@@ -1,0 +1,344 @@
+NEW in 0.22.1
+==============
+ - Add more SIP profiles and widget (Xavier Claessens).
+ - Enable VoIP by default. Requier latest stream-engine. (Xavier Claessens).
+ - Move chat chandler into the same process than contact list (Xavier Claessens).
+ - Remove queueing messages until the alias is ready, this doesn't work and cause lost messages. A better solution will come in HEAD. (Xavier Claessens).
+ - Remove code that prevent to display dup backlog. This is broken and in some cases drop new messages. A better fix will come is HEAD. (Xavier Claessens).
+
+Bugs fixed:
+ - Fixed #513679, Need a widget to configure SIP accounts (Baptiste Mille-Mathias)
+
+NEW in 0.22.0
+==============
+ - Queue received messages until the sender got his alias. (Xavier Claessens).
+
+Bugs fixed:
+ - Fixed #466521, Add an advanced expander in the generic setting widget (Marco Barisione)
+ - Fixed #479534, remember conversation window sizes (Marco Barisione)
+ - Fixed #501805, empathy should prevent to run multiple instances (Marco Barisione)
+ - Fixed #505616, linkability of URL broken on _ (Marco Barisione)
+ - Fixed #520788, Wrong button order in the favourite rooms dialog (Marco Barisione)
+ - Fixed #521051, empathy_main_window_show() should use empathy_window_present() (Marco Barisione)
+
+Translations:
+ - Updated Finnish translation (ituohela).
+ - Updated en_GB translation  (Philip Withnall).
+ - Updated sv translation  (Daniel Nylander).
+ - Updated it translation  (Milo Casagrande).
+ - Updated Spanish translation  (Jorge Gonzalez).
+ - Updated fr translation  (Robert-André Mauchin).
+
+NEW in 0.21.91
+==============
+ - Blink the status icon for new incoming calls. (Xavier Claessens).
+ - Close the media channel if stream engine crashes. (Xavier Claessens).
+ - Change status to closed if stream engine dies or if a call fails. (Xavier Claessens).
+ - Make use of generated code for using stream engine. (Xavier Claessens).
+ - Add a GUI to configure IRC accounts (Guillaume Desmottes).
+ - accounts-dialog: swap the create and previous button (Guillaume Desmottes).
+ - save when adding/removing networks (Guillaume Desmottes).
+ - check if network !=  NULL before trying to set its charset (Guillaume Desmottes).
+ - New call code, should be more usable (Elliot Fairweather).
+ - Try to create salut account if getting the gconf key fails. (Xavier Claessens).
+ - Add a generic UI to make easy building UI for protocol specific settings. (Xavier Claessens).
+ - Fix setting avatar on salut.  (Sjoerd Simons).
+ - Use EMPATHY_SRCDIR environment variable to load uninstalled glade/xml/dtd files (Xavier Claessens).
+
+Bugs fixed:
+ - Fixed #505585, Improve .gitignore (Guillaume Desmottes)
+ - Fixed #505622, add "check" framework support (Guillaume Desmottes)
+ - Fixed #507515, "has come online" is printed even if peer has been online the whole time (Xavier Claessens)
+ - Fixed #507656, "make valgrind" broken (Guillaume Desmottes)
+ - Fixed #513673, Need a GUI to configure ICQ accounts (Andreas Henriksson)
+ - Fixed #513674, Need a GUI to configure Yahoo! accounts (Susana)
+ - Fixed #516198, Thinks contacts come online each time a chat dialog is opened (Xavier Claessens)
+ - Fixed #517098, Critical warnings viewing previous conversations (Xavier Claessens)
+
+Translations:
+ - Updated pt_BR translation  (Og Maciel).
+ - Updated sv translation (Daniel Nylander).
+ - Updated Spanish translation  (Jorge Gonzalez).
+ - Updated Arabic Translation (Abou Manal).
+ - Updated eu translation  (Inaki Larranaga Murgoitio).
+ - Updated Occitan translation (ymarcheg).
+ - Updated Basque translation. (dooteo).
+ - Updated Finnish translation (ituohela).
+ - Updated ja translation  (Takeshi AIHANA).
+ - Updated Nepali Translation (pachimho).
+ - Updated Finnish translation (ituohela).
+ - Updated Galician Translation. (icq).
+ - Added Hebrew translation (yairhr).
+
+NEW in 0.21.90
+==============
+ - Change "new message" dialog to "new conversation" and make possible to do voip call. (Xavier Claessens).
+ - Try to load dtd and glade files from the srcdir. (Xavier Claessens).
+ - Add a property to have or not groups on EmpathyContactListStore (Xavier Claessens).
+ - Add a features property on EmpathyContactListView to enable/disable each action. (Xavier Claessens).
+ - Add a program to show chat logs (Xavier Claessens).
+ - Add a cancel button on the custom message diaog (Xavier Claessens).
+ - Unset account parameter if user gives an empthy value. (Xavier Claessens).
+ - Show/Hide main window when changing corresponding gcong key. (Xavier Claessens).
+
+Bugs fixed:
+ - Fixed #501467, improve accounts dialog (Xavier Claessens)
+ - Fixed #507840, New UI for Jabber accounts (Xavier Claessens)
+ - Fixed #509906, empathy is showing off-line contacts before on-line ones (Xavier Claessens)
+ - Fixed #511048, Ellipsize error button (Xavier Claessens)
+ - Fixed #511841, account has to be selected to (un)check its checkbox (Carl-Anton Ingmarsson)
+ - Fixed #515008, Nickname should be in the main section of the preferences for salut accounts (Marco Barisione)
+ - Fixed #515010, Do not be automatically set published name for new salut accounts (Marco Barisione)
+ - Fixed #511679, Empathy HEAD doesn't build (Guillaume Desmottes)
+
+Translations:
+ - Updated eu translation (Inaki Larranaga Murgoitio).
+ - Updated Arabic Translation (Djihed Afifi).
+ - Updated Galician Translation. (icq).
+ - Updated Spanish translation (Jorge Gonzalez).
+
+NEW in 0.21.5.2
+==============
+ - Update API documentation generator. (Xavier Claessens).
+ - Update python binding for new API. (Xavier Claessens).
+ - Rename BlockType to EMPATHY_CHAT_VIEW_BLOCK to respect namespace (Xavier Claessens).
+ - Change EMPATHY_AVATAR_CHOOSER_TYPE to EMPATHY_TYPE_AVATAR_CHOOSER (Xavier Claessens).
+ - Ignore ssl errors for gtalk profile by default otherwise it won't connect. (Xavier Claessens).
+
+Bugs fixed:
+ - Fixed #509656, crash in Empathy Instant Messenger: Nothing. I was viewing s... (Xavier Claessens)
+
+Translations:
+ - Updated ja Translation (Takeshi AIHANA).
+ - Updated sv Translation (Daniel Nylander).
+
+NEW in 0.21.5.1
+==============
+ - Fix release.py script to give correct author of fixed bug.
+ - Fix NEWS file with correct authors
+ - BUMP ABI version, forgot that for release 0.21.5
+
+NEW in 0.21.5
+==============
+ - Adding a release.py script that uses git.
+ - Add SIP icon picked from pidgin.
+ - Cleanup icons: Regenerate icons from SVG at 16, 22, 24, 32 and 48 size.
+   Change xmpp-link-local icon from apple's to the avahi icon. Still missing SVG
+   for im-message, im-message-new and user-typing.
+ - Add avatar token in logs and load avatar from cache when getting logs messages.
+ - Reset status message when coming back from away and the status was manually
+   set to away.
+ - Update profiles based on N810's.
+ - Remove ChangeLog and po/ChangeLog, new release script uses git logs and
+   generates ChangeLog file from git.
+ - Add .gitignore files.
+ - Chandlers leaves when there is no more channels to handle.
+ - Set call window title to contact name
+ - Import Gossip's chat theme system and simplify it a bit.
+
+Bugs fixed:
+ - Fixed #466960, status icon tooltip doesn't change when status changes (Xavier Claessens)
+ - Fixed #508520, :0 smiley conversion shouldn't happen for times (Xavier Claessens)
+ - Fixed #499885, Automatically connect at session start (Carl-Anton Ingmarsson)
+ - Fixed #507656, "make valgrind" broken (Guillaume Desmottes)
+ - Fixed #459520, Can't remove a group (David Turner)
+ - Fixed #447851, Wider list of participants in group chat/IRC channel (Rohit Agrawal)
+ - Fixed #505622, add "check" framework support (Guillaume Desmottes)
+ - Fixed #490153, Join _New... icon (Michael Monreal)
+ - Fixed #502932, Text selection in Accounts window (Xavier Claessens)
+
+Translations:
+ - Updated Spanish Translation (jorgegonz).
+ - Updated Norwegian bokmål Translation (kmaraas).
+ - Updated Occitan Translation (ymarcheg).
+ - Updated French Translation (claudep).
+ - Updated Swedish Translation (dnylande).
+ - Updated Brazilian Portuguese Translation (leonardof).
+ - Updated Basque Translation (dooteo).
+ - Updated Arabic Translation (djihed).
+
+NEW in 0.21.4:
+=============
+ - Cache avatar pixbuf in EmpathyChatView to avoid having a new pixbuf in memory
+   for each message a contact sends
+ - Generate ChangeLog from svn commits. Copy generator from epiphany.
+ - Correctly store/restore presence when NM state changes.
+ - Split EmpathyContactFactory to have one EmpathyTpContactFactory per account.
+ - When NM is in sleeping (=disabled) state, do just like if it was connected.
+   Add a gconf key to disable NM support completely.
+
+NEW in 0.21.3:
+=============
+ - Request new Text Channel if the contact is online again and CM don't support
+   offline message or if account gets reconnected.
+ - Depend on telepathy-glib and make use of his new API. Don't use deprecated
+   functions of libtelepathy.
+ - Better gtkdoc generator.
+
+NEW in 0.21.2:
+=============
+ - Display error message when an account failed to connect.
+ - Move chats to its own process.
+ - Move chandlers in $libexecdir
+ - Don't use the same bus name for filter and chandler programs. 
+
+NEW in 0.21.1:
+=============
+ - Cleanup licences and copyrights, Modules with 100% collabora code are now
+   relicenced to LGPL.
+ - Hide main window with ALT-F4.
+ - Set chat state to ACTIVE when receiving a message from a contact, avoid
+   staying in COMPOSING state forever for protocols like MSN that do not notify
+   when contact stoped writing.
+ - Don't use deprecated Gtk/GLib API. Mainly replace GtkTooltips by new
+   tooltip API from GTK 2.12.
+ - Use g_timeout_add_seconds when appropriated to avoid weaking the process too
+   much.
+ - Implement EmpathyAvatarChooser and EmpathyAvatarImage and make use of them in
+   contact information windows. That means we can now enlarge avatars when
+   clicking on it and we can set our own avatar if we edit our own contact.
+ - Implement edit personal information window, no vcard supported yet, but it's
+   not possible to set our own alias/avatar.
+ - Bump version to 0.21.1 for GNOME 2.21.1 release.
+
+NEW in 0.14:
+===========
+ - Megaphone applet now uses avatar cache.
+
+NEW in 0.13:
+===========
+ - Completely reworked ContactList API, new EmpathyContactFactory class.
+ - Update to new Telepathy avatar spec.
+ - Dynamic smiley managment and more efficient algorithm to detect smileys in
+   messages. New EmpathySmileyManager class.
+ - Adding capabilities contact property for Audio/Video.
+ - Adding UI to start a VoIP call. Atm it only shows a microphone icon for
+   contacts supporting voice or video but does not make the call. See
+   EMPATHY_VOIP branch for more complete support.
+ - "interactive" property on EmpathyContactListView to enable/disable context
+   menu and action when double-click on a contact.
+ - Add 2 properties to EmpathyIdle to activate auto-away and auto-disconnect,
+   default to off. Only empathy main client will turn them on, like that if
+   other processes are running with an EmpathyIdle instance they won't change
+   presence in the same time than Empathy client.
+ - Cache avatars in ~/.gnome2/Empathy/avatars.
+ - Adding a test program, useful to use with valgrind.
+ - Free return value for async DBus calls, they are not owned by dbus-glib.
+   This fix big leaks.
+
+NEW in 0.12:
+===========
+ - Only update the topic of it has really be changed, avoid diplaying many
+   times "Topic set to:" message.
+ - Some Jabber chatroom sends messages received before we joined the room, avoid
+   displaying those messages if we already logged them last time we joined that
+   room. Previous workaround prevented Empathy to log offline messages.
+
+NEW in 0.11:
+===========
+ - Change main window's title to "Contact list".
+ - Do not list profiles that don't have the corresponding CM installed when
+   creating a new account.
+
+NEW in 0.10:
+===========
+ - Align param names on the left in the generic account settings widget.
+ - Try to guess the server from the jid if we are using the jabber profile.
+
+NEW in 0.9:
+===========
+ - Initial room list support. It doesn't work yet but most of the code is ready.
+ - Tell the user when a message can't be sent.
+ - Set all contacts from salut protocol to the "Local Network" group.
+ - Fix NetworkManager support.
+ - Iconify main window to the status icon like in rhythmbox.
+ - Show avatars in chatrooms.
+ - Fix avatar not being requested when empathy starts.
+ - Remove unused nickname entry and use a GtkTable for room information.
+ - Set a window title and fix alignment of widgets for contact related dialogs
+   (add, edit/view info).
+ - Adding initial API documentation using gtk-doc.
+ - Auto-accept to publish presence to contacts that are in our subscribe list.
+   When accepting a pending contact add it to publish and subscribe list.
+ - Filter incoming text channels and make status icon flash when there we
+   receive a new message. Dispatch the channel only when we get a message and
+   the user click on the icon.
+ - Install libempathy and libempathy-gtk and make their API public. The API is
+   NOT STABLE AT ALL !!!
+
+NEW in 0.8:
+===========
+ - Fixed contact list handling.
+ - Make use of NetworkManager to set presence to OFFILE when we are disconnected
+   and restore presence once we are reconnected.
+ - UI for searching in conversation history and to view all conversations with
+   a given contact.
+ - Do not use 2 different processes (empathy and empathy-chat), merge them
+   into one client. This is easier for debugging and share data.
+ - Do not create log directory for a chat if there is no messages to put in.
+ - Do not set active contacts when creating the store, and when contact groups
+   changed.
+ - Fix warning when using command-line options.
+ - Ignore ssl errors by default. This is needed to connect jabber accounts
+   using ssl.
+ - Adding spellcheck support using aspell.
+ - Lots of bugs fixed.
+
+NEW in 0.7:
+===========
+ - Adding new contacts.
+ - Accept/Reject contacts who wants to get our presence.
+ - Edit/View contacts information.
+ - Get name and topic properties for chatrooms.
+ - Log chats and display 10 last messages when opening a new chat.
+ - Set presence to available for protocols that do not supports presence
+   (SIP, IRC).
+ - Lots of bugs fixed.
+
+NEW in 0.6:
+===========
+ - Join room when clicking on favorite rooms.
+ - Do not restore away presence message when coming back after the user set
+   manually to away.
+ - Set parent window when poping a new window/dialog.
+ - Implement favorite chatroom menu.
+ - Do not highlight contacts already known when creating the contact list.
+ - Do not set status message to "Extended autoaway", let user's message
+   unchanged.
+ - Many bugs and leaks fixed.
+
+NEW in 0.5:
+===========
+ - Do not highlight groups when adding them in the roster.
+ - Do not create new GossipContact object in presence/avatar/alias changed
+   signal if we don't already know that contact from a contact list channel.
+   This should fix DBus max pending calls limit reached in some cases.
+ - New icon for empathy-new-message, empathy-group-message and
+   empathy-proto-irc.
+ - Chatroom support. New objects: GossipNewChatroomDialog, GossipAccountChooser,
+   GossipGroupChat
+ - If we are offline do not set away on idle. If we are already away restore to
+   available when we are no mode idle. Do no modify status message.
+ - Fixed message displaying with fancy themes.
+ - Many bugs fixed.
+
+NEW in 0.4:
+===========
+ - contact list refactoring: EmpathyContactList is an iface implemented by
+   EmpathyTpContactList, EmpathyContactManager and EmpathyTpChatroom.
+   GossipContactList splitted into GossipContactListStore and
+   GossipContactListView, it can display any object implementing the
+   EmpathyContactList iface. Make possible to set custom functions to define
+   the groups of a contact, by default it gets the "group" property of the
+   GossipContact object. This make possible to reuse the contact list UI from
+   the main window for chatrooms where groups are the role/affiliation of the
+   contact on that room.
+ - Auto away when gnome-screensaver says the session is idle and extended away
+   30min after that.
+ - Display ChatState when the contact is composing.
+ - Bugbuddy now reports crashes to GNOME Bugzilla.
+ - New program icon.
+ - Setting i18n support and importing po files from gossip.
+ - Add an example label for jid.
+ - Do not open chat window twice for the same conversation.
+ 
