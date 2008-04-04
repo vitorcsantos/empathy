@@ -50,7 +50,6 @@ struct _EmpathyTpChatPriv {
 	MissionControl        *mc;
 	gboolean               acknowledge;
 	gboolean               had_pending_messages;
-	GSList                *message_queue;
 	TpChan                *tp_chan;
 	DBusGProxy	      *props_iface;
 	DBusGProxy            *text_iface;
@@ -161,84 +160,6 @@ tp_chat_build_message (EmpathyTpChat *chat,
 }
 
 static void
-tp_chat_sender_ready_notify_cb (EmpathyContact *contact,
-				GParamSpec     *param_spec,
-				EmpathyTpChat  *chat)
-{
-	EmpathyTpChatPriv *priv = GET_PRIV (chat);
-	EmpathyMessage    *message;
-	EmpathyContact    *sender;
-	gboolean           removed = FALSE;
-	const gchar       *name, *id;
-
-	/* Emit all messages queued until we find a message with not
-	 * ready sender. When leaving this loop, sender is the first not ready
-	 * contact queued and removed tells if at least one message got removed
-	 * from the queue. */
-	while (priv->message_queue) {
-		message = priv->message_queue->data;
-		sender = empathy_message_get_sender (message);
-		name = empathy_contact_get_name (sender);
-		id = empathy_contact_get_id (sender);
-
-		if (!tp_strdiff (name, id)) {
-			break;
-		}
-
-		empathy_debug (DEBUG_DOMAIN, "Queued message ready");
-		g_signal_emit (chat, signals[MESSAGE_RECEIVED], 0, message);
-		priv->message_queue = g_slist_remove (priv->message_queue,
-						      message);
-		g_object_unref (message);
-		removed = TRUE;
-	}
-
-	if (removed) {
-		g_signal_handlers_disconnect_by_func (contact,
-						      tp_chat_sender_ready_notify_cb,
-						      chat);
-
-		if (priv->message_queue) {
-			g_signal_connect (sender, "notify::name",
-					  G_CALLBACK (tp_chat_sender_ready_notify_cb),
-					  chat);
-		}
-	}
-}
-
-static void
-tp_chat_emit_or_queue_message (EmpathyTpChat  *chat,
-			       EmpathyMessage *message)
-{
-	EmpathyTpChatPriv   *priv = GET_PRIV (chat);
-	EmpathyContact      *sender;
-	const gchar         *name, *id;
-
-	if (priv->message_queue != NULL) {
-		empathy_debug (DEBUG_DOMAIN, "Message queue not empty");
-		priv->message_queue = g_slist_append (priv->message_queue,
-						      g_object_ref (message));
-		return;
-	}
-
-	sender = empathy_message_get_sender (message);
-	name = empathy_contact_get_name (sender);
-	id = empathy_contact_get_id (sender);
-	if (tp_strdiff (name, id)) {
-		empathy_debug (DEBUG_DOMAIN, "Message queue empty and sender ready");
-		g_signal_emit (chat, signals[MESSAGE_RECEIVED], 0, message);
-		return;
-	}
-
-	empathy_debug (DEBUG_DOMAIN, "Sender not ready");
-	priv->message_queue = g_slist_append (priv->message_queue, 
-					      g_object_ref (message));
-	g_signal_connect (sender, "notify::name",
-			  G_CALLBACK (tp_chat_sender_ready_notify_cb),
-			  chat);
-}
-
-static void
 tp_chat_received_cb (DBusGProxy    *text_iface,
 		     guint          message_id,
 		     guint          timestamp,
@@ -265,7 +186,7 @@ tp_chat_received_cb (DBusGProxy    *text_iface,
 					 from_handle,
 					 message_body);
 
-	tp_chat_emit_or_queue_message (EMPATHY_TP_CHAT (chat), message);
+	g_signal_emit (chat, signals[MESSAGE_RECEIVED], 0, message);
 	g_object_unref (message);
 
 	if (priv->acknowledge) {
@@ -296,7 +217,7 @@ tp_chat_sent_cb (DBusGProxy    *text_iface,
 					 0,
 					 message_body);
 
-	tp_chat_emit_or_queue_message (EMPATHY_TP_CHAT (chat), message);
+	g_signal_emit (chat, signals[MESSAGE_RECEIVED], 0, message);
 	g_object_unref (message);
 }
 
@@ -385,7 +306,7 @@ tp_chat_list_pending_messages_cb (DBusGProxy *proxy,
 						 from_handle,
 						 message_body);
 
-		tp_chat_emit_or_queue_message (chat, message);
+		g_signal_emit (chat, signals[MESSAGE_RECEIVED], 0, message);
 		g_object_unref (message);
 
 		g_value_array_free (message_struct);

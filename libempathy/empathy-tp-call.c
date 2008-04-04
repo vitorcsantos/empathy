@@ -57,6 +57,7 @@ struct _EmpathyTpCallPriv
   EmpathyContact *contact;
   gboolean is_incoming;
   guint status;
+  gboolean stream_engine_started;
 
   EmpathyTpCallStream *audio;
   EmpathyTpCallStream *video;
@@ -226,6 +227,18 @@ tp_call_stream_removed_cb (DBusGProxy *channel,
 }
 
 static void
+tp_call_invalidated_cb (TpProxy       *stream_engine,
+                        GQuark         domain,
+                        gint           code,
+                        gchar         *message,
+                        EmpathyTpCall *call)
+{
+  empathy_debug (DEBUG_DOMAIN, "Stream engine proxy invalidated: %s",
+      message);
+  empathy_tp_call_close_channel (call);
+}
+
+static void
 tp_call_channel_closed_cb (TpChan *channel,
                            EmpathyTpCall *call)
 {
@@ -244,13 +257,21 @@ tp_call_channel_closed_cb (TpChan *channel,
       TELEPATHY_CHAN_IFACE_GROUP_QUARK);
 
   dbus_g_proxy_disconnect_signal (DBUS_G_PROXY (priv->channel), "Closed",
-      G_CALLBACK (tp_call_channel_closed_cb), (gpointer) call);
+      G_CALLBACK (tp_call_channel_closed_cb), call);
   dbus_g_proxy_disconnect_signal (streamed_iface, "StreamStateChanged",
-      G_CALLBACK (tp_call_stream_state_changed_cb), (gpointer) call);
+      G_CALLBACK (tp_call_stream_state_changed_cb), call);
   dbus_g_proxy_disconnect_signal (streamed_iface, "StreamAdded",
-      G_CALLBACK (tp_call_stream_added_cb), (gpointer) call);
+      G_CALLBACK (tp_call_stream_added_cb), call);
   dbus_g_proxy_disconnect_signal (streamed_iface, "StreamRemoved",
-      G_CALLBACK (tp_call_stream_removed_cb), (gpointer) call);
+      G_CALLBACK (tp_call_stream_removed_cb), call);
+
+  if (priv->stream_engine)
+    {
+      g_signal_handlers_disconnect_by_func (priv->stream_engine,
+          tp_call_invalidated_cb, call);
+      g_object_unref (priv->stream_engine);
+      priv->stream_engine = NULL;
+    }
 }
 
 static void
@@ -506,28 +527,26 @@ tp_call_async_cb (TpProxy *proxy,
 }
 
 static void
-tp_call_invalidated_cb (TpProxy       *stream_engine,
-                        GQuark         domain,
-                        gint           code,
-                        gchar         *message,
-                        EmpathyTpCall *call)
-{
-  empathy_debug (DEBUG_DOMAIN, "Stream engine proxy invalidated: %s",
-      message);
-  empathy_tp_call_close_channel (call);
-}
-
-static void
 tp_call_watch_name_owner_cb (TpDBusDaemon *daemon,
                              const gchar *name,
                              const gchar *new_owner,
                              gpointer call)
 {
-  if (G_STR_EMPTY (new_owner))
+  EmpathyTpCallPriv *priv = GET_PRIV (call);
+
+  /* G_STR_EMPTY(new_owner) means either stream-engine has not started yet or
+   * has crashed. We want to close the channel if stream-engine has crashed.
+   * */
+  empathy_debug (DEBUG_DOMAIN,
+                 "Watch SE: name='%s' SE started='%s' new_owner='%s'",
+                 name, priv->stream_engine_started ? "yes" : "no",
+                 new_owner ? new_owner : "none");
+  if (priv->stream_engine_started && G_STR_EMPTY (new_owner))
     {
       empathy_debug (DEBUG_DOMAIN, "Stream engine falled off the bus");
       empathy_tp_call_close_channel (call);
     }
+  priv->stream_engine_started = !G_STR_EMPTY (new_owner);
 }
 
 static void
@@ -587,20 +606,20 @@ tp_call_constructor (GType type,
   priv = GET_PRIV (call);
 
   dbus_g_proxy_connect_signal (DBUS_G_PROXY (priv->channel), "Closed",
-     G_CALLBACK (tp_call_channel_closed_cb), (gpointer) call, NULL);
+     G_CALLBACK (tp_call_channel_closed_cb), call, NULL);
 
   streamed_iface = tp_chan_get_interface (priv->channel,
       TELEPATHY_CHAN_IFACE_STREAMED_QUARK);
   dbus_g_proxy_connect_signal (streamed_iface, "StreamStateChanged",
       G_CALLBACK (tp_call_stream_state_changed_cb),
-      (gpointer) call, NULL);
+      call, NULL);
   dbus_g_proxy_connect_signal (streamed_iface, "StreamDirectionChanged",
       G_CALLBACK (tp_call_stream_direction_changed_cb),
-      (gpointer) call, NULL);
+      call, NULL);
   dbus_g_proxy_connect_signal (streamed_iface, "StreamAdded",
-      G_CALLBACK (tp_call_stream_added_cb), (gpointer) call, NULL);
+      G_CALLBACK (tp_call_stream_added_cb), call, NULL);
   dbus_g_proxy_connect_signal (streamed_iface, "StreamRemoved",
-      G_CALLBACK (tp_call_stream_removed_cb), (gpointer) call, NULL);
+      G_CALLBACK (tp_call_stream_removed_cb), call, NULL);
 
   mc = empathy_mission_control_new ();
   account = mission_control_get_account_for_connection (mc, priv->connection,
@@ -609,11 +628,11 @@ tp_call_constructor (GType type,
   g_object_unref (mc);
 
   g_signal_connect (G_OBJECT (priv->group), "member-added",
-      G_CALLBACK (tp_call_member_added_cb), (gpointer) call);
+      G_CALLBACK (tp_call_member_added_cb), call);
   g_signal_connect (G_OBJECT (priv->group), "local-pending",
-      G_CALLBACK (tp_call_local_pending_cb), (gpointer) call);
+      G_CALLBACK (tp_call_local_pending_cb), call);
   g_signal_connect (G_OBJECT (priv->group), "remote-pending",
-      G_CALLBACK (tp_call_remote_pending_cb), (gpointer) call);
+      G_CALLBACK (tp_call_remote_pending_cb), call);
 
   tp_call_start_stream_engine (call);
   /* FIXME: unnecessary for outgoing? */
@@ -800,6 +819,7 @@ empathy_tp_call_init (EmpathyTpCall *call)
 
   priv->status = EMPATHY_TP_CALL_STATUS_READYING;
   priv->contact = NULL;
+  priv->stream_engine_started = FALSE;
   priv->audio = g_slice_new0 (EmpathyTpCallStream);
   priv->video = g_slice_new0 (EmpathyTpCallStream);
   priv->audio->exists = FALSE;
@@ -889,7 +909,7 @@ empathy_tp_call_close_channel (EmpathyTpCall *call)
       g_clear_error (&error);
     }
   else
-        priv->status = EMPATHY_TP_CALL_STATUS_CLOSED;
+      priv->status = EMPATHY_TP_CALL_STATUS_CLOSED;
 }
 
 void

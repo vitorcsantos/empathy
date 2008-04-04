@@ -78,7 +78,6 @@ struct _EmpathyChatPriv {
 	GList                 *compositors;
 	guint                  scroll_idle_id;
 	gboolean               first_tp_chat;
-	time_t                 last_log_timestamp;
 	gboolean               is_first_char;
 	guint                  block_events_timeout_id;
 	/* Used to automatically shrink a window that has temporarily
@@ -512,21 +511,8 @@ chat_message_received_cb (EmpathyTpChat  *tp_chat,
 {
 	EmpathyChatPriv *priv;
 	EmpathyContact  *sender;
-	time_t           timestamp;
 
 	priv = GET_PRIV (chat);
-
-	timestamp = empathy_message_get_timestamp (message);
-	if (timestamp <= priv->last_log_timestamp) {
-		/* Do not take care of messages anterior of the last
-		 * logged message. Some Jabber chatroom sends messages
-		 * received before we joined the room, this avoid
-		 * displaying those messages if we already logged them
-		 * last time we joined that room. */
-		empathy_debug (DEBUG_DOMAIN, "Skipping message because it is "
-			       "anterior of last logged message.");
-		return;
-	}
 
 	sender = empathy_message_get_sender (message);
 	empathy_debug (DEBUG_DOMAIN, "Appending message ('%s')",
@@ -1282,7 +1268,6 @@ chat_add_logs (EmpathyChat *chat)
 			continue;
 		}
 
-		priv->last_log_timestamp = empathy_message_get_timestamp (message);
 		empathy_chat_view_append_message (chat->view, message);
 
 		g_object_unref (message);
