@@ -1,3 +1,14 @@
+NEW in 0.22.1
+==============
+ - Add more SIP profiles and widget (Xavier Claessens).
+ - Enable VoIP by default. Requier latest stream-engine. (Xavier Claessens).
+ - Move chat chandler into the same process than contact list (Xavier Claessens).
+ - Remove queueing messages until the alias is ready, this doesn't work and cause lost messages. A better solution will come in HEAD. (Xavier Claessens).
+ - Remove code that prevent to display dup backlog. This is broken and in some cases drop new messages. A better fix will come is HEAD. (Xavier Claessens).
+
+Bugs fixed:
+ - Fixed #513679, Need a widget to configure SIP accounts (Baptiste Mille-Mathias)
+
 NEW in 0.22.0
 ==============
  - Queue received messages until the sender got his alias. (Xavier Claessens).
