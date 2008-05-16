@@ -1,0 +1,297 @@
+<?xml version="1.0"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY legal SYSTEM "legal.xml">
+<!ENTITY appversion "2.24">
+<!ENTITY manrevision "2.0">
+<!ENTITY date "April 2008">
+<!ENTITY app "<application>Empathy</application>">
+<!ENTITY appname "Empathy">
+]>
+
+<article id="index" lang="en">
+  <!-- please do not change the id; for translations, change lang to -->
+  <!-- appropriate code -->
+  <articleinfo> 
+    <title>&app; Manual V&manrevision;</title>       
+
+    <copyright> 
+      <year>2008</year> 
+      <holder>Ubuntu Documentation Project</holder> 
+    </copyright> 
+    <!-- An address can be added to the publisher information.  If a role is 
+    not specified, the publisher/author is the same for all versions of the 
+    document.  -->
+    <publisher> 
+      <publishername>Ubuntu Documentation Project</publishername> 
+    </publisher> 
+
+    <!-- licence stuff -->
+    &legal;
+    
+    <authorgroup> 
+      <author role="maintainer"> 
+	<firstname>Milo</firstname> 
+	<surname>Casagrande</surname> 
+	<affiliation> 
+	  <orgname>Ubuntu Documentation Project</orgname> 
+	  <address><email>milo_casagrande@yahoo.it</email></address> 
+	</affiliation> 
+      </author> 
+      <author> 
+	<firstname>Seth</firstname> 
+	<surname>Dudenhofer</surname> 
+	<affiliation> 
+	  <orgname>Ubuntu Documentation Project</orgname> 
+	  <address><email>sdudenhofer@gmail.com</email></address> 
+	</affiliation> 
+      </author> 
+      <author> 
+	<firstname>Jesse N.</firstname> 
+	<surname>Richardson</surname> 
+	<affiliation> 
+	  <orgname>Ubuntu Documentation Project</orgname> 
+	  <address><email>richardson183@bellsouth.net</email></address> 
+	</affiliation> 
+      </author> 
+    </authorgroup>
+
+<!-- According to GNU FDL, revision history is mandatory if you are -->
+<!-- modifying/reusing someone else's document.  If not, you can omit it. -->
+<!-- Remember to remove the &manrevision; entity from the revision -->
+<!-- entries other than the current revision. -->
+<!-- The revision numbering system for GNOME manuals is as follows: -->
+<!-- * the revision number consists of two components -->
+<!-- * the first component of the revision number reflects the release version of the GNOME desktop. -->
+<!-- * the second component of the revision number is a decimal unit that is incremented with each revision of the manual. -->
+<!-- For example, if the GNOME desktop release is V2.x, the first version of the manual that -->
+<!-- is written in that desktop timeframe is V2.0, the second version of the manual is V2.1, etc. -->
+<!-- When the desktop release version changes to V3.x, the revision number of the manual changes -->
+<!-- to V3.0, and so on. -->
+    <revhistory>
+      <revision> 
+	<revnumber>Empathy Manual V&manrevision;</revnumber> 
+	<date>&date;</date> 
+	<revdescription> 
+	  <para role="author">Milo Casagrande
+	    <email>milo_casagrande@yahoo.it</email>
+	  </para>
+	  <para role="author">Seth Dudenhofer
+	    <email>sdudenhofer@gmail.com</email>
+	  </para>
+	  <para role="author">Jesse N. Richardson
+	    <email>richardson183@bellsouth.net</email>
+	  </para>
+	  <para role="publisher">Ubuntu Documentation Project</para>
+	</revdescription> 
+      </revision> 
+    </revhistory> 
+    
+    <releaseinfo>
+      This manual describes version &appversion; of &appname;.
+    </releaseinfo> 
+    <legalnotice> 
+      <title>Feedback</title> 
+      <para>
+	To report a bug or make a suggestion regarding the &app; application or
+	this manual, follow the directions in the <ulink url="ghelp:gnome-feedback"
+	  type="help">GNOME Feedback Page</ulink>. 
+      </para>
+    </legalnotice>
+
+    <abstract role="description">
+      <para>
+	&appname; is an application for instant messaging.
+      </para>
+    </abstract>
+
+  </articleinfo>
+
+  <indexterm zone="index"> 
+    <primary>Empathy</primary> 
+  </indexterm> 
+  <indexterm zone="index"> 
+    <primary>empathy</primary> 
+    <secondary>istant messaging</secondary>
+  </indexterm>
+
+  <sect1 id="empathy-intro">
+    <title>Introduction</title>
+    <para>
+      &app; is a multi-protocol instant messaging program for the
+      GNOME Desktop that allows you to keep in touch with your friends
+      over a network.
+    </para>
+    <para>
+      It supports the following protocols:
+      <itemizedlist>
+	<listitem>
+	  <para>
+	    <acronym>AIM</acronym>
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Google Talk
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    ICQ
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    <acronym>IRC</acronym>
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Jabber
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    <acronym>MSN</acronym>
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Salut
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Yahoo
+	  </para>
+	</listitem>
+      </itemizedlist>
+    </para>
+  </sect1>
+
+  <sect1 id="empathy-getting-started">
+    <title>Getting Started</title>
+
+    <sect2 id="empathy-starting">
+      <title>To Start &appname;</title>
+      <para>You can start &app; in the following ways:
+      </para> 
+      <variablelist>
+    	<varlistentry>
+	  <term><guimenu>Applications</guimenu> menu</term>
+	  <listitem>
+	    <para>Choose 
+	      <menuchoice>
+		<guisubmenu>Internet</guisubmenu>
+		<guimenuitem>Empathy Instant Messenger</guimenuitem>
+	      </menuchoice>.
+	    </para>
+	  </listitem>
+    	</varlistentry>
+    	<varlistentry>
+	  <term>Command line</term>
+	  <listitem>
+	    <para>Type <command>empathy</command> and then press
+	      <keycap>Return</keycap>.
+	    </para>
+	  </listitem>
+    	</varlistentry>
+      </variablelist>
+    </sect2>
+
+    <sect2 id="emphaty-when-start">
+      <title>When you start &appname;</title>
+      <para>
+	When you start &app; the following window is displayed.
+	<!-- Figure -->
+	<!-- 
+	Commented out, need to find a solution on how to
+	structure this section.
+	<figure id="empathy-mainwindow"> 
+	  <title>&app; Main Window</title> 
+	  <screenshot> 
+	    <mediaobject> 
+	      <imageobject>
+		<imagedata fileref="figures/empathy-main-window.png" format="PNG"/> 
+	      </imageobject>
+	      <textobject> 
+		<phrase>
+		  Shows &app; main window. Contains the	titlebar, the
+		  menubar, contact list, status icon and status arrow
+		  button list.
+		</phrase> 
+	      </textobject> 
+	    </mediaobject> 
+	  </screenshot> 
+	</figure>
+	-->
+	<!-- End of Figure -->
+      </para>
+      <para>
+	<xref linkend="empathy-TBL-1"/> describes the components of a browser window.
+	<table frame="topbot" id="empathy-TBL-1">
+	  <title>&app; Main Components</title>
+	  <tgroup cols="2" colsep="0" rowsep="0">
+	    <colspec colname="colspec0" colwidth="29.39*"/>
+	    <colspec colname="colspec1" colwidth="70.61*"/>
+	    <thead>
+	      <row rowsep="1">
+		<entry valign="top">
+		  <para>Component</para>
+		</entry>
+		<entry valign="top">
+		  <para>Description</para>
+		</entry>
+	      </row>
+	    </thead>
+	    <tbody>
+	      <row>
+		<entry valign="top">
+		  <para>Menubar</para>
+		</entry>
+		<entry valign="top">
+		  <para>
+		    Contains menus used to perform actions in &app;.
+		  </para>
+		</entry>
+	      </row>
+	      <row>
+		<entry valign="top">
+		  <para>Status Drop-Down List</para>
+		</entry>
+		<entry valign="top">
+		  <para>
+		    Allows to update the user's status.
+		  </para>
+		</entry>
+	      </row>
+	      <row>
+		<entry valign="top">
+		  <para>Account Button</para>
+		</entry>
+		<entry valign="top">
+		  <para>
+		    Opens the <guilabel>Accounts</guilabel> dialog.
+		  </para>
+		</entry>
+	      </row>
+	      <row>
+		<entry valign="top">
+		  <para>Contact List</para>
+		</entry>
+		<entry valign="top">
+		  <para>
+		    Shows all the available contacts and their
+		    associated status.
+		  </para>
+		</entry>
+	      </row>
+	    </tbody>
+	  </tgroup>
+	</table>
+      </para>
+    </sect2>
+
+  </sect1>
+
+</article>
