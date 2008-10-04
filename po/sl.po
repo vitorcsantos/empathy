@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: empathy\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-09 11:33+0000\n"
-"PO-Revision-Date: 2008-09-10 09:38+0100\n"
+"POT-Creation-Date: 2008-10-04 04:16+0000\n"
+"PO-Revision-Date: 2008-10-04 08:10+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -440,7 +440,7 @@ msgstr "_Prezri konferenčna vabila in vabila klepetalnic"
 
 #: ../libempathy-gtk/empathy-account-widget-yahoo.glade.h:9
 msgid "_Room List locale:"
-msgstr "_Locale seznama sob:"
+msgstr "_Jezikovna predloga seznama sob:"
 
 #: ../libempathy-gtk/empathy-avatar-chooser.c:457
 msgid "Select Your Avatar Image"
@@ -600,7 +600,7 @@ msgstr "Odstranjevanje stika"
 
 #: ../libempathy-gtk/empathy-contact-list-view.c:1330
 msgid "Sorry, I don't want you in my contact list anymore."
-msgstr "Žal, vas ne želim vas več imeti v seznamu mojih stikov."
+msgstr "Ne želim vas več imeti v seznamu mojih stikov."
 
 #: ../libempathy-gtk/empathy-contact-menu.c:109
 #: ../src/empathy-main-window.glade.h:9
@@ -639,7 +639,7 @@ msgid "Select"
 msgstr "Izberi"
 
 #: ../libempathy-gtk/empathy-contact-widget.c:884
-#: ../src/empathy-main-window.c:853
+#: ../src/empathy-main-window.c:855
 msgid "Group"
 msgstr "Skupina"
 
@@ -847,7 +847,7 @@ msgstr "Ni mogoče odpreti naslova URI"
 
 #: ../libempathy-gtk/totem-subtitle-encoding.c:158
 msgid "Current Locale"
-msgstr "Trenutni locale"
+msgstr "Trenutno jezikovno območje"
 
 #: ../libempathy-gtk/totem-subtitle-encoding.c:161
 #: ../libempathy-gtk/totem-subtitle-encoding.c:163
@@ -1046,6 +1046,14 @@ msgstr "_Podrobnosti"
 msgid "_Preferences"
 msgstr "_Lastnosti"
 
+#: ../megaphone/src/megaphone-applet.c:255
+msgid "Please configure a contact."
+msgstr "Prosimo, uredite podatke stika."
+
+#: ../megaphone/src/megaphone-applet.c:348
+msgid "Select contact..."
+msgstr "Izbor stika ..."
+
 #: ../nothere/data/GNOME_NotHere_Applet.server.in.in.h:1
 msgid "Presence"
 msgstr "Prisotnost"
@@ -1073,11 +1081,11 @@ msgstr "- Empathy trenutna sporočila"
 
 #: ../src/empathy-about-dialog.c:84
 msgid "Empathy is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version."
-msgstr "Empathy je prosta programska oprema; program lahko razširjate in/ali spreminjate pod pogoji Splošnega dovoljenja GNU (GNU General PublicLicense), kot ga je objavila ustanova Free Software Foundation; bodisi različice 2 ali (po vaši izbiri) katerekoli poznejše različice."
+msgstr "Empathy je prosta programska oprema; program lahko razširjate in/ali spreminjate pod pogoji Splošnega javnega dovoljenja GNU (GNU General Public License), kot ga je objavila ustanova Free Software Foundation; bodisi različice 2 ali (po vaši izbiri) katerekoli poznejše različice."
 
 #: ../src/empathy-about-dialog.c:88
 msgid "Empathy is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details."
-msgstr "Empathy se razširja v upanju, da bo uporaben, vendar BREZ VSAKRŠNEGA JAMSTVA; tudi brez posredne zagotovitve CENOVNE VREDNOSTI ali PRIMERNOSTI ZA DOLOČEN NAMEN.  Za podrobnosti glejte besedilo GNU General Public License."
+msgstr "Empathy se razširja v upanju, da bo uporaben, vendar BREZ VSAKRŠNEGA JAMSTVA; tudi brez posredne zagotovitve CENOVNE VREDNOSTI ali PRIMERNOSTI ZA DOLOČEN NAMEN.  Za podrobnosti glejte besedilo GNU Splošnega javnega dovoljenja."
 
 #: ../src/empathy-about-dialog.c:92
 msgid "You should have received a copy of the GNU General Public License along with Empathy; if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-130159 USA"
@@ -1347,7 +1355,7 @@ msgstr "_Odcepi zavihek"
 
 #: ../src/empathy-chat-window.glade.h:15
 msgid "_Favorite Chatroom"
-msgstr "_Priljibljena klepetalnica"
+msgstr "_Priljubljena klepetalnica"
 
 #: ../src/empathy-chat-window.glade.h:16
 #: ../src/empathy-main-window.glade.h:12
@@ -1453,67 +1461,67 @@ msgstr ""
 msgid "Show and edit accounts"
 msgstr "Prikaži in uredi račune"
 
-#: ../src/empathy-main-window.c:836
+#: ../src/empathy-main-window.c:838
 msgid "Contact"
 msgstr "Stik"
 
-#: ../src/empathy-main-window.c:1038
+#: ../src/empathy-main-window.c:1040
 msgid "_Edit account"
 msgstr "_Uredi račun"
 
-#: ../src/empathy-main-window.c:1121
+#: ../src/empathy-main-window.c:1123
 msgid "No error specified"
 msgstr "Ni določene napake"
 
-#: ../src/empathy-main-window.c:1124
+#: ../src/empathy-main-window.c:1126
 msgid "Network error"
 msgstr "Napaka omrežja"
 
-#: ../src/empathy-main-window.c:1127
+#: ../src/empathy-main-window.c:1129
 msgid "Authentication failed"
 msgstr "Overovitev ni uspela"
 
-#: ../src/empathy-main-window.c:1130
+#: ../src/empathy-main-window.c:1132
 msgid "Encryption error"
 msgstr "Napaka šifriranja"
 
-#: ../src/empathy-main-window.c:1133
+#: ../src/empathy-main-window.c:1135
 msgid "Name in use"
 msgstr "Ime je v uporabi"
 
-#: ../src/empathy-main-window.c:1136
+#: ../src/empathy-main-window.c:1138
 msgid "Certificate not provided"
 msgstr "Certifikat ni na voljo"
 
-#: ../src/empathy-main-window.c:1139
+#: ../src/empathy-main-window.c:1141
 msgid "Certificate untrusted"
 msgstr "Certifikat ni overjen"
 
-#: ../src/empathy-main-window.c:1142
+#: ../src/empathy-main-window.c:1144
 msgid "Certificate expired"
 msgstr "Certifikat je pretekel"
 
-#: ../src/empathy-main-window.c:1145
+#: ../src/empathy-main-window.c:1147
 msgid "Certificate not activated"
 msgstr "Certifikat ni potrjen"
 
-#: ../src/empathy-main-window.c:1148
+#: ../src/empathy-main-window.c:1150
 msgid "Certificate hostname mismatch"
 msgstr "Neustrezen prstni odtis gostitelja"
 
-#: ../src/empathy-main-window.c:1151
+#: ../src/empathy-main-window.c:1153
 msgid "Certificate fingerprint mismatch"
 msgstr "Neustrezen prstni odtis certifikata"
 
-#: ../src/empathy-main-window.c:1154
+#: ../src/empathy-main-window.c:1156
 msgid "Certificate self-signed"
 msgstr "Certifikat je samo-podpisan"
 
-#: ../src/empathy-main-window.c:1157
+#: ../src/empathy-main-window.c:1159
 msgid "Certificate error"
 msgstr "Napaka certifikata"
 
-#: ../src/empathy-main-window.c:1160
+#: ../src/empathy-main-window.c:1162
 msgid "Unknown error"
 msgstr "Neznana napaka"
 
