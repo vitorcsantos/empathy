@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gossip\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-13 16:28+0200\n"
-"PO-Revision-Date: 2008-09-19 11:29+0200\n"
-"Last-Translator: Mario Blättermann <mario.blaettermann@t-online.de>\n"
+"POT-Creation-Date: 2008-10-16 14:36+0200\n"
+"PO-Revision-Date: 2008-10-16 14:37+0200\n"
+"Last-Translator: Andre Klapper <ak-47@gmx.net>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -155,8 +155,8 @@ msgid ""
 "Whether or not Empathy should automatically log in to your accounts on "
 "startup."
 msgstr ""
-"Legt fest, ob Empathy sich automatisch beim Start bei allen Ihren vorhandenen "
-"Konten anmelden soll."
+"Legt fest, ob Empathy sich automatisch beim Start bei allen Ihren "
+"vorhandenen Konten anmelden soll."
 
 #: ../data/empathy.schemas.in.h:30
 msgid ""
@@ -174,11 +174,11 @@ msgstr ""
 
 #: ../data/empathy.schemas.in.h:32
 msgid ""
-"Whether or not the network manager should be used to automatically disconnect/"
-"reconnect."
+"Whether or not the network manager should be used to automatically "
+"disconnect/reconnect."
 msgstr ""
-"Legt fest, ob der Netzwerk-Manager für das automatische Verbinden und Trennen "
-"der Verbindung genutzt werden soll."
+"Legt fest, ob der Netzwerk-Manager für das automatische Verbinden und "
+"Trennen der Verbindung genutzt werden soll."
 
 #: ../data/empathy.schemas.in.h:33
 msgid ""
@@ -244,8 +244,8 @@ msgstr "Legt fest, ob das Thema für Chaträume genutzt werden soll."
 #: ../data/empathy.schemas.in.h:44
 msgid ""
 "Which criterium to use when sorting the contact list. Default is to use sort "
-"by the contact's name with the value \"name\". A value of \"state\" will sort "
-"the contact list by state."
+"by the contact's name with the value \"name\". A value of \"state\" will "
+"sort the contact list by state."
 msgstr ""
 "Legt fest, welches Kriterium für das Sortieren der Kontaktliste genutzt "
 "werden soll. Standardmäßig wird bei »name« nach den Namen der Kontakte "
@@ -686,7 +686,7 @@ msgid "Select"
 msgstr "Wählen"
 
 #: ../libempathy-gtk/empathy-contact-widget.c:884
-#: ../src/empathy-main-window.c:853
+#: ../src/empathy-main-window.c:855
 msgid "Group"
 msgstr "Gruppe"
 
@@ -1101,6 +1101,14 @@ msgstr "_Information"
 msgid "_Preferences"
 msgstr "_Einstellungen"
 
+#: ../megaphone/src/megaphone-applet.c:255
+msgid "Please configure a contact."
+msgstr "Bitte geben Sie einen Kontakt an."
+
+#: ../megaphone/src/megaphone-applet.c:348
+msgid "Select contact..."
+msgstr "Kontakt auswählen …"
+
 #: ../nothere/data/GNOME_NotHere_Applet.server.in.in.h:1
 msgid "Presence"
 msgstr "Anwesenheit"
@@ -1135,14 +1143,15 @@ msgid ""
 msgstr ""
 "Empathy ist freie Software, Sie können sie weitergeben und/oder verändern "
 "solange Sie sich an die Regeln der GNU General Public License halten, so wie "
-"sie von der Free Software Foundation festgelegt wurden; entweder in Version 2 "
-"der Lizenz oder (nach Ihrem Ermessen) in jeder folgenden Lizenz."
+"sie von der Free Software Foundation festgelegt wurden; entweder in Version "
+"2 der Lizenz oder (nach Ihrem Ermessen) in jeder folgenden Lizenz."
 
 #: ../src/empathy-about-dialog.c:88
 msgid ""
 "Empathy is distributed in the hope that it will be useful, but WITHOUT ANY "
-"WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR "
-"A PARTICULAR PURPOSE.  See the GNU General Public License for more details."
+"WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
+"FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more "
+"details."
 msgstr ""
 "Empathy wurde mit dem Ziel veröffentlicht, dass Sie es nützlich finden, "
 "jedoch OHNE JEDWEDE GARANTIE, sogar ohne eine implizite Garantie der "
@@ -1198,14 +1207,14 @@ msgstr ""
 
 #: ../src/empathy-accounts-dialog.c:978
 msgid ""
-"Any associated conversations and chat rooms will NOT be removed if you decide "
-"to proceed.\n"
+"Any associated conversations and chat rooms will NOT be removed if you "
+"decide to proceed.\n"
 "\n"
-"Should you decide to add the account back at a later time, they will still be "
-"available."
+"Should you decide to add the account back at a later time, they will still "
+"be available."
 msgstr ""
-"Jegliche zugehörigen Unterhaltungen und Chaträume werden NICHT entfernt, wenn "
-"Sie fortfahren.\n"
+"Jegliche zugehörigen Unterhaltungen und Chaträume werden NICHT entfernt, "
+"wenn Sie fortfahren.\n"
 "\n"
 "Falls Sie sich dazu entschließen, das Konto später wieder hinzuzufügen, "
 "werden diese weiterhin verfügbar sein."
@@ -1549,67 +1558,67 @@ msgstr ""
 msgid "Show and edit accounts"
 msgstr "Kontakte anzeigen und bearbeiten"
 
-#: ../src/empathy-main-window.c:836
+#: ../src/empathy-main-window.c:838
 msgid "Contact"
 msgstr "Kontakt"
 
-#: ../src/empathy-main-window.c:1038
+#: ../src/empathy-main-window.c:1040
 msgid "_Edit account"
 msgstr "_Konto bearbeiten"
 
-#: ../src/empathy-main-window.c:1121
+#: ../src/empathy-main-window.c:1123
 msgid "No error specified"
 msgstr "Kein Fehler angegeben"
 
-#: ../src/empathy-main-window.c:1124
+#: ../src/empathy-main-window.c:1126
 msgid "Network error"
 msgstr "Netzwerk-Fehler"
 
-#: ../src/empathy-main-window.c:1127
+#: ../src/empathy-main-window.c:1129
 msgid "Authentication failed"
 msgstr "Authentifizierung fehlgeschlagen"
 
-#: ../src/empathy-main-window.c:1130
+#: ../src/empathy-main-window.c:1132
 msgid "Encryption error"
 msgstr "Verschlüsselungsfehler"
 
-#: ../src/empathy-main-window.c:1133
+#: ../src/empathy-main-window.c:1135
 msgid "Name in use"
 msgstr "Name bereits in Benutzung"
 
-#: ../src/empathy-main-window.c:1136
+#: ../src/empathy-main-window.c:1138
 msgid "Certificate not provided"
 msgstr "Zertifikat wurde nicht bereitgestellt"
 
-#: ../src/empathy-main-window.c:1139
+#: ../src/empathy-main-window.c:1141
 msgid "Certificate untrusted"
 msgstr "Zertifikat nicht vertrauenswürdig"
 
-#: ../src/empathy-main-window.c:1142
+#: ../src/empathy-main-window.c:1144
 msgid "Certificate expired"
 msgstr "Zertifikat ausgelaufen"
 
-#: ../src/empathy-main-window.c:1145
+#: ../src/empathy-main-window.c:1147
 msgid "Certificate not activated"
 msgstr "Zertifikat nicht aktiviert"
 
-#: ../src/empathy-main-window.c:1148
+#: ../src/empathy-main-window.c:1150
 msgid "Certificate hostname mismatch"
 msgstr "Zertifikat und Hostname unterschiedlich"
 
-#: ../src/empathy-main-window.c:1151
+#: ../src/empathy-main-window.c:1153
 msgid "Certificate fingerprint mismatch"
 msgstr "Zertifikat und Fingerprint unterschiedlich"
 
-#: ../src/empathy-main-window.c:1154
+#: ../src/empathy-main-window.c:1156
 msgid "Certificate self-signed"
 msgstr "Selbstsigniertes Zertifikat"
 
-#: ../src/empathy-main-window.c:1157
+#: ../src/empathy-main-window.c:1159
 msgid "Certificate error"
 msgstr "Zertifikat-Fehler"
 
-#: ../src/empathy-main-window.c:1160
+#: ../src/empathy-main-window.c:1162
 msgid "Unknown error"
 msgstr "Unbekannter Fehler"
 
@@ -1678,7 +1687,8 @@ msgid ""
 "the current account's server"
 msgstr ""
 "Geben Sie den Server an, der den Raum bereitstellt, oder lassen Sie das Feld "
-"leer, wenn sich der Raum auf dem Server des momentan benutzten Kontos befindet"
+"leer, wenn sich der Raum auf dem Server des momentan benutzten Kontos "
+"befindet"
 
 #: ../src/empathy-new-chatroom-dialog.glade.h:5
 msgid "Join"
@@ -1731,11 +1741,11 @@ msgstr "<b>Visuell</b>"
 
 #: ../src/empathy-preferences.glade.h:9
 msgid ""
-"<small>The list of languages reflects only the languages for which you have a "
-"dictionary installed.</small>"
+"<small>The list of languages reflects only the languages for which you have "
+"a dictionary installed.</small>"
 msgstr ""
-"<small>Die Liste der Sprachen zeigt nur die Sprachen an, für die Wörterbücher "
-"installiert sind.</small>"
+"<small>Die Liste der Sprachen zeigt nur die Sprachen an, für die "
+"Wörterbücher installiert sind.</small>"
 
 #: ../src/empathy-preferences.glade.h:10
 msgid "Automatically _connect on startup "
@@ -1869,14 +1879,15 @@ msgstr "Kontaktliste an_zeigen"
 #~ "To add a new account, you can click on the 'Add' button and a new entry "
 #~ "will be created for you to start configuring."
 #~ msgstr ""
-#~ "Um ein neues Konto hinzuzufügen klicken Sie auf den »Hinzufügen«-Knopf. Ein "
-#~ "neuer Eintrag wird nun für Sie erstellt, der danach bearbeitet werden kann."
+#~ "Um ein neues Konto hinzuzufügen klicken Sie auf den »Hinzufügen«-Knopf. "
+#~ "Ein neuer Eintrag wird nun für Sie erstellt, der danach bearbeitet werden "
+#~ "kann."
 
 #~ msgid ""
 #~ "\n"
 #~ "\n"
-#~ "If you do not want to add an account, simply click on the account you want "
-#~ "to configure in the list on the left."
+#~ "If you do not want to add an account, simply click on the account you "
+#~ "want to configure in the list on the left."
 #~ msgstr ""
 #~ "\n"
 #~ "\n"
@@ -1890,11 +1901,11 @@ msgstr "Kontaktliste an_zeigen"
 #~ "To add a new account, you can click on the 'Add' button and a new entry "
 #~ "will be created for you to started configuring.\n"
 #~ "\n"
-#~ "If you do not want to add an account, simply click on the account you want "
-#~ "to configure in the list on the left."
+#~ "If you do not want to add an account, simply click on the account you "
+#~ "want to configure in the list on the left."
 #~ msgstr ""
-#~ "Um ein neues Konto hinzuzufügen klicken Sie auf den »Hinzufügen«-Knopf. Ein "
-#~ "neuer Eintrag wird nun für Sie erstellt, der danach bearbeitet werden "
+#~ "Um ein neues Konto hinzuzufügen klicken Sie auf den »Hinzufügen«-Knopf. "
+#~ "Ein neuer Eintrag wird nun für Sie erstellt, der danach bearbeitet werden "
 #~ "kann.\n"
 #~ "\n"
 #~ "Falls Sie kein neues Konto erstellen möchten klicken Sie einfach in der "
