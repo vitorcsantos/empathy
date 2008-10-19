@@ -9,13 +9,14 @@
 # Khaled Hosny <khaledhosny@eglug.org>, 2006.
 # Abou Manal <aboumanal@gmail.com>, 2008.
 # Djihed Afifi<djihed@gmail.com, 2008.
+# Anas Afif Emad <anas.e87@gmail.com, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: gossip.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-14 11:08+0100\n"
-"PO-Revision-Date: 2008-08-03 01:32-0000\n"
-"Last-Translator: Youssef Chahibi <chahibi@gmail.com>\n"
+"POT-Creation-Date: 2008-10-19 12:07+0100\n"
+"PO-Revision-Date: 2008-09-18 17:31+0300\n"
+"Last-Translator: Anas Afif Emad <anas.e87@gmail.com>\n"
 "Language-Team: Arabic <support@eglug.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -68,7 +69,7 @@ msgstr "الاتصال الآلي عند بدء البرنامج"
 
 #: ../data/empathy.schemas.in.h:9
 msgid "Empathy should use the avatar of the contact as the chat window icon"
-msgstr ""
+msgstr "استخدام الصور الشخصيّة للمراسل كأيقونة لنافذة المحادثة"
 
 #: ../data/empathy.schemas.in.h:10
 msgid "Enable popup when contact is available"
@@ -153,11 +154,10 @@ msgid ""
 msgstr "الولوج آليا إلى حساباتك عند بدء التشغيل."
 
 #: ../data/empathy.schemas.in.h:30
-#, fuzzy
 msgid ""
 "Whether or not Empathy should use the avatar of the contact as the chat "
 "window icon."
-msgstr "إظهار صور شخصية للمراسلين في لائحة المراسلين ونوافذ المحادثة."
+msgstr "استخدام الصور الشخصية للمراسل كأيقونة لنافذة المحادثة"
 
 #: ../data/empathy.schemas.in.h:31
 msgid ""
@@ -443,14 +443,12 @@ msgid "Discover STUN"
 msgstr "اكتشف ال‍STUN"
 
 #: ../libempathy-gtk/empathy-account-widget-sip.glade.h:6
-#, fuzzy
 msgid "STUN Server:"
-msgstr "خادم Stun:"
+msgstr "خادم STUN:"
 
 #: ../libempathy-gtk/empathy-account-widget-sip.glade.h:7
-#, fuzzy
 msgid "STUN port:"
-msgstr "منفذ Stun:"
+msgstr "منفذ STUN:"
 
 #: ../libempathy-gtk/empathy-account-widget-sip.glade.h:8
 msgid "_Username:"
@@ -461,9 +459,8 @@ msgid "Use _Yahoo Japan"
 msgstr "استخدم يا_هو اليابان"
 
 #: ../libempathy-gtk/empathy-account-widget-yahoo.glade.h:5
-#, fuzzy
 msgid "Yahoo I_D:"
-msgstr "ا_سم المستخدم:"
+msgstr "مُعرّف ال_ياهو:"
 
 #: ../libempathy-gtk/empathy-account-widget-yahoo.glade.h:7
 msgid "_Ignore conference and chatroom invitations"
@@ -537,7 +534,7 @@ msgstr "أدرج التعابير المرسومة"
 
 #: ../libempathy-gtk/empathy-chat.c:979
 msgid "_Send"
-msgstr ""
+msgstr "أ_رسل"
 
 #: ../libempathy-gtk/empathy-chat.c:1013
 msgid "_Check Word Spelling..."
@@ -656,21 +653,19 @@ msgid "_Edit"
 msgstr "_حرّر"
 
 #: ../libempathy-gtk/empathy-contact-widget.c:358
-#, fuzzy
 msgid "Save Avatar"
-msgstr "أعرض الصور الشخصية"
+msgstr "احفظ الصور الشخصية"
 
 #: ../libempathy-gtk/empathy-contact-widget.c:414
-#, fuzzy
 msgid "Unable to save avatar"
-msgstr "لا يمكن فتح المسار"
+msgstr "لا يمكن حفظ الصورة الشخصية"
 
 #: ../libempathy-gtk/empathy-contact-widget.c:875
 msgid "Select"
 msgstr "حدّد"
 
 #: ../libempathy-gtk/empathy-contact-widget.c:884
-#: ../src/empathy-main-window.c:853
+#: ../src/empathy-main-window.c:855
 msgid "Group"
 msgstr "المجموعة"
 
@@ -735,7 +730,6 @@ msgid "OS:"
 msgstr "نظام التشغيل:"
 
 #: ../libempathy-gtk/empathy-contact-widget.glade.h:16
-#, fuzzy
 msgid ""
 "Select the groups you want this contact to appear in.  Note that you can "
 "select more than one group or no groups."
@@ -752,9 +746,8 @@ msgid "Web site:"
 msgstr "موقع الإنترنت:"
 
 #: ../libempathy-gtk/empathy-contact-widget.glade.h:19
-#, fuzzy
 msgid "_Add Group"
-msgstr "المجموعة"
+msgstr "أ_ضف مجموعة"
 
 #: ../libempathy-gtk/empathy-irc-network-dialog.c:284
 msgid "new server"
@@ -804,14 +797,12 @@ msgid "_For:"
 msgstr "_عن:"
 
 #: ../libempathy-gtk/empathy-new-message-dialog.glade.h:2
-#, fuzzy
 msgid "C_all"
-msgstr "اتصال"
+msgstr "ا_تصل"
 
 #: ../libempathy-gtk/empathy-new-message-dialog.glade.h:3
-#, fuzzy
 msgid "C_hat"
-msgstr "محادثة"
+msgstr "ا_بدأ محادثة"
 
 #: ../libempathy-gtk/empathy-new-message-dialog.glade.h:4
 msgid "Contact ID:"
@@ -1085,6 +1076,15 @@ msgstr "_معلومات"
 msgid "_Preferences"
 msgstr "ال_تفضيلات"
 
+#: ../megaphone/src/megaphone-applet.c:255
+msgid "Please configure a contact."
+msgstr ""
+
+#: ../megaphone/src/megaphone-applet.c:348
+#, fuzzy
+msgid "Select contact..."
+msgstr "أضِف مراسلا..."
+
 #: ../nothere/data/GNOME_NotHere_Applet.server.in.in.h:1
 msgid "Presence"
 msgstr "الوجود"
@@ -1103,9 +1103,8 @@ msgid "Don't show the contact list on startup"
 msgstr "لا تعرض قائمة المراسلين عند بدء التشغيل"
 
 #: ../src/empathy.c:388
-#, fuzzy
 msgid "Show the accounts dialog"
-msgstr "اعرض و _حرّر الحسابات"
+msgstr "أعرض مربع حوار الحسابات"
 
 #: ../src/empathy.c:400
 msgid "- Empathy Instant Messenger"
@@ -1152,7 +1151,8 @@ msgid "translator-credits"
 msgstr ""
 "فريق عربآيز للترجمة http://www.arabeyes.org :\n"
 "جهاد عفيفي\t<djihed@gmail.com>\n"
-"يوسف رفه\t<yousef@raffah.com>"
+"يوسف رفه\t<yousef@raffah.com>\n"
+"أنس عفيف عماد\t<anas.e87@gmail.com>"
 
 #: ../src/empathy-accounts-dialog.c:389
 msgid "Enabled"
@@ -1165,9 +1165,9 @@ msgstr "حسابات"
 
 #. To translator: %s is the protocol name
 #: ../src/empathy-accounts-dialog.c:862
-#, fuzzy, c-format
+#, c-format
 msgid "New %s account"
-msgstr "لا حساب"
+msgstr "حساب %s جديد"
 
 #: ../src/empathy-accounts-dialog.c:972
 #, c-format
@@ -1195,9 +1195,8 @@ msgid "<b>New Account</b>"
 msgstr "<b>حساب جديد</b>"
 
 #: ../src/empathy-accounts-dialog.glade.h:2
-#, fuzzy
 msgid "<b>No protocol installed</b>"
-msgstr "<b>لم يحدّد أيّ حساب</b>"
+msgstr "<b>لم يتم تثبيت أي بروتوكول</b>"
 
 #: ../src/empathy-accounts-dialog.glade.h:3
 msgid "<b>Settings</b>"
@@ -1209,7 +1208,7 @@ msgstr "ا_نشاء"
 
 #: ../src/empathy-accounts-dialog.glade.h:6
 msgid "I already have an account I want to use"
-msgstr ""
+msgstr "لدي مسبقاً حساب وأريد استخدامه"
 
 #: ../src/empathy-accounts-dialog.glade.h:7
 msgid ""
@@ -1280,9 +1279,9 @@ msgid "Connecting"
 msgstr "يتصل"
 
 #: ../src/empathy-call-window.c:524
-#, fuzzy, c-format
+#, c-format
 msgid "Incoming call from %s rejected because there is already a running call."
-msgstr "رفضت المكالمة بسبب وجود مكالمة جارية."
+msgstr "رفضت مكالمة قادمة من %s  بسبب وجود مكالمة جارية."
 
 #: ../src/empathy-call-window.glade.h:1
 msgid "#"
@@ -1415,9 +1414,8 @@ msgid "_Detach Tab"
 msgstr "_فصل اللسان"
 
 #: ../src/empathy-chat-window.glade.h:15
-#, fuzzy
 msgid "_Favorite Chatroom"
-msgstr "حرّر الغرفة المفضلة"
+msgstr "الغرفة الم_فضلة"
 
 #: ../src/empathy-chat-window.glade.h:16 ../src/empathy-main-window.glade.h:12
 msgid "_Help"
@@ -1526,67 +1524,67 @@ msgstr ""
 msgid "Show and edit accounts"
 msgstr "اعرض و _حرّر الحسابات"
 
-#: ../src/empathy-main-window.c:836
+#: ../src/empathy-main-window.c:838
 msgid "Contact"
 msgstr "مراسَل"
 
-#: ../src/empathy-main-window.c:1038
+#: ../src/empathy-main-window.c:1040
 msgid "_Edit account"
 msgstr "_حرِر الحساب"
 
-#: ../src/empathy-main-window.c:1121
+#: ../src/empathy-main-window.c:1123
 msgid "No error specified"
-msgstr ""
+msgstr "لم يحدد أي خطأ"
 
-#: ../src/empathy-main-window.c:1124
+#: ../src/empathy-main-window.c:1126
 msgid "Network error"
 msgstr "خطأ شبكي"
 
-#: ../src/empathy-main-window.c:1127
+#: ../src/empathy-main-window.c:1129
 msgid "Authentication failed"
 msgstr "فشل التحقق"
 
-#: ../src/empathy-main-window.c:1130
+#: ../src/empathy-main-window.c:1132
 msgid "Encryption error"
 msgstr "خطأ التشفير"
 
-#: ../src/empathy-main-window.c:1133
+#: ../src/empathy-main-window.c:1135
 msgid "Name in use"
 msgstr "الاسم مستخدم مسبقا"
 
-#: ../src/empathy-main-window.c:1136
+#: ../src/empathy-main-window.c:1138
 msgid "Certificate not provided"
 msgstr "الشهادة غير متوفرة"
 
-#: ../src/empathy-main-window.c:1139
+#: ../src/empathy-main-window.c:1141
 msgid "Certificate untrusted"
 msgstr "الشهادة غير موثوق بها"
 
-#: ../src/empathy-main-window.c:1142
+#: ../src/empathy-main-window.c:1144
 msgid "Certificate expired"
 msgstr "انتهت صلاحية الشهادة"
 
-#: ../src/empathy-main-window.c:1145
+#: ../src/empathy-main-window.c:1147
 msgid "Certificate not activated"
 msgstr "الشهادة غير نشطة"
 
-#: ../src/empathy-main-window.c:1148
+#: ../src/empathy-main-window.c:1150
 msgid "Certificate hostname mismatch"
 msgstr "عدم تطابق الشهادة مع اسم الخادوم"
 
-#: ../src/empathy-main-window.c:1151
+#: ../src/empathy-main-window.c:1153
 msgid "Certificate fingerprint mismatch"
 msgstr "عدم تطابق الشهادة مع التوقيع"
 
-#: ../src/empathy-main-window.c:1154
+#: ../src/empathy-main-window.c:1156
 msgid "Certificate self-signed"
 msgstr "شهادة موقعة ذاتيا"
 
-#: ../src/empathy-main-window.c:1157
+#: ../src/empathy-main-window.c:1159
 msgid "Certificate error"
 msgstr "خطأ في الشهادة"
 
-#: ../src/empathy-main-window.c:1160
+#: ../src/empathy-main-window.c:1162
 msgid "Unknown error"
 msgstr "خطأ مجهول"
 
