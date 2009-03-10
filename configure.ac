@@ -1,4 +1,4 @@
-AC_INIT(Empathy, 2.25.93, http://bugzilla.gnome.org/browse.cgi?product=empathy)
+AC_INIT(Empathy, 2.26.0, http://bugzilla.gnome.org/browse.cgi?product=empathy)
 AC_PREREQ(2.59)
 AC_COPYRIGHT([
   Copyright (C) 2003-2007 Imendio AB
@@ -9,13 +9,13 @@ AC_COPYRIGHT([
 #   (Interfaces removed:    CURRENT++, AGE=0, REVISION=0)
 #   (Interfaces added:      CURRENT++, AGE++, REVISION=0)
 #   (No interfaces changed:                   REVISION++)
-LIBEMPATHY_CURRENT=22
+LIBEMPATHY_CURRENT=23
 LIBEMPATHY_AGE=0
 LIBEMPATHY_REVISION=0
 
 LIBEMPATHY_GTK_CURRENT=21
 LIBEMPATHY_GTK_AGE=2
-LIBEMPATHY_GTK_REVISION=0
+LIBEMPATHY_GTK_REVISION=1
 
 AC_SUBST(LIBEMPATHY_CURRENT)
 AC_SUBST(LIBEMPATHY_AGE)
