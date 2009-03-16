@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: empathy 0.24.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-06 15:15+0100\n"
-"PO-Revision-Date: 2009-02-06 15:17+0100\n"
+"POT-Creation-Date: 2009-03-16 10:31+0100\n"
+"PO-Revision-Date: 2009-03-16 10:42+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -59,9 +59,8 @@ msgid "Default directory to select an avatar image from"
 msgstr "Forvalgt mappe for personbilde"
 
 #: ../data/empathy.schemas.in.h:8
-#, fuzzy
 msgid "Disable popup notifications when away"
-msgstr "Slå av lyder når du er borte"
+msgstr "Slå av oppsprett-varsling når du er borte"
 
 #: ../data/empathy.schemas.in.h:9
 msgid "Disable sounds when away"
@@ -85,9 +84,8 @@ msgstr ""
 "Empathy skal bruke personbildet for kontakten som ikon for pratevinduet"
 
 #: ../data/empathy.schemas.in.h:14
-#, fuzzy
 msgid "Enable popup notifications for new messages"
-msgstr "_Aktiver varsling med lyder"
+msgstr "Slå på oppsprett-varsling for nye meldinger"
 
 #: ../data/empathy.schemas.in.h:15
 msgid "Enable spell checker"
@@ -143,7 +141,7 @@ msgstr "Spill av lyd når du logger ut"
 
 #: ../data/empathy.schemas.in.h:28
 msgid "Popup notifications if the chat isn't focused"
-msgstr ""
+msgstr "Vis varsling hvis pratevinduet ikke er fokusert"
 
 #: ../data/empathy.schemas.in.h:29
 msgid "Salut account is created"
@@ -231,51 +229,52 @@ msgid ""
 msgstr "Om smilefjes skal konverteres til grafikk i samtaler."
 
 #: ../data/empathy.schemas.in.h:47
-msgid "Whether or not to play a sound notifications when away or busy."
-msgstr "Om lyder skal spilles av når du er borte eller opptatt."
-
-#: ../data/empathy.schemas.in.h:48
 #, fuzzy
 msgid ""
 "Whether or not to play a sound to notify for contacts logging in the network."
 msgstr "Om bilder av kontakter skal vises i kontaktlisten og samtalevinduer."
 
-#: ../data/empathy.schemas.in.h:49
+#: ../data/empathy.schemas.in.h:48
 #, fuzzy
 msgid ""
 "Whether or not to play a sound to notify for contacts logging off the "
 "network."
 msgstr "Om bilder av kontakter skal vises i kontaktlisten og samtalevinduer."
 
-#: ../data/empathy.schemas.in.h:50
+#: ../data/empathy.schemas.in.h:49
 #, fuzzy
 msgid "Whether or not to play a sound to notify for events."
 msgstr "Om lyder skal spilles av når opptatt."
 
-#: ../data/empathy.schemas.in.h:51
+#: ../data/empathy.schemas.in.h:50
 #, fuzzy
 msgid "Whether or not to play a sound to notify for incoming messages."
 msgstr "Om lyder skal spilles av når meldinger kommer inn."
 
-#: ../data/empathy.schemas.in.h:52
+#: ../data/empathy.schemas.in.h:51
 #, fuzzy
 msgid "Whether or not to play a sound to notify for new conversations."
 msgstr "Om lyder skal spilles av når meldinger kommer inn."
 
-#: ../data/empathy.schemas.in.h:53
+#: ../data/empathy.schemas.in.h:52
 #, fuzzy
 msgid "Whether or not to play a sound to notify for outgoing messages."
 msgstr "Om lyder skal spilles av når meldinger kommer inn."
 
-#: ../data/empathy.schemas.in.h:54
+#: ../data/empathy.schemas.in.h:53
 #, fuzzy
 msgid "Whether or not to play a sound when logging in a network."
 msgstr "Om lyder skal spilles av når borte."
 
-#: ../data/empathy.schemas.in.h:55
+#: ../data/empathy.schemas.in.h:54
 #, fuzzy
 msgid "Whether or not to play a sound when logging off a network."
 msgstr "Om lyder skal spilles av når borte."
+
+#: ../data/empathy.schemas.in.h:55
+#, fuzzy
+msgid "Whether or not to play sound notifications when away or busy."
+msgstr "Om lyder skal spilles av når du er borte eller opptatt."
 
 #: ../data/empathy.schemas.in.h:56
 msgid ""
@@ -330,7 +329,7 @@ msgstr ""
 "å sortere kontakter etter verdien «name». Hvis man bruker «state» vil "
 "kontaktlisten sorteres etter kontaktens tilstand."
 
-#: ../libempathy/empathy-tp-contact-list.c:731 ../src/empathy.c:269
+#: ../libempathy/empathy-tp-contact-list.c:731 ../src/empathy.c:271
 msgid "People nearby"
 msgstr "Personer i nærheten"
 
@@ -597,77 +596,77 @@ msgstr "Alle filer"
 msgid "Click to enlarge"
 msgstr "Klikk for å forstørre"
 
-#: ../libempathy-gtk/empathy-chat.c:507
+#: ../libempathy-gtk/empathy-chat.c:498
 msgid "offline"
 msgstr "frakoblet"
 
-#: ../libempathy-gtk/empathy-chat.c:510
+#: ../libempathy-gtk/empathy-chat.c:501
 msgid "invalid contact"
 msgstr "ugyldig kontakt"
 
-#: ../libempathy-gtk/empathy-chat.c:513
+#: ../libempathy-gtk/empathy-chat.c:504
 msgid "permission denied"
 msgstr "tilgang nektet"
 
-#: ../libempathy-gtk/empathy-chat.c:516
+#: ../libempathy-gtk/empathy-chat.c:507
 msgid "too long message"
 msgstr "meldingen er for lang"
 
-#: ../libempathy-gtk/empathy-chat.c:519
+#: ../libempathy-gtk/empathy-chat.c:510
 msgid "not implemented"
 msgstr "ikke implementert"
 
-#: ../libempathy-gtk/empathy-chat.c:522
+#: ../libempathy-gtk/empathy-chat.c:513
 msgid "unknown"
 msgstr "ukjent"
 
-#: ../libempathy-gtk/empathy-chat.c:526
+#: ../libempathy-gtk/empathy-chat.c:517
 #, c-format
 msgid "Error sending message '%s': %s"
 msgstr "Feil ved sending av melding «%s»: %s"
 
-#: ../libempathy-gtk/empathy-chat.c:556
+#: ../libempathy-gtk/empathy-chat.c:547
 #, c-format
 msgid "Topic set to: %s"
 msgstr "Emnet er satt til: %s"
 
-#: ../libempathy-gtk/empathy-chat.c:558
+#: ../libempathy-gtk/empathy-chat.c:549
 msgid "No topic defined"
 msgstr "Emne ikke definert"
 
-#: ../libempathy-gtk/empathy-chat.c:973
+#: ../libempathy-gtk/empathy-chat.c:964
 msgid "Insert Smiley"
 msgstr "Sett inn smilefjes"
 
 #. send button
-#: ../libempathy-gtk/empathy-chat.c:991
-#: ../libempathy-gtk/empathy-ui-utils.c:1538
+#: ../libempathy-gtk/empathy-chat.c:982
+#: ../libempathy-gtk/empathy-ui-utils.c:1559
 msgid "_Send"
 msgstr "_Send"
 
-#: ../libempathy-gtk/empathy-chat.c:1025
+#: ../libempathy-gtk/empathy-chat.c:1016
 msgid "_Check Word Spelling..."
 msgstr "_Stavekontroll ..."
 
-#: ../libempathy-gtk/empathy-chat.c:1131
+#: ../libempathy-gtk/empathy-chat.c:1134
 #, c-format
 msgid "%s has joined the room"
 msgstr "%s har blitt med i rommet"
 
-#: ../libempathy-gtk/empathy-chat.c:1134
+#: ../libempathy-gtk/empathy-chat.c:1137
 #, c-format
 msgid "%s has left the room"
 msgstr "%s har forlatt rommet"
 
-#: ../libempathy-gtk/empathy-chat.c:1248 ../src/empathy-call-window.c:466
+#: ../libempathy-gtk/empathy-chat.c:1251 ../src/empathy-call-window.c:764
 msgid "Disconnected"
 msgstr "Koblet fra"
 
-#: ../libempathy-gtk/empathy-chat.c:1644
+#: ../libempathy-gtk/empathy-chat.c:1647
 msgid "Connected"
 msgstr "Koblet til"
 
-#: ../libempathy-gtk/empathy-chat.c:1694
+#: ../libempathy-gtk/empathy-chat.c:1697
 #: ../libempathy-gtk/empathy-log-window.c:505
 msgid "Conversation"
 msgstr "Samtale"
@@ -680,16 +679,18 @@ msgstr "<b>Emne:</b>"
 msgid "Group Chat"
 msgstr "Gruppesamtale"
 
-#: ../libempathy-gtk/empathy-chat-text-view.c:333
+#: ../libempathy-gtk/empathy-chat-text-view.c:324
 msgid "_Copy Link Address"
 msgstr "_Kopier lenkens adresse"
 
-#: ../libempathy-gtk/empathy-chat-text-view.c:341
+#: ../libempathy-gtk/empathy-chat-text-view.c:332
 msgid "_Open Link"
 msgstr "_Åpne lenke"
 
-#: ../libempathy-gtk/empathy-chat-text-view.c:432
-msgid "%A %d %B %Y"
+#. Translators: timestamp displayed between conversations in
+#. * chat windows (strftime format string)
+#: ../libempathy-gtk/empathy-chat-text-view.c:425
+msgid "%A %B %d %Y"
 msgstr "%A %d %B %Y"
 
 #: ../libempathy-gtk/empathy-contact-dialogs.c:180
@@ -704,11 +705,11 @@ msgstr "Endre kontaktinformasjon"
 msgid "Contact Information"
 msgstr "Kontaktinformasjon"
 
-#: ../libempathy-gtk/empathy-contact-dialogs.c:266
+#: ../libempathy-gtk/empathy-contact-dialogs.c:267
 msgid "I would like to add you to my contact list."
 msgstr "Jeg ønsker å legge deg til i min kontaktliste."
 
-#: ../libempathy-gtk/empathy-contact-dialogs.c:290
+#: ../libempathy-gtk/empathy-contact-dialogs.c:291
 msgid "New Contact"
 msgstr "Ny kontakt"
 
@@ -720,66 +721,66 @@ msgstr "A_vgjør senere"
 msgid "Subscription Request"
 msgstr "Abonnementsforespørsel"
 
-#: ../libempathy-gtk/empathy-contact-list-view.c:1249
+#: ../libempathy-gtk/empathy-contact-list-view.c:1255
 #, c-format
 msgid "Do you really want to remove the group '%s'?"
 msgstr "Vil du virkelig fjerne gruppen «%s»?"
 
-#: ../libempathy-gtk/empathy-contact-list-view.c:1251
+#: ../libempathy-gtk/empathy-contact-list-view.c:1257
 msgid "Removing group"
 msgstr "Fjerner gruppe"
 
-#: ../libempathy-gtk/empathy-contact-list-view.c:1298
-#: ../libempathy-gtk/empathy-contact-list-view.c:1377
+#: ../libempathy-gtk/empathy-contact-list-view.c:1304
+#: ../libempathy-gtk/empathy-contact-list-view.c:1383
 msgid "_Remove"
 msgstr "Fje_rn"
 
-#: ../libempathy-gtk/empathy-contact-list-view.c:1328
+#: ../libempathy-gtk/empathy-contact-list-view.c:1334
 #, c-format
 msgid "Do you really want to remove the contact '%s'?"
 msgstr "Vil du virkelig fjerne kontakten «%s»?"
 
-#: ../libempathy-gtk/empathy-contact-list-view.c:1330
+#: ../libempathy-gtk/empathy-contact-list-view.c:1336
 msgid "Removing contact"
 msgstr "Fjerner kontakt"
 
-#: ../libempathy-gtk/empathy-contact-list-view.c:1335
+#: ../libempathy-gtk/empathy-contact-list-view.c:1341
 msgid "Sorry, I don't want you in my contact list anymore."
 msgstr "Beklager, men jeg vil ikke ha deg på kontaktlisten min lenger."
 
-#: ../libempathy-gtk/empathy-contact-menu.c:122
+#: ../libempathy-gtk/empathy-contact-menu.c:130
 #: ../src/empathy-main-window.glade.h:9
 msgid "_Chat"
 msgstr "_Prat"
 
-#: ../libempathy-gtk/empathy-contact-menu.c:153
+#: ../libempathy-gtk/empathy-contact-menu.c:161
 #: ../src/empathy-call-window.glade.h:5
 msgid "_Call"
 msgstr "_Ring"
 
-#: ../libempathy-gtk/empathy-contact-menu.c:192
+#: ../libempathy-gtk/empathy-contact-menu.c:200
 #: ../src/empathy-main-window.glade.h:17
 msgid "_View Previous Conversations"
 msgstr "_Vis tidligere samtaler"
 
-#: ../libempathy-gtk/empathy-contact-menu.c:214
+#: ../libempathy-gtk/empathy-contact-menu.c:222
 msgid "Send file"
 msgstr "Send fil"
 
-#: ../libempathy-gtk/empathy-contact-menu.c:242
+#: ../libempathy-gtk/empathy-contact-menu.c:250
 msgid "Infor_mation"
 msgstr "Infor_masjon"
 
-#: ../libempathy-gtk/empathy-contact-menu.c:269
+#: ../libempathy-gtk/empathy-contact-menu.c:277
 #: ../src/empathy-chat-window.glade.h:14 ../src/empathy-main-window.glade.h:11
 msgid "_Edit"
 msgstr "_Rediger"
 
-#: ../libempathy-gtk/empathy-contact-menu.c:328
+#: ../libempathy-gtk/empathy-contact-menu.c:336
 msgid "Inviting to this room"
 msgstr "Inviterer til dette rommet"
 
-#: ../libempathy-gtk/empathy-contact-menu.c:361
+#: ../libempathy-gtk/empathy-contact-menu.c:369
 msgid "_Invite to chatroom"
 msgstr "_Inviter til praterom"
 
@@ -901,7 +902,7 @@ msgid "SSL"
 msgstr "SSL"
 
 #: ../libempathy-gtk/empathy-log-window.c:498
-#: ../src/empathy-import-dialog.c:276
+#: ../src/empathy-import-dialog.c:277
 msgid "Account"
 msgstr "Konto"
 
@@ -997,51 +998,51 @@ msgstr "Tøm"
 msgid "Blue"
 msgstr "Blå"
 
-#: ../libempathy-gtk/empathy-ui-utils.c:1385
+#: ../libempathy-gtk/empathy-ui-utils.c:1406
 msgid "Unable to open URI"
 msgstr "Kan ikke åpne URI"
 
-#: ../libempathy-gtk/empathy-ui-utils.c:1530
+#: ../libempathy-gtk/empathy-ui-utils.c:1551
 msgid "Select a file"
 msgstr "Velg en fil"
 
-#: ../libempathy-gtk/empathy-ui-utils.c:1566
+#: ../libempathy-gtk/empathy-ui-utils.c:1587
 msgid "Received an instant message"
 msgstr "Mottok en lynmelding"
 
-#: ../libempathy-gtk/empathy-ui-utils.c:1568
+#: ../libempathy-gtk/empathy-ui-utils.c:1589
 msgid "Sent an instant message"
 msgstr "Send en lynmelding"
 
-#: ../libempathy-gtk/empathy-ui-utils.c:1570
+#: ../libempathy-gtk/empathy-ui-utils.c:1591
 msgid "Incoming chat request"
 msgstr "Innkommende samtaleforespørsel"
 
-#: ../libempathy-gtk/empathy-ui-utils.c:1572
+#: ../libempathy-gtk/empathy-ui-utils.c:1593
 msgid "Contact connected"
 msgstr "Kontakt koblet til"
 
-#: ../libempathy-gtk/empathy-ui-utils.c:1574
+#: ../libempathy-gtk/empathy-ui-utils.c:1595
 msgid "Contact disconnected"
 msgstr "Kontakt koblet fra"
 
-#: ../libempathy-gtk/empathy-ui-utils.c:1576
+#: ../libempathy-gtk/empathy-ui-utils.c:1597
 msgid "Connected to server"
 msgstr "Koblet til tjener"
 
-#: ../libempathy-gtk/empathy-ui-utils.c:1578
+#: ../libempathy-gtk/empathy-ui-utils.c:1599
 msgid "Disconnected from server"
 msgstr "Koblet fra tjener"
 
-#: ../libempathy-gtk/empathy-ui-utils.c:1580
+#: ../libempathy-gtk/empathy-ui-utils.c:1601
 msgid "Incoming voice call"
 msgstr "Innkommende samtale"
 
-#: ../libempathy-gtk/empathy-ui-utils.c:1582
+#: ../libempathy-gtk/empathy-ui-utils.c:1603
 msgid "Outgoing voice call"
 msgstr "Utgående samtale"
 
-#: ../libempathy-gtk/empathy-ui-utils.c:1584
+#: ../libempathy-gtk/empathy-ui-utils.c:1605
 msgid "Voice call ended"
 msgstr "Samtale avsluttet"
 
@@ -1265,19 +1266,19 @@ msgstr "Tilstedeværelse"
 msgid "Set your own presence"
 msgstr "Velg din egen tilstedeværelse"
 
-#: ../src/empathy.c:426
+#: ../src/empathy.c:430
 msgid "Don't connect on startup"
 msgstr "Ikke koble til ved oppstart"
 
-#: ../src/empathy.c:430
+#: ../src/empathy.c:434
 msgid "Don't show the contact list on startup"
 msgstr "Ikke vis kontaktlisten ved oppstart"
 
-#: ../src/empathy.c:434
+#: ../src/empathy.c:438
 msgid "Show the accounts dialog"
 msgstr "Vis kontovinduet"
 
-#: ../src/empathy.c:446
+#: ../src/empathy.c:450
 msgid "- Empathy Instant Messenger"
 msgstr "- Empathy lynmeldingsprogram"
 
@@ -1398,43 +1399,44 @@ msgstr ""
 msgid "Type:"
 msgstr "Type:"
 
-#: ../src/empathy-call-window.c:180
+#: ../src/empathy-call-window.c:346
 msgid "Contrast"
 msgstr "Kontrast"
 
-#: ../src/empathy-call-window.c:180
+#: ../src/empathy-call-window.c:349
 msgid "Brightness"
 msgstr "Lysstyrke"
 
-#: ../src/empathy-call-window.c:180
+#: ../src/empathy-call-window.c:352
 msgid "Gamma"
 msgstr "Gamma"
 
-#: ../src/empathy-call-window.c:212
+#: ../src/empathy-call-window.c:456
 msgid "Volume"
 msgstr "Volum"
 
-#: ../src/empathy-call-window.c:287
+#: ../src/empathy-call-window.c:547
 msgid "_Sidebar"
 msgstr "_Sidelinje"
 
-#: ../src/empathy-call-window.c:305
+#: ../src/empathy-call-window.c:565
 msgid "Dialpad"
 msgstr "Nummertavle"
 
-#: ../src/empathy-call-window.c:309
+#: ../src/empathy-call-window.c:571
 msgid "Audio input"
-msgstr ""
+msgstr "Lyd-inndata"
 
-#: ../src/empathy-call-window.c:313
+#: ../src/empathy-call-window.c:575
 msgid "Video input"
-msgstr ""
+msgstr "Video-inndata"
 
-#: ../src/empathy-call-window.c:326
+#: ../src/empathy-call-window.c:588
 msgid "Connecting..."
 msgstr "Kobler til..."
 
-#: ../src/empathy-call-window.c:489
+#. Translators: number of minutes:seconds the caller has been connected
+#: ../src/empathy-call-window.c:844
 #, c-format
 msgid "Connected -- %d:%02dm"
 msgstr "Koblet til - %d:%02dm"
@@ -1444,8 +1446,8 @@ msgid "Hang up"
 msgstr "Legg på"
 
 #: ../src/empathy-call-window.glade.h:2
-msgid "Send Video"
-msgstr "Send video"
+msgid "Send Audio"
+msgstr "Send lyd"
 
 #: ../src/empathy-call-window.glade.h:3
 msgid "Send video"
@@ -1458,10 +1460,6 @@ msgstr "Forhåndsvis video"
 #: ../src/empathy-call-window.glade.h:6
 msgid "_View"
 msgstr "_Vis"
-
-#: ../src/empathy-call-window.glade.h:7
-msgid "menuitem2"
-msgstr ""
 
 #: ../src/empathy-chat-window.c:313
 #, c-format
@@ -1476,12 +1474,10 @@ msgstr "Emne:"
 msgid "Typing a message."
 msgstr "Skriver en melding"
 
-#: ../src/empathy-chat-window.c:892 ../src/empathy-event-manager.c:424
-#, fuzzy, c-format
+#: ../src/empathy-chat-window.c:892 ../src/empathy-event-manager.c:429
+#, c-format
 msgid "New message from %s"
-msgstr ""
-"Ny melding fra %s:\n"
-"%s"
+msgstr "Ny melding fra %s"
 
 #: ../src/empathy-chat-window.glade.h:1
 msgid "C_lear"
@@ -1597,58 +1593,75 @@ msgstr "_Tjener:"
 msgid "_Room:"
 msgstr "_Rom:"
 
-#: ../src/empathy-event-manager.c:372
+#: ../src/empathy-event-manager.c:377
 msgid "Incoming call"
 msgstr "Innkommende samtale"
 
-#: ../src/empathy-event-manager.c:375
+#: ../src/empathy-event-manager.c:380
 #, c-format
 msgid "%s is calling you, do you want to answer?"
 msgstr "%s ringer deg. Vil du svare?"
 
-#: ../src/empathy-event-manager.c:382
+#: ../src/empathy-event-manager.c:387
 msgid "_Reject"
 msgstr "Av_vis"
 
-#: ../src/empathy-event-manager.c:388
+#: ../src/empathy-event-manager.c:393
 msgid "_Answer"
 msgstr "Sv_ar"
 
-#: ../src/empathy-event-manager.c:511
+#: ../src/empathy-event-manager.c:516
 #, c-format
 msgid "Incoming call from %s"
 msgstr "Innkommende samtale fra %s"
 
-#: ../src/empathy-event-manager.c:559
+#: ../src/empathy-event-manager.c:564
 #, c-format
 msgid "%s is offering you an invitation"
 msgstr "%s tilbyr deg en invitasjon"
 
-#: ../src/empathy-event-manager.c:565
-#, fuzzy
-msgid "An external application will be started to handle it."
-msgstr ""
-"%s sender deg en invitasjon. Et eksternt program vil bli startet for å "
-"håndtere den."
-
 #: ../src/empathy-event-manager.c:570
-#, fuzzy
-msgid "You don't have the needed external application to handle it."
-msgstr ""
-"%s sender deg en invitasjon, men du har ikke nødvendig eksternt program som "
-"kan håndtere dette."
+msgid "An external application will be started to handle it."
+msgstr "Et eksternt program vil bli startet for å håndtere den."
 
-#: ../src/empathy-event-manager.c:706
+#: ../src/empathy-event-manager.c:575
+msgid "You don't have the needed external application to handle it."
+msgstr "Du har ikke nødvendig eksternt program for å håndtere dette."
+
+#: ../src/empathy-event-manager.c:698
+msgid "Room invitation"
+msgstr "Invitasjon til rom"
+
+#: ../src/empathy-event-manager.c:701
+#, c-format
+msgid "%s is inviting you to join %s"
+msgstr "%s inviterer deg til å bli med i %s"
+
+#. Decline button
+#: ../src/empathy-event-manager.c:709 ../src/empathy-ft-manager.c:1031
+msgid "_Decline"
+msgstr "_Avslå"
+
+#: ../src/empathy-event-manager.c:714
+msgid "_Join"
+msgstr "_Bli med"
+
+#: ../src/empathy-event-manager.c:744
+#, c-format
+msgid "%s invited you to join %s"
+msgstr "%s inviterte deg til å bli med i %s"
+
+#: ../src/empathy-event-manager.c:867
 #, c-format
 msgid "Incoming file transfer from %s"
 msgstr "Innkommende filoverføring fra %s"
 
-#: ../src/empathy-event-manager.c:800
+#: ../src/empathy-event-manager.c:961
 #, c-format
 msgid "Subscription requested by %s"
 msgstr "Abonnement forespurt av %s"
 
-#: ../src/empathy-event-manager.c:804
+#: ../src/empathy-event-manager.c:965
 #, c-format
 msgid ""
 "\n"
@@ -1657,152 +1670,149 @@ msgstr ""
 "\n"
 "Melding: %s"
 
-#: ../src/empathy-ft-manager.c:113
+#. Translators: time left, when it is more than one hour
+#: ../src/empathy-ft-manager.c:114
 #, c-format
 msgid "%u:%02u.%02u"
 msgstr "%u:%02u.%02u"
 
-#: ../src/empathy-ft-manager.c:115
+#. Translators: time left, when is is less than one hour
+#: ../src/empathy-ft-manager.c:117
 #, c-format
 msgid "%02u.%02u"
 msgstr "%02u.%02u"
 
-#: ../src/empathy-ft-manager.c:164
+#: ../src/empathy-ft-manager.c:166
 msgid "No reason was specified"
 msgstr "Ingen årsak oppgitt"
 
-#: ../src/empathy-ft-manager.c:166
+#: ../src/empathy-ft-manager.c:168
 msgid "The change in state was requested"
 msgstr "Tilstandsendring ble etterspurt"
 
-#: ../src/empathy-ft-manager.c:168
+#: ../src/empathy-ft-manager.c:170
 msgid "You canceled the file transfer"
 msgstr "Du avbrøt filoverføringen"
 
-#: ../src/empathy-ft-manager.c:170
+#: ../src/empathy-ft-manager.c:172
 msgid "The other participant canceled the file transfer"
 msgstr "Avsender avbrøt filoverføringen"
 
-#: ../src/empathy-ft-manager.c:172
+#: ../src/empathy-ft-manager.c:174
 msgid "Error while trying to transfer the file"
 msgstr "Feil under overføring av filen"
 
-#: ../src/empathy-ft-manager.c:174
+#: ../src/empathy-ft-manager.c:176
 msgid "The other participant is unable to transfer the file"
 msgstr "Avsender kan ikke overføre filen"
 
-#: ../src/empathy-ft-manager.c:176
+#: ../src/empathy-ft-manager.c:178
 msgid "Unknown reason"
 msgstr "Ukjent årsak"
 
 #. translators: first %s is filename, second %s is the contact name
-#: ../src/empathy-ft-manager.c:224
+#: ../src/empathy-ft-manager.c:226
 #, c-format
 msgid "Receiving \"%s\" from %s"
 msgstr "Mottar «%s» fra %s"
 
 #. translators: first %s is filename, second %s is the contact name
-#: ../src/empathy-ft-manager.c:227
+#: ../src/empathy-ft-manager.c:229
 #, c-format
 msgid "Sending \"%s\" to %s"
 msgstr "Sender «%s» til %s"
 
-#: ../src/empathy-ft-manager.c:237
+#: ../src/empathy-ft-manager.c:239
 msgctxt "file size"
 msgid "Unknown"
 msgstr "Ukjent"
 
 #. translators: first %s is the transferred size, second %s is
 #. * the total file size
-#: ../src/empathy-ft-manager.c:245
+#: ../src/empathy-ft-manager.c:247
 #, c-format
 msgid "%s of %s"
 msgstr "%s av %s"
 
-#: ../src/empathy-ft-manager.c:252
+#: ../src/empathy-ft-manager.c:254
 msgid "Waiting the other participant's response"
 msgstr "Venter på svar fra motparten"
 
-#: ../src/empathy-ft-manager.c:262
+#: ../src/empathy-ft-manager.c:264
 #, c-format
 msgid "\"%s\" received from %s"
 msgstr "«%s» mottatt fra %s"
 
-#: ../src/empathy-ft-manager.c:268
+#: ../src/empathy-ft-manager.c:270
 #, c-format
 msgid "\"%s\" sent to %s"
 msgstr "«%s» sendt til %s"
 
-#: ../src/empathy-ft-manager.c:271
+#: ../src/empathy-ft-manager.c:273
 msgid "File transfer completed"
 msgstr "Filoverføring fullført"
 
-#: ../src/empathy-ft-manager.c:280
+#: ../src/empathy-ft-manager.c:282
 #, c-format
 msgid "\"%s\" receiving from %s"
 msgstr "«%s» mottas fra %s"
 
-#: ../src/empathy-ft-manager.c:286
+#: ../src/empathy-ft-manager.c:288
 #, c-format
 msgid "\"%s\" sending to %s"
 msgstr "«%s» sendes til %s"
 
-#: ../src/empathy-ft-manager.c:289
+#: ../src/empathy-ft-manager.c:291
 #, c-format
 msgid "File transfer canceled: %s"
 msgstr "Filoverføring avbrutt: %s"
 
-#: ../src/empathy-ft-manager.c:304
+#: ../src/empathy-ft-manager.c:306
 msgctxt "remaining time"
 msgid "Unknown"
 msgstr "Ukjent"
 
-#: ../src/empathy-ft-manager.c:364
+#: ../src/empathy-ft-manager.c:366
 msgctxt "file transfer percent"
 msgid "Unknown"
 msgstr "Ukjent"
 
-#: ../src/empathy-ft-manager.c:700
+#: ../src/empathy-ft-manager.c:663
 msgid "%"
 msgstr "%"
 
-#: ../src/empathy-ft-manager.c:712
+#: ../src/empathy-ft-manager.c:675
 msgid "File"
 msgstr "Fil"
 
-#: ../src/empathy-ft-manager.c:734
+#: ../src/empathy-ft-manager.c:697
 msgid "Remaining"
 msgstr "Gjenstår"
 
-#: ../src/empathy-ft-manager.c:885
+#: ../src/empathy-ft-manager.c:895
 msgid "Cannot save file to this location"
 msgstr "Kan ikke lagre filen til denne lokasjonen"
 
-#: ../src/empathy-ft-manager.c:931
+#: ../src/empathy-ft-manager.c:941
 msgid "Save file as..."
 msgstr "Lagre fil som..."
 
-#: ../src/empathy-ft-manager.c:1001
+#: ../src/empathy-ft-manager.c:1011
 msgid "unknown size"
 msgstr "ukjent størrelse"
 
-#: ../src/empathy-ft-manager.c:1007
+#: ../src/empathy-ft-manager.c:1017
 #, c-format
 msgid "%s would like to send you a file"
 msgstr "%s ønsker å sende deg en fil"
 
-#: ../src/empathy-ft-manager.c:1012
+#: ../src/empathy-ft-manager.c:1022
 #, c-format
 msgid "Do you want to accept the file \"%s\" (%s)?"
 msgstr "Vil du motta filen «%s» (%s)?"
 
-#. Decline button
-#: ../src/empathy-ft-manager.c:1021
-msgid "_Decline"
-msgstr "_Avslå"
-
 #. Accept button
-#: ../src/empathy-ft-manager.c:1030
+#: ../src/empathy-ft-manager.c:1040
 msgid "_Accept"
 msgstr "Godt_a"
 
@@ -1814,19 +1824,20 @@ msgstr "Filoverføringer"
 msgid "Remove completed, canceled and failed file transfers from the list"
 msgstr "Fjerning fullført. Filoverføringer fra listen er avbrutt og feilet"
 
-#: ../src/empathy-import-dialog.c:254
+#. Translators: this is the header of a treeview column
+#: ../src/empathy-import-dialog.c:255
 msgid "Import"
 msgstr "Importer"
 
-#: ../src/empathy-import-dialog.c:263
+#: ../src/empathy-import-dialog.c:264
 msgid "Protocol"
 msgstr "Protokoll"
 
-#: ../src/empathy-import-dialog.c:289
+#: ../src/empathy-import-dialog.c:290
 msgid "Source"
 msgstr "Kilde"
 
-#: ../src/empathy-import-dialog.c:377
+#: ../src/empathy-import-dialog.c:378
 msgid ""
 "No accounts to import could be found. Empathy currently only supports "
 "importing accounts from Pidgin."
@@ -2027,7 +2038,7 @@ msgid "<b>Appearance</b>"
 msgstr "<b>Utseende</b>"
 
 #: ../src/empathy-preferences.glade.h:2
-msgid "<b>Behaviour</b>"
+msgid "<b>Behavior</b>"
 msgstr "<b>Oppførsel</b>"
 
 #: ../src/empathy-preferences.glade.h:3
@@ -2063,9 +2074,8 @@ msgid "Chat Th_eme:"
 msgstr "Samtale_tema:"
 
 #: ../src/empathy-preferences.glade.h:10
-#, fuzzy
 msgid "Disable notifications when _away or busy"
-msgstr "Slå av lyder når du er b_orte eller opptatt"
+msgstr "Slå av varsling når du er b_orte eller opptatt"
 
 #: ../src/empathy-preferences.glade.h:11
 msgid "Disable sounds when _away or busy"
@@ -2073,7 +2083,7 @@ msgstr "Slå av lyder når du er b_orte eller opptatt"
 
 #: ../src/empathy-preferences.glade.h:12
 msgid "Enable notifications when the _chat is not focused"
-msgstr ""
+msgstr "Slå på varsling når _pratevinduet ikke har fokus"
 
 #: ../src/empathy-preferences.glade.h:13
 msgid "General"
@@ -2120,9 +2130,8 @@ msgid "Themes"
 msgstr "Temaer"
 
 #: ../src/empathy-preferences.glade.h:24
-#, fuzzy
 msgid "_Enable bubble notifications"
-msgstr "_Aktiver varsling med lyder"
+msgstr "_Aktiver varsling med bobler"
 
 #: ../src/empathy-preferences.glade.h:25
 msgid "_Enable sound notifications"
@@ -2144,12 +2153,12 @@ msgstr "_Avslutt"
 msgid "_Show Contact List"
 msgstr "Vi_s kontaktliste"
 
-#: ../src/empathy-tube-dispatch.c:356
+#: ../src/empathy-tube-dispatch.c:364
 #, c-format
 msgid "Unable to start application for service %s: %s"
 msgstr "Kan ikke starte program for tjeneste %s: %s"
 
-#: ../src/empathy-tube-dispatch.c:427
+#: ../src/empathy-tube-dispatch.c:435
 #, c-format
 msgid ""
 "An invitation was offered for service %s, but you don't have the needed "
