@@ -289,6 +289,7 @@ preferences_sound_cell_toggled_cb (GtkCellRendererToggle *toggle,
 
 	empathy_conf_set_bool (empathy_conf_get (), key, instore);
 
+	g_free (key);
 	gtk_tree_path_free (path);
 }
 
@@ -566,6 +567,7 @@ preferences_languages_load_foreach (GtkTreeModel  *model,
 		}
 	}
 
+	g_free (code);
 	gtk_list_store_set (GTK_LIST_STORE (model), iter, COL_LANG_ENABLED, found, -1);
 	return FALSE;
 }
