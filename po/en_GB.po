@@ -1,15 +1,17 @@
-# Copyright (C) 2006 THE PACKAGE'S COPYRIGHT HOLDER
+# Copyright (C) 2006 Empathy's COPYRIGHT HOLDER
 # This file is distributed under the same licence as the empathy package.
 #
 # David Lodge <dave@cirt.net>, 2007, 2009.
+# Bruce Cowan <bcowan@fastmail.co.uk>, 2009.
+# Philip Withnall <philip@tecnocode.co.uk>, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: empathy\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-23 17:25+0000\n"
-"PO-Revision-Date: 2009-02-23 17:36+0000\n"
-"Last-Translator: David Lodge <dave@cirt.net>\n"
-"Language-Team: en_GB <en@li.org>\n"
+"POT-Creation-Date: 2009-09-12 18:19+0100\n"
+"PO-Revision-Date: 2009-08-30 23:40+0100\n"
+"Last-Translator: Philip Withnall <philip@tecnocode.co.uk>\n"
+"Language-Team: British English <en@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -43,7 +45,7 @@ msgstr "Chat window theme"
 msgid ""
 "Comma separated list of spell checker languages to use (e.g. en, fr, nl)."
 msgstr ""
-"Comma separated list of spell checker languages to use (e.g. en, fr, nl)."
+"Comma-separated list of spell checker languages to use (e.g. en, fr, nl)."
 
 #: ../data/empathy.schemas.in.h:5
 msgid "Compact contact list"
@@ -51,7 +53,7 @@ msgstr "Compact contact list"
 
 #: ../data/empathy.schemas.in.h:6
 msgid "Contact list sort criterium"
-msgstr "Contact list sort criterium"
+msgstr "Contact list sort criterion"
 
 #: ../data/empathy.schemas.in.h:7
 msgid "Default directory to select an avatar image from"
@@ -139,7 +141,7 @@ msgstr "Play a sound when we log out"
 
 #: ../data/empathy.schemas.in.h:28
 msgid "Popup notifications if the chat isn't focused"
-msgstr "Popup notifications if the chat isn't focussed"
+msgstr "Pop up notifications if the chat isn't focussed"
 
 #: ../data/empathy.schemas.in.h:29
 msgid "Salut account is created"
@@ -163,7 +165,7 @@ msgstr "Spell checking languages"
 
 #: ../data/empathy.schemas.in.h:34
 msgid "The default folder to save file transfers in."
-msgstr "The default folder in which to save file transfers."
+msgstr "The default folder to save file transfers in."
 
 #: ../data/empathy.schemas.in.h:35
 msgid "The last directory that an avatar image was chosen from."
@@ -224,8 +226,7 @@ msgid ""
 "Whether or not to check words typed against the languages you want to check "
 "with."
 msgstr ""
-"Whether to check words typed against the languages with which you want to "
-"check."
+"Whether to check words typed against the languages you want to check against."
 
 #: ../data/empathy.schemas.in.h:46
 msgid ""
@@ -236,30 +237,29 @@ msgstr "Whether to convert smileys into graphical images in conversations."
 msgid ""
 "Whether or not to play a sound to notify for contacts logging in the network."
 msgstr ""
-"Whether to play a sound to notify for contacts logging into the network."
+"Whether to play a sound to notify of contacts logging into the network."
 
 #: ../data/empathy.schemas.in.h:48
 msgid ""
 "Whether or not to play a sound to notify for contacts logging off the "
 "network."
-msgstr ""
-"Whether to play a sound to notify for contacts logging off the network."
+msgstr "Whether to play a sound to notify of contacts logging off the network."
 
 #: ../data/empathy.schemas.in.h:49
 msgid "Whether or not to play a sound to notify for events."
-msgstr "Whether to play a sound to notify for events."
+msgstr "Whether to play a sound to notify of events."
 
 #: ../data/empathy.schemas.in.h:50
 msgid "Whether or not to play a sound to notify for incoming messages."
-msgstr "Whether to play a sound to notify for incoming messages."
+msgstr "Whether to play a sound to notify of incoming messages."
 
 #: ../data/empathy.schemas.in.h:51
 msgid "Whether or not to play a sound to notify for new conversations."
-msgstr "Whether to play a sound to notify for new conversations."
+msgstr "Whether to play a sound to notify of new conversations."
 
 #: ../data/empathy.schemas.in.h:52
 msgid "Whether or not to play a sound to notify for outgoing messages."
-msgstr "Whether to play a sound to notify for outgoing messages."
+msgstr "Whether to play a sound to notify of outgoing messages."
 
 #: ../data/empathy.schemas.in.h:53
 msgid "Whether or not to play a sound when logging in a network."
@@ -311,11 +311,11 @@ msgstr ""
 
 #: ../data/empathy.schemas.in.h:62
 msgid "Whether to show the contact list in compact mode or not."
-msgstr "Whether to show the contact list in compact mode or not."
+msgstr "Whether to show the contact list in compact mode."
 
 #: ../data/empathy.schemas.in.h:63
 msgid "Whether to use the theme for chat rooms or not."
-msgstr "Whether to use the theme for chat rooms or not."
+msgstr "Whether to use the theme for chat rooms."
 
 #: ../data/empathy.schemas.in.h:64
 msgid ""
@@ -323,11 +323,11 @@ msgid ""
 "by the contact's name with the value \"name\". A value of \"state\" will "
 "sort the contact list by state."
 msgstr ""
-"Which criterium to use when sorting the contact list. Default is to use sort "
+"Which criterion to use when sorting the contact list. Default is to use sort "
 "by the contact's name with the value \"name\". A value of \"state\" will "
 "sort the contact list by state."
 
-#: ../libempathy/empathy-tp-contact-list.c:731 ../src/empathy.c:269
+#: ../libempathy/empathy-tp-contact-list.c:732 ../src/empathy.c:271
 msgid "People nearby"
 msgstr "People nearby"
 
@@ -509,7 +509,7 @@ msgstr "_Ignore SSL certificate errors"
 
 #: ../libempathy-gtk/empathy-account-widget-salut.glade.h:2
 msgid "_Email:"
-msgstr "_E-mail:"
+msgstr "_E-mail address:"
 
 #: ../libempathy-gtk/empathy-account-widget-salut.glade.h:3
 msgid "_First Name:"
@@ -566,27 +566,27 @@ msgid "_Room List locale:"
 msgstr "_Room List locale:"
 
 #: ../libempathy-gtk/empathy-avatar-chooser.c:462
-#: ../libempathy-gtk/empathy-avatar-chooser.c:537
+#: ../libempathy-gtk/empathy-avatar-chooser.c:538
 msgid "Couldn't convert image"
 msgstr "Couldn't convert image"
 
 #: ../libempathy-gtk/empathy-avatar-chooser.c:463
 msgid "None of the accepted image formats is supported on your system"
-msgstr "None of the accepted image formats is supported on your system"
+msgstr "None of the accepted image formats are supported on your system"
 
-#: ../libempathy-gtk/empathy-avatar-chooser.c:956
+#: ../libempathy-gtk/empathy-avatar-chooser.c:957
 msgid "Select Your Avatar Image"
 msgstr "Select Your Avatar Image"
 
-#: ../libempathy-gtk/empathy-avatar-chooser.c:959
+#: ../libempathy-gtk/empathy-avatar-chooser.c:960
 msgid "No Image"
 msgstr "No Image"
 
-#: ../libempathy-gtk/empathy-avatar-chooser.c:1021
+#: ../libempathy-gtk/empathy-avatar-chooser.c:1022
 msgid "Images"
 msgstr "Images"
 
-#: ../libempathy-gtk/empathy-avatar-chooser.c:1025
+#: ../libempathy-gtk/empathy-avatar-chooser.c:1026
 msgid "All Files"
 msgstr "All Files"
 
@@ -594,77 +594,77 @@ msgstr "All Files"
 msgid "Click to enlarge"
 msgstr "Click to enlarge"
 
-#: ../libempathy-gtk/empathy-chat.c:507
+#: ../libempathy-gtk/empathy-chat.c:522
 msgid "offline"
 msgstr "offline"
 
-#: ../libempathy-gtk/empathy-chat.c:510
+#: ../libempathy-gtk/empathy-chat.c:525
 msgid "invalid contact"
 msgstr "invalid contact"
 
-#: ../libempathy-gtk/empathy-chat.c:513
+#: ../libempathy-gtk/empathy-chat.c:528
 msgid "permission denied"
 msgstr "permission denied"
 
-#: ../libempathy-gtk/empathy-chat.c:516
+#: ../libempathy-gtk/empathy-chat.c:531
 msgid "too long message"
 msgstr "too long message"
 
-#: ../libempathy-gtk/empathy-chat.c:519
+#: ../libempathy-gtk/empathy-chat.c:534
 msgid "not implemented"
 msgstr "not implemented"
 
-#: ../libempathy-gtk/empathy-chat.c:522
+#: ../libempathy-gtk/empathy-chat.c:537
 msgid "unknown"
 msgstr "unknown"
 
-#: ../libempathy-gtk/empathy-chat.c:526
+#: ../libempathy-gtk/empathy-chat.c:541
 #, c-format
 msgid "Error sending message '%s': %s"
 msgstr "Error sending message '%s': %s"
 
-#: ../libempathy-gtk/empathy-chat.c:556
+#: ../libempathy-gtk/empathy-chat.c:571
 #, c-format
 msgid "Topic set to: %s"
 msgstr "Topic set to: %s"
 
-#: ../libempathy-gtk/empathy-chat.c:558
+#: ../libempathy-gtk/empathy-chat.c:573
 msgid "No topic defined"
 msgstr "No topic defined"
 
-#: ../libempathy-gtk/empathy-chat.c:973
+#: ../libempathy-gtk/empathy-chat.c:988
 msgid "Insert Smiley"
 msgstr "Insert Smiley"
 
 #. send button
-#: ../libempathy-gtk/empathy-chat.c:991
-#: ../libempathy-gtk/empathy-ui-utils.c:1538
+#: ../libempathy-gtk/empathy-chat.c:1006
+#: ../libempathy-gtk/empathy-ui-utils.c:1559
 msgid "_Send"
 msgstr "_Send"
 
-#: ../libempathy-gtk/empathy-chat.c:1025
+#: ../libempathy-gtk/empathy-chat.c:1040
 msgid "_Check Word Spelling..."
-msgstr "_Check Word Spelling..."
+msgstr "_Check Word Spelling…"
 
-#: ../libempathy-gtk/empathy-chat.c:1131
+#: ../libempathy-gtk/empathy-chat.c:1158
 #, c-format
 msgid "%s has joined the room"
 msgstr "%s has joined the room"
 
-#: ../libempathy-gtk/empathy-chat.c:1134
+#: ../libempathy-gtk/empathy-chat.c:1161
 #, c-format
 msgid "%s has left the room"
 msgstr "%s has left the room"
 
-#: ../libempathy-gtk/empathy-chat.c:1248 ../src/empathy-call-window.c:548
+#: ../libempathy-gtk/empathy-chat.c:1276 ../src/empathy-call-window.c:764
 msgid "Disconnected"
 msgstr "Disconnected"
 
-#: ../libempathy-gtk/empathy-chat.c:1644
+#: ../libempathy-gtk/empathy-chat.c:1673
 msgid "Connected"
 msgstr "Connected"
 
-#: ../libempathy-gtk/empathy-chat.c:1694
+#: ../libempathy-gtk/empathy-chat.c:1723
 #: ../libempathy-gtk/empathy-log-window.c:505
 msgid "Conversation"
 msgstr "Conversation"
@@ -677,17 +677,19 @@ msgstr "<b>Topic:</b>"
 msgid "Group Chat"
 msgstr "Group Chat"
 
-#: ../libempathy-gtk/empathy-chat-text-view.c:340
+#: ../libempathy-gtk/empathy-chat-text-view.c:331
 msgid "_Copy Link Address"
 msgstr "_Copy Link Address"
 
-#: ../libempathy-gtk/empathy-chat-text-view.c:348
+#: ../libempathy-gtk/empathy-chat-text-view.c:339
 msgid "_Open Link"
 msgstr "_Open Link"
 
-#: ../libempathy-gtk/empathy-chat-text-view.c:439
+#. Translators: timestamp displayed between conversations in
+#. * chat windows (strftime format string)
+#: ../libempathy-gtk/empathy-chat-text-view.c:432
 msgid "%A %B %d %Y"
-msgstr "%A %B %d %Y"
+msgstr "%A %d %B %Y"
 
 #: ../libempathy-gtk/empathy-contact-dialogs.c:180
 msgid "Personal Information"
@@ -717,30 +719,30 @@ msgstr "Decide _Later"
 msgid "Subscription Request"
 msgstr "Subscription Request"
 
-#: ../libempathy-gtk/empathy-contact-list-view.c:1249
+#: ../libempathy-gtk/empathy-contact-list-view.c:1255
 #, c-format
 msgid "Do you really want to remove the group '%s'?"
 msgstr "Do you really want to remove the group '%s'?"
 
-#: ../libempathy-gtk/empathy-contact-list-view.c:1251
+#: ../libempathy-gtk/empathy-contact-list-view.c:1257
 msgid "Removing group"
 msgstr "Removing group"
 
-#: ../libempathy-gtk/empathy-contact-list-view.c:1298
-#: ../libempathy-gtk/empathy-contact-list-view.c:1377
+#: ../libempathy-gtk/empathy-contact-list-view.c:1304
+#: ../libempathy-gtk/empathy-contact-list-view.c:1383
 msgid "_Remove"
 msgstr "_Remove"
 
-#: ../libempathy-gtk/empathy-contact-list-view.c:1328
+#: ../libempathy-gtk/empathy-contact-list-view.c:1334
 #, c-format
 msgid "Do you really want to remove the contact '%s'?"
 msgstr "Do you really want to remove the contact '%s'?"
 
-#: ../libempathy-gtk/empathy-contact-list-view.c:1330
+#: ../libempathy-gtk/empathy-contact-list-view.c:1336
 msgid "Removing contact"
 msgstr "Removing contact"
 
-#: ../libempathy-gtk/empathy-contact-list-view.c:1335
+#: ../libempathy-gtk/empathy-contact-list-view.c:1341
 msgid "Sorry, I don't want you in my contact list anymore."
 msgstr "Sorry, I don't want you in my contact list anymore."
 
@@ -776,7 +778,7 @@ msgstr "_Edit"
 msgid "Inviting to this room"
 msgstr "Inviting to this room"
 
-#: ../libempathy-gtk/empathy-contact-menu.c:369
+#: ../libempathy-gtk/empathy-contact-menu.c:367
 msgid "_Invite to chatroom"
 msgstr "_Invite to chat room"
 
@@ -784,19 +786,19 @@ msgstr "_Invite to chat room"
 msgid "Select a contact"
 msgstr "Select a contact"
 
-#: ../libempathy-gtk/empathy-contact-widget.c:358
+#: ../libempathy-gtk/empathy-contact-widget.c:360
 msgid "Save Avatar"
 msgstr "Save Avatar"
 
-#: ../libempathy-gtk/empathy-contact-widget.c:414
+#: ../libempathy-gtk/empathy-contact-widget.c:416
 msgid "Unable to save avatar"
 msgstr "Unable to save avatar"
 
-#: ../libempathy-gtk/empathy-contact-widget.c:895
+#: ../libempathy-gtk/empathy-contact-widget.c:911
 msgid "Select"
 msgstr "Select"
 
-#: ../libempathy-gtk/empathy-contact-widget.c:904
+#: ../libempathy-gtk/empathy-contact-widget.c:920
 #: ../src/empathy-main-window.c:991
 msgid "Group"
 msgstr "Group"
@@ -842,11 +844,11 @@ msgstr "Contact information"
 
 #: ../libempathy-gtk/empathy-contact-widget.glade.h:10
 msgid "Email:"
-msgstr "E-mail:"
+msgstr "E-mail address:"
 
 #: ../libempathy-gtk/empathy-contact-widget.glade.h:11
 msgid "Fullname:"
-msgstr "Fullname:"
+msgstr "Full name:"
 
 #. Identifier to connect to Instant Messaging network
 #: ../libempathy-gtk/empathy-contact-widget.glade.h:13
@@ -855,7 +857,7 @@ msgstr "Identifier:"
 
 #: ../libempathy-gtk/empathy-contact-widget.glade.h:14
 msgid "Information requested..."
-msgstr "Information requested..."
+msgstr "Information requested…"
 
 #: ../libempathy-gtk/empathy-contact-widget.glade.h:15
 msgid "OS:"
@@ -866,8 +868,8 @@ msgid ""
 "Select the groups you want this contact to appear in.  Note that you can "
 "select more than one group or no groups."
 msgstr ""
-"Select the groups in which you want this contact to appear.  Note that you "
-"can select more than one group or no groups."
+"Select the groups you want this contact to appear in. Note that you can "
+"select more than one group or no groups."
 
 #: ../libempathy-gtk/empathy-contact-widget.glade.h:17
 msgid "Version:"
@@ -898,7 +900,7 @@ msgid "SSL"
 msgstr "SSL"
 
 #: ../libempathy-gtk/empathy-log-window.c:498
-#: ../src/empathy-import-dialog.c:277
+#: ../src/empathy-import-dialog.c:282
 msgid "Account"
 msgstr "Account"
 
@@ -944,7 +946,7 @@ msgstr "New Conversation"
 #. Custom messages
 #: ../libempathy-gtk/empathy-presence-chooser.c:685
 msgid "Custom messages..."
-msgstr "Custom messages..."
+msgstr "Custom messages…"
 
 #: ../libempathy-gtk/empathy-presence-chooser.glade.h:1
 msgid "Custom message"
@@ -994,51 +996,51 @@ msgstr "Clean"
 msgid "Blue"
 msgstr "Blue"
 
-#: ../libempathy-gtk/empathy-ui-utils.c:1385
+#: ../libempathy-gtk/empathy-ui-utils.c:1406
 msgid "Unable to open URI"
 msgstr "Unable to open URI"
 
-#: ../libempathy-gtk/empathy-ui-utils.c:1530
+#: ../libempathy-gtk/empathy-ui-utils.c:1551
 msgid "Select a file"
 msgstr "Select a file"
 
-#: ../libempathy-gtk/empathy-ui-utils.c:1566
+#: ../libempathy-gtk/empathy-ui-utils.c:1587
 msgid "Received an instant message"
 msgstr "Received an instant message"
 
-#: ../libempathy-gtk/empathy-ui-utils.c:1568
+#: ../libempathy-gtk/empathy-ui-utils.c:1589
 msgid "Sent an instant message"
 msgstr "Sent an instant message"
 
-#: ../libempathy-gtk/empathy-ui-utils.c:1570
+#: ../libempathy-gtk/empathy-ui-utils.c:1591
 msgid "Incoming chat request"
 msgstr "Incoming chat request"
 
-#: ../libempathy-gtk/empathy-ui-utils.c:1572
+#: ../libempathy-gtk/empathy-ui-utils.c:1593
 msgid "Contact connected"
 msgstr "Contact connected"
 
-#: ../libempathy-gtk/empathy-ui-utils.c:1574
+#: ../libempathy-gtk/empathy-ui-utils.c:1595
 msgid "Contact disconnected"
 msgstr "Contact disconnected"
 
-#: ../libempathy-gtk/empathy-ui-utils.c:1576
+#: ../libempathy-gtk/empathy-ui-utils.c:1597
 msgid "Connected to server"
 msgstr "Connected to server"
 
-#: ../libempathy-gtk/empathy-ui-utils.c:1578
+#: ../libempathy-gtk/empathy-ui-utils.c:1599
 msgid "Disconnected from server"
 msgstr "Disconnected from server"
 
-#: ../libempathy-gtk/empathy-ui-utils.c:1580
+#: ../libempathy-gtk/empathy-ui-utils.c:1601
 msgid "Incoming voice call"
 msgstr "Incoming voice call"
 
-#: ../libempathy-gtk/empathy-ui-utils.c:1582
+#: ../libempathy-gtk/empathy-ui-utils.c:1603
 msgid "Outgoing voice call"
 msgstr "Outgoing voice call"
 
-#: ../libempathy-gtk/empathy-ui-utils.c:1584
+#: ../libempathy-gtk/empathy-ui-utils.c:1605
 msgid "Voice call ended"
 msgstr "Voice call ended"
 
@@ -1220,7 +1222,7 @@ msgstr ""
 
 #: ../megaphone/data/GNOME_Megaphone_Applet.schemas.in.h:2
 msgid "The contact's avatar token. Empty means contact has no avatar."
-msgstr "The contact's avatar token. Empty means contact has no avatar."
+msgstr "The contact's avatar token. Empty means the contact has no avatar."
 
 #: ../megaphone/data/GNOME_Megaphone_Applet.server.in.in.h:1
 msgid "Megaphone"
@@ -1251,7 +1253,7 @@ msgstr "Please configure a contact."
 
 #: ../megaphone/src/megaphone-applet.c:348
 msgid "Select contact..."
-msgstr "Select contact..."
+msgstr "Select contact…"
 
 #: ../nothere/data/GNOME_NotHere_Applet.server.in.in.h:1
 msgid "Presence"
@@ -1262,19 +1264,19 @@ msgstr "Presence"
 msgid "Set your own presence"
 msgstr "Set your own presence"
 
-#: ../src/empathy.c:426
+#: ../src/empathy.c:430
 msgid "Don't connect on startup"
 msgstr "Don't connect on startup"
 
-#: ../src/empathy.c:430
+#: ../src/empathy.c:434
 msgid "Don't show the contact list on startup"
 msgstr "Don't show the contact list on startup"
 
-#: ../src/empathy.c:434
+#: ../src/empathy.c:438
 msgid "Show the accounts dialog"
 msgstr "Show the accounts dialogue"
 
-#: ../src/empathy.c:446
+#: ../src/empathy.c:450
 msgid "- Empathy Instant Messenger"
 msgstr "- Empathy Instant Messenger"
 
@@ -1318,7 +1320,10 @@ msgstr "An Instant Messaging client for GNOME"
 
 #: ../src/empathy-about-dialog.c:126
 msgid "translator-credits"
-msgstr "David Lodge <dave@cirt.net>"
+msgstr ""
+"David Lodge <dave@cirt.net>\n"
+"Philip Withnall <philip@tecnocode.co.uk>\n"
+"Bruce Cowan <bcowan@fastmail.co.uk>"
 
 #: ../src/empathy-accounts-dialog.c:391
 msgid "Enabled"
@@ -1380,7 +1385,7 @@ msgstr "I already have an account I want to use"
 
 #: ../src/empathy-accounts-dialog.glade.h:7
 msgid "Import Accounts..."
-msgstr "Import Accounts..."
+msgstr "Import Accounts…"
 
 #: ../src/empathy-accounts-dialog.glade.h:8
 msgid ""
@@ -1394,43 +1399,44 @@ msgstr ""
 msgid "Type:"
 msgstr "Type:"
 
-#: ../src/empathy-call-window.c:258
+#: ../src/empathy-call-window.c:346
 msgid "Contrast"
 msgstr "Contrast"
 
-#: ../src/empathy-call-window.c:258
+#: ../src/empathy-call-window.c:349
 msgid "Brightness"
 msgstr "Brightness"
 
-#: ../src/empathy-call-window.c:258
+#: ../src/empathy-call-window.c:352
 msgid "Gamma"
 msgstr "Gamma"
 
-#: ../src/empathy-call-window.c:290
+#: ../src/empathy-call-window.c:456
 msgid "Volume"
 msgstr "Volume"
 
-#: ../src/empathy-call-window.c:366
+#: ../src/empathy-call-window.c:547
 msgid "_Sidebar"
 msgstr "_Sidebar"
 
-#: ../src/empathy-call-window.c:384
+#: ../src/empathy-call-window.c:565
 msgid "Dialpad"
 msgstr "Dialpad"
 
-#: ../src/empathy-call-window.c:390
+#: ../src/empathy-call-window.c:571
 msgid "Audio input"
 msgstr "Audio input"
 
-#: ../src/empathy-call-window.c:394
+#: ../src/empathy-call-window.c:575
 msgid "Video input"
 msgstr "Video input"
 
-#: ../src/empathy-call-window.c:407
+#: ../src/empathy-call-window.c:588
 msgid "Connecting..."
-msgstr "Connecting..."
+msgstr "Connecting…"
 
-#: ../src/empathy-call-window.c:572
+#. Translators: number of minutes:seconds the caller has been connected
+#: ../src/empathy-call-window.c:844
 #, c-format
 msgid "Connected -- %d:%02dm"
 msgstr "Connected — %d:%02dm"
@@ -1468,7 +1474,7 @@ msgstr "Topic:"
 msgid "Typing a message."
 msgstr "Typing a message."
 
-#: ../src/empathy-chat-window.c:892 ../src/empathy-event-manager.c:429
+#: ../src/empathy-chat-window.c:892 ../src/empathy-event-manager.c:428
 #, c-format
 msgid "New message from %s"
 msgstr "New message from %s"
@@ -1503,7 +1509,7 @@ msgstr "Move Tab _Right"
 
 #: ../src/empathy-chat-window.glade.h:8
 msgid "Select who would you like to invite:"
-msgstr "Select who would you like to invite:"
+msgstr "Select who you would like to invite:"
 
 #: ../src/empathy-chat-window.glade.h:9
 msgid "You have been invited to join a chat conference."
@@ -1586,75 +1592,75 @@ msgstr "S_erver:"
 msgid "_Room:"
 msgstr "_Room:"
 
-#: ../src/empathy-event-manager.c:377
+#: ../src/empathy-event-manager.c:376
 msgid "Incoming call"
 msgstr "Incoming call"
 
-#: ../src/empathy-event-manager.c:380
+#: ../src/empathy-event-manager.c:379
 #, c-format
 msgid "%s is calling you, do you want to answer?"
 msgstr "%s is calling you. Do you want to answer?"
 
-#: ../src/empathy-event-manager.c:387
+#: ../src/empathy-event-manager.c:386
 msgid "_Reject"
 msgstr "_Reject"
 
-#: ../src/empathy-event-manager.c:393
+#: ../src/empathy-event-manager.c:392
 msgid "_Answer"
 msgstr "_Answer"
 
-#: ../src/empathy-event-manager.c:516
+#: ../src/empathy-event-manager.c:515
 #, c-format
 msgid "Incoming call from %s"
 msgstr "Incoming call from %s"
 
-#: ../src/empathy-event-manager.c:564
+#: ../src/empathy-event-manager.c:563
 #, c-format
 msgid "%s is offering you an invitation"
 msgstr "%s is offering you an invitation"
 
-#: ../src/empathy-event-manager.c:570
+#: ../src/empathy-event-manager.c:569
 msgid "An external application will be started to handle it."
 msgstr "An external application will be started to handle it."
 
-#: ../src/empathy-event-manager.c:575
+#: ../src/empathy-event-manager.c:574
 msgid "You don't have the needed external application to handle it."
 msgstr "You don't have the needed external application to handle it."
 
-#: ../src/empathy-event-manager.c:698
+#: ../src/empathy-event-manager.c:697
 msgid "Room invitation"
 msgstr "Room invitation"
 
-#: ../src/empathy-event-manager.c:701
+#: ../src/empathy-event-manager.c:700
 #, c-format
 msgid "%s is inviting you to join %s"
 msgstr "%s is inviting you to join %s"
 
 #. Decline button
-#: ../src/empathy-event-manager.c:709 ../src/empathy-ft-manager.c:1021
+#: ../src/empathy-event-manager.c:708 ../src/empathy-ft-manager.c:1031
 msgid "_Decline"
 msgstr "_Decline"
 
-#: ../src/empathy-event-manager.c:714
+#: ../src/empathy-event-manager.c:713
 msgid "_Join"
 msgstr "_Join"
 
-#: ../src/empathy-event-manager.c:744
+#: ../src/empathy-event-manager.c:743
 #, c-format
 msgid "%s invited you to join %s"
 msgstr "%s invited you to join %s"
 
-#: ../src/empathy-event-manager.c:867
+#: ../src/empathy-event-manager.c:866
 #, c-format
 msgid "Incoming file transfer from %s"
 msgstr "Incoming file transfer from %s"
 
-#: ../src/empathy-event-manager.c:961
+#: ../src/empathy-event-manager.c:960
 #, c-format
 msgid "Subscription requested by %s"
 msgstr "Subscription requested by %s"
 
-#: ../src/empathy-event-manager.c:965
+#: ../src/empathy-event-manager.c:964
 #, c-format
 msgid ""
 "\n"
@@ -1663,172 +1669,174 @@ msgstr ""
 "\n"
 "Message: %s"
 
-#: ../src/empathy-ft-manager.c:113
+#. Translators: time left, when it is more than one hour
+#: ../src/empathy-ft-manager.c:114
 #, c-format
 msgid "%u:%02u.%02u"
 msgstr "%u:%02u.%02u"
 
-#: ../src/empathy-ft-manager.c:115
+#. Translators: time left, when is is less than one hour
+#: ../src/empathy-ft-manager.c:117
 #, c-format
 msgid "%02u.%02u"
 msgstr "%02u.%02u"
 
-#: ../src/empathy-ft-manager.c:164
+#: ../src/empathy-ft-manager.c:166
 msgid "No reason was specified"
 msgstr "No reason was specified"
 
-#: ../src/empathy-ft-manager.c:166
+#: ../src/empathy-ft-manager.c:168
 msgid "The change in state was requested"
 msgstr "The change in state was requested"
 
-#: ../src/empathy-ft-manager.c:168
+#: ../src/empathy-ft-manager.c:170
 msgid "You canceled the file transfer"
 msgstr "You cancelled the file transfer"
 
-#: ../src/empathy-ft-manager.c:170
+#: ../src/empathy-ft-manager.c:172
 msgid "The other participant canceled the file transfer"
 msgstr "The other participant cancelled the file transfer"
 
-#: ../src/empathy-ft-manager.c:172
+#: ../src/empathy-ft-manager.c:174
 msgid "Error while trying to transfer the file"
 msgstr "Error while trying to transfer the file"
 
-#: ../src/empathy-ft-manager.c:174
+#: ../src/empathy-ft-manager.c:176
 msgid "The other participant is unable to transfer the file"
 msgstr "The other participant is unable to transfer the file"
 
-#: ../src/empathy-ft-manager.c:176
+#: ../src/empathy-ft-manager.c:178
 msgid "Unknown reason"
 msgstr "Unknown reason"
 
 #. translators: first %s is filename, second %s is the contact name
-#: ../src/empathy-ft-manager.c:224
+#: ../src/empathy-ft-manager.c:226
 #, c-format
 msgid "Receiving \"%s\" from %s"
 msgstr "Receiving \"%s\" from %s"
 
 #. translators: first %s is filename, second %s is the contact name
-#: ../src/empathy-ft-manager.c:227
+#: ../src/empathy-ft-manager.c:229
 #, c-format
 msgid "Sending \"%s\" to %s"
 msgstr "Sending \"%s\" to %s"
 
-#: ../src/empathy-ft-manager.c:237
+#: ../src/empathy-ft-manager.c:239
 msgctxt "file size"
 msgid "Unknown"
 msgstr "Unknown"
 
 #. translators: first %s is the transferred size, second %s is
 #. * the total file size
-#: ../src/empathy-ft-manager.c:245
+#: ../src/empathy-ft-manager.c:247
 #, c-format
 msgid "%s of %s"
 msgstr "%s of %s"
 
-#: ../src/empathy-ft-manager.c:252
+#: ../src/empathy-ft-manager.c:254
 msgid "Waiting the other participant's response"
-msgstr "Waiting the other participant's response"
+msgstr "Waiting for the other participant's response"
 
-#: ../src/empathy-ft-manager.c:262
+#: ../src/empathy-ft-manager.c:264
 #, c-format
 msgid "\"%s\" received from %s"
 msgstr "\"%s\" received from %s"
 
-#: ../src/empathy-ft-manager.c:268
+#: ../src/empathy-ft-manager.c:270
 #, c-format
 msgid "\"%s\" sent to %s"
 msgstr "\"%s\" sent to %s"
 
-#: ../src/empathy-ft-manager.c:271
+#: ../src/empathy-ft-manager.c:273
 msgid "File transfer completed"
 msgstr "File transfer completed"
 
-#: ../src/empathy-ft-manager.c:280
+#: ../src/empathy-ft-manager.c:282
 #, c-format
 msgid "\"%s\" receiving from %s"
 msgstr "\"%s\" receiving from %s"
 
-#: ../src/empathy-ft-manager.c:286
+#: ../src/empathy-ft-manager.c:288
 #, c-format
 msgid "\"%s\" sending to %s"
 msgstr "\"%s\" sending to %s"
 
-#: ../src/empathy-ft-manager.c:289
+#: ../src/empathy-ft-manager.c:291
 #, c-format
 msgid "File transfer canceled: %s"
 msgstr "File transfer cancelled: %s"
 
-#: ../src/empathy-ft-manager.c:304
+#: ../src/empathy-ft-manager.c:306
 msgctxt "remaining time"
 msgid "Unknown"
 msgstr "Unknown"
 
-#: ../src/empathy-ft-manager.c:364
+#: ../src/empathy-ft-manager.c:366
 msgctxt "file transfer percent"
 msgid "Unknown"
 msgstr "Unknown"
 
-#: ../src/empathy-ft-manager.c:700
+#: ../src/empathy-ft-manager.c:663
 msgid "%"
 msgstr "%"
 
-#: ../src/empathy-ft-manager.c:712
+#: ../src/empathy-ft-manager.c:675
 msgid "File"
 msgstr "File"
 
-#: ../src/empathy-ft-manager.c:734
+#: ../src/empathy-ft-manager.c:697
 msgid "Remaining"
 msgstr "Remaining"
 
-#: ../src/empathy-ft-manager.c:885
+#: ../src/empathy-ft-manager.c:895
 msgid "Cannot save file to this location"
 msgstr "Cannot save file to this location"
 
-#: ../src/empathy-ft-manager.c:931
+#: ../src/empathy-ft-manager.c:941
 msgid "Save file as..."
-msgstr "Save file as..."
+msgstr "Save file as…"
 
-#: ../src/empathy-ft-manager.c:1001
+#: ../src/empathy-ft-manager.c:1011
 msgid "unknown size"
 msgstr "unknown size"
 
-#: ../src/empathy-ft-manager.c:1007
+#: ../src/empathy-ft-manager.c:1017
 #, c-format
 msgid "%s would like to send you a file"
 msgstr "%s would like to send you a file"
 
-#: ../src/empathy-ft-manager.c:1012
+#: ../src/empathy-ft-manager.c:1022
 #, c-format
 msgid "Do you want to accept the file \"%s\" (%s)?"
 msgstr "Do you want to accept the file \"%s\" (%s)?"
 
 #. Accept button
-#: ../src/empathy-ft-manager.c:1030
+#: ../src/empathy-ft-manager.c:1040
 msgid "_Accept"
 msgstr "_Accept"
 
 #: ../src/empathy-ft-manager.glade.h:1
 msgid "File transfers"
-msgstr "File transfers"
+msgstr "File Transfers"
 
 #: ../src/empathy-ft-manager.glade.h:2
 msgid "Remove completed, canceled and failed file transfers from the list"
 msgstr "Remove completed, cancelled and failed file transfers from the list"
 
 #. Translators: this is the header of a treeview column
-#: ../src/empathy-import-dialog.c:255
+#: ../src/empathy-import-dialog.c:260
 msgid "Import"
 msgstr "Import"
 
-#: ../src/empathy-import-dialog.c:264
+#: ../src/empathy-import-dialog.c:269
 msgid "Protocol"
 msgstr "Protocol"
 
-#: ../src/empathy-import-dialog.c:290
+#: ../src/empathy-import-dialog.c:295
 msgid "Source"
 msgstr "Source"
 
-#: ../src/empathy-import-dialog.c:378
+#: ../src/empathy-import-dialog.c:383
 msgid ""
 "No accounts to import could be found. Empathy currently only supports "
 "importing accounts from Pidgin."
@@ -1922,7 +1930,7 @@ msgstr "Join _Favourites"
 
 #: ../src/empathy-main-window.glade.h:4
 msgid "Join _New..."
-msgstr "Join _New..."
+msgstr "Join _New…"
 
 #: ../src/empathy-main-window.glade.h:5
 msgid "Manage Favorites"
@@ -1938,11 +1946,11 @@ msgstr "_Accounts"
 
 #: ../src/empathy-main-window.glade.h:8
 msgid "_Add Contact..."
-msgstr "_Add Contact..."
+msgstr "_Add Contact…"
 
 #: ../src/empathy-main-window.glade.h:13 ../src/empathy-status-icon.glade.h:2
 msgid "_New Conversation..."
-msgstr "_New Conversation..."
+msgstr "_New Conversation…"
 
 #: ../src/empathy-main-window.glade.h:14
 msgid "_Personal Information"
@@ -2020,7 +2028,7 @@ msgstr "Account connected"
 msgid "Account disconnected"
 msgstr "Account disconnected"
 
-#: ../src/empathy-preferences.c:397
+#: ../src/empathy-preferences.c:398
 msgid "Language"
 msgstr "Language"
 
@@ -2058,7 +2066,7 @@ msgstr "Automatically _connect on startup "
 
 #: ../src/empathy-preferences.glade.h:8
 msgid "Avatars are user chosen images shown in the contact list"
-msgstr "Avatars are user chosen images shown in the contact list"
+msgstr "Avatars are user-chosen images shown in the contact list"
 
 #: ../src/empathy-preferences.glade.h:9
 msgid "Chat Th_eme:"
@@ -2155,8 +2163,744 @@ msgid ""
 "An invitation was offered for service %s, but you don't have the needed "
 "application to handle it"
 msgstr ""
-"An invitation was offered for service %s, but you don't have the needed "
+"An invitation was offered for service %s, but you don't have the necessary "
 "application to handle it"
+
+#~ msgid "Empathy"
+#~ msgstr "Empathy"
+
+#~ msgid "Empathy IM Client"
+#~ msgstr "Empathy IM Client"
+
+#~ msgid "IM Client"
+#~ msgstr "IM Client"
+
+#~ msgid "Empathy can publish the user's location"
+#~ msgstr "Empathy can publish the user's location"
+
+#~ msgid "Empathy can use the GPS to guess the location"
+#~ msgstr "Empathy can use the GPS to guess the location"
+
+#, fuzzy
+#~ msgid "Empathy can use the cellular network to guess the location"
+#~ msgstr "Empathy can use the cellular network to guess the location"
+
+#~ msgid "Empathy can use the network to guess the location"
+#~ msgstr "Empathy can use the network to guess the location"
+
+#~ msgid "Empathy should reduce the location's accuracy"
+#~ msgstr "Empathy should reduce the location's accuracy"
+
+#~ msgid "Enable WebKit Developer Tools"
+#~ msgstr "Enable WebKit Developer Tools"
+
+#~ msgid "MC 4 accounts have been imported"
+#~ msgstr "MC 4 accounts have been imported"
+
+#~ msgid "MC 4 accounts have been imported."
+#~ msgstr "MC 4 accounts have been imported."
+
+#~ msgid "Path of the adium theme to use"
+#~ msgstr "Path of the adium theme to use"
+
+#~ msgid "Path of the adium theme to use if the theme used for chat is adium."
+#~ msgstr "Path of the adium theme to use if the theme used for chat is adium."
+
+#~ msgid "Popup notifications when a contact sign in"
+#~ msgstr "Popup notifications when a contact sign in"
+
+#~ msgid "Popup notifications when a contact sign out"
+#~ msgstr "Popup notifications when a contact sign out"
+
+#~ msgid "Show contact list in rooms"
+#~ msgstr "Show contact list in rooms"
+
+#~ msgid ""
+#~ "Whether WebKit developer tools, such as the Web Inspector, should be "
+#~ "enabled."
+#~ msgstr ""
+#~ "Whether WebKit developer tools, such as the Web Inspector, should be "
+#~ "enabled."
+
+#~ msgid ""
+#~ "Whether or not Empathy can publish the user's location to his contacts."
+#~ msgstr ""
+#~ "Whether or not Empathy can publish the user's location to his contacts."
+
+#~ msgid "Whether or not Empathy can use the GPS to guess the location."
+#~ msgstr "Whether or not Empathy can use the GPS to guess the location."
+
+#, fuzzy
+#~| msgid ""
+#~| "Whether or not Empathy should use the avatar of the contact as the chat "
+#~| "window icon."
+#~ msgid ""
+#~ "Whether or not Empathy can use the cellular network to guess the location."
+#~ msgstr ""
+#~ "Whether or not Empathy can use the cellular network to guess the location."
+
+#~ msgid "Whether or not Empathy can use the network to guess the location."
+#~ msgstr "Whether or not Empathy can use the network to guess the location."
+
+#~ msgid ""
+#~ "Whether or not Empathy should reduce the location's accuracy for privacy "
+#~ "reasons."
+#~ msgstr ""
+#~ "Whether or not Empathy should reduce the location's accuracy for privacy "
+#~ "reasons."
+
+#~ msgid ""
+#~ "Whether or not to show a popup notification when a contact goes offline."
+#~ msgstr ""
+#~ "Whether or not to show a popup notification when a contact goes offline."
+
+#~ msgid ""
+#~ "Whether or not to show a popup notification when a contact goes online."
+#~ msgstr ""
+#~ "Whether or not to show a popup notification when a contact goes online."
+
+#~ msgid "Whether or not to show the contact list in chat rooms."
+#~ msgstr "Whether or not to show the contact list in chat rooms."
+
+#~ msgid "Can't set an empty display name"
+#~ msgstr "Can't set an empty display name"
+
+#~ msgid "The hash of the received file and the sent one do not match"
+#~ msgstr "The hash of the received file and the sent one do not match"
+
+#~ msgid "File transfer not supported by remote contact"
+#~ msgstr "File transfer not supported by remote contact"
+
+#~ msgid "The selected file is not a regular file"
+#~ msgstr "The selected file is not a regular file"
+
+#~ msgid "The selected file is empty"
+#~ msgstr "The selected file is empty"
+
+#~ msgid "Socket type not supported"
+#~ msgstr "Socket type not supported"
+
+#~ msgid "People Nearby"
+#~ msgstr "People Nearby"
+
+#~ msgid "Yahoo! Japan"
+#~ msgstr "Yahoo! Japan"
+
+#~ msgid "Facebook Chat"
+#~ msgstr "Facebook Chat"
+
+#~ msgid "%d second ago"
+#~ msgid_plural "%d seconds ago"
+#~ msgstr[0] "%d second ago"
+#~ msgstr[1] "%d seconds ago"
+
+#~ msgid "%d minute ago"
+#~ msgid_plural "%d minutes ago"
+#~ msgstr[0] "%d minute ago"
+#~ msgstr[1] "%d minutes ago"
+
+#~ msgid "%d hour ago"
+#~ msgid_plural "%d hours ago"
+#~ msgstr[0] "%d hour ago"
+#~ msgstr[1] "%d hours ago"
+
+#~ msgid "%d day ago"
+#~ msgid_plural "%d days ago"
+#~ msgstr[0] "%d day ago"
+#~ msgstr[1] "%d days ago"
+
+#~ msgid "%d week ago"
+#~ msgid_plural "%d weeks ago"
+#~ msgstr[0] "%d week ago"
+#~ msgstr[1] "%d weeks ago"
+
+#~ msgid "%d month ago"
+#~ msgid_plural "%d months ago"
+#~ msgstr[0] "%d month ago"
+#~ msgstr[1] "%d months ago"
+
+#~ msgid "in the future"
+#~ msgstr "in the future"
+
+#~ msgid "<span size=\"small\"><b>Example:</b> MyScreenName</span>"
+#~ msgstr "<span size=\"small\"><b>Example:</b> MyScreenName</span>"
+
+#~ msgid "What is your AIM password?"
+#~ msgstr "What is your AIM password?"
+
+#~ msgid "What is your AIM screen name?"
+#~ msgstr "What is your AIM screen name?"
+
+#~ msgid "<span size=\"small\"><b>Example:</b> username</span>"
+#~ msgstr "<span size=\"small\"><b>Example:</b> username</span>"
+
+#~ msgid "What is your GroupWise User ID?"
+#~ msgstr "What is your GroupWise User ID?"
+
+#~ msgid "What is your GroupWise password?"
+#~ msgstr "What is your GroupWise password?"
+
+#~ msgid "<span size=\"small\"><b>Example:</b> 123456789</span>"
+#~ msgstr "<span size=\"small\"><b>Example:</b> 123456789</span>"
+
+#~ msgid "What is your ICQ UIN?"
+#~ msgstr "What is your ICQ UIN?"
+
+#~ msgid "What is your ICQ password?"
+#~ msgstr "What is your ICQ password?"
+
+#~ msgid "Servers"
+#~ msgstr "Servers"
+
+#, fuzzy
+#~| msgid "<span size=\"small\"><b>Example:</b> user@hotmail.com</span>"
+#~ msgid "<span size=\"small\"><b>Example:</b> user@gmail.com</span>"
+#~ msgstr "<span size=\"small\"><b>Example:</b> user@hotmail.com</span>"
+
+#~ msgid "<span size=\"small\"><b>Example:</b> user@jabber.org</span>"
+#~ msgstr "<span size=\"small\"><b>Example:</b> user@jabber.org</span>"
+
+#, fuzzy
+#~| msgid "What is your Yahoo! ID?"
+#~ msgid "What is your Google ID?"
+#~ msgstr "What is your Yahoo! ID?"
+
+#, fuzzy
+#~| msgid "What is your Yahoo! password?"
+#~ msgid "What is your Google password?"
+#~ msgstr "What is your Yahoo! password?"
+
+#~ msgid "What is your Jabber ID?"
+#~ msgstr "What is your Jabber ID?"
+
+#~ msgid "What is your Jabber password?"
+#~ msgstr "What is your Jabber password?"
+
+#~ msgid "What is your desired Jabber ID?"
+#~ msgstr "What is your desired Jabber ID?"
+
+#~ msgid "What is your desired Jabber password?"
+#~ msgstr "What is your desired Jabber password?"
+
+#~ msgid "<span size=\"small\"><b>Example:</b> user@hotmail.com</span>"
+#~ msgstr "<span size=\"small\"><b>Example:</b> user@hotmail.com</span>"
+
+#~ msgid "What is your Windows Live password?"
+#~ msgstr "What is your Windows Live password?"
+
+#~ msgid "What is your Windows Live user name?"
+#~ msgstr "What is your Windows Live user name?"
+
+#~ msgid "<span size=\"small\"><b>Example:</b> user@my.sip.server</span>"
+#~ msgstr "<span size=\"small\"><b>Example:</b> user@my.sip.server</span>"
+
+#~ msgid "What is your SIP account password?"
+#~ msgstr "What is your SIP account password?"
+
+#~ msgid "What is your SIP login ID?"
+#~ msgstr "What is your SIP login ID?"
+
+#~ msgid "What is your Yahoo! ID?"
+#~ msgstr "What is your Yahoo! ID?"
+
+#~ msgid "What is your Yahoo! password?"
+#~ msgstr "What is your Yahoo! password?"
+
+#~ msgid "Failed to reconnect this chat"
+#~ msgstr "Failed to reconnect this chat"
+
+#~ msgid "Unsupported command"
+#~ msgstr "Unsupported command"
+
+#~ msgid "(No Suggestions)"
+#~ msgstr "(No Suggestions)"
+
+#~ msgid "_Spelling Suggestions"
+#~ msgstr "_Spelling Suggestions"
+
+#~ msgid "%s has disconnected"
+#~ msgstr "%s has disconnected"
+
+#~ msgid "%1$s was kicked by %2$s"
+#~ msgstr "%1$s was kicked by %2$s"
+
+#~ msgid "%s was kicked"
+#~ msgstr "%s was kicked"
+
+#~ msgid "%1$s was banned by %2$s"
+#~ msgstr "%1$s was banned by %2$s"
+
+#~ msgid "%s was banned"
+#~ msgstr "%s was banned"
+
+#~ msgid " (%s)"
+#~ msgstr " (%s)"
+
+#~ msgctxt "menu item"
+#~ msgid "_Audio Call"
+#~ msgstr "_Audio Call"
+
+#~ msgctxt "menu item"
+#~ msgid "_Video Call"
+#~ msgstr "_Video Call"
+
+#~ msgid "Share my desktop"
+#~ msgstr "Share my desktop"
+
+#~ msgid "Country ISO Code:"
+#~ msgstr "Country ISO Code:"
+
+#~ msgid "Country:"
+#~ msgstr "Country:"
+
+#~ msgid "State:"
+#~ msgstr "State:"
+
+#~ msgid "City:"
+#~ msgstr "City:"
+
+#~ msgid "Area:"
+#~ msgstr "Area:"
+
+#, fuzzy
+#~ msgid "Postal Code:"
+#~ msgstr "Postal Code:"
+
+#~ msgid "Street:"
+#~ msgstr "Street:"
+
+#~ msgid "Building:"
+#~ msgstr "Building:"
+
+#~ msgid "Floor:"
+#~ msgstr "Floor:"
+
+#~ msgid "Room:"
+#~ msgstr "Room:"
+
+#~ msgid "Description:"
+#~ msgstr "Description:"
+
+#~ msgid "URI:"
+#~ msgstr "URI:"
+
+#~ msgid "Accuracy Level:"
+#~ msgstr "Accuracy Level:"
+
+#~ msgid "Error:"
+#~ msgstr "Error:"
+
+#~ msgid "Vertical Error (meters):"
+#~ msgstr "Vertical Error (metres):"
+
+#~ msgid "Horizontal Error (meters):"
+#~ msgstr "Horizontal Error (metres):"
+
+#~ msgid "Speed:"
+#~ msgstr "Speed:"
+
+#~ msgid "Bearing:"
+#~ msgstr "Bearing:"
+
+#~ msgid "Climb Speed:"
+#~ msgstr "Climb Speed:"
+
+#~ msgid "Last Updated on:"
+#~ msgstr "Last Updated on:"
+
+#~ msgid "Longitude:"
+#~ msgstr "Longitude:"
+
+#~ msgid "Latitude:"
+#~ msgstr "Latitude:"
+
+#~ msgid "Altitude:"
+#~ msgstr "Altitude:"
+
+#~ msgid "<b>Location</b>"
+#~ msgstr "<b>Location</b>"
+
+#~ msgid "<b>Location</b>, "
+#~ msgstr "<b>Location</b>, "
+
+#~ msgid "%B %e, %Y at %R UTC"
+#~ msgstr "%e %B, %Y at %R UTC"
+
+#~ msgid "<b>Location</b> at (date)\t"
+#~ msgstr "<b>Location</b> at (date)\t"
+
+#~ msgid "Contact Details"
+#~ msgstr "Contact Details"
+
+#~ msgid "Groups"
+#~ msgstr "Groups"
+
+#~ msgid "Custom Message..."
+#~ msgstr "Custom Message..."
+
+#~ msgid "Edit Custom Messages..."
+#~ msgstr "Edit Custom Messages..."
+
+#~ msgid "Click to remove this status as a favorite"
+#~ msgstr "Click to remove this status as a favourite"
+
+#~ msgid "Click to make this status a favorite"
+#~ msgstr "Click to make this status a favourite"
+
+#~ msgid "Set status"
+#~ msgstr "Set status"
+
+#~ msgid "Set your presence and current status"
+#~ msgstr "Set your presence and current status"
+
+#~ msgid "Enter Custom Message"
+#~ msgstr "Enter Custom Message"
+
+#~ msgid "Edit Custom Messages"
+#~ msgstr "Edit Custom Messages"
+
+#~ msgid "Add _New Preset"
+#~ msgstr "Add _New Preset"
+
+#~ msgid "Saved Presets"
+#~ msgstr "Saved Presets"
+
+#~ msgid "Select a destination"
+#~ msgstr "Select a destination"
+
+#~ msgid "- Empathy IM Client"
+#~ msgstr "- Empathy IM Client"
+
+#~ msgid "There has been an error while importing the accounts."
+#~ msgstr "There has been an error while importing the accounts."
+
+#~ msgid "There has been an error while parsing the account details."
+#~ msgstr "There has been an error while parsing the account details."
+
+#~ msgid "There has been an error while creating the account."
+#~ msgstr "There has been an error while creating the account."
+
+#~ msgid "There has been an error."
+#~ msgstr "There has been an error."
+
+#~ msgid "The error message was: <span style=\"italic\">%s</span>"
+#~ msgstr "The error message was: <span style=\"italic\">%s</span>"
+
+#, fuzzy
+#~ msgid ""
+#~ "You can either go back and try to enter your accounts' details again or "
+#~ "quit this assistant and add accounts later from the Edit menu."
+#~ msgstr ""
+#~ "You can either go back and try to enter your account's details again or "
+#~ "quit this assistant and add accounts later from the Edit menu."
+
+#~ msgid "An error occurred"
+#~ msgstr "An error occurred"
+
+#~ msgid "What kind of chat account do you have?"
+#~ msgstr "What kind of chat account do you have?"
+
+#~ msgid "Enter your account details"
+#~ msgstr "Enter your account details"
+
+#~ msgid "What kind of chat account do you want to create?"
+#~ msgstr "What kind of chat account do you want to create?"
+
+#~ msgid "Do you want to create other chat accounts?"
+#~ msgstr "Do you want to create other chat accounts?"
+
+#~ msgid "Enter the details for the new account"
+#~ msgstr "Enter the details for the new account"
+
+#, fuzzy
+#~ msgid ""
+#~ "With Empathy you can chat with people online nearby and with friends and "
+#~ "colleagues who use Google Talk, AIM, Windows Live and many other chat "
+#~ "programs. With a microphone or a webcam you can also have audio or video "
+#~ "calls."
+#~ msgstr ""
+#~ "With Empathy you can chat with people online nearby and with friends and "
+#~ "colleagues who use Google Talk, AIM, Windows Live and many other chat "
+#~ "programs. With a microphone or a webcam you can also have audio or video "
+#~ "calls."
+
+#~ msgid "Do you have an account you've been using with another chat program?"
+#~ msgstr "Do you have an account you've been using with another chat program?"
+
+#~ msgid "Yes, import my account details from "
+#~ msgstr "Yes, import my account details from "
+
+#~ msgid "Yes, I'll enter my account details now"
+#~ msgstr "Yes, I'll enter my account details now"
+
+#~ msgid "No, I want a new account"
+#~ msgstr "No, I want a new account"
+
+#~ msgid "No, I just want to see people online nearby for now"
+#~ msgstr "No, I just want to see people online nearby for now"
+
+#~ msgid "Yes"
+#~ msgstr "Yes"
+
+#~ msgid "No, that's all for now"
+#~ msgstr "No, that's all for now"
+
+#~ msgid "Welcome to Empathy"
+#~ msgstr "Welcome to Empathy"
+
+#~ msgid "Import your existing accounts"
+#~ msgstr "Import your existing accounts"
+
+#, fuzzy
+#~| msgid "%s on %s"
+#~ msgid "%1$s on %2$s"
+#~ msgstr "%s on %s"
+
+#~ msgid "%s Account"
+#~ msgstr "%s Account"
+
+#~ msgid "New account"
+#~ msgstr "New account"
+
+#, fuzzy
+#~| msgid ""
+#~| "You are about to remove your %s account!\n"
+#~| "Are you sure you want to proceed?"
+#~ msgid ""
+#~ "You are about to create a new account, which will discard\n"
+#~ "your changes. Are you sure you want to proceed?"
+#~ msgstr ""
+#~ "You are about to remove your %s account!\n"
+#~ "Are you sure you want to proceed?"
+
+#, fuzzy
+#~| msgid ""
+#~| "You are about to remove your %s account!\n"
+#~| "Are you sure you want to proceed?"
+#~ msgid ""
+#~ "You are about to select another account, which will discard\n"
+#~ "your changes. Are you sure you want to proceed?"
+#~ msgstr ""
+#~ "You are about to remove your %s account!\n"
+#~ "Are you sure you want to proceed?"
+
+#, fuzzy
+#~| msgid ""
+#~| "You are about to remove your %s account!\n"
+#~| "Are you sure you want to proceed?"
+#~ msgid ""
+#~ "You are about to close the window, which will discard\n"
+#~ "your changes. Are you sure you want to proceed?"
+#~ msgstr ""
+#~ "You are about to remove your %s account!\n"
+#~ "Are you sure you want to proceed?"
+
+#~ msgid "Add new"
+#~ msgstr "Add new"
+
+#~ msgid "_Add..."
+#~ msgstr "_Add..."
+
+#~ msgid "_Reuse an existing account"
+#~ msgstr "_Reuse an existing account"
+
+#~ msgid "account"
+#~ msgstr "account"
+
+#~ msgid "Call with %s"
+#~ msgstr "Call with %s"
+
+#~ msgid "Call"
+#~ msgstr "Call"
+
+#~ msgid "Redial"
+#~ msgstr "Redial"
+
+#~ msgid "%s is now offline."
+#~ msgstr "%s is now offline."
+
+#~ msgid "%s is now online."
+#~ msgstr "%s is now online."
+
+#~ msgid "%s of %s at %s/s"
+#~ msgstr "%s of %s at %s/s"
+
+#~ msgid "Error receiving \"%s\" from %s"
+#~ msgstr "Error receiving \"%s\" from %s"
+
+#~ msgid "Error receiving a file"
+#~ msgstr "Error receiving a file"
+
+#~ msgid "Error sending \"%s\" to %s"
+#~ msgstr "Error sending \"%s\" to %s"
+
+#~ msgid "Error sending a file"
+#~ msgstr "Error sending a file"
+
+#~ msgid "Checking integrity of \"%s\""
+#~ msgstr "Checking integrity of \"%s\""
+
+#~ msgid "Hashing \"%s\""
+#~ msgstr "Hashing \"%s\""
+
+#~ msgid "%s account"
+#~ msgstr "%s account"
+
+#~ msgid "Contacts on a _Map"
+#~ msgstr "Contacts on a _Map"
+
+#~ msgid "N_ormal Size"
+#~ msgstr "N_ormal Size"
+
+#~ msgid "Normal Size With _Avatars"
+#~ msgstr "Normal Size With _Avatars"
+
+#~ msgid "_Compact Size"
+#~ msgstr "_Compact Size"
+
+#~ msgid "_Debug"
+#~ msgstr "_Debug"
+
+#~ msgid "_File Transfers"
+#~ msgstr "_File Transfers"
+
+#~ msgid "_Join..."
+#~ msgstr "_Join..."
+
+#~ msgid "_Offline Contacts"
+#~ msgstr "_Offline Contacts"
+
+#~ msgid "_Previous Conversations"
+#~ msgstr "_Previous Conversations"
+
+#~ msgid "Chat Room"
+#~ msgstr "Chat Room"
+
+#~ msgid "Members"
+#~ msgstr "Members"
+
+#~ msgctxt ""
+#~ "Room/Join's roomlist tooltip. Parametersare a channel name, yes/no, yes/"
+#~ "no and a number."
+#~ msgid ""
+#~ "<b>%s</b>\n"
+#~ "Invite required: %s\n"
+#~ "Password required: %s\n"
+#~ "Members: %s"
+#~ msgstr ""
+#~ "<b>%s</b>\n"
+#~ "Invite required: %s\n"
+#~ "Password required: %s\n"
+#~ "Members: %s"
+
+#~ msgid "No"
+#~ msgstr "No"
+
+#~ msgid "Could not start room listing"
+#~ msgstr "Could not start room listing"
+
+#~ msgid "Could not stop room listing"
+#~ msgstr "Could not stop room listing"
+
+#~ msgid "Couldn't load room list"
+#~ msgstr "Couldn't load room list"
+
+#~ msgid "Join Room"
+#~ msgstr "Join Room"
+
+#~ msgid "Room List"
+#~ msgstr "Room List"
+
+#~ msgid "Allow _GPS usage"
+#~ msgstr "Allow _GPS usage"
+
+#~ msgid "Allow _cellphone usage"
+#~ msgstr "Allow _mobile phone usage"
+
+#~ msgid "Allow _network usage"
+#~ msgstr "Allow _network usage"
+
+#~ msgid "Enable notifications when a contact comes online"
+#~ msgstr "Enable notifications when a contact comes online"
+
+#~ msgid "Enable notifications when a contact goes offline"
+#~ msgstr "Enable notifications when a contact goes offline"
+
+#~ msgid "Geoclue Settings"
+#~ msgstr "Geoclue Settings"
+
+#~ msgid "Location"
+#~ msgstr "Location"
+
+#~ msgid "Privacy"
+#~ msgstr "Privacy"
+
+#~ msgid ""
+#~ "Reduced location accuracy means that nothing more precise than your city, "
+#~ "state and country will be published.  GPS coordinates will be accurate to "
+#~ "1 decimal place."
+#~ msgstr ""
+#~ "Reduced location accuracy means that nothing more precise than your city, "
+#~ "state and country will be published.  GPS coordinates will be accurate to "
+#~ "1 decimal place."
+
+#~ msgid "Show contact _list in rooms"
+#~ msgstr "Show contact _list in rooms"
+
+#~ msgid "_Publish location to my contacts"
+#~ msgstr "_Publish location to my contacts"
+
+#~ msgid "_Reduce location accuracy"
+#~ msgstr "_Reduce location accuracy"
+
+#~ msgid "Contact Map View"
+#~ msgstr "Contact Map View"
+
+#~ msgid "Error"
+#~ msgstr "Error"
+
+#~ msgid "Critical"
+#~ msgstr "Critical"
+
+#~ msgid "Warning"
+#~ msgstr "Warning"
+
+#~ msgid "Info"
+#~ msgstr "Info"
+
+#~ msgid "Debug"
+#~ msgstr "Debug"
+
+#~ msgid "Save"
+#~ msgstr "Save"
+
+#~ msgid "Debug Window"
+#~ msgstr "Debug Window"
+
+#~ msgid "Pause"
+#~ msgstr "Pause"
+
+#~ msgid "Level "
+#~ msgstr "Level "
+
+#~ msgid "Time"
+#~ msgstr "Time"
+
+#~ msgid "Domain"
+#~ msgstr "Domain"
+
+#~ msgid "Category"
+#~ msgstr "Category"
+
+#~ msgid "Level"
+#~ msgstr "Level"
+
+#~ msgid ""
+#~ "The selected connection manager does not support the remote debugging "
+#~ "extension."
+#~ msgstr ""
+#~ "The selected connection manager does not support the remote debugging "
+#~ "extension."
 
 #~ msgid "Enable popup when contact is available"
 #~ msgstr "Enable popup when contact is available"
@@ -2173,17 +2917,8 @@ msgstr ""
 #~ msgid "Closing this window will end the call in progress."
 #~ msgstr "Closing this window will end the call in progress."
 
-#~ msgid "_End Call"
-#~ msgstr "_End Call"
-
-#~ msgid "Empathy Call"
-#~ msgstr "Empathy Call"
-
 #~ msgid "Readying"
 #~ msgstr "Readying"
-
-#~ msgid "%s - Empathy Call"
-#~ msgstr "%s - Empathy Call"
 
 #~ msgid ""
 #~ "Incoming call from %s rejected because there is already a running call."
@@ -2363,9 +3098,6 @@ msgstr ""
 #~ msgid "gtk-quit"
 #~ msgstr "gtk-quit"
 
-#~ msgid "<b>Options</b>"
-#~ msgstr "<b>Options</b>"
-
 #~ msgid "_Use for chat rooms"
 #~ msgstr "_Use for chat rooms"
 
@@ -2374,9 +3106,6 @@ msgstr ""
 
 #~ msgid "irc account settings"
 #~ msgstr "irc account settings"
-
-#~ msgid "jabber account settings"
-#~ msgstr "jabber account settings"
 
 #~ msgid "msn account settings"
 #~ msgstr "msn account settings"
@@ -2417,20 +3146,11 @@ msgstr ""
 #~ msgid "_Copy"
 #~ msgstr "_Copy"
 
-#~ msgid "_Paste"
-#~ msgstr "_Paste"
-
 #~ msgid "_Show Contacts"
 #~ msgstr "_Show Contacts"
 
 #~ msgid "Enter the new topic you want to set for this room:"
 #~ msgstr "Enter the new topic you want to set for this room:"
-
-#~ msgid "%s went offline"
-#~ msgstr "%s went offline"
-
-#~ msgid "%s has come online"
-#~ msgstr "%s has come online"
 
 #, fuzzy
 #~ msgid "Instant Messenger"
@@ -2460,9 +3180,6 @@ msgstr ""
 #~ msgstr ""
 #~ "<small><b><span foreground=\"#555\">Example: user@jabber.org</span></b></"
 #~ "small>"
-
-#~ msgid "Chat Room"
-#~ msgstr "Chat Room"
 
 #~ msgid "<b>Languages</b>"
 #~ msgstr "<b>Languages</b>"
@@ -2507,9 +3224,6 @@ msgstr ""
 #~ msgid "<b>Subscription</b>"
 #~ msgstr "<b>Subscription</b>"
 
-#~ msgid "<span size=\"smaller\">Example: Mikael or user@server.org</span>"
-#~ msgstr "<span size=\"smaller\">Example: Mikael or user@server.org</span>"
-
 #~ msgid ""
 #~ "<span size=\"smaller\">Note: You must select an account if the contact is "
 #~ "unknown</span>"
@@ -2531,12 +3245,6 @@ msgstr ""
 
 #~ msgid "Contact List - Gossip"
 #~ msgstr "Contact List - Gossip"
-
-#~ msgid "Contacts"
-#~ msgstr "Contacts"
-
-#~ msgid "Country:"
-#~ msgstr "Country:"
 
 #~ msgid "Edit Groups"
 #~ msgstr "Edit Groups"
@@ -2613,9 +3321,6 @@ msgstr ""
 
 #~ msgid "_Birthday:"
 #~ msgstr "_Birthday:"
-
-#~ msgid "_Description:"
-#~ msgstr "_Description:"
 
 #~ msgid "_Disconnect"
 #~ msgstr "_Disconnect"
