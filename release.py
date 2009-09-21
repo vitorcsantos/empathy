@@ -9,7 +9,7 @@ import time
 from string import Template
 from optparse import OptionParser
 
-last_tag_patern = 'EMPATHY_2_27*'
+last_tag_patern = 'EMPATHY_2_28*'
 username = 'xclaesse'
 upload_server = 'master.gnome.org'
 template = '''\
