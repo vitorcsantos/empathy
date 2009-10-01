@@ -1081,9 +1081,12 @@ account_widget_switch_flipped_cb (NbtkGtkLightSwitch *sw,
 {
   EmpathyAccountWidgetPriv *priv = GET_PRIV (user_data);
   EmpathyAccount *account;
+#ifndef HAVE_NBTK
   gboolean state;
 
   state = gtk_toggle_button_get_active (toggle_button);
+#endif
+
   account = empathy_account_settings_get_account (priv->settings);
 
   /* Enable the account according to the value of the "Enabled" checkbox */
