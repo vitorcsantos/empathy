@@ -130,6 +130,7 @@ notification_close_helper (EmpathyStatusIconPriv *priv)
 	}
 }
 
+#ifdef HAVE_NBTK
 static void
 notification_action_cb (NotifyNotification *notification,
 			gchar              *action,
@@ -140,6 +141,7 @@ notification_action_cb (NotifyNotification *notification,
 	if (priv->event)
 		empathy_event_activate (priv->event);
 }
+#endif
 
 static void
 status_icon_update_notification (EmpathyStatusIcon *icon)
