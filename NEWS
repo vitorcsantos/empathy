@@ -1,3 +1,32 @@
+NEW in 2.28.0.1
+===============
+
+This new release in the stable 2.28 branch fixes critical bugs and
+introduces some Moblin specific UI changes. These changes shouldn't affect
+GNOME users as they'll be activated only if Empathy is built with
+--enable-moblin which is disabled by default. As a side effect of this,
+few strings have been added, here again, that shouldn't break existing
+translations in GNOME.
+
+Bugs fixed:
+ - Fixed #589408, Add respond button to notifications (Rob Bradford) (Moblin only)
+ - Fixed #595945, Crash when doing nothing (Cosimo Cecchi)
+ - Fixed #595962, Criticals endlessly if you open and contract a group too fast. (Will Thompson)
+ - Fixed #596044, --hide-contact-list doesn't work (Cosimo Cecchi)
+ - Fixed #596303, Missing file fallback for Adium themes not implemented. (Xavier Claessens)
+ - Fixed #596317, Adium themes always attempt to combine consecutive messages. (Xavier Claessens)
+ - Fixed #597125, libnotify chat bubbles aren't displayed once the first bubble disappeared (Rob Bradford)
+
+Translations:
+ - Updated es Translation (Jorge González)
+ - Updated he Translation (Yaron Shahrabani)
+ - Updated it Translation (Milo Casagrande)
+ - Updated ja Translation (Kentaro Kazuhama)
+ - Updated pl Translation (Tomasz Dominikowski)
+
+Documentation translations:
+ - Updated de Documentation translation (Mario Blättermann)
+
 NEW in 2.28.0
 ==============
 Bugs fixed:
