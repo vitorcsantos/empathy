@@ -169,6 +169,7 @@ status_icon_update_notification (EmpathyStatusIcon *icon)
 			notify_notification_set_timeout (priv->notification,
 							 NOTIFY_EXPIRES_DEFAULT);
 
+#ifdef HAVE_NBTK
 			if (priv->notify_supports_actions) {
 				notify_notification_add_action (priv->notification,
 					"respond",
@@ -177,6 +178,7 @@ status_icon_update_notification (EmpathyStatusIcon *icon)
 					icon,
 					NULL);
 			}
+#endif
 
 			g_signal_connect (priv->notification, "closed",
 					  G_CALLBACK (status_icon_notification_closed_cb), icon);
