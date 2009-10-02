@@ -393,6 +393,7 @@ accounts_dialog_protocol_changed_cb (GtkWidget *widget,
       return;
     }
 
+#ifndef HAVE_NBTK
   if (tp_connection_manager_protocol_can_register (proto) && !is_gtalk)
     {
       gtk_widget_show (priv->radiobutton_register);
@@ -403,6 +404,11 @@ accounts_dialog_protocol_changed_cb (GtkWidget *widget,
       gtk_widget_hide (priv->radiobutton_register);
       gtk_widget_hide (priv->radiobutton_reuse);
     }
+#else
+  gtk_widget_hide (priv->radiobutton_register);
+  gtk_widget_hide (priv->radiobutton_reuse);
+#endif
+
   g_object_unref (cm);
 }
 
@@ -792,16 +798,26 @@ accounts_dialog_view_delete_activated_cb (EmpathyCellRendererActivatable *cell,
     }
 
   question_dialog_primary_text = g_strdup_printf (
+#ifndef HAVE_NBTK
       _("You are about to remove your %s account!\n"
           "Are you sure you want to proceed?"),
+#else
+      /* Translators: this is used only when built on a moblin platform */
+      _("Do you want to remove %s from your computer?"),
+#endif /* HAVE_NBTK */
       empathy_account_get_display_name (account));
 
   accounts_dialog_show_question_dialog (dialog, question_dialog_primary_text,
+#ifndef HAVE_NBTK
       _("Any associated conversations and chat rooms will NOT be "
           "removed if you decide to proceed.\n"
           "\n"
           "Should you decide to add the account back at a later time, "
           "they will still be available."),
+#else
+      /* Translators: this is used only when built on a moblin platform */
+      _("This will not remove your account on the server."),
+#endif /* HAVE_NBTK */
       G_CALLBACK (accounts_dialog_delete_account_response_cb),
       dialog,
       GTK_STOCK_CANCEL, GTK_RESPONSE_NO,
@@ -840,6 +856,9 @@ accounts_dialog_model_add_columns (EmpathyAccountsDialog *dialog)
       accounts_dialog_model_pixbuf_data_func,
       dialog,
       NULL);
+#ifdef HAVE_NBTK
+  g_object_set (cell, "ypad", 4, NULL);
+#endif
 
   /* Name renderer */
   cell = gtk_cell_renderer_text_new ();
@@ -862,6 +881,9 @@ accounts_dialog_model_add_columns (EmpathyAccountsDialog *dialog)
   gtk_tree_view_column_pack_start (column, cell, FALSE);
   g_object_set (cell,
         "icon-name", GTK_STOCK_DELETE,
+#ifdef HAVE_NBTK
+        "show-on-select", TRUE,
+#endif
         NULL);
 
   g_signal_connect (cell, "path-activated",
@@ -1410,6 +1432,7 @@ accounts_dialog_button_create_clicked_cb (GtkWidget *button,
 
   g_free (str);
 
+#ifndef HAVE_NBTK
   if (tp_connection_manager_protocol_can_register (proto))
     {
       gboolean active;
@@ -1419,6 +1442,7 @@ accounts_dialog_button_create_clicked_cb (GtkWidget *button,
       if (active)
         empathy_account_settings_set_boolean (settings, "register", TRUE);
     }
+#endif
 
   if (is_gtalk)
     empathy_account_settings_set_icon_name_async (settings, "im-google-talk",
@@ -1605,6 +1629,9 @@ accounts_dialog_build_ui (EmpathyAccountsDialog *dialog)
   GtkBuilder                   *gui;
   gchar                        *filename;
   EmpathyAccountsDialogPriv    *priv = GET_PRIV (dialog);
+#ifdef HAVE_NBTK
+  GtkWidget                    *action_area;
+#endif
 
   filename = empathy_file_lookup ("empathy-accounts-dialog.ui", "src");
 
@@ -1637,6 +1664,14 @@ accounts_dialog_build_ui (EmpathyAccountsDialog *dialog)
       NULL);
 
   g_object_unref (gui);
+
+#ifdef HAVE_NBTK
+  action_area = gtk_dialog_get_action_area (GTK_DIALOG (priv->window));
+  gtk_widget_hide (action_area);
+
+  gtk_button_set_label (GTK_BUTTON (priv->button_create), GTK_STOCK_ADD);
+  gtk_button_set_use_stock (GTK_BUTTON (priv->button_create), TRUE);
+#endif
 
   priv->combobox_protocol = empathy_protocol_chooser_new ();
   gtk_box_pack_start (GTK_BOX (priv->hbox_type),
