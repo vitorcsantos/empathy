@@ -135,11 +135,6 @@ enum {
   PROP_PARENT = 1
 };
 
-static void accounts_dialog_account_display_name_changed_cb (
-    EmpathyAccount *account,
-    GParamSpec *pspec,
-    gpointer user_data);
-
 static EmpathyAccountSettings * accounts_dialog_model_get_selected_settings (
     EmpathyAccountsDialog *dialog);
 
@@ -761,8 +756,6 @@ accounts_dialog_delete_account_response_cb (GtkDialog *message_dialog,
 
       if (account != NULL)
         {
-          g_signal_handlers_disconnect_by_func (account,
-              accounts_dialog_account_display_name_changed_cb, account_dialog);
           empathy_account_remove_async (account, NULL, NULL);
           g_object_unref (account);
           account = NULL;
@@ -1280,8 +1273,9 @@ accounts_dialog_add_account (EmpathyAccountsDialog *dialog,
       TP_CONNECTION_STATUS_DISCONNECTED,
       dialog);
 
-  g_signal_connect (account, "notify::display-name",
-      G_CALLBACK (accounts_dialog_account_display_name_changed_cb), dialog);
+  empathy_signal_connect_weak (account, "notify::display-name",
+      G_CALLBACK (accounts_dialog_account_display_name_changed_cb),
+      G_OBJECT (dialog));
 
   g_object_unref (settings);
 }
@@ -1336,8 +1330,6 @@ accounts_dialog_account_removed_cb (EmpathyAccountManager *manager,
 
   if (accounts_dialog_get_account_iter (dialog, account, &iter))
     {
-      g_signal_handlers_disconnect_by_func (account,
-          accounts_dialog_account_display_name_changed_cb, dialog);
       gtk_list_store_remove (GTK_LIST_STORE (
             gtk_tree_view_get_model (GTK_TREE_VIEW (priv->treeview))), &iter);
     }
