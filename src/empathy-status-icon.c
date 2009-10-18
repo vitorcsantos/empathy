@@ -130,7 +130,7 @@ notification_close_helper (EmpathyStatusIconPriv *priv)
 	}
 }
 
-#ifdef HAVE_NBTK
+#ifdef HAVE_MOBLIN
 static void
 notification_action_cb (NotifyNotification *notification,
 			gchar              *action,
@@ -171,7 +171,7 @@ status_icon_update_notification (EmpathyStatusIcon *icon)
 			notify_notification_set_timeout (priv->notification,
 							 NOTIFY_EXPIRES_DEFAULT);
 
-#ifdef HAVE_NBTK
+#ifdef HAVE_MOBLIN
 			if (priv->notify_supports_actions) {
 				notify_notification_add_action (priv->notification,
 					"respond",
