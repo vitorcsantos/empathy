@@ -1,3 +1,48 @@
+NEW in 2.28.1
+=============
+
+The "Xavier, 25 affonds!" release.
+
+Bugs fixed:
+ - Fixed #594619, asserts in empathy_idle_set_presence() after suspend/resume (Jonny Lamb)
+ - Fixed #598423, empathy crashed when dnding an avatar image (Cosimo Cecchi)
+ - Fixed #598452, crashed with SIGSEGV in contact_list_store_iface_setup() (Guillaume Desmottes)
+ - Fixed #581488, copy/paste is broken
+ - Fixed #594654, empathy crashed with SIGSEGV in empathy_account_settings_get_default()
+ - Fixed #594908, empathy crashed with SIGSEGV in tp_contact_list_got_added_members_cb()
+ - Fixed #597125, libnotify chat bubbles aren't displayed once the first bubble disappeared
+ - Fixed #597289, Info dialog says "Edit contact information"
+ - Fixed #597293, libempathy header files are wrong
+ - Fixed #597416, empathy crashed with SIGSEGV in empathy_account_settings_get_account() (Guillaume Desmottes)
+ - Fixed #598332, Crash when CM crashes during a channel request. (Mike Ruprecht)
+ - Fixed #598354, Presence chooser shouldn't be sensitive when there are no accounts (Sjoerd Simons)
+ - Fixed #598355, Use pretty names for protocol in account display names (Sjoerd Simons)
+ - Fixed #598408, Changing display name can crash empathy (Guillaume Desmottes)
+ - Fixed #598432, empathy crashed with SIGSEGV in empathy_call_window_audio_input_level_changed_cb() (Guillaume Desmottes)
+ - Fixed #598453, empathy crashed with SIGSEGV in empathy_call_window_got_self_contact_cb() (Guillaume Desmottes)
+ - Fixed #598628, Empathy start isn't idempotent
+
+Translations:
+ - Updated bg Translation (Alexander Shopov)
+ - Updated ca Translation (Gil Forcada)
+ - Updated cs Translation (Petr Kovar)
+ - Updated de Translation (Mario Blättermann)
+ - Updated es Translation (Jorge González)
+ - Updated fr Translation (Claude Paroz)
+ - Updated hu Translation (Gabor Kelemen)
+ - Updated it Translation (Milo Casagrande)
+ - Updated nb Translation (Kjartan Maraas)
+ - Updated pa Translation (A S Alam)
+ - Updated pt_BR Translation (André Gondim)
+ - Updated ru Translation (Leonid Kanter)
+ - Updated sl Translation (Matej Urbančič)
+ - Updated sv Translation (Daniel Nylander)
+ - Updated th Translation (Theppitak Karoonboonyanan)
+
+Documentation translations:
+ - Updated de Documentation translation (Mario Blättermann)
+ - Updated el Documentation translation (Jennie Petoumenou)
+
 NEW in 2.28.0.1
 ===============
 
