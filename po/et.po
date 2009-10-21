@@ -11,9 +11,9 @@ msgstr ""
 "Project-Id-Version: empathy 2.28\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=empathy&component=general\n"
-"POT-Creation-Date: 2009-09-16 18:17+0000\n"
-"PO-Revision-Date: 2009-09-17 10:17+0300\n"
-"Last-Translator: Mattias Põldaru <mahfiaz gmail com>\n"
+"POT-Creation-Date: 2009-10-02 16:41+0000\n"
+"PO-Revision-Date: 2009-10-19 10:52+0300\n"
+"Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <et@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -449,8 +449,16 @@ msgstr "Kõik"
 msgid "%s:"
 msgstr "%s:"
 
+#| msgid "_Join"
+msgid "L_og in"
+msgstr "Logi _sisse"
+
 msgid "Enabled"
 msgstr "Lubatud"
+
+#.  Translators: this is used only when built on a moblin platform 
+msgid "Account:"
+msgstr "Konto:"
 
 msgid "<span size=\"small\"><b>Example:</b> MyScreenName</span>"
 msgstr "<span size=\"small\"><b>Näide:</b> MinuEkraaniNimi</span>"
@@ -942,9 +950,6 @@ msgstr "%e. %B %Y kell %R UTC"
 
 msgid "<b>Location</b> at (date)\t"
 msgstr "<b>Asukoht</b> kuupäeval\t"
-
-msgid "Account:"
-msgstr "Konto:"
 
 msgid "Alias:"
 msgstr "Alias:"
@@ -1450,6 +1455,12 @@ msgstr ""
 "Sa oled eemaldamas oma %s kontot.\n"
 "Kas sa soovid seda teha?"
 
+#. Translators: this is used only when built on a moblin platform
+#, c-format
+#| msgid "Do you really want to remove the group '%s'?"
+msgid "Do you want to remove %s from your computer?"
+msgstr "Kas tahad '%s' oma arvutist eemaldada?"
+
 msgid ""
 "Any associated conversations and chat rooms will NOT be removed if you "
 "decide to proceed.\n"
@@ -1460,6 +1471,10 @@ msgstr ""
 "Jätkamisel EI eemaldata ühtegi seotud vestlust ega jututuba.\n"
 "\n"
 "Kui sa peaksid konto hiljem uuesti lisama, on need andmed ikka alles."
+
+#. Translators: this is used only when built on a moblin platform
+msgid "This will not remove your account on the server."
+msgstr "See eemaldab serverist sinu konto."
 
 msgid ""
 "You are about to select another account, which will discard\n"
@@ -1474,6 +1489,11 @@ msgid ""
 msgstr ""
 "Sa oled akent sulgemas ja see tühistab tehtud muudatused\n"
 "Kas sa soovid seda teha?"
+
+#.  Translators: this is used only when built on a moblin platform 
+#| msgid "_Next Tab"
+msgid "_Next"
+msgstr "_Järgmine"
 
 msgid "Accounts"
 msgstr "Kontod"
@@ -1830,7 +1850,7 @@ msgid "Authentication failed"
 msgstr "Tõrge autentimisel"
 
 msgid "Encryption error"
-msgstr "Krüpteerimise viga"
+msgstr "Krüptimise viga"
 
 msgid "Name in use"
 msgstr "Nimi on juba kasutusel"
@@ -2105,6 +2125,9 @@ msgstr "_Minu asukoht avaldatakse kontaktidele"
 
 msgid "_Reduce location accuracy"
 msgstr "_Asukoha täpsust vähendatakse"
+
+msgid "Respond"
+msgstr "Vastamine"
 
 msgid "Status"
 msgstr "Olek"
