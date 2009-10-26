@@ -324,7 +324,10 @@ theme_adium_parse_body (EmpathyThemeAdium *theme,
 			if (s > last) {
 				/* Append the text between last link (or the
 				 * start of the message) and this link */
-				g_string_append_len (string, text + last, s - last);
+				gchar *str;
+				str = g_markup_escape_text (text + last, s - last);
+				g_string_append (string, str);
+				g_free (str);
 			}
 
 			/* Append the link inside <a href=""></a> tag */
@@ -342,7 +345,10 @@ theme_adium_parse_body (EmpathyThemeAdium *theme,
 
 		if (e < strlen (text)) {
 			/* Append the text after the last link */
-			g_string_append_len (string, text + e, strlen (text) - e);
+			gchar *str;
+			str = g_markup_escape_text (text + e, strlen (text) - e);
+			g_string_append (string, str);
+			g_free (str);
 		}
 
 		g_free (ret);
