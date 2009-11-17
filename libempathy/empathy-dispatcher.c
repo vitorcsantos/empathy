@@ -1491,6 +1491,7 @@ empathy_dispatcher_join_muc (TpConnection *connection,
   request_data  = new_dispatcher_request_data (dispatcher, connection,
     TP_IFACE_CHANNEL_TYPE_TEXT, TP_HANDLE_TYPE_ROOM, 0, NULL,
     NULL, callback, user_data);
+  request_data->should_ensure = TRUE;
 
   connection_data->outstanding_requests = g_list_prepend
     (connection_data->outstanding_requests, request_data);
