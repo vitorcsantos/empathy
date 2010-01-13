@@ -1005,6 +1005,7 @@ main (int argc, char *argv[])
   g_object_unref (unique_app);
 
   notify_uninit ();
+  xmlCleanupParser ();
 
   return EXIT_SUCCESS;
 }
