@@ -1,3 +1,35 @@
+NEW in 2.30.0.1 (09/04/2010)
+===============
+
+The "Financial domination for charity" release.
+
+This new release in the stable 2.30 branch fixes various bugs including 3 crashes.
+Distributions shipping GNOME 2.30 should upgrade to this version.
+
+Bugs fixed:
+ - Fixed #612363, empathy crashed with SIGSEGV in g_closure_invoke() (Guillaume Desmottes)
+ - Fixed #612949, contact list is empty for a jabber account with a lot of contacts (Guillaume Desmottes)
+ - Fixed #613243, Join room should be greyed out for AIM (Andrew Gorcester)
+ - Fixed #613382, Previous/Next Tab menu items aren't disabled if at the first/last tab and gtk-keynav-wrap-around is 0 (Aaron Brown)
+ - Fixed #613930, empathy incorrectly updates our own IRC nick for /me (Guillaume Desmottes)
+ - Fixed #614002, Shouldn't request RoomList channel if not supported by connection (Guillaume Desmottes)
+ - Fixed #614874, account-chooser crashes when setting a filter and has-all-option to TRUE (Guillaume Desmottes)
+ - Fixed #615027, empathy crashed with SIGSEGV in g_object_unref() (Guillaume Desmottes)
+ - Fixed #615058, Wrong account name when using the assistant (Guillaume Desmottes)
+ - Fixed #612020, Empathy fails to initiate a audio/video call over XMPP (Olivier Crête)
+
+Translations:
+ - Updated ar Translation (Khaled Hosny)
+ - Updated ca Translation (Jordi Serratosa)
+ - Updated crh Translation (Reşat SABIQ)
+ - Updated da Translation (Ask H. Larsen)
+ - Updated it Translation (Milo Casagrande)
+ - Updated lv Translation (Peteris Krisjanis)
+ - Updated th Translation (Theppitak Karoonboonyanan)
+
+Documentation translations:
+ - Updated el Documentation translation (Simos Xenitellis)
+
 NEW in 2.30.0 (29/03/2010)
 =============
 
