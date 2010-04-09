@@ -77,24 +77,12 @@ typedef struct {
 
 G_DEFINE_TYPE (EmpathyStatusIcon, empathy_status_icon, G_TYPE_OBJECT);
 
-static gboolean
-activate_event (EmpathyEvent *event)
-{
-	empathy_event_activate (event);
-
-	return FALSE;
-}
-
 static void
 status_icon_notification_closed_cb (NotifyNotification *notification,
 				    EmpathyStatusIcon  *icon)
 {
 	EmpathyStatusIconPriv *priv = GET_PRIV (icon);
-	EmpathyNotificationClosedReason reason = 0;
 
-#ifdef notify_notification_get_closed_reason
-	reason = notify_notification_get_closed_reason (notification);
-#endif
 	if (priv->notification) {
 		g_object_unref (priv->notification);
 		priv->notification = NULL;
@@ -104,19 +92,8 @@ status_icon_notification_closed_cb (NotifyNotification *notification,
 		return;
 	}
 
-	/* the notification has been closed by the user, see the
-	 * DesktopNotification spec.
-	 */
-	if (reason == EMPATHY_NOTIFICATION_CLOSED_DISMISSED) {
-		/* use an idle here, as this callback is called from a
-		 * DBus signal handler inside libnotify, and we might call
-		 * a *_run_* method when activating the event.
-		 */
-		g_idle_add ((GSourceFunc) activate_event, priv->event);
-	} else {
-		/* inhibit other updates for this event */
-		empathy_event_inhibit_updates (priv->event);
-	}
+	/* inhibit other updates for this event */
+	empathy_event_inhibit_updates (priv->event);
 }
 
 static void
