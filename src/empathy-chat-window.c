@@ -61,11 +61,6 @@
 #define DEBUG_FLAG EMPATHY_DEBUG_CHAT
 #include <libempathy/empathy-debug.h>
 
-typedef struct {
-	EmpathyChatWindow *window;
-	EmpathyChat *chat;
-} NotificationData;
-
 #define GET_PRIV(obj) EMPATHY_GET_PRIV (obj, EmpathyChatWindow)
 typedef struct {
 	EmpathyChat *current_chat;
@@ -79,7 +74,6 @@ typedef struct {
 	GtkWidget   *dialog;
 	GtkWidget   *notebook;
 	NotifyNotification *notification;
-	NotificationData *notification_data;
 
 	GtkTargetList *contact_targets;
 	GtkTargetList *file_targets;
@@ -1189,22 +1183,13 @@ chat_window_set_urgency_hint (EmpathyChatWindow *window,
 }
 
 static void
-free_notification_data (NotificationData *data)
-{
-	g_object_unref (data->chat);
-	g_slice_free (NotificationData, data);
-}
-
-static void
 chat_window_notification_closed_cb (NotifyNotification *notify,
-				    NotificationData *cb_data)
+				    EmpathyChatWindow *self)
 {
-	EmpathyChatWindowPriv *priv = GET_PRIV (cb_data->window);
+	EmpathyChatWindowPriv *priv = GET_PRIV (self);
 
 	g_object_unref (notify);
 	priv->notification = NULL;
-	free_notification_data (cb_data);
-	priv->notification_data = NULL;
 }
 
 static void
@@ -1239,17 +1224,11 @@ chat_window_show_or_update_notification (EmpathyChatWindow *window,
 		notify_notification_update (priv->notification,
 					    header, escaped, NULL);
 	} else {
-		NotificationData *cb_data = cb_data = g_slice_new0 (NotificationData);
-
-		cb_data->chat = g_object_ref (chat);
-		cb_data->window = window;
-
-		priv->notification_data = cb_data;
 		priv->notification = notify_notification_new (header, escaped, NULL, NULL);
 		notify_notification_set_timeout (priv->notification, NOTIFY_EXPIRES_DEFAULT);
 
 		g_signal_connect (priv->notification, "closed",
-				  G_CALLBACK (chat_window_notification_closed_cb), cb_data);
+				  G_CALLBACK (chat_window_notification_closed_cb), window);
 	}
 
 	pixbuf = empathy_notify_manager_get_pixbuf_for_notification (priv->notify_mgr,
@@ -1754,11 +1733,6 @@ chat_window_finalize (GObject *object)
 		notify_notification_close (priv->notification, NULL);
 		g_object_unref (priv->notification);
 		priv->notification = NULL;
-		if (priv->notification_data != NULL)
-			{
-				free_notification_data (priv->notification_data);
-				priv->notification_data = NULL;
-			}
 	}
 
 	if (priv->contact_targets) {
