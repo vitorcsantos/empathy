@@ -1065,7 +1065,7 @@ chat_window_tabs_left_activate_cb (GtkAction         *action,
 {
 	EmpathyChatWindowPriv *priv;
 	EmpathyChat           *chat;
-	gint                  index_;
+	gint                  index_, num_pages;
 
 	priv = GET_PRIV (window);
 
@@ -1078,6 +1078,9 @@ chat_window_tabs_left_activate_cb (GtkAction         *action,
 	gtk_notebook_reorder_child (GTK_NOTEBOOK (priv->notebook),
 				    GTK_WIDGET (chat),
 				    index_ - 1);
+
+	num_pages = gtk_notebook_get_n_pages (GTK_NOTEBOOK (priv->notebook));
+	chat_window_menu_context_update (priv, num_pages);
 }
 
 static void
@@ -1086,7 +1089,7 @@ chat_window_tabs_right_activate_cb (GtkAction         *action,
 {
 	EmpathyChatWindowPriv *priv;
 	EmpathyChat           *chat;
-	gint                  index_;
+	gint                  index_, num_pages;
 
 	priv = GET_PRIV (window);
 
@@ -1096,6 +1099,9 @@ chat_window_tabs_right_activate_cb (GtkAction         *action,
 	gtk_notebook_reorder_child (GTK_NOTEBOOK (priv->notebook),
 				    GTK_WIDGET (chat),
 				    index_ + 1);
+
+	num_pages = gtk_notebook_get_n_pages (GTK_NOTEBOOK (priv->notebook));
+	chat_window_menu_context_update (priv, num_pages);
 }
 
 static void
