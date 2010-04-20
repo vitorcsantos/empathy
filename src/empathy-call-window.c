@@ -1334,6 +1334,12 @@ empathy_call_window_dispose (GObject *object)
     g_object_unref (priv->handler);
   priv->handler = NULL;
 
+  if (priv->bus_message_source_id != 0)
+    {
+      g_source_remove (priv->bus_message_source_id);
+      priv->bus_message_source_id = 0;
+    }
+
   if (priv->pipeline != NULL)
     g_object_unref (priv->pipeline);
   priv->pipeline = NULL;
@@ -1390,12 +1396,6 @@ empathy_call_window_finalize (GObject *object)
       g_signal_handler_disconnect (G_OBJECT (priv->video_output),
           priv->video_output_motion_handler_id);
       priv->video_output_motion_handler_id = 0;
-    }
-
-  if (priv->bus_message_source_id != 0)
-    {
-      g_source_remove (priv->bus_message_source_id);
-      priv->bus_message_source_id = 0;
     }
 
   /* free any data held directly by the object here */
