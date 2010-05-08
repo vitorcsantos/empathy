@@ -847,6 +847,13 @@ enable_camera (EmpathyCallWindow *self)
   if (priv->camera_state == CAMERA_STATE_ON)
     return;
 
+  if (priv->video_input == NULL)
+    {
+      DEBUG ("Can't enable camera, no input");
+      return;
+    }
+
+
   DEBUG ("Enable camera");
 
   empathy_call_window_set_send_video (self, TRUE);
@@ -2240,6 +2247,8 @@ empathy_call_window_remove_video_input (EmpathyCallWindow *self)
   EmpathyCallWindowPriv *priv = GET_PRIV (self);
   GstElement *preview;
 
+  disable_camera (self);
+
   DEBUG ("remove video input");
   preview = empathy_video_widget_get_element (
     EMPATHY_VIDEO_WIDGET (priv->video_preview));
@@ -2258,11 +2267,8 @@ empathy_call_window_remove_video_input (EmpathyCallWindow *self)
   gtk_widget_destroy (priv->video_preview);
   priv->video_preview = NULL;
 
-  gtk_toggle_tool_button_set_active (
-      GTK_TOGGLE_TOOL_BUTTON (priv->tool_button_camera_on), FALSE);
   gtk_widget_set_sensitive (priv->tool_button_camera_on, FALSE);
-
-  gtk_widget_show (priv->self_user_avatar_widget);
+  gtk_widget_set_sensitive (priv->tool_button_camera_preview, FALSE);
 }
 
 static void
