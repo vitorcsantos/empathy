@@ -417,8 +417,9 @@ avatar_chooser_maybe_convert_and_scale (EmpathyAvatarChooser *chooser,
 	gchar                    *new_mime_type = NULL;
 	gdouble                   min_factor, max_factor;
 	gdouble                   factor;
-	gchar                    *converted_image_data = NULL;
-	gsize                     converted_image_size = 0;
+	gchar                    *best_image_data = NULL;
+	gsize                     best_image_size = 0;
+	guint                     count = 0;
 
 	g_object_get (priv->factory,
 		"avatar-mime-types", &mime_types, /* Needs g_strfreev-ing */
@@ -492,9 +493,9 @@ avatar_chooser_maybe_convert_and_scale (EmpathyAvatarChooser *chooser,
 		GdkPixbuf *pixbuf_scaled = NULL;
 		gboolean   saved;
 		gint       new_width, new_height;
+		gchar     *converted_image_data;
+		gsize      converted_image_size;
 		GError    *error = NULL;
-
-		g_free (converted_image_data);
 
 		if (factor != 1) {
 			new_width = width * factor;
@@ -532,8 +533,23 @@ avatar_chooser_maybe_convert_and_scale (EmpathyAvatarChooser *chooser,
 		DEBUG ("Produced an image data of %"G_GSIZE_FORMAT" bytes.",
 			converted_image_size);
 
-		if (max_size == 0)
-			break;
+		/* If the new image satisfy the req, keep it as current best */
+		if (max_size == 0 ||
+		    converted_image_size <= max_size) {
+			if (best_image_data)
+				g_free (best_image_data);
+
+			best_image_data = converted_image_data;
+			best_image_size = converted_image_size;
+
+			/* If this image is close enough to the optimal size,
+			 * stop searching */
+			if (max_size == 0 ||
+			    max_size - converted_image_size <= 1024)
+				break;
+		} else {
+			g_free (converted_image_data);
+		}
 
 		/* Make a binary search for the bigest factor that produce
 		 * an image data size less than max_size */
@@ -543,20 +559,23 @@ avatar_chooser_maybe_convert_and_scale (EmpathyAvatarChooser *chooser,
 			min_factor = factor;
 		factor = (min_factor + max_factor)/2;
 
-		/* We are done if either:
-		 * - min_factor == max_factor. That happens if we resized to
-		 *   the max required dimension and the produced data size is
-		 *   less than max_size.
-		 * - The data size is close enough to max_size. Here we accept
-		 *   a difference of 1k.
-		 */
-	} while (min_factor != max_factor &&
-	         abs (max_size - converted_image_size) > 1024);
+		if ((int) (width * factor) == new_width ||
+		    (int) (height * factor) == new_height) {
+			/* min_factor and max_factor are too close, so the new
+			 * factor will produce the same image as previous
+			 * iteration. No need to continue, we already found
+			 * the optimal size. */
+			break;
+		}
+
+		/* Do 10 iterations in the worst case */
+	} while (++count < 10);
+
 	g_free (new_format_name);
 
-	/* Takes ownership of new_mime_type and converted_image_data */
-	avatar = empathy_avatar_new ((guchar *) converted_image_data,
-		converted_image_size, new_mime_type, NULL, NULL);
+	/* Takes ownership of new_mime_type and best_image_data */
+	avatar = empathy_avatar_new ((guchar *) best_image_data,
+		best_image_size, new_mime_type, NULL, NULL);
 
 	return avatar;
 }
