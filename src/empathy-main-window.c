@@ -882,13 +882,15 @@ main_window_favorite_chatroom_join (EmpathyChatroom *chatroom)
 	const gchar    *room;
 
 	account = empathy_chatroom_get_account (chatroom);
+	if (tp_account_get_connection_status (account, NULL) !=
+					     TP_CONNECTION_STATUS_CONNECTED)
+		return;
 	connection = tp_account_get_connection (account);
+	g_assert (connection != NULL);
 	room = empathy_chatroom_get_room (chatroom);
 
-	if (connection != NULL) {
-		DEBUG ("Requesting channel for '%s'", room);
-		empathy_dispatcher_join_muc (connection, room, NULL, NULL);
-	}
+	DEBUG ("Requesting channel for '%s'", room);
+	empathy_dispatcher_join_muc (connection, room, NULL, NULL);
 }
 
 static void
