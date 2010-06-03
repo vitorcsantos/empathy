@@ -875,22 +875,122 @@ main_window_view_show_map_cb (GtkCheckMenuItem  *item,
 }
 
 static void
-main_window_favorite_chatroom_join (EmpathyChatroom *chatroom)
+join_chatroom (EmpathyChatroom *chatroom,
+	       gint64 timestamp)
 {
 	TpAccount      *account;
 	TpConnection   *connection;
 	const gchar    *room;
 
 	account = empathy_chatroom_get_account (chatroom);
-	if (tp_account_get_connection_status (account, NULL) !=
-					     TP_CONNECTION_STATUS_CONNECTED)
-		return;
 	connection = tp_account_get_connection (account);
 	g_assert (connection != NULL);
 	room = empathy_chatroom_get_room (chatroom);
 
 	DEBUG ("Requesting channel for '%s'", room);
+
 	empathy_dispatcher_join_muc (connection, room, NULL, NULL);
+}
+
+typedef struct
+{
+	TpAccount *account;
+	EmpathyChatroom *chatroom;
+	gint64 timestamp;
+	glong sig_id;
+	guint timeout;
+} join_fav_account_sig_ctx;
+
+static join_fav_account_sig_ctx *
+join_fav_account_sig_ctx_new (TpAccount *account,
+			     EmpathyChatroom *chatroom,
+			      gint64 timestamp)
+{
+	join_fav_account_sig_ctx *ctx = g_slice_new0 (
+		join_fav_account_sig_ctx);
+
+	ctx->account = g_object_ref (account);
+	ctx->chatroom = g_object_ref (chatroom);
+	ctx->timestamp = timestamp;
+	return ctx;
+}
+
+static void
+join_fav_account_sig_ctx_free (join_fav_account_sig_ctx *ctx)
+{
+	g_object_unref (ctx->account);
+	g_object_unref (ctx->chatroom);
+	g_slice_free (join_fav_account_sig_ctx, ctx);
+}
+
+static void
+account_status_changed_cb (TpAccount  *account,
+			   TpConnectionStatus old_status,
+			   TpConnectionStatus new_status,
+			   guint reason,
+			   gchar *dbus_error_name,
+			   GHashTable *details,
+			   gpointer user_data)
+{
+	join_fav_account_sig_ctx *ctx = user_data;
+
+	switch (new_status) {
+		case TP_CONNECTION_STATUS_DISCONNECTED:
+			/* Don't wait any longer */
+			goto finally;
+			break;
+
+		case TP_CONNECTION_STATUS_CONNECTING:
+			/* Wait a bit */
+			return;
+
+		case TP_CONNECTION_STATUS_CONNECTED:
+			/* We can join the room */
+			break;
+	}
+
+	join_chatroom (ctx->chatroom, ctx->timestamp);
+
+finally:
+	g_source_remove (ctx->timeout);
+	g_signal_handler_disconnect (account, ctx->sig_id);
+}
+
+#define JOIN_FAVORITE_TIMEOUT 5
+
+static gboolean
+join_favorite_timeout_cb (gpointer data)
+{
+	join_fav_account_sig_ctx *ctx = data;
+
+	/* stop waiting for joining the favorite room */
+	g_signal_handler_disconnect (ctx->account, ctx->sig_id);
+	return FALSE;
+}
+
+static void
+main_window_favorite_chatroom_join (EmpathyChatroom *chatroom)
+{
+	TpAccount      *account;
+
+	account = empathy_chatroom_get_account (chatroom);
+	if (tp_account_get_connection_status (account, NULL) !=
+					     TP_CONNECTION_STATUS_CONNECTED) {
+		join_fav_account_sig_ctx *ctx;
+
+		ctx = join_fav_account_sig_ctx_new (account, chatroom,
+			gtk_get_current_event_time ());
+
+		ctx->sig_id = g_signal_connect_data (account, "status-changed",
+			G_CALLBACK (account_status_changed_cb), ctx,
+			(GClosureNotify) join_fav_account_sig_ctx_free, 0);
+
+		ctx->timeout = g_timeout_add_seconds (JOIN_FAVORITE_TIMEOUT,
+			join_favorite_timeout_cb, ctx);
+		return;
+	}
+
+	join_chatroom (chatroom, gtk_get_current_event_time ());
 }
 
 static void
