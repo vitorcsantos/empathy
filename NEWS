@@ -1,3 +1,51 @@
+NEW in 2.30.1.1 (09/06/2010)
+===============
+
+The "Faster, Better, Stronger" release.
+
+This stable release fixes some critical issues including crashes and a nasty bug
+preventing multi-lines MSN messages to be displayed when using Adium themes.
+We strongly advice distributions to upgrade to this version.
+
+IMPORTANT: We are now using the new icon replacing the deprecated
+'stock_person' one and so rely on gnome-icon-theme 2.30. If your
+distribution doens't ship this version you should consider to revert this
+commit in your package:
+http://git.gnome.org/browse/empathy/commit/?id=b87a2f274a838e8636c64605506e6ba243c2671a
+
+Bugs fixed:
+ - Fixed #606738, empathy_dispatcher_join_muc: assertion failed: (connection_data != NULL) when joining favorites rooms while account is connecting (Guillaume Desmottes)
+ - Fixed #616616, Possible to open multiple accounts dialog (Danielle Madeley)
+ - Fixed #616859, build failure due to missing header (Jasper Lievisse Adriaanse)
+ - Fixed #617262, Empathy accounts CC module calls textdomain (Rob Bradford)
+ - Fixed #617909, Should call gtk_builder_set_translation_domain on GtkBuilder UI components (Rob Bradford)
+ - Fixed #617971, Empathy silently fails importing contacts from Pidgin (Guillaume Desmottes)
+ - Fixed #618401, Empathy should use port 8001 to connect to freenode irc (Brian Curtis)
+ - Fixed #618883, IRC account: don't allow to save changes when editing network details (Guillaume Desmottes)
+ - Fixed #618969, Incomplete localisation of g-c-c module (Rob Bradford)
+ - Fixed #619701, Avatar chooser can enter infinite loop (Xavier Claessens)
+ - Fixed #619702, configure script not compatible with dash as /bin/sh (Simon McVittie)
+ - Fixed #619736, crash on 0-byte file in log search (Robert McQueen)
+ - Fixed #619862, "Network error" on connecting to Facebook Chat (Guillaume Desmottes)
+ - Fixed #619863, "Previous Conversations" Search entry is not activatable (Guillaume Desmottes)
+ - Fixed #619980, empathy hangs with high cpu load when changing avatar (Xavier Claessens)
+ - Fixed #620439, "Join favorites" should deal better with connecting accounts (Guillaume Desmottes)
+ - Fixed #620474, Status reported by account dialog is wrong in connman mode (Rob Bradford)
+ - Fixed #620476, accounts_dialog_update_status_infobar mixes const and allocated strings for message (Rob Bradford)
+ - Fixed #620657, Empathy should not requires that geoclue providers support updates (Laurent Bigonville)
+ - Fixed #620903, some messages get dropped when using adium themes (Guillaume Desmottes)
+ - Fixed #621023, empathy does not set geoclue requirements before asking for address/position (Laurent Bigonville)
+ - Fixed #608103, Missing image icon shows up when contact has no avatar (Frédéric Péters)
+ - Fixed #618167, Crash when trying to start a camera preview without a camera (Sjoerd Simons)
+
+Translations:
+ - Updated et Translation (Mattias Põldaru)
+ - Updated nl Translation (Hannie Dumoleyn)
+
+Documentation translations:
+ - Updated de Documentation translation (Mario Blättermann)
+ - Updated es Documentation translation (Jorge González)
+
 NEW in 2.30.1 (26/04/2010)
 =============
 
