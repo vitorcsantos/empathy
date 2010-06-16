@@ -1233,8 +1233,8 @@ chat_window_show_or_update_notification (EmpathyChatWindow *window,
 		priv->notification = notify_notification_new (header, escaped, NULL, NULL);
 		notify_notification_set_timeout (priv->notification, NOTIFY_EXPIRES_DEFAULT);
 
-		g_signal_connect (priv->notification, "closed",
-				  G_CALLBACK (chat_window_notification_closed_cb), window);
+		empathy_signal_connect_weak (priv->notification, "closed",
+				  G_CALLBACK (chat_window_notification_closed_cb), G_OBJECT (window));
 	}
 
 	pixbuf = empathy_notify_manager_get_pixbuf_for_notification (priv->notify_mgr,
