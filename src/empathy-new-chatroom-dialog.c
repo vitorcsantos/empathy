@@ -730,6 +730,8 @@ new_chatroom_dialog_join (EmpathyNewChatroomDialog *dialog)
 		room_name = g_strdup (room);
 	}
 
+	g_strstrip (room_name);
+
 	DEBUG ("Requesting channel for '%s'", room_name);
 	empathy_dispatcher_join_muc (connection, room_name, NULL, NULL);
 
