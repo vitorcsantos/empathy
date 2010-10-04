@@ -1,3 +1,47 @@
+NEW in 2.32.0.1 (04/10/2010)
+===============
+
+This release in the stable 2.32 branches fixes various bugs and brings some
+small improvements. We suggest distributions shipping GNOME 2.32 to use this version.
+If it's too late for you, we strongly recommend that you backport at least these
+two patches:
+
+http://git.gnome.org/browse/empathy/commit/?h=gnome-2-32&id=045d3c82deb7d6288c9026c98dc1b836370864ed
+without it newly created GTalk accounts won't be able to connect.
+
+http://git.gnome.org/browse/empathy/commit/?h=gnome-2-32&id=6c7d6ae27283e2a54b97198baedfe9c26b812b46
+which fixes a crash when trying to connect to some XMPP servers.
+
+Dependencies:
+
+ • GTK+ ≥ 2.22.0
+
+Bugs fixed:
+ - Fixed #631095, auth client crashes when trying to connect (Cosimo Cecchi)
+ - Fixed #558802, show the "new message" icon regardless of focus, active tab (Guillaume Desmottes)
+ - Fixed #593437, Should leave fullscreen mode when call is disconnected (Guillaume Desmottes)
+ - Fixed #629782, doesn't check unique result (Guillaume Desmottes)
+ - Fixed #629912, Better heuristic to pick default individual (Guillaume Desmottes)
+ - Fixed #629922, Contacts list window triggers _NET_ACTIVE_WINDOW timestamp error from Metacity (Guillaume Desmottes)
+ - Fixed #630107, update Empathy to deprecation changes in GTK+ 2.22 (Diego Escalante Urrelo)
+ - Fixed #630276, Hitting redial doesn't clear error messages (Guillaume Desmottes)
+ - Fixed #630427, Empathy Loses ContactInfo data it doesn't support in the UI (Guillaume Desmottes)
+ - Fixed #631098, Always show status icon in contact right-click menu (for meta-contacts)
+ - Fixed #630544, Refers to a nonexistent UI item (Milo Casagrande)
+ - Fixed #631049, Recommended SIP provider no longer available (Milo Casagrande)
+
+Translations:
+ - Updated el Translation (Simos Xenitellis, Giannis Katsampirhs)
+ - Updated es Translation (Jorge González)
+ - Updated lt Translation (Žygimantas Beručka)
+ - Updated nl Translation (Hannie Dumoleyn)
+ - Updated sv Translation (Daniel Nylander)
+
+Documentation translations:
+ - Updated el Documentation translation (Michael Kotsarinis)
+ - Updated hu Documentation translation (Gabor Kelemen)
+ - Updated it Documentation translation (Milo Casagrande)
+
 NEW in 2.32.0 (27/09/2010)
 =============
 
