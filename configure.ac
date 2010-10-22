@@ -39,7 +39,6 @@ GTK_REQUIRED=2.22.0
 KEYRING_REQUIRED=2.26.0
 LIBCANBERRA_GTK_REQUIRED=0.4
 LIBNOTIFY_REQUIRED=0.4.4
-LIBNOTIFY_REQUIRED_GTK3=0.5.1
 TELEPATHY_FARSIGHT_REQUIRED=0.0.14
 TELEPATHY_GLIB_REQUIRED=0.11.15
 TELEPATHY_LOGGER=0.1.5
@@ -53,7 +52,6 @@ ISO_CODES_REQUIRED=0.35
 LIBCHAMPLAIN_GTK_REQUIRED=0.7.1
 LIBCHAMPLAIN_REQUIRED=0.7.1
 NAUTILUS_SENDTO_REQUIRED=2.31.7
-NAUTILUS_SENDTO_REQUIRED_GTK3=2.90.0
 NETWORK_MANAGER_REQUIRED=0.7.0
 WEBKIT_REQUIRED=1.1.15
 GNOME_CONTROL_CENTER_GTK3_REQUIRED=2.31.4
@@ -180,46 +178,17 @@ fi
 # -----------------------------------------------------------
 # GTK+
 # -----------------------------------------------------------
-AC_ARG_ENABLE(gtk3,
-              AS_HELP_STRING([--enable-gtk3=@<:@no/yes/auto@:>@],
-                             [build with GTK+3]), ,
-                             enable_gtk3=auto)
+PKG_CHECK_MODULES(GTK, gtk+-2.0 >= $GTK_REQUIRED)
 
-# Try to use GTK+3 if available
-if test "x$enable_gtk3" != "xno"; then
-   PKG_CHECK_MODULES(GTK,
-   [
-      gtk+-3.0 >= $GTK_REQUIRED
-   ], have_gtk3="yes", have_gtk3="no")
-else
-   have_gtk3="no"
-fi
+# GTK2 specific deps
+PKG_CHECK_MODULES(CANBERRA, libcanberra-gtk >= $LIBCANBERRA_GTK_REQUIRED)
+PKG_CHECK_MODULES(LIBNOTIFY, libnotify >= $LIBNOTIFY_REQUIRED)
+PKG_CHECK_MODULES(UNIQUE, unique-1.0 >= $UNIQUE_REQUIRED)
+PKG_CHECK_MODULES(GCR, gcr-0 >= $KEYRING_REQUIRED)
 
-if test "x$enable_gtk3" = "xyes" -a "x$have_gtk3" != "xyes"; then
-   AC_MSG_ERROR([Could not find gtk3 dependencies.])
-fi
-
-if test "x$have_gtk3" == "xyes"; then
-   # GTK3 specific deps
-   PKG_CHECK_MODULES(CANBERRA, libcanberra-gtk3 >= $LIBCANBERRA_GTK_REQUIRED)
-   PKG_CHECK_MODULES(LIBNOTIFY, libnotify >= $LIBNOTIFY_REQUIRED_GTK3)
-   PKG_CHECK_MODULES(UNIQUE, unique-3.0 >= $UNIQUE_REQUIRED)
-   PKG_CHECK_MODULES(GCR, gcr-3 >= $KEYRING_REQUIRED)
-
-   AC_DEFINE(HAVE_GTK3, 1, [Define if we're compiling against GTK+ 3])
-else
-   PKG_CHECK_MODULES(GTK, gtk+-2.0 >= $GTK_REQUIRED)
-
-   # GTK2 specific deps
-   PKG_CHECK_MODULES(CANBERRA, libcanberra-gtk >= $LIBCANBERRA_GTK_REQUIRED)
-   PKG_CHECK_MODULES(LIBNOTIFY, libnotify >= $LIBNOTIFY_REQUIRED)
-   PKG_CHECK_MODULES(UNIQUE, unique-1.0 >= $UNIQUE_REQUIRED)
-   PKG_CHECK_MODULES(GCR, gcr-0 >= $KEYRING_REQUIRED)
-
-   # Enable GSEAL checks if needed
-   if test $USE_MAINTAINER_MODE = yes; then
-      AC_DEFINE(GSEAL_ENABLE, [], [Seal public structs to force usage of accessors])
-   fi
+# Enable GSEAL checks if needed
+if test $USE_MAINTAINER_MODE = yes; then
+  AC_DEFINE(GSEAL_ENABLE, [], [Seal public structs to force usage of accessors])
 fi
 
 # -----------------------------------------------------------
@@ -302,13 +271,8 @@ AC_ARG_ENABLE(webkit,
 
 if test "x$enable_webkit" != "xno"; then
 
-   if test "x$have_gtk3" == "xno"; then
-      PKG_CHECK_MODULES(WEBKIT, [webkit-1.0 >= $WEBKIT_REQUIRED],
-          have_webkit="yes", have_webkit="no")
-   else
-      PKG_CHECK_MODULES(WEBKIT, [webkitgtk-3.0 >= $WEBKIT_REQUIRED],
-          have_webkit="yes", have_webkit="no")
-   fi
+   PKG_CHECK_MODULES(WEBKIT, [webkit-1.0 >= $WEBKIT_REQUIRED],
+        have_webkit="yes", have_webkit="no")
 
    if test "x$have_webkit" = "xyes"; then
       AC_DEFINE(HAVE_WEBKIT, 1, [Define if you have libwebkitgtk])
@@ -370,17 +334,12 @@ AC_ARG_ENABLE(map,
 
 if test "x$enable_map" != "xno"; then
 
-   if test "x$have_gtk3" == "xno"; then
-      PKG_CHECK_MODULES(LIBCHAMPLAIN,
-      [
-         champlain-0.8 >= $LIBCHAMPLAIN_REQUIRED,
-         champlain-gtk-0.8 >= $LIBCHAMPLAIN_GTK_REQUIRED
-         clutter-gtk-0.10 >= $CLUTTER_GTK_REQUIRED
-      ], have_libchamplain="yes", have_libchamplain="no")
-   else
-      # FIXME: check deps once clutter-gtk and champlain have been ported to GTK3
-      have_libchamplain="no"
-   fi
+   PKG_CHECK_MODULES(LIBCHAMPLAIN,
+    [
+       champlain-0.8 >= $LIBCHAMPLAIN_REQUIRED,
+       champlain-gtk-0.8 >= $LIBCHAMPLAIN_GTK_REQUIRED
+       clutter-gtk-0.10 >= $CLUTTER_GTK_REQUIRED
+    ], have_libchamplain="yes", have_libchamplain="no")
 
    if test "x$have_libchamplain" = "xyes"; then
       AC_DEFINE(HAVE_LIBCHAMPLAIN, 1, [Define if you have libchamplain])
@@ -462,19 +421,12 @@ AC_ARG_ENABLE(nautilus-sendto,
                              enable_nautilus_sendto=auto)
 
 if test "x$enable_nautilus_sendto" != "xno"; then
-   if test "x$have_gtk3" == "xno"; then
-      # Newer NST requires GTK+3 so we can't use it
-      PKG_CHECK_MODULES(NST,
-      [
-         nautilus-sendto >= $NAUTILUS_SENDTO_REQUIRED
-         nautilus-sendto < 2.90.0
-      ], have_nst="yes", have_nst="no")
-   else
-      PKG_CHECK_MODULES(NST,
-      [
-         nautilus-sendto >= $NAUTILUS_SENDTO_REQUIRED_GTK3
-      ], have_nst="yes", have_nst="no")
-   fi
+   # Newer NST requires GTK+3 so we can't use it
+   PKG_CHECK_MODULES(NST,
+   [
+      nautilus-sendto >= $NAUTILUS_SENDTO_REQUIRED
+      nautilus-sendto < 2.90.0
+   ], have_nst="yes", have_nst="no")
 else
    have_nst=no
 fi
@@ -495,13 +447,8 @@ AC_ARG_ENABLE(control_center_embedding,
 
 if test "x$enable_control_center_embedding" != "xno"; then
 
-   if test "x$have_gtk3" == "xno"; then
-      PKG_CHECK_MODULES(CONTROL_CENTER_EMBEDDING, [libgnome-control-center < GNOME_CONTROL_CENTER_GTK3_REQUIRED],
-          have_control_center_embedding="yes", have_control_center_embedding="no")
-   else
-      PKG_CHECK_MODULES(CONTROL_CENTER_EMBEDDING, [libgnome-control-center >= GNOME_CONTROL_CENTER_GTK3_REQUIRED],
-          have_control_center_embedding="yes", have_control_center_embedding="no")
-   fi
+   PKG_CHECK_MODULES(CONTROL_CENTER_EMBEDDING, [libgnome-control-center < GNOME_CONTROL_CENTER_GTK3_REQUIRED],
+        have_control_center_embedding="yes", have_control_center_embedding="no")
 
    if test "x$have_control_center_embedding" = "xyes"; then
       AC_DEFINE(HAVE_CONTROL_CENTER_EMBEDDING, 1, [Define if you have the single-window control center])
@@ -564,7 +511,6 @@ Configure summary:
 	Compiler Flags..............:  ${CFLAGS} ${ERROR_CFLAGS}
 	Prefix......................:  ${prefix}
 	Coding style checks.........:  ${ENABLE_CODING_STYLE_CHECKS}
-	Use GTK+3...................:  ${have_gtk3}
 
     Features:
 	Spell checking (enchant)....:  ${have_enchant}
