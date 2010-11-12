@@ -27,6 +27,7 @@ noinst_LTLIBRARIES = libempathy.la
 libempathy_headers =				\
 	empathy-account-settings.h		\
 	empathy-auth-factory.h			\
+	empathy-channel-factory.h \
 	empathy-chatroom-manager.h		\
 	empathy-chatroom.h			\
 	empathy-connection-managers.h		\
@@ -67,6 +68,7 @@ libempathy_la_SOURCES =					\
 	$(libempathy_headers)				\
 	empathy-account-settings.c			\
 	empathy-auth-factory.c				\
+	empathy-channel-factory.c \
 	empathy-chatroom-manager.c			\
 	empathy-chatroom.c				\
 	empathy-connection-managers.c			\
