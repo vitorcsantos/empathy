@@ -620,6 +620,8 @@ individual_avatar_pixbuf_received_cb (FolksIndividual *individual,
               EMPATHY_INDIVIDUAL_STORE_COL_PIXBUF_AVATAR, pixbuf,
               -1);
         }
+
+      free_iters (iters);
     }
 
   /* Free things */
