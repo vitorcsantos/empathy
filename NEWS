@@ -1,3 +1,19 @@
+NEW in 2.32.2 (18/11/2010)
+=============
+
+This release adds a '--with-ca-file' option to configure.
+The default is to use the normal location for either Red Hat
+or Debian, or fail if neither exists. Use --with-ca-file to force a
+particular location (e.g. if your build system doesn't guarantee to have
+the CA certificate bundle installed), or use --without-ca-file if your system
+doesn't have a standard CA certificate store.
+
+Two memory leaks have also been fixed which should drastically reduce empathy's
+memory consumption on longer runs.
+
+Bugs fixed:
+ - Fixed #634197, [Patch] Make CA cert paths configurable (Brian Pepple)
+
 NEW in 2.32.1 (15/11/2010)
 =============
 
