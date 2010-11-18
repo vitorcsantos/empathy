@@ -327,6 +327,13 @@ individual_store_find_contact (EmpathyIndividualStore *self,
 }
 
 static void
+free_iters (GList *iters)
+{
+  g_list_foreach (iters, (GFunc) gtk_tree_iter_free, NULL);
+  g_list_free (iters);
+}
+
+static void
 individual_store_remove_individual (EmpathyIndividualStore *self,
     FolksIndividual *individual)
 {
@@ -362,8 +369,7 @@ individual_store_remove_individual (EmpathyIndividualStore *self,
         }
     }
 
-  g_list_foreach (iters, (GFunc) gtk_tree_iter_free, NULL);
-  g_list_free (iters);
+  free_iters (iters);
 }
 
 static void
@@ -490,9 +496,7 @@ individual_store_contact_set_active (EmpathyIndividualStore *self,
         }
     }
 
-  g_list_foreach (iters, (GFunc) gtk_tree_iter_free, NULL);
-  g_list_free (iters);
-
+  free_iters (iters);
 }
 
 static void individual_store_contact_active_free (ShowActiveData *data);
@@ -786,8 +790,7 @@ individual_store_contact_update (EmpathyIndividualStore *self,
    * timeout removes the user from the contact list, really we
    * should remove the first timeout.
    */
-  g_list_foreach (iters, (GFunc) gtk_tree_iter_free, NULL);
-  g_list_free (iters);
+  free_iters (iters);
 }
 
 static void
