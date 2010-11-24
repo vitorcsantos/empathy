@@ -1108,6 +1108,9 @@ log_window_get_messages_for_date (EmpathyLogWindow *window,
       date,
       log_window_got_messages_for_date_cb,
       (gpointer) window);
+
+  g_free (chat_id);
+  g_object_unref (account);
 }
 
 static void
