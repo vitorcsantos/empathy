@@ -42,6 +42,7 @@
 #include <libempathy/empathy-gsettings.h>
 #include <libempathy/empathy-utils.h>
 #include <libempathy/empathy-dispatcher.h>
+#include <libempathy/empathy-marshal.h>
 
 #include "empathy-chat.h"
 #include "empathy-spell.h"
@@ -56,6 +57,7 @@
 
 #define DEBUG_FLAG EMPATHY_DEBUG_CHAT
 #include <libempathy/empathy-debug.h>
+
 
 #define CHAT_DIR_CREATE_MODE  (S_IRUSR | S_IWUSR | S_IXUSR)
 #define CHAT_FILE_CREATE_MODE (S_IRUSR | S_IWUSR)
@@ -1108,7 +1110,9 @@ chat_state_changed_cb (EmpathyTpChat      *tp_chat,
 }
 
 static void
-chat_message_received (EmpathyChat *chat, EmpathyMessage *message)
+chat_message_received (EmpathyChat *chat,
+	EmpathyMessage *message,
+	gboolean pending)
 {
 	EmpathyChatPriv *priv = GET_PRIV (chat);
 	EmpathyContact  *sender;
@@ -1127,7 +1131,7 @@ chat_message_received (EmpathyChat *chat, EmpathyMessage *message)
 			       chat);
 
 	priv->unread_messages++;
-	g_signal_emit (chat, signals[NEW_MESSAGE], 0, message);
+	g_signal_emit (chat, signals[NEW_MESSAGE], 0, message, pending);
 }
 
 static void
@@ -1135,7 +1139,7 @@ chat_message_received_cb (EmpathyTpChat  *tp_chat,
 			  EmpathyMessage *message,
 			  EmpathyChat    *chat)
 {
-	chat_message_received (chat, message);
+	chat_message_received (chat, message, FALSE);
 }
 
 static void
@@ -1936,7 +1940,7 @@ show_pending_messages (EmpathyChat *chat) {
 
 	for (l = messages; l != NULL ; l = g_list_next (l)) {
 		EmpathyMessage *message = EMPATHY_MESSAGE (l->data);
-		chat_message_received (chat, message);
+		chat_message_received (chat, message, TRUE);
 	}
 }
 
@@ -2752,9 +2756,9 @@ empathy_chat_class_init (EmpathyChatClass *klass)
 			      G_SIGNAL_RUN_LAST,
 			      0,
 			      NULL, NULL,
-			      g_cclosure_marshal_VOID__OBJECT,
+			      _empathy_marshal_VOID__OBJECT_BOOLEAN,
 			      G_TYPE_NONE,
-			      1, EMPATHY_TYPE_MESSAGE);
+			      2, EMPATHY_TYPE_MESSAGE, G_TYPE_BOOLEAN);
 
 	g_type_class_add_private (object_class, sizeof (EmpathyChatPriv));
 }

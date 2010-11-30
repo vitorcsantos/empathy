@@ -1351,6 +1351,7 @@ chat_window_set_highlight_room_tab_label (EmpathyChat *chat)
 static void
 chat_window_new_message_cb (EmpathyChat       *chat,
 			    EmpathyMessage    *message,
+			    gboolean pending,
 			    EmpathyChatWindow *window)
 {
 	EmpathyChatWindowPriv *priv;
