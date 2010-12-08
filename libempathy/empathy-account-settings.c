@@ -212,8 +212,17 @@ empathy_account_settings_constructed (GObject *object)
 
   if (!priv->ready)
     {
-      tp_account_prepare_async (priv->account, NULL,
-          empathy_account_settings_account_ready_cb, self);
+      GQuark features[] = {
+          TP_ACCOUNT_FEATURE_CORE,
+          TP_ACCOUNT_FEATURE_STORAGE,
+          0 };
+
+      if (priv->account != NULL)
+        {
+          tp_proxy_prepare_async (priv->account, features,
+              empathy_account_settings_account_ready_cb, self);
+        }
+
       tp_g_signal_connect_object (priv->managers, "notify::ready",
         G_CALLBACK (empathy_account_settings_managers_ready_cb), object, 0);
     }
@@ -503,8 +512,10 @@ empathy_account_settings_check_readyness (EmpathyAccountSettings *self)
         }
     }
 
+  /* priv->account won't be a proper account if it's the account
+   * assistant showing this widget. */
   if (priv->supports_sasl && !priv->password_retrieved
-      && !priv->password_requested)
+      && !priv->password_requested && priv->account != NULL)
     {
       priv->password_requested = TRUE;
 
