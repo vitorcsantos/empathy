@@ -330,6 +330,10 @@ status_icon_event_added_cb (EmpathyEventManager *manager,
 		return;
 	}
 
+	if (event->type == EMPATHY_EVENT_TYPE_AUTH) {
+		return;
+	}
+
 	DEBUG ("New event %p", event);
 
 	priv->event = event;
@@ -358,6 +362,10 @@ status_icon_event_removed_cb (EmpathyEventManager *manager,
 		return;
 	}
 
+	if (event->type == EMPATHY_EVENT_TYPE_AUTH) {
+		return;
+	}
+
 	priv->event = empathy_event_manager_get_top_event (priv->event_manager);
 
 	status_icon_update_tooltip (icon);
@@ -382,6 +390,10 @@ status_icon_event_updated_cb (EmpathyEventManager *manager,
 	EmpathyStatusIconPriv *priv = GET_PRIV (icon);
 
 	if (event != priv->event) {
+		return;
+	}
+
+	if (event->type == EMPATHY_EVENT_TYPE_AUTH) {
 		return;
 	}
 
