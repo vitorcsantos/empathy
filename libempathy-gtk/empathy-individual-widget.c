@@ -816,7 +816,7 @@ individual_dup_avatar (FolksIndividual *individual)
 
   /* FIXME: We just choose the first Persona which has an avatar, and save that.
    * The avatar handling in EmpathyContact needs to be moved into libfolks as
-   * much as possible, and this code rewritten to use FolksAvatar.
+   * much as possible, and this code rewritten to use FolksHasAvatar.
    * (bgo#627401) */
   personas = folks_individual_get_personas (individual);
   for (l = personas; l != NULL; l = l->next)
@@ -1070,8 +1070,8 @@ favourite_toggled_cb (GtkToggleButton *button,
     EmpathyIndividualWidget *self)
 {
   gboolean active = gtk_toggle_button_get_active (button);
-  folks_favourite_set_is_favourite (
-      FOLKS_FAVOURITE (GET_PRIV (self)->individual), active);
+  folks_favouritable_set_is_favourite (
+      FOLKS_FAVOURITABLE (GET_PRIV (self)->individual), active);
 }
 
 static void
@@ -1210,7 +1210,8 @@ notify_is_favourite_cb (gpointer folks_object,
   if (GTK_IS_TOGGLE_BUTTON (favourite_widget))
     {
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (favourite_widget),
-          folks_favourite_get_is_favourite (FOLKS_FAVOURITE (folks_object)));
+          folks_favouritable_get_is_favourite (
+              FOLKS_FAVOURITABLE (folks_object)));
     }
 }
 

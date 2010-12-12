@@ -484,9 +484,11 @@ update_persona (EmpathyPersonaStore *self,
           EMPATHY_PERSONA_STORE_COL_DISPLAY_ID,
               folks_persona_get_display_id (persona),
           EMPATHY_PERSONA_STORE_COL_PRESENCE_TYPE,
-              folks_presence_get_presence_type (FOLKS_PRESENCE (persona)),
+              folks_has_presence_get_presence_type (
+                  FOLKS_HAS_PRESENCE (persona)),
           EMPATHY_PERSONA_STORE_COL_STATUS,
-              folks_presence_get_presence_message (FOLKS_PRESENCE (persona)),
+              folks_has_presence_get_presence_message (
+                  FOLKS_HAS_PRESENCE (persona)),
           EMPATHY_PERSONA_STORE_COL_IS_ONLINE, now_online,
           EMPATHY_PERSONA_STORE_COL_CAN_AUDIO_CALL,
               empathy_contact_get_capabilities (contact) &

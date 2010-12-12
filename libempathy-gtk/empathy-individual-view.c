@@ -370,14 +370,14 @@ real_drag_individual_received_cb (EmpathyIndividualView *self,
   if (!tp_strdiff (new_group, EMPATHY_INDIVIDUAL_STORE_FAVORITE))
     {
       /* Mark contact as favourite */
-      folks_favourite_set_is_favourite (FOLKS_FAVOURITE (individual), TRUE);
+      folks_favouritable_set_is_favourite (FOLKS_FAVOURITABLE (individual), TRUE);
       return;
     }
 
   if (!tp_strdiff (old_group, EMPATHY_INDIVIDUAL_STORE_FAVORITE))
     {
       /* Remove contact as favourite */
-      folks_favourite_set_is_favourite (FOLKS_FAVOURITE (individual), FALSE);
+      folks_favouritable_set_is_favourite (FOLKS_FAVOURITABLE (individual), FALSE);
 
       /* Don't try to remove it */
       old_group = NULL;
@@ -624,7 +624,7 @@ individual_view_drag_motion (GtkWidget *widget,
         }
 
       if (individual != NULL &&
-          folks_individual_is_online (individual) &&
+          folks_has_presence_is_online (FOLKS_HAS_PRESENCE (individual)) &&
           (caps & EMPATHY_CAPABILITIES_FT))
         {
           gdk_drag_status (context, GDK_ACTION_COPY, time_);

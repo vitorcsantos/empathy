@@ -445,7 +445,7 @@ individual_store_add_individual (EmpathyIndividualStore *self,
   g_list_free (groups);
 
   if (priv->show_groups &&
-      folks_favourite_get_is_favourite (FOLKS_FAVOURITE (individual)))
+      folks_favouritable_get_is_favourite (FOLKS_FAVOURITABLE (individual)))
     {
       /* Add contact to the fake 'Favorites' group */
       GtkTreeIter iter_group;
@@ -673,7 +673,7 @@ individual_store_contact_update (EmpathyIndividualStore *self,
     }
 
   /* Get online state now. */
-  now_online = folks_individual_is_online (individual);
+  now_online = folks_has_presence_is_online (FOLKS_HAS_PRESENCE (individual));
 
   if (!in_list)
     {
