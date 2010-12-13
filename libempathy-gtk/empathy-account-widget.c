@@ -1449,6 +1449,41 @@ account_widget_build_groupwise (EmpathyAccountWidget *self,
 }
 
 static void
+account_widget_build_skype (EmpathyAccountWidget *self,
+    const char *filename)
+{
+  EmpathyAccountWidgetPriv *priv = GET_PRIV (self);
+
+  if (priv->simple)
+    {
+      self->ui_details->gui = empathy_builder_get_file (filename,
+          "vbox_skype_simple", &self->ui_details->widget,
+          NULL);
+
+      empathy_account_widget_handle_params (self,
+          "entry_id_simple", "account",
+          "entry_password_simple", "password",
+          NULL);
+
+      self->ui_details->default_focus = g_strdup ("entry_id_simple");
+    }
+  else
+    {
+      self->ui_details->gui = empathy_builder_get_file (filename,
+          "table_common_skype_settings", &priv->table_common_settings,
+          "vbox_skype_settings", &self->ui_details->widget,
+          NULL);
+
+      empathy_account_widget_handle_params (self,
+          "entry_id", "account",
+          "entry_password", "password",
+          NULL);
+
+      self->ui_details->default_focus = g_strdup ("entry_id");
+    }
+}
+
+static void
 account_widget_destroy_cb (GtkWidget *widget,
     EmpathyAccountWidget *self)
 {
@@ -1846,6 +1881,7 @@ do_constructed (GObject *obj)
     WIDGET (haze, groupwise),
     WIDGET (idle, irc),
     WIDGET (sofiasip, sip),
+    WIDGET (psyke, skype),
   };
 
   cm_name = empathy_account_settings_get_cm (priv->settings);

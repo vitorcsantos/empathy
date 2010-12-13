@@ -202,6 +202,7 @@ ui_DATA = 					\
 	empathy-account-widget-yahoo.ui		\
 	empathy-account-widget-groupwise.ui	\
 	empathy-account-widget-aim.ui		\
+	empathy-account-widget-skype.ui		\
 	empathy-status-preset-dialog.ui		\
 	empathy-log-window.ui			\
 	empathy-chat.ui				\
