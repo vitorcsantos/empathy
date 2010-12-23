@@ -631,7 +631,8 @@ empathy_pixbuf_avatar_from_individual_scaled_async (
 			callback, user_data,
 			empathy_pixbuf_avatar_from_individual_scaled_async);
 
-	avatar_file = folks_avatar_get_avatar (FOLKS_AVATAR (individual));
+	avatar_file =
+		folks_avatar_owner_get_avatar (FOLKS_AVATAR_OWNER (individual));
 	if (avatar_file == NULL)
 		goto out;
 
