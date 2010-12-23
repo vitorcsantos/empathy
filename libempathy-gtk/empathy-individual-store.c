@@ -673,7 +673,8 @@ individual_store_contact_update (EmpathyIndividualStore *self,
     }
 
   /* Get online state now. */
-  now_online = folks_has_presence_is_online (FOLKS_HAS_PRESENCE (individual));
+  now_online = folks_presence_owner_is_online (
+      FOLKS_PRESENCE_OWNER (individual));
 
   if (!in_list)
     {
@@ -760,9 +761,11 @@ individual_store_contact_update (EmpathyIndividualStore *self,
           EMPATHY_INDIVIDUAL_STORE_COL_NAME,
             folks_aliasable_get_alias (FOLKS_ALIASABLE (individual)),
           EMPATHY_INDIVIDUAL_STORE_COL_PRESENCE_TYPE,
-            folks_individual_get_presence_type (individual),
+            folks_presence_owner_get_presence_type (
+                FOLKS_PRESENCE_OWNER (individual)),
           EMPATHY_INDIVIDUAL_STORE_COL_STATUS,
-            folks_individual_get_presence_message (individual),
+            folks_presence_owner_get_presence_message (
+                FOLKS_PRESENCE_OWNER (individual)),
           EMPATHY_INDIVIDUAL_STORE_COL_COMPACT, priv->is_compact,
           EMPATHY_INDIVIDUAL_STORE_COL_IS_GROUP, FALSE,
           EMPATHY_INDIVIDUAL_STORE_COL_IS_ONLINE, now_online,
@@ -1422,8 +1425,12 @@ individual_store_state_sort_func (GtkTreeModel *model,
   /* If we managed to get this far, we can start looking at
    * the presences.
    */
-  folks_presence_type_a = folks_individual_get_presence_type (individual_a);
-  folks_presence_type_b = folks_individual_get_presence_type (individual_b);
+  folks_presence_type_a =
+      folks_presence_owner_get_presence_type (
+          FOLKS_PRESENCE_OWNER (individual_a));
+  folks_presence_type_b =
+      folks_presence_owner_get_presence_type (
+          FOLKS_PRESENCE_OWNER (individual_b));
   tp_presence_a = empathy_folks_presence_type_to_tp (folks_presence_type_a);
   tp_presence_b = empathy_folks_presence_type_to_tp (folks_presence_type_b);
 
