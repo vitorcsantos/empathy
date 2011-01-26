@@ -23,6 +23,8 @@
 
 #include <glib/gi18n-lib.h>
 
+#include <telepathy-glib/util.h>
+
 #define DEBUG_FLAG EMPATHY_DEBUG_SASL
 #include <libempathy/empathy-debug.h>
 #include <libempathy/empathy-utils.h>
