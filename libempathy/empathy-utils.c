@@ -756,7 +756,7 @@ empathy_folks_individual_contains_contact (FolksIndividual *individual)
   personas = folks_individual_get_personas (individual);
   for (l = personas; l != NULL; l = l->next)
     {
-      if (TPF_IS_PERSONA (l->data))
+      if (empathy_folks_persona_is_interesting (FOLKS_PERSONA (l->data)))
         return (tpf_persona_get_contact (TPF_PERSONA (l->data)) != NULL);
     }
 
@@ -783,7 +783,7 @@ empathy_contact_dup_from_folks_individual (FolksIndividual *individual)
     {
       TpfPersona *persona = l->data;
 
-      if (TPF_IS_PERSONA (persona))
+      if (empathy_folks_persona_is_interesting (FOLKS_PERSONA (persona)))
         {
           TpContact *tp_contact;
 
@@ -801,6 +801,24 @@ tp_channel_group_change_reason_from_folks_groups_change_reason (
     FolksGroupableChangeReason reason)
 {
   return (TpChannelGroupChangeReason) reason;
+}
+
+gboolean
+empathy_folks_persona_is_interesting (FolksPersona *persona)
+{
+  /* We're not interested in non-Telepathy personas */
+  if (!TPF_IS_PERSONA (persona))
+    return FALSE;
+
+  /* We're not interested in user personas which haven't been added to the
+   * contact list (see bgo#637151). */
+  if (folks_persona_get_is_user (persona) &&
+      !tpf_persona_get_is_in_contact_list (TPF_PERSONA (persona)))
+    {
+      return FALSE;
+    }
+
+  return TRUE;
 }
 
 gchar *

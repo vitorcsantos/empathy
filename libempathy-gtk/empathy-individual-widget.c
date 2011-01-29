@@ -400,7 +400,7 @@ details_update (EmpathyIndividualWidget *self)
       personas = folks_individual_get_personas (priv->individual);
       for (l = personas; l != NULL; l = l->next)
         {
-          if (TPF_IS_PERSONA (l->data))
+          if (empathy_folks_persona_is_interesting (FOLKS_PERSONA (l->data)))
             {
               tp_contact = tpf_persona_get_contact (TPF_PERSONA (l->data));
               if (tp_contact != NULL)
@@ -548,7 +548,7 @@ location_update (EmpathyIndividualWidget *self)
     {
       FolksPersona *persona = FOLKS_PERSONA (l->data);
 
-      if (TPF_IS_PERSONA (persona))
+      if (empathy_folks_persona_is_interesting (persona))
         {
           TpContact *tp_contact;
 
@@ -721,7 +721,7 @@ location_update (EmpathyIndividualWidget *self)
         {
           FolksPersona *persona = FOLKS_PERSONA (l->data);
 
-          if (TPF_IS_PERSONA (persona))
+          if (empathy_folks_persona_is_interesting (persona))
             {
               gdouble lat = 0.0, lon = 0.0;
               ClutterActor *marker;
@@ -793,7 +793,7 @@ persona_dup_avatar (FolksPersona *persona)
   EmpathyContact *contact;
   EmpathyAvatar *avatar;
 
-  if (!TPF_IS_PERSONA (persona))
+  if (!empathy_folks_persona_is_interesting (persona))
     return NULL;
 
   tp_contact = tpf_persona_get_contact (TPF_PERSONA (persona));
@@ -996,7 +996,7 @@ individual_is_user (FolksIndividual *individual)
     {
       FolksPersona *persona = FOLKS_PERSONA (l->data);
 
-      if (TPF_IS_PERSONA (persona))
+      if (empathy_folks_persona_is_interesting (persona))
         {
           TpContact *tp_contact;
           EmpathyContact *contact;
@@ -1391,7 +1391,7 @@ add_persona (EmpathyIndividualWidget *self,
   GtkWidget *label, *account_label, *account_image, *separator;
   guint current_row = 0;
 
-  if (!TPF_IS_PERSONA (persona))
+  if (!empathy_folks_persona_is_interesting (persona))
     return;
 
   if (priv->flags & EMPATHY_INDIVIDUAL_WIDGET_EDIT_FAVOURITE)
@@ -1494,7 +1494,7 @@ remove_persona (EmpathyIndividualWidget *self,
   GtkWidget *separator;
   GtkTable *table;
 
-  if (!TPF_IS_PERSONA (persona))
+  if (!empathy_folks_persona_is_interesting (persona))
     return;
 
   table = g_hash_table_lookup (priv->persona_tables, persona);
@@ -1566,7 +1566,7 @@ individual_table_set_up (EmpathyIndividualWidget *self)
       personas = folks_individual_get_personas (priv->individual);
       for (l = personas; l != NULL; l = l->next)
         {
-          if (TPF_IS_PERSONA (l->data))
+          if (empathy_folks_persona_is_interesting (FOLKS_PERSONA (l->data)))
             num_personas++;
         }
 
@@ -1629,7 +1629,7 @@ personas_changed_cb (FolksIndividual *individual,
 
   for (l = personas; l != NULL; l = l->next)
     {
-      if (TPF_IS_PERSONA (l->data))
+      if (empathy_folks_persona_is_interesting (FOLKS_PERSONA (l->data)))
         new_num_personas++;
     }
 
@@ -1811,7 +1811,7 @@ individual_update (EmpathyIndividualWidget *self)
       personas = folks_individual_get_personas (priv->individual);
       for (l = personas; l != NULL; l = l->next)
         {
-          if (!TPF_IS_PERSONA (l->data))
+          if (!empathy_folks_persona_is_interesting (FOLKS_PERSONA (l->data)))
             continue;
 
           update_persona (self, FOLKS_PERSONA (l->data));

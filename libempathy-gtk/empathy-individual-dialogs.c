@@ -193,7 +193,7 @@ empathy_block_individual_dialog_show (GtkWindow *parent,
       TpContact *contact;
       EmpathyIndividualManagerFlags flags;
 
-      if (!TPF_IS_PERSONA (persona))
+      if (!empathy_folks_persona_is_interesting (FOLKS_PERSONA (persona)))
           continue;
 
       contact = tpf_persona_get_contact (persona);
