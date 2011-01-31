@@ -773,46 +773,31 @@ static void
 ft_handler_populate_outgoing_request (EmpathyFTHandler *handler)
 {
   guint contact_handle;
-  GHashTable *request;
-  GValue *value;
   EmpathyFTHandlerPriv *priv = GET_PRIV (handler);
-
-  request = priv->request = g_hash_table_new_full (g_str_hash, g_str_equal,
-	    NULL, (GDestroyNotify) tp_g_value_slice_free);
+  gchar *uri;
 
   contact_handle = empathy_contact_get_handle (priv->contact);
+  uri = g_file_get_uri (priv->gfile);
 
-  /* org.freedesktop.Telepathy.Channel.ChannelType */
-  value = tp_g_value_slice_new_string (TP_IFACE_CHANNEL_TYPE_FILE_TRANSFER);
-  g_hash_table_insert (request, TP_IFACE_CHANNEL ".ChannelType", value);
+  priv->request = tp_asv_new (
+      TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING,
+        TP_IFACE_CHANNEL_TYPE_FILE_TRANSFER,
+      TP_PROP_CHANNEL_TARGET_HANDLE_TYPE, G_TYPE_UINT,
+        TP_HANDLE_TYPE_CONTACT,
+      TP_PROP_CHANNEL_TARGET_HANDLE, G_TYPE_UINT,
+        contact_handle,
+      TP_PROP_CHANNEL_TYPE_FILE_TRANSFER_CONTENT_TYPE, G_TYPE_STRING,
+        priv->content_type,
+      TP_PROP_CHANNEL_TYPE_FILE_TRANSFER_FILENAME, G_TYPE_STRING,
+        priv->filename,
+      TP_PROP_CHANNEL_TYPE_FILE_TRANSFER_SIZE, G_TYPE_UINT64,
+        priv->total_bytes,
+      TP_PROP_CHANNEL_TYPE_FILE_TRANSFER_DATE, G_TYPE_UINT64,
+        priv->mtime,
+      TP_PROP_CHANNEL_TYPE_FILE_TRANSFER_URI, G_TYPE_STRING, uri,
+      NULL);
 
-  /* org.freedesktop.Telepathy.Channel.TargetHandleType */
-  value = tp_g_value_slice_new_uint (TP_HANDLE_TYPE_CONTACT);
-  g_hash_table_insert (request, TP_IFACE_CHANNEL ".TargetHandleType", value);
-
-  /* org.freedesktop.Telepathy.Channel.TargetHandle */
-  value = tp_g_value_slice_new_uint (contact_handle);
-  g_hash_table_insert (request, TP_IFACE_CHANNEL ".TargetHandle", value);
-
-  /* org.freedesktop.Telepathy.Channel.Type.FileTransfer.ContentType */
-  value = tp_g_value_slice_new_string (priv->content_type);
-  g_hash_table_insert (request,
-      TP_IFACE_CHANNEL_TYPE_FILE_TRANSFER ".ContentType", value);
-
-  /* org.freedesktop.Telepathy.Channel.Type.FileTransfer.Filename */
-  value = tp_g_value_slice_new_string (priv->filename);
-  g_hash_table_insert (request,
-      TP_IFACE_CHANNEL_TYPE_FILE_TRANSFER ".Filename", value);
-
-  /* org.freedesktop.Telepathy.Channel.Type.FileTransfer.Size */
-  value = tp_g_value_slice_new_uint64 (priv->total_bytes);
-  g_hash_table_insert (request,
-      TP_IFACE_CHANNEL_TYPE_FILE_TRANSFER ".Size", value);
-
-  /* org.freedesktop.Telepathy.Channel.Type.FileTransfer.Date */
-  value = tp_g_value_slice_new_uint64 ((guint64) priv->mtime);
-  g_hash_table_insert (request,
-      TP_IFACE_CHANNEL_TYPE_FILE_TRANSFER ".Date", value);
+  g_free (uri);
 }
 
 static gboolean
