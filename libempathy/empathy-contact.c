@@ -967,6 +967,9 @@ empathy_contact_get_presence_message (EmpathyContact *contact)
   if (priv->persona != NULL)
     return folks_presence_get_presence_message (FOLKS_PRESENCE (priv->persona));
 
+  if (priv->tp_contact != NULL)
+    return tp_contact_get_presence_message (priv->tp_contact);
+
   return NULL;
 }
 
