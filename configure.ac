@@ -141,9 +141,7 @@ PKG_CHECK_MODULES(EMPATHY,
    dbus-glib-1
    farsight2-0.10
    folks >= $FOLKS_REQUIRED
-   folks <= 0.2
    folks-telepathy >= $FOLKS_REQUIRED
-   folks-telepathy <= 0.2
    gconf-2.0 >= $GCONF_REQUIRED
    gio-2.0 >= $GLIB_REQUIRED
    gio-unix-2.0 >= $GLIB_REQUIRED
