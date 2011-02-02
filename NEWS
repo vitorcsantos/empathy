@@ -1,3 +1,42 @@
+NEW in 2.33.1 (02/02/2011)
+=============
+
+This is the first release in the gnome-2.34 branch. As you probably know, there
+is no GNOME 2.34 planned, the next major release being 3.0.
+We decided to make a bunch of releases containing backports of some new
+features and bug fixes from 3.0. This will allow distributions not shipping
+GNOME 3 yet to still bring some of the recent Telepathy and Empathy improvements
+to their users.
+We are continuing, of course, to work hard on 3.0 which stays our main
+development branch.
+
+The biggest changes in this release, compared to 2.32, is the port to latest
+Folks release and the ability to search for contacts on the server.
+
+Empathy is now also able to prompt you for your password when it's needed, rather
+than requiring you to save it when you create the account. This needs the very
+latest versions of connection managers (in some cases, unreleased versions).
+Older connection managers will continue to work but you'll still have to save
+passwords when creating accounts.
+
+Dependencies:
+ • folks ≥ 0.3.4
+ • telepathy-glib ≥ 0.13.11
+ • libnotify ≥ 0.7.0
+
+Bugs fixed:
+ - Fixed #586257, In Empathy, "F2" key should rename contacts (Kushal Das)
+ - Fixed #637847, Adjust for Folks avatar and presence interface renames (Travis Reitter)
+ - Fixed #637097, Port to latest folks API changes (Philip Withnall)
+ - Fixed #626507, Connection error message is not shown completely (Robert Sajdok)
+ - Fixed #634853, Empathy does not allow Yahoo server to be added to account. (Guillaume Desmottes)
+ - Fixed #640411, Crash when trying to create an ICQ account (Guillaume Desmottes)
+ - Fixed #635513, Message displayed TWICE (in chat msg overlay) when opening a chat window for unread msg (Guillaume Desmottes)
+ - Fixed #639352, Notifications for login and logout need love (Guillaume Desmottes)
+ - Fixed #606947, support Contact Search API (Emilio Pozuelo Monfort)
+ - Fixed #640751, Mark a non-user-visible string as untranslatable. (Will Thompson)
+ - Fixed #636613, Become a server SASL handler (Jonny Lamb)
+
 NEW in 2.32.2 (18/11/2010)
 =============
 
