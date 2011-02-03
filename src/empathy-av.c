@@ -94,7 +94,7 @@ call_window_destroy_cb (EmpathyCallWindow *window,
 
 static void
 new_call_handler_cb (EmpathyCallFactory *factory,
-    EmpathyCallHandler *handler,
+    EmpathyStreamedMediaHandler *handler,
     gboolean outgoing,
     gpointer user_data)
 {
