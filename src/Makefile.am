@@ -109,7 +109,7 @@ empathy_debugger_SOURCES =						\
 empathy_av_SOURCES =						\
 	empathy-av.c \
 	empathy-call-window-fullscreen.c empathy-call-window-fullscreen.h \
-	empathy-call-window.c empathy-call-window.h	 \
+	empathy-streamed-media-window.c empathy-streamed-media-window.h \
 	empathy-sidebar.c empathy-sidebar.h \
 	$(NULL)
 
