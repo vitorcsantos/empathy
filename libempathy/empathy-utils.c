@@ -50,7 +50,6 @@
 #include "empathy-individual-manager.h"
 #include "empathy-dispatcher.h"
 #include "empathy-idle.h"
-#include "empathy-tp-call.h"
 #include "empathy-tp-contact-factory.h"
 
 #include <extensions/extensions.h>
