@@ -28,7 +28,7 @@
 
 #include <telepathy-glib/debug-sender.h>
 
-#include <libempathy/empathy-call-factory.h>
+#include <libempathy/empathy-streamed-media-factory.h>
 #include <libempathy-gtk/empathy-ui-utils.h>
 
 #include "empathy-streamed-media-window.h"
@@ -93,7 +93,7 @@ call_window_destroy_cb (EmpathyStreamedMediaWindow *window,
 }
 
 static void
-new_call_handler_cb (EmpathyCallFactory *factory,
+new_call_handler_cb (EmpathyStreamedMediaFactory *factory,
     EmpathyStreamedMediaHandler *handler,
     gboolean outgoing,
     gpointer user_data)
@@ -124,7 +124,7 @@ main (int argc,
 #ifdef ENABLE_DEBUG
   TpDebugSender *debug_sender;
 #endif
-  EmpathyCallFactory *call_factory;
+  EmpathyStreamedMediaFactory *call_factory;
   GError *error = NULL;
 
   /* Init */
@@ -158,12 +158,12 @@ main (int argc,
   g_log_set_default_handler (tp_debug_sender_log_handler, G_LOG_DOMAIN);
 #endif
 
-  call_factory = empathy_call_factory_initialise ();
+  call_factory = empathy_streamed_media_factory_initialise ();
 
   g_signal_connect (G_OBJECT (call_factory), "new-streamed-media-handler",
       G_CALLBACK (new_call_handler_cb), NULL);
 
-  if (!empathy_call_factory_register (call_factory, &error))
+  if (!empathy_streamed_media_factory_register (call_factory, &error))
     {
       g_critical ("Failed to register Handler: %s", error->message);
       g_error_free (error);
