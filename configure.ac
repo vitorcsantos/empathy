@@ -139,7 +139,6 @@ AC_SUBST(ERROR_CFLAGS)
 PKG_CHECK_MODULES(EMPATHY,
 [
    dbus-glib-1
-   farsight2-0.10
    folks >= $FOLKS_REQUIRED
    folks-telepathy >= $FOLKS_REQUIRED
    gconf-2.0 >= $GCONF_REQUIRED
@@ -152,10 +151,15 @@ PKG_CHECK_MODULES(EMPATHY,
    gstreamer-0.10
    gstreamer-interfaces-0.10
    libxml-2.0
-   telepathy-farsight >= $TELEPATHY_FARSIGHT_REQUIRED
    telepathy-glib >= $TELEPATHY_GLIB_REQUIRED
    telepathy-logger-0.1 >= $TELEPATHY_LOGGER
    x11
+])
+
+PKG_CHECK_MODULES(EMPATHY_AV,
+[
+   farsight2-0.10
+   telepathy-farsight >= $TELEPATHY_FARSIGHT_REQUIRED
 ])
 
 # -----------------------------------------------------------
