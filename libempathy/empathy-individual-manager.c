@@ -30,6 +30,7 @@
 #include <telepathy-glib/util.h>
 
 #include <folks/folks.h>
+#include <folks/folks-telepathy.h>
 
 #include <extensions/extensions.h>
 
@@ -459,6 +460,77 @@ empathy_individual_manager_remove (EmpathyIndividualManager *self,
       aggregator_remove_individual_cb, self);
 }
 
+/**
+ * empathy_individual_manager_supports_blocking
+ * @self: the #EmpathyIndividualManager
+ * @individual: an individual to check
+ *
+ * Indicates whether any personas of an @individual can be blocked.
+ *
+ * Returns: %TRUE if any persona supports contact blocking
+ */
+gboolean
+empathy_individual_manager_supports_blocking (EmpathyIndividualManager *self,
+    FolksIndividual *individual)
+{
+  EmpathyIndividualManagerPriv *priv;
+  GList *personas, *l;
+
+  g_return_val_if_fail (EMPATHY_IS_INDIVIDUAL_MANAGER (self), FALSE);
+
+  priv = GET_PRIV (self);
+
+  personas = folks_individual_get_personas (individual);
+
+  for (l = personas; l != NULL; l = l->next)
+    {
+      TpfPersona *persona = l->data;
+      TpConnection *conn;
+
+      if (!TPF_IS_PERSONA (persona))
+        continue;
+
+      conn = tp_contact_get_connection (tpf_persona_get_contact (persona));
+
+      if (empathy_individual_manager_get_flags_for_connection (self, conn) &
+          EMPATHY_INDIVIDUAL_MANAGER_CAN_BLOCK)
+        return TRUE;
+    }
+
+  return FALSE;
+}
+
+void
+empathy_individual_manager_set_blocked (EmpathyIndividualManager *self,
+    FolksIndividual *individual,
+    gboolean blocked)
+{
+  EmpathyIndividualManagerPriv *priv;
+  GList *personas, *l;
+
+  g_return_if_fail (EMPATHY_IS_INDIVIDUAL_MANAGER (self));
+
+  priv = GET_PRIV (self);
+
+  personas = folks_individual_get_personas (individual);
+
+  for (l = personas; l != NULL; l = l->next)
+    {
+      TpfPersona *persona = l->data;
+      EmpathyContact *contact;
+
+      if (!TPF_IS_PERSONA (persona))
+        continue;
+
+      contact = empathy_contact_dup_from_tp_contact (
+          tpf_persona_get_contact (persona));
+      empathy_contact_set_persona (contact, FOLKS_PERSONA (persona));
+      empathy_contact_list_set_blocked (
+          EMPATHY_CONTACT_LIST (priv->contact_manager),
+          contact, blocked);
+    }
+}
+
 static void
 groups_change_group_cb (GObject *source,
     GAsyncResult *result,
@@ -528,6 +600,8 @@ empathy_individual_manager_get_flags_for_connection (
     flags |= EMPATHY_INDIVIDUAL_MANAGER_CAN_ALIAS;
   if (list_flags & EMPATHY_CONTACT_LIST_CAN_GROUP)
     flags |= EMPATHY_INDIVIDUAL_MANAGER_CAN_GROUP;
+  if (list_flags & EMPATHY_CONTACT_LIST_CAN_BLOCK)
+    flags |= EMPATHY_INDIVIDUAL_MANAGER_CAN_BLOCK;
 
   return flags;
 }
