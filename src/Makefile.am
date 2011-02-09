@@ -87,8 +87,8 @@ bin_PROGRAMS =			\
 	$(NULL)
 
 libexec_PROGRAMS = \
-	empathy-av \
-	empathy-auth-client
+	empathy-auth-client \
+	empathy-av
 
 BUILT_SOURCES = \
 	src-marshal.h \
@@ -109,12 +109,21 @@ empathy_debugger_SOURCES =						\
 	empathy-debugger.c		 				\
 	$(NULL)
 
-empathy_av_SOURCES =						\
+empathy_av_SOURCES = \
 	empathy-av.c \
-	empathy-streamed-media-window-fullscreen.c empathy-streamed-media-window-fullscreen.h \
-	empathy-streamed-media-window.c empathy-streamed-media-window.h \
-	empathy-sidebar.c empathy-sidebar.h \
+	empathy-streamed-media-factory.c \
+	empathy-streamed-media-factory.h \
+	empathy-streamed-media-handler.c \
+	empathy-streamed-media-handler.h \
+	empathy-streamed-media-window-fullscreen.c \
+	empathy-streamed-media-window-fullscreen.h \
+	empathy-streamed-media-window.c \
+	empathy-streamed-media-window.h \
+	empathy-sidebar.c \
+	empathy-sidebar.h \
 	$(NULL)
+
+nodist_empathy_av_SOURCES = $(BUILT_SOURCES)
 
 empathy_auth_client_SOURCES =						\
 	empathy-auth-client.c
