@@ -48,6 +48,7 @@
 #include "empathy-individual-menu.h"
 #include "empathy-individual-store.h"
 #include "empathy-contact-dialogs.h"
+#include "empathy-individual-dialogs.h"
 #include "empathy-images.h"
 #include "empathy-linking-dialog.h"
 #include "empathy-cell-renderer-expander.h"
@@ -2352,12 +2353,21 @@ individual_view_remove_activate_cb (GtkMenuItem *menuitem,
               text, can_block);
       if (res == GTK_RESPONSE_YES || res == GTK_RESPONSE_REJECT)
         {
-          empathy_individual_manager_remove (manager, individual, "");
+          if (res == GTK_RESPONSE_REJECT &&
+              empathy_block_individual_dialog_show (parent, individual, NULL))
+            {
+              empathy_individual_manager_set_blocked (manager, individual,
+                  TRUE);
+            }
+          else
+            {
+              goto finally;
+            }
 
-          if (res == GTK_RESPONSE_REJECT)
-            empathy_individual_manager_set_blocked (manager, individual, TRUE);
+          empathy_individual_manager_remove (manager, individual, "");
         }
 
+finally:
       g_free (text);
       g_object_unref (individual);
       g_object_unref (manager);
