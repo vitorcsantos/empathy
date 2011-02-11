@@ -42,6 +42,8 @@ G_BEGIN_DECLS
   EMPATHY_INDIVIDUAL_MANAGER_CAN_REMOVE = 1 << 1,
   EMPATHY_INDIVIDUAL_MANAGER_CAN_ALIAS = 1 << 2,
   EMPATHY_INDIVIDUAL_MANAGER_CAN_GROUP = 1 << 3,
+  EMPATHY_INDIVIDUAL_MANAGER_CAN_BLOCK = 1 << 4,
+  EMPATHY_INDIVIDUAL_MANAGER_CAN_REPORT_ABUSIVE = 1 << 5,
 } EmpathyIndividualManagerFlags;
 
 typedef struct _EmpathyIndividualManager EmpathyIndividualManager;
@@ -93,6 +95,14 @@ void empathy_individual_manager_link_personas (EmpathyIndividualManager *self,
 void empathy_individual_manager_unlink_individual (
     EmpathyIndividualManager *self,
     FolksIndividual *individual);
+
+gboolean empathy_individual_manager_supports_blocking (
+    EmpathyIndividualManager *self,
+    FolksIndividual *individual);
+
+void empathy_individual_manager_set_blocked (EmpathyIndividualManager *self,
+    FolksIndividual *individual,
+    gboolean blocked);
 
 G_END_DECLS
 #endif /* __EMPATHY_INDIVIDUAL_MANAGER_H__ */
