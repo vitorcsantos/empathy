@@ -2352,11 +2352,14 @@ individual_view_remove_activate_cb (GtkMenuItem *menuitem,
               text, can_block);
       if (res == GTK_RESPONSE_YES || res == GTK_RESPONSE_REJECT)
         {
+          gboolean abusive;
+
           if (res == GTK_RESPONSE_REJECT &&
-              empathy_block_individual_dialog_show (parent, individual, NULL))
+              empathy_block_individual_dialog_show (parent, individual,
+                &abusive))
             {
               empathy_individual_manager_set_blocked (manager, individual,
-                  TRUE);
+                  TRUE, abusive);
             }
           else
             {
