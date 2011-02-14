@@ -85,15 +85,17 @@ subscription_dialog_response_cb (GtkDialog *dialog,
 					     contact, "");
 	}
 	else if (response == GTK_RESPONSE_REJECT) {
+		gboolean abusive;
+
 		/* confirm the blocking */
 		if (empathy_block_contact_dialog_show (GTK_WINDOW (dialog),
-						       contact, NULL)) {
+						       contact, &abusive)) {
 			empathy_contact_list_remove (
 					EMPATHY_CONTACT_LIST (manager),
 					contact, "");
 			empathy_contact_list_set_blocked (
 					EMPATHY_CONTACT_LIST (manager),
-					contact, TRUE);
+					contact, TRUE, abusive);
 		} else {
 			/* if they don't confirm, return back to the
 			 * first dialog */
@@ -530,8 +532,6 @@ empathy_block_contact_dialog_show (GtkWindow      *parent,
 	}
 
 	res = gtk_dialog_run (GTK_DIALOG (dialog));
-	gtk_widget_destroy (dialog);
-
 	if (abusive != NULL) {
 		if (abusive_check != NULL) {
 			*abusive = gtk_toggle_button_get_active (
@@ -541,6 +541,7 @@ empathy_block_contact_dialog_show (GtkWindow      *parent,
 		}
 	}
 
+	gtk_widget_destroy (dialog);
 	g_object_unref (manager);
 
 	return res == GTK_RESPONSE_REJECT;

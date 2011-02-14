@@ -13,10 +13,10 @@ EXTRA_DIST = \
     generic-types.xml \
     misc.xml \
     Debug.xml \
-    Channel_Interface_Conference.xml \
     Logger.xml \
     Authentication_TLS_Certificate.xml \
     Channel_Type_Server_TLS_Connection.xml \
+    Connection_Interface_Contact_Blocking.xml \
     $(NULL)
 
 noinst_LTLIBRARIES = libemp-extensions.la
