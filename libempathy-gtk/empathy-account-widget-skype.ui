@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <requires lib="gtk+" version="2.16"/>
-  <object class="GtkAdjustment" id="adjustment1">
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
+  <!-- interface-naming-policy project-wide -->
   <object class="GtkVBox" id="vbox_skype_settings">
     <property name="visible">True</property>
-    <property name="can_focus">False</property>
     <property name="spacing">6</property>
     <child>
       <object class="GtkTable" id="table_common_skype_settings">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
         <property name="n_rows">4</property>
         <property name="n_columns">2</property>
         <property name="column_spacing">12</property>
@@ -20,7 +15,6 @@
         <child>
           <object class="GtkLabel" id="label_password">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
             <property name="xalign">0</property>
             <property name="label" translatable="yes">Pass_word:</property>
             <property name="use_underline">True</property>
@@ -35,7 +29,6 @@
         <child>
           <object class="GtkLabel" id="label_id">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
             <property name="xalign">0</property>
             <property name="label" translatable="yes">Skype name:</property>
             <property name="use_underline">True</property>
@@ -74,7 +67,6 @@
         <child>
           <object class="GtkLabel" id="label1">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
             <property name="label" translatable="yes">Don't have a Skype Name?
 Get one at &lt;a href="http://www.skype.com/go/register"&gt;Skype.com&lt;/a&gt;</property>
             <property name="use_markup">True</property>
@@ -89,7 +81,6 @@ Get one at &lt;a href="http://www.skype.com/go/register"&gt;Skype.com&lt;/a&gt;<
         <child>
           <object class="GtkLabel" id="label2">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
             <property name="label" translatable="yes">&lt;a href="https://login.skype.com/account/password-reset-request"&gt;Forgotten your password?&lt;/a&gt;</property>
             <property name="use_markup">True</property>
           </object>
@@ -113,28 +104,47 @@ Get one at &lt;a href="http://www.skype.com/go/register"&gt;Skype.com&lt;/a&gt;<
         <property name="position">0</property>
       </packing>
     </child>
+    <child>
+      <object class="GtkHButtonBox" id="hbuttonbox1">
+        <property name="visible">True</property>
+        <property name="layout_style">start</property>
+        <child>
+          <object class="GtkButton" id="edit-privacy-settings-button">
+            <property name="label" translatable="yes">Edit _Privacy Settings...</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="use_underline">True</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="position">1</property>
+      </packing>
+    </child>
   </object>
   <object class="GtkVBox" id="vbox_skype_simple">
     <property name="visible">True</property>
-    <property name="can_focus">False</property>
     <property name="spacing">6</property>
     <child>
       <object class="GtkLabel" id="label_id_simple">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
         <property name="xalign">0</property>
         <property name="label" translatable="yes">What is your Skype Name?</property>
       </object>
       <packing>
-        <property name="expand">True</property>
-        <property name="fill">True</property>
         <property name="position">0</property>
       </packing>
     </child>
     <child>
-      <object class="GtkAlignment" id="alignment1">
+      <object class="GtkAlignment" id="alignment3">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
         <property name="xalign">0</property>
         <property name="yalign">0</property>
         <property name="xscale">0.34999999403953552</property>
@@ -144,7 +154,6 @@ Get one at &lt;a href="http://www.skype.com/go/register"&gt;Skype.com&lt;/a&gt;<
         <child>
           <object class="GtkVBox" id="vbox1">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
             <property name="spacing">4</property>
             <child>
               <object class="GtkEntry" id="entry_id_simple">
@@ -152,26 +161,21 @@ Get one at &lt;a href="http://www.skype.com/go/register"&gt;Skype.com&lt;/a&gt;<
                 <property name="can_focus">True</property>
               </object>
               <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
                 <property name="position">0</property>
               </packing>
             </child>
             <child>
               <object class="GtkLabel" id="label_example">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
                 <property name="xalign">0.10000000149011612</property>
                 <property name="label" translatable="yes">Don't have a Skype Name?
 Get one at &lt;a href="http://www.skype.com/go/register"&gt;Skype.com&lt;/a&gt;</property>
                 <property name="use_markup">True</property>
                 <attributes>
-                  <attribute name="scale" value="0.80000000000000004"/>
+                  <attribute name="scale" value="0.800000"/>
                 </attributes>
               </object>
               <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
                 <property name="position">1</property>
               </packing>
             </child>
@@ -179,28 +183,22 @@ Get one at &lt;a href="http://www.skype.com/go/register"&gt;Skype.com&lt;/a&gt;<
         </child>
       </object>
       <packing>
-        <property name="expand">True</property>
-        <property name="fill">True</property>
         <property name="position">1</property>
       </packing>
     </child>
     <child>
       <object class="GtkLabel" id="label_password_simple">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
         <property name="xalign">0</property>
         <property name="label" translatable="yes">What is your Skype password?</property>
       </object>
       <packing>
-        <property name="expand">True</property>
-        <property name="fill">True</property>
         <property name="position">2</property>
       </packing>
     </child>
     <child>
       <object class="GtkAlignment" id="alignment2">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
         <property name="xalign">0</property>
         <property name="yalign">0</property>
         <property name="xscale">0.34999999403953552</property>
@@ -209,7 +207,6 @@ Get one at &lt;a href="http://www.skype.com/go/register"&gt;Skype.com&lt;/a&gt;<
         <child>
           <object class="GtkVBox" id="vbox2">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
             <child>
               <object class="GtkEntry" id="entry_password_simple">
                 <property name="visible">True</property>
@@ -217,21 +214,16 @@ Get one at &lt;a href="http://www.skype.com/go/register"&gt;Skype.com&lt;/a&gt;<
                 <property name="visibility">False</property>
               </object>
               <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
                 <property name="position">0</property>
               </packing>
             </child>
             <child>
-              <object class="GtkLabel" id="label3">
+              <object class="GtkLabel" id="label9">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
                 <property name="label" translatable="yes">&lt;a href="https://login.skype.com/account/password-reset-request"&gt;Forgotten your password?&lt;/a&gt;</property>
                 <property name="use_markup">True</property>
               </object>
               <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
                 <property name="position">1</property>
               </packing>
             </child>
@@ -239,10 +231,231 @@ Get one at &lt;a href="http://www.skype.com/go/register"&gt;Skype.com&lt;/a&gt;<
         </child>
       </object>
       <packing>
-        <property name="expand">True</property>
-        <property name="fill">True</property>
         <property name="position">3</property>
       </packing>
     </child>
+  </object>
+  <object class="GtkDialog" id="privacy-settings-dialog">
+    <property name="resizable">False</property>
+    <property name="modal">True</property>
+    <property name="type_hint">dialog</property>
+    <property name="skip_taskbar_hint">True</property>
+    <property name="skip_pager_hint">True</property>
+    <child internal-child="vbox">
+      <object class="GtkVBox" id="dialog-vbox1">
+        <property name="visible">True</property>
+        <property name="spacing">2</property>
+        <child>
+          <object class="GtkFrame" id="frame1">
+            <property name="visible">True</property>
+            <property name="label_xalign">0</property>
+            <property name="shadow_type">none</property>
+            <child>
+              <object class="GtkAlignment" id="alignment1">
+                <property name="visible">True</property>
+                <property name="top_padding">6</property>
+                <property name="left_padding">12</property>
+                <child>
+                  <object class="GtkVBox" id="privacy-settings-vbox">
+                    <property name="visible">True</property>
+                    <property name="spacing">6</property>
+                    <child>
+                      <object class="GtkTable" id="privacy-settings-table">
+                        <property name="visible">True</property>
+                        <property name="n_rows">5</property>
+                        <property name="n_columns">2</property>
+                        <property name="column_spacing">6</property>
+                        <property name="row_spacing">6</property>
+                        <child>
+                          <object class="GtkLabel" id="label3">
+                            <property name="visible">True</property>
+                            <property name="xalign">0</property>
+                            <property name="label" translatable="yes">Allow _text chats from:</property>
+                            <property name="use_underline">True</property>
+                            <property name="mnemonic_widget">allow-text-chats-from</property>
+                          </object>
+                          <packing>
+                            <property name="x_options">GTK_FILL</property>
+                            <property name="y_options">GTK_FILL</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="label4">
+                            <property name="visible">True</property>
+                            <property name="xalign">0</property>
+                            <property name="label" translatable="yes">Allow _Skype calls from:</property>
+                            <property name="use_underline">True</property>
+                            <property name="mnemonic_widget">allow-skype-calls-from</property>
+                          </object>
+                          <packing>
+                            <property name="top_attach">1</property>
+                            <property name="bottom_attach">2</property>
+                            <property name="x_options">GTK_FILL</property>
+                            <property name="y_options">GTK_FILL</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="label6">
+                            <property name="visible">True</property>
+                            <property name="xalign">0</property>
+                            <property name="label" translatable="yes">Allow _outside calls from:</property>
+                            <property name="use_underline">True</property>
+                            <property name="mnemonic_widget">allow-outside-calls-from</property>
+                          </object>
+                          <packing>
+                            <property name="top_attach">2</property>
+                            <property name="bottom_attach">3</property>
+                            <property name="x_options">GTK_FILL</property>
+                            <property name="y_options">GTK_FILL</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkCheckButton" id="show-my-web-status">
+                            <property name="label" translatable="yes">Show my _web status</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">False</property>
+                            <property name="use_underline">True</property>
+                            <property name="draw_indicator">True</property>
+                          </object>
+                          <packing>
+                            <property name="right_attach">2</property>
+                            <property name="top_attach">4</property>
+                            <property name="bottom_attach">5</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="label7">
+                            <property name="visible">True</property>
+                            <property name="xalign">0</property>
+                            <property name="label" translatable="yes">Show my _avatar to:</property>
+                            <property name="use_underline">True</property>
+                            <property name="mnemonic_widget">show-my-avatar-to</property>
+                          </object>
+                          <packing>
+                            <property name="top_attach">3</property>
+                            <property name="bottom_attach">4</property>
+                            <property name="x_options">GTK_FILL</property>
+                            <property name="y_options">GTK_FILL</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkComboBox" id="allow-text-chats-from">
+                            <property name="visible">True</property>
+                            <child>
+                              <object class="GtkCellRendererText" id="cellrenderertext1"/>
+                              <attributes>
+                                <attribute name="text">1</attribute>
+                              </attributes>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="right_attach">2</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkComboBox" id="allow-skype-calls-from">
+                            <property name="visible">True</property>
+                            <child>
+                              <object class="GtkCellRendererText" id="cellrenderertext2"/>
+                              <attributes>
+                                <attribute name="text">1</attribute>
+                              </attributes>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="right_attach">2</property>
+                            <property name="top_attach">1</property>
+                            <property name="bottom_attach">2</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkComboBox" id="allow-outside-calls-from">
+                            <property name="visible">True</property>
+                            <child>
+                              <object class="GtkCellRendererText" id="cellrenderertext4"/>
+                              <attributes>
+                                <attribute name="text">1</attribute>
+                              </attributes>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="right_attach">2</property>
+                            <property name="top_attach">2</property>
+                            <property name="bottom_attach">3</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkComboBox" id="show-my-avatar-to">
+                            <property name="visible">True</property>
+                            <child>
+                              <object class="GtkCellRendererText" id="cellrenderertext5"/>
+                              <attributes>
+                                <attribute name="text">1</attribute>
+                              </attributes>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="right_attach">2</property>
+                            <property name="top_attach">3</property>
+                            <property name="bottom_attach">4</property>
+                          </packing>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="pack_type">end</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child type="label">
+              <object class="GtkLabel" id="label8">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">&lt;span size="x-large" weight="bold"&gt;Privacy Settings&lt;/span&gt;</property>
+                <property name="use_markup">True</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child internal-child="action_area">
+          <object class="GtkHButtonBox" id="dialog-action_area1">
+            <property name="visible">True</property>
+            <property name="layout_style">end</property>
+            <child>
+              <object class="GtkButton" id="button1">
+                <property name="label">gtk-close</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="use_stock">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="pack_type">end</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+    <action-widgets>
+      <action-widget response="0">button1</action-widget>
+    </action-widgets>
   </object>
 </interface>
