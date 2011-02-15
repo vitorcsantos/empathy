@@ -21,6 +21,7 @@
  *          Martyn Russell <martyn@imendio.com>
  *          Cosimo Cecchi <cosimo.cecchi@collabora.co.uk>
  *          Jonathan Tellier <jonathan.tellier@gmail.com>
+ *          Danielle Madeley <danielle.madeley@collabora.co.uk>
  */
 
 #include <config.h>
@@ -33,6 +34,8 @@
 #ifdef HAVE_MEEGO
 #include <mx-gtk/mx-gtk.h>
 #endif /* HAVE_MEEGO */
+
+#include <extensions/extensions.h>
 
 #include <libempathy/empathy-utils.h>
 
@@ -1448,6 +1451,314 @@ account_widget_build_groupwise (EmpathyAccountWidget *self,
     }
 }
 
+enum {
+    PS_COL_ENUM_VALUE,
+    PS_COL_DISPLAY_NAME,
+    NUM_PS_COLS
+};
+
+static void
+account_widget_skype_combo_changed_cb (GtkComboBox *combo,
+    EmpathyAccountWidget *self)
+{
+  EmpathyAccountWidgetPriv *priv = GET_PRIV (self);
+  const char *prop_name = g_object_get_data (G_OBJECT (combo), "dbus-property");
+  TpConnection *conn;
+  EmpPrivacySetting prop_value;
+  GtkTreeIter iter;
+  GValue value = { 0, };
+
+  gtk_combo_box_get_active_iter (combo, &iter);
+  gtk_tree_model_get (gtk_combo_box_get_model (combo), &iter,
+      PS_COL_ENUM_VALUE, &prop_value,
+      -1);
+
+  DEBUG ("Combo changed: %s", prop_name);
+
+  g_value_init (&value, G_TYPE_UINT);
+  g_value_set_uint (&value, prop_value);
+
+  conn = tp_account_get_connection (
+      empathy_account_settings_get_account (priv->settings));
+  tp_cli_dbus_properties_call_set (conn, -1,
+      EMP_IFACE_CONNECTION_INTERFACE_PRIVACY_SETTINGS,
+      prop_name, &value, NULL, NULL, NULL, NULL);
+
+  g_value_unset (&value);
+}
+
+static void
+account_widget_skype_toggle_changed_cb (GtkToggleButton *toggle,
+    EmpathyAccountWidget *self)
+{
+  EmpathyAccountWidgetPriv *priv = GET_PRIV (self);
+  const char *prop_name = g_object_get_data (G_OBJECT (toggle),
+      "dbus-property");
+  TpConnection *conn;
+  GValue value = { 0, };
+
+  DEBUG ("Toggle changed: %s", prop_name);
+
+  g_value_init (&value, G_TYPE_BOOLEAN);
+  g_value_set_boolean (&value, gtk_toggle_button_get_active (toggle));
+
+  conn = tp_account_get_connection (
+      empathy_account_settings_get_account (priv->settings));
+  tp_cli_dbus_properties_call_set (conn, -1,
+      EMP_IFACE_CONNECTION_INTERFACE_PRIVACY_SETTINGS,
+      prop_name, &value, NULL, NULL, NULL, NULL);
+
+  g_value_unset (&value);
+}
+
+static void
+account_widget_build_skype_get_privacy_settings_cb (TpProxy *cm,
+    GHashTable *props,
+    const GError *in_error,
+    gpointer user_data,
+    GObject *weak_obj)
+{
+  EmpathyAccountWidget *self = EMPATHY_ACCOUNT_WIDGET (weak_obj);
+  GtkBuilder *gui = user_data;
+  guint i;
+
+  static const char *widgets[] = {
+      "allow-text-chats-from",
+      "allow-skype-calls-from",
+      "allow-outside-calls-from",
+      "show-my-avatar-to",
+      "show-my-web-status"
+  };
+
+  if (in_error != NULL)
+    {
+      DEBUG ("Failed to get properties: %s", in_error->message);
+
+      // FIXME: disable privacy settings
+
+      return;
+    }
+
+  for (i = 0; i < G_N_ELEMENTS (widgets); i++)
+    {
+      GtkWidget *widget = GTK_WIDGET (gtk_builder_get_object (gui, widgets[i]));
+      const char *prop_name = g_object_get_data (G_OBJECT (widget),
+          "dbus-property");
+
+      DEBUG ("Widget '%s' (%s), prop = %s",
+          widgets[i], G_OBJECT_TYPE_NAME (widget), prop_name);
+
+      if (GTK_IS_COMBO_BOX (widget))
+        {
+          GtkTreeModel *model =
+            gtk_combo_box_get_model (GTK_COMBO_BOX (widget));
+          GtkTreeIter iter;
+          gboolean valid;
+
+          guint prop_value = tp_asv_get_uint32 (props, prop_name, NULL);
+
+          DEBUG ("prop_value = %u", prop_value);
+
+          for (valid = gtk_tree_model_get_iter_first (model, &iter);
+               valid;
+               valid = gtk_tree_model_iter_next (model, &iter))
+            {
+              guint v;
+
+              gtk_tree_model_get (model, &iter,
+                  PS_COL_ENUM_VALUE, &v,
+                  -1);
+
+              if (v == prop_value)
+                {
+                  gtk_combo_box_set_active_iter (GTK_COMBO_BOX (widget), &iter);
+                  break;
+                }
+            }
+
+          g_signal_connect (widget, "changed",
+              G_CALLBACK (account_widget_skype_combo_changed_cb), self);
+        }
+      else if (GTK_IS_TOGGLE_BUTTON (widget))
+        {
+          gboolean prop_value = tp_asv_get_boolean (props, prop_name, NULL);
+
+          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), prop_value);
+
+          g_signal_connect (widget, "toggled",
+              G_CALLBACK (account_widget_skype_toggle_changed_cb), self);
+        }
+      else
+        {
+          g_assert_not_reached ();
+        }
+    }
+}
+
+/**
+ * account_widget_build_skype_setup_combo:
+ * @gui:
+ * @widget:
+ * @first_option: a list of options from the enum, terminated by -1
+ */
+static void
+account_widget_build_skype_setup_combo (GtkBuilder *gui,
+    const char *widget,
+    const char *prop_name,
+    int first_option,
+    ...)
+{
+  GtkWidget *combo;
+  GtkListStore *store;
+  va_list var_args;
+  int option;
+
+  static const char *options[NUM_EMP_PRIVACY_SETTINGS] = {
+        N_("Nobody"),
+        N_("Contacts"),
+        N_("Anyone"),
+        N_("Known Numbers")
+  };
+
+  combo = GTK_WIDGET (gtk_builder_get_object (gui, widget));
+
+  g_return_if_fail (combo != NULL);
+
+  store = gtk_list_store_new (NUM_PS_COLS,
+      G_TYPE_UINT, /* PS_COL_ENUM_VALUE */
+      G_TYPE_STRING /* PS_COL_DISPLAY_NAME */
+      );
+  gtk_combo_box_set_model (GTK_COMBO_BOX (combo), GTK_TREE_MODEL (store));
+
+  va_start (var_args, first_option);
+
+  for (option = first_option; option != -1; option = va_arg (var_args, int))
+    {
+      gtk_list_store_insert_with_values (store, NULL, -1,
+          PS_COL_ENUM_VALUE, option,
+          PS_COL_DISPLAY_NAME, gettext(options[option]),
+          -1);
+    }
+
+  va_end (var_args);
+
+  g_object_set_data (G_OBJECT (combo), "dbus-property", (gpointer) prop_name);
+}
+
+static gboolean
+_connection_status_binding_function (GBinding *binding,
+    const GValue *source_value,
+    GValue *target_value,
+    gpointer user_data)
+{
+  g_return_val_if_fail (G_VALUE_HOLDS_UINT (source_value), FALSE);
+  g_return_val_if_fail (G_VALUE_HOLDS_BOOLEAN (target_value), FALSE);
+
+  g_value_set_boolean (target_value,
+      g_value_get_uint (source_value) == TP_CONNECTION_STATUS_CONNECTED);
+
+  return TRUE;
+}
+
+static GBinding *
+account_widget_bind_connection_status (EmpathyAccountSettings *settings,
+    gpointer widget,
+    const char *property)
+{
+  /* FIXME: support for this in tp-glib is
+   * https://bugs.freedesktop.org/show_bug.cgi?id=34813 */
+  return g_object_bind_property_full (
+      empathy_account_settings_get_account (settings),
+      "connection-status",
+      widget, property,
+      G_BINDING_SYNC_CREATE,
+      _connection_status_binding_function,
+      NULL, NULL, NULL);
+}
+
+static void
+account_widget_skype_privacy_settings (GtkWidget *button,
+    EmpathyAccountWidget *self)
+{
+  EmpathyAccountWidgetPriv *priv = GET_PRIV (self);
+  TpConnection *conn;
+  char *filename;
+  GtkBuilder *gui;
+  GtkWidget *dialog, *show_my_web_status, *table, *vbox;
+  GtkWidget *toplevel, *infobar, *label;
+
+  DEBUG ("Loading privacy settings");
+
+  filename = empathy_file_lookup ("empathy-account-widget-skype.ui",
+      "libempathy-gtk");
+  gui = empathy_builder_get_file (filename,
+      "privacy-settings-dialog", &dialog,
+      "privacy-settings-table", &table,
+      "privacy-settings-vbox", &vbox,
+      "show-my-web-status", &show_my_web_status,
+      NULL);
+
+  toplevel = gtk_widget_get_toplevel (self->ui_details->widget);
+  if (gtk_widget_is_toplevel (toplevel) && GTK_IS_WINDOW (toplevel))
+    gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (toplevel));
+
+  /* make the settings insensitive when the account is disconnected */
+  account_widget_bind_connection_status (priv->settings,
+      table, "sensitive");
+
+  /* set up an informative info bar */
+  infobar = gtk_info_bar_new ();
+  gtk_box_pack_start (GTK_BOX (vbox), infobar, FALSE, TRUE, 0);
+  gtk_info_bar_set_message_type (GTK_INFO_BAR (infobar), GTK_MESSAGE_INFO);
+  label = gtk_label_new (_("Account Disconnected"));
+  gtk_container_add (
+      GTK_CONTAINER (gtk_info_bar_get_content_area (GTK_INFO_BAR (infobar))),
+      label);
+  gtk_widget_show (label);
+  g_object_bind_property (table, "sensitive", infobar, "visible",
+      G_BINDING_SYNC_CREATE | G_BINDING_INVERT_BOOLEAN);
+
+  account_widget_build_skype_setup_combo (gui,
+      "allow-text-chats-from", "AllowTextChannelsFrom",
+      EMP_PRIVACY_SETTING_ANYONE,
+      EMP_PRIVACY_SETTING_CONTACTS,
+      -1);
+  account_widget_build_skype_setup_combo (gui,
+      "allow-skype-calls-from", "AllowCallChannelsFrom",
+      EMP_PRIVACY_SETTING_ANYONE,
+      EMP_PRIVACY_SETTING_CONTACTS,
+      -1);
+  account_widget_build_skype_setup_combo (gui,
+      "allow-outside-calls-from", "AllowOutsideCallsFrom",
+      EMP_PRIVACY_SETTING_ANYONE,
+      EMP_PRIVACY_SETTING_KNOWN_NUMBERS,
+      EMP_PRIVACY_SETTING_CONTACTS,
+      -1);
+  account_widget_build_skype_setup_combo (gui,
+      "show-my-avatar-to", "ShowMyAvatarTo",
+      EMP_PRIVACY_SETTING_ANYONE,
+      EMP_PRIVACY_SETTING_CONTACTS,
+      -1);
+
+  g_object_set_data (G_OBJECT (show_my_web_status), "dbus-property",
+      "ShowMyWebStatus");
+
+  /* get the current parameter values from psyke */
+  conn = tp_account_get_connection (
+      empathy_account_settings_get_account (priv->settings));
+
+  tp_cli_dbus_properties_call_get_all (conn, -1,
+      EMP_IFACE_CONNECTION_INTERFACE_PRIVACY_SETTINGS,
+      account_widget_build_skype_get_privacy_settings_cb,
+      g_object_ref (gui), g_object_unref,
+      G_OBJECT (self));
+
+  g_object_unref (gui);
+
+  gtk_dialog_run (GTK_DIALOG (dialog));
+  gtk_widget_destroy (dialog);
+}
+
 static void
 account_widget_build_skype (EmpathyAccountWidget *self,
     const char *filename)
@@ -1469,10 +1780,21 @@ account_widget_build_skype (EmpathyAccountWidget *self,
     }
   else
     {
+      GtkWidget *edit_privacy_settings_button;
+
       self->ui_details->gui = empathy_builder_get_file (filename,
           "table_common_skype_settings", &priv->table_common_settings,
           "vbox_skype_settings", &self->ui_details->widget,
+          "edit-privacy-settings-button", &edit_privacy_settings_button,
           NULL);
+
+      empathy_builder_connect (self->ui_details->gui, self,
+          "edit-privacy-settings-button", "clicked",
+              account_widget_skype_privacy_settings,
+          NULL);
+
+      account_widget_bind_connection_status (priv->settings,
+          edit_privacy_settings_button, "sensitive");
 
       empathy_account_widget_handle_params (self,
           "entry_id", "account",
