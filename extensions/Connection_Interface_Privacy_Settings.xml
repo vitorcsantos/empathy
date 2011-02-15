@@ -1,0 +1,114 @@
+<?xml version="1.0" ?>
+<node name="/Connection_Interface_Privacy_Settings"
+  xmlns:tp="http://telepathy.freedesktop.org/wiki/DbusSpec#extensions-v0">
+  <tp:copyright>Copyright &#x00a9; 2010 Collabora Ltd.</tp:copyright>
+  <tp:license xmlns="http://www.w3.org/1999/xhtml">
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Library General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+  </tp:license>
+
+  <interface
+    name="uk.co.Collabora.Telepathy.Psyke.Connection.Interface.PrivacySettings">
+
+    <tp:docstring>
+      Privacy Setting Connection properties for telepathy-psyke.
+    </tp:docstring>
+
+    <tp:enum name="Privacy_Setting" type="u"
+             value_prefix="Privacy_Setting">
+      <tp:docstring>
+        Ordering of these values in SkypeKit is inconsistent. Always switch
+        for the values you want.
+      </tp:docstring>
+
+      <tp:enumvalue suffix="Nobody" value="0">
+        <tp:docstring>
+          No users (not available for all properties).
+        </tp:docstring>
+      </tp:enumvalue>
+      <tp:enumvalue suffix="Contacts" value="1">
+        <tp:docstring>
+          Users on the contact list.
+        </tp:docstring>
+      </tp:enumvalue>
+      <tp:enumvalue suffix="Anyone" value="2">
+        <tp:docstring>
+          All users.
+        </tp:docstring>
+      </tp:enumvalue>
+      <tp:enumvalue suffix="Known_Numbers" value="3">
+        <tp:docstring>
+          Known numbers (not available for all properties).
+        </tp:docstring>
+      </tp:enumvalue>
+    </tp:enum>
+
+    <property name="AllowTextChannelsFrom"
+              tp:name-for-bindings="Allow_Text_Channels_From"
+              type="u" tp:type="Privacy_Setting"
+              access="readwrite">
+      <tp:docstring>
+        From whom to allow incoming Text channels.
+      </tp:docstring>
+    </property>
+
+    <property name="AllowCallChannelsFrom"
+              tp:name-for-bindings="Allow_Call_Channels_From"
+              type="u" tp:type="Privacy_Setting"
+              access="readwrite">
+      <tp:docstring>
+        From whom to allow incoming Call channels.
+      </tp:docstring>
+    </property>
+
+    <!-- FIXME: this property is difficult to implement, disable for now
+    <property name="AllowVideoFrom"
+              tp:name-for-bindings="Allow_Video_From"
+              type="u" tp:type="Privacy_Setting"
+              access="readwrite">
+      <tp:docstring>
+        From whom to automatically enable video.
+      </tp:docstring>
+    </property>
+     -->
+
+    <property name="AllowOutsideCallsFrom"
+              tp:name-for-bindings="Allow_Outside_Calls_From"
+              type="u" tp:type="Privacy_Setting"
+              access="readwrite">
+      <tp:docstring>
+        From whom to receive outside calls.
+      </tp:docstring>
+    </property>
+
+    <property name="ShowMyAvatarTo"
+              tp:name-for-bindings="Show_My_Avatar_To"
+              type="u" tp:type="Privacy_Setting"
+              access="readwrite">
+      <tp:docstring>
+        To whom to show my avatar.
+      </tp:docstring>
+    </property>
+
+    <property name="ShowMyWebStatus"
+              tp:name-for-bindings="Show_My_Web_Status"
+              type="b" access="readwrite">
+      <tp:docstring>
+        Whether or not to show my status on the web.
+      </tp:docstring>
+    </property>
+
+  </interface>
+
+</node>
