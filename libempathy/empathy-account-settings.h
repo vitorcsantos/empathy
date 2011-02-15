@@ -170,6 +170,7 @@ void empathy_account_settings_apply_async (EmpathyAccountSettings *settings,
 gboolean empathy_account_settings_apply_finish (
   EmpathyAccountSettings *settings,
   GAsyncResult *result,
+  gboolean *reconnect_required,
   GError **error);
 
 gboolean empathy_account_settings_is_valid (EmpathyAccountSettings *settings);
