@@ -60,6 +60,7 @@
 
 #include <libempathy-gtk/empathy-ui-utils.h>
 #include <libempathy-gtk/empathy-location-manager.h>
+#include <libempathy-gtk/empathy-theme-manager.h>
 
 #include "empathy-main-window.h"
 #include "empathy-accounts-common.h"
@@ -406,6 +407,7 @@ main (int argc, char *argv[])
   TpDebugSender *debug_sender;
 #endif
   GSettings *gsettings;
+  EmpathyThemeManager *theme_mgr;
 
   GOptionContext *optcontext;
   GOptionEntry options[] = {
@@ -547,6 +549,9 @@ main (int argc, char *argv[])
   location_manager = empathy_location_manager_dup_singleton ();
 #endif
 
+  /* Keep the theme manager alive as it does some caching */
+  theme_mgr = empathy_theme_manager_dup_singleton ();
+
   gtk_main ();
 
   empathy_idle_set_state (idle, TP_CONNECTION_PRESENCE_TYPE_OFFLINE);
@@ -569,6 +574,7 @@ main (int argc, char *argv[])
   g_object_unref (ft_factory);
   g_object_unref (unique_app);
   g_object_unref (gsettings);
+  g_object_unref (theme_mgr);
   gtk_widget_destroy (window);
 
   notify_uninit ();
