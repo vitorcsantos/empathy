@@ -2,6 +2,7 @@ include $(top_srcdir)/tools/flymake.mk
 
 CPPFLAGS_COMMON =					\
 	$(EMPATHY_CFLAGS)				\
+	$(YELL_CFLAGS)					\
 	$(EDS_CFLAGS)					\
 	$(GTK_CFLAGS)					\
 	$(ERROR_CFLAGS)					\
@@ -29,6 +30,7 @@ LDADD =								\
 	$(UNIQUE_LIBS)						\
 	$(EMPATHY_LIBS)						\
 	$(GTK_LIBS)						\
+	$(YELL_LIBS)						\
 	$(LIBCHAMPLAIN_LIBS)					\
 	$(WEBKIT_LIBS)
 
@@ -137,6 +139,30 @@ empathy_av_LDFLAGS = $(EMPATHY_AV_LIBS)
 
 empathy_auth_client_SOURCES =						\
 	empathy-auth-client.c
+
+if HAVE_CALL
+
+libexec_PROGRAMS += empathy-call
+
+empathy_call_SOURCES = \
+       empathy-call.c \
+       empathy-call-factory.c \
+       empathy-call-factory.h \
+       empathy-call-handler.c \
+       empathy-call-handler.h \
+       empathy-call-window.c \
+       empathy-call-window.h \
+       empathy-call-window-fullscreen.c \
+       empathy-call-window-fullscreen.h \
+       empathy-sidebar.c \
+       empathy-sidebar.h
+
+nodist_empathy_call_SOURCES = $(BUILT_SOURCES)
+
+empathy_call_CFLAGS = $(EMPATHY_CALL_CFLAGS)
+empathy_call_LDFLAGS = $(EMPATHY_CALL_LIBS)
+
+endif
 
 empathy_handwritten_source = \
 	empathy-about-dialog.c empathy-about-dialog.h			\
