@@ -9,6 +9,7 @@ AM_CPPFLAGS =                                           \
 	-DLOCALEDIR=\""$(datadir)/locale"\"		\
 	-DG_LOG_DOMAIN=\"empathy\"			\
 	$(EMPATHY_CFLAGS)				\
+	$(YELL_CFLAGS)					\
 	$(GEOCLUE_CFLAGS)				\
 	$(NETWORK_MANAGER_CFLAGS)			\
 	$(CONNMAN_CFLAGS)				\
@@ -109,6 +110,7 @@ nodist_libempathy_la_SOURCES =\
 libempathy_la_LIBADD =		\
 	$(top_builddir)/extensions/libemp-extensions.la \
 	$(EMPATHY_LIBS) \
+	$(YELL_LIBS) \
 	$(GEOCLUE_LIBS) \
 	$(NETWORK_MANAGER_LIBS) \
 	$(CONNMAN_LIBS)
