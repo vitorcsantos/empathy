@@ -271,9 +271,6 @@ static void empathy_call_window_restart_call (EmpathyCallWindow *window);
 static void empathy_call_window_status_message (EmpathyCallWindow *window,
   gchar *message);
 
-static void empathy_call_window_update_avatars_visibility (TpyCallChannel *call,
-  EmpathyCallWindow *window);
-
 static gboolean empathy_call_window_bus_message (GstBus *bus,
   GstMessage *message, gpointer user_data);
 
@@ -1656,14 +1653,6 @@ empathy_call_window_class_init (
     PROP_CALL_HANDLER, param_spec);
 }
 
-static void
-empathy_call_window_video_stream_changed_cb (TpyCallChannel *call,
-    GParamSpec *property, EmpathyCallWindow *self)
-{
-  DEBUG ("video stream changed");
-  empathy_call_window_update_avatars_visibility (call, self);
-}
-
 void
 empathy_call_window_dispose (GObject *object)
 {
@@ -2437,10 +2426,6 @@ empathy_call_window_connected (gpointer user_data)
 
   g_object_get (priv->handler, "call-channel", &call, NULL);
 
-  tp_g_signal_connect_object (call, "notify::video-stream",
-    G_CALLBACK (empathy_call_window_video_stream_changed_cb),
-    self, 0);
-
   if (tpy_call_channel_has_dtmf (call))
     gtk_widget_set_sensitive (priv->dtmf_panel, TRUE);
 
@@ -2461,7 +2446,8 @@ empathy_call_window_connected (gpointer user_data)
 
   gtk_widget_set_sensitive (priv->mic_button, TRUE);
 
-  empathy_call_window_update_avatars_visibility (call, self);
+  gtk_widget_hide (priv->video_output);
+  gtk_widget_show (priv->remote_user_avatar_widget);
 
   g_object_unref (call);
 
@@ -2760,24 +2746,6 @@ empathy_call_window_bus_message (GstBus *bus, GstMessage *message,
     }
 
   return TRUE;
-}
-
-static void
-empathy_call_window_update_avatars_visibility (TpyCallChannel *call,
-    EmpathyCallWindow *window)
-{
-  EmpathyCallWindowPriv *priv = GET_PRIV (window);
-
-  if (tpy_call_channel_is_receiving_video (call))
-    {
-      gtk_widget_hide (priv->remote_user_avatar_widget);
-      gtk_widget_show (priv->video_output);
-    }
-  else
-    {
-      gtk_widget_hide (priv->video_output);
-      gtk_widget_show (priv->remote_user_avatar_widget);
-    }
 }
 
 static void
