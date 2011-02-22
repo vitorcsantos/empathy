@@ -44,6 +44,7 @@
 
 #include "empathy-new-call-dialog.h"
 #include "empathy-account-chooser.h"
+#include "empathy-call-utils.h"
 
 static EmpathyNewCallDialog *dialog_singleton = NULL;
 

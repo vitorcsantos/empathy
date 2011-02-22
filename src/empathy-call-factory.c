@@ -34,6 +34,8 @@
 #include <libempathy/empathy-tp-contact-factory.h>
 #include <libempathy/empathy-utils.h>
 
+#include <libempathy-gtk/empathy-call-utils.h>
+
 #include "empathy-call-factory.h"
 #include "empathy-call-handler.h"
 #include "src-marshal.h"
