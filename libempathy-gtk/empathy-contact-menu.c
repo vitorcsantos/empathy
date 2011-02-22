@@ -339,7 +339,9 @@ empathy_contact_audio_call_menu_item_activated (GtkMenuItem *item,
 	EmpathyContact *contact)
 {
 
-	empathy_call_new_with_streams (contact, TRUE, FALSE,
+	empathy_call_new_with_streams (empathy_contact_get_id (contact),
+		empathy_contact_get_account (contact),
+		TRUE, FALSE,
 		gtk_get_current_event_time ());
 }
 
@@ -370,7 +372,9 @@ static void
 empathy_contact_video_call_menu_item_activated (GtkMenuItem *item,
 	EmpathyContact *contact)
 {
-	empathy_call_new_with_streams (contact, TRUE, TRUE,
+	empathy_call_new_with_streams (empathy_contact_get_id (contact),
+		empathy_contact_get_account (contact),
+		TRUE, TRUE,
 		gtk_get_current_event_time ());
 }
 
