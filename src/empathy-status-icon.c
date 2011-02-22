@@ -143,6 +143,7 @@ add_notification_actions (EmpathyStatusIcon *self,
 			break;
 
 		case EMPATHY_EVENT_TYPE_VOIP:
+		case EMPATHY_EVENT_TYPE_CALL:
 			notify_notification_add_action (notification,
 				"reject", _("Reject"), (NotifyActionCallback) notification_decline_cb,
 					self, NULL);
