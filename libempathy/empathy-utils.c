@@ -352,8 +352,8 @@ empathy_call_new_with_streams (EmpathyContact *contact,
 	g_hash_table_unref (streamed_media_request);
 	g_object_unref (call_req);
 #else
-	gHashTable *request;
-	tpAccountChannelRequest *req;
+	GHashTable *request;
+	TpAccountChannelRequest *req;
 
 	request = empathy_call_create_streamed_media_request (contact,
 							      initial_audio,
