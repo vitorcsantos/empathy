@@ -436,8 +436,8 @@ main (int argc, char *argv[])
   gtk_clutter_init (&argc, &argv);
 #endif
 
+  g_type_init ();
   tpy_cli_init ();
-
   empathy_init ();
 
   optcontext = g_option_context_new (N_("- Empathy IM Client"));
