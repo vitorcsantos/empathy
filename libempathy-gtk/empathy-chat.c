@@ -1897,7 +1897,7 @@ chat_input_populate_popup_cb (GtkTextView *view,
 
 
 static gboolean
-chat_log_filter (TplEntry *log,
+chat_log_filter (TplEvent *log,
 		 gpointer user_data)
 {
 	EmpathyChat *chat = user_data;
@@ -1905,11 +1905,11 @@ chat_log_filter (TplEntry *log,
 	EmpathyChatPriv *priv = GET_PRIV (chat);
 	const GList *pending;
 
-	g_return_val_if_fail (TPL_IS_ENTRY (log), FALSE);
+	g_return_val_if_fail (TPL_IS_EVENT (log), FALSE);
 	g_return_val_if_fail (EMPATHY_IS_CHAT (chat), FALSE);
 
 	pending = empathy_tp_chat_get_pending_messages (priv->tp_chat);
-	message = empathy_message_from_tpl_log_entry (log);
+	message = empathy_message_from_tpl_log_event (log);
 
 	for (; pending; pending = g_list_next (pending)) {
 		if (empathy_message_equal (message, pending->data)) {
@@ -1956,7 +1956,7 @@ got_filtered_messages_cb (GObject *manager,
 	EmpathyChatPriv *priv = GET_PRIV (chat);
 	GError *error = NULL;
 
-	if (!tpl_log_manager_get_filtered_messages_finish (TPL_LOG_MANAGER (manager),
+	if (!tpl_log_manager_get_filtered_events_finish (TPL_LOG_MANAGER (manager),
 		result, &messages, &error)) {
 		DEBUG ("%s. Aborting.", error->message);
 		empathy_chat_view_append_event (chat->view,
@@ -1967,9 +1967,9 @@ got_filtered_messages_cb (GObject *manager,
 
 	for (l = messages; l; l = g_list_next (l)) {
 		EmpathyMessage *message;
-		g_assert (TPL_IS_ENTRY (l->data));
+		g_assert (TPL_IS_EVENT (l->data));
 
-		message = empathy_message_from_tpl_log_entry (l->data);
+		message = empathy_message_from_tpl_log_event (l->data);
 		g_object_unref (l->data);
 
 		empathy_chat_view_append_message (chat->view, message);
@@ -1995,7 +1995,7 @@ static void
 chat_add_logs (EmpathyChat *chat)
 {
 	EmpathyChatPriv *priv = GET_PRIV (chat);
-	gboolean         is_chatroom;
+	TplEntity       *target;
 
 	if (!priv->id) {
 		return;
@@ -2005,18 +2005,21 @@ chat_add_logs (EmpathyChat *chat)
 	empathy_chat_view_scroll (chat->view, FALSE);
 
 	/* Add messages from last conversation */
-	is_chatroom = priv->handle_type == TP_HANDLE_TYPE_ROOM;
+	if (priv->handle_type == TP_HANDLE_TYPE_ROOM)
+	  target = tpl_entity_new_from_room_id (priv->id);
+	else
+	  target = tpl_entity_new (priv->id, TPL_ENTITY_CONTACT, NULL, NULL);
 
 	priv->retrieving_backlogs = TRUE;
-	tpl_log_manager_get_filtered_messages_async (priv->log_manager,
-							      priv->account,
-							      priv->id,
-							      is_chatroom,
-							      5,
-							      chat_log_filter,
-							      chat,
-							      got_filtered_messages_cb,
-							      (gpointer) chat);
+	tpl_log_manager_get_filtered_events_async (priv->log_manager,
+						   priv->account,
+						   target,
+						   TPL_EVENT_MASK_TEXT,
+						   5,
+						   chat_log_filter,
+						   chat,
+						   got_filtered_messages_cb,
+						   (gpointer) chat);
 }
 
 static gint
