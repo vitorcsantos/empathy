@@ -223,7 +223,7 @@ PKG_CHECK_MODULES(GCR,
     gcr-0 < 2.91)
 
 # Enable GSEAL checks if needed
-if test $USE_MAINTAINER_MODE = yes; then
+if test "x$USE_MAINTAINER_MODE" = "xyes"; then
   AC_DEFINE(GSEAL_ENABLE, [], [Seal public structs to force usage of accessors])
 fi
 
