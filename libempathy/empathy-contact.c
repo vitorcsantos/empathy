@@ -28,6 +28,7 @@
 #include <telepathy-glib/account-manager.h>
 #include <telepathy-glib/interfaces.h>
 #include <telepathy-glib/util.h>
+#include <telepathy-yell/telepathy-yell.h>
 
 #include <telepathy-logger/log-manager.h>
 
@@ -1664,6 +1665,29 @@ tp_caps_to_capabilities (TpCapabilities *caps)
                 capabilities |= EMPATHY_CAPABILITIES_AUDIO;
               else if (!tp_strdiff (allowed_prop[j],
                     TP_PROP_CHANNEL_TYPE_STREAMED_MEDIA_INITIAL_VIDEO))
+                capabilities |= EMPATHY_CAPABILITIES_VIDEO;
+            }
+        }
+      else if (!tp_strdiff (chan_type,
+        TPY_IFACE_CHANNEL_TYPE_CALL))
+        {
+          guint j;
+
+          if (tp_asv_get_boolean (fixed_prop,
+              TPY_PROP_CHANNEL_TYPE_CALL_INITIAL_AUDIO, NULL))
+            capabilities |= EMPATHY_CAPABILITIES_AUDIO;
+
+          if (tp_asv_get_boolean (fixed_prop,
+              TPY_PROP_CHANNEL_TYPE_CALL_INITIAL_VIDEO, NULL))
+            capabilities |= EMPATHY_CAPABILITIES_VIDEO;
+
+          for (j = 0; allowed_prop[j] != NULL; j++)
+            {
+              if (!tp_strdiff (allowed_prop[j],
+                    TPY_PROP_CHANNEL_TYPE_CALL_INITIAL_AUDIO))
+                capabilities |= EMPATHY_CAPABILITIES_AUDIO;
+              else if (!tp_strdiff (allowed_prop[j],
+                    TPY_PROP_CHANNEL_TYPE_CALL_INITIAL_VIDEO))
                 capabilities |= EMPATHY_CAPABILITIES_VIDEO;
             }
         }
