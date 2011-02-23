@@ -109,8 +109,8 @@ nodist_libempathy_la_SOURCES =\
 
 libempathy_la_LIBADD =		\
 	$(top_builddir)/extensions/libemp-extensions.la \
+	$(top_builddir)/telepathy-yell/telepathy-yell/libtelepathy-yell.la \
 	$(EMPATHY_LIBS) \
-	$(YELL_LIBS) \
 	$(GEOCLUE_LIBS) \
 	$(NETWORK_MANAGER_LIBS) \
 	$(CONNMAN_LIBS)
