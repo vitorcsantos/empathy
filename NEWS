@@ -1,3 +1,40 @@
+NEW in 2.33.2 (24/02/2011)
+=============
+
+The “happy birthday my love, now you can delete your logs^Wprevious
+conversations” release.
+
+Dependencies:
+ • telepathy-logger ≥ 0.2.0
+ • folks ≥ 0.3.5
+ • telepathy-glib ≥ 0.13.12
+ • telepathy-farstream (optional)
+
+Empathy has been ported to latest telepathy-logger API and is now able to
+delete previous conversations.
+
+You can now block annoying contacts.
+
+This release also brings empathy-call, a new experimental handler for Call
+channels, our new audio/video API that is going to replace
+StreamedMedia channels.
+If you wish to test it, you'll need to install telepathy-farstream.
+This new handler can easily be disabled by passing --enable-call=no during the
+configure.
+
+Bugs fixed:
+ - Fixed #641861, Can't setup an irc server (Guillaume Desmottes)
+ - Fixed #642358, Empathy should check Reconnect_Required before calling Reconnect() (Guillaume Desmottes)
+ - Fixed #592595, Allow pinning contacts (showing them even when they are offline) (Guillaume Desmottes)
+ - Fixed #634679, Implement a channel factory (Guillaume Desmottes)
+ - Fixed #637151, Hide the user Individual from the contact list (Philip Withnall)
+ - Fixed #640723, Port 2.34 to Folks 0.3 (Philip Withnall)
+ - Fixed #641662, Update for libfolks API changes to IndividualAggregator.add_persona_from_details (Philip Withnall)
+ - Fixed #641985, connectivity: Uses old connman D-BUS names (Rob Bradford)
+ - Fixed #642296, Hitting Enter doesn't activate the "Enter password" dialog (Guillaume Desmottes)
+ - Fixed #642385, Incomplete list of servers and port numbers for Freenode (Debarshi Ray)
+ - Fixed #643186, Certificate dialog should disappear if the connection goes away (Guillaume Desmottes)
+
 NEW in 2.33.1 (02/02/2011)
 =============
 
