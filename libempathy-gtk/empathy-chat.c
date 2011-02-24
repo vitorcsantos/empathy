@@ -2020,6 +2020,8 @@ chat_add_logs (EmpathyChat *chat)
 						   chat,
 						   got_filtered_messages_cb,
 						   (gpointer) chat);
+
+	g_object_unref (target);
 }
 
 static gint
