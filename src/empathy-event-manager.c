@@ -1062,7 +1062,7 @@ approve_channels (TpSimpleApprover *approver,
       TpyCallChannel *call = TPY_CALL_CHANNEL (channel);
       const gchar *id;
 
-      approval->handler_instance = G_OBJECT (call);
+      approval->handler_instance = g_object_ref (call);
 
       id = tp_channel_get_identifier (channel);
 
