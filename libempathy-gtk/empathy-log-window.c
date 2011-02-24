@@ -31,7 +31,11 @@
 #include <gtk/gtk.h>
 
 #include <telepathy-glib/account-manager.h>
+#include <telepathy-glib/proxy-subclass.h>
+
 #include <telepathy-logger/log-manager.h>
+
+#include <extensions/extensions.h>
 
 #include <libempathy/empathy-chatroom-manager.h>
 #include <libempathy/empathy-chatroom.h>
@@ -61,7 +65,8 @@ typedef struct {
 	GtkWidget         *button_previous;
 	GtkWidget         *button_next;
 
-	GtkWidget         *vbox_chats;
+	GtkWidget         *hbox_chats;
+	GtkWidget         *delete_button;
 	GtkWidget         *account_chooser_chats;
 	GtkWidget         *entry_chats;
 	GtkWidget         *calendar_chats;
@@ -116,6 +121,8 @@ static void     log_window_entry_chats_changed_cb          (GtkWidget        *en
 							    EmpathyLogWindow *window);
 static void     log_window_entry_chats_activate_cb         (GtkWidget        *entry,
 							    EmpathyLogWindow *window);
+static void     log_window_delete_button_clicked_cb        (GtkButton        *button,
+							    EmpathyLogWindow *window);
 
 enum {
 	COL_FIND_ACCOUNT_ICON,
@@ -162,13 +169,7 @@ account_manager_prepared_cb (GObject *source_object,
 	account_num = g_list_length (accounts);
 	g_list_free (accounts);
 
-	if (account_num > 1) {
-		gtk_widget_show (window->vbox_chats);
-		gtk_widget_show (window->account_chooser_chats);
-	} else {
-		gtk_widget_hide (window->vbox_chats);
-		gtk_widget_hide (window->account_chooser_chats);
-	}
+	gtk_widget_show_all (window->hbox_chats);
 }
 
 static void
@@ -249,7 +250,7 @@ empathy_log_window_show (TpAccount  *account,
 				       "button_next", &window->button_next,
 				       "entry_chats", &window->entry_chats,
 				       "calendar_chats", &window->calendar_chats,
-				       "vbox_chats", &window->vbox_chats,
+				       "hbox_chats", &window->hbox_chats,
 				       "treeview_chats", &window->treeview_chats,
 				       "scrolledwindow_chats", &window->scrolledwindow_chats,
 				       NULL);
@@ -297,8 +298,18 @@ empathy_log_window_show (TpAccount  *account,
 	window->account_chooser_chats = empathy_account_chooser_new ();
 	account_chooser = EMPATHY_ACCOUNT_CHOOSER (window->account_chooser_chats);
 
-	gtk_box_pack_start (GTK_BOX (window->vbox_chats),
+	gtk_box_pack_start (GTK_BOX (window->hbox_chats),
 			    window->account_chooser_chats,
+			    FALSE, TRUE, 0);
+
+	/* Delete button */
+	window->delete_button = gtk_button_new_from_stock (GTK_STOCK_DELETE);
+	g_signal_connect (window->delete_button, "clicked",
+			  G_CALLBACK(log_window_delete_button_clicked_cb),
+			  window);
+
+	gtk_box_pack_start (GTK_BOX (window->hbox_chats),
+			    window->delete_button,
 			    FALSE, TRUE, 0);
 
 	g_signal_connect (window->account_chooser_chats, "changed",
@@ -1374,4 +1385,78 @@ log_window_entry_chats_activate_cb (GtkWidget       *entry,
 					    FALSE,
 					    FALSE);
 	}
+}
+
+static void
+log_window_logger_clear_account_cb (TpProxy *proxy,
+				    const GError *error,
+				    gpointer user_data,
+				    GObject *weak_object)
+{
+	EmpathyLogWindow *window = user_data;
+
+	if (error != NULL)
+		g_warning ("Error when clearing logs: %s", error->message);
+
+	/* Refresh the log viewer so the logs are cleared if the account
+	 * has been deleted */
+	empathy_chat_view_clear (window->chatview_chats);
+	log_window_chats_populate (window);
+}
+
+static void
+log_window_delete_button_clicked_cb (GtkButton        *button,
+				     EmpathyLogWindow *window)
+{
+	GtkWidget *dialog;
+	EmpathyAccountChooser *account_chooser;
+	TpAccount *account;
+	gint response_id;
+	TpDBusDaemon *bus;
+	TpProxy *logger;
+	GError *error = NULL;
+
+	account_chooser = EMPATHY_ACCOUNT_CHOOSER (window->account_chooser_chats);
+	account = empathy_account_chooser_get_account (account_chooser);
+
+	dialog = gtk_message_dialog_new_with_markup (NULL, 0, GTK_MESSAGE_WARNING,
+		GTK_BUTTONS_NONE,
+		_("Delete all previous conversations on <b>%s</b>?"),
+		tp_account_get_display_name (account));
+
+	gtk_dialog_add_buttons (GTK_DIALOG (dialog),
+				GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+				_("Delete previous conversations"), GTK_RESPONSE_APPLY,
+				NULL);
+
+	response_id = gtk_dialog_run (GTK_DIALOG (dialog));
+	gtk_widget_destroy (dialog);
+
+	if (response_id != GTK_RESPONSE_APPLY)
+		return;
+
+	bus = tp_dbus_daemon_dup (&error);
+	if (error != NULL) {
+		g_warning ("Could not delete logs: %s", error->message);
+		g_error_free (error);
+		return;
+	}
+
+	logger = g_object_new (TP_TYPE_PROXY,
+			       "bus-name", "org.freedesktop.Telepathy.Logger",
+			       "object-path", "/org/freedesktop/Telepathy/Logger",
+			       "dbus-daemon", bus,
+			       NULL);
+	g_object_unref (bus);
+
+	tp_proxy_add_interface_by_id (logger, EMP_IFACE_QUARK_LOGGER);
+
+	DEBUG ("Deleting logs for %s", tp_proxy_get_object_path (account));
+
+	emp_cli_logger_call_clear_account (logger, -1,
+					   tp_proxy_get_object_path (account),
+					   log_window_logger_clear_account_cb,
+					   window, NULL, G_OBJECT (window->window));
+
+	g_object_unref (logger);
 }
