@@ -1512,6 +1512,67 @@ account_widget_skype_toggle_changed_cb (GtkToggleButton *toggle,
 }
 
 static void
+account_widget_skype_set_value (EmpathyAccountWidget *self,
+    GtkWidget *widget,
+    GValue *value)
+{
+  g_return_if_fail (value != NULL);
+
+  if (GTK_IS_COMBO_BOX (widget))
+    {
+      GtkTreeModel *model =
+        gtk_combo_box_get_model (GTK_COMBO_BOX (widget));
+      guint prop_value;
+      GtkTreeIter iter;
+      gboolean valid;
+
+      g_return_if_fail (G_VALUE_HOLDS_UINT (value));
+
+      prop_value = g_value_get_uint (value);
+
+      g_signal_handlers_block_by_func (widget,
+          account_widget_skype_combo_changed_cb, self);
+
+      for (valid = gtk_tree_model_get_iter_first (model, &iter);
+           valid;
+           valid = gtk_tree_model_iter_next (model, &iter))
+        {
+          guint v;
+
+          gtk_tree_model_get (model, &iter,
+              PS_COL_ENUM_VALUE, &v,
+              -1);
+
+          if (v == prop_value)
+            {
+              gtk_combo_box_set_active_iter (GTK_COMBO_BOX (widget), &iter);
+              break;
+            }
+        }
+
+      g_signal_handlers_unblock_by_func (widget,
+          account_widget_skype_combo_changed_cb, self);
+    }
+  else if (GTK_IS_TOGGLE_BUTTON (widget))
+    {
+      g_return_if_fail (G_VALUE_HOLDS_BOOLEAN (value));
+
+      g_signal_handlers_block_by_func (widget,
+          account_widget_skype_toggle_changed_cb, self);
+
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget),
+          g_value_get_boolean (value));
+
+      g_signal_handlers_unblock_by_func (widget,
+          account_widget_skype_toggle_changed_cb, self);
+    }
+  else
+    {
+      g_assert_not_reached ();
+    }
+}
+
+static void
 account_widget_build_skype_get_privacy_settings_cb (TpProxy *cm,
     GHashTable *props,
     const GError *in_error,
@@ -1548,50 +1609,51 @@ account_widget_build_skype_get_privacy_settings_cb (TpProxy *cm,
       DEBUG ("Widget '%s' (%s), prop = %s",
           widgets[i], G_OBJECT_TYPE_NAME (widget), prop_name);
 
-      if (GTK_IS_COMBO_BOX (widget))
+      account_widget_skype_set_value (self, widget,
+          g_hash_table_lookup (props, prop_name));
+    }
+}
+
+static void
+account_widget_skype_properties_changed_cb (TpProxy *conn,
+    const char *interface,
+    GHashTable *props,
+    const char **invalidated,
+    gpointer user_data,
+    GObject *weak_obj)
+{
+  EmpathyAccountWidget *self = EMPATHY_ACCOUNT_WIDGET (weak_obj);
+  GtkWidget *table = user_data;
+  GHashTableIter iter;
+  const char *prop;
+  GValue *value;
+
+  g_hash_table_iter_init (&iter, props);
+  while (g_hash_table_iter_next (&iter, (gpointer) &prop, (gpointer) &value))
+    {
+      GList *children, *ptr;
+
+      DEBUG ("Property changed: %s", prop);
+
+      /* find this value in the widget tree */
+      children = gtk_container_get_children (GTK_CONTAINER (table));
+
+      for (ptr = children; ptr != NULL; ptr = ptr->next)
         {
-          GtkTreeModel *model =
-            gtk_combo_box_get_model (GTK_COMBO_BOX (widget));
-          GtkTreeIter iter;
-          gboolean valid;
+          GtkWidget *widget = ptr->data;
+          const char *prop_name = g_object_get_data (G_OBJECT (widget),
+              "dbus-property");
 
-          guint prop_value = tp_asv_get_uint32 (props, prop_name, NULL);
-
-          DEBUG ("prop_value = %u", prop_value);
-
-          for (valid = gtk_tree_model_get_iter_first (model, &iter);
-               valid;
-               valid = gtk_tree_model_iter_next (model, &iter))
+          if (!tp_strdiff (prop_name, prop))
             {
-              guint v;
+              DEBUG ("Got child %p (%s)", widget, G_OBJECT_TYPE_NAME (widget));
 
-              gtk_tree_model_get (model, &iter,
-                  PS_COL_ENUM_VALUE, &v,
-                  -1);
-
-              if (v == prop_value)
-                {
-                  gtk_combo_box_set_active_iter (GTK_COMBO_BOX (widget), &iter);
-                  break;
-                }
+              account_widget_skype_set_value (self, widget, value);
+              break;
             }
-
-          g_signal_connect (widget, "changed",
-              G_CALLBACK (account_widget_skype_combo_changed_cb), self);
         }
-      else if (GTK_IS_TOGGLE_BUTTON (widget))
-        {
-          gboolean prop_value = tp_asv_get_boolean (props, prop_name, NULL);
 
-          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), prop_value);
-
-          g_signal_connect (widget, "toggled",
-              G_CALLBACK (account_widget_skype_toggle_changed_cb), self);
-        }
-      else
-        {
-          g_assert_not_reached ();
-        }
+      g_list_free (children);
     }
 }
 
@@ -1602,7 +1664,8 @@ account_widget_build_skype_get_privacy_settings_cb (TpProxy *cm,
  * @first_option: a list of options from the enum, terminated by -1
  */
 static void
-account_widget_build_skype_setup_combo (GtkBuilder *gui,
+account_widget_build_skype_setup_combo (EmpathyAccountWidget *self,
+    GtkBuilder *gui,
     const char *widget,
     const char *prop_name,
     int first_option,
@@ -1643,6 +1706,8 @@ account_widget_build_skype_setup_combo (GtkBuilder *gui,
   va_end (var_args);
 
   g_object_set_data (G_OBJECT (combo), "dbus-property", (gpointer) prop_name);
+  g_signal_connect (combo, "changed",
+      G_CALLBACK (account_widget_skype_combo_changed_cb), self);
 }
 
 static gboolean
@@ -1718,23 +1783,23 @@ account_widget_skype_privacy_settings (GtkWidget *button,
   g_object_bind_property (table, "sensitive", infobar, "visible",
       G_BINDING_SYNC_CREATE | G_BINDING_INVERT_BOOLEAN);
 
-  account_widget_build_skype_setup_combo (gui,
+  account_widget_build_skype_setup_combo (self, gui,
       "allow-text-chats-from", "AllowTextChannelsFrom",
       EMP_PRIVACY_SETTING_ANYONE,
       EMP_PRIVACY_SETTING_CONTACTS,
       -1);
-  account_widget_build_skype_setup_combo (gui,
+  account_widget_build_skype_setup_combo (self, gui,
       "allow-skype-calls-from", "AllowCallChannelsFrom",
       EMP_PRIVACY_SETTING_ANYONE,
       EMP_PRIVACY_SETTING_CONTACTS,
       -1);
-  account_widget_build_skype_setup_combo (gui,
+  account_widget_build_skype_setup_combo (self, gui,
       "allow-outside-calls-from", "AllowOutsideCallsFrom",
       EMP_PRIVACY_SETTING_ANYONE,
       EMP_PRIVACY_SETTING_KNOWN_NUMBERS,
       EMP_PRIVACY_SETTING_CONTACTS,
       -1);
-  account_widget_build_skype_setup_combo (gui,
+  account_widget_build_skype_setup_combo (self, gui,
       "show-my-avatar-to", "ShowMyAvatarTo",
       EMP_PRIVACY_SETTING_ANYONE,
       EMP_PRIVACY_SETTING_CONTACTS,
@@ -1742,6 +1807,8 @@ account_widget_skype_privacy_settings (GtkWidget *button,
 
   g_object_set_data (G_OBJECT (show_my_web_status), "dbus-property",
       "ShowMyWebStatus");
+  g_signal_connect (show_my_web_status, "toggled",
+      G_CALLBACK (account_widget_skype_toggle_changed_cb), self);
 
   /* get the current parameter values from psyke */
   conn = tp_account_get_connection (
@@ -1752,6 +1819,9 @@ account_widget_skype_privacy_settings (GtkWidget *button,
       account_widget_build_skype_get_privacy_settings_cb,
       g_object_ref (gui), g_object_unref,
       G_OBJECT (self));
+  tp_cli_dbus_properties_connect_to_properties_changed (conn,
+      account_widget_skype_properties_changed_cb,
+      table, NULL, G_OBJECT (self), NULL);
 
   g_object_unref (gui);
 
