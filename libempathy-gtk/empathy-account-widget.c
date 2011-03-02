@@ -1822,7 +1822,8 @@ account_widget_skype_privacy_settings (GtkWidget *button,
   infobar = gtk_info_bar_new ();
   gtk_box_pack_start (GTK_BOX (vbox), infobar, FALSE, TRUE, 0);
   gtk_info_bar_set_message_type (GTK_INFO_BAR (infobar), GTK_MESSAGE_INFO);
-  label = gtk_label_new (_("Account Disconnected"));
+  label = gtk_label_new (_("Privacy settings can only be changed while the "
+                           "account is connected."));
   gtk_container_add (
       GTK_CONTAINER (gtk_info_bar_get_content_area (GTK_INFO_BAR (infobar))),
       label);
