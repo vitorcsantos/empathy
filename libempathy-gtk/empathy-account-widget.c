@@ -1625,9 +1625,24 @@ account_widget_build_skype_get_privacy_settings_cb (TpProxy *cm,
 
   if (in_error != NULL)
     {
+      GtkWidget *table, *infobar, *label;
+
       DEBUG ("Failed to get properties: %s", in_error->message);
 
-      // FIXME: disable privacy settings
+      table = GTK_WIDGET (gtk_builder_get_object (gui,
+            "privacy-settings-table"));
+      gtk_widget_set_sensitive (table, FALSE);
+
+      infobar = gtk_info_bar_new ();
+      gtk_box_pack_start (
+          GTK_BOX (gtk_builder_get_object (gui, "privacy-settings-vbox")),
+          infobar, FALSE, TRUE, 0);
+      gtk_info_bar_set_message_type (GTK_INFO_BAR (infobar), GTK_MESSAGE_ERROR);
+      label = gtk_label_new (_("Failed to retrieve privacy settings."));
+      gtk_container_add (GTK_CONTAINER (
+          gtk_info_bar_get_content_area (GTK_INFO_BAR (infobar))),
+        label);
+      gtk_widget_show (label);
 
       return;
     }
