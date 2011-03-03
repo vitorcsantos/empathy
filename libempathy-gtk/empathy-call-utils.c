@@ -61,6 +61,7 @@ show_call_error (GError *error)
 
   dialog = gtk_message_dialog_new (NULL, 0,
       GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE,
+      "%s",
       get_error_display_message (error));
 
   g_signal_connect_swapped (dialog, "response",
