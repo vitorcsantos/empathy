@@ -1607,6 +1607,7 @@ account_widget_build_skype_get_privacy_settings_cb (TpProxy *cm,
           infobar, FALSE, TRUE, 0);
       gtk_info_bar_set_message_type (GTK_INFO_BAR (infobar), GTK_MESSAGE_ERROR);
       label = gtk_label_new (_("Failed to retrieve privacy settings."));
+      gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
       gtk_container_add (GTK_CONTAINER (
           gtk_info_bar_get_content_area (GTK_INFO_BAR (infobar))),
         label);
@@ -1792,6 +1793,7 @@ account_widget_skype_privacy_settings (GtkWidget *button,
   gtk_info_bar_set_message_type (GTK_INFO_BAR (infobar), GTK_MESSAGE_INFO);
   label = gtk_label_new (_("Privacy settings can only be changed while the "
                            "account is connected."));
+  gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
   gtk_container_add (
       GTK_CONTAINER (gtk_info_bar_get_content_area (GTK_INFO_BAR (infobar))),
       label);
