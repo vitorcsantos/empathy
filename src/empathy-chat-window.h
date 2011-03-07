@@ -72,6 +72,7 @@ void               empathy_chat_window_switch_to_chat (EmpathyChatWindow *window
 gboolean           empathy_chat_window_has_focus      (EmpathyChatWindow *window);
 EmpathyChat *      empathy_chat_window_find_chat      (TpAccount        *account,
 						       const gchar      *id);
+EmpathyChat *      empathy_chat_window_find_chat_by_channel (const char *path);
 void               empathy_chat_window_present_chat   (EmpathyChat      *chat,
 						       gint64 timestamp);
 

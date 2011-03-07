@@ -2360,6 +2360,39 @@ empathy_chat_window_find_chat (TpAccount   *account,
 	return NULL;
 }
 
+EmpathyChat *
+empathy_chat_window_find_chat_by_channel (const char *channel_path)
+{
+	GList *l;
+
+	g_return_val_if_fail (!EMP_STR_EMPTY (channel_path), NULL);
+
+	for (l = chat_windows; l; l = l->next) {
+		EmpathyChatWindowPriv *priv;
+		EmpathyChatWindow     *window;
+		GList                *ll;
+
+		window = l->data;
+		priv = GET_PRIV (window);
+
+		for (ll = priv->chats; ll; ll = ll->next) {
+			EmpathyChat *chat;
+			EmpathyTpChat *tp_chat;
+			const char *path;
+
+			chat = ll->data;
+			tp_chat = empathy_chat_get_tp_chat (chat);
+			path = empathy_tp_chat_get_channel_path (tp_chat);
+
+			if (!tp_strdiff (channel_path, path)) {
+				return chat;
+			}
+		}
+	}
+
+	return NULL;
+}
+
 void
 empathy_chat_window_present_chat (EmpathyChat *chat,
 				  gint64 timestamp)
