@@ -729,6 +729,8 @@ accounts_dialog_protocol_changed_cb (GtkWidget *widget,
   GtkTreeIter iter;
   gboolean creating;
   EmpathyAccountSettings *settings;
+  TpConnectionManager *cm;
+  TpConnectionManagerProtocol *proto;
   gchar *account = NULL, *password = NULL;
 
   /* The "changed" signal is fired during the initiation of the
@@ -746,6 +748,25 @@ accounts_dialog_protocol_changed_cb (GtkWidget *widget,
 
   if (!gtk_tree_selection_get_selected (selection, &model, &iter))
     return;
+
+  cm = empathy_protocol_chooser_dup_selected (
+      EMPATHY_PROTOCOL_CHOOSER (priv->combobox_protocol), &proto, NULL, NULL);
+
+  if (cm == NULL)
+    return;
+
+  g_object_unref (cm);
+
+  if (!tp_strdiff (proto->name, "skype"))
+    {
+      if (!account_widget_skype_show_eula (GTK_WINDOW (dialog)))
+        {
+          gtk_combo_box_set_active (
+              GTK_COMBO_BOX (priv->combobox_protocol), 0);
+          empathy_account_dialog_cancel (dialog);
+          return;
+        }
+    }
 
   /* Save "account" and "password" parameters */
   g_object_get (priv->setting_widget_object, "settings", &settings, NULL);
