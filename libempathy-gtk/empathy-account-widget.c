@@ -1726,37 +1726,6 @@ account_widget_build_skype_setup_combo (EmpathyAccountWidget *self,
       G_CALLBACK (account_widget_skype_combo_changed_cb), self);
 }
 
-static gboolean
-_connection_status_binding_function (GBinding *binding,
-    const GValue *source_value,
-    GValue *target_value,
-    gpointer user_data)
-{
-  g_return_val_if_fail (G_VALUE_HOLDS_UINT (source_value), FALSE);
-  g_return_val_if_fail (G_VALUE_HOLDS_BOOLEAN (target_value), FALSE);
-
-  g_value_set_boolean (target_value,
-      g_value_get_uint (source_value) == TP_CONNECTION_STATUS_CONNECTED);
-
-  return TRUE;
-}
-
-static GBinding *
-account_widget_bind_connection_status (EmpathyAccountSettings *settings,
-    gpointer widget,
-    const char *property)
-{
-  /* FIXME: support for this in tp-glib is
-   * https://bugs.freedesktop.org/show_bug.cgi?id=34813 */
-  return g_object_bind_property_full (
-      empathy_account_settings_get_account (settings),
-      "connection-status",
-      widget, property,
-      G_BINDING_SYNC_CREATE,
-      _connection_status_binding_function,
-      NULL, NULL, NULL);
-}
-
 static void
 account_widget_skype_privacy_settings (GtkWidget *button,
     EmpathyAccountWidget *self)
@@ -1784,8 +1753,9 @@ account_widget_skype_privacy_settings (GtkWidget *button,
     gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (toplevel));
 
   /* make the settings insensitive when the account is disconnected */
-  account_widget_bind_connection_status (priv->settings,
-      table, "sensitive");
+  tp_account_bind_connection_status_to_property (
+      empathy_account_settings_get_account (priv->settings),
+      table, "sensitive", FALSE);
 
   /* set up an informative info bar */
   infobar = gtk_info_bar_new ();
@@ -1869,6 +1839,8 @@ account_widget_build_skype (EmpathyAccountWidget *self,
   else
     {
       GtkWidget *edit_privacy_settings_button;
+      TpAccount *account =
+        empathy_account_settings_get_account (priv->settings);
 
       self->ui_details->gui = empathy_builder_get_file (filename,
           "table_common_skype_settings", &priv->table_common_settings,
@@ -1881,8 +1853,11 @@ account_widget_build_skype (EmpathyAccountWidget *self,
               account_widget_skype_privacy_settings,
           NULL);
 
-      account_widget_bind_connection_status (priv->settings,
-          edit_privacy_settings_button, "sensitive");
+      if (account != NULL)
+        tp_account_bind_connection_status_to_property (account,
+            edit_privacy_settings_button, "sensitive", FALSE);
+      else
+        gtk_widget_set_sensitive (edit_privacy_settings_button, FALSE);
 
       empathy_account_widget_handle_params (self,
           "entry_id", "account",
