@@ -55,6 +55,12 @@ clientfile_DATA = \
 htmldir = $(datadir)/empathy
 html_DATA = Template.html
 
+pixmapsdir = $(datadir)/empathy
+pixmaps_DATA = \
+	canonical-logo.png \
+	plugged-into-skype.png \
+	$(NULL)
+
 EXTRA_DIST = 				\
 	$(convert_DATA)			\
 	$(desktop_in_files)		\
@@ -65,6 +71,7 @@ EXTRA_DIST = 				\
 	$(clientfile_DATA)		\
 	$(servicefile_in_files)		\
 	$(gsettings_files)		\
+	$(pixmaps_DATA)			\
 	$(NULL)
 
 DISTCLEANFILES = 		\
