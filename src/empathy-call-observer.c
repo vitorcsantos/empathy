@@ -31,7 +31,7 @@
 
 #include "empathy-call-observer.h"
 
-#define DEBUG_FLAG EMPATHY_DEBUG_DISPATCHER
+#define DEBUG_FLAG EMPATHY_DEBUG_VOIP
 #include <libempathy/empathy-debug.h>
 
 struct _EmpathyCallObserverPriv {
@@ -59,6 +59,9 @@ on_channel_closed (TpProxy *proxy,
     gchar   *message,
     EmpathyCallObserver *self)
 {
+  DEBUG ("channel %s has been invalidated; stop observing it",
+      tp_proxy_get_object_path (proxy));
+
   self->priv->channels = g_list_remove (self->priv->channels, proxy);
   g_object_unref (proxy);
 }
@@ -174,6 +177,8 @@ observe_channels (TpSimpleObserver *observer,
           error->message);
       return;
     }
+
+  DEBUG ("Observing channel %s", tp_proxy_get_object_path (channel));
 
   tp_g_signal_connect_object (channel, "invalidated",
       G_CALLBACK (on_channel_closed), self, 0);
