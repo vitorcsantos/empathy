@@ -2,11 +2,12 @@
 <interface>
   <requires lib="gtk+" version="2.16"/>
   <!-- interface-naming-policy project-wide -->
-  <object class="GtkVBox" id="vbox_skype_settings">
+  <object class="GtkVBox" id="vbox_skype_settings_setup">
     <property name="visible">True</property>
+    <property name="border_width">6</property>
     <property name="spacing">6</property>
     <child>
-      <object class="GtkTable" id="table_common_skype_settings">
+      <object class="GtkTable" id="table_common_skype_settings_setup">
         <property name="visible">True</property>
         <property name="n_rows">4</property>
         <property name="n_columns">2</property>
@@ -32,7 +33,7 @@
             <property name="xalign">0</property>
             <property name="label" translatable="yes">Skype name:</property>
             <property name="use_underline">True</property>
-            <property name="mnemonic_widget">entry_id</property>
+            <property name="mnemonic_widget">entry_id_setup</property>
           </object>
           <packing>
             <property name="x_options">GTK_FILL</property>
@@ -40,7 +41,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkEntry" id="entry_id">
+          <object class="GtkEntry" id="entry_id_setup">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
           </object>
@@ -51,7 +52,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkEntry" id="entry_password">
+          <object class="GtkEntry" id="entry_password_setup">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="visibility">False</property>
@@ -104,33 +105,10 @@ Get one at &lt;a href="http://www.skype.com/go/register"&gt;Skype.com&lt;/a&gt;<
         <property name="position">0</property>
       </packing>
     </child>
-    <child>
-      <object class="GtkHButtonBox" id="hbuttonbox1">
-        <property name="visible">True</property>
-        <property name="layout_style">start</property>
-        <child>
-          <object class="GtkButton" id="edit-privacy-settings-button">
-            <property name="label" translatable="yes">Edit _Privacy Settings...</property>
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
-            <property name="use_underline">True</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">False</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
-      </object>
-      <packing>
-        <property name="expand">False</property>
-        <property name="position">1</property>
-      </packing>
-    </child>
   </object>
   <object class="GtkVBox" id="vbox_skype_simple">
     <property name="visible">True</property>
+    <property name="border_width">6</property>
     <property name="spacing">6</property>
     <child>
       <object class="GtkLabel" id="label_id_simple">
@@ -489,5 +467,189 @@ Get one at &lt;a href="http://www.skype.com/go/register"&gt;Skype.com&lt;/a&gt;<
     <action-widgets>
       <action-widget response="0">button1</action-widget>
     </action-widgets>
+  </object>
+  <object class="GtkVBox" id="vbox_skype_settings">
+    <property name="visible">True</property>
+    <property name="border_width">6</property>
+    <property name="spacing">6</property>
+    <child>
+      <object class="GtkTable" id="table_common_skype_settings">
+        <property name="visible">True</property>
+        <property name="n_rows">3</property>
+        <property name="n_columns">2</property>
+        <property name="column_spacing">12</property>
+        <property name="row_spacing">6</property>
+        <child>
+          <object class="GtkLabel" id="label_password1">
+            <property name="visible">True</property>
+            <property name="xalign">0</property>
+            <property name="label" translatable="yes">Pass_word:</property>
+            <property name="use_underline">True</property>
+          </object>
+          <packing>
+            <property name="top_attach">1</property>
+            <property name="bottom_attach">2</property>
+            <property name="x_options">GTK_FILL</property>
+            <property name="y_options"></property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="label_id1">
+            <property name="visible">True</property>
+            <property name="xalign">0</property>
+            <property name="label" translatable="yes">Skype name:</property>
+            <property name="use_underline">True</property>
+            <property name="mnemonic_widget">entry_id_setup</property>
+          </object>
+          <packing>
+            <property name="x_options">GTK_FILL</property>
+            <property name="y_options"></property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkEntry" id="entry_id">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="invisible_char">●</property>
+          </object>
+          <packing>
+            <property name="left_attach">1</property>
+            <property name="right_attach">2</property>
+            <property name="y_options"></property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkEntry" id="entry_password">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="visibility">False</property>
+            <property name="invisible_char">●</property>
+          </object>
+          <packing>
+            <property name="left_attach">1</property>
+            <property name="right_attach">2</property>
+            <property name="top_attach">1</property>
+            <property name="bottom_attach">2</property>
+            <property name="y_options"></property>
+          </packing>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <object class="GtkLinkButton" id="linkbutton2">
+            <property name="label" translatable="yes">Change Password...</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="has_tooltip">True</property>
+            <property name="uri">https://secure.skype.com/account/personal/change-password</property>
+          </object>
+          <packing>
+            <property name="left_attach">1</property>
+            <property name="right_attach">2</property>
+            <property name="top_attach">2</property>
+            <property name="bottom_attach">3</property>
+            <property name="x_options">GTK_FILL</property>
+          </packing>
+        </child>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">False</property>
+        <property name="position">4</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkHButtonBox" id="hbuttonbox1">
+        <property name="visible">True</property>
+        <property name="layout_style">start</property>
+        <child>
+          <object class="GtkButton" id="edit-privacy-settings-button">
+            <property name="label" translatable="yes">Edit _Privacy Settings...</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="use_underline">True</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="position">5</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkImage" id="plugged-into-skype-logo">
+        <property name="visible">True</property>
+        <property name="xalign">0</property>
+        <property name="stock">gtk-missing-image</property>
+      </object>
+      <packing>
+        <property name="pack_type">end</property>
+        <property name="position">3</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkLabel" id="label10">
+        <property name="visible">True</property>
+        <property name="xalign">0</property>
+        <property name="label" translatable="yes">Empathy is plugged into Skype™, allowing free calls to Skype users. Skype is a trademark of Skype Limited or its related companies. This application has not been checked, verified, certified, or otherwise approved or endorsed by Skype Communications S.a.r.l. or any of their related companies.</property>
+        <property name="wrap">True</property>
+      </object>
+      <packing>
+        <property name="pack_type">end</property>
+        <property name="position">2</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkHBox" id="hbox1">
+        <property name="visible">True</property>
+        <child>
+          <object class="GtkImage" id="canonical-logo">
+            <property name="visible">True</property>
+            <property name="xalign">0</property>
+            <property name="stock">gtk-missing-image</property>
+          </object>
+          <packing>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLinkButton" id="linkbutton1">
+            <property name="label" translatable="yes">Canonical Support...</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="has_tooltip">True</property>
+            <property name="uri">http://canonical.com/support</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+      <packing>
+        <property name="pack_type">end</property>
+        <property name="position">1</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkLabel" id="label11">
+        <property name="visible">True</property>
+        <property name="xalign">0</property>
+        <property name="label" translatable="yes">Canonical provides technical support for Empathy on Ubuntu.</property>
+      </object>
+      <packing>
+        <property name="pack_type">end</property>
+        <property name="position">0</property>
+      </packing>
+    </child>
   </object>
 </interface>

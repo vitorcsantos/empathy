@@ -1836,16 +1836,35 @@ account_widget_build_skype (EmpathyAccountWidget *self,
 
       self->ui_details->default_focus = g_strdup ("entry_id_simple");
     }
+  else if (priv->creating_account)
+    {
+      /* if we don't have an account it means we're doing the initial setup */
+      self->ui_details->gui = empathy_builder_get_file (filename,
+          "table_common_skype_settings_setup", &priv->table_common_settings,
+          "vbox_skype_settings_setup", &self->ui_details->widget,
+          NULL);
+
+      empathy_account_widget_handle_params (self,
+          "entry_id_setup", "account",
+          "entry_password_setup", "password",
+          NULL);
+
+      self->ui_details->default_focus = g_strdup ("entry_id_setup");
+    }
   else
     {
-      GtkWidget *edit_privacy_settings_button;
       TpAccount *account =
         empathy_account_settings_get_account (priv->settings);
+      GtkWidget *edit_privacy_settings_button;
+      GtkWidget *plugged_into_skype_logo, *canonical_logo;
+      char *logo;
 
       self->ui_details->gui = empathy_builder_get_file (filename,
           "table_common_skype_settings", &priv->table_common_settings,
           "vbox_skype_settings", &self->ui_details->widget,
           "edit-privacy-settings-button", &edit_privacy_settings_button,
+          "plugged-into-skype-logo", &plugged_into_skype_logo,
+          "canonical-logo", &canonical_logo,
           NULL);
 
       empathy_builder_connect (self->ui_details->gui, self,
@@ -1858,6 +1877,15 @@ account_widget_build_skype (EmpathyAccountWidget *self,
             edit_privacy_settings_button, "sensitive", FALSE);
       else
         gtk_widget_set_sensitive (edit_privacy_settings_button, FALSE);
+
+
+      logo = empathy_file_lookup ("plugged-into-skype.png", "data");
+      gtk_image_set_from_file (GTK_IMAGE (plugged_into_skype_logo), logo);
+      g_free (logo);
+
+      logo = empathy_file_lookup ("canonical-logo.png", "data");
+      gtk_image_set_from_file (GTK_IMAGE (canonical_logo), logo);
+      g_free (logo);
 
       empathy_account_widget_handle_params (self,
           "entry_id", "account",
