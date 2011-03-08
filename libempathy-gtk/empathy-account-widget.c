@@ -1412,13 +1412,34 @@ account_widget_skype_show_eula (GtkWindow *parent)
 {
   GtkWidget *dialog, *textview, *vbox, *scrolledwindow;
   GtkTextBuffer *buffer;
-  gchar *filename = empathy_file_lookup ("skype-eula.txt", "data");
+  gchar *filename, *l10n_filename;
+  const gchar * const * langs;
+  GError *error = NULL;
   gchar *eula;
   gint result;
   gsize len;
-  GError *error = NULL;
+  gint i;
 
-  g_file_get_contents (filename, &eula, &len, &error);
+  filename = empathy_file_lookup ("skype-eula.txt", "data");
+
+  langs = g_get_language_names ();
+
+  for (i = 0; langs[i] != NULL; i++)
+    {
+      l10n_filename = g_strconcat (filename, ".", langs[i], NULL);
+      g_file_get_contents (l10n_filename, &eula, &len, NULL);
+      g_free (l10n_filename);
+
+      if (eula != NULL)
+        break;
+    }
+
+  if (eula == NULL)
+    {
+      DEBUG ("Could not open translated Skype EULA");
+      g_file_get_contents (filename, &eula, &len, &error);
+    }
+
   g_free (filename);
 
   if (error != NULL)
