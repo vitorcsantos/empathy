@@ -46,6 +46,7 @@
 #include <libempathy-gtk/empathy-account-widget.h>
 #include <libempathy-gtk/empathy-account-widget-irc.h>
 #include <libempathy-gtk/empathy-account-widget-sip.h>
+#include <libempathy-gtk/empathy-account-widget-skype.h>
 #include <libempathy-gtk/empathy-cell-renderer-activatable.h>
 #include <libempathy-gtk/empathy-images.h>
 #include <libempathy-gtk/mx-gtk-light-switch.h>
@@ -770,7 +771,7 @@ accounts_dialog_protocol_changed_cb (GtkWidget *widget,
 
   if (!tp_strdiff (proto->name, "skype"))
     {
-      if (!account_widget_skype_show_eula (GTK_WINDOW (dialog)))
+      if (!empathy_account_widget_skype_show_eula (GTK_WINDOW (dialog)))
         {
           gtk_combo_box_set_active (
               GTK_COMBO_BOX (priv->combobox_protocol), 0);

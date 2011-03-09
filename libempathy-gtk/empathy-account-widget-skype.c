@@ -17,6 +17,7 @@
  * Boston, MA  02110-1301  USA
  *
  * Authors: Danielle Madeley <danielle.madeley@collabora.co.uk>
+ *          Emilio Pozuelo Monfort <emilio.pozuelo@collabora.co.uk>
  */
 
 #include <config.h>
@@ -489,3 +490,78 @@ empathy_account_widget_build_skype (EmpathyAccountWidget *self,
       self->ui_details->default_focus = g_strdup ("entry_id");
     }
 }
+
+gboolean
+empathy_account_widget_skype_show_eula (GtkWindow *parent)
+{
+  GtkWidget *dialog, *textview, *vbox, *scrolledwindow;
+  GtkTextBuffer *buffer;
+  gchar *filename, *l10n_filename;
+  const gchar * const * langs;
+  GError *error = NULL;
+  gchar *eula;
+  gint result;
+  gsize len;
+  gint i;
+
+  filename = empathy_file_lookup ("skype-eula.txt", "data");
+
+  langs = g_get_language_names ();
+
+  for (i = 0; langs[i] != NULL; i++)
+    {
+      l10n_filename = g_strconcat (filename, ".", langs[i], NULL);
+      g_file_get_contents (l10n_filename, &eula, &len, NULL);
+      g_free (l10n_filename);
+
+      if (eula != NULL)
+        break;
+    }
+
+  if (eula == NULL)
+    {
+      DEBUG ("Could not open translated Skype EULA");
+      g_file_get_contents (filename, &eula, &len, &error);
+    }
+
+  g_free (filename);
+
+  if (error != NULL)
+    {
+      g_warning ("Could not open Skype EULA: %s", error->message);
+      g_error_free (error);
+      return FALSE;
+    }
+
+  dialog = gtk_dialog_new_with_buttons (_("End User License Agreement"),
+      parent, GTK_DIALOG_MODAL,
+      _("Decline"), GTK_RESPONSE_CANCEL,
+      _("Accept"), GTK_RESPONSE_ACCEPT,
+      NULL);
+
+  buffer = gtk_text_buffer_new (NULL);
+  gtk_text_buffer_set_text (buffer, eula, len);
+  g_free (eula);
+  textview = gtk_text_view_new_with_buffer (buffer);
+  gtk_text_view_set_editable (GTK_TEXT_VIEW (textview), FALSE);
+  gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (textview), GTK_WRAP_WORD_CHAR);
+
+  vbox = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
+
+  scrolledwindow = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_add_with_viewport (
+      GTK_SCROLLED_WINDOW (scrolledwindow), textview);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow),
+      GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
+
+  gtk_box_pack_start (GTK_BOX (vbox), scrolledwindow, TRUE, TRUE, 0);
+  gtk_window_set_default_size (GTK_WINDOW (dialog), 400, 250);
+  gtk_widget_show_all (dialog);
+
+  result = gtk_dialog_run (GTK_DIALOG (dialog));
+
+  gtk_widget_destroy (dialog);
+
+  return (result == GTK_RESPONSE_ACCEPT);
+}
+
