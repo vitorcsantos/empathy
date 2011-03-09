@@ -26,6 +26,8 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
+#include "empathy-account-widget-irc.h"
+
 G_BEGIN_DECLS
 
 struct _EmpathyAccountWidgetUIDetails {
@@ -36,6 +38,49 @@ struct _EmpathyAccountWidgetUIDetails {
   char *default_focus;
 };
 
+typedef struct {
+  EmpathyAccountSettings *settings;
+
+  GtkWidget *table_common_settings;
+  GtkWidget *apply_button;
+  GtkWidget *cancel_button;
+  GtkWidget *entry_password;
+  GtkWidget *spinbutton_port;
+  GtkWidget *enabled_checkbox;
+  GtkWidget *radiobutton_reuse;
+
+  gboolean simple;
+
+  gboolean contains_pending_changes;
+
+  /* An EmpathyAccountWidget can be used to either create an account or
+   * modify it. When we are creating an account, this member is set to TRUE */
+  gboolean creating_account;
+
+  /* whether there are any other real accounts. Necessary so we know whether
+   * it's safe to dismiss this widget in some cases (eg, whether the Cancel
+   * button should be sensitive) */
+  gboolean other_accounts_exist;
+
+  /* if TRUE, the GTK+ destroy signal has been fired and so the widgets
+   * embedded in this account widget can't be used any more
+   * workaround because some async callbacks can be called after the
+   * widget has been destroyed */
+  gboolean destroyed;
+
+  TpAccountManager *account_manager;
+
+  GtkWidget *param_account_widget;
+  GtkWidget *param_password_widget;
+
+  gboolean automatic_change;
+  GtkWidget *remember_password_widget;
+
+  /* Used only for IRC accounts */
+  EmpathyIrcNetworkChooser *irc_network_chooser;
+
+  gboolean dispose_run;
+} EmpathyAccountWidgetPriv;
 
 void empathy_account_widget_handle_params (EmpathyAccountWidget *self,
     const gchar *first_widget,
