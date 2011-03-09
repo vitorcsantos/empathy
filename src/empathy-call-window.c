@@ -1937,7 +1937,7 @@ empathy_call_window_sink_removed_cb (EmpathyCallHandler *handler,
    * This assumes that there is only one video stream per channel...
    */
 
-  if (media_type == TP_MEDIA_STREAM_TYPE_VIDEO)
+  if (media_type == FS_MEDIA_TYPE_VIDEO)
     {
       if (priv->funnel != NULL)
         {
@@ -1955,7 +1955,7 @@ empathy_call_window_sink_removed_cb (EmpathyCallHandler *handler,
           return TRUE;
         }
     }
-  else if (media_type == TP_MEDIA_STREAM_TYPE_AUDIO)
+  else if (media_type == FS_MEDIA_TYPE_AUDIO)
     {
       if (priv->liveadder != NULL)
         {
