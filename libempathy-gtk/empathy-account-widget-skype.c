@@ -409,20 +409,7 @@ empathy_account_widget_build_skype (EmpathyAccountWidget *self,
 {
   EmpathyAccountWidgetPriv *priv = GET_PRIV (self);
 
-  if (priv->simple)
-    {
-      self->ui_details->gui = empathy_builder_get_file (filename,
-          "vbox_skype_simple", &self->ui_details->widget,
-          NULL);
-
-      empathy_account_widget_handle_params (self,
-          "entry_id_simple", "account",
-          "entry_password_simple", "password",
-          NULL);
-
-      self->ui_details->default_focus = g_strdup ("entry_id_simple");
-    }
-  else if (priv->creating_account)
+  if (priv->simple || priv->creating_account)
     {
       /* if we don't have an account it means we're doing the initial setup */
       self->ui_details->gui = empathy_builder_get_file (filename,
