@@ -29,6 +29,7 @@
 #include <extensions/extensions.h>
 
 #include <libempathy/empathy-utils.h>
+#include <libempathy/empathy-server-sasl-handler.h>
 
 #include "empathy-account-widget-skype.h"
 #include "empathy-account-widget-private.h"
@@ -38,6 +39,196 @@
 #include <libempathy/empathy-debug.h>
 
 #define GET_PRIV(obj) EMPATHY_GET_PRIV (obj, EmpathyAccountWidget)
+
+typedef struct
+{
+  TpAccount *account;
+  TpChannel *channel;
+  char *password;
+} ObserveChannelsData;
+
+static ObserveChannelsData *
+observe_channels_data_new (TpAccount *account,
+    TpChannel *channel,
+    const char *password)
+{
+  ObserveChannelsData *data = g_slice_new0 (ObserveChannelsData);
+
+  data->account = g_object_ref (account);
+  data->channel = g_object_ref (channel);
+  data->password = g_strdup (password);
+
+  return data;
+}
+
+static void
+observe_channels_data_free (ObserveChannelsData *data)
+{
+  g_object_unref (data->account);
+  g_object_unref (data->channel);
+  g_free (data->password);
+
+  g_slice_free (ObserveChannelsData, data);
+}
+
+static void
+auth_observer_sasl_handler_invalidated (EmpathyServerSASLHandler *sasl_handler,
+    gpointer user_data)
+{
+  DEBUG ("SASL Handler done");
+
+  g_object_unref (sasl_handler);
+}
+
+static void
+auth_observer_new_sasl_handler_cb (GObject *obj,
+    GAsyncResult *result,
+    gpointer user_data)
+{
+  ObserveChannelsData *data = user_data;
+  EmpathyServerSASLHandler *sasl_handler;
+  GError *error = NULL;
+
+  sasl_handler = empathy_server_sasl_handler_new_finish (result, &error);
+  if (error != NULL)
+    {
+      DEBUG ("Failed to create SASL handler: %s", error->message);
+
+      tp_channel_close_async (data->channel, NULL, NULL);
+
+      g_error_free (error);
+      goto finally;
+    }
+
+  DEBUG ("providing password");
+
+  g_signal_connect (sasl_handler, "invalidated",
+      G_CALLBACK (auth_observer_sasl_handler_invalidated), NULL);
+  empathy_server_sasl_handler_provide_password (sasl_handler,
+      data->password, TRUE);
+
+finally:
+  observe_channels_data_free (data);
+}
+
+static void
+auth_observer_claim_cb (GObject *dispatch_operation,
+    GAsyncResult *result,
+    gpointer user_data)
+{
+  ObserveChannelsData *data = user_data;
+  GError *error = NULL;
+
+  if (!tp_channel_dispatch_operation_claim_finish (
+        TP_CHANNEL_DISPATCH_OPERATION (dispatch_operation), result, &error))
+    {
+      DEBUG ("Failed to claim auth channel");
+
+      g_error_free (error);
+      observe_channels_data_free (data);
+      return;
+    }
+
+  empathy_server_sasl_handler_new_async (data->account, data->channel,
+      auth_observer_new_sasl_handler_cb, data);
+}
+
+static void
+auth_observer_observe_channels (TpSimpleObserver *auth_observer,
+    TpAccount *account,
+    TpConnection *connection,
+    GList *channels,
+    TpChannelDispatchOperation *dispatch_operation,
+    GList *requests,
+    TpObserveChannelsContext *context,
+    gpointer user_data)
+{
+  TpChannel *channel;
+  GHashTable *props;
+  GStrv available_mechanisms;
+  GtkWidget *password_entry = user_data;
+  const char *password;
+
+  /* we only do this for Psyke */
+  if (tp_strdiff (
+        tp_connection_get_connection_manager_name (connection),
+        "psyke"))
+    goto except;
+
+  /* can only deal with one channel */
+  if (g_list_length (channels) != 1)
+    goto except;
+
+  channel = channels->data;
+  props = tp_channel_borrow_immutable_properties (channel);
+  available_mechanisms = tp_asv_get_boxed (props,
+      TP_PROP_CHANNEL_INTERFACE_SASL_AUTHENTICATION_AVAILABLE_MECHANISMS,
+      G_TYPE_STRV);
+
+  /* must support X-TELEPATHY-PASSWORD */
+  if (!tp_strv_contains ((const char * const *) available_mechanisms,
+        "X-TELEPATHY-PASSWORD"))
+    goto except;
+
+  /* do we have a password */
+  password = gtk_entry_get_text (GTK_ENTRY (password_entry));
+  if (tp_str_empty (password))
+    goto except;
+
+  DEBUG ("claiming auth channel");
+
+  tp_channel_dispatch_operation_claim_async (dispatch_operation,
+      auth_observer_claim_cb,
+      observe_channels_data_new (account, channel, password));
+
+  tp_observe_channels_context_accept (context);
+  return;
+
+except:
+  tp_observe_channels_context_accept (context);
+}
+
+static TpBaseClient *
+auth_observer_new (GtkWidget *password_entry)
+{
+  TpDBusDaemon *dbus;
+  TpBaseClient *auth_observer;
+  GError *error = NULL;
+
+  dbus = tp_dbus_daemon_dup (&error);
+
+  if (error != NULL)
+    {
+      g_warning ("Failed to get DBus daemon: %s", error->message);
+      g_error_free (error);
+      return NULL;
+    }
+
+  auth_observer = tp_simple_observer_new (dbus, FALSE, "Empathy.PsykePreAuth",
+      FALSE, auth_observer_observe_channels, password_entry, NULL);
+
+  tp_base_client_set_observer_delay_approvers (auth_observer, TRUE);
+  tp_base_client_take_observer_filter (auth_observer, tp_asv_new (
+        TP_PROP_CHANNEL_CHANNEL_TYPE,
+        G_TYPE_STRING,
+        TP_IFACE_CHANNEL_TYPE_SERVER_AUTHENTICATION,
+
+        TP_PROP_CHANNEL_TYPE_SERVER_AUTHENTICATION_AUTHENTICATION_METHOD,
+        G_TYPE_STRING,
+        TP_IFACE_CHANNEL_INTERFACE_SASL_AUTHENTICATION,
+
+        NULL));
+
+  if (!tp_base_client_register (auth_observer, &error))
+    {
+      DEBUG ("Failed to register Psyke pre-auth observer: %s", error->message);
+      g_error_free (error);
+    }
+
+  g_object_unref (dbus);
+
+  return auth_observer;
+}
 
 enum {
     PS_COL_ENUM_VALUE,
@@ -430,6 +621,7 @@ empathy_account_widget_build_skype (EmpathyAccountWidget *self,
     const char *filename)
 {
   EmpathyAccountWidgetPriv *priv = GET_PRIV (self);
+  GtkWidget *password_entry;
 
   if (priv->simple || priv->creating_account)
     {
@@ -440,6 +632,7 @@ empathy_account_widget_build_skype (EmpathyAccountWidget *self,
           "table_common_skype_settings_setup", &priv->table_common_settings,
           "vbox_skype_settings_setup", &self->ui_details->widget,
           "skype-info-vbox", &skype_info,
+          "entry_password_setup", &password_entry,
           NULL);
 
       account_widget_build_skype_set_pixmap (self->ui_details->gui,
@@ -452,7 +645,6 @@ empathy_account_widget_build_skype (EmpathyAccountWidget *self,
 
       empathy_account_widget_handle_params (self,
           "entry_id_setup", "account",
-          "entry_password_setup", "password",
           NULL);
 
       self->ui_details->default_focus = g_strdup ("entry_id_setup");
@@ -468,6 +660,7 @@ empathy_account_widget_build_skype (EmpathyAccountWidget *self,
           "vbox_skype_settings", &self->ui_details->widget,
           "skype-info-vbox", &skype_info,
           "edit-privacy-settings-button", &edit_privacy_settings_button,
+          "entry_password", &password_entry,
           NULL);
 
       empathy_builder_connect (self->ui_details->gui, self,
@@ -491,11 +684,15 @@ empathy_account_widget_build_skype (EmpathyAccountWidget *self,
 
       empathy_account_widget_handle_params (self,
           "entry_id", "account",
-          "entry_password", "password",
           NULL);
 
       self->ui_details->default_focus = g_strdup ("entry_id");
     }
+
+  /* create the Psyke pre-authentication observer --
+   * tie the lifetime of the observer to the lifetime of the widget */
+  g_object_set_data_full (G_OBJECT (self->ui_details->widget), "auth-observer",
+      auth_observer_new (password_entry), g_object_unref);
 }
 
 gboolean
