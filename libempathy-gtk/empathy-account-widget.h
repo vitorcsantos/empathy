@@ -82,8 +82,6 @@ void empathy_account_widget_set_password_param (EmpathyAccountWidget *self,
 void empathy_account_widget_set_other_accounts_exist (
     EmpathyAccountWidget *self, gboolean others_exist);
 
-gboolean account_widget_skype_show_eula (GtkWindow *parent);
-
 /* protected methods */
 void empathy_account_widget_changed (EmpathyAccountWidget *widget);
 
