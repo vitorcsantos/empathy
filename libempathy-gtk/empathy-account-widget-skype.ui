@@ -450,7 +450,7 @@ Get one at &lt;a href="http://www.skype.com/go/register"&gt;Skype.com&lt;/a&gt;<
       <packing>
         <property name="expand">False</property>
         <property name="fill">False</property>
-        <property name="position">4</property>
+        <property name="position">0</property>
       </packing>
     </child>
     <child>
@@ -474,9 +474,13 @@ Get one at &lt;a href="http://www.skype.com/go/register"&gt;Skype.com&lt;/a&gt;<
       </object>
       <packing>
         <property name="expand">False</property>
-        <property name="position">5</property>
+        <property name="position">1</property>
       </packing>
     </child>
+  </object>
+  <object class="GtkVBox" id="skype-info-vbox">
+    <property name="visible">True</property>
+    <property name="spacing">6</property>
     <child>
       <object class="GtkImage" id="plugged-into-skype-logo">
         <property name="visible">True</property>
@@ -484,8 +488,8 @@ Get one at &lt;a href="http://www.skype.com/go/register"&gt;Skype.com&lt;/a&gt;<
         <property name="stock">gtk-missing-image</property>
       </object>
       <packing>
-        <property name="pack_type">end</property>
-        <property name="position">3</property>
+        <property name="expand">False</property>
+        <property name="position">0</property>
       </packing>
     </child>
     <child>
@@ -496,8 +500,8 @@ Get one at &lt;a href="http://www.skype.com/go/register"&gt;Skype.com&lt;/a&gt;<
         <property name="wrap">True</property>
       </object>
       <packing>
-        <property name="pack_type">end</property>
-        <property name="position">2</property>
+        <property name="expand">False</property>
+        <property name="position">1</property>
       </packing>
     </child>
     <child>
@@ -519,7 +523,7 @@ Get one at &lt;a href="http://www.skype.com/go/register"&gt;Skype.com&lt;/a&gt;<
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
-            <property name="has_tooltip">True</property>
+            <property name="relief">none</property>
             <property name="uri">http://canonical.com/support</property>
           </object>
           <packing>
@@ -529,8 +533,8 @@ Get one at &lt;a href="http://www.skype.com/go/register"&gt;Skype.com&lt;/a&gt;<
         </child>
       </object>
       <packing>
-        <property name="pack_type">end</property>
-        <property name="position">1</property>
+        <property name="expand">False</property>
+        <property name="position">2</property>
       </packing>
     </child>
     <child>
@@ -540,8 +544,8 @@ Get one at &lt;a href="http://www.skype.com/go/register"&gt;Skype.com&lt;/a&gt;<
         <property name="label" translatable="yes">Canonical provides technical support for Empathy on Ubuntu.</property>
       </object>
       <packing>
-        <property name="pack_type">end</property>
-        <property name="position">0</property>
+        <property name="expand">False</property>
+        <property name="position">3</property>
       </packing>
     </child>
   </object>
