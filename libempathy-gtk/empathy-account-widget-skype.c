@@ -29,6 +29,7 @@
 
 #include <libempathy/empathy-utils.h>
 
+#include "empathy-account-widget-skype.h"
 #include "empathy-account-widget-private.h"
 #include "empathy-ui-utils.h"
 
@@ -301,7 +302,7 @@ account_widget_build_skype_setup_combo (EmpathyAccountWidget *self,
     {
       gtk_list_store_insert_with_values (store, NULL, -1,
           PS_COL_ENUM_VALUE, option,
-          PS_COL_DISPLAY_NAME, gettext(options[option]),
+          PS_COL_DISPLAY_NAME, gettext (options[option]),
           -1);
     }
 
