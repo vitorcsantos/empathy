@@ -16,6 +16,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * Authors: Danielle Madeley <danielle.madeley@collabora.co.uk>
+ *          Emilio Pozuelo Monfort <emilio.pozuelo@collabora.co.uk>
  */
 
 #ifndef __EMPATHY_ACCOUNT_WIDGET_SKYPE_H__
@@ -28,6 +29,8 @@ G_BEGIN_DECLS
 
 void empathy_account_widget_build_skype (EmpathyAccountWidget *self,
     const char *filename);
+gboolean empathy_account_widget_skype_show_eula (GtkWindow *parent);
+
 
 G_END_DECLS
 
