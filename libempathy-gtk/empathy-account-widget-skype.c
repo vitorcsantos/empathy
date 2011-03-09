@@ -403,6 +403,19 @@ account_widget_skype_privacy_settings (GtkWidget *button,
   gtk_widget_destroy (dialog);
 }
 
+static void
+account_widget_build_skype_set_pixmap (GtkBuilder *gui,
+    const char *widget,
+    const char *file)
+{
+  GtkImage *image = GTK_IMAGE (gtk_builder_get_object (gui, widget));
+  char *filename = empathy_file_lookup (file, "data");
+
+  gtk_image_set_from_file (image, filename);
+
+  g_free (filename);
+}
+
 void
 empathy_account_widget_build_skype (EmpathyAccountWidget *self,
     const char *filename)
@@ -411,11 +424,22 @@ empathy_account_widget_build_skype (EmpathyAccountWidget *self,
 
   if (priv->simple || priv->creating_account)
     {
+      GtkWidget *skype_info;
+
       /* if we don't have an account it means we're doing the initial setup */
       self->ui_details->gui = empathy_builder_get_file (filename,
           "table_common_skype_settings_setup", &priv->table_common_settings,
           "vbox_skype_settings_setup", &self->ui_details->widget,
+          "skype-info-vbox", &skype_info,
           NULL);
+
+      account_widget_build_skype_set_pixmap (self->ui_details->gui,
+          "plugged-into-skype-logo", "plugged-into-skype.png");
+      account_widget_build_skype_set_pixmap (self->ui_details->gui,
+          "canonical-logo", "canonical-logo.png");
+
+      gtk_box_pack_end (GTK_BOX (self->ui_details->widget), skype_info,
+          TRUE, TRUE, 0);
 
       empathy_account_widget_handle_params (self,
           "entry_id_setup", "account",
@@ -428,16 +452,13 @@ empathy_account_widget_build_skype (EmpathyAccountWidget *self,
     {
       TpAccount *account =
         empathy_account_settings_get_account (priv->settings);
-      GtkWidget *edit_privacy_settings_button;
-      GtkWidget *plugged_into_skype_logo, *canonical_logo;
-      char *logo;
+      GtkWidget *edit_privacy_settings_button, *skype_info;
 
       self->ui_details->gui = empathy_builder_get_file (filename,
           "table_common_skype_settings", &priv->table_common_settings,
           "vbox_skype_settings", &self->ui_details->widget,
+          "skype-info-vbox", &skype_info,
           "edit-privacy-settings-button", &edit_privacy_settings_button,
-          "plugged-into-skype-logo", &plugged_into_skype_logo,
-          "canonical-logo", &canonical_logo,
           NULL);
 
       empathy_builder_connect (self->ui_details->gui, self,
@@ -451,13 +472,13 @@ empathy_account_widget_build_skype (EmpathyAccountWidget *self,
       else
         gtk_widget_set_sensitive (edit_privacy_settings_button, FALSE);
 
-      logo = empathy_file_lookup ("plugged-into-skype.png", "data");
-      gtk_image_set_from_file (GTK_IMAGE (plugged_into_skype_logo), logo);
-      g_free (logo);
+      account_widget_build_skype_set_pixmap (self->ui_details->gui,
+          "plugged-into-skype-logo", "plugged-into-skype.png");
+      account_widget_build_skype_set_pixmap (self->ui_details->gui,
+          "canonical-logo", "canonical-logo.png");
 
-      logo = empathy_file_lookup ("canonical-logo.png", "data");
-      gtk_image_set_from_file (GTK_IMAGE (canonical_logo), logo);
-      g_free (logo);
+      gtk_box_pack_end (GTK_BOX (self->ui_details->widget), skype_info,
+          TRUE, TRUE, 0);
 
       empathy_account_widget_handle_params (self,
           "entry_id", "account",
