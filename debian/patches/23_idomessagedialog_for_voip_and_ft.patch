@@ -1,0 +1,204 @@
+=== modified file 'configure.ac'
+--- a/configure.ac
++++ b/configure.ac
+@@ -43,6 +43,7 @@
+ TELEPATHY_GLIB_REQUIRED=0.13.16
+ TELEPATHY_LOGGER=0.2.0
+ UNIQUE_REQUIRED=1.1.2
++IDO_REQUIRED=0.1.14
+ 
+ # Optionnal deps
+ CLUTTER_GTK_REQUIRED=0.10
+@@ -161,6 +162,7 @@
+    libxml-2.0
+    telepathy-glib >= $TELEPATHY_GLIB_REQUIRED
+    telepathy-logger-0.2 >= $TELEPATHY_LOGGER
++   libido-0.1 >= $IDO_REQUIRED
+    x11
+    launchpad-integration
+ ])
+--- a/src/empathy-event-manager.c
++++ b/src/empathy-event-manager.c
+@@ -48,6 +48,9 @@
+ #include <libempathy-gtk/empathy-contact-dialogs.h>
+ #include <libempathy-gtk/empathy-sound.h>
+ 
++#include <libido/idomessagedialog.h>
++#include <libempathy-gtk/empathy-ui-utils.h>
++
+ #include "empathy-event-manager.h"
+ #include "empathy-main-window.h"
+ 
+@@ -470,6 +473,7 @@
+     }
+ }
+ 
++
+ static void
+ event_manager_call_window_confirmation_dialog_response_cb (GtkDialog *dialog,
+   gint response, gpointer user_data)
+@@ -490,13 +494,75 @@
+ }
+ 
+ static void
++event_channel_process_ft_func (EventPriv *event)
++{
++  GtkWidget *dialog;
++  GtkWidget *button;
++  GtkWidget *image;
++  gint width, height;
++  GdkPixbuf *avatar;
++
++  if (event->approval->dialog != NULL)
++    {
++      gtk_window_present (GTK_WINDOW (event->approval->dialog));
++      return;
++    }
++
++  dialog = ido_message_dialog_new (NULL,
++                                   GTK_DIALOG_MODAL,
++                                   GTK_MESSAGE_QUESTION,
++                                   GTK_BUTTONS_NONE,
++                                   _("Incoming file transfer from %s"),
++                                   empathy_contact_get_alias (event->approval->contact));
++  gtk_message_dialog_format_secondary_markup (GTK_WINDOW (dialog), _("%s is sending you a file. Do you want to accept it?"),
++                                              empathy_contact_get_alias (event->approval->contact));
++
++  avatar = empathy_pixbuf_avatar_from_contact_scaled (event->approval->contact, 48, 48);
++  if (avatar != NULL)
++  {
++    image = gtk_image_new_from_pixbuf (avatar);
++  } else {
++    /* Set image of the dialog */
++    image = gtk_image_new_from_icon_name (EMPATHY_IMAGE_DOCUMENT_SEND,
++          GTK_ICON_SIZE_DIALOG);
++  }
++
++  gtk_message_dialog_set_image (GTK_MESSAGE_DIALOG (dialog), image);
++  gtk_widget_show (image);
++
++  gtk_dialog_set_default_response (GTK_DIALOG (dialog),
++      GTK_RESPONSE_OK);
++
++  button = gtk_dialog_add_button (GTK_DIALOG (dialog),
++      _("_Reject"), GTK_RESPONSE_REJECT);
++  image = gtk_image_new_from_icon_name ("stop",
++    GTK_ICON_SIZE_BUTTON);
++  gtk_button_set_image (GTK_BUTTON (button), image);
++
++  button = gtk_dialog_add_button (GTK_DIALOG (dialog),
++      _("_Accept"), GTK_RESPONSE_ACCEPT);
++
++  image = gtk_image_new_from_icon_name ("filesaveas.png", GTK_ICON_SIZE_BUTTON);
++  gtk_button_set_image (GTK_BUTTON (button), image);
++
++  g_signal_connect (dialog, "response",
++      G_CALLBACK (event_manager_call_window_confirmation_dialog_response_cb),
++      event->approval);
++
++  gtk_widget_show (dialog);
++
++  event->approval->dialog = dialog;
++}
++
++static void
+ event_channel_process_voip_func (EventPriv *event)
+ {
+   GtkWidget *dialog;
+   GtkWidget *button;
+   GtkWidget *image;
+   gboolean video;
+-  gchar *title;
++  gint width, height;
++  GdkPixbuf *avatar;
+ 
+   if (event->approval->dialog != NULL)
+     {
+@@ -522,33 +588,33 @@
+       return;
+     }
+ 
+-  dialog = gtk_message_dialog_new (NULL, 0,
+-      GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE,
+-      video ? _("Incoming video call"): _("Incoming call"));
+-
+-  gtk_message_dialog_format_secondary_text (
+-    GTK_MESSAGE_DIALOG (dialog), video ?
+-      _("%s is video calling you. Do you want to answer?"):
+-      _("%s is calling you. Do you want to answer?"),
+-      empathy_contact_get_alias (event->approval->contact));
+-
+-  title = g_strdup_printf (_("Incoming call from %s"),
+-      empathy_contact_get_alias (event->approval->contact));
+-
+-  gtk_window_set_title (GTK_WINDOW (dialog), title);
+-  g_free (title);
+-
+-  /* Set image of the dialog */
+-  if (video)
++  dialog = ido_message_dialog_new (NULL,
++                                              GTK_DIALOG_MODAL,
++                                              GTK_MESSAGE_QUESTION,
++                                              GTK_BUTTONS_NONE,
++                                              video ? _("Incoming video call from %s"): _("Incoming call from %s"), empathy_contact_get_alias (event->approval->contact));
++  gtk_message_dialog_format_secondary_markup (GTK_WINDOW (dialog), video ?
++                                              _("%s is video calling you. Do you want to answer?"):
++                                              _("%s is calling you. Do you want to answer?"),
++                                              empathy_contact_get_alias (event->approval->contact));
++
++  avatar = empathy_pixbuf_avatar_from_contact_scaled (event->approval->contact, 48, 48);
++  if (avatar != NULL)
++  {
++    image = gtk_image_new_from_pixbuf (avatar);
++  } else {
++    /* Set image of the dialog */
++    if (video)
+     {
+       image = gtk_image_new_from_icon_name (EMPATHY_IMAGE_VIDEO_CALL,
+           GTK_ICON_SIZE_DIALOG);
+     }
+-  else
++    else
+     {
+       image = gtk_image_new_from_icon_name (EMPATHY_IMAGE_VOIP,
+           GTK_ICON_SIZE_DIALOG);
+     }
++  }
+ 
+   gtk_message_dialog_set_image (GTK_MESSAGE_DIALOG (dialog), image);
+   gtk_widget_show (image);
+@@ -909,7 +975,7 @@
+   event_manager_add (approval->manager, NULL,
+       approval->contact, EMPATHY_EVENT_TYPE_TRANSFER,
+       EMPATHY_IMAGE_DOCUMENT_SEND, header, NULL,
+-      approval, event_channel_process_func, NULL);
++      approval, event_channel_process_ft_func, NULL);
+ 
+   /* FIXME better sound for incoming file transfers ?*/
+   empathy_sound_play (window, EMPATHY_SOUND_CONVERSATION_NEW);
+--- a/src/empathy-indicator-manager.c
++++ b/src/empathy-indicator-manager.c
+@@ -144,6 +144,10 @@
+     EmpathyEvent *event,
+     EmpathyIndicatorManager *manager)
+ {
++  if (event->type == EMPATHY_EVENT_TYPE_VOIP || event->type == EMPATHY_EVENT_TYPE_TRANSFER) {
++    return;
++  }
++
+   EmpathyIndicator *indicator = NULL;
+   EmpathyIndicatorManagerPriv *priv;
+   IndicatorEvent *indicator_event;
+--- a/src/empathy-status-icon.c
++++ b/src/empathy-status-icon.c
+@@ -193,6 +193,10 @@
+ 	}
+ 
+ 	if (priv->event) {
++                if (priv->event->type == EMPATHY_EVENT_TYPE_VOIP || priv->event->type == EMPATHY_EVENT_TYPE_TRANSFER) {
++			empathy_event_activate (priv->event);
++			return;
++		}
+ 		gchar *message_esc = NULL;
+ 		gboolean has_x_canonical_append;
+ 		NotifyNotification *notification = priv->notification;
