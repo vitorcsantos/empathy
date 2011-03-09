@@ -61,6 +61,9 @@ pixmaps_DATA = \
 	plugged-into-skype.png \
 	$(NULL)
 
+euladir = $(datadir)/empathy
+eula_DATA = skype-eula.txt
+
 EXTRA_DIST = 				\
 	$(convert_DATA)			\
 	$(desktop_in_files)		\
@@ -72,6 +75,7 @@ EXTRA_DIST = 				\
 	$(servicefile_in_files)		\
 	$(gsettings_files)		\
 	$(pixmaps_DATA)			\
+	$(eula_DATA)			\
 	$(NULL)
 
 DISTCLEANFILES = 		\
