@@ -405,6 +405,23 @@ account_widget_build_skype_account_properties_changed_cb (TpProxy *account,
 }
 
 static void
+account_widget_build_skype_password_entry_focus (GtkWidget *password_entry,
+    GdkEventFocus *event,
+    gpointer user_data)
+{
+  if (g_object_get_data (G_OBJECT (password_entry), "fake-password") == NULL)
+    return;
+
+  DEBUG ("Clearing fake password for editing");
+
+  gtk_entry_set_text (GTK_ENTRY (password_entry), "");
+  g_object_set_data (G_OBJECT (password_entry), "fake-password",
+      GUINT_TO_POINTER (FALSE));
+
+  /* FIXME: need to light up the apply/cancel buttons */
+}
+
+static void
 account_widget_build_skype_get_privacy_settings_cb (TpProxy *cm,
     GHashTable *props,
     const GError *in_error,
@@ -759,6 +776,11 @@ empathy_account_widget_build_skype (EmpathyAccountWidget *self,
           account_widget_build_skype_account_properties_changed_cb,
           NULL, NULL, G_OBJECT (password_entry), NULL);
     }
+
+  /* if the user changes the password, it's probably no longer a fake
+   * password */
+  g_signal_connect (password_entry, "focus-in-event",
+      G_CALLBACK (account_widget_build_skype_password_entry_focus), NULL);
 }
 
 gboolean
