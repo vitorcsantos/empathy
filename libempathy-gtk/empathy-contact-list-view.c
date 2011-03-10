@@ -386,8 +386,8 @@ contact_list_view_contact_drag_received (GtkWidget         *view,
 {
 	EmpathyContactListViewPriv *priv;
 	TpAccountManager           *account_manager;
-        TpConnection               *connection;
-	TpAccount                  *account;
+	TpConnection               *connection = NULL;
+	TpAccount                  *account = NULL;
 	DndGetContactData          *data;
 	GtkTreePath                *source_path;
 	const gchar   *sel_data;
