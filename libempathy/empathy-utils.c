@@ -57,6 +57,8 @@
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include "empathy-debug.h"
 
+#define TM "\342\204\242" /* trademark */
+
 /* Translation between presence types and string */
 static struct {
 	const gchar *name;
@@ -551,6 +553,7 @@ empathy_protocol_name_to_display_name (const gchar *proto_name)
     { "facebook", N_("Facebook Chat"), TRUE },
     { "groupwise", "GroupWise", FALSE },
     { "sip", "SIP", FALSE },
+    { "skype", "Skype" TM, FALSE },
     { NULL, NULL }
   };
 
