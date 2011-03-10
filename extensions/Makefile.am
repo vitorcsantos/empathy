@@ -14,6 +14,7 @@ EXTRA_DIST = \
     misc.xml \
     Debug.xml \
     Logger.xml \
+    Account_Interface_External_Password_Storage.xml \
     Authentication_TLS_Certificate.xml \
     Channel_Interface_Credentials_Storage.xml \
     Channel_Type_Server_TLS_Connection.xml \
