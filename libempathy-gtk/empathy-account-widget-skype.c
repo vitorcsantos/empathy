@@ -422,6 +422,27 @@ account_widget_build_skype_password_entry_focus (GtkWidget *password_entry,
 }
 
 static void
+account_widget_skype_forget_password (GtkEntry *entry,
+    GtkEntryIconPosition pos,
+    GdkEvent *event,
+    EmpathyAccountWidget *self)
+{
+  EmpathyAccountWidgetPriv *priv = GET_PRIV (self);
+  TpAccount *account = empathy_account_settings_get_account (priv->settings);
+
+  if (pos != GTK_ENTRY_ICON_SECONDARY)
+    return;
+
+  if (account == NULL)
+    return;
+
+  DEBUG ("ForgetPassword clicked");
+
+  emp_cli_account_interface_external_password_storage_call_forget_password (
+      TP_PROXY (account), -1, NULL, NULL, NULL, NULL);
+}
+
+static void
 account_widget_build_skype_get_privacy_settings_cb (TpProxy *cm,
     GHashTable *props,
     const GError *in_error,
@@ -735,6 +756,8 @@ empathy_account_widget_build_skype (EmpathyAccountWidget *self,
       empathy_builder_connect (self->ui_details->gui, self,
           "edit-privacy-settings-button", "clicked",
               account_widget_skype_privacy_settings,
+          "entry_password", "icon-press",
+              account_widget_skype_forget_password,
           NULL);
 
       if (account != NULL)
