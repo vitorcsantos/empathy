@@ -374,11 +374,34 @@ account_widget_build_skype_get_password_saved_cb (TpProxy *account,
 
   DEBUG ("PasswordSaved: %s", password_saved ? "yes" : "no");
 
-  if (password_saved)
-    gtk_entry_set_text (GTK_ENTRY (password_entry), "xxxxxxxx");
+  gtk_entry_set_text (GTK_ENTRY (password_entry),
+      password_saved ? "xxxxxxxx": "");
 
   g_object_set_data (password_entry, "fake-password",
       GUINT_TO_POINTER (password_saved));
+}
+
+static void
+account_widget_build_skype_account_properties_changed_cb (TpProxy *account,
+    const char *iface,
+    GHashTable *changed,
+    const char **invalidated,
+    gpointer user_data,
+    GObject *password_entry)
+{
+  GValue *value;
+
+  if (tp_strdiff (iface,
+        EMP_IFACE_ACCOUNT_INTERFACE_EXTERNAL_PASSWORD_STORAGE))
+    return;
+
+  value = g_hash_table_lookup (changed, "PasswordSaved");
+
+  if (value == NULL)
+    return;
+
+  account_widget_build_skype_get_password_saved_cb (account, value, NULL,
+      NULL, password_entry);
 }
 
 static void
@@ -732,6 +755,9 @@ empathy_account_widget_build_skype (EmpathyAccountWidget *self,
           "PasswordSaved",
           account_widget_build_skype_get_password_saved_cb,
           NULL, NULL, G_OBJECT (password_entry));
+      tp_cli_dbus_properties_connect_to_properties_changed (account,
+          account_widget_build_skype_account_properties_changed_cb,
+          NULL, NULL, G_OBJECT (password_entry), NULL);
     }
 }
 
