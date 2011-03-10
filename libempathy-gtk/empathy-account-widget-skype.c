@@ -764,7 +764,7 @@ empathy_account_widget_build_skype (EmpathyAccountWidget *self,
       auth_observer_new (password_entry), g_object_unref);
 
   /* find out if we know the password */
-  if (tp_proxy_has_interface_by_id (account,
+  if (account != NULL && tp_proxy_has_interface_by_id (account,
         EMP_IFACE_QUARK_ACCOUNT_INTERFACE_EXTERNAL_PASSWORD_STORAGE))
     {
       tp_cli_dbus_properties_call_get (account, -1,
