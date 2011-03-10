@@ -34,6 +34,7 @@
 #include <libempathy/empathy-utils.h>
 
 #include <libempathy-gtk/empathy-account-widget.h>
+#include <libempathy-gtk/empathy-account-widget-skype.h>
 #include <libempathy-gtk/empathy-protocol-chooser.h>
 #include <libempathy-gtk/empathy-ui-utils.h>
 
@@ -399,6 +400,15 @@ account_assistant_protocol_changed_cb (GtkComboBox *chooser,
   if (cm == NULL || proto == NULL)
     /* we are not ready yet */
     return;
+
+  if (!tp_strdiff (proto->name, "skype"))
+    {
+      if (!empathy_account_widget_skype_show_eula (GTK_WINDOW (self)))
+        {
+          gtk_combo_box_set_active (chooser, 0);
+          return;
+        }
+    }
 
   /* Create account */
   if (is_gtalk)
