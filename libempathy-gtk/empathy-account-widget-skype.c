@@ -147,7 +147,7 @@ auth_observer_observe_channels (TpSimpleObserver *auth_observer,
   GHashTable *props;
   GStrv available_mechanisms;
   GtkWidget *password_entry = user_data;
-  const char *password;
+  const char *password = NULL;
 
   /* we only do this for Psyke */
   if (tp_strdiff (
@@ -171,7 +171,9 @@ auth_observer_observe_channels (TpSimpleObserver *auth_observer,
     goto except;
 
   /* do we have a password */
-  password = gtk_entry_get_text (GTK_ENTRY (password_entry));
+  if (g_object_get_data (G_OBJECT (password_entry), "fake-password") == NULL)
+    password = gtk_entry_get_text (GTK_ENTRY (password_entry));
+
   if (tp_str_empty (password))
     goto except;
 
@@ -349,6 +351,34 @@ account_widget_skype_set_value (EmpathyAccountWidget *self,
     {
       g_assert_not_reached ();
     }
+}
+
+static void
+account_widget_build_skype_get_password_saved_cb (TpProxy *account,
+    const GValue *value,
+    const GError *in_error,
+    gpointer user_data,
+    GObject *password_entry)
+{
+  gboolean password_saved;
+
+  if (in_error != NULL)
+    {
+      DEBUG ("Failed to get PasswordSaved: %s", in_error->message);
+      return;
+    }
+
+  g_return_if_fail (G_VALUE_HOLDS_BOOLEAN (value));
+
+  password_saved = g_value_get_boolean (value);
+
+  DEBUG ("PasswordSaved: %s", password_saved ? "yes" : "no");
+
+  if (password_saved)
+    gtk_entry_set_text (GTK_ENTRY (password_entry), "xxxxxxxx");
+
+  g_object_set_data (password_entry, "fake-password",
+      GUINT_TO_POINTER (password_saved));
 }
 
 static void
@@ -621,6 +651,7 @@ empathy_account_widget_build_skype (EmpathyAccountWidget *self,
     const char *filename)
 {
   EmpathyAccountWidgetPriv *priv = GET_PRIV (self);
+  TpAccount *account = empathy_account_settings_get_account (priv->settings);
   GtkWidget *password_entry;
 
   if (priv->simple || priv->creating_account)
@@ -651,8 +682,6 @@ empathy_account_widget_build_skype (EmpathyAccountWidget *self,
     }
   else
     {
-      TpAccount *account =
-        empathy_account_settings_get_account (priv->settings);
       GtkWidget *edit_privacy_settings_button, *skype_info;
 
       self->ui_details->gui = empathy_builder_get_file (filename,
@@ -693,6 +722,17 @@ empathy_account_widget_build_skype (EmpathyAccountWidget *self,
    * tie the lifetime of the observer to the lifetime of the widget */
   g_object_set_data_full (G_OBJECT (self->ui_details->widget), "auth-observer",
       auth_observer_new (password_entry), g_object_unref);
+
+  /* find out if we know the password */
+  if (tp_proxy_has_interface_by_id (account,
+        EMP_IFACE_QUARK_ACCOUNT_INTERFACE_EXTERNAL_PASSWORD_STORAGE))
+    {
+      tp_cli_dbus_properties_call_get (account, -1,
+          EMP_IFACE_ACCOUNT_INTERFACE_EXTERNAL_PASSWORD_STORAGE,
+          "PasswordSaved",
+          account_widget_build_skype_get_password_saved_cb,
+          NULL, NULL, G_OBJECT (password_entry));
+    }
 }
 
 gboolean
