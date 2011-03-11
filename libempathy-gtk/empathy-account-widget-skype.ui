@@ -11,27 +11,13 @@
         <property name="visible">True</property>
         <property name="n_rows">4</property>
         <property name="n_columns">2</property>
-        <property name="column_spacing">12</property>
+        <property name="column_spacing">6</property>
         <property name="row_spacing">6</property>
-        <child>
-          <object class="GtkLabel" id="label_password">
-            <property name="visible">True</property>
-            <property name="xalign">0</property>
-            <property name="label" translatable="yes">Pass_word:</property>
-            <property name="use_underline">True</property>
-          </object>
-          <packing>
-            <property name="top_attach">2</property>
-            <property name="bottom_attach">3</property>
-            <property name="x_options">GTK_FILL</property>
-            <property name="y_options"></property>
-          </packing>
-        </child>
         <child>
           <object class="GtkLabel" id="label_id">
             <property name="visible">True</property>
             <property name="xalign">0</property>
-            <property name="label" translatable="yes">Skype name:</property>
+            <property name="label" translatable="yes">_Skype name:</property>
             <property name="use_underline">True</property>
             <property name="mnemonic_widget">entry_id_setup</property>
           </object>
@@ -90,6 +76,21 @@ Get one at &lt;a href="http://www.skype.com/go/register"&gt;Skype.com&lt;/a&gt;<
             <property name="right_attach">2</property>
             <property name="top_attach">3</property>
             <property name="bottom_attach">4</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkCheckButton" id="remember-password-setup">
+            <property name="label" translatable="yes">Remember pass_word:</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">False</property>
+            <property name="use_underline">True</property>
+            <property name="active">True</property>
+            <property name="draw_indicator">True</property>
+          </object>
+          <packing>
+            <property name="top_attach">2</property>
+            <property name="bottom_attach">3</property>
           </packing>
         </child>
         <child>
@@ -402,22 +403,8 @@ Get one at &lt;a href="http://www.skype.com/go/register"&gt;Skype.com&lt;/a&gt;<
         <property name="visible">True</property>
         <property name="n_rows">3</property>
         <property name="n_columns">2</property>
-        <property name="column_spacing">12</property>
+        <property name="column_spacing">6</property>
         <property name="row_spacing">6</property>
-        <child>
-          <object class="GtkLabel" id="label_password1">
-            <property name="visible">True</property>
-            <property name="xalign">0</property>
-            <property name="label" translatable="yes">Pass_word:</property>
-            <property name="use_underline">True</property>
-          </object>
-          <packing>
-            <property name="top_attach">1</property>
-            <property name="bottom_attach">2</property>
-            <property name="x_options">GTK_FILL</property>
-            <property name="y_options"></property>
-          </packing>
-        </child>
         <child>
           <object class="GtkLabel" id="label_id1">
             <property name="visible">True</property>
@@ -477,6 +464,21 @@ Get one at &lt;a href="http://www.skype.com/go/register"&gt;Skype.com&lt;/a&gt;<
             <property name="top_attach">2</property>
             <property name="bottom_attach">3</property>
             <property name="x_options">GTK_FILL</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkCheckButton" id="remember-password">
+            <property name="label" translatable="yes">Remember pass_word:</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">False</property>
+            <property name="use_underline">True</property>
+            <property name="active">True</property>
+            <property name="draw_indicator">True</property>
+          </object>
+          <packing>
+            <property name="top_attach">1</property>
+            <property name="bottom_attach">2</property>
           </packing>
         </child>
         <child>
