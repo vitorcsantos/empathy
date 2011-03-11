@@ -45,18 +45,21 @@ typedef struct
   TpAccount *account;
   TpChannel *channel;
   char *password;
+  gboolean remember;
 } ObserveChannelsData;
 
 static ObserveChannelsData *
 observe_channels_data_new (TpAccount *account,
     TpChannel *channel,
-    const char *password)
+    const char *password,
+    gboolean remember)
 {
   ObserveChannelsData *data = g_slice_new0 (ObserveChannelsData);
 
   data->account = g_object_ref (account);
   data->channel = g_object_ref (channel);
   data->password = g_strdup (password);
+  data->remember = remember;
 
   return data;
 }
@@ -100,12 +103,12 @@ auth_observer_new_sasl_handler_cb (GObject *obj,
       goto finally;
     }
 
-  DEBUG ("providing password");
+  DEBUG ("providing password, remember = %s", data->remember ? "yes" : "no");
 
   g_signal_connect (sasl_handler, "invalidated",
       G_CALLBACK (auth_observer_sasl_handler_invalidated), NULL);
   empathy_server_sasl_handler_provide_password (sasl_handler,
-      data->password, TRUE);
+      data->password, data->remember);
 
 finally:
   observe_channels_data_free (data);
@@ -148,6 +151,7 @@ auth_observer_observe_channels (TpSimpleObserver *auth_observer,
   GStrv available_mechanisms;
   GtkWidget *password_entry = user_data;
   const char *password = NULL;
+  gboolean remember;
 
   /* we only do this for Psyke */
   if (tp_strdiff (
@@ -177,14 +181,15 @@ auth_observer_observe_channels (TpSimpleObserver *auth_observer,
   if (tp_str_empty (password))
     goto except;
 
+  /* do we want to remember it */
+  remember = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (
+      g_object_get_data (G_OBJECT (password_entry), "remember-password")));
+
   DEBUG ("claiming auth channel");
 
   tp_channel_dispatch_operation_claim_async (dispatch_operation,
       auth_observer_claim_cb,
-      observe_channels_data_new (account, channel, password));
-
-  tp_observe_channels_context_accept (context);
-  return;
+      observe_channels_data_new (account, channel, password, remember));
 
 except:
   tp_observe_channels_context_accept (context);
@@ -437,6 +442,23 @@ account_widget_skype_forget_password (GtkEntry *entry,
     return;
 
   DEBUG ("ForgetPassword clicked");
+
+  emp_cli_account_interface_external_password_storage_call_forget_password (
+      TP_PROXY (account), -1, NULL, NULL, NULL, NULL);
+}
+
+static void
+account_widget_skype_remember_password_toggled (GtkToggleButton *button,
+    EmpathyAccountWidget *self)
+{
+  EmpathyAccountWidgetPriv *priv = GET_PRIV (self);
+  TpAccount *account = empathy_account_settings_get_account (priv->settings);
+
+  /* we only forget the password if the toggle goes inactive */
+  if (gtk_toggle_button_get_active (button))
+    return;
+
+  DEBUG ("forgetting password");
 
   emp_cli_account_interface_external_password_storage_call_forget_password (
       TP_PROXY (account), -1, NULL, NULL, NULL, NULL);
@@ -713,7 +735,7 @@ empathy_account_widget_build_skype (EmpathyAccountWidget *self,
 {
   EmpathyAccountWidgetPriv *priv = GET_PRIV (self);
   TpAccount *account = empathy_account_settings_get_account (priv->settings);
-  GtkWidget *password_entry;
+  GtkWidget *password_entry, *remember_password;
 
   if (priv->simple || priv->creating_account)
     {
@@ -725,6 +747,7 @@ empathy_account_widget_build_skype (EmpathyAccountWidget *self,
           "vbox_skype_settings_setup", &self->ui_details->widget,
           "skype-info-vbox", &skype_info,
           "entry_password_setup", &password_entry,
+          "remember-password-setup", &remember_password,
           NULL);
 
       account_widget_build_skype_set_pixmap (self->ui_details->gui,
@@ -751,6 +774,7 @@ empathy_account_widget_build_skype (EmpathyAccountWidget *self,
           "skype-info-vbox", &skype_info,
           "edit-privacy-settings-button", &edit_privacy_settings_button,
           "entry_password", &password_entry,
+          "remember-password", &remember_password,
           NULL);
 
       empathy_builder_connect (self->ui_details->gui, self,
@@ -758,6 +782,8 @@ empathy_account_widget_build_skype (EmpathyAccountWidget *self,
               account_widget_skype_privacy_settings,
           "entry_password", "icon-press",
               account_widget_skype_forget_password,
+          "remember-password", "toggled",
+              account_widget_skype_remember_password_toggled,
           NULL);
 
       if (account != NULL)
@@ -785,6 +811,8 @@ empathy_account_widget_build_skype (EmpathyAccountWidget *self,
    * tie the lifetime of the observer to the lifetime of the widget */
   g_object_set_data_full (G_OBJECT (self->ui_details->widget), "auth-observer",
       auth_observer_new (password_entry), g_object_unref);
+  g_object_set_data (G_OBJECT (password_entry), "remember-password",
+      remember_password);
 
   /* find out if we know the password */
   if (account != NULL && tp_proxy_has_interface_by_id (account,
