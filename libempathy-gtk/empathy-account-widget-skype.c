@@ -176,7 +176,8 @@ account_widget_build_skype_get_privacy_settings_cb (TpProxy *cm,
       "allow-skype-calls-from",
       "allow-outside-calls-from",
       "show-my-avatar-to",
-      "show-my-web-status"
+      "show-my-web-status",
+      "show-i-have-video-to"
   };
 
   if (in_error != NULL)
@@ -374,6 +375,12 @@ account_widget_skype_privacy_settings (GtkWidget *button,
       EMP_PRIVACY_SETTING_ANYONE,
       EMP_PRIVACY_SETTING_KNOWN_NUMBERS,
       EMP_PRIVACY_SETTING_CONTACTS,
+      -1);
+  account_widget_build_skype_setup_combo (self, gui,
+      "show-i-have-video-to", "ShowIHaveVideoTo",
+      EMP_PRIVACY_SETTING_ANYONE,
+      EMP_PRIVACY_SETTING_CONTACTS,
+      EMP_PRIVACY_SETTING_NOBODY,
       -1);
   account_widget_build_skype_setup_combo (self, gui,
       "show-my-avatar-to", "ShowMyAvatarTo",
