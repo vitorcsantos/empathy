@@ -2237,11 +2237,11 @@ individual_view_remove_dialog_show (GtkWindow *parent,
 
   if (block_button)
     gtk_dialog_add_button (GTK_DIALOG (dialog),
-        _("Delete and Block"), GTK_RESPONSE_REJECT);
+        _("Remove and Block"), GTK_RESPONSE_REJECT);
 
   gtk_dialog_add_buttons (GTK_DIALOG (dialog),
       GTK_STOCK_CANCEL, GTK_RESPONSE_NO,
-      GTK_STOCK_DELETE, GTK_RESPONSE_YES, NULL);
+      GTK_STOCK_REMOVE, GTK_RESPONSE_YES, NULL);
   gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
       "%s", secondary_text);
 
@@ -2362,7 +2362,7 @@ individual_view_remove_activate_cb (GtkMenuItem *menuitem,
       parent = empathy_get_toplevel_window (GTK_WIDGET (view));
       text =
           g_strdup_printf (
-          _("Do you really want to remove the contact '%s'?"),
+          _("Are you sure you want to remove '%s' from your contacts?"),
           folks_aliasable_get_alias (FOLKS_ALIASABLE (individual)));
       res = individual_view_remove_dialog_show (parent, _("Removing contact"),
               text, can_block);
