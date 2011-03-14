@@ -91,7 +91,8 @@ libempathy_gtk_handwritten_source =            	\
 	empathy-theme-irc.c			\
 	empathy-theme-manager.c			\
 	empathy-tls-dialog.c			\
-	empathy-ui-utils.c
+	empathy-ui-utils.c			\
+	$(NULL)
 
 libempathy_gtk_headers =			\
 	empathy-account-chooser.h		\
@@ -154,12 +155,14 @@ libempathy_gtk_headers =			\
 	empathy-theme-irc.h			\
 	empathy-theme-manager.h			\
 	empathy-tls-dialog.h			\
-	empathy-ui-utils.h
+	empathy-ui-utils.h			\
+	$(NULL)
 
 libempathy_gtk_la_SOURCES =			\
 	$(libempathy_gtk_handwritten_source)	\
 	$(libempathy_gtk_headers)		\
 	gcr-simple-certificate.c gcr-simple-certificate.h \
+	mx-gtk-light-switch.c mx-gtk-light-switch.h \
 	totem-subtitle-encoding.c totem-subtitle-encoding.h
 
 # do not distribute generated files
