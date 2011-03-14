@@ -379,6 +379,11 @@ account_widget_build_skype_get_password_saved_cb (TpProxy *account,
 
   DEBUG ("PasswordSaved: %s", password_saved ? "yes" : "no");
 
+  /* don't wipe the password if there's a real value in there */
+  if (g_object_get_data (password_entry, "fake-password") == NULL &&
+      !tp_str_empty (gtk_entry_get_text (GTK_ENTRY (password_entry))))
+    return;
+
   gtk_entry_set_text (GTK_ENTRY (password_entry),
       password_saved ? "xxxxxxxx": "");
 
