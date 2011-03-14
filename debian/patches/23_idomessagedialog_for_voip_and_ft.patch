@@ -1,15 +1,28 @@
+From: Ubuntu Core Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Date: Mon, 14 Mar 2011 14:24:26 +0000
+Subject: 23_idomessagedialog_for_voip_and_ft
+
 === modified file 'configure.ac'
+---
+ configure.ac                    |    2 +
+ src/empathy-event-manager.c     |  108 +++++++++++++++++++++++++++++++--------
+ src/empathy-indicator-manager.c |    6 ++
+ src/empathy-status-icon.c       |    6 ++
+ 4 files changed, 101 insertions(+), 21 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 6fcfd94..8518765 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -43,6 +43,7 @@
- TELEPATHY_GLIB_REQUIRED=0.13.16
+@@ -43,6 +43,7 @@ TELEPATHY_FARSIGHT_REQUIRED=0.0.14
+ TELEPATHY_GLIB_REQUIRED=0.13.17
  TELEPATHY_LOGGER=0.2.0
  UNIQUE_REQUIRED=1.1.2
 +IDO_REQUIRED=0.1.14
  
  # Optionnal deps
  CLUTTER_GTK_REQUIRED=0.10
-@@ -161,6 +162,7 @@
+@@ -161,6 +162,7 @@ PKG_CHECK_MODULES(EMPATHY,
     libxml-2.0
     telepathy-glib >= $TELEPATHY_GLIB_REQUIRED
     telepathy-logger-0.2 >= $TELEPATHY_LOGGER
@@ -17,6 +30,8 @@
     x11
     launchpad-integration
  ])
+diff --git a/src/empathy-event-manager.c b/src/empathy-event-manager.c
+index 5b44345..f3edca5 100644
 --- a/src/empathy-event-manager.c
 +++ b/src/empathy-event-manager.c
 @@ -48,6 +48,9 @@
@@ -29,7 +44,7 @@
  #include "empathy-event-manager.h"
  #include "empathy-main-window.h"
  
-@@ -470,6 +473,7 @@
+@@ -470,6 +473,7 @@ reject_approval (EventManagerApproval *approval)
      }
  }
  
@@ -37,7 +52,7 @@
  static void
  event_manager_call_window_confirmation_dialog_response_cb (GtkDialog *dialog,
    gint response, gpointer user_data)
-@@ -490,13 +494,75 @@
+@@ -490,13 +494,75 @@ event_manager_call_window_confirmation_dialog_response_cb (GtkDialog *dialog,
  }
  
  static void
@@ -114,7 +129,7 @@
  
    if (event->approval->dialog != NULL)
      {
-@@ -522,33 +588,33 @@
+@@ -522,33 +588,33 @@ event_channel_process_voip_func (EventPriv *event)
        return;
      }
  
@@ -167,7 +182,7 @@
  
    gtk_message_dialog_set_image (GTK_MESSAGE_DIALOG (dialog), image);
    gtk_widget_show (image);
-@@ -909,7 +975,7 @@
+@@ -909,7 +975,7 @@ event_manager_ft_got_contact_cb (TpConnection *connection,
    event_manager_add (approval->manager, NULL,
        approval->contact, EMPATHY_EVENT_TYPE_TRANSFER,
        EMPATHY_IMAGE_DOCUMENT_SEND, header, NULL,
@@ -176,29 +191,38 @@
  
    /* FIXME better sound for incoming file transfers ?*/
    empathy_sound_play (window, EMPATHY_SOUND_CONVERSATION_NEW);
+diff --git a/src/empathy-indicator-manager.c b/src/empathy-indicator-manager.c
+index beccaad..2362b15 100644
 --- a/src/empathy-indicator-manager.c
 +++ b/src/empathy-indicator-manager.c
-@@ -144,6 +144,10 @@
+@@ -144,6 +144,12 @@ indicator_manager_event_added_cb (EmpathyEventManager *event_manager,
      EmpathyEvent *event,
      EmpathyIndicatorManager *manager)
  {
-+  if (event->type == EMPATHY_EVENT_TYPE_VOIP || event->type == EMPATHY_EVENT_TYPE_TRANSFER) {
++  if (event->type == EMPATHY_EVENT_TYPE_VOIP
++      || event->type == EMPATHY_EVENT_TYPE_CALL
++      || event->type == EMPATHY_EVENT_TYPE_TRANSFER) {
 +    return;
 +  }
 +
    EmpathyIndicator *indicator = NULL;
    EmpathyIndicatorManagerPriv *priv;
    IndicatorEvent *indicator_event;
+diff --git a/src/empathy-status-icon.c b/src/empathy-status-icon.c
+index 90c94ea..16cc737 100644
 --- a/src/empathy-status-icon.c
 +++ b/src/empathy-status-icon.c
-@@ -193,6 +193,10 @@
+@@ -193,6 +193,12 @@ status_icon_update_notification (EmpathyStatusIcon *icon)
  	}
  
  	if (priv->event) {
-+                if (priv->event->type == EMPATHY_EVENT_TYPE_VOIP || priv->event->type == EMPATHY_EVENT_TYPE_TRANSFER) {
++		if (priv->event->type == EMPATHY_EVENT_TYPE_VOIP
++				|| priv->event->type == EMPATHY_EVENT_TYPE_CALL
++				|| priv->event->type == EMPATHY_EVENT_TYPE_TRANSFER) {
 +			empathy_event_activate (priv->event);
 +			return;
 +		}
  		gchar *message_esc = NULL;
  		gboolean has_x_canonical_append;
  		NotifyNotification *notification = priv->notification;
+-- 
