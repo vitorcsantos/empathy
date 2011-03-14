@@ -125,7 +125,7 @@ auth_observer_claim_cb (GObject *dispatch_operation,
   if (!tp_channel_dispatch_operation_claim_finish (
         TP_CHANNEL_DISPATCH_OPERATION (dispatch_operation), result, &error))
     {
-      DEBUG ("Failed to claim auth channel");
+      DEBUG ("Failed to claim auth channel: %s", error->message);
 
       g_error_free (error);
       observe_channels_data_free (data);
