@@ -519,12 +519,19 @@ account_widget_build_skype_get_privacy_settings_cb (TpProxy *cm,
       GtkWidget *widget = GTK_WIDGET (gtk_builder_get_object (gui, widgets[i]));
       const char *prop_name = g_object_get_data (G_OBJECT (widget),
           "dbus-property");
+      GValue *value;
 
       DEBUG ("Widget '%s' (%s), prop = %s",
           widgets[i], G_OBJECT_TYPE_NAME (widget), prop_name);
 
-      account_widget_skype_set_value (self, widget,
-          g_hash_table_lookup (props, prop_name));
+      value = g_hash_table_lookup (props, prop_name);
+      if (value == NULL)
+        {
+          g_warning ("Couldn't get a value for %s", prop_name);
+          continue;
+        }
+
+      account_widget_skype_set_value (self, widget, value);
     }
 }
 
