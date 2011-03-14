@@ -591,8 +591,8 @@ account_widget_build_skype_setup_combo (EmpathyAccountWidget *self,
   int option;
 
   static const char *options[NUM_EMP_PRIVACY_SETTINGS] = {
-        N_("Nobody"),
-        N_("Contacts"),
+        N_("No one"),
+        N_("My contacts"),
         N_("Anyone"),
         N_("Known Numbers")
   };
