@@ -483,7 +483,7 @@ account_widget_build_skype_get_privacy_settings_cb (TpProxy *cm,
   static const char *widgets[] = {
       "allow-text-chats-from",
       "allow-skype-calls-from",
-      "allow-outside-calls-from",
+      "allow-video-from",
       "show-my-avatar-to",
       "show-my-web-status",
       "show-i-have-video-to"
@@ -680,9 +680,8 @@ account_widget_skype_privacy_settings (GtkWidget *button,
       EMP_PRIVACY_SETTING_CONTACTS,
       -1);
   account_widget_build_skype_setup_combo (self, gui,
-      "allow-outside-calls-from", "AllowOutsideCallsFrom",
+      "allow-video-from", "AllowVideoFrom",
       EMP_PRIVACY_SETTING_ANYONE,
-      EMP_PRIVACY_SETTING_KNOWN_NUMBERS,
       EMP_PRIVACY_SETTING_CONTACTS,
       -1);
   account_widget_build_skype_setup_combo (self, gui,
