@@ -175,9 +175,9 @@ Get one at &lt;a href="http://www.skype.com/go/register"&gt;Skype.com&lt;/a&gt;<
                               <object class="GtkLabel" id="label6">
                                 <property name="visible">True</property>
                                 <property name="xalign">0</property>
-                                <property name="label" translatable="yes">Allow _outside calls from:</property>
+                                <property name="label" translatable="yes">Allow video _from:</property>
                                 <property name="use_underline">True</property>
-                                <property name="mnemonic_widget">allow-outside-calls-from</property>
+                                <property name="mnemonic_widget">allow-video-from</property>
                               </object>
                               <packing>
                                 <property name="top_attach">2</property>
@@ -234,8 +234,9 @@ Get one at &lt;a href="http://www.skype.com/go/register"&gt;Skype.com&lt;/a&gt;<
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkComboBox" id="allow-outside-calls-from">
+                              <object class="GtkComboBox" id="allow-video-from">
                                 <property name="visible">True</property>
+                                <property name="sensitive">False</property>
                                 <child>
                                   <object class="GtkCellRendererText" id="cellrenderertext4"/>
                                   <attributes>
