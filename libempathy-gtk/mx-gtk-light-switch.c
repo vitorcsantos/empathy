@@ -90,10 +90,8 @@ struct _MxGtkLightSwitchPrivate {
   gint     offset; /* offset of the mouse to slider when dragging */
 };
 
-/* MEDIUM VERTICAL BAR U+2759 */
-#define ON_STRING "\342\235\231"
-  /* WHITE CIRCLE U+25CB */
-#define OFF_STRING "\342\227\213"
+#define ON_STRING _("On")
+#define OFF_STRING _("Off")
 
 #define UNAVAILABLE_STRING _("Unavailable")
 
@@ -204,13 +202,11 @@ draw (GtkWidget *lightswitch,
 
   gint on_label_x;
   gint off_label_x;
-/*
   gint label_width;
   gint label_height;
-*/
   GtkStyle *style;
-//  PangoLayout *layout;
-//  PangoContext *context;
+  PangoLayout *layout;
+  PangoContext *context;
   GtkStateType state_type;
 
   priv = MX_GTK_LIGHT_SWITCH_GET_PRIVATE (lightswitch);
@@ -238,9 +234,10 @@ draw (GtkWidget *lightswitch,
                  (priv->trough_width),
                  priv->switch_height);
 
+#if 0
   if (state_type == GTK_STATE_INSENSITIVE)
     return;
-#if 0
+#else
   if (state_type == GTK_STATE_INSENSITIVE)
     {
       context = gdk_pango_context_get ();
