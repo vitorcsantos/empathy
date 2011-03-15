@@ -365,6 +365,7 @@ account_widget_build_skype_get_password_saved_cb (TpProxy *account,
     gpointer user_data,
     GObject *password_entry)
 {
+  GtkWidget *remember_password;
   gboolean password_saved;
 
   if (in_error != NULL)
@@ -384,8 +385,13 @@ account_widget_build_skype_get_password_saved_cb (TpProxy *account,
       !tp_str_empty (gtk_entry_get_text (GTK_ENTRY (password_entry))))
     return;
 
+  remember_password =
+    GTK_WIDGET (g_object_get_data (password_entry, "remember-password"));
+
   gtk_entry_set_text (GTK_ENTRY (password_entry),
       password_saved ? "xxxxxxxxxxxx": "");
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (remember_password),
+      password_saved);
 
   g_object_set_data (password_entry, "fake-password",
       GUINT_TO_POINTER (password_saved));
@@ -801,6 +807,9 @@ empathy_account_widget_build_skype (EmpathyAccountWidget *self,
       auth_observer_new (password_entry), g_object_unref);
   g_object_set_data (G_OBJECT (password_entry), "remember-password",
       remember_password);
+
+  g_object_bind_property (remember_password, "active",
+      password_entry, "sensitive", G_BINDING_SYNC_CREATE);
 
   /* find out if we know the password */
   if (account != NULL && tp_proxy_has_interface_by_id (account,
