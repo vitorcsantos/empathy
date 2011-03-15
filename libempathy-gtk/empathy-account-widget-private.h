@@ -57,6 +57,7 @@ typedef struct {
   GtkWidget *radiobutton_reuse;
 
   gboolean simple;
+  gboolean enabled;
 
   gboolean contains_pending_changes;
 
