@@ -385,7 +385,7 @@ account_widget_build_skype_get_password_saved_cb (TpProxy *account,
     return;
 
   gtk_entry_set_text (GTK_ENTRY (password_entry),
-      password_saved ? "xxxxxxxx": "");
+      password_saved ? "xxxxxxxxxxxx": "");
 
   g_object_set_data (password_entry, "fake-password",
       GUINT_TO_POINTER (password_saved));
