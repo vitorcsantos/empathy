@@ -440,6 +440,8 @@ account_widget_skype_additional_apply_forget_passwd_cb (TpProxy *account,
   /* reconnect is required */
   g_simple_async_result_set_op_res_gboolean (simple, in_error == NULL);
   g_simple_async_result_complete (simple);
+
+  g_object_unref (simple);
 }
 
 static void
