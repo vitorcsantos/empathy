@@ -65,6 +65,7 @@ typedef struct {
   GtkWidget *radiobutton_reuse;
 
   gboolean simple;
+  gboolean enabled;
 
   gboolean contains_pending_changes;
 
@@ -103,6 +104,7 @@ enum {
   PROP_SIMPLE,
   PROP_CREATING_ACCOUNT,
   PROP_OTHER_ACCOUNTS_EXIST,
+  PROP_ENABLED,
 };
 
 enum {
@@ -834,19 +836,8 @@ account_widget_applied_continue (EmpathyAccountWidget *widget,
               account_widget_account_enabled_cb, widget);
           g_signal_emit (widget, signals[ACCOUNT_CREATED], 0, account);
         }
-      else if (priv->enabled_checkbox != NULL)
+      else
         {
-          gboolean enabled_checked;
-
-          enabled_checked =
-#ifdef HAVE_MEEGO
-            mx_gtk_light_switch_get_active (
-                MX_GTK_LIGHT_SWITCH (priv->enabled_checkbox));
-#else
-            gtk_toggle_button_get_active (
-                GTK_TOGGLE_BUTTON (priv->enabled_checkbox));
-#endif /* HAVE_MEEGO */
-
           /* If the account was offline, we always want to try reconnecting,
            * to give it a chance to connect if the previous params were wrong.
            * tp_account_reconnect_async() won't do anything if the requested
@@ -856,7 +847,7 @@ account_widget_applied_continue (EmpathyAccountWidget *widget,
             reconnect_required = TRUE;
 
           if (reconnect_required && tp_account_is_enabled (account)
-              && enabled_checked)
+              && priv->enabled)
             {
               /* After having applied changes to a user account, we
                * reconnect it if needed. This is done so the new
@@ -1586,6 +1577,9 @@ do_set_property (GObject *object,
       empathy_account_widget_set_other_accounts_exist (
           EMPATHY_ACCOUNT_WIDGET (object), g_value_get_boolean (value));
       break;
+    case PROP_ENABLED:
+      priv->enabled = g_value_get_boolean (value);
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
     }
@@ -1616,6 +1610,9 @@ do_get_property (GObject *object,
       break;
     case PROP_OTHER_ACCOUNTS_EXIST:
       g_value_set_boolean (value, priv->other_accounts_exist);
+      break;
+    case PROP_ENABLED:
+      g_value_set_boolean (value, priv->enabled);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -2146,6 +2143,13 @@ empathy_account_widget_class_init (EmpathyAccountWidgetClass *klass)
       G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS | G_PARAM_CONSTRUCT_ONLY);
   g_object_class_install_property (oclass, PROP_OTHER_ACCOUNTS_EXIST,
                   param_spec);
+
+  param_spec = g_param_spec_boolean ("enabled",
+      "Enabled",
+      "TRUE if this account widget is enabled",
+      FALSE,
+      G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+  g_object_class_install_property (oclass, PROP_ENABLED, param_spec);
 
   signals[HANDLE_APPLY] =
     g_signal_new ("handle-apply", G_TYPE_FROM_CLASS (klass),

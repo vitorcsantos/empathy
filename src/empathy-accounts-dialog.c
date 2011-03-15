@@ -331,6 +331,11 @@ accounts_dialog_update_status_infobar (EmpathyAccountsDialog *dialog,
   g_signal_handlers_unblock_by_func (priv->enabled_switch,
       accounts_dialog_enable_switch_flipped, dialog);
 
+  /* inform the account widget */
+  g_object_set (priv->setting_widget_object,
+      "enabled", account_enabled,
+      NULL);
+
   if (account_enabled)
     {
       switch (status)
