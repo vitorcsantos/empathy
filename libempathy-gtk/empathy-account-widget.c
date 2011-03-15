@@ -756,16 +756,19 @@ account_widget_account_enabled_cb (GObject *source_object,
   g_object_unref (widget);
 }
 
+static void account_widget_applied_continue (EmpathyAccountWidget *widget,
+    gboolean reconnect_required);
+static void account_widget_applied_additional_cb (GObject *widget,
+    GAsyncResult *result, gpointer user_data);
+
 static void
 account_widget_applied_cb (GObject *source_object,
     GAsyncResult *res,
     gpointer user_data)
 {
   GError *error = NULL;
-  TpAccount *account;
   EmpathyAccountSettings *settings = EMPATHY_ACCOUNT_SETTINGS (source_object);
   EmpathyAccountWidget *widget = EMPATHY_ACCOUNT_WIDGET (user_data);
-  EmpathyAccountWidgetPriv *priv = GET_PRIV (widget);
   gboolean reconnect_required;
 
   empathy_account_settings_apply_finish (settings, res, &reconnect_required,
@@ -777,6 +780,44 @@ account_widget_applied_cb (GObject *source_object,
       g_error_free (error);
       return;
     }
+
+  DEBUG ("First stage apply complete: reconnect_required = %s",
+      reconnect_required ? "yes" : "no");
+
+  /* if there is additional work for this widget, do that now */
+  if (widget->ui_details->additional_apply_async != NULL)
+    widget->ui_details->additional_apply_async (widget,
+        account_widget_applied_additional_cb,
+        GUINT_TO_POINTER (reconnect_required));
+  else
+    account_widget_applied_continue (widget, reconnect_required);
+}
+
+static void
+account_widget_applied_additional_cb (GObject *obj,
+    GAsyncResult *result,
+    gpointer user_data)
+{
+  EmpathyAccountWidget *widget = EMPATHY_ACCOUNT_WIDGET (obj);
+  GSimpleAsyncResult *simple = G_SIMPLE_ASYNC_RESULT (result);
+  gboolean reconnect_required = GPOINTER_TO_UINT (user_data);
+
+  /* we don't care about the error status, the async method can report it,
+   * just get the result */
+  reconnect_required |= g_simple_async_result_get_op_res_gboolean (simple);
+
+  DEBUG ("Second stage apply complete: reconnect_required = %s",
+      reconnect_required ? "yes" : "no");
+
+  account_widget_applied_continue (widget, reconnect_required);
+}
+
+static void
+account_widget_applied_continue (EmpathyAccountWidget *widget,
+    gboolean reconnect_required)
+{
+  EmpathyAccountWidgetPriv *priv = GET_PRIV (widget);
+  TpAccount *account;
 
   account = empathy_account_settings_get_account (priv->settings);
 

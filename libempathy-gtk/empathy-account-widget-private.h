@@ -34,6 +34,13 @@ struct _EmpathyAccountWidgetUIDetails {
   GtkBuilder *gui;
 
   char *default_focus;
+
+  /* an optional callback to call after calling
+   * empathy_account_settings_apply_async () -- must use a GSimpleAsyncResult
+   * which sets a gboolean indicating reconnect_required */
+  void (* additional_apply_async) (EmpathyAccountWidget *,
+      GAsyncReadyCallback callback,
+      gpointer user_data);
 };
 
 
