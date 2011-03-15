@@ -1397,18 +1397,33 @@ log_window_logger_clear_account_cb (TpProxy *proxy,
 }
 
 static void
+log_window_clear_logs_chooser_select_account (EmpathyAccountChooser *chooser,
+					      EmpathyLogWindow *window)
+{
+	empathy_account_chooser_set_account (chooser,
+		empathy_account_chooser_get_account (EMPATHY_ACCOUNT_CHOOSER (window->account_chooser_chats)));
+}
+
+static void
 log_window_delete_menu_clicked_cb (GtkMenuItem      *menuitem,
 				   EmpathyLogWindow *window)
 {
-	GtkWidget *dialog, *content_area, *hbox, *label, *account_chooser;
+	GtkWidget *dialog, *content_area, *hbox, *label;
+	EmpathyAccountChooser *account_chooser;
 	gint response_id;
 	TpDBusDaemon *bus;
 	TpProxy *logger;
 	GError *error = NULL;
 
-	account_chooser = empathy_account_chooser_new ();
-	empathy_account_chooser_set_has_all_option (EMPATHY_ACCOUNT_CHOOSER (account_chooser),
-		TRUE);
+	account_chooser = (EmpathyAccountChooser *) empathy_account_chooser_new ();
+	empathy_account_chooser_set_has_all_option (account_chooser, TRUE);
+
+	/* Select the same account as in the history window */
+	if (empathy_account_chooser_is_ready (account_chooser))
+		log_window_clear_logs_chooser_select_account (account_chooser, window);
+	else
+		g_signal_connect (account_chooser, "ready",
+				  G_CALLBACK (log_window_clear_logs_chooser_select_account), window);
 
 	dialog = gtk_message_dialog_new_with_markup (GTK_WINDOW (window->window),
 		GTK_DIALOG_MODAL, GTK_MESSAGE_WARNING,
@@ -1427,7 +1442,7 @@ log_window_delete_menu_clicked_cb (GtkMenuItem      *menuitem,
 	label = gtk_label_new (_("Delete from:"));
 	gtk_box_pack_start (GTK_BOX (hbox), label,
 		FALSE, FALSE, 0);
-	gtk_box_pack_start (GTK_BOX (hbox), account_chooser,
+	gtk_box_pack_start (GTK_BOX (hbox), GTK_WIDGET (account_chooser),
 		FALSE, FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (content_area), hbox,
 		FALSE, FALSE, 0);
@@ -1455,15 +1470,14 @@ log_window_delete_menu_clicked_cb (GtkMenuItem      *menuitem,
 
 	tp_proxy_add_interface_by_id (logger, EMP_IFACE_QUARK_LOGGER);
 
-	if (empathy_account_chooser_has_all_selected (EMPATHY_ACCOUNT_CHOOSER (account_chooser))) {
+	if (empathy_account_chooser_has_all_selected (account_chooser)) {
 		DEBUG ("Deleting logs for all the accounts");
 
 		emp_cli_logger_call_clear (logger, -1,
 					   log_window_logger_clear_account_cb,
 					   window, NULL, G_OBJECT (window->window));
 	} else {
-		TpAccount *account = empathy_account_chooser_get_account (
-			EMPATHY_ACCOUNT_CHOOSER (account_chooser));
+		TpAccount *account = empathy_account_chooser_get_account (account_chooser);
 
 		DEBUG ("Deleting logs for %s", tp_proxy_get_object_path (account));
 
