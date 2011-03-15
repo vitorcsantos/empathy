@@ -420,7 +420,7 @@ account_widget_build_skype_account_properties_changed_cb (TpProxy *account,
       NULL, password_entry);
 }
 
-static void
+static gboolean
 account_widget_build_skype_password_entry_focus (GtkWidget *password_entry,
     GdkEventFocus *event,
     gpointer user_data)
@@ -435,6 +435,8 @@ account_widget_build_skype_password_entry_focus (GtkWidget *password_entry,
       GUINT_TO_POINTER (FALSE));
 
   /* FIXME: need to light up the apply/cancel buttons */
+
+  return FALSE;
 }
 
 static void
