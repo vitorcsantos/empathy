@@ -420,6 +420,45 @@ account_widget_build_skype_account_properties_changed_cb (TpProxy *account,
       NULL, password_entry);
 }
 
+static void
+account_widget_skype_additional_apply_forget_passwd_cb (TpProxy *account,
+    const GError *in_error,
+    gpointer user_data,
+    GObject *weak_obj)
+{
+  GSimpleAsyncResult *simple = G_SIMPLE_ASYNC_RESULT (weak_obj);
+
+  if (in_error != NULL)
+    {
+      DEBUG ("Did not forget password: %s", in_error->message);
+    }
+  else
+    {
+      DEBUG ("Password forgot, proceed to reconnect");
+    }
+
+  /* reconnect is required */
+  g_simple_async_result_set_op_res_gboolean (simple, in_error == NULL);
+  g_simple_async_result_complete (simple);
+}
+
+static void
+account_widget_skype_additional_apply_async (EmpathyAccountWidget *self,
+    GAsyncReadyCallback callback,
+    gpointer user_data)
+{
+  EmpathyAccountWidgetPriv *priv = GET_PRIV (self);
+  TpAccount *account = empathy_account_settings_get_account (priv->settings);
+  GSimpleAsyncResult *simple = g_simple_async_result_new (G_OBJECT (self),
+      callback, user_data, NULL);
+
+  /* we have to forget the password, else psyke won't query for the new one */
+  emp_cli_account_interface_external_password_storage_call_forget_password (
+      TP_PROXY (account), -1,
+      account_widget_skype_additional_apply_forget_passwd_cb,
+      NULL, NULL, G_OBJECT (simple));
+}
+
 static gboolean
 account_widget_build_skype_password_entry_focus (GtkWidget *password_entry,
     GdkEventFocus *event,
@@ -441,6 +480,8 @@ account_widget_build_skype_password_entry_focus (GtkWidget *password_entry,
     {
       DEBUG ("Highlighting Apply/Cancel button");
 
+      self->ui_details->additional_apply_async =
+        account_widget_skype_additional_apply_async;
       empathy_account_widget_changed (self);
     }
 
