@@ -1008,6 +1008,7 @@ empathy_call_window_init (EmpathyCallWindow *self)
   GtkWidget *arrow;
   GtkWidget *page;
   gchar *filename;
+  GtkWidget *scroll;
 
   priv = self->priv = G_TYPE_INSTANCE_GET_PRIVATE (self,
     EMPATHY_TYPE_CALL_WINDOW, EmpathyCallWindowPriv);
@@ -1148,8 +1149,14 @@ empathy_call_window_init (EmpathyCallWindow *self)
 
   gtk_widget_set_sensitive (priv->dtmf_panel, FALSE);
 
-  empathy_sidebar_add_page (EMPATHY_SIDEBAR (priv->sidebar),
-      _("Details"), priv->details_vbox);
+  /* Put the details vbox in a scroll window as it can require a lot of
+   * horizontal space. */
+  scroll = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scroll),
+      priv->details_vbox);
+
+  empathy_sidebar_add_page (EMPATHY_SIDEBAR (priv->sidebar), _("Details"),
+    scroll);
 
   gtk_widget_show_all (top_vbox);
 
