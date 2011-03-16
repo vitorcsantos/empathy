@@ -1379,6 +1379,9 @@ empathy_account_settings_account_updated (GObject *source,
     {
       if (priv->password != NULL)
         {
+          /* FIXME: we shouldn't save the password if we
+           * can't (MaySaveResponse=False) but we don't have API to check that
+           * at this point (fdo #35382). */
           empathy_keyring_set_password_async (priv->account, priv->password,
               empathy_account_settings_set_password_cb, settings);
         }
@@ -1426,6 +1429,19 @@ empathy_account_settings_created_cb (GObject *source,
   else
     {
       priv->account = g_object_ref (account);
+
+      if (priv->supports_sasl && priv->password != NULL)
+        {
+          /* Save the password before connecting */
+          /* FIXME: we shouldn't save the password if we
+           * can't (MaySaveResponse=False) but we don't have API to check that
+           * at this point (fdo #35382). */
+          empathy_keyring_set_password_async (priv->account,
+              priv->password, empathy_account_settings_set_password_cb,
+              settings);
+          return;
+        }
+
       empathy_account_settings_discard_changes (settings);
     }
 
