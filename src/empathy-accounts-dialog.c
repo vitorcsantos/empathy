@@ -258,6 +258,20 @@ accounts_dialog_enable_switch_flipped (MxGtkLightSwitch *sw,
   if (account == NULL)
     return;
 
+  if (state == TRUE &&
+      !tp_strdiff (tp_account_get_connection_manager (account), "psyke"))
+    {
+      /* psyke typically doesn't support more than one simultaneous connection
+       * unless you've compiled it to do so */
+      if (!empathy_accounts_dialog_skype_disable_other_accounts (account,
+            GTK_WINDOW (dialog)))
+        {
+          /* user chose not to proceed */
+          mx_gtk_light_switch_set_active (sw, FALSE);
+          return;
+        }
+    }
+
   tp_account_set_enabled_async (account, state,
       accounts_dialog_enable_account_cb, NULL);
 }
