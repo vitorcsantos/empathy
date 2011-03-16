@@ -1379,6 +1379,50 @@ log_window_entry_chats_activate_cb (GtkWidget       *entry,
 	}
 }
 
+typedef struct {
+	EmpathyAccountChooserFilterResultCallback callback;
+	gpointer                                  user_data;
+} FilterCallbackData;
+
+static void
+got_entities (GObject      *manager,
+	      GAsyncResult *result,
+	      gpointer      user_data)
+{
+	FilterCallbackData *data = user_data;
+	GList *entities;
+	GError *error;
+
+	if (!tpl_log_manager_get_entities_finish (TPL_LOG_MANAGER (manager), result, &entities, &error)) {
+		DEBUG ("Could not get entities: %s", error->message);
+		g_error_free (error);
+		data->callback (FALSE, data->user_data);
+	} else {
+		data->callback (entities != NULL, data->user_data);
+
+		g_list_free_full (entities, g_object_unref);
+	}
+
+	g_slice_free (FilterCallbackData, data);
+}
+
+static void
+empathy_account_chooser_filter_has_logs (TpAccount *account,
+					 EmpathyAccountChooserFilterResultCallback callback,
+					 gpointer callback_data,
+					 gpointer user_data)
+{
+	TplLogManager *manager = tpl_log_manager_dup_singleton ();
+	FilterCallbackData *cb_data = g_slice_new0 (FilterCallbackData);
+
+	cb_data->callback = callback;
+	cb_data->user_data = callback_data;
+
+	tpl_log_manager_get_entities_async (manager, account, got_entities, cb_data);
+
+	g_object_unref (manager);
+}
+
 static void
 log_window_logger_clear_account_cb (TpProxy *proxy,
 				    const GError *error,
@@ -1417,6 +1461,7 @@ log_window_delete_menu_clicked_cb (GtkMenuItem      *menuitem,
 
 	account_chooser = (EmpathyAccountChooser *) empathy_account_chooser_new ();
 	empathy_account_chooser_set_has_all_option (account_chooser, TRUE);
+	empathy_account_chooser_set_filter (account_chooser, empathy_account_chooser_filter_has_logs, NULL);
 
 	/* Select the same account as in the history window */
 	if (empathy_account_chooser_is_ready (account_chooser))
