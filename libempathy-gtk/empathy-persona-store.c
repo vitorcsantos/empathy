@@ -142,7 +142,7 @@ persona_active_new (EmpathyPersonaStore *self,
   ShowActiveData *data;
 
   DEBUG ("Contact:'%s' now active, and %s be removed",
-      folks_aliasable_get_alias (FOLKS_ALIASABLE (persona)),
+      folks_alias_details_get_alias (FOLKS_ALIAS_DETAILS (persona)),
       remove_ ? "WILL" : "WILL NOT");
 
   data = g_slice_new0 (ShowActiveData);
@@ -213,7 +213,7 @@ static gboolean
 persona_active_cb (ShowActiveData *data)
 {
   const gchar *alias =
-      folks_aliasable_get_alias (FOLKS_ALIASABLE (data->persona));
+      folks_alias_details_get_alias (FOLKS_ALIAS_DETAILS (data->persona));
 
   if (data->remove)
     {
@@ -235,7 +235,7 @@ persona_updated_cb (FolksPersona *persona,
     EmpathyPersonaStore *self)
 {
   DEBUG ("Contact:'%s' updated, checking roster is in sync...",
-      folks_aliasable_get_alias (FOLKS_ALIASABLE (persona)));
+      folks_alias_details_get_alias (FOLKS_ALIAS_DETAILS (persona)));
 
   update_persona (self, persona);
 }
@@ -289,7 +289,7 @@ add_persona (EmpathyPersonaStore *self,
 
   priv = GET_PRIV (self);
 
-  alias = folks_aliasable_get_alias (FOLKS_ALIASABLE (persona));
+  alias = folks_alias_details_get_alias (FOLKS_ALIAS_DETAILS (persona));
   if (EMP_STR_EMPTY (alias))
     return;
 
@@ -408,7 +408,7 @@ update_persona (EmpathyPersonaStore *self,
   const gchar *alias;
 
   path = find_persona (self, persona);
-  alias = folks_aliasable_get_alias (FOLKS_ALIASABLE (persona));
+  alias = folks_alias_details_get_alias (FOLKS_ALIAS_DETAILS (persona));
 
   if (path == NULL)
     {
@@ -438,8 +438,8 @@ update_persona (EmpathyPersonaStore *self,
       gtk_tree_path_free (path);
 
       /* Get online state now. */
-      now_online = folks_presence_owner_is_online (
-          FOLKS_PRESENCE_OWNER (persona));
+      now_online = folks_presence_details_is_online (
+          FOLKS_PRESENCE_DETAILS (persona));
 
       /* Get online state before. */
       gtk_tree_model_get (GTK_TREE_MODEL (self), &iter,
@@ -485,11 +485,11 @@ update_persona (EmpathyPersonaStore *self,
           EMPATHY_PERSONA_STORE_COL_DISPLAY_ID,
               folks_persona_get_display_id (persona),
           EMPATHY_PERSONA_STORE_COL_PRESENCE_TYPE,
-              folks_presence_owner_get_presence_type (
-                  FOLKS_PRESENCE_OWNER (persona)),
+              folks_presence_details_get_presence_type (
+                  FOLKS_PRESENCE_DETAILS (persona)),
           EMPATHY_PERSONA_STORE_COL_STATUS,
-              folks_presence_owner_get_presence_message (
-                  FOLKS_PRESENCE_OWNER (persona)),
+              folks_presence_details_get_presence_message (
+                  FOLKS_PRESENCE_DETAILS (persona)),
           EMPATHY_PERSONA_STORE_COL_IS_ONLINE, now_online,
           EMPATHY_PERSONA_STORE_COL_CAN_AUDIO_CALL,
               empathy_contact_get_capabilities (contact) &
@@ -556,8 +556,8 @@ sort_personas (FolksPersona *persona_a,
 
   /* alias */
   ret_val = g_utf8_collate (
-      folks_aliasable_get_alias (FOLKS_ALIASABLE (persona_a)),
-      folks_aliasable_get_alias (FOLKS_ALIASABLE (persona_b)));
+      folks_alias_details_get_alias (FOLKS_ALIAS_DETAILS (persona_a)),
+      folks_alias_details_get_alias (FOLKS_ALIAS_DETAILS (persona_b)));
 
   if (ret_val != 0)
     goto out;
@@ -622,9 +622,10 @@ state_sort_func (GtkTreeModel *model,
    * the presences.
    */
   ret_val = -tp_connection_presence_type_cmp_availability (
-      folks_presence_owner_get_presence_type (FOLKS_PRESENCE_OWNER (persona_a)),
-      folks_presence_owner_get_presence_type (
-          FOLKS_PRESENCE_OWNER (persona_b)));
+      folks_presence_details_get_presence_type (
+          FOLKS_PRESENCE_DETAILS (persona_a)),
+      folks_presence_details_get_presence_type (
+          FOLKS_PRESENCE_DETAILS (persona_b)));
 
   if (ret_val == 0) {
     /* Fallback: compare by name et al. */

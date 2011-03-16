@@ -485,8 +485,8 @@ empathy_contact_set_presence_message (EmpathyContact *contact,
 
   if (priv->persona != NULL)
     {
-      folks_presence_owner_set_presence_message (
-          FOLKS_PRESENCE_OWNER (priv->persona), message);
+      folks_presence_details_set_presence_message (
+          FOLKS_PRESENCE_DETAILS (priv->persona), message);
     }
 }
 
@@ -704,12 +704,12 @@ empathy_contact_set_alias (EmpathyContact *contact,
 
   /* Set the alias on the persona if possible */
   persona = empathy_contact_get_persona (contact);
-  if (persona != NULL && FOLKS_IS_ALIASABLE (persona))
+  if (persona != NULL && FOLKS_IS_ALIAS_DETAILS (persona))
     {
       DEBUG ("Setting alias for contact %s to %s",
           empathy_contact_get_id (contact), alias);
 
-      folks_aliasable_set_alias (FOLKS_ALIASABLE (persona), alias);
+      folks_alias_details_set_alias (FOLKS_ALIAS_DETAILS (persona), alias);
     }
 
   if (tp_strdiff (alias, priv->alias))
@@ -727,10 +727,10 @@ groups_change_group_cb (GObject *source,
     GAsyncResult *result,
     gpointer user_data)
 {
-  FolksGroupable *groupable = FOLKS_GROUPABLE (source);
+  FolksGroupDetails *group_details = FOLKS_GROUP_DETAILS (source);
   GError *error = NULL;
 
-  folks_groupable_change_group_finish (groupable, result, &error);
+  folks_group_details_change_group_finish (group_details, result, &error);
   if (error != NULL)
     {
       g_warning ("failed to change group: %s", error->message);
@@ -754,9 +754,9 @@ empathy_contact_change_group (EmpathyContact *contact, const gchar *group,
   persona = empathy_contact_get_persona (contact);
   if (persona != NULL)
     {
-      if (FOLKS_IS_GROUPABLE (persona))
-        folks_groupable_change_group (FOLKS_GROUPABLE (persona), group, is_member,
-          groups_change_group_cb, contact);
+      if (FOLKS_IS_GROUP_DETAILS (persona))
+        folks_group_details_change_group (FOLKS_GROUP_DETAILS (persona), group,
+            is_member, groups_change_group_cb, contact);
       return;
     }
 
@@ -919,7 +919,8 @@ empathy_contact_set_persona (EmpathyContact *contact,
   /* Set the persona's groups */
   if (priv->groups != NULL)
     {
-      folks_groupable_set_groups (FOLKS_GROUPABLE (persona), priv->groups);
+      folks_group_details_set_groups (FOLKS_GROUP_DETAILS (persona),
+          priv->groups);
       g_hash_table_destroy (priv->groups);
       priv->groups = NULL;
     }
@@ -967,8 +968,8 @@ empathy_contact_get_presence_message (EmpathyContact *contact)
 
   if (priv->persona != NULL)
     {
-      return folks_presence_owner_get_presence_message (
-          FOLKS_PRESENCE_OWNER (priv->persona));
+      return folks_presence_details_get_presence_message (
+          FOLKS_PRESENCE_DETAILS (priv->persona));
     }
 
   if (priv->tp_contact != NULL)
@@ -1775,16 +1776,16 @@ static int
 presence_cmp_func (EmpathyContact *a,
     EmpathyContact *b)
 {
-  FolksPresenceOwner *presence_a, *presence_b;
+  FolksPresenceDetails *presence_a, *presence_b;
 
-  presence_a = FOLKS_PRESENCE_OWNER (empathy_contact_get_persona (a));
-  presence_b = FOLKS_PRESENCE_OWNER (empathy_contact_get_persona (b));
+  presence_a = FOLKS_PRESENCE_DETAILS (empathy_contact_get_persona (a));
+  presence_b = FOLKS_PRESENCE_DETAILS (empathy_contact_get_persona (b));
 
   /* We negate the result because we're sorting in reverse order (i.e. such that
    * the Personas with the highest presence are at the beginning of the list. */
-  return -folks_presence_owner_typecmp (
-      folks_presence_owner_get_presence_type (presence_a),
-      folks_presence_owner_get_presence_type (presence_b));
+  return -folks_presence_details_typecmp (
+      folks_presence_details_get_presence_type (presence_a),
+      folks_presence_details_get_presence_type (presence_b));
 }
 
 static gint

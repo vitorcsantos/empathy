@@ -233,10 +233,10 @@ groups_change_group_cb (GObject *source,
     GAsyncResult *result,
     gpointer user_data)
 {
-  FolksGroupable *groupable = FOLKS_GROUPABLE (source);
+  FolksGroupDetails *group_details = FOLKS_GROUP_DETAILS (source);
   GError *error = NULL;
 
-  folks_groupable_change_group_finish (groupable, result, &error);
+  folks_group_details_change_group_finish (group_details, result, &error);
   if (error != NULL)
     {
       g_warning ("failed to change group: %s", error->message);
@@ -367,14 +367,16 @@ real_drag_individual_received_cb (EmpathyIndividualView *self,
   if (!tp_strdiff (new_group, EMPATHY_INDIVIDUAL_STORE_FAVORITE))
     {
       /* Mark contact as favourite */
-      folks_favouritable_set_is_favourite (FOLKS_FAVOURITABLE (individual), TRUE);
+      folks_favourite_details_set_is_favourite (
+          FOLKS_FAVOURITE_DETAILS (individual), TRUE);
       return;
     }
 
   if (!tp_strdiff (old_group, EMPATHY_INDIVIDUAL_STORE_FAVORITE))
     {
       /* Remove contact as favourite */
-      folks_favouritable_set_is_favourite (FOLKS_FAVOURITABLE (individual), FALSE);
+      folks_favourite_details_set_is_favourite (
+          FOLKS_FAVOURITE_DETAILS (individual), FALSE);
 
       /* Don't try to remove it */
       old_group = NULL;
@@ -382,14 +384,14 @@ real_drag_individual_received_cb (EmpathyIndividualView *self,
 
   if (new_group != NULL)
     {
-      folks_groupable_change_group (FOLKS_GROUPABLE (individual), new_group, TRUE,
-          groups_change_group_cb, NULL);
+      folks_group_details_change_group (FOLKS_GROUP_DETAILS (individual),
+          new_group, TRUE, groups_change_group_cb, NULL);
     }
 
   if (old_group != NULL && action == GDK_ACTION_MOVE)
     {
-      folks_groupable_change_group (FOLKS_GROUPABLE (individual), old_group,
-          FALSE, groups_change_group_cb, NULL);
+      folks_group_details_change_group (FOLKS_GROUP_DETAILS (individual),
+          old_group, FALSE, groups_change_group_cb, NULL);
     }
 }
 
@@ -621,7 +623,8 @@ individual_view_drag_motion (GtkWidget *widget,
         }
 
       if (individual != NULL &&
-          folks_presence_owner_is_online (FOLKS_PRESENCE_OWNER (individual)) &&
+          folks_presence_details_is_online (
+              FOLKS_PRESENCE_DETAILS (individual)) &&
           (caps & EMPATHY_CAPABILITIES_FT))
         {
           gdk_drag_status (context, GDK_ACTION_COPY, time_);
@@ -1638,13 +1641,13 @@ individual_view_is_visible_individual (EmpathyIndividualView *self,
   if (contains_interesting_persona == FALSE)
     return FALSE;
 
-  is_favorite = folks_favouritable_get_is_favourite (
-      FOLKS_FAVOURITABLE (individual));
+  is_favorite = folks_favourite_details_get_is_favourite (
+      FOLKS_FAVOURITE_DETAILS (individual));
   if (is_searching == FALSE)
     return (priv->show_offline || is_online || is_favorite);
 
   /* check alias name */
-  str = folks_aliasable_get_alias (FOLKS_ALIASABLE (individual));
+  str = folks_alias_details_get_alias (FOLKS_ALIAS_DETAILS (individual));
 
   if (empathy_live_search_match (live, str))
     return TRUE;
@@ -2374,7 +2377,7 @@ individual_view_remove_activate_cb (GtkMenuItem *menuitem,
       text =
           g_strdup_printf (
           _("Are you sure you want to remove '%s' from your contacts?"),
-          folks_aliasable_get_alias (FOLKS_ALIASABLE (individual)));
+          folks_alias_details_get_alias (FOLKS_ALIAS_DETAILS (individual)));
       res = individual_view_remove_dialog_show (parent, _("Removing contact"),
               text, can_block);
       if (res == GTK_RESPONSE_YES || res == GTK_RESPONSE_REJECT)

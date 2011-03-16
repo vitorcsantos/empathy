@@ -86,8 +86,8 @@ individual_notify_is_favourite_cb (FolksIndividual *individual,
     GParamSpec *pspec,
     EmpathyIndividualManager *self)
 {
-  gboolean is_favourite = folks_favouritable_get_is_favourite (
-      FOLKS_FAVOURITABLE (individual));
+  gboolean is_favourite = folks_favourite_details_get_is_favourite (
+      FOLKS_FAVOURITE_DETAILS (individual));
   g_signal_emit (self, signals[FAVOURITES_CHANGED], 0, individual,
       is_favourite);
 }
@@ -483,7 +483,7 @@ empathy_individual_manager_remove (EmpathyIndividualManager *self,
 
   DEBUG ("removing individual %s (%s)",
       folks_individual_get_id (individual),
-      folks_aliasable_get_alias (FOLKS_ALIASABLE (individual)));
+      folks_alias_details_get_alias (FOLKS_ALIAS_DETAILS (individual)));
 
   folks_individual_aggregator_remove_individual (priv->aggregator, individual,
       aggregator_remove_individual_cb, self);
@@ -568,10 +568,10 @@ groups_change_group_cb (GObject *source,
     GAsyncResult *result,
     gpointer user_data)
 {
-  FolksGroupable *groupable = FOLKS_GROUPABLE (source);
+  FolksGroupDetails *group_details = FOLKS_GROUP_DETAILS (source);
   GError *error = NULL;
 
-  folks_groupable_change_group_finish (groupable, result, &error);
+  folks_group_details_change_group_finish (group_details, result, &error);
   if (error != NULL)
     {
       g_warning ("failed to change group: %s", error->message);
@@ -584,8 +584,8 @@ remove_group_cb (const gchar *id,
     FolksIndividual *individual,
     const gchar *group)
 {
-  folks_groupable_change_group (FOLKS_GROUPABLE (individual), group, FALSE,
-      groups_change_group_cb, NULL);
+  folks_group_details_change_group (FOLKS_GROUP_DETAILS (individual), group,
+      FALSE, groups_change_group_cb, NULL);
 }
 
 void
