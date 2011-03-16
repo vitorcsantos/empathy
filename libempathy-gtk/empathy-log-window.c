@@ -123,6 +123,12 @@ static void     log_window_entry_chats_activate_cb         (GtkWidget        *en
 static void     log_window_delete_menu_clicked_cb          (GtkMenuItem      *menuitem,
 							    EmpathyLogWindow *window);
 
+static void
+empathy_account_chooser_filter_has_logs (TpAccount *account,
+					 EmpathyAccountChooserFilterResultCallback callback,
+					 gpointer callback_data,
+					 gpointer user_data);
+
 enum {
 	COL_FIND_ACCOUNT_ICON,
 	COL_FIND_ACCOUNT_NAME,
@@ -299,6 +305,7 @@ empathy_log_window_show (TpAccount  *account,
 	/* Account chooser for chats */
 	window->account_chooser_chats = empathy_account_chooser_new ();
 	account_chooser = EMPATHY_ACCOUNT_CHOOSER (window->account_chooser_chats);
+	empathy_account_chooser_set_filter (account_chooser, empathy_account_chooser_filter_has_logs, NULL);
 
 	gtk_box_pack_start (GTK_BOX (window->hbox_chats),
 			    window->account_chooser_chats,
@@ -1438,6 +1445,10 @@ log_window_logger_clear_account_cb (TpProxy *proxy,
 	 * has been deleted */
 	empathy_chat_view_clear (window->chatview_chats);
 	log_window_chats_populate (window);
+
+	/* Re-filter the account chooser so the accounts without logs get greyed out */
+	empathy_account_chooser_set_filter (EMPATHY_ACCOUNT_CHOOSER (window->account_chooser_chats),
+					    empathy_account_chooser_filter_has_logs, NULL);
 }
 
 static void
