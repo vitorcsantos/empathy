@@ -1026,6 +1026,7 @@ empathy_streamed_media_window_init (EmpathyStreamedMediaWindow *self)
   gchar *filename;
   GKeyFile *keyfile;
   GError *error = NULL;
+  GtkWidget *scroll;
 
   filename = empathy_file_lookup ("empathy-call-window.ui", "src");
   gui = empathy_builder_get_file (filename,
@@ -1182,8 +1183,14 @@ empathy_streamed_media_window_init (EmpathyStreamedMediaWindow *self)
 
   gtk_widget_set_sensitive (priv->dtmf_panel, FALSE);
 
+  /* Put the details vbox in a scroll window as it can require a lot of
+   * horizontal space. */
+  scroll = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scroll),
+      priv->details_vbox);
+
   empathy_sidebar_add_page (EMPATHY_SIDEBAR (priv->sidebar), _("Details"),
-    priv->details_vbox);
+    scroll);
 
   gtk_widget_show_all (top_vbox);
 
