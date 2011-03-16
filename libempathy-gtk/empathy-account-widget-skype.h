@@ -30,7 +30,8 @@ G_BEGIN_DECLS
 void empathy_account_widget_build_skype (EmpathyAccountWidget *self,
     const char *filename);
 gboolean empathy_account_widget_skype_show_eula (GtkWindow *parent);
-
+gboolean empathy_accounts_dialog_skype_disable_other_accounts (
+    TpAccount *account, GtkWindow *parent);
 
 G_END_DECLS
 

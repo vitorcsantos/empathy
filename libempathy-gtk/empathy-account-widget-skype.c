@@ -958,3 +958,76 @@ empathy_account_widget_skype_show_eula (GtkWindow *parent)
   return (result == GTK_RESPONSE_ACCEPT);
 }
 
+gboolean
+empathy_accounts_dialog_skype_disable_other_accounts (TpAccount *account,
+    GtkWindow *parent)
+{
+  TpAccountManager *am = tp_account_manager_dup ();
+  GList *accounts, *ptr;
+  gboolean other_psyke_accounts = FALSE;
+
+  /* check if any other psyke accounts are enabled */
+  accounts = tp_account_manager_get_valid_accounts (am);
+
+  for (ptr = accounts; ptr != NULL; ptr = ptr->next)
+    {
+      TpAccount *a = ptr->data;
+
+      if (tp_strdiff (
+            tp_proxy_get_object_path (account),
+            tp_proxy_get_object_path (a)) &&
+          tp_account_is_enabled (a) &&
+          !tp_strdiff (tp_account_get_connection_manager (a), "psyke"))
+        {
+          other_psyke_accounts = TRUE;
+          break;
+        }
+    }
+
+  g_list_free (accounts);
+
+  if (other_psyke_accounts)
+    {
+      GtkWidget *msg = gtk_message_dialog_new (parent, 0,
+          GTK_MESSAGE_QUESTION, GTK_BUTTONS_YES_NO,
+          "%s\n\n%s",
+          _("Multiple Skype accounts can not be enabled simultaneously. "
+            "Enabling this Skype account will disable all others."),
+          _("Continue to enable this account?"));
+      int response;
+
+      response = gtk_dialog_run (GTK_DIALOG (msg));
+      gtk_widget_destroy (msg);
+
+      if (response != GTK_RESPONSE_YES)
+        {
+          /* the user chose not to proceed */
+          g_object_unref (am);
+
+          return FALSE;
+        }
+
+      /* the user chose to proceed, disable the other accounts */
+      accounts = tp_account_manager_get_valid_accounts (am);
+
+      for (ptr = accounts; ptr != NULL; ptr = ptr->next)
+        {
+          TpAccount *a = ptr->data;
+
+          if (tp_strdiff (
+                tp_proxy_get_object_path (account),
+                tp_proxy_get_object_path (a)) &&
+              tp_account_is_enabled (a) &&
+              !tp_strdiff (tp_account_get_connection_manager (a), "psyke"))
+            {
+              tp_account_set_enabled_async (a, FALSE, NULL, NULL);
+            }
+        }
+
+      g_list_free (accounts);
+    }
+
+  g_object_unref (am);
+
+  return TRUE;
+}
