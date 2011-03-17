@@ -2237,13 +2237,21 @@ static int
 individual_view_remove_dialog_show (GtkWindow *parent,
     const gchar *message,
     const gchar *secondary_text,
-    gboolean block_button)
+    gboolean block_button,
+    GdkPixbuf *avatar)
 {
   GtkWidget *dialog;
   gboolean res;
 
   dialog = gtk_message_dialog_new (parent, GTK_DIALOG_MODAL,
       GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s", message);
+
+  if (avatar != NULL)
+    {
+      GtkWidget *image = gtk_image_new_from_pixbuf (avatar);
+      gtk_message_dialog_set_image (GTK_MESSAGE_DIALOG (dialog), image);
+      gtk_widget_show (image);
+    }
 
   if (block_button)
     {
@@ -2292,7 +2300,7 @@ individual_view_group_remove_activate_cb (GtkMenuItem *menuitem,
           group);
       parent = empathy_get_toplevel_window (GTK_WIDGET (view));
       if (individual_view_remove_dialog_show (parent, _("Removing group"),
-              text, FALSE) == REMOVE_DIALOG_RESPONSE_DELETE)
+              text, FALSE, NULL) == REMOVE_DIALOG_RESPONSE_DELETE)
         {
           EmpathyIndividualManager *manager =
               empathy_individual_manager_dup_singleton ();
@@ -2362,6 +2370,69 @@ empathy_individual_view_get_group_menu (EmpathyIndividualView *view)
 }
 
 static void
+got_avatar (GObject *source_object,
+    GAsyncResult *result,
+    gpointer user_data)
+{
+  FolksIndividual *individual = FOLKS_INDIVIDUAL (source_object);
+  EmpathyIndividualView *view = user_data;
+  EmpathyIndividualManager *manager;
+  GdkPixbuf *avatar;
+  gchar *text;
+  GtkWindow *parent;
+  gboolean can_block;
+  GError *error = NULL;
+  gint res;
+
+  avatar = empathy_pixbuf_avatar_from_individual_scaled_finish (individual,
+      result, &error);
+
+  if (error != NULL)
+    {
+      DEBUG ("Could not get avatar: %s", error->message);
+      g_error_free (error);
+    }
+
+  /* We couldn't retrieve the avatar, but that isn't a fatal error,
+   * so we still display the remove dialog. */
+
+  manager = empathy_individual_manager_dup_singleton ();
+  can_block = empathy_individual_manager_supports_blocking (manager,
+      individual);
+
+  parent = empathy_get_toplevel_window (GTK_WIDGET (view));
+  text =
+      g_strdup_printf (
+      _("Are you sure you want to remove '%s' from your contacts?"),
+      folks_alias_details_get_alias (FOLKS_ALIAS_DETAILS (individual)));
+
+  res = individual_view_remove_dialog_show (parent, _("Removing contact"),
+      text, can_block, avatar);
+
+  if (res == REMOVE_DIALOG_RESPONSE_DELETE ||
+      res == REMOVE_DIALOG_RESPONSE_DELETE_AND_BLOCK)
+    {
+      gboolean abusive;
+
+      if (res == REMOVE_DIALOG_RESPONSE_DELETE_AND_BLOCK)
+        {
+          if (!empathy_block_individual_dialog_show (parent, individual,
+               avatar, &abusive))
+            goto finally;
+
+          empathy_individual_manager_set_blocked (manager, individual,
+              TRUE, abusive);
+        }
+
+      empathy_individual_manager_remove (manager, individual, "");
+    }
+
+ finally:
+  g_free (text);
+  g_object_unref (manager);
+}
+
+static void
 individual_view_remove_activate_cb (GtkMenuItem *menuitem,
     EmpathyIndividualView *view)
 {
@@ -2371,46 +2442,9 @@ individual_view_remove_activate_cb (GtkMenuItem *menuitem,
 
   if (individual != NULL)
     {
-      EmpathyIndividualManager *manager;
-      gchar *text;
-      GtkWindow *parent;
-      gboolean can_block;
-      int res;
-
-      manager = empathy_individual_manager_dup_singleton ();
-      can_block = empathy_individual_manager_supports_blocking (manager,
-          individual);
-
-      parent = empathy_get_toplevel_window (GTK_WIDGET (view));
-      text =
-          g_strdup_printf (
-          _("Are you sure you want to remove '%s' from your contacts?"),
-          folks_alias_details_get_alias (FOLKS_ALIAS_DETAILS (individual)));
-      res = individual_view_remove_dialog_show (parent, _("Removing contact"),
-              text, can_block);
-
-      if (res == REMOVE_DIALOG_RESPONSE_DELETE ||
-          res == REMOVE_DIALOG_RESPONSE_DELETE_AND_BLOCK)
-        {
-          gboolean abusive;
-
-          if (res == REMOVE_DIALOG_RESPONSE_DELETE_AND_BLOCK)
-            {
-              if (!empathy_block_individual_dialog_show (parent, individual,
-                    &abusive))
-                goto finally;
-
-              empathy_individual_manager_set_blocked (manager, individual,
-                  TRUE, abusive);
-            }
-
-          empathy_individual_manager_remove (manager, individual, "");
-        }
-
-finally:
-      g_free (text);
+      empathy_pixbuf_avatar_from_individual_scaled_async (individual,
+          48, 48, NULL, got_avatar, view);
       g_object_unref (individual);
-      g_object_unref (manager);
     }
 }
 
