@@ -1,0 +1,159 @@
+=== modified file 'src/empathy-ft-manager.c'
+--- old/src/empathy-ft-manager.c	2011-02-15 17:11:00 +0000
++++ new/src/empathy-ft-manager.c	2011-02-16 21:48:36 +0000
+@@ -46,6 +46,8 @@
+ 
+ #include "empathy-ft-manager.h"
+ 
++#include <unity.h>
++
+ enum
+ {
+   COL_PERCENT,
+@@ -65,6 +67,7 @@
+   GtkWidget *open_button;
+   GtkWidget *abort_button;
+   GtkWidget *clear_button;
++  UnityLauncherEntry *launcher;
+ } EmpathyFTManagerPriv;
+ 
+ enum
+@@ -83,6 +86,53 @@
+ static void ft_handler_hashing_started_cb (EmpathyFTHandler *handler,
+     EmpathyFTManager *manager);
+ 
++static gchar * ft_manager_format_progress_bytes_and_percentage (
++                                                 guint64 current,
++                                                 guint64 total,
++                                                 gdouble speed,
++                                                 int *percentage);
++
++static void
++ft_update_unity_launcher (EmpathyFTManager *manager)
++{
++  EmpathyFTManagerPriv *priv;
++
++  priv = GET_PRIV (manager);
++  g_return_if_fail (priv->launcher != NULL);
++
++  guint64 current_bytes = 0;
++  guint64 total_bytes = 0;
++  int percentage;
++  gdouble progress;
++  GHashTableIter iter;
++  gpointer handler;
++
++  g_hash_table_iter_init (&iter, priv->ft_handler_to_row_ref);
++  while (g_hash_table_iter_next (&iter, &handler, NULL)) 
++  {
++      if (!empathy_ft_handler_is_completed (handler) &&
++          !empathy_ft_handler_is_cancelled (handler))
++      {
++          current_bytes = current_bytes + empathy_ft_handler_get_transferred_bytes (handler);
++          total_bytes = total_bytes + empathy_ft_handler_get_total_bytes (handler);
++      }
++  }
++  ft_manager_format_progress_bytes_and_percentage (current_bytes, total_bytes, -1, &percentage);
++
++  progress = percentage;
++  progress = progress / 100;
++
++  unity_launcher_entry_set_progress (priv->launcher, progress);
++  if (progress > 0 && progress < 100)
++  {
++    unity_launcher_entry_set_progress_visible (priv->launcher, TRUE);
++  } 
++  else 
++  {
++    unity_launcher_entry_set_progress_visible (priv->launcher, FALSE);
++  }
++}
++
+ static gchar *
+ ft_manager_format_interval (guint interval)
+ {
+@@ -392,6 +442,8 @@
+       COL_PERCENT, percentage,
+       -1);
+ 
++  ft_update_unity_launcher (manager);
++
+   gtk_tree_path_free (path);
+ 
+ }
+@@ -458,6 +510,8 @@
+   ft_manager_clear_handler_time (manager, row_ref);
+   ft_manager_update_buttons (manager);
+ 
++  ft_update_unity_launcher (manager);
++
+   g_free (message);
+ }
+ 
+@@ -465,6 +519,7 @@
+ do_real_transfer_done (EmpathyFTManager *manager,
+                        EmpathyFTHandler *handler)
+ {
++  EmpathyFTManagerPriv *priv;
+   const char *contact_name;
+   const char *filename;
+   char *first_line, *second_line, *message;
+@@ -474,6 +529,8 @@
+   GtkRecentManager *recent_manager;
+   GFile *file;
+ 
++  priv = GET_PRIV (manager); 
++
+   row_ref = ft_manager_get_row_from_handler (manager, handler);
+   g_return_if_fail (row_ref != NULL);
+ 
+@@ -499,6 +556,8 @@
+   ft_manager_update_handler_message (manager, row_ref, message);
+   ft_manager_clear_handler_time (manager, row_ref);
+ 
++  ft_update_unity_launcher (manager);
++
+   /* update buttons */
+   ft_manager_update_buttons (manager);
+ 
+@@ -535,6 +594,8 @@
+   DEBUG ("Transfer done, no hashing");
+ 
+   do_real_transfer_done (manager, handler);
++
++  ft_update_unity_launcher (manager);
+ }
+ 
+ static void
+@@ -576,6 +637,8 @@
+                                 EmpathyTpFile *tp_file,
+                                 EmpathyFTManager *manager)
+ {
++  EmpathyFTManagerPriv *priv;
++  priv = GET_PRIV (manager);
+   guint64 transferred_bytes, total_bytes;
+ 
+   DEBUG ("Transfer started");
+@@ -1054,6 +1117,12 @@
+ 
+   g_hash_table_destroy (priv->ft_handler_to_row_ref);
+ 
++  if (priv->launcher != NULL)
++  {
++    g_object_unref(priv->launcher);
++    priv->launcher = NULL;
++  }
++ 
+   G_OBJECT_CLASS (empathy_ft_manager_parent_class)->finalize (object);
+ }
+ 
+@@ -1071,6 +1140,8 @@
+       g_direct_equal, (GDestroyNotify) g_object_unref,
+       (GDestroyNotify) gtk_tree_row_reference_free);
+ 
++  priv->launcher = unity_launcher_entry_get_for_desktop_id ("empathy.desktop");
++
+   ft_manager_build_ui (manager);
+ }
+ 
+

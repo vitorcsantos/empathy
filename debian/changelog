@@ -1,0 +1,1247 @@
+empathy (2.33.4+git.20110316.7bae28-0ubuntu0+easton1) natty; urgency=low
+
+  * New upstream snapshot.
+    + debian/control:
+      - Bump folks build dependencies.
+
+ -- Emilio Pozuelo Monfort <pochu@debian.org>  Wed, 16 Mar 2011 19:29:34 +0000
+
+empathy (2.33.3+git.20110314.0bb62c-0ubuntu0+easton1) natty; urgency=low
+
+  * Fix versioning, this is 2.33.3 + plus some changes.
+
+ -- Emilio Pozuelo Monfort <pochu@debian.org>  Mon, 14 Mar 2011 20:58:40 +0000
+
+empathy (2.33.3~git.20110314.0bb62c-0ubuntu0+easton1) natty; urgency=low
+
+  [ Sjoerd Simons ]
+  * debian/patches/23_idomessagedialog_for_voip_and_ft.patch
+    + Behave the same for SM and Call channels.
+
+  [ Emilio Pozuelo Monfort ]
+  * New upstream snapshot.
+    + debian/control:
+      - Bump libtelepathy-glib-dev and libgstreamer0.10-dev build-deps.
+
+ -- Emilio Pozuelo Monfort <emilio.pozuelo@collabora.co.uk>  Mon, 14 Mar 2011 16:21:49 +0000
+
+empathy (2.33.3~git.20110310.40dfa0-1) natty; urgency=low
+
+  * New upstream snapshot with Skype modifications.
+
+ -- Emilio Pozuelo Monfort <emilio.pozuelo@collabora.co.uk>  Wed, 09 Mar 2011 14:09:11 +0000
+
+empathy (2.33.2-0ubuntu2) natty; urgency=low
+
+  * debian/patches/23_idomessagedialog_for_voip_and_ft.patch
+    - Make incoming call and file transfer dialogs decorated
+
+ -- Ken VanDine <ken.vandine@canonical.com>  Thu, 24 Feb 2011 15:52:19 -0500
+
+empathy (2.33.2-0ubuntu1) natty; urgency=low
+
+  * New upstream release
+  * -debian/patches/reword_subscription_dailog_to_be_less_technical.patch
+    - merged upstream
+  * debian/control
+    - Bumped build depends for tp-logger, tp-glib, folks and libunity-dev
+
+ -- Ken VanDine <ken.vandine@canonical.com>  Thu, 24 Feb 2011 11:54:47 -0500
+
+empathy (2.33.1-0ubuntu4) natty; urgency=low
+
+  * debian/patches/41_unity_launcher_progress.patch
+    - Added support for file transfer progress in the unity launcher
+  * debian/patches/40_unity_launcher_count.patch
+    - renamed for consistency and clarity
+
+ -- Ken VanDine <ken.vandine@canonical.com>  Tue, 15 Feb 2011 15:36:35 -0500
+
+empathy (2.33.1-0ubuntu3) natty; urgency=low
+
+  [ Brian Curtis ]
+  * debian/patches/40_libunity.patch
+    -add launcher support for empathy
+  * debian/changelog
+    -add libunity-dev to deps
+
+  [ Ken VanDine ]
+  * debian/patches/40_libunity.patch
+    - cleaned up some debugging messages
+    - unref the launcher
+
+ -- Brian Curtis <bcurtiswx@ubuntu.com>  Mon, 14 Feb 2011 17:28:40 -0500
+
+empathy (2.33.1-0ubuntu2) natty; urgency=low
+
+  * debian/patches/23_idomessagedialog_for_voip_and_ft.patch
+    - Use IdoMessageDialog for incoming file transfers as well as voip
+
+ -- Ken VanDine <ken.vandine@canonical.com>  Mon, 14 Feb 2011 15:48:48 -0500
+
+empathy (2.33.1-0ubuntu1) natty; urgency=low
+
+  [ Brian Curtis ]
+  * New Upstream Release
+  * debian/control
+    -bumped dep on folks, telepathy-glib and libnotify
+  * debian/patches
+    -removed patches now in source
+    -refreshed patches
+
+  [ Ken VanDine ]
+  * debian/patches/20_libindicate.patch
+    - Updated notification code to match the libnotify4-dev API 
+  * debian/rules
+    - Explicitly disable location awareness
+
+ -- Ken VanDine <ken.vandine@canonical.com>  Thu, 03 Feb 2011 12:17:02 -0500
+
+empathy (2.32.2-0ubuntu8) natty; urgency=low
+
+  * debian/patches/23_idomessagedialog_for_voip.patch
+    - Raise a IdoMessageDialog for incoming voip calls (LP: #440865)
+  * debian/control
+    - Added a new build depends on libido-0.1-dev, needed for IdoMessageDialog
+
+ -- Ken VanDine <ken.vandine@canonical.com>  Tue, 01 Feb 2011 12:29:11 -0500
+
+empathy (2.32.2-0ubuntu7) natty; urgency=low
+
+  * debian/patches/00_git_conn_disc_notif.patch (LP: #582757)
+  * debian/patches/00_git_F2_opens_contact_info.patch (LP: #387991)
+  * debian/patches/00_git_tooltip_on_error_info.patch (LP: #681413)
+  * debian/rules
+    - added --with-ca-file='/etc/ssl/certs/ca-certificates.crt'
+
+ -- Brian Curtis <bcurtiswx@ubuntu.com>  Tue, 25 Jan 2011 13:20:01 -0500
+
+empathy (2.32.2-0ubuntu6) natty; urgency=low
+
+  * debian/patches/22_tell_if_the_message_is_a_pending_one_or_not.patch:
+  * debian/patches/22_dont_display_notifications_for_pending_messages.patch:
+    - Don't display duplicate notifications. (LP: #666288)
+
+ -- Omer Akram <om26er@ubuntu.com>  Mon, 17 Jan 2011 20:11:44 +0500
+
+empathy (2.32.2-0ubuntu5) natty; urgency=low
+
+  * debian/control
+    - Bumped build depends for libindicate and libindicate-gtk to >= 0.4.91
+  * debian/patches/20_libindicate.patch
+    - Updated to check for indicate-0.5
+
+ -- Ken VanDine <ken.vandine@canonical.com>  Fri, 14 Jan 2011 12:52:27 -0600
+
+empathy (2.32.2-0ubuntu4) natty; urgency=low
+
+  * debian/control:
+    - Change build-depends from libwebkit-dev to libwebkitgtk-dev
+
+ -- Robert Ancell <robert.ancell@canonical.com>  Mon, 10 Jan 2011 15:07:47 -0600
+
+empathy (2.32.2-0ubuntu3) natty; urgency=low
+
+  * debian/patches/00git_folks_api.patch:
+    - Update to latest folks API
+
+  [ Omer Akram ]
+  * debian/patches/enable_pidgin_imported_contacts.patch:
+    - Enable pidgin imported accounts by default. (LP: #622215)
+  * debian/patches/reword_subscription_dailog_to_be_less_technical.patch:
+    - Reword subscription request dialog to be less technical. (LP: #670197)
+
+ -- Robert Ancell <robert.ancell@canonical.com>  Thu, 06 Jan 2011 14:32:31 +1100
+
+empathy (2.32.2-0ubuntu2) natty; urgency=low
+
+  * debian/patches/00git_folks_aliasable_groupable.patch:
+  * debian/patches/00git_individual_methods.patch:
+    - Use latest libfolks API
+
+ -- Robert Ancell <robert.ancell@canonical.com>  Mon, 06 Dec 2010 16:14:51 +1100
+
+empathy (2.32.2-0ubuntu1) natty; urgency=low
+
+  * New upstream release
+
+ -- Robert Ancell <robert.ancell@canonical.com>  Wed, 24 Nov 2010 17:18:51 +1100
+
+empathy (2.32.1-0ubuntu2) natty; urgency=low
+
+  * Version bump for natty upload
+
+ -- Ken VanDine <ken.vandine@canonical.com>  Wed, 17 Nov 2010 10:05:40 -0500
+
+empathy (2.32.1-0ubuntu1) maverick-proposed; urgency=low
+
+  * New Upstream Release
+    - Empathy doesn't build with gcr-3 (Guillaume Desmottes)
+    - Empathy 2.32.x needs to require libnotify < 0.7 (Guillaume Desmottes)
+    - Empathy 2.32.x shouldn't support GTK 3 (Guillaume Desmottes)
+    - (LP: #655090), window resizes irreversibly when perfoming a contact 
+      search (Guillaume Desmottes)
+    - Fixed (LP: #641949) Honour preference 'disable notifications when 
+      busy or away'
+    - Updated translations
+  * patches/20_libindicate.patch
+    - fixed hunk failures
+
+ -- Brian Curtis <bcurtiswx@ubuntu.com>  Tue, 16 Nov 2010 22:01:18 -0500
+
+empathy (2.32.0.1-0ubuntu1) maverick-proposed; urgency=low
+
+  * New upstream release (LP: #654981)
+    - auth client crashes when trying to connect (Cosimo Cecchi)
+    - show the "new message" icon regardless of focus, active tab (Guillaume Desmottes)
+    - Should leave fullscreen mode when call is disconnected (Guillaume Desmottes)
+    - doesn't check unique result (Guillaume Desmottes)
+    - Better heuristic to pick default individual (Guillaume Desmottes)
+    - Contacts list window triggers _NET_ACTIVE_WINDOW timestamp error from Metacity (Guillaume Desmottes)
+    - update Empathy to deprecation changes in GTK+ 2.22 (Diego Escalante Urrelo)
+    - Hitting redial doesn't clear error messages (Guillaume Desmottes)
+    - Empathy Loses ContactInfo data it doesn't support in the UI (Guillaume Desmottes)
+    - Always show status icon in contact right-click menu (for meta-contacts)
+    - Refers to a nonexistent UI item (Milo Casagrande)
+    - Recommended SIP provider no longer available (Milo Casagrande)
+
+ -- Ken VanDine <ken.vandine@canonical.com>  Mon, 04 Oct 2010 12:03:51 -0400
+
+empathy (2.32.0-0ubuntu2) maverick; urgency=low
+
+  * debian/patches/91_git_fix_gtalk_for_new_accounts.patch:
+    - from upstream: fix empathy to be compatible with gtalk new accounts
+
+ -- Didier Roche <didrocks@ubuntu.com>  Fri, 01 Oct 2010 16:06:56 +0200
+
+empathy (2.32.0-0ubuntu1) maverick; urgency=low
+
+  * New upstream release.
+    -(LP: #634892) Double contacts after adding new contact in group "Ungrouped" (Philip Withnall)
+    -Blacklist Haze's sip protocol (Guillaume Desmottes)
+    -Failed assertion in contact_widget_details_feature_prepared_cb() (Guillaume Desmottes)
+    -(LP: #638270) empathy-accounts assert failure: *** glibc detected *** /usr/bin/empathy-accounts: free(): invalid pointer: 0x0809d5b6 *** (Guillaume Desmottes)
+    -File missing from POTFILES.in (Gabor Kelemen)
+    -Untranslatable strings (Gabor Kelemen)
+    -Typo in user guide: witn (Gabor Kelemen) 
+
+ -- Brian Curtis <bcurtiswx@ubuntu.com>  Mon, 27 Sep 2010 10:21:30 -0400
+
+empathy (2.31.92-0ubuntu2) maverick; urgency=low
+
+  * debian/patches/20_libindicate.patch
+    - Don't use notify_notification_new_with_status_icon when the status 
+      icon isn't visible (LP: #603526)
+
+ -- Ken VanDine <ken.vandine@canonical.com>  Tue, 14 Sep 2010 12:24:49 -0400
+
+empathy (2.31.92-0ubuntu1) maverick; urgency=low
+
+  * New upstream release:
+    This is the GNOME 2.32 release candidate. A bunch of meta-contacts related
+    bugs have been fixed and the audio/video client has been improved to
+    reduce the bandwith used by the video stream.
+    We also use the stable API of the Conference, ServerTLSConnection and
+    TLSCertificate interfaces so you should upgrade to telepathy-gabble 0.9.18
+    if you want to use these features.
+  * debian/control:
+    - bump libtelepathy-glib-dev build-dep
+  * debian/patches/91_git_unref_empathyindividualview_later.patch:
+    - in upstream version
+
+ -- Didier Roche <didrocks@ubuntu.com>  Tue, 14 Sep 2010 13:05:00 +0200
+
+empathy (2.31.91.1-0ubuntu3) maverick; urgency=low
+
+  * Depends on telepathy-logger (lp: #623516), recommends libdconf0
+
+ -- Sebastien Bacher <seb128@ubuntu.com>  Mon, 06 Sep 2010 22:56:52 +0200
+
+empathy (2.31.91.1-0ubuntu2) maverick; urgency=low
+
+  * debian/control:
+    - readd libebook1.2-dev build-dep as built with --with_eds (default value)
+
+ -- Didier Roche <didrocks@ubuntu.com>  Fri, 03 Sep 2010 13:15:34 +0200
+
+empathy (2.31.91.1-0ubuntu1) maverick; urgency=low
+
+  * New upstream release
+  * debian/control:
+    - add libgcr-dev build-dep
+  * debian/patches/91_git_unref_empathyindividualview_later.patch:
+    - additional fix from git requested by upstream
+
+ -- Didier Roche <didrocks@ubuntu.com>  Thu, 02 Sep 2010 12:40:03 +0200
+
+empathy (2.31.91-0ubuntu1) maverick; urgency=low
+
+  * New upstream release:
+    - Support metacontacts (Travis Treitter, Philip Treitter) (LP: #256478)
+    - Initial empathy account wizard (Welcome Screen) does not offer IRC as an
+      account (Guillaume Desmottes) (LP: #433714)
+    - Dragging and dropping a chat tab hides the original window (Guillaume
+      Desmottes) (LP: #512746)
+    - After upgrade to 2.31.90 (from 2.31.6) empathy does not list users of irc
+      chat (Guillaume Desmottes) (LP: #622684)
+  * debian/control:
+    - Bump build-depends on libgnome-keyring-dev, libfolks-dev,
+      libfolks-telepathy-dev, libnautilus-sendto-dev
+    - Add build-depends on libgnutls-dev
+    - Drop build-depends on libebook1.2-dev
+
+ -- Robert Ancell <robert.ancell@canonical.com>  Tue, 31 Aug 2010 15:05:58 +1000
+
+empathy (2.31.90-1ubuntu1) maverick; urgency=low
+
+  * Merge with Debian experimental, remaining Ubuntu changes:
+  * debian/control:
+    - Build-depend on dh-autoreconf, gnome-common
+    - Drop geoclue/mapping build-depends (they are in Universe)
+    - Add indicator build-depends
+    - Add Vcz-Bzr link
+    - Don't recommend libdconf0 - we do that at a higher level
+    - Add Suggests on telepathy-idle
+    - Bump telepathy-butterfly, telepathy-haze to recommends
+    - Don't recommends the freedesktop sound theme we have an ubuntu one
+  * debian/rules:
+    - Use autoreconf.mk
+    - Enable libindicate
+    - Disable map and location
+    - Make sure favourite-contacts is disabled, it requires telepathy-logger
+  * debian/empathy.install:
+    - Install message indicator configuration
+  * debian/indicators/empathy:
+    - Message indicator configuration
+  * debian/patches/01_lpi.patch:
+    - Add Launchpad integration
+  * debian/patches/02_notifications_focus.patch: 
+    - gsettings doesn't allow overwritting defaults yet to change the schemas
+  * debian/patches/10_use_notify_osd_icons.patch:
+    - Use the notify-osd image for new messages
+  * debian/patches/11_empathy_accounts_category.patch:
+    - Put empathy-accounts in correct category
+  * debian/patches/20_libindicate.patch:
+    - Integrate into messaging menu
+  * debian/patches/21_login_indicators.patch:
+    - Only display indicator for signon events if the preference is set
+  * debian/patches/31_really_raise_window.patch:
+    - Force focus of the window when selected from the indicator
+  * debian/patches/34_start_raised_execpt_in_session.patch:
+    - If not started with the session, we should always raise
+  * debian/patches/36_chat_window_default_size.patch:
+    - Make the default chat window size larger
+  * debian/patches/37_facebook_default.patch:
+    - Make facebook the default chat account type
+  * debian/patches/38_lp_569289.patch
+    - Set freenode as default IRC network for new IRC accounts
+
+ -- Robert Ancell <robert.ancell@canonical.com>  Tue, 24 Aug 2010 12:55:07 +1000
+
+empathy (2.31.90-1) experimental; urgency=low
+
+  * New upstream release
+  * debian/control:
+    - Bump build-dependencies
+
+ -- Laurent Bigonville <bigon@debian.org>  Thu, 19 Aug 2010 15:06:18 +0200
+
+empathy (2.31.6-1) experimental; urgency=low
+
+  * New upstream release
+  * debian/control:
+    - Bump Standards-Version to 3.9.1 (no further changes)
+    - Adjust build-dependencies
+
+ -- Laurent Bigonville <bigon@debian.org>  Mon, 16 Aug 2010 23:14:39 +0200
+
+empathy (2.31.5.1-1) experimental; urgency=low
+
+  * New upstream release
+    - Install manpages provided by upstream
+    - Install new empathy-av component
+
+ -- Laurent Bigonville <bigon@debian.org>  Tue, 13 Jul 2010 17:33:52 +0200
+
+empathy (2.31.4-1) experimental; urgency=low
+
+  * New upstream release
+    - debian/control: Adjust build-dependencies
+  * Bump Standards-Version to 3.9.0 (no further changes)
+    - debian/control: Use Breaks instead of Conflicts
+  * debian/empathy.install: Install dconf schema instead of the gconf one
+  * debian/rules: Pass --disable-schemas-compile to prevent schemas compiling
+    at build time.
+  * debian/control: Make empathy Recommends telepathy-logger and libdconf0
+
+ -- Laurent Bigonville <bigon@debian.org>  Thu, 08 Jul 2010 12:04:18 +0200
+
+empathy (2.30.2-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Laurent Bigonville <bigon@debian.org>  Sat, 26 Jun 2010 23:59:13 +0200
+
+empathy (2.30.1.1-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Laurent Bigonville <bigon@debian.org>  Sun, 13 Jun 2010 19:06:19 +0200
+
+empathy (2.31.3-1) experimental; urgency=low
+
+  * New upstream release
+    - Bump telepathy-glib-dev build-dependency
+
+ -- Laurent Bigonville <bigon@debian.org>  Tue, 08 Jun 2010 11:24:18 +0200
+
+empathy (2.31.2-2) experimental; urgency=low
+
+  * Add versionized depedency for gnome-icon-theme
+  * Add Breaks for telepathy-butterfly (<< 0.5.10) as the contacts don't 
+    appear in the contact list with previous versions
+
+ -- Laurent Bigonville <bigon@debian.org>  Tue, 25 May 2010 15:31:33 +0200
+
+empathy (2.31.2-1) experimental; urgency=low
+
+  * New upstream release
+
+ -- Laurent Bigonville <bigon@debian.org>  Mon, 24 May 2010 19:41:14 +0200
+
+empathy (2.31.1-1) experimental; urgency=low
+
+  * New upstream release
+    - Bump libgtk2.0-dev and libtelepathy-glib-dev build-dep
+
+ -- Laurent Bigonville <bigon@debian.org>  Sat, 08 May 2010 14:53:57 +0200
+
+empathy (2.30.1-2) unstable; urgency=low
+
+  * Explicitly set "compression = bzip2" in debian/source/options
+
+ -- Laurent Bigonville <bigon@debian.org>  Sat, 08 May 2010 14:01:38 +0200
+
+empathy (2.30.1-1) unstable; urgency=low
+
+  * New upstream release
+  * Re-enable geoclue support on kfreebsd-* archs
+
+ -- Laurent Bigonville <bigon@debian.org>  Sat, 01 May 2010 16:50:46 +0200
+
+empathy (2.30.0.2-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Laurent Bigonville <bigon@debian.org>  Tue, 20 Apr 2010 17:57:54 +0200
+
+empathy (2.30.0.1-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Laurent Bigonville <bigon@debian.org>  Fri, 09 Apr 2010 15:20:39 +0200
+
+empathy (2.30.0-1) experimental; urgency=low
+
+  * New upstream release
+  * debian/watch: use .bz2 file
+
+ -- Laurent Bigonville <bigon@debian.org>  Sat, 03 Apr 2010 13:50:35 +0200
+
+empathy (2.29.93-1) experimental; urgency=low
+
+  * New upstream release
+
+ -- Laurent Bigonville <bigon@debian.org>  Wed, 17 Mar 2010 21:28:57 +0100
+
+empathy (2.29.92-1) experimental; urgency=low
+
+  * New upstream release
+
+ -- Laurent Bigonville <bigon@debian.org>  Sat, 13 Mar 2010 13:12:11 +0100
+
+empathy (2.29.91.2-1) experimental; urgency=low
+
+  * New upstream release
+  * debian/copyright: Update file
+
+ -- Laurent Bigonville <bigon@debian.org>  Sun, 07 Mar 2010 14:42:56 +0100
+
+empathy (2.29.91-1) experimental; urgency=low
+
+  * New upstream release
+    - debian/empathy-accounts.1: Add manpage for empathy-accounts binary
+    - debian/empathy.install: Also install empathy-accounts.desktop
+  * Bump Standards-Version (no further changes)
+
+ -- Laurent Bigonville <bigon@debian.org>  Mon, 22 Feb 2010 23:45:14 +0100
+
+empathy (2.29.90-1) experimental; urgency=low
+
+  * New upstream release
+
+ -- Laurent Bigonville <bigon@debian.org>  Thu, 11 Feb 2010 20:27:11 +0100
+
+empathy (2.28.2-3) unstable; urgency=low
+
+  * debian/control:
+    - Recommends freedesktop-sound-theme for empathy package (Closes: #526137)
+
+ -- Laurent Bigonville <bigon@debian.org>  Sun, 31 Jan 2010 20:45:36 +0100
+
+empathy (2.29.6-1) experimental; urgency=low
+
+  * New upstream release
+    - Should now build correctly with gcc-4.5 (Closes: #564979)
+  * debian/rules: Remove --enable-python flag
+
+ -- Laurent Bigonville <bigon@debian.org>  Wed, 27 Jan 2010 23:39:10 +0100
+
+empathy (2.29.5.1-1) experimental; urgency=low
+
+  * New upstream release
+    - Bump libtelepathy-glib-dev build-dep
+  * debian/control:
+    - Suggests vino for empathy package (Closes: #562288)
+  * debian/gbp.conf: Use bzip2 compression for orig tarball
+  * Do not install empathy-accounts.1 and empathy-logs.1 manpages anymore
+
+ -- Laurent Bigonville <bigon@debian.org>  Tue, 12 Jan 2010 23:47:02 +0100
+
+empathy (2.28.2-2) unstable; urgency=low
+
+  * debian/control:
+    - Suggests vino for empathy package (Closes: #562288)
+    - Add Recommends to allow -dbg package to pull each other (Closes: #564679)
+
+ -- Laurent Bigonville <bigon@debian.org>  Tue, 12 Jan 2010 22:37:10 +0100
+
+empathy (2.29.4-1) experimental; urgency=low
+
+  * New upstream release
+  * Enable in-tree nautilus-sendto plugin
+  * debian/control:
+    - Use better short description
+    - Recommends freedesktop-sound-theme for empathy package (Closes: #526137)
+  * Use new source package version "3.0 (quilt)"
+
+ -- Laurent Bigonville <bigon@debian.org>  Wed, 23 Dec 2009 00:10:21 +0100
+
+empathy (2.28.2-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Laurent Bigonville <bigon@debian.org>  Tue, 15 Dec 2009 18:43:31 +0100
+
+empathy (2.28.1.2-2) unstable; urgency=low
+
+  * debian/control: Fix typo (Closes: #559673)
+
+ -- Laurent Bigonville <bigon@debian.org>  Wed, 09 Dec 2009 18:14:50 +0100
+
+empathy (2.29.3-1) experimental; urgency=low
+
+  * New upstream release
+
+ -- Laurent Bigonville <bigon@debian.org>  Tue, 01 Dec 2009 13:53:52 +0100
+
+empathy (2.28.1.2-1) unstable; urgency=low
+
+  * New upstream release
+    - Should now build correctly with --no-add-needed flag
+      (Closes: #554325)
+  * debian/control: Fix typo (packages->package) (Closes: #557373)
+
+ -- Laurent Bigonville <bigon@debian.org>  Thu, 26 Nov 2009 06:33:51 +0100
+
+empathy (2.29.2-1) experimental; urgency=low
+
+  * Merge with debian unstable
+  * New upstream release
+    - Bump build-dependencies
+    - Should now build correctly with --no-add-needed flag
+      (Closes: #554325)
+    - IRC commands should now be passed to server (Closes: #549173)
+
+ -- Laurent Bigonville <bigon@debian.org>  Mon, 16 Nov 2009 23:40:52 +0100
+
+empathy (2.28.1.1-4) unstable; urgency=low
+
+  * Add symbols file for arch where geoclue support is disabled
+
+ -- Laurent Bigonville <bigon@debian.org>  Sat, 14 Nov 2009 20:45:54 +0100
+
+empathy (2.28.1.1-3) unstable; urgency=low
+
+  * Also do not try to build with geoclue support on non-linux arch
+
+ -- Laurent Bigonville <bigon@debian.org>  Sat, 14 Nov 2009 19:25:08 +0100
+
+empathy (2.28.1.1-2) unstable; urgency=low
+
+  * Do not try to build with networkmanager support on non-linux arch
+
+ -- Laurent Bigonville <bigon@debian.org>  Wed, 11 Nov 2009 22:56:43 +0100
+
+empathy (2.29.1-1) experimental; urgency=low
+
+  * New upstream release
+    - Drop megaphone applet
+    - Drop libempathy, libempathy-gtk and python-empathy packages
+    - Rename empathy-doc to empathy-common (Closes: #547904)
+  * debian/control:
+    - Fix typo
+    - packet -> package
+    - Add Recommends on yelp for empathy-common (Closes: #553524)
+  * Move GConf schema to empathy package
+
+ -- Laurent Bigonville <bigon@debian.org>  Wed, 04 Nov 2009 18:27:30 +0100
+
+empathy (2.28.1.1-1) unstable; urgency=low
+
+  * New upstream bugfix release
+  * debian/patches/*: removed, all fixed upstream
+  * debian/control: Recommend empathy-doc instead of depending on it
+
+ -- Sjoerd Simons <sjoerd@debian.org>  Mon, 26 Oct 2009 22:36:02 +0000
+
+empathy (2.28.1-2) unstable; urgency=low
+
+  * d/patches/0001-Ignoring-non-installed-languages.patch
+    + Added. Fix a crash when trying to spell-check using a dictionary that's
+      no longer installed. (from upstream git)
+  * d/patches/0002-empathy-protocol-chooser-don-t-cache-TpConnectionMan.patch
+    + Added. Prevent TpConnectionManager from being cached as it can be freed
+      under out feet. Fixes a crash while managing accounts (Closes: #551265)
+      (from upstream git)
+  * d/patches/0003-empathy-chat-window-Don-t-update-the-Contact-menu-if.patch,
+    d/patches/0004-Fix-crash-when-joining-a-chat-GTK_WIDGET_VISIBLE-is-.patch:
+    + Added. Fixes Empathy blocking when a notication is displayed while the
+      contact menu is open (from upstream git)
+
+ -- Sjoerd Simons <sjoerd@debian.org>  Sun, 25 Oct 2009 19:04:54 +0000
+
+empathy (2.28.1-1) unstable; urgency=low
+
+  * New upstream release.
+  * debian/libempathy30.symbols: Updated.
+
+ -- Jonny Lamb <jonny@debian.org>  Tue, 20 Oct 2009 13:59:06 +0100
+
+empathy (2.28.0.1-2) unstable; urgency=low
+
+  * Add libempathy30-dbg, libempathy-gtk28-dbg and empathy-dbg packages.
+  * debian/control: Add Conflicts and Replaces fields to
+    libempathy{30,-gtk28} packages to make upgrades easier. Thanks to
+    Andres Salomon <dilinger@collabora.co.uk> for the "patch".
+    (Closes: #548779)
+
+ -- Jonny Lamb <jonny@debian.org>  Sat, 17 Oct 2009 12:34:49 +0100
+
+empathy (2.28.0.1-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Sjoerd Simons <sjoerd@debian.org>  Sun, 04 Oct 2009 13:09:34 +0100
+
+empathy (2.28.0-1) unstable; urgency=low
+
+  [ Laurent Bigonville ]
+  * libempathy-gtk-dev: add missing Depends on libcanberra-gtk-dev
+
+  [ Jonny Lamb ]
+  * New upstream release.
+  * debian/control:
+    + Upped build-depend versions on libtelepathy-glib and libchamplain.
+
+ -- Jonny Lamb <jonny@debian.org>  Mon, 21 Sep 2009 23:23:38 +0100
+
+empathy (2.27.92-1) experimental; urgency=low
+
+  * New upstream release
+    - Drop debian/patches/0001-Remove-libmissioncontrol-deps.patch:
+      fixed upstream
+    - Bump libraries soname and adjust .symbols files
+  * Split GNOME documentation out of arch-dependent package
+
+ -- Laurent Bigonville <bigon@debian.org>  Wed, 09 Sep 2009 19:28:22 +0200
+
+empathy (2.27.91.1-3) experimental; urgency=low
+
+  * debian/control:
+    - Add missing build-deps
+    - Add missing dependencies to -dev packages (LP: #423174)
+  * Re-enable map support now that new versions of champlain and clutter
+    are in debian
+
+ -- Laurent Bigonville <bigon@debian.org>  Thu, 03 Sep 2009 12:08:00 +0200
+
+empathy (2.27.91.1-2) experimental; urgency=low
+
+  * debian/control:
+    + Remove libtelepathy-dev dependency from libempathy-dev
+    + Remove libmissioncontrol-dev dependency from libempathy-dev
+  * debian/patches/0001-Remove-libmissioncontrol-deps.patch:
+    * Remove missioncontrol deps from the pc files, patch from upstream git
+
+ -- Sjoerd Simons <sjoerd@debian.org>  Thu, 27 Aug 2009 10:20:15 +0100
+
+empathy (2.27.91.1-1) experimental; urgency=low
+
+  * New upstream release.
+  * debian/control:
+    + Upped dependencies as appropriate for the new release.
+    + Upped Standards-Version. (no changes)
+    + Upped sonames as appropriate.
+    + s/Gadu Gadu/Gadu-Gadu/g
+    + Change dep on libempathy29 to telepathy-mission-control-5.
+  * debian/rules:
+    + Use --with-connectivity instead of --enable-network-manager.
+  * Disable building with map as new enough clutter-gtk and champlain
+    packages aren't in the archive yet.
+  * debian/libempathy-common.install: Don't install profiles anymore.
+  * debian/empathy.install: Don't try to install omf files.
+  * debian/*.symbols: Updated.
+  * debian/{empathy,libempathy-common}.install: Update to include some new
+    files.
+
+ -- Jonny Lamb <jonny@debian.org>  Wed, 26 Aug 2009 10:36:05 +0100
+
+empathy (2.27.5-1) experimental; urgency=low
+
+  * New Upstream Version
+    - Bump libraries soname and adjust .symbols files
+  * debian/control:
+    - Add geoclue-yahoo recommends for libempathy-gtk
+    - Use more meaningful desctiptions (LP: #259788)
+  * debian/update-patches.mk: Update script to work with recent git version
+  * Enable network manager support
+
+ -- Laurent Bigonville <bigon@debian.org>  Tue, 04 Aug 2009 11:20:18 +0200
+
+empathy (2.27.3-2) experimental; urgency=low
+
+  * debian/rules: Remove duplicate include
+  * debian/control:
+    - Bump Standards-Version (no further changes)
+    - Drop all conflicts, packages not even in old-stable anymore
+  * Enable Adium themes support
+    - debian/rules: Pass --enable-webkit to configure
+    - debian/control: Add libwebkit-dev build-dep
+    - debian/libempathy-gtk24.symbols: Add new exported symbols
+  * Enable geoclue support
+    - debian/rules: Pass --enable-location to configure
+    - debian/control: Add libgeoclue-dev build-dep
+    - debian/libempathy-gtk24.symbols: Add new exported symbols
+  * Enable map (champlain) support
+    - debian/rules: Pass --enable-map to configure
+    - debian/control: Add libchamplain-0.3-dev, libchamplain-gtk-0.3-dev
+      and libclutter-gtk-0.8-dev build-dep
+
+ -- Laurent Bigonville <bigon@debian.org>  Tue, 23 Jun 2009 11:10:25 +0200
+
+empathy (2.27.3-1) experimental; urgency=low
+
+  * New upstream release.
+    - Bump libraries soname and adjust .symbols files
+  * debian/control: Bump libtelepathy-glib-dev build-dep
+  * debian/libempathy-gtk-common.install: Add default adium theme
+
+ -- Laurent Bigonville <bigon@debian.org>  Wed, 17 Jun 2009 20:38:21 +0200
+
+empathy (2.27.2-1) experimental; urgency=low
+
+  * New upstream release
+    - Bump libraries soname and adjust .symbols files
+
+ -- Laurent Bigonville <bigon@debian.org>  Sun, 31 May 2009 16:52:39 +0200
+
+empathy (2.27.1.1-1) experimental; urgency=low
+
+  * New upstream release
+    - Bump libraries soname and adjust .symbols files
+  * debian/control:
+    - Bump libgtk2.0-dev and libtelepathy-glib-dev build-dep
+    - Bump libgtk2.0-dev dependency for libempathy-gtk-dev
+    - Remove all libglade references
+  * debian/libempathy-gtk-common.install: now install .ui files instead
+    of .glade files
+  * Bump debhelper version to 7
+
+ -- Laurent Bigonville <bigon@debian.org>  Tue, 19 May 2009 14:18:13 +0200
+
+empathy (2.26.2-1) unstable; urgency=low
+
+  [ Jonny Lamb ]
+  * debian/control: Added haze and butterfly as empathy Suggests.
+
+  [ Laurent Bigonville ]
+  * New upstream release
+
+ -- Laurent Bigonville <bigon@debian.org>  Mon, 18 May 2009 21:43:25 +0200
+
+empathy (2.26.1-1) unstable; urgency=low
+
+  * New upstream release
+  * debian/control: Add Homepage field
+
+ -- Laurent Bigonville <bigon@debian.org>  Tue, 14 Apr 2009 11:44:14 +0200
+
+empathy (2.26.0-1) unstable; urgency=low
+
+  * New Upstream Version
+    - Bump libtelepathy-glib-dev build-dependency
+    - Bump libempathy soname and adjust .symbols file
+  * debian/control:
+    - Bump Standards-Version to 3.8.1 (no further changes)
+    - Remove telepathy-stream-engine recommends and conflicts
+  * python-empathy.install: Fix FTBFS with python >= 2.6
+
+ -- Laurent Bigonville <bigon@debian.org>  Wed, 18 Mar 2009 13:18:54 +0100
+
+empathy (2.25.92-1) unstable; urgency=low
+
+  * New Upstream Version
+  * Bump libempathy soname again
+
+ -- Sjoerd Simons <sjoerd@debian.org>  Tue, 03 Mar 2009 23:46:29 +0000
+
+empathy (2.25.91-2) unstable; urgency=low
+
+  [ Laurent Bigonville ]
+  * debian/control: Add minimal version for libtelepathy-farsight-dev build-dep
+
+  [ Jonny Lamb ]
+  * Upload to unstable.
+
+ -- Jonny Lamb <jonny@debian.org>  Tue, 03 Mar 2009 18:05:50 +0000
+
+empathy (2.25.91-1) experimental; urgency=low
+
+  [ Sjoerd Simons ]
+  * debian/patches/0001-Set-initial-value-for-sound-pref-checkboxes.patch
+    - Removed, fixed upstream
+
+  [ Jonny Lamb ]
+  * New upstream release.
+    + Bumped libempathy{,-gtk} sonames.
+  * debian/gbp.conf: Removed no-create-orig field.
+  * debian/control:
+    + Added myself to Uploaders.
+    + Removed XS-Dm-Upload-Allowed field.
+    + Upped build-dep on libtelepathy-glib-dev to >= 0.7.21.
+    + Removed duplicate Section fields.
+    + Made short descriptions unique.
+  * debian/libempathy21.symbols: Updated symbols file.
+  * debian/libempathy-gtk19.symbols: Updated symbols file.
+  * debian/empathy-logs.1: Added new manpage.
+  * debian/copyright: Completely rewrote.
+
+ -- Jonny Lamb <jonny@debian.org>  Fri, 27 Feb 2009 15:20:03 +0000
+
+empathy (2.25.4-1) experimental; urgency=low
+
+  [ Simon McVittie ]
+  * Switch packaging to git
+  * Add gbp.conf (for git-buildpackage) and `debian/rules update-patches`
+    target
+  * Add README.source
+
+  [ Sjoerd Simons ]
+  * New Upstream Version
+  * debian/control: Add libcanberra-gtk-dev to build-depends
+  * debian/control: Bump libempathy soname from 17 to 19
+  * debian/libempathy-gtk17.symbols: Update with new symbols
+  * debian/libempathy19.symbols: Update with new symbols
+  * debian/patches/0001-Set-initial-value-for-sound-pref-checkboxes.patch
+    - Added. Set the initial values of the sound preferences from the
+      configuration. (From upstream git)
+
+ -- Sjoerd Simons <sjoerd@debian.org>  Wed, 07 Jan 2009 18:33:49 +0000
+
+empathy (2.25.3-1) experimental; urgency=low
+
+  * New upstream release
+    - Bump libempathy-gtk soname
+    - Fix symbols files
+  * debian/control:
+    - Bump libgtk2.0-dev build-dependency
+    - Drop libgnomeui-dev build-dep
+  * Drop debian/patches/64bit-build-fix.patch: fixed upstream
+
+ -- Laurent Bigonville <bigon@debian.org>  Sat, 20 Dec 2008 21:45:15 +0100
+
+empathy (2.25.2-2) experimental; urgency=low
+
+  * debian/patches/64bit-build-fix.patch:
+    - Fix build on 64 bit platforms
+
+ -- Sjoerd Simons <sjoerd@debian.org>  Thu, 04 Dec 2008 00:46:53 +0000
+
+empathy (2.25.2-1) experimental; urgency=low
+
+  * New upstream release.
+    - Bump libtelepathy-glib-dev build-dep and add libgnomeui-dev
+    - Bump soname of libempathy
+
+ -- Laurent Bigonville <bigon@debian.org>  Mon, 01 Dec 2008 21:35:56 +0100
+
+empathy (2.24.1-1) experimental; urgency=low
+
+  * New upstream release.
+
+ -- Laurent Bigonville <bigon@debian.org>  Mon, 20 Oct 2008 21:12:27 +0200
+
+empathy (2.24.0-1) experimental; urgency=low
+
+  * New upstream release.
+
+ -- Laurent Bigonville <bigon@debian.org>  Mon, 22 Sep 2008 21:37:47 +0200
+
+empathy (2.23.92-1) experimental; urgency=low
+
+  * New upstream release
+    - Adjust libempathy-gtk15.symbols
+  * Use my debian.org address in Uploaders
+
+ -- Laurent Bigonville <bigon@debian.org>  Tue, 09 Sep 2008 19:03:12 +0200
+
+empathy (2.23.90-2) experimental; urgency=low
+
+  * debian/libempathy14.symbols: Fix version of an exported symbol
+  * Use rarian-compat and librarian-dev instead of scrollkeeper as build-dep
+  * Bump build-deps and remove libtelepathy-dev (not needed anymore)
+  * Remove --enable-voip flags (voip enabled by default), rename
+    --enable-aspell to --enable-spell
+  * Add explicit build-depends against libglib2.0-dev
+  * Install gnome help and omf files in empathy package
+
+ -- Laurent Bigonville <bigon@bigon.be>  Mon, 25 Aug 2008 08:04:11 +0200
+
+empathy (2.23.90-1) experimental; urgency=low
+
+  * New upstream release.
+
+ -- Dafydd Harries <daf@debian.org>  Sun, 24 Aug 2008 22:03:36 +0100
+
+empathy (0.23.4-1) experimental; urgency=low
+
+  [ Laurent Bigonville ]
+  * Bump Standards-Version to 3.8.0 (no further changes)
+
+  [ Sjoerd Simons ]
+  * New upstream release
+  * Bumped soname of libempathy-gtk again and update symbols file
+  * Add a version depend on telepathy-glib-dev matching the configure.ac
+
+ -- Sjoerd Simons <sjoerd@debian.org>  Sat, 02 Aug 2008 22:08:58 +0100
+
+empathy (0.23.3-3) unstable; urgency=low
+
+  * Use my debian.org address in Uploaders
+  * debian/patches/00empathy_486683.patch: Fix crash when adding SIP contacts
+    (Closes: #486683)
+
+ -- Laurent Bigonville <bigon@debian.org>  Sat, 25 Oct 2008 00:30:02 +0200
+
+empathy (0.23.3-2) unstable; urgency=low
+
+  * Add recommend on gvfs-backends. These are used for the url handlers in the
+    chat window.
+  * debian/patches/00_mark_unknown_presence_id_as_unset.patch
+    + Added. Mark presence as unknown when the presence string isn't
+    recognized
+
+ -- Sjoerd Simons <sjoerd@debian.org>  Sat, 02 Aug 2008 19:56:46 +0100
+
+empathy (0.23.3-1) unstable; urgency=low
+
+  [ Sjoerd Simons ]
+  * New upstream release (0.23.3)
+  * Bump libempathy and libempathy-gtk sonames
+  * debian/*.symbols: Remove the debian version number from all symbols
+
+  [ Laurent Bigonville ]
+  * New upstream release (0.23.2)
+    - Bump libempathy and libempathy-gtk soname and fix symbols files
+  * Add dbus-x11 dependency on empathy package (Closes: #480486)
+  * Add licence information about files libempathy-gtk/totem-subtitle-encoding.c
+    and libempathy-gtk/totem-subtitle-encoding.h
+
+ -- Sjoerd Simons <sjoerd@debian.org>  Fri, 06 Jun 2008 17:14:31 +0100
+
+empathy (0.23.1-1) unstable; urgency=low
+
+  [ Laurent Bigonville ]
+  * debian/control: Add telepathy-stream-engine as a recommends for empathy
+    package
+
+  [ Sjoerd Simons ]
+  * New upstream release
+  * debian/control: Add conflict with older version of stream-engine
+  * debian/patches/00_fix_python_bindings.patch:
+    - Removed. Fixed upstream
+  * debian/patches/01_remove_unused_code.patch:
+    - Removed. Fixed upstream
+  * Bump libempathy and libempathy-gtk soname
+  * debian/control: Add build-depend on gnome-doc-utils
+
+  [ Simon McVittie ]
+  * Use my debian.org address in Uploaders
+
+ -- Sjoerd Simons <sjoerd@debian.org>  Thu, 01 May 2008 11:42:57 +0200
+
+empathy (0.22.1-1) unstable; urgency=low
+
+  * debian/rules, debian/empathy.install: Enable VOIP support
+  * debian/empathy.install: Chat handler is now part of the main empathy
+    process
+  * debian/patches/00_fix_python_bindings.patch:
+    + Added. Don't try to import objects that don't exist anymore (from
+      upstream git) (Closes: #474260)
+  * debian/patches/01_remove_unused_code.patch:
+    + Added. Remove unused code. Fixes compilation errors with Gcc 4.3
+      (Closes: #466817)
+  * debian/libempathy-gtk11.symbols, debian/libempathy-gtk11.shlibs: Update
+    symbols and shlibs
+
+ -- Sjoerd Simons <sjoerd@debian.org>  Sun, 06 Apr 2008 23:33:50 +0200
+
+empathy (0.22.0-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Sjoerd Simons <sjoerd@debian.org>  Mon, 10 Mar 2008 16:39:07 +0100
+
+empathy (0.21.91-1) unstable; urgency=low
+
+  * New upstream release
+  * debian/patches/00_set_null_presence_message.patch:
+    - Removed. Merged upstream
+  * debian/control: Add xsltproc to build-depends
+  * Bump libempathy and libempathy-gtk soname to 11
+  * debian/control: Bump libtelepathy-dev build-depend to 0.3.1
+  * debian/libempathy-common.install: Add irc network definitions
+
+ -- Sjoerd Simons <sjoerd@debian.org>  Mon, 03 Mar 2008 20:45:26 +0100
+
+empathy (0.21.90-2) unstable; urgency=low
+
+  * debian/*.symbols: Remove the debian versioning
+  * debian/patches/00_set_null_presence_message.patch:
+    - Added. If there is no presence-message, (re)set it to NULL. So the UI
+      can choose the right default message
+
+ -- Sjoerd Simons <sjoerd@debian.org>  Sun, 10 Feb 2008 12:46:53 +0100
+
+empathy (0.21.90-1) unstable; urgency=low
+
+  * New upstream release
+  * Removed patches merge upstream:
+    - debian/patches/fix-pyftbfs.patch
+    - debian/patches/accounts-icons-path.patch
+  * Bump sonames for libempathy and libempathy-gtk
+
+ -- Sjoerd Simons <sjoerd@debian.org>  Sat, 09 Feb 2008 23:25:59 +0100
+
+empathy (0.21.5.2-1) unstable; urgency=low
+
+  [ Laurent Bigonville ]
+  * New upstream release (0.21.5.2)
+  * Add XS-Dm-Upload-Allowed: yes, really
+  * Bump libmissioncontrol-client-dev build-dep version
+  * Bump soname of libempathy-gtk
+  * Drop debian/msn-haze.profile: merged upstream
+  * debian/patches/fix-pyftbfs.patch: Fix FTBFS of the python binding
+    (taken from upstream)
+  * debian/patches/accounts-icons-path.patch: Fix search path for icons (taken
+    from upstream)
+  * debian/rules: remove installed test program
+
+  [ Sjoerd Simons ]
+  * Add symbol files for libempathy and libempathy-gtk
+  * libempathy7: Bumped shlibs
+  * debian/libempathy-common.install: Install empathy-log-manager.xsl
+  * debian/libempathy-common, debian/libempathy-gtk-common.install: Install
+    empathy-chatroom-manager.dtd in libempathy-common instead of
+    libempathy-gtk-common
+  * debian/control: Let libempathy-common conflict with older versions of
+    libempathy-gtk-common
+  * debian/rules: Disable the building of tests
+
+ -- Sjoerd Simons <sjoerd@debian.org>  Mon, 21 Jan 2008 20:28:49 +0100
+
+empathy (0.21.4-1) unstable; urgency=low
+
+  [ Laurent Bigonville ]
+  * New upstream release
+  * Bump Standards-Version to 3.7.3, no further changes.
+
+  [ Sjoerd Simons ]
+  * debian/patches/fix_setting_avatar.patch
+    - Added. Fix setting avatars
+  * debian/patches/listen_to_presence_changed.patch
+    - Added. Listen to the PresenceChanged signal from the MC instead of the
+      deprecated PresenceStatusActual.
+
+ -- Sjoerd Simons <sjoerd@debian.org>  Sat, 05 Jan 2008 19:06:01 +0100
+
+empathy (0.21.3-1) unstable; urgency=low
+
+  * New upstream release
+  * Add XS-Dm-Upload-Allowed: yes
+  * Bump soname of both libraries
+  * Drop debian/patches/00_configure.patch: applied upstream
+  * Make -common packages arch:all and let the libs depends on
+    ${source:Version} of their respective -common packages again.
+  * Let the -dev packages depends on ${binary:Version} of their
+    respective lib packages.
+
+ -- Laurent Bigonville <bigon@bigon.be>  Tue, 04 Dec 2007 00:00:31 +0100
+
+empathy (0.21.2-2) unstable; urgency=low
+
+  * debian/patches/00_configure.patch
+    - Added. Use the pkg-config file for X11 to get the right linker arguments
+      Fixes FTBFS (Closes: #451902)
+
+ -- Sjoerd Simons <sjoerd@debian.org>  Wed, 21 Nov 2007 20:59:11 +0100
+
+empathy (0.21.2-1) unstable; urgency=low
+
+  [ Laurent Bigonville ]
+  * New upstream release, bump soname for both libraries
+  * Drop debian/patch/add-haze-profiles.patch and add debian/msn-haze.profile
+    to avoid patching autofoo, installing it via debian/rules
+  * debian/empathy.install: empathy.desktop is now installed in
+    /etc/xdg/autostart/
+  * debian/libempathy-gtk-common.install:
+    - Also install icons that are under /usr/share/empathy/icons/
+  * debian/control:
+    - Add gnome-icon-theme to libempathy-gtk-common dependencies
+    - Bump libmissioncontrol-client-dev build-dep version
+  * Add manpages for empathy and empathy-account,
+    thanks to Simon McVittie <smcv@ianadd.pseudorandom.co.uk> (Closes: #448620)
+  * Use now official Vcs-* field
+  * Install empathy-chat-chandler in /usr/lib/empathy/
+  * Disable voip support and remove recommends for tp-se, not stable enough yet
+  * Install .desktop file in /usr/share/applications
+
+  [ Sjoerd Simons ]
+  * debian/control: Let the libs depend on ${binary:Version} of their
+    respective -common packages.
+
+ -- Sjoerd Simons <sjoerd@debian.org>  Fri, 16 Nov 2007 11:03:08 +0100
+
+empathy (0.14-1) unstable; urgency=low
+
+  [ Loic Minier ]
+  * Fix typo in control.
+
+  [ Laurent Bigonville ]
+  * New upstream version
+    - Drop debian/patches/disable-voip.patch, applied upstream
+  * Enable VOIP and add telepathy-stream-engine to Recommends
+
+ -- Laurent Bigonville <bigon@bigon.be>  Mon, 01 Oct 2007 18:46:11 +0200
+
+empathy (0.13-1) unstable; urgency=low
+
+  [ Laurent Bigonville ]
+  * New upstream release, bump soname for libempathy and libempathy-gtk
+    - Drop build-dep on libgnomeui-dev
+    - Add build-dep on libpanel-applet2-dev
+    - Bump build-dep version of libgtk2.0-dev
+    - Build and install the megaphone applet
+    - Add libtelepathy-dev as build-dep
+  * Fix typo in libempathy-dev description
+  * debian/patches/add-haze-profiles.patch: ship .profile files to support
+    telepathy-haze (Closes: #444032)
+
+  [ Sjoerd Simons ]
+  * debian/patches/disable-voip.patch: Disable voip user interface elements as
+    their noops in this version.
+  * debian/copyright: Updated
+
+ -- Sjoerd Simons <sjoerd@debian.org>  Sat, 29 Sep 2007 18:41:39 +0200
+
+empathy (0.12-2) unstable; urgency=low
+
+  * debian/control: Let the -common packages conflict and replace the old
+    empathy
+  * debian/control: Let libempathy-gtk-dev depends on libglade2-dev instead of
+    libglade-dev
+  * debian/control: Tighten depends of libempathy-gtk-dev a bit more
+
+ -- Sjoerd Simons <sjoerd@debian.org>  Sat, 08 Sep 2007 21:00:58 +0200
+
+empathy (0.12-1) unstable; urgency=low
+
+  [ Sjoerd Simons ]
+  * New upstream release
+  * Conflict with cohoba and gossip-telepathy
+
+  [ Laurent Bigonville ]
+  * debian/control:
+    - Add myself as Uploaders
+    - Add libaspell-dev and iso-codes as build-dep and enable spellchecker
+    - Add XS-Vcs-Bzr field
+    - Bump mission-control build-dep
+    - Remove unneeded libmissioncontrol-sever builddep and rename
+      libmissioncontrol-dev to libmissioncontrol-client-dev
+
+  [ Loic Minier ]
+  * Tweak copyright.
+  * Wrap build-deps and deps.
+  * Use HTTP in watch file.
+  * Include CDBS' utils.mk.
+
+  [ Sjoerd Simons ]
+  * Added build-depend on libebook1.2-dev
+  * Split up empathy into a whole slew of packages
+  * Set linker flags to  -Wl,-z,defs -Wl,-O1
+  * debian/rules: Call dh_pysupport on python-empathy
+  * debian/control, debian/rules: Explicitely enable the python bindings
+
+ -- Sjoerd Simons <sjoerd@debian.org>  Sat, 25 Aug 2007 18:41:08 +0200
+
+empathy (0.8-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Sjoerd Simons <sjoerd@debian.org>  Sat, 23 Jun 2007 14:45:31 +0100
+
+empathy (0.7-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Sjoerd Simons <sjoerd@debian.org>  Mon, 11 Jun 2007 10:31:19 +0200
+
+empathy (0.6-1) unstable; urgency=low
+
+  [ Dafydd Harries ]
+  * Add watch file.
+
+  [ Sjoerd Simons ]
+  * New upstream release
+
+ -- Sjoerd Simons <sjoerd@debian.org>  Mon, 04 Jun 2007 09:27:47 +0200
+
+empathy (0.5-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Sjoerd Simons <sjoerd@debian.org>  Sat, 26 May 2007 19:02:41 +0200
+
+empathy (0.4-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Sjoerd Simons <sjoerd@debian.org>  Sun, 20 May 2007 15:31:42 +0200
+
+empathy (0.3-1) unstable; urgency=low
+
+  * Initial release
+
+ -- Sjoerd Simons <sjoerd@debian.org>  Mon, 14 May 2007 22:32:24 +0200
+

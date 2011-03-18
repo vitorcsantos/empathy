@@ -1,0 +1,127 @@
+Source: empathy
+Section: gnome
+Priority: optional
+Maintainer: Ubuntu Core Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+XSBC-Original-Maintainer: Debian Telepathy maintainers <pkg-telepathy-maintainers@lists.alioth.debian.org>
+Uploaders: Sjoerd Simons <sjoerd@debian.org>,
+           Dafydd Harries <daf@debian.org>,
+           Simon McVittie <smcv@debian.org>,
+           Riccardo Setti <giskard@debian.org>,
+           Laurent Bigonville <bigon@debian.org>,
+           Jonny Lamb <jonny@debian.org>
+Build-Depends: cdbs,
+               debhelper (>= 7),
+               dh-autoreconf,
+               gnome-common,
+               rarian-compat,
+               librarian-dev,
+               libglib2.0-dev (>= 2.27.2),
+               libgtk2.0-dev (>= 2.22.0),
+               libgconf2-dev (>= 1.2.0),
+               libtelepathy-glib-dev (>= 0.13.17),
+               libtelepathy-logger-dev (>= 0.2.0),
+               libebook1.2-dev,
+               intltool,
+               libenchant-dev (>= 1.2.0),
+               iso-codes,
+               libgnutls-dev (>= 2.8.5),
+               xsltproc,
+               gnome-doc-utils (>= 0.17.3),
+               libcanberra-gtk-dev (>= 0.4),
+               libnotify4-dev (>= 0.7.0),
+               libx11-dev,
+               libgstfarsight0.10-dev,
+               libdbus-glib-1-dev,
+               libtelepathy-farsight-dev (>= 0.0.14),
+               libtelepathy-farstream-dev,
+               libgstreamer0.10-dev (>= 0.10.32),
+               libgstreamer-plugins-base0.10-dev,
+               libnm-glib-dev (>= 0.7) [!kfreebsd-i386 !kfreebsd-amd64 !hurd-i386],
+               libnm-util-dev (>= 0.7) [!kfreebsd-i386 !kfreebsd-amd64 !hurd-i386],
+               libwebkitgtk-dev,
+               libgnome-keyring-dev (>= 2.26.0),
+               libgcr-dev (>= 2.26.0),
+               libunique-dev (>= 1.1.2),
+               nautilus-sendto (>= 2.31.7),
+               libfolks-dev (>= 0.4.0),
+               libfolks-telepathy-dev (>= 0.4.0),
+               libindicate-dev (>= 0.4.91),
+               libindicate-gtk-dev (>= 0.4.91),
+               libido-0.1-dev,
+               liblaunchpad-integration-dev (>= 0.1.17),
+               libunity-dev (>= 3.4.6)
+Standards-Version: 3.9.1
+Vcs-Bzr: https://code.launchpad.net/~ubuntu-desktop/empathy/ubuntu
+Homepage: http://live.gnome.org/Empathy
+
+Package: empathy
+Architecture: any
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+         empathy-common (= ${source:Version}),
+         telepathy-mission-control-5,
+         gnome-icon-theme (>= 2.30.0),
+         dbus-x11,
+         telepathy-logger
+Recommends: telepathy-gabble,
+            telepathy-salut,
+            libdconf0,
+            gvfs-backends,
+            telepathy-haze,
+            telepathy-butterfly,
+            nautilus-sendto-empathy
+Suggests: telepathy-idle,
+          vino
+Replaces: libempathy-gtk-common
+Breaks: telepathy-butterfly (<< 0.5.10)
+Description: GNOME multi-protocol chat and call client
+ Instant messaging program supporting text, voice, video, file transfers
+ and inter-application communication over many different protocols,
+ including: AIM, MSN, Google Talk (Jabber/XMPP), Facebook, Yahoo!, Salut,
+ Gadu-Gadu, Groupwise, ICQ and QQ.
+ .
+ This package contains the Empathy IM application and account manager.
+
+Package: empathy-dbg
+Architecture: any
+Depends: ${misc:Depends}, empathy (= ${binary:Version})
+Section: debug
+Priority: extra
+Description: GNOME multi-protocol chat and call client (debug symbols)
+ Instant messaging program supporting text, voice, video, file transfers
+ and inter-application communication over many different protocols,
+ including: AIM, MSN, Google Talk (Jabber/XMPP), Facebook, Yahoo!, Salut,
+ Gadu-Gadu, Groupwise, ICQ and QQ.
+ .
+ This package contains debug symbols for the Empathy IM application and
+ account manager.
+
+Package: empathy-common
+Architecture: all
+Depends: ${misc:Depends}
+Recommends: yelp
+Replaces: empathy (<< 2.27.92), empathy-doc, libempathy-common, libempathy-gtk-common
+Conflicts: empathy-doc, libempathy-common, libempathy-gtk-common
+Provides: empathy-doc, libempathy-common, libempathy-gtk-common
+Description: GNOME multi-protocol chat and call client (common files)
+ Instant messaging program supporting text, voice, video, file transfers
+ and inter-application communication over many different protocols,
+ including: AIM, MSN, Google Talk (Jabber/XMPP), Facebook, Yahoo!, Salut,
+ Gadu-Gadu, Groupwise, ICQ and QQ.
+ .
+ This package contains the architecture independent files for Empathy
+ IM application.
+
+Package: nautilus-sendto-empathy
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, empathy-common (= ${source:Version})
+Recommends: nautilus-sendto (>= 2.28.2-2)
+Replaces: nautilus-sendto (<< 2.28.2-2)
+Breaks: nautilus-sendto (<< 2.28.2-2)
+Description: GNOME multi-protocol chat and call client (nautilus-sendto plugin)
+ Instant messaging program supporting text, voice, video, file transfers
+ and inter-application communication over many different protocols,
+ including: AIM, MSN, Google Talk (Jabber/XMPP), Facebook, Yahoo!, Salut,
+ Gadu-Gadu, Groupwise, ICQ and QQ.
+ .
+ This package contains nautilus-sendto plugin for the Empathy IM application.

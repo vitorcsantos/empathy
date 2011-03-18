@@ -1,0 +1,83 @@
+=== modified file 'configure.ac'
+--- old/configure.ac	2011-02-24 17:01:06 +0000
++++ new/configure.ac	2011-02-24 17:01:49 +0000
+@@ -160,6 +160,7 @@
+    telepathy-glib >= $TELEPATHY_GLIB_REQUIRED
+    telepathy-logger-0.2 >= $TELEPATHY_LOGGER
+    x11
++   launchpad-integration
+ ])
+ 
+ PKG_CHECK_MODULES(YELL, [telepathy-yell])
+
+=== modified file 'src/empathy-chat-window.c'
+--- old/src/empathy-chat-window.c	2011-02-24 17:01:06 +0000
++++ new/src/empathy-chat-window.c	2011-02-24 17:01:49 +0000
+@@ -36,6 +36,9 @@
+ #include <glib/gi18n.h>
+ #include <libnotify/notification.h>
+ 
++/* Add launchpad hooks */
++#include <launchpad-integration.h>
++
+ #include <telepathy-glib/telepathy-glib.h>
+ 
+ #include <libempathy/empathy-contact.h>
+@@ -2069,6 +2072,9 @@
+ 	chat_window_chat_manager_chats_changed_cb (priv->chat_manager,
+ 						   empathy_chat_manager_get_num_chats (priv->chat_manager),
+ 						   window);
++
++	/* Add launchpad hooks */
++	launchpad_integration_add_ui (priv->ui_manager, "/chats_menubar/menu_help/LaunchpadItems");
+ }
+ 
+ EmpathyChatWindow *
+
+=== modified file 'src/empathy-chat-window.ui'
+--- old/src/empathy-chat-window.ui	2011-02-24 17:01:06 +0000
++++ new/src/empathy-chat-window.ui	2011-02-24 17:01:49 +0000
+@@ -197,6 +197,7 @@
+         </menu>
+         <menu action="menu_help">
+           <menuitem action="menu_help_contents"/>
++          <placeholder name="LaunchpadItems"/>
+           <menuitem action="menu_help_about"/>
+         </menu>
+       </menubar>
+
+=== modified file 'src/empathy-main-window.c'
+--- old/src/empathy-main-window.c	2011-02-24 17:01:06 +0000
++++ new/src/empathy-main-window.c	2011-02-24 17:01:49 +0000
+@@ -33,6 +33,9 @@
+ #include <telepathy-glib/util.h>
+ #include <folks/folks.h>
+ 
++/* Add launchpad hooks */
++#include <launchpad-integration.h>
++
+ #include <libempathy/empathy-contact.h>
+ #include <libempathy/empathy-idle.h>
+ #include <libempathy/empathy-utils.h>
+@@ -1973,6 +1976,8 @@
+ 	main_window_notify_contact_list_size_cb (priv->gsettings_ui,
+ 						 EMPATHY_PREFS_UI_SHOW_AVATARS,
+ 						 window);
++
++	launchpad_integration_add_ui (priv->ui_manager, "/menubar/help/LaunchpadItems");
+ }
+ 
+ GtkWidget *
+
+=== modified file 'src/empathy-main-window.ui'
+--- old/src/empathy-main-window.ui	2011-02-24 17:01:06 +0000
++++ new/src/empathy-main-window.ui	2011-02-24 17:01:49 +0000
+@@ -277,6 +277,7 @@
+         <menu action="help">
+           <menuitem action="help_contents"/>
+           <menuitem action="help_debug"/>
++          <placeholder name="LaunchpadItems"/>
+           <menuitem action="help_about"/>
+         </menu>
+       </menubar>
+

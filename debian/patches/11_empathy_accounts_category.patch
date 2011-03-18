@@ -1,0 +1,16 @@
+Description: Put empathy-accounts in correct category
+Bug: https://bugzilla.gnome.org/show_bug.cgi?id=611913
+
+Index: empathy-2.32.2/data/empathy-accounts.desktop.in.in
+===================================================================
+--- empathy-2.32.2.orig/data/empathy-accounts.desktop.in.in	2010-11-24 17:22:17.415693001 +1100
++++ empathy-2.32.2/data/empathy-accounts.desktop.in.in	2010-11-24 17:22:20.075693001 +1100
+@@ -7,7 +7,7 @@
+ StartupNotify=true
+ Terminal=false
+ Type=Application
+-Categories=GNOME;GTK;Settings;DesktopSettings;
++Categories=GNOME;GTK;Settings;X-GNOME-PersonalSettings;
+ X-GNOME-Settings-Panel=empathy-accounts
+ X-GNOME-Bugzilla-Bugzilla=GNOME
+ X-GNOME-Bugzilla-Product=empathy

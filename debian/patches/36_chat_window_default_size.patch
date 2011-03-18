@@ -1,0 +1,21 @@
+Description: Make the default chat window size larger
+Bug: https://bugzilla.gnome.org/show_bug.cgi?id=612216
+Bug-Ubuntu: https://bugs.edge.launchpad.net/ubuntu/+source/empathy/+bug/509756
+
+https://bugzilla.gnome.org/show_bug.cgi?id=612216
+=== modified file 'src/empathy-chat-window.ui'
+Index: empathy-2.31.3/src/empathy-chat-window.ui
+===================================================================
+--- empathy-2.31.3.orig/src/empathy-chat-window.ui	2010-06-18 16:29:28.536792269 +1000
++++ empathy-2.31.3/src/empathy-chat-window.ui	2010-06-18 16:38:13.768792269 +1000
+@@ -206,8 +206,8 @@
+   <object class="GtkWindow" id="chat_window">
+     <property name="title" translatable="yes">Chat</property>
+     <property name="role">chat</property>
+-    <property name="default_width">350</property>
+-    <property name="default_height">250</property>
++    <property name="default_width">580</property>
++    <property name="default_height">480</property>
+     <child>
+       <object class="GtkVBox" id="chat_vbox">
+         <property name="visible">True</property>
