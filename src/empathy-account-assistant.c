@@ -422,11 +422,18 @@ account_assistant_protocol_changed_cb (GtkComboBox *chooser,
           "talkx.l.google.com:80",
           NULL};
 
+      gchar *extra_identities[] = {
+          "talk.google.com",
+          NULL};
+
       empathy_account_settings_set_icon_name_async (settings, "im-google-talk",
         NULL, NULL);
 
       empathy_account_settings_set_strv (settings, "fallback-servers",
           fallback_servers);
+
+      empathy_account_settings_set_strv (settings, "extra-identities",
+          extra_identities);
     }
   else if (is_facebook)
     {
