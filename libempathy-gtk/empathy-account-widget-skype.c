@@ -995,6 +995,8 @@ empathy_accounts_dialog_skype_disable_other_accounts (TpAccount *account,
 
   if (other_psyke_accounts)
     {
+#if 0 /* this dialog is a good idea, but currently lacking from the UX spec,
+       * so it's being left out for now */
       GtkWidget *msg = gtk_message_dialog_new (parent, 0,
           GTK_MESSAGE_QUESTION, GTK_BUTTONS_YES_NO,
           "%s\n\n%s",
@@ -1013,6 +1015,7 @@ empathy_accounts_dialog_skype_disable_other_accounts (TpAccount *account,
 
           return FALSE;
         }
+#endif
 
       /* the user chose to proceed, disable the other accounts */
       accounts = tp_account_manager_get_valid_accounts (am);
