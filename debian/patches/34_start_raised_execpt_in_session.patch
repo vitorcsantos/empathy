@@ -2,11 +2,9 @@ Description: If not started with the session, we should always raise
 Bug: bugs.launchpad.net/bugs/503052
 
 === modified file 'src/empathy-status-icon.c'
-Index: empathy-2.33.1/src/empathy-status-icon.c
-===================================================================
---- empathy-2.33.1.orig/src/empathy-status-icon.c	2011-02-02 11:22:44.251459011 -0500
-+++ empathy-2.33.1/src/empathy-status-icon.c	2011-02-02 11:22:52.711459000 -0500
-@@ -865,6 +865,9 @@
+--- a/src/empathy-status-icon.c
++++ b/src/empathy-status-icon.c
+@@ -864,6 +864,9 @@
  #ifdef HAVE_LIBINDICATE
  	gboolean               use_libindicate;
  #endif
@@ -16,7 +14,7 @@ Index: empathy-2.33.1/src/empathy-status-icon.c
  
  	g_return_val_if_fail (GTK_IS_WINDOW (window), NULL);
  
-@@ -900,8 +903,16 @@
+@@ -899,8 +902,16 @@
  			  icon);
  
  	if (!hide_contact_list) {

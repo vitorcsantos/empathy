@@ -2,10 +2,8 @@ Description: Force focus of the window when selected from the indicator
 Bug: https://bugs.launchpad.net/bugs/442389
 
 === modified file 'libempathy-gtk/empathy-ui-utils.c'
-Index: empathy-2.33.1/libempathy-gtk/empathy-ui-utils.c
-===================================================================
---- empathy-2.33.1.orig/libempathy-gtk/empathy-ui-utils.c	2011-02-02 11:22:39.271459005 -0500
-+++ empathy-2.33.1/libempathy-gtk/empathy-ui-utils.c	2011-02-02 11:22:49.651459020 -0500
+--- a/libempathy-gtk/empathy-ui-utils.c
++++ b/libempathy-gtk/empathy-ui-utils.c
 @@ -1596,6 +1596,41 @@
  	}
  }
@@ -56,11 +54,9 @@ Index: empathy-2.33.1/libempathy-gtk/empathy-ui-utils.c
  }
  
  void
-Index: empathy-2.33.1/src/empathy-event-manager.c
-===================================================================
---- empathy-2.33.1.orig/src/empathy-event-manager.c	2011-02-02 11:22:44.251459011 -0500
-+++ empathy-2.33.1/src/empathy-event-manager.c	2011-02-02 11:22:49.651459020 -0500
-@@ -44,6 +44,7 @@
+--- a/src/empathy-event-manager.c
++++ b/src/empathy-event-manager.c
+@@ -47,6 +47,7 @@
  #include <libempathy-gtk/empathy-images.h>
  #include <libempathy-gtk/empathy-contact-dialogs.h>
  #include <libempathy-gtk/empathy-sound.h>
@@ -68,7 +64,7 @@ Index: empathy-2.33.1/src/empathy-event-manager.c
  
  #include <libido/idomessagedialog.h>
  #include <libempathy-gtk/empathy-ui-utils.h>
-@@ -495,7 +496,7 @@
+@@ -504,7 +505,7 @@
  
    if (event->approval->dialog != NULL)
      {
