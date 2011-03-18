@@ -958,6 +958,17 @@ empathy_account_widget_skype_show_eula (GtkWindow *parent)
   return (result == GTK_RESPONSE_ACCEPT);
 }
 
+static gboolean
+is_other_psyke_account (TpAccount *ours,
+    TpAccount *other)
+{
+  return (tp_strdiff (
+        tp_proxy_get_object_path (ours),
+        tp_proxy_get_object_path (other)) &&
+      tp_account_is_enabled (other) &&
+      !tp_strdiff (tp_account_get_connection_manager (other), "psyke"));
+}
+
 gboolean
 empathy_accounts_dialog_skype_disable_other_accounts (TpAccount *account,
     GtkWindow *parent)
@@ -973,11 +984,7 @@ empathy_accounts_dialog_skype_disable_other_accounts (TpAccount *account,
     {
       TpAccount *a = ptr->data;
 
-      if (tp_strdiff (
-            tp_proxy_get_object_path (account),
-            tp_proxy_get_object_path (a)) &&
-          tp_account_is_enabled (a) &&
-          !tp_strdiff (tp_account_get_connection_manager (a), "psyke"))
+      if (is_other_psyke_account (account, a))
         {
           other_psyke_accounts = TRUE;
           break;
@@ -1014,11 +1021,7 @@ empathy_accounts_dialog_skype_disable_other_accounts (TpAccount *account,
         {
           TpAccount *a = ptr->data;
 
-          if (tp_strdiff (
-                tp_proxy_get_object_path (account),
-                tp_proxy_get_object_path (a)) &&
-              tp_account_is_enabled (a) &&
-              !tp_strdiff (tp_account_get_connection_manager (a), "psyke"))
+          if (is_other_psyke_account (account, a))
             {
               tp_account_set_enabled_async (a, FALSE, NULL, NULL);
             }
