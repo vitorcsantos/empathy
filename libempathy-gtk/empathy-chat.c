@@ -42,13 +42,13 @@
 #include <libempathy/empathy-gsettings.h>
 #include <libempathy/empathy-utils.h>
 #include <libempathy/empathy-dispatcher.h>
-#include <libempathy/empathy-marshal.h>
 
 #include "empathy-chat.h"
 #include "empathy-spell.h"
 #include "empathy-contact-list-store.h"
 #include "empathy-contact-list-view.h"
 #include "empathy-contact-menu.h"
+#include "empathy-gtk-marshal.h"
 #include "empathy-search-bar.h"
 #include "empathy-theme-manager.h"
 #include "empathy-smiley-manager.h"
@@ -2764,7 +2764,7 @@ empathy_chat_class_init (EmpathyChatClass *klass)
 			      G_SIGNAL_RUN_LAST,
 			      0,
 			      NULL, NULL,
-			      _empathy_marshal_VOID__OBJECT_BOOLEAN,
+			      _empathy_gtk_marshal_VOID__OBJECT_BOOLEAN,
 			      G_TYPE_NONE,
 			      2, EMPATHY_TYPE_MESSAGE, G_TYPE_BOOLEAN);
 
