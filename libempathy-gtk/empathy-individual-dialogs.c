@@ -162,15 +162,26 @@ empathy_new_individual_dialog_show_with_individual (GtkWindow *parent,
 }
 
 static char *
-contact_pretty_name (TpContact *contact)
+build_account_list (GHashTable *set)
 {
-  const char *alias = tp_contact_get_alias (contact);
-  const char *identifier = tp_contact_get_identifier (contact);
+  GHashTableIter iter;
+  const char *key;
+  const char **accounts;
+  char *str;
+  guint i;
 
-  if (tp_strdiff (alias, identifier))
-    return g_strdup_printf ("%s (%s)", alias, identifier);
-  else
-    return g_strdup (alias);
+  accounts = g_malloc0 (sizeof (char *) * (g_hash_table_size (set) + 1));
+
+  g_hash_table_iter_init (&iter, set);
+  i = 0;
+  while (g_hash_table_iter_next (&iter, (gpointer) &key, NULL))
+    accounts[i++] = key;
+
+  str = g_strjoinv (", ", (char **) accounts);
+
+  g_free (accounts);
+
+  return str;
 }
 
 /*
@@ -188,9 +199,8 @@ empathy_block_individual_dialog_show (GtkWindow *parent,
   GtkWidget *abusive_check = NULL;
   GList *personas, *l;
   GString *text = g_string_new ("");
-  GString *blocked_str = g_string_new ("");
-  GString *notblocked_str = g_string_new ("");
-  guint npersonas_blocked = 0, npersonas_notblocked = 0;
+  GHashTable *blocked = g_hash_table_new (g_str_hash, g_str_equal);
+  GHashTable *not_blocked = g_hash_table_new (g_str_hash, g_str_equal);
   gboolean can_report_abuse = FALSE;
   int res;
 
@@ -212,54 +222,51 @@ empathy_block_individual_dialog_show (GtkWindow *parent,
   for (l = personas; l != NULL; l = l->next)
     {
       TpfPersona *persona = l->data;
-      TpContact *contact;
+      EmpathyContact *contact;
       EmpathyIndividualManagerFlags flags;
-      GString *s;
-      char *str;
+      GHashTable *set;
 
       if (!empathy_folks_persona_is_interesting (FOLKS_PERSONA (persona)))
           continue;
 
-      contact = tpf_persona_get_contact (persona);
+      contact = empathy_contact_dup_from_tp_contact (
+          tpf_persona_get_contact (persona));
       flags = empathy_individual_manager_get_flags_for_connection (manager,
-          tp_contact_get_connection (contact));
+          empathy_contact_get_connection (contact));
 
       if (flags & EMPATHY_INDIVIDUAL_MANAGER_CAN_BLOCK)
-        {
-          s = blocked_str;
-          npersonas_blocked++;
-        }
+        set = blocked;
       else
-        {
-          s = notblocked_str;
-          npersonas_notblocked++;
-        }
+        set = not_blocked;
 
       if (flags & EMPATHY_INDIVIDUAL_MANAGER_CAN_REPORT_ABUSIVE)
         can_report_abuse = TRUE;
 
-      str = contact_pretty_name (contact);
-      g_string_append_printf (s, "\n " BULLET_POINT " %s", str);
-      g_free (str);
+      g_hash_table_insert (set, (gpointer)
+          tp_account_get_display_name (empathy_contact_get_account (contact)),
+          NULL);
+      g_object_unref (contact);
     }
 
   g_string_append_printf (text,
       _("Are you sure you want to block '%s' from contacting you again?"),
       folks_alias_details_get_alias (FOLKS_ALIAS_DETAILS (individual)));
 
-  if (npersonas_blocked > 0)
-    g_string_append_printf (text, "\n\n%s\n%s",
-        ngettext ("The following identity will be blocked:",
-                  "The following identities will be blocked:",
-                  npersonas_blocked),
-        blocked_str->str);
+  /* if there are any accounts the contact can not be blocked from */
+  if (g_hash_table_size (not_blocked) > 0)
+    {
+      char *blocked_str = build_account_list (blocked);
+      char *not_blocked_str = build_account_list (not_blocked);
 
-  if (npersonas_notblocked > 0)
-    g_string_append_printf (text, "\n\n%s\n%s",
-        ngettext ("The following identity can not be blocked:",
-                  "The following identities can not be blocked:",
-                  npersonas_notblocked),
-        notblocked_str->str);
+      g_string_append (text, "\n\n");
+      g_string_append_printf (text,
+          _("Blocking will only block calls and chats from %s. It can not "
+            "block calls and chats from %s."),
+          blocked_str, not_blocked_str);
+
+      g_free (blocked_str);
+      g_free (not_blocked_str);
+    }
 
   gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
     "%s", text->str);
@@ -275,9 +282,7 @@ empathy_block_individual_dialog_show (GtkWindow *parent,
 
       vbox = gtk_message_dialog_get_message_area (GTK_MESSAGE_DIALOG (dialog));
       abusive_check = gtk_check_button_new_with_mnemonic (
-          ngettext ("_Report this contact as abusive",
-                    "_Report these contacts as abusive",
-                    npersonas_blocked));
+          _("_Report this contact as abusive"));
 
       gtk_box_pack_start (GTK_BOX (vbox), abusive_check, FALSE, TRUE, 0);
       gtk_widget_show (abusive_check);
@@ -285,8 +290,8 @@ empathy_block_individual_dialog_show (GtkWindow *parent,
 
   g_object_unref (manager);
   g_string_free (text, TRUE);
-  g_string_free (blocked_str, TRUE);
-  g_string_free (notblocked_str, TRUE);
+  g_hash_table_destroy (blocked);
+  g_hash_table_destroy (not_blocked);
 
   res = gtk_dialog_run (GTK_DIALOG (dialog));
 
