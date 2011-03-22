@@ -818,7 +818,7 @@ account_chooser_update_iter (EmpathyAccountChooser *chooser,
 
 	data = g_slice_new0 (FilterResultCallbackData);
 	data->chooser = chooser;
-	data->account = account;
+	data->account = g_object_ref (account);
 	data->iter = g_memdup (iter, sizeof (GtkTreeIter));
 
 	if (priv->filter)
