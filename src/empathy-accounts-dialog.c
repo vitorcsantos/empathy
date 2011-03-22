@@ -695,11 +695,22 @@ accounts_dialog_setup_ui_to_add_account (EmpathyAccountsDialog *dialog)
           "talkx.l.google.com:80",
           NULL};
 
+      gchar *extra_certificate_identities[] = {
+          "talk.google.com",
+          NULL};
+
       empathy_account_settings_set_icon_name_async (settings, "im-google-talk",
           NULL, NULL);
 
       empathy_account_settings_set_strv (settings, "fallback-servers",
           fallback_servers);
+
+      if (empathy_account_settings_have_tp_param (settings,
+              "extra-certificate-identities"))
+        {
+          empathy_account_settings_set_strv (settings,
+                  "extra-certificate-identities", extra_certificate_identities);
+        }
     }
   else if (is_facebook)
     {
