@@ -221,8 +221,7 @@ PKG_CHECK_MODULES(LIBNOTIFY,
 PKG_CHECK_MODULES(UNIQUE, unique-1.0 >= $UNIQUE_REQUIRED)
 # gnome-keyring breaks API in 2.91.x
 PKG_CHECK_MODULES(GCR,
-    gcr-0 >= $KEYRING_REQUIRED
-    gcr-0 < 2.91)
+    gcr-0 >= $KEYRING_REQUIRED)
 
 # Enable GSEAL checks if needed
 if test "x$USE_MAINTAINER_MODE" = "xyes"; then
