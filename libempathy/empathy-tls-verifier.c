@@ -232,7 +232,7 @@ real_start_verification (EmpathyTLSVerifier *self)
   EmpTLSCertificateRejectReason reason =
     EMP_TLS_CERTIFICATE_REJECT_REASON_UNKNOWN;
   gint i;
-  gboolean matched;
+  gboolean matched = FALSE;
   EmpathyTLSVerifierPriv *priv = GET_PRIV (self);
 
   DEBUG ("Starting verification");
@@ -241,7 +241,7 @@ real_start_verification (EmpathyTLSVerifier *self)
   first_cert = g_ptr_array_index (priv->cert_chain, 0);
   if (priv->reference_identities != NULL)
     {
-      for (i = 0, matched = FALSE; priv->reference_identities[i] != NULL; ++i)
+      for (i = 0; priv->reference_identities[i] != NULL; ++i)
         {
           if (gnutls_x509_crt_check_hostname (first_cert,
                   priv->reference_identities[i]) == 1)
