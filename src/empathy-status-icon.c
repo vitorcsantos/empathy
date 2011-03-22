@@ -34,9 +34,11 @@
 
 #include <telepathy-glib/account-manager.h>
 #include <telepathy-glib/util.h>
+#include <telepathy-yell/telepathy-yell.h>
 
 #include <libempathy/empathy-gsettings.h>
 #include <libempathy/empathy-utils.h>
+#include <libempathy/empathy-tp-streamed-media.h>
 
 #include <libempathy-gtk/empathy-presence-chooser.h>
 #include <libempathy-gtk/empathy-ui-utils.h>
@@ -108,6 +110,22 @@ notification_close_helper (EmpathyStatusIconPriv *priv)
 }
 
 static void
+notification_approve_no_video_cb (NotifyNotification *notification,
+			gchar              *action,
+			EmpathyStatusIcon  *icon)
+{
+	EmpathyStatusIconPriv *priv = GET_PRIV (icon);
+
+	if (priv->event)
+		{
+			tpy_call_channel_send_video (
+				TPY_CALL_CHANNEL (priv->event->handler_instance),
+				FALSE);
+			empathy_event_approve (priv->event);
+		}
+}
+
+static void
 notification_approve_cb (NotifyNotification *notification,
 			gchar              *action,
 			EmpathyStatusIcon  *icon)
@@ -134,6 +152,7 @@ add_notification_actions (EmpathyStatusIcon *self,
 			  NotifyNotification *notification)
 {
 	EmpathyStatusIconPriv *priv = GET_PRIV (self);
+	gboolean video;
 
 	switch (priv->event->type) {
 		case EMPATHY_EVENT_TYPE_CHAT:
@@ -144,12 +163,27 @@ add_notification_actions (EmpathyStatusIcon *self,
 
 		case EMPATHY_EVENT_TYPE_VOIP:
 		case EMPATHY_EVENT_TYPE_CALL:
+			if (priv->event->type == EMPATHY_EVENT_TYPE_VOIP)
+				video = empathy_tp_streamed_media_has_initial_video (
+					EMPATHY_TP_STREAMED_MEDIA (priv->event->handler_instance));
+			else
+				video = tpy_call_channel_has_initial_video (
+					TPY_CALL_CHANNEL (priv->event->handler_instance));
+
 			notify_notification_add_action (notification,
 				"reject", _("Reject"), (NotifyActionCallback) notification_decline_cb,
 					self, NULL);
 
+
+			if (video && priv->event->type == EMPATHY_EVENT_TYPE_CALL)
+				notify_notification_add_action (notification,
+					"answer", _("Answer"), (NotifyActionCallback)
+						notification_approve_no_video_cb,
+						self, NULL);
+
 			notify_notification_add_action (notification,
-				"answer", _("Answer"), (NotifyActionCallback) notification_approve_cb,
+				"answer", video ? _("Answer with video") : _("Answer"),
+					(NotifyActionCallback) notification_approve_cb,
 					self, NULL);
 			break;
 
