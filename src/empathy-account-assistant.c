@@ -422,7 +422,7 @@ account_assistant_protocol_changed_cb (GtkComboBox *chooser,
           "talkx.l.google.com:80",
           NULL};
 
-      gchar *extra_identities[] = {
+      gchar *extra_certificate_identities[] = {
           "talk.google.com",
           NULL};
 
@@ -432,8 +432,12 @@ account_assistant_protocol_changed_cb (GtkComboBox *chooser,
       empathy_account_settings_set_strv (settings, "fallback-servers",
           fallback_servers);
 
-      empathy_account_settings_set_strv (settings, "extra-identities",
-          extra_identities);
+      if (empathy_account_settings_have_tp_param (settings,
+              "extra-certificate-identities"))
+        {
+          empathy_account_settings_set_strv (settings,
+                  "extra-certificate-identities", extra_certificate_identities);
+        }
     }
   else if (is_facebook)
     {
