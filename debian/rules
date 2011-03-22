@@ -1,0 +1,42 @@
+#!/usr/bin/make -f
+
+DEB_DH_INSTALL_SOURCEDIR=debian/tmp
+
+include /usr/share/cdbs/1/rules/autoreconf.mk
+include /usr/share/cdbs/1/rules/debhelper.mk
+include /usr/share/cdbs/1/class/gnome.mk
+
+# List any files which are not installed
+include /usr/share/cdbs/1/rules/utils.mk
+common-binary-post-install-arch:: list-missing
+
+# Ensure at build time that the library has no dependencies on undefined
+# symbols, and speed up loading.
+#LDFLAGS += -Wl,-z,defs -Wl,-O1
+
+DEB_CONFIGURE_EXTRA_FLAGS := --enable-spell \
+                             --enable-libindicate \
+                             --disable-Werror
+                             --disable-tests \
+                             --disable-schemas-compile \
+                             --enable-webkit \
+                             --enable-map=no \
+                             --enable-location=no \
+                             --enable-favourite-contacts=no \
+                             --enable-nautilus-sendto \
+                             --enable-call \
+                             --with-ca-file='/etc/ssl/certs/ca-certificates.crt'
+
+DEB_DBG_PACKAGE_empathy = empathy-dbg
+
+DEB_BUILD_ARCH_OS := $(shell dpkg-architecture -qDEB_BUILD_ARCH_OS)
+
+ifeq ($(DEB_BUILD_ARCH_OS),linux)
+  DEB_CONFIGURE_EXTRA_FLAGS += --with-connectivity=nm --enable-location=no
+else ifeq ($(DEB_BUILD_ARCH_OS),kfreebsd)
+  DEB_CONFIGURE_EXTRA_FLAGS += --with-connectivity=no --enable-location=no
+else
+  DEB_CONFIGURE_EXTRA_FLAGS += --with-connectivity=no --enable-location=no
+endif
+
+include $(CURDIR)/debian/update-patches.mk

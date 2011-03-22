@@ -1,0 +1,21 @@
+Descrption: Make facebook the default chat account type, it is the most popular now and fits with our Social From the Start theme for Lucid
+Author: ?
+
+=== modified file 'libempathy-gtk/empathy-protocol-chooser.c'
+--- old/libempathy-gtk/empathy-protocol-chooser.c	2010-03-16 13:30:07 +0000
++++ new/libempathy-gtk/empathy-protocol-chooser.c	2010-03-16 13:36:37 +0000
+@@ -137,10 +137,10 @@
+             COL_IS_FACEBOOK, &is_facebook,
+             -1);
+ 
+-          if (is_gtalk || is_facebook)
++          if (is_facebook)
++            cmp = -1;
++          else
+             cmp = 1;
+-          else
+-            cmp = -1;
+         }
+     }
+ 
+
