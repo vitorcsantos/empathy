@@ -177,7 +177,7 @@ add_notification_actions (EmpathyStatusIcon *self,
 
 			if (video && priv->event->type == EMPATHY_EVENT_TYPE_CALL)
 				notify_notification_add_action (notification,
-					"answer", _("Answer"), (NotifyActionCallback)
+					"answer-no-video", _("Answer"), (NotifyActionCallback)
 						notification_approve_no_video_cb,
 						self, NULL);
 
