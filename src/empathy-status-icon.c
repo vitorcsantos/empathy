@@ -116,13 +116,12 @@ notification_approve_no_video_cb (NotifyNotification *notification,
 {
 	EmpathyStatusIconPriv *priv = GET_PRIV (icon);
 
-	if (priv->event)
-		{
-			tpy_call_channel_send_video (
-				TPY_CALL_CHANNEL (priv->event->handler_instance),
-				FALSE);
-			empathy_event_approve (priv->event);
-		}
+	if (priv->event) {
+		tpy_call_channel_send_video (
+			TPY_CALL_CHANNEL (priv->event->handler_instance),
+			FALSE);
+		empathy_event_approve (priv->event);
+	}
 }
 
 static void
