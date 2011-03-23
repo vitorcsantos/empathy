@@ -10,7 +10,7 @@
  
  # telepathy-yell
  prev_top_build_prefix=$ac_top_build_prefix
-@@ -481,6 +483,34 @@
+@@ -480,6 +482,34 @@
  AC_SUBST(MEEGO_LIBS)
  
  # -----------------------------------------------------------
@@ -45,7 +45,7 @@
  # nautilus-sendto
  # -----------------------------------------------------------
  AC_ARG_ENABLE(nautilus-sendto,
-@@ -582,6 +612,7 @@
+@@ -581,6 +611,7 @@
  	CA Cert Path................:  ${GTLS_SYSTEM_CA_FILE}
  
      Features:
@@ -69,7 +69,7 @@
      <key name="sort-criterium" type="s">
 --- a/libempathy-gtk/empathy-ui-utils.c
 +++ b/libempathy-gtk/empathy-ui-utils.c
-@@ -1564,25 +1564,36 @@
+@@ -1567,25 +1567,36 @@
  	Display      *dpy;
  	GdkWindow    *gdk_window;
  
@@ -1424,7 +1424,7 @@
  #include <libnotify/notification.h>
  #include <libnotify/notify.h>
  
-@@ -50,6 +51,12 @@
+@@ -52,6 +53,12 @@
  #include "empathy-preferences.h"
  #include "empathy-event-manager.h"
  
@@ -1437,7 +1437,7 @@
  #define DEBUG_FLAG EMPATHY_DEBUG_DISPATCHER
  #include <libempathy/empathy-debug.h>
  
-@@ -74,6 +81,10 @@
+@@ -76,6 +83,10 @@
  	GtkAction           *show_window_item;
  	GtkAction           *new_message_item;
  	GtkAction           *status_item;
@@ -1448,7 +1448,7 @@
  } EmpathyStatusIconPriv;
  
  G_DEFINE_TYPE (EmpathyStatusIcon, empathy_status_icon, G_TYPE_OBJECT);
-@@ -424,6 +435,92 @@
+@@ -457,6 +468,92 @@
  		empathy_window_present (GTK_WINDOW (priv->window));
  	}
  }
@@ -1541,7 +1541,7 @@
  
  static void
  status_icon_notify_visibility_cb (GSettings   *gsettings,
-@@ -443,10 +540,36 @@
+@@ -476,10 +573,36 @@
  	EmpathyStatusIconPriv *priv = GET_PRIV (icon);
  	gboolean               visible;
  
@@ -1578,7 +1578,7 @@
  static void
  status_icon_presence_changed_cb (EmpathyStatusIcon *icon)
  {
-@@ -630,6 +753,9 @@
+@@ -663,6 +786,9 @@
  	g_object_unref (priv->notify_mgr);
  	g_object_unref (priv->gsettings_ui);
  	g_object_unref (priv->window);
@@ -1588,7 +1588,7 @@
  }
  
  static void
-@@ -690,6 +816,13 @@
+@@ -723,6 +849,13 @@
  			  G_CALLBACK (status_icon_notify_visibility_cb),
  			  icon);
  
@@ -1602,7 +1602,7 @@
  	status_icon_create_menu (icon);
  
  	g_signal_connect_swapped (priv->account_manager,
-@@ -722,6 +855,9 @@
+@@ -755,6 +888,9 @@
  	EmpathyStatusIconPriv *priv;
  	EmpathyStatusIcon     *icon;
  	gboolean               should_hide;
@@ -1612,7 +1612,7 @@
  
  	g_return_val_if_fail (GTK_IS_WINDOW (window), NULL);
  
-@@ -729,6 +865,24 @@
+@@ -762,6 +898,24 @@
  	priv = GET_PRIV (icon);
  
  	priv->window = g_object_ref (window);
@@ -1637,7 +1637,7 @@
  
  	g_signal_connect_after (priv->window, "key-press-event",
  			  G_CALLBACK (status_icon_key_press_event_cb),
-@@ -745,6 +899,12 @@
+@@ -778,6 +932,12 @@
  		should_hide = TRUE;
  	}
  

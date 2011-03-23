@@ -4,7 +4,7 @@ Bug: https://bugs.launchpad.net/bugs/442389
 === modified file 'libempathy-gtk/empathy-ui-utils.c'
 --- a/libempathy-gtk/empathy-ui-utils.c
 +++ b/libempathy-gtk/empathy-ui-utils.c
-@@ -1596,6 +1596,41 @@
+@@ -1599,6 +1599,41 @@
  	}
  }
  
@@ -46,7 +46,7 @@ Bug: https://bugs.launchpad.net/bugs/442389
  /* Takes care of moving the window to the current workspace. */
  void
  empathy_window_present_with_time (GtkWindow *window,
-@@ -1630,6 +1665,7 @@
+@@ -1633,6 +1668,7 @@
  
  	gtk_window_set_skip_taskbar_hint (window, FALSE);
  	gtk_window_deiconify (window);
@@ -64,7 +64,7 @@ Bug: https://bugs.launchpad.net/bugs/442389
  
  #include <libido/idomessagedialog.h>
  #include <libempathy-gtk/empathy-ui-utils.h>
-@@ -504,7 +505,7 @@
+@@ -513,7 +514,7 @@
  
    if (event->approval->dialog != NULL)
      {

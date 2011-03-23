@@ -29,7 +29,7 @@
  #include "empathy-event-manager.h"
  #include "empathy-main-window.h"
  
-@@ -470,6 +473,7 @@
+@@ -473,6 +476,7 @@
      }
  }
  
@@ -37,7 +37,7 @@
  static void
  event_manager_call_window_confirmation_dialog_response_cb (GtkDialog *dialog,
    gint response, gpointer user_data)
-@@ -490,13 +494,75 @@
+@@ -499,13 +503,75 @@
  }
  
  static void
@@ -111,10 +111,10 @@
 -  gchar *title;
 +  gint width, height;
 +  GdkPixbuf *avatar;
+   EmpathyEventType etype = event->public.type;
  
    if (event->approval->dialog != NULL)
-     {
-@@ -522,33 +588,33 @@
+@@ -532,33 +598,33 @@
        return;
      }
  
@@ -167,7 +167,7 @@
  
    gtk_message_dialog_set_image (GTK_MESSAGE_DIALOG (dialog), image);
    gtk_widget_show (image);
-@@ -934,7 +1000,7 @@
+@@ -955,7 +1021,7 @@
    event_manager_add (approval->manager, NULL,
        approval->contact, EMPATHY_EVENT_TYPE_TRANSFER,
        EMPATHY_IMAGE_DOCUMENT_SEND, header, NULL,
@@ -193,7 +193,7 @@
    IndicatorEvent *indicator_event;
 --- a/src/empathy-status-icon.c
 +++ b/src/empathy-status-icon.c
-@@ -193,6 +193,12 @@
+@@ -226,6 +226,12 @@
  	}
  
  	if (priv->event) {
