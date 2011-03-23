@@ -389,6 +389,7 @@ empathy_individual_manager_add_from_contact (EmpathyIndividualManager *self,
     EmpathyContact *contact)
 {
   EmpathyIndividualManagerPriv *priv;
+  EmpathyContactManager *contact_manager;
   FolksBackendStore *backend_store;
   FolksBackend *backend;
   FolksPersonaStore *persona_store;
@@ -442,6 +443,19 @@ empathy_individual_manager_add_from_contact (EmpathyIndividualManager *self,
       aggregator_add_persona_from_details_cb, contact);
 
   g_hash_table_destroy (details);
+
+  /* unblock the EmpathyContact */
+  contact_manager = empathy_contact_manager_dup_singleton ();
+
+  if (empathy_contact_manager_get_flags_for_connection (contact_manager,
+        empathy_contact_get_connection (contact)) &
+      EMPATHY_CONTACT_LIST_CAN_BLOCK)
+    {
+      empathy_contact_list_set_blocked (EMPATHY_CONTACT_LIST (contact_manager),
+          contact, FALSE, FALSE);
+    }
+
+  g_object_unref (contact_manager);
 
 finish:
   tp_clear_object (&backend);
