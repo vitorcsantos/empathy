@@ -257,12 +257,17 @@ empathy_block_individual_dialog_show (GtkWindow *parent,
     {
       char *blocked_str = build_account_list (blocked);
       char *not_blocked_str = build_account_list (not_blocked);
+      int nblocked = g_hash_table_size (blocked);
 
       g_string_append (text, "\n\n");
       g_string_append_printf (text,
-          _("Blocking will only block calls and chats from %s. It can not "
-            "block calls and chats from %s."),
-          blocked_str, not_blocked_str);
+          ngettext (
+            "Blocking will only block calls and chats on the following"
+            " account: %s. It will not block calls and chats on %s.",
+            "Blocking will only block calls and chats on the following"
+            " accounts: %s. It will not block calls and chats on %s.",
+            nblocked),
+            blocked_str, not_blocked_str);
 
       g_free (blocked_str);
       g_free (not_blocked_str);
