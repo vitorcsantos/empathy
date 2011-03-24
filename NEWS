@@ -1,3 +1,40 @@
+NEW in 2.34.0 (24/03/2011)
+=============
+
+This first stable release in the 2.34 series fixes various authentication
+and log viewer bugs.
+The /query and /msg commands have also be re-implemented.
+
+Dependencies:
+ • telepathy-glib ≥ 0.14.1
+
+Bugs fixed:
+ - Fixed #645112, Can't handle more than one ServerAuthentication at the same time (Guillaume Desmottes)
+ - Fixed #643690, Have to enter password even if provided during account creation (Guillaume Desmottes)
+ - Fixed #643860, Should scroll to the right row when adding a new account (Guillaume Desmottes)
+ - Fixed #644406, Should set password-prompt on IRC accounts when needed (Guillaume Desmottes)
+ - Fixed #644914, History window: filter accounts without logs (Emilio Pozuelo Monfort)
+ - Fixed #644936, Don't update Contact menu on a focus-in (Michael Terry)
+ - Fixed #645008, empathy-auth-client should implement the Debug interface (Guillaume Desmottes)
+ - Fixed #645014, ICQ widget: should be able to enter an email address (Guillaume Desmottes)
+ - Fixed #645069, Show an avatar on the block contact dialog (Emilio Pozuelo Monfort)
+ - Fixed #645108, Empathy is asking for password but I told him to remember it (Guillaume Desmottes)
+ - Fixed #645115, Free priv->hostname in EmpathyServerTlsHandler (Stef Walter)
+ - Fixed #645119, Use ServerTLSConnection.ReferenceIdentities to check cert identity. (Stef Walter)
+ - Fixed #645121, Contact Search uses Ctrl-F, leaving Find in Contact List (Will Thompson)
+ - Fixed #645133, Set 'extra-identities' for Google Talk accounts (Stef Walter)
+ - Fixed #645487, Adding a user who is on the block list doesn't remove them from the block list (Danielle Madeley)
+ - Fixed #645488, Blocking linked contacts doesn't work and can crash empathy (Emilio Pozuelo Monfort)
+ - Fixed #645504, Use stable ContactBlocking API (Guillaume Desmottes)
+ - Fixed #645509, Please re-enable /query and /msg for 2.33.x (Guillaume Desmottes)
+ - Fixed #645558, Opening blocked contacts twice horribly breaks (Emilio Pozuelo Monfort)
+ - Fixed #645670, Logs not displayed when opening viewer from the contact menu and using an Adium theme (Guillaume Desmottes)
+ - Fixed #645582, Calendar widget should be disabled if no contact selected (Guillaume Desmottes)
+ - Fixed #645586, Contact not selected when opening conversation log from conversation window (Guillaume Desmottes)
+
+Translations:
+ - Updated it Translation (Milo Casagrande)
+
 NEW in 2.33.4 (16/03/2011)
 =============
 
