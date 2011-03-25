@@ -866,7 +866,9 @@ static void
 account_widget_apply_clicked_cb (GtkWidget *button,
     EmpathyAccountWidget *self)
 {
-    account_widget_apply_and_log_in (self);
+  empathy_accounts_dialog_skype_disable_other_accounts (NULL, NULL);
+
+  account_widget_apply_and_log_in (self);
 }
 
 static void

@@ -962,6 +962,9 @@ static gboolean
 is_other_psyke_account (TpAccount *ours,
     TpAccount *other)
 {
+  if (ours == NULL)
+    return TRUE;
+
   return (tp_strdiff (
         tp_proxy_get_object_path (ours),
         tp_proxy_get_object_path (other)) &&
