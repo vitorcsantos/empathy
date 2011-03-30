@@ -478,7 +478,7 @@ account_widget_build_skype_password_entry_focus (GtkWidget *password_entry,
           GUINT_TO_POINTER (FALSE));
     }
 
-  if (tp_account_is_enabled (account))
+  if (account != NULL && tp_account_is_enabled (account))
     {
       DEBUG ("Highlighting Apply/Cancel button");
 
