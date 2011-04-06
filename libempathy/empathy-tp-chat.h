@@ -107,6 +107,7 @@ gboolean       empathy_tp_chat_is_invited           (EmpathyTpChat      *chat,
 						     TpHandle *inviter);
 
 const char *   empathy_tp_chat_get_channel_path     (EmpathyTpChat      *chat);
+gboolean       empathy_tp_chat_is_sms_channel       (EmpathyTpChat      *chat);
 
 G_END_DECLS
 
