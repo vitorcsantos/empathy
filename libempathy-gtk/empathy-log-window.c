@@ -786,37 +786,11 @@ log_window_chats_changed_cb (GtkTreeSelection *selection,
 	log_window_chats_get_messages (window, NULL);
 }
 
-typedef struct
-{
-	EmpathyLogWindow *window;
-	TpAccount *account;
-} GetEntitiesCtx;
-
-static GetEntitiesCtx *
-get_entities_ctx_new (EmpathyLogWindow *window,
-		      TpAccount *account)
-{
-	GetEntitiesCtx *ctx = g_slice_new (GetEntitiesCtx);
-
-	/* EmpathyLogWindow isn't a proper GObject so we can't ref it */
-	ctx->window = window;
-	ctx->account = g_object_ref (account);
-	return ctx;
-}
-
-static void
-get_entities_ctx_free (GetEntitiesCtx *ctx)
-{
-	g_object_unref (ctx->account);
-	g_slice_free (GetEntitiesCtx, ctx);
-}
-
 static void
 log_manager_got_entities_cb (GObject *manager,
 			     GAsyncResult *result,
 			     gpointer user_data)
 {
-	GetEntitiesCtx        *ctx = user_data;
 	GList                 *entities;
 	GList                 *l;
 	GtkTreeView           *view;
@@ -826,8 +800,7 @@ log_manager_got_entities_cb (GObject *manager,
 	GtkTreeIter            iter;
 	GError                *error = NULL;
 	gboolean               select_account = FALSE;
-
-	view = GTK_TREE_VIEW (ctx->window->treeview_chats);
+	TpAccount             *account = user_data;
 
 	if (log_window == NULL)
 		goto out;
@@ -839,7 +812,7 @@ log_manager_got_entities_cb (GObject *manager,
 			goto out;
 	}
 
-	view = GTK_TREE_VIEW (ctx->window->treeview_chats);
+	view = GTK_TREE_VIEW (log_window->treeview_chats);
 	model = gtk_tree_view_get_model (view);
 	selection = gtk_tree_view_get_selection (view);
 	store = GTK_LIST_STORE (model);
@@ -853,13 +826,13 @@ log_manager_got_entities_cb (GObject *manager,
 		gtk_list_store_set (store, &iter,
 				COL_CHAT_ICON, "empathy-available", /* FIXME */
 				COL_CHAT_NAME, tpl_entity_get_alias (entity),
-				COL_CHAT_ACCOUNT, ctx->account,
+				COL_CHAT_ACCOUNT, account,
 				COL_CHAT_TARGET, entity,
 				-1);
 
-		if (ctx->window->selected_account != NULL &&
-		    !tp_strdiff (tp_proxy_get_object_path (ctx->account),
-		    tp_proxy_get_object_path (ctx->window->selected_account)))
+		if (log_window->selected_account != NULL &&
+		    !tp_strdiff (tp_proxy_get_object_path (account),
+		    tp_proxy_get_object_path (log_window->selected_account)))
 			select_account = TRUE;
 
 		/* FIXME: Update COL_CHAT_ICON/NAME */
@@ -872,15 +845,15 @@ log_manager_got_entities_cb (GObject *manager,
 	/* Unblock signals */
 	g_signal_handlers_unblock_by_func (selection,
 			log_window_chats_changed_cb,
-			ctx->window);
+			log_window);
 
 	/* We display the selected account if we populate the model with chats from
 	 * this account. */
 	if (select_account)
-		log_window_chats_set_selected (ctx->window);
+		log_window_chats_set_selected (log_window);
 
 out:
-	get_entities_ctx_free (ctx);
+	g_object_unref (account);
 }
 
 static void
@@ -893,7 +866,6 @@ log_window_chats_populate (EmpathyLogWindow *window)
 	GtkTreeModel         *model;
 	GtkTreeSelection     *selection;
 	GtkListStore         *store;
-	GetEntitiesCtx       *ctx;
 
 	account_chooser = EMPATHY_ACCOUNT_CHOOSER (window->account_chooser_chats);
 	account = empathy_account_chooser_dup_account (account_chooser);
@@ -915,10 +887,9 @@ log_window_chats_populate (EmpathyLogWindow *window)
 
 	gtk_list_store_clear (store);
 
-	ctx = get_entities_ctx_new (window, account);
-
+	/* Pass the account reference to the callback */
 	tpl_log_manager_get_entities_async (window->log_manager, account,
-			log_manager_got_entities_cb, ctx);
+			log_manager_got_entities_cb, account);
 }
 
 static void
