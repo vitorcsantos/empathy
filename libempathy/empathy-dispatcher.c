@@ -509,9 +509,11 @@ ensure_text_channel_cb (GObject *source,
     }
 }
 
-void
-empathy_dispatcher_chat_with_contact_id (TpAccount *account,
-    const gchar *contact_id,
+static void
+empathy_dispatcher_create_text_channel (TpAccount *account,
+    TpHandleType target_handle_type,
+    const gchar *target_id,
+    gboolean sms_channel,
     gint64 timestamp)
 {
   GHashTable *request;
@@ -520,9 +522,13 @@ empathy_dispatcher_chat_with_contact_id (TpAccount *account,
   request = tp_asv_new (
       TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING,
         TP_IFACE_CHANNEL_TYPE_TEXT,
-      TP_PROP_CHANNEL_TARGET_HANDLE_TYPE, G_TYPE_UINT, TP_HANDLE_TYPE_CONTACT,
-      TP_PROP_CHANNEL_TARGET_ID, G_TYPE_STRING, contact_id,
+      TP_PROP_CHANNEL_TARGET_HANDLE_TYPE, G_TYPE_UINT, target_handle_type,
+      TP_PROP_CHANNEL_TARGET_ID, G_TYPE_STRING, target_id,
       NULL);
+
+  if (sms_channel)
+    tp_asv_set_boolean (request,
+        TP_PROP_CHANNEL_INTERFACE_SMS_SMS_CHANNEL, TRUE);
 
   req = tp_account_channel_request_new (account, request, timestamp);
 
@@ -534,27 +540,30 @@ empathy_dispatcher_chat_with_contact_id (TpAccount *account,
 }
 
 void
+empathy_dispatcher_chat_with_contact_id (TpAccount *account,
+    const gchar *contact_id,
+    gint64 timestamp)
+{
+  empathy_dispatcher_create_text_channel (account, TP_HANDLE_TYPE_CONTACT,
+      contact_id, FALSE, timestamp);
+}
+
+void
 empathy_dispatcher_join_muc (TpAccount *account,
     const gchar *room_name,
     gint64 timestamp)
 {
-  GHashTable *request;
-  TpAccountChannelRequest *req;
+  empathy_dispatcher_create_text_channel (account, TP_HANDLE_TYPE_ROOM,
+      room_name, FALSE, timestamp);
+}
 
-  request = tp_asv_new (
-      TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING,
-        TP_IFACE_CHANNEL_TYPE_TEXT,
-      TP_PROP_CHANNEL_TARGET_HANDLE_TYPE, G_TYPE_UINT, TP_HANDLE_TYPE_ROOM,
-      TP_PROP_CHANNEL_TARGET_ID, G_TYPE_STRING, room_name,
-      NULL);
-
-  req = tp_account_channel_request_new (account, request, timestamp);
-
-  tp_account_channel_request_ensure_channel_async (req, NULL, NULL,
-      ensure_text_channel_cb, NULL);
-
-  g_hash_table_unref (request);
-  g_object_unref (req);
+void
+empathy_dispatcher_sms_contact_id (TpAccount *account,
+    const gchar *contact_id,
+    gint64 timestamp)
+{
+  empathy_dispatcher_create_text_channel (account, TP_HANDLE_TYPE_CONTACT,
+      contact_id, TRUE, timestamp);
 }
 
 static gboolean
