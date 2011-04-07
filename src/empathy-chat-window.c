@@ -670,6 +670,9 @@ chat_window_update_chat_tab_full (EmpathyChat *chat,
 	else if (g_list_find (priv->chats_composing, chat)) {
 		icon_name = EMPATHY_IMAGE_TYPING;
 	}
+	else if (empathy_chat_is_sms_channel (chat)) {
+		icon_name = EMPATHY_IMAGE_SMS;
+	}
 	else if (remote_contact) {
 		icon_name = empathy_icon_name_for_contact (remote_contact);
 	} else {
@@ -2213,6 +2216,9 @@ empathy_chat_window_add_chat (EmpathyChatWindow *window,
 			  G_CALLBACK (chat_window_chat_notify_cb),
 			  NULL);
 	g_signal_connect (chat, "notify::remote-contact",
+			  G_CALLBACK (chat_window_chat_notify_cb),
+			  NULL);
+	g_signal_connect (chat, "notify::sms-channel",
 			  G_CALLBACK (chat_window_chat_notify_cb),
 			  NULL);
 	chat_window_chat_notify_cb (chat);
