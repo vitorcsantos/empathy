@@ -16,7 +16,7 @@ common-binary-post-install-arch:: list-missing
 
 DEB_CONFIGURE_EXTRA_FLAGS := --enable-spell \
                              --enable-libindicate \
-                             --disable-Werror
+                             --disable-Werror \
                              --disable-tests \
                              --disable-schemas-compile \
                              --enable-webkit \
