@@ -70,6 +70,11 @@ void empathy_dispatcher_join_muc (TpAccount *account,
   const gchar *roomname,
   gint64 timestamp);
 
+void
+empathy_dispatcher_sms_contact_id (TpAccount *account,
+  const gchar *contact_id,
+  gint64 timestamp);
+
 void empathy_dispatcher_find_requestable_channel_classes_async
     (EmpathyDispatcher *dispatcher, TpConnection *connection,
      const gchar *channel_type, guint handle_type,

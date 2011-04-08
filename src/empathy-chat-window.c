@@ -146,6 +146,8 @@ static const GtkTargetEntry drag_types_dest_file[] = {
 
 static void chat_window_update (EmpathyChatWindow *window,
 		gboolean update_contact_menu);
+static EmpathyChat *empathy_chat_window_find_chat (TpAccount *account,
+		const gchar *id);
 
 G_DEFINE_TYPE (EmpathyChatWindow, empathy_chat_window, G_TYPE_OBJECT);
 
@@ -442,14 +444,14 @@ get_all_unread_messages (EmpathyChatWindowPriv *priv)
 static gchar *
 get_window_title_name (EmpathyChatWindowPriv *priv)
 {
-	const gchar *active_name;
+	gchar *active_name, *ret;
 	guint nb_chats;
 	guint current_unread_msgs;
 
 	nb_chats = g_list_length (priv->chats);
 	g_assert (nb_chats > 0);
 
-	active_name = empathy_chat_get_name (priv->current_chat);
+	active_name = empathy_chat_dup_name (priv->current_chat);
 
 	current_unread_msgs = empathy_chat_get_nb_unread_messages (
 			priv->current_chat);
@@ -457,9 +459,9 @@ get_window_title_name (EmpathyChatWindowPriv *priv)
 	if (nb_chats == 1) {
 		/* only one tab */
 		if (current_unread_msgs == 0)
-			return g_strdup (active_name);
+			ret = g_strdup (active_name);
 		else
-			return g_strdup_printf (ngettext (
+			ret = g_strdup_printf (ngettext (
 				"%s (%d unread)",
 				"%s (%d unread)", current_unread_msgs),
 				active_name, current_unread_msgs);
@@ -471,7 +473,7 @@ get_window_title_name (EmpathyChatWindowPriv *priv)
 
 		if (all_unread_msgs == 0) {
 			/* no unread message */
-			return g_strdup_printf (ngettext (
+			ret = g_strdup_printf (ngettext (
 				"%s (and %u other)",
 				"%s (and %u others)", nb_others),
 				active_name, nb_others);
@@ -479,7 +481,7 @@ get_window_title_name (EmpathyChatWindowPriv *priv)
 
 		else if (all_unread_msgs == current_unread_msgs) {
 			/* unread messages are in the current tab */
-			return g_strdup_printf (ngettext (
+			ret = g_strdup_printf (ngettext (
 				"%s (%d unread)",
 				"%s (%d unread)", current_unread_msgs),
 				active_name, current_unread_msgs);
@@ -487,7 +489,7 @@ get_window_title_name (EmpathyChatWindowPriv *priv)
 
 		else if (current_unread_msgs == 0) {
 			/* unread messages are in other tabs */
-			return g_strdup_printf (ngettext (
+			ret = g_strdup_printf (ngettext (
 				"%s (%d unread from others)",
 				"%s (%d unread from others)",
 				all_unread_msgs),
@@ -496,13 +498,17 @@ get_window_title_name (EmpathyChatWindowPriv *priv)
 
 		else {
 			/* unread messages are in all the tabs */
-			return g_strdup_printf (ngettext (
+			ret = g_strdup_printf (ngettext (
 				"%s (%d unread from all)",
 				"%s (%d unread from all)",
 				all_unread_msgs),
 				active_name, all_unread_msgs);
 		}
 	}
+
+	g_free (active_name);
+
+	return ret;
 }
 
 static void
@@ -630,7 +636,7 @@ chat_window_update_chat_tab_full (EmpathyChat *chat,
 	EmpathyChatWindow     *window;
 	EmpathyChatWindowPriv *priv;
 	EmpathyContact        *remote_contact;
-	const gchar           *name;
+	gchar                 *name;
 	const gchar           *id;
 	TpAccount             *account;
 	const gchar           *subject;
@@ -649,7 +655,7 @@ chat_window_update_chat_tab_full (EmpathyChat *chat,
 	priv = GET_PRIV (window);
 
 	/* Get information */
-	name = empathy_chat_get_name (chat);
+	name = empathy_chat_dup_name (chat);
 	account = empathy_chat_get_account (chat);
 	subject = empathy_chat_get_subject (chat);
 	remote_contact = empathy_chat_get_remote_contact (chat);
@@ -667,6 +673,9 @@ chat_window_update_chat_tab_full (EmpathyChat *chat,
 	}
 	else if (g_list_find (priv->chats_composing, chat)) {
 		icon_name = EMPATHY_IMAGE_TYPING;
+	}
+	else if (empathy_chat_is_sms_channel (chat)) {
+		icon_name = EMPATHY_IMAGE_SMS;
 	}
 	else if (remote_contact) {
 		icon_name = empathy_icon_name_for_contact (remote_contact);
@@ -694,6 +703,10 @@ chat_window_update_chat_tab_full (EmpathyChat *chat,
 		status = empathy_contact_get_presence_message (remote_contact);
 	} else {
 		id = name;
+	}
+
+	if (empathy_chat_is_sms_channel (chat)) {
+		append_markup_printf (tooltip, "%s ", _("SMS:"));
 	}
 
 	append_markup_printf (tooltip,
@@ -731,6 +744,8 @@ chat_window_update_chat_tab_full (EmpathyChat *chat,
 	if (priv->current_chat == chat) {
 		chat_window_update (window, update_contact_menu);
 	}
+
+	g_free (name);
 }
 
 static void
@@ -858,21 +873,24 @@ chat_window_favorite_toggled_cb (GtkToggleAction   *toggle_action,
 	EmpathyChatWindowPriv *priv = GET_PRIV (window);
 	gboolean               active;
 	TpAccount             *account;
+	gchar                 *name;
 	const gchar           *room;
 	EmpathyChatroom       *chatroom;
 
 	active = gtk_toggle_action_get_active (toggle_action);
 	account = empathy_chat_get_account (priv->current_chat);
 	room = empathy_chat_get_id (priv->current_chat);
+	name = empathy_chat_dup_name (priv->current_chat);
 
 	chatroom = empathy_chatroom_manager_ensure_chatroom (
 		     priv->chatroom_manager,
 		     account,
 		     room,
-		     empathy_chat_get_name (priv->current_chat));
+		     name);
 
 	empathy_chatroom_set_favorite (chatroom, active);
 	g_object_unref (chatroom);
+	g_free (name);
 }
 
 static void
@@ -882,21 +900,24 @@ chat_window_always_urgent_toggled_cb (GtkToggleAction   *toggle_action,
 	EmpathyChatWindowPriv *priv = GET_PRIV (window);
 	gboolean               active;
 	TpAccount             *account;
+	gchar                 *name;
 	const gchar           *room;
 	EmpathyChatroom       *chatroom;
 
 	active = gtk_toggle_action_get_active (toggle_action);
 	account = empathy_chat_get_account (priv->current_chat);
 	room = empathy_chat_get_id (priv->current_chat);
+	name = empathy_chat_dup_name (priv->current_chat);
 
 	chatroom = empathy_chatroom_manager_ensure_chatroom (
 		     priv->chatroom_manager,
 		     account,
 		     room,
-		     empathy_chat_get_name (priv->current_chat));
+		     name);
 
 	empathy_chatroom_set_always_urgent (chatroom, active);
 	g_object_unref (chatroom);
+	g_free (name);
 }
 
 static void
@@ -1358,18 +1379,20 @@ chat_window_show_or_update_notification (EmpathyChatWindow *window,
 static void
 chat_window_set_highlight_room_tab_label (EmpathyChat *chat)
 {
-	gchar *markup;
+	gchar *markup, *name;
 	GtkWidget *widget;
 
 	if (!empathy_chat_is_room (chat))
 		return;
 
+	name = empathy_chat_dup_name (chat);
 	markup = g_markup_printf_escaped (
 		"<span color=\"red\" weight=\"bold\">%s</span>",
-		empathy_chat_get_name (chat));
+		name);
 
 	widget = g_object_get_data (G_OBJECT (chat), "chat-window-tab-label");
 	gtk_label_set_markup (GTK_LABEL (widget), markup);
+	g_free (name);
 	g_free (markup);
 }
 
@@ -2213,6 +2236,9 @@ empathy_chat_window_add_chat (EmpathyChatWindow *window,
 	g_signal_connect (chat, "notify::remote-contact",
 			  G_CALLBACK (chat_window_chat_notify_cb),
 			  NULL);
+	g_signal_connect (chat, "notify::sms-channel",
+			  G_CALLBACK (chat_window_chat_notify_cb),
+			  NULL);
 	chat_window_chat_notify_cb (chat);
 
 	gtk_notebook_append_page_menu (GTK_NOTEBOOK (priv->notebook), child, label, popup_label);
@@ -2329,7 +2355,7 @@ empathy_chat_window_has_focus (EmpathyChatWindow *window)
 	return has_focus;
 }
 
-EmpathyChat *
+static EmpathyChat *
 empathy_chat_window_find_chat (TpAccount   *account,
 			       const gchar *id)
 {
@@ -2352,6 +2378,39 @@ empathy_chat_window_find_chat (TpAccount   *account,
 
 			if (account == empathy_chat_get_account (chat) &&
 			    !tp_strdiff (id, empathy_chat_get_id (chat))) {
+				return chat;
+			}
+		}
+	}
+
+	return NULL;
+}
+
+EmpathyChat *
+empathy_chat_window_find_chat_by_channel (const char *channel_path)
+{
+	GList *l;
+
+	g_return_val_if_fail (!EMP_STR_EMPTY (channel_path), NULL);
+
+	for (l = chat_windows; l; l = l->next) {
+		EmpathyChatWindowPriv *priv;
+		EmpathyChatWindow     *window;
+		GList                *ll;
+
+		window = l->data;
+		priv = GET_PRIV (window);
+
+		for (ll = priv->chats; ll; ll = ll->next) {
+			EmpathyChat *chat;
+			EmpathyTpChat *tp_chat;
+			const char *path;
+
+			chat = ll->data;
+			tp_chat = empathy_chat_get_tp_chat (chat);
+			path = empathy_tp_chat_get_channel_path (tp_chat);
+
+			if (!tp_strdiff (channel_path, path)) {
 				return chat;
 			}
 		}

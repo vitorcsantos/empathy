@@ -1075,6 +1075,18 @@ empathy_contact_get_status (EmpathyContact *contact)
 }
 
 gboolean
+empathy_contact_can_sms (EmpathyContact *contact)
+{
+  EmpathyContactPriv *priv;
+
+  g_return_val_if_fail (EMPATHY_IS_CONTACT (contact), FALSE);
+
+  priv = GET_PRIV (contact);
+
+  return priv->capabilities & EMPATHY_CAPABILITIES_SMS;
+}
+
+gboolean
 empathy_contact_can_voip (EmpathyContact *contact)
 {
   EmpathyContactPriv *priv;
@@ -1165,6 +1177,9 @@ empathy_contact_can_do_action (EmpathyContact *self,
     {
       case EMPATHY_ACTION_CHAT:
         sensitivity = TRUE;
+        break;
+      case EMPATHY_ACTION_SMS:
+        sensitivity = empathy_contact_can_sms (self);
         break;
       case EMPATHY_ACTION_AUDIO_CALL:
         sensitivity = empathy_contact_can_voip_audio (self);
@@ -1696,6 +1711,12 @@ tp_caps_to_capabilities (TpCapabilities *caps)
                     TPY_PROP_CHANNEL_TYPE_CALL_INITIAL_VIDEO))
                 capabilities |= EMPATHY_CAPABILITIES_VIDEO;
             }
+        }
+      else if (!tp_strdiff (chan_type, TP_IFACE_CHANNEL_TYPE_TEXT))
+        {
+          if (tp_asv_get_boolean (fixed_prop,
+                TP_PROP_CHANNEL_INTERFACE_SMS_SMS_CHANNEL, NULL))
+            capabilities |= EMPATHY_CAPABILITIES_SMS;
         }
     }
 
