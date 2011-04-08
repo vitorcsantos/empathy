@@ -2229,8 +2229,8 @@ empathy_individual_view_get_selected_group (EmpathyIndividualView *view,
 enum
 {
   REMOVE_DIALOG_RESPONSE_CANCEL = 0,
-  REMOVE_DIALOG_RESPONSE_DELETE,
-  REMOVE_DIALOG_RESPONSE_DELETE_AND_BLOCK,
+  REMOVE_DIALOG_RESPONSE_REMOVE,
+  REMOVE_DIALOG_RESPONSE_REMOVE_AND_BLOCK,
 };
 
 static int
@@ -2260,17 +2260,17 @@ individual_view_remove_dialog_show (GtkWindow *parent,
       /* gtk_dialog_add_button() doesn't allow us to pass a string with a
        * mnemonic so we have to create the button manually. */
       button = gtk_button_new_with_mnemonic (
-          _("Delete and _Block"));
+          _("Remove and _Block"));
 
       gtk_dialog_add_action_widget (GTK_DIALOG (dialog), button,
-          REMOVE_DIALOG_RESPONSE_DELETE_AND_BLOCK);
+          REMOVE_DIALOG_RESPONSE_REMOVE_AND_BLOCK);
 
       gtk_widget_show (button);
     }
 
   gtk_dialog_add_buttons (GTK_DIALOG (dialog),
       GTK_STOCK_CANCEL, REMOVE_DIALOG_RESPONSE_CANCEL,
-      GTK_STOCK_DELETE, REMOVE_DIALOG_RESPONSE_DELETE, NULL);
+      GTK_STOCK_REMOVE, REMOVE_DIALOG_RESPONSE_REMOVE, NULL);
 
   gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
       "%s", secondary_text);
@@ -2300,7 +2300,7 @@ individual_view_group_remove_activate_cb (GtkMenuItem *menuitem,
           group);
       parent = empathy_get_toplevel_window (GTK_WIDGET (view));
       if (individual_view_remove_dialog_show (parent, _("Removing group"),
-              text, FALSE, NULL) == REMOVE_DIALOG_RESPONSE_DELETE)
+              text, FALSE, NULL) == REMOVE_DIALOG_RESPONSE_REMOVE)
         {
           EmpathyIndividualManager *manager =
               empathy_individual_manager_dup_singleton ();
@@ -2409,12 +2409,12 @@ got_avatar (GObject *source_object,
   res = individual_view_remove_dialog_show (parent, _("Removing contact"),
       text, can_block, avatar);
 
-  if (res == REMOVE_DIALOG_RESPONSE_DELETE ||
-      res == REMOVE_DIALOG_RESPONSE_DELETE_AND_BLOCK)
+  if (res == REMOVE_DIALOG_RESPONSE_REMOVE ||
+      res == REMOVE_DIALOG_RESPONSE_REMOVE_AND_BLOCK)
     {
       gboolean abusive;
 
-      if (res == REMOVE_DIALOG_RESPONSE_DELETE_AND_BLOCK)
+      if (res == REMOVE_DIALOG_RESPONSE_REMOVE_AND_BLOCK)
         {
           if (!empathy_block_individual_dialog_show (parent, individual,
                avatar, &abusive))
