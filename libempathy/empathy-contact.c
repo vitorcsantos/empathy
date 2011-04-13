@@ -1688,19 +1688,18 @@ tp_caps_to_capabilities (TpCapabilities *caps)
                     TP_PROP_CHANNEL_TYPE_STREAMED_MEDIA_INITIAL_VIDEO))
                 capabilities |= EMPATHY_CAPABILITIES_VIDEO;
             }
+
+          if (tp_asv_get_boolean (fixed_prop,
+                    TP_PROP_CHANNEL_TYPE_STREAMED_MEDIA_INITIAL_AUDIO, NULL))
+            capabilities |= EMPATHY_CAPABILITIES_AUDIO;
+          if (tp_asv_get_boolean (fixed_prop,
+                    TP_PROP_CHANNEL_TYPE_STREAMED_MEDIA_INITIAL_VIDEO, NULL))
+            capabilities |= EMPATHY_CAPABILITIES_VIDEO;
         }
       else if (!tp_strdiff (chan_type,
         TPY_IFACE_CHANNEL_TYPE_CALL))
         {
           guint j;
-
-          if (tp_asv_get_boolean (fixed_prop,
-              TPY_PROP_CHANNEL_TYPE_CALL_INITIAL_AUDIO, NULL))
-            capabilities |= EMPATHY_CAPABILITIES_AUDIO;
-
-          if (tp_asv_get_boolean (fixed_prop,
-              TPY_PROP_CHANNEL_TYPE_CALL_INITIAL_VIDEO, NULL))
-            capabilities |= EMPATHY_CAPABILITIES_VIDEO;
 
           for (j = 0; allowed_prop[j] != NULL; j++)
             {
@@ -1711,6 +1710,13 @@ tp_caps_to_capabilities (TpCapabilities *caps)
                     TPY_PROP_CHANNEL_TYPE_CALL_INITIAL_VIDEO))
                 capabilities |= EMPATHY_CAPABILITIES_VIDEO;
             }
+
+          if (tp_asv_get_boolean (fixed_prop,
+              TPY_PROP_CHANNEL_TYPE_CALL_INITIAL_AUDIO, NULL))
+            capabilities |= EMPATHY_CAPABILITIES_AUDIO;
+          if (tp_asv_get_boolean (fixed_prop,
+              TPY_PROP_CHANNEL_TYPE_CALL_INITIAL_VIDEO, NULL))
+            capabilities |= EMPATHY_CAPABILITIES_VIDEO;
         }
       else if (!tp_strdiff (chan_type, TP_IFACE_CHANNEL_TYPE_TEXT))
         {
