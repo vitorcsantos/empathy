@@ -922,7 +922,18 @@ static void
 main_window_balance_activate_cb (GtkAction         *action,
 				 EmpathyMainWindow *window)
 {
-	DEBUG ("ACTIVATE!");
+	TpAccount *account = g_object_get_data (G_OBJECT (action), "account");
+	const char *protocol = tp_account_get_protocol (account);
+
+	/* FIXME: need a generic way to find out how to top-up an
+	 * account that also works with arbitrary SIP and XMPP gateways --
+	 * https://bugs.freedesktop.org/show_bug.cgi?id=36254 */
+	if (!tp_strdiff (protocol, "skype")) {
+		empathy_url_show (GTK_WIDGET (window),
+			"http://go.skype.com/store.buy.skypecredit");
+	} else {
+		DEBUG ("unknown protocol for top-up");
+	}
 }
 
 static void
