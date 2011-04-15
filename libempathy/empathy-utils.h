@@ -102,6 +102,8 @@ gboolean empathy_folks_persona_is_interesting (FolksPersona *persona);
 
 gchar * empathy_get_x509_certificate_hostname (gnutls_x509_crt_t cert);
 
+char *empathy_format_currency (int amount, guint scale, const char *currency);
+
 G_END_DECLS
 
 #endif /*  __EMPATHY_UTILS_H__ */
