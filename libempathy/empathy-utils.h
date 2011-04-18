@@ -102,7 +102,7 @@ gboolean empathy_folks_persona_is_interesting (FolksPersona *persona);
 
 gchar * empathy_get_x509_certificate_hostname (gnutls_x509_crt_t cert);
 
-char *empathy_format_currency (int amount, guint scale, const char *currency);
+gchar *empathy_format_currency (gint amount, guint scale, const gchar *currency);
 
 G_END_DECLS
 
