@@ -59,7 +59,7 @@ typedef struct {
 	EmpathyAdiumData     *data;
 	EmpathySmileyManager *smiley_manager;
 	EmpathyContact       *last_contact;
-	time_t                last_timestamp;
+	gint64                last_timestamp;
 	gboolean              last_is_backlog;
 	guint                 pages_loading;
 	GList                *message_queue;
@@ -324,7 +324,7 @@ theme_adium_append_html (EmpathyThemeAdium *theme,
 		         const gchar       *contact_id,
 		         const gchar       *service_name,
 		         const gchar       *message_classes,
-		         time_t             timestamp,
+		         gint64             timestamp,
 		         gboolean           is_backlog)
 {
 	GString     *string;
@@ -442,7 +442,7 @@ theme_adium_append_message (EmpathyChatView *view,
 	const gchar           *contact_id;
 	EmpathyAvatar         *avatar;
 	const gchar           *avatar_filename = NULL;
-	time_t                 timestamp;
+	gint64                 timestamp;
 	gchar                 *html = NULL;
 	gsize                  len = 0;
 	const gchar           *func;
