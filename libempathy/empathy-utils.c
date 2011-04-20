@@ -408,18 +408,33 @@ empathy_account_get_error_message (TpAccount *account,
 {
 	const gchar *dbus_error;
 	const gchar *message;
-        const GHashTable *details = NULL;
+  const GHashTable *details = NULL;
 	TpConnectionStatusReason reason;
+  guint skype_reason;
+  gboolean skype_reason_valid;
 
 	dbus_error = tp_account_get_detailed_error (account, &details);
 
-        if (user_requested != NULL)
-          {
-            if (tp_asv_get_boolean (details, "user-requested", NULL))
-              *user_requested = TRUE;
-            else
-              *user_requested = FALSE;
-          }
+  if (user_requested != NULL)
+    {
+      if (tp_asv_get_boolean (details, "user-requested", NULL))
+        *user_requested = TRUE;
+      else
+        *user_requested = FALSE;
+    }
+
+  /* Skype certification requires us to return the precise error message.
+   * Check to see if skype-reason is defined, if it is, try to use that
+   * over the dbus error message */
+  skype_reason = tp_asv_get_uint32 (details, "skype-reason",
+      &skype_reason_valid);
+
+  if (skype_reason_valid)
+    {
+      message = empathy_skype_reason_to_string (skype_reason);
+      if (message != NULL)
+        return message;
+    }
 
 	message = empathy_dbus_error_name_get_default_message (dbus_error);
 	if (message != NULL)
@@ -795,4 +810,65 @@ empathy_get_x509_certificate_hostname (gnutls_x509_crt_t cert)
     return g_strndup (dns_name, dns_name_size);
 
   return NULL;
+}
+
+const gchar *
+empathy_skype_reason_to_string (guint skype_reason)
+{
+  switch (skype_reason)
+    {
+      case EMP_SKYPE_LOGOUTREASON_NONE:
+        return _("No Reason");
+      case EMP_SKYPE_LOGOUTREASON_LOGOUT_CALLED:
+        return _("Requested");
+      case EMP_SKYPE_LOGOUTREASON_HTTPS_PROXY_AUTH_FAILED:
+        return _("HTTPS proxy authentication failed");
+      case EMP_SKYPE_LOGOUTREASON_SOCKS_PROXY_AUTH_FAILED:
+        return _("SOCKS proxy authentication failed");
+      case EMP_SKYPE_LOGOUTREASON_P2P_CONNECT_FAILED:
+        return _("Peer-to-peer connection failed");
+      case EMP_SKYPE_LOGOUTREASON_SERVER_CONNECT_FAILED:
+        return _("Server connection failed");
+      case EMP_SKYPE_LOGOUTREASON_SERVER_OVERLOADED:
+        return _("Server overloaded");
+      case EMP_SKYPE_LOGOUTREASON_DB_IN_USE:
+        return _("Local database in use");
+      case EMP_SKYPE_LOGOUTREASON_INVALID_SKYPENAME:
+        return _("Invalid username");
+      case EMP_SKYPE_LOGOUTREASON_INVALID_EMAIL:
+        return _("Invalid email address");
+      case EMP_SKYPE_LOGOUTREASON_UNACCEPTABLE_PASSWORD:
+        return _("Unacceptable password");
+      case EMP_SKYPE_LOGOUTREASON_SKYPENAME_TAKEN:
+        return _("Username already taken");
+      case EMP_SKYPE_LOGOUTREASON_REJECTED_AS_UNDERAGE:
+        return _("Rejected as underage");
+      case EMP_SKYPE_LOGOUTREASON_NO_SUCH_IDENTITY:
+        return _("No such identity");
+      case EMP_SKYPE_LOGOUTREASON_INCORRECT_PASSWORD:
+        return _("Incorrect password");
+      case EMP_SKYPE_LOGOUTREASON_TOO_MANY_LOGIN_ATTEMPTS:
+        return _("Too many login attempts");
+      case EMP_SKYPE_LOGOUTREASON_PASSWORD_HAS_CHANGED:
+        return _("Password has changed");
+      case EMP_SKYPE_LOGOUTREASON_PERIODIC_UIC_UPDATE_FAILED:
+        /* FIXME: what now? */
+        return _("Periodic UIC update failed");
+      case EMP_SKYPE_LOGOUTREASON_DB_DISK_FULL:
+        return _("Cannot write to local database: disk full");
+      case EMP_SKYPE_LOGOUTREASON_DB_IO_ERROR:
+        return _("Cannot write to local database: input/output error");
+      case EMP_SKYPE_LOGOUTREASON_DB_CORRUPT:
+        return _("Local database corrupt");
+      case EMP_SKYPE_LOGOUTREASON_DB_FAILURE:
+        return _("Local database failure");
+      case EMP_SKYPE_LOGOUTREASON_INVALID_APP_ID:
+        return _("Invalid application ID");
+      case EMP_SKYPE_LOGOUTREASON_APP_ID_BLACKLISTED:
+        return _("Application ID blacklisted");
+      case EMP_SKYPE_LOGOUTREASON_UNSUPPORTED_VERSION:
+        return _("Unsupported Skype version (software upgrade required)");
+    }
+
+  g_return_val_if_reached (NULL);
 }

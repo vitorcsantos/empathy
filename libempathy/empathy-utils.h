@@ -102,6 +102,37 @@ gboolean empathy_folks_persona_is_interesting (FolksPersona *persona);
 
 gchar * empathy_get_x509_certificate_hostname (gnutls_x509_crt_t cert);
 
+/* this enum is taken from SkypeKit */
+enum {
+  EMP_SKYPE_LOGOUTREASON_NONE = 0, /* No reason given */ 
+  EMP_SKYPE_LOGOUTREASON_LOGOUT_CALLED = 1, /* manual logout (or unknown reason from previous session) */ 
+  EMP_SKYPE_LOGOUTREASON_HTTPS_PROXY_AUTH_FAILED = 2, /* sync errors at login/registration */ 
+  EMP_SKYPE_LOGOUTREASON_SOCKS_PROXY_AUTH_FAILED = 3, /* sync errors at login/registration */ 
+  EMP_SKYPE_LOGOUTREASON_P2P_CONNECT_FAILED = 4, /* sync errors at login/registration */ 
+  EMP_SKYPE_LOGOUTREASON_SERVER_CONNECT_FAILED = 5, /* sync errors at login/registration */ 
+  EMP_SKYPE_LOGOUTREASON_SERVER_OVERLOADED = 6, /* sync errors at login/registration */ 
+  EMP_SKYPE_LOGOUTREASON_DB_IN_USE = 7, /* sync errors at login/registration */ 
+  EMP_SKYPE_LOGOUTREASON_INVALID_SKYPENAME = 8, /* sync errors at registration */ 
+  EMP_SKYPE_LOGOUTREASON_INVALID_EMAIL = 9, /* sync errors at registration */ 
+  EMP_SKYPE_LOGOUTREASON_UNACCEPTABLE_PASSWORD = 10, /* sync errors at registration */ 
+  EMP_SKYPE_LOGOUTREASON_SKYPENAME_TAKEN = 11, /* sync errors at registration */ 
+  EMP_SKYPE_LOGOUTREASON_REJECTED_AS_UNDERAGE = 12, /* sync errors at registration */ 
+  EMP_SKYPE_LOGOUTREASON_NO_SUCH_IDENTITY = 13, /* sync errors at login */ 
+  EMP_SKYPE_LOGOUTREASON_INCORRECT_PASSWORD = 14, /* sync errors at login */ 
+  EMP_SKYPE_LOGOUTREASON_TOO_MANY_LOGIN_ATTEMPTS = 15, /* sync errors at login */ 
+  EMP_SKYPE_LOGOUTREASON_PASSWORD_HAS_CHANGED = 16, /* async errors (can happen anytime while logged in) */ 
+  EMP_SKYPE_LOGOUTREASON_PERIODIC_UIC_UPDATE_FAILED = 17, /* async errors (can happen anytime while logged in) */ 
+  EMP_SKYPE_LOGOUTREASON_DB_DISK_FULL = 18, /* async errors (can happen anytime while logged in) */ 
+  EMP_SKYPE_LOGOUTREASON_DB_IO_ERROR = 19, /* async errors (can happen anytime while logged in) */ 
+  EMP_SKYPE_LOGOUTREASON_DB_CORRUPT = 20, /* async errors (can happen anytime while logged in) */ 
+  EMP_SKYPE_LOGOUTREASON_DB_FAILURE = 21, /* deprecated (superceded by more detailed DB_* errors) */ 
+  EMP_SKYPE_LOGOUTREASON_INVALID_APP_ID = 22, /* platform sdk */ 
+  EMP_SKYPE_LOGOUTREASON_APP_ID_BLACKLISTED = 23, /* platform sdk */ 
+  EMP_SKYPE_LOGOUTREASON_UNSUPPORTED_VERSION = 24, /* forced upgrade/discontinuation */ 
+};
+
+const gchar *empathy_skype_reason_to_string (guint skype_reason);
+
 G_END_DECLS
 
 #endif /*  __EMPATHY_UTILS_H__ */
