@@ -39,6 +39,7 @@
 #include "libempathy/empathy-gsettings.h"
 #include "libempathy/empathy-location.h"
 #include "libempathy/empathy-utils.h"
+#include "libempathy/empathy-time.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_LOCATION
 #include "libempathy/empathy-debug.h"
@@ -322,16 +323,15 @@ static void
 update_timestamp (EmpathyLocationManager *self)
 {
   EmpathyLocationManagerPriv *priv= GET_PRIV (self);
+  gint64 timestamp;
   GValue *new_value;
-  gint64 stamp64;
-  time_t timestamp;
 
-  timestamp = time (NULL);
-  stamp64 = (gint64) timestamp;
-  new_value = tp_g_value_slice_new_int64 (stamp64);
+  timestamp = empathy_time_get_current ();
+  new_value = tp_g_value_slice_new_int64 (timestamp);
   g_hash_table_insert (priv->location, g_strdup (EMPATHY_LOCATION_TIMESTAMP),
       new_value);
-  DEBUG ("\t - Timestamp: %" G_GINT64_FORMAT, stamp64);
+
+  DEBUG ("\t - Timestamp: %" G_GINT64_FORMAT, timestamp);
 }
 
 static void
