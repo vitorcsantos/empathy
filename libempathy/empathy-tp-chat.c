@@ -1972,3 +1972,13 @@ empathy_tp_chat_is_sms_channel (EmpathyTpChat *self)
 
 	return priv->sms_channel;
 }
+
+EmpathyContact *
+empathy_tp_chat_get_self_contact (EmpathyTpChat *self)
+{
+	EmpathyTpChatPriv *priv = GET_PRIV (self);
+
+	g_return_val_if_fail (EMPATHY_IS_TP_CHAT (self), NULL);
+
+	return priv->user;
+}
