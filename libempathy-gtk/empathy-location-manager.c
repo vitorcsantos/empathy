@@ -324,9 +324,12 @@ update_timestamp (EmpathyLocationManager *self)
 {
   EmpathyLocationManagerPriv *priv= GET_PRIV (self);
   gint64 timestamp;
+  GValue *new_value;
 
   timestamp = empathy_time_get_current ();
-  tp_asv_set_int64 (priv->location, EMPATHY_LOCATION_TIMESTAMP, timestamp);
+  new_value = tp_g_value_slice_new_int64 (timestamp);
+  g_hash_table_insert (priv->location, g_strdup (EMPATHY_LOCATION_TIMESTAMP),
+      new_value);
 
   DEBUG ("\t - Timestamp: %" G_GINT64_FORMAT, timestamp);
 }
