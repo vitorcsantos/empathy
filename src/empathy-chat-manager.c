@@ -216,6 +216,16 @@ handle_channels (TpSimpleHandler *handler,
       TpChannel *channel = l->data;
       EmpathyTpChat *tp_chat;
 
+      if (tp_proxy_get_invalidated (channel) != NULL)
+        continue;
+
+      if (!TP_IS_TEXT_CHANNEL (channel))
+        {
+          DEBUG ("Channel %s doesn't implement Messages; can't handle it",
+              tp_proxy_get_object_path (channel));
+          continue;
+        }
+
       tp_chat = empathy_tp_chat_new (account, channel);
 
       if (empathy_tp_chat_is_ready (tp_chat))
