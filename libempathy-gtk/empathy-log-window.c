@@ -1385,7 +1385,7 @@ log_window_who_changed_cb (GtkTreeSelection *selection,
   GtkTreeIter iter;
   gboolean someone = FALSE;
 
-g_print ("log_window_who_changed_cb\n");
+  DEBUG ("log_window_who_changed_cb");
 
   view = gtk_tree_selection_get_tree_view (selection);
   model = gtk_tree_view_get_model (view);
@@ -1525,7 +1525,6 @@ get_entities_for_account (TplActionChain *chain, gpointer user_data)
 {
   Ctx *ctx = user_data;
 
-g_print ("get_entities_for_account\n");
   tpl_log_manager_get_entities_async (ctx->window->log_manager, ctx->account,
       log_manager_got_entities_cb, ctx);
 }
@@ -1911,7 +1910,7 @@ log_window_when_changed_cb (GtkTreeSelection *selection,
   GtkTreeModel *model;
   GtkTreeIter iter;
 
-g_print ("log_window_when_changed_cb\n");
+  DEBUG ("log_window_when_changed_cb");
 
   view = gtk_tree_selection_get_tree_view (selection);
   model = gtk_tree_view_get_model (view);
@@ -2021,7 +2020,7 @@ log_window_what_changed_cb (GtkTreeSelection *selection,
   GtkTreeModel *model;
   GtkTreeIter iter;
 
-g_print ("log_window_what_changed_cb\n");
+  DEBUG ("log_window_what_changed_cb");
 
   view = gtk_tree_selection_get_tree_view (selection);
   model = gtk_tree_view_get_model (view);
@@ -2257,7 +2256,6 @@ get_events_for_date (TplActionChain *chain, gpointer user_data)
 {
   Ctx *ctx = user_data;
 
-g_print ("get_events_for_date\n");
   tpl_log_manager_get_events_for_date_async (ctx->window->log_manager,
       ctx->account, ctx->entity, ctx->event_mask,
       ctx->date,
@@ -2457,7 +2455,7 @@ static void
 get_dates_for_entity (TplActionChain *chain, gpointer user_data)
 {
   Ctx *ctx = user_data;
-g_print ("get_dates_for_entity\n");
+
   tpl_log_manager_get_dates_async (ctx->window->log_manager,
       ctx->account, ctx->entity, ctx->event_mask,
       log_manager_got_dates_cb, ctx);
