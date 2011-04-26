@@ -2188,9 +2188,6 @@ log_window_got_messages_for_date_cb (GObject *manager,
     {
       DEBUG ("Unable to retrieve messages for the selected date: %s. Aborting",
           error->message);
-/* FIXME
-      empathy_chat_view_append_event (log_window->chatview_events,
-          "Unable to retrieve messages for the selected date");*/
       g_error_free (error);
       goto out;
     }
@@ -2362,9 +2359,6 @@ log_manager_got_dates_cb (GObject *manager,
     {
       DEBUG ("Unable to retrieve messages' dates: %s. Aborting",
           error->message);
-/* FIXME
-      empathy_chat_view_append_event (log_window->chatview_events,
-          _("Unable to retrieve messages' dates"));*/
       goto out;
     }
 
