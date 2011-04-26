@@ -325,7 +325,7 @@ empathy_message_from_tpl_log_event (TplEvent *logevent)
 		empathy_message_set_receiver (retval, contact);
 		g_object_unref (contact);
 	}
-	
+
 	if (sender != NULL) {
 		contact = empathy_contact_from_tpl_contact (account, sender);
 		empathy_message_set_sender (retval, contact);
