@@ -924,15 +924,13 @@ static void
 main_window_balance_activate_cb (GtkAction         *action,
 				 EmpathyMainWindow *window)
 {
-	TpAccount *account = g_object_get_data (G_OBJECT (action), "account");
-	const char *protocol = tp_account_get_protocol (account);
+	const char *uri;
 
-	/* FIXME: need a generic way to find out how to top-up an
-	 * account that also works with arbitrary SIP and XMPP gateways --
-	 * https://bugs.freedesktop.org/show_bug.cgi?id=36254 */
-	if (!tp_strdiff (protocol, "skype")) {
-		empathy_url_show (GTK_WIDGET (window),
-			"http://go.skype.com/store.buy.skypecredit");
+	uri = g_object_get_data (G_OBJECT (action), "manage-credit-uri");
+
+	if (!tp_str_empty (uri)) {
+		DEBUG ("Top-up credit URI: %s", uri);
+		empathy_url_show (GTK_WIDGET (window), uri);
 	} else {
 		DEBUG ("unknown protocol for top-up");
 	}
@@ -974,23 +972,30 @@ main_window_balance_update_balance (GtkAction   *action,
 }
 
 static void
-main_window_setup_balance_got_balance (TpProxy      *conn,
-				       const GValue *value,
-				       const GError *in_error,
-				       gpointer      user_data,
-				       GObject      *action)
+main_window_setup_balance_got_balance_props (TpProxy      *conn,
+					     GHashTable   *props,
+					     const GError *in_error,
+					     gpointer      user_data,
+					     GObject      *action)
 {
 	GValueArray *balance = NULL;
+	const char *uri;
 
 	if (in_error != NULL) {
-		DEBUG ("Failed to get account balance: %s",
+		DEBUG ("Failed to get account balance properties: %s",
 			in_error->message);
-	} else if (!G_VALUE_HOLDS (value, TP_STRUCT_TYPE_CURRENCY_AMOUNT)) {
-		DEBUG ("Type mismatch");
-	} else {
-		balance = g_value_get_boxed (value);
+		goto finally;
 	}
 
+	balance = tp_asv_get_boxed (props, "AccountBalance",
+		TP_STRUCT_TYPE_CURRENCY_AMOUNT);
+	uri = tp_asv_get_string (props, "ManageCreditURI");
+
+	g_object_set_data_full (action, "manage-credit-uri",
+		g_strdup (uri), g_free);
+	gtk_action_set_sensitive (GTK_ACTION (action), !tp_str_empty (uri));
+
+finally:
 	main_window_balance_update_balance (GTK_ACTION (action), balance);
 }
 
@@ -1149,10 +1154,9 @@ main_window_setup_balance_conn_ready (GObject      *conn,
 	widget = main_window_setup_balance_create_widget (window, action);
 
 	/* request the current balance and monitor for any changes */
-	tp_cli_dbus_properties_call_get (conn, -1,
+	tp_cli_dbus_properties_call_get_all (conn, -1,
 		TP_IFACE_CONNECTION_INTERFACE_BALANCE,
-		"AccountBalance",
-		main_window_setup_balance_got_balance,
+		main_window_setup_balance_got_balance_props,
 		window, NULL, G_OBJECT (action));
 
 	tp_cli_connection_interface_balance_connect_to_balance_changed (
