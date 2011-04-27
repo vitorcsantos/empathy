@@ -700,8 +700,15 @@ account_chooser_find_account_foreach (GtkTreeModel *model,
 {
 	FindAccountData *data = user_data;
 	TpAccount  *account;
+	RowType type;
 
-	gtk_tree_model_get (model, iter, COL_ACCOUNT_POINTER, &account, -1);
+	gtk_tree_model_get (model, iter,
+		COL_ACCOUNT_POINTER, &account,
+		COL_ACCOUNT_ROW_TYPE, &type,
+		 -1);
+
+	if (type != ROW_ACCOUNT)
+		return FALSE;
 
 	if (account == data->account) {
 		data->found = TRUE;
@@ -983,4 +990,12 @@ empathy_account_chooser_get_account (EmpathyAccountChooser *chooser)
 	g_object_unref (account);
 
 	return account;
+}
+
+TpAccountManager *
+empathy_account_chooser_get_account_manager (EmpathyAccountChooser *self)
+{
+	EmpathyAccountChooserPriv *priv = GET_PRIV (self);
+
+	return priv->manager;
 }
