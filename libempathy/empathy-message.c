@@ -309,11 +309,12 @@ empathy_message_from_tpl_log_event (TplEvent *logevent)
 		body = g_strdup (tpl_text_event_get_message (
 			TPL_TEXT_EVENT (logevent)));
 
-		retval = empathy_message_new (body);
-
-		empathy_message_set_tptype (retval,
-			tpl_text_event_get_message_type (TPL_TEXT_EVENT (logevent)));
-		empathy_message_set_is_backlog (retval, TRUE);
+		retval = g_object_new (EMPATHY_TYPE_MESSAGE,
+			"type", tpl_text_event_get_message_type (TPL_TEXT_EVENT (logevent)),
+			"body", body,
+			"timestamp", tpl_event_get_timestamp (logevent),
+			"is-backlog", TRUE,
+			NULL);
 
 		g_free (body);
 	} else if (TPL_IS_CALL_EVENT (logevent)) {
@@ -328,19 +329,17 @@ empathy_message_from_tpl_log_event (TplEvent *logevent)
 			body = g_strdup_printf (_("Call from %s"),
 				tpl_entity_get_alias (tpl_event_get_sender (logevent)));
 
-		retval = empathy_message_new (body);
+		retval = g_object_new (EMPATHY_TYPE_MESSAGE,
+			"body", body,
+			"timestamp", tpl_event_get_timestamp (logevent),
+			NULL);
 		g_free (body);
+	} else {
+		return NULL;
 	}
 
 	receiver = tpl_event_get_receiver (logevent);
 	sender = tpl_event_get_sender (logevent);
-
-	retval = g_object_new (EMPATHY_TYPE_MESSAGE,
-		"type", tpl_text_event_get_message_type (TPL_TEXT_EVENT (logevent)),
-		"body", body,
-		"is-backlog", TRUE,
-		"timestamp", tpl_event_get_timestamp (logevent),
-		NULL);
 
 	if (receiver != NULL) {
 		contact = empathy_contact_from_tpl_contact (account, receiver);
@@ -353,8 +352,6 @@ empathy_message_from_tpl_log_event (TplEvent *logevent)
 		empathy_message_set_sender (retval, contact);
 		g_object_unref (contact);
 	}
-
-	g_free (body);
 
 	return retval;
 }
