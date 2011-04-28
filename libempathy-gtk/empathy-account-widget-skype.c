@@ -962,12 +962,16 @@ static gboolean
 is_other_psyke_account (TpAccount *ours,
     TpAccount *other)
 {
-  if (ours == NULL)
-    return TRUE;
+  gboolean paths_diff;
 
-  return (tp_strdiff (
+  if (ours == NULL)
+    paths_diff = TRUE;
+  else
+    paths_diff = tp_strdiff (
         tp_proxy_get_object_path (ours),
-        tp_proxy_get_object_path (other)) &&
+        tp_proxy_get_object_path (other));
+
+  return (paths_diff &&
       tp_account_is_enabled (other) &&
       !tp_strdiff (tp_account_get_connection_manager (other), "psyke"));
 }
