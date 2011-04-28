@@ -866,7 +866,16 @@ static void
 account_widget_apply_clicked_cb (GtkWidget *button,
     EmpathyAccountWidget *self)
 {
-  empathy_accounts_dialog_skype_disable_other_accounts (NULL, NULL);
+  GtkWidget *parent;
+
+  parent = gtk_widget_get_toplevel (button);
+  if (!GTK_IS_WINDOW (parent) || !gtk_widget_is_toplevel (parent))
+    parent = NULL;
+
+  if (!empathy_accounts_dialog_skype_disable_other_accounts (NULL,
+        GTK_WINDOW (parent)))
+    /* the user chose not to proceed */
+    return;
 
   account_widget_apply_and_log_in (self);
 }
