@@ -251,8 +251,9 @@ status_icon_update_notification (EmpathyStatusIcon *icon)
 							 NOTIFY_EXPIRES_DEFAULT);
 
 			if (has_x_canonical_append) {
+				/* We have to set a not empty string to keep libnotify happy */
 				notify_notification_set_hint_string (notification,
-					EMPATHY_NOTIFY_MANAGER_CAP_X_CANONICAL_APPEND, "");
+					EMPATHY_NOTIFY_MANAGER_CAP_X_CANONICAL_APPEND, "1");
 			}
 
 			if (empathy_notify_manager_has_capability (priv->notify_mgr,
