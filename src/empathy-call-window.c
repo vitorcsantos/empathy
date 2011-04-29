@@ -2110,14 +2110,37 @@ empathy_call_window_update_timer (gpointer user_data)
   return TRUE;
 }
 
-#if 0
+enum
+{
+  EMP_RESPONSE_BALANCE
+};
+
+static void
+on_error_infobar_response_cb (GtkInfoBar *info_bar,
+    gint response_id,
+    gpointer user_data)
+{
+  switch (response_id)
+    {
+      case GTK_RESPONSE_CLOSE:
+        gtk_widget_destroy (GTK_WIDGET (info_bar));
+        break;
+      case EMP_RESPONSE_BALANCE:
+        empathy_url_show (GTK_WIDGET (info_bar),
+            g_object_get_data (G_OBJECT (info_bar), "uri"));
+        break;
+    }
+}
+
 static void
 display_error (EmpathyCallWindow *self,
-    TpyCallChannel *call,
     const gchar *img,
     const gchar *title,
     const gchar *desc,
-    const gchar *details)
+    const gchar *details,
+    const gchar *button_text,
+    const gchar *uri,
+    gint button_response)
 {
   EmpathyCallWindowPriv *priv = GET_PRIV (self);
   GtkWidget *info_bar;
@@ -2131,6 +2154,14 @@ display_error (EmpathyCallWindow *self,
   /* Create info bar */
   info_bar = gtk_info_bar_new_with_buttons (GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
       NULL);
+
+  if (button_text != NULL)
+    {
+      gtk_info_bar_add_button (GTK_INFO_BAR (info_bar),
+          button_text, button_response);
+      g_object_set_data_full (G_OBJECT (info_bar),
+          "uri", g_strdup (uri), g_free);
+    }
 
   gtk_info_bar_set_message_type (GTK_INFO_BAR (info_bar), GTK_MESSAGE_WARNING);
 
@@ -2179,13 +2210,14 @@ display_error (EmpathyCallWindow *self,
     }
 
   g_signal_connect (info_bar, "response",
-      G_CALLBACK (gtk_widget_destroy), NULL);
+      G_CALLBACK (on_error_infobar_response_cb), NULL);
 
   gtk_box_pack_start (GTK_BOX (priv->errors_vbox), info_bar,
       FALSE, FALSE, CONTENT_HBOX_CHILDREN_PACKING_PADDING);
   gtk_widget_show_all (info_bar);
 }
 
+#if 0
 static gchar *
 media_stream_error_to_txt (EmpathyCallWindow *self,
     TpyCallChannel *call,
@@ -2305,13 +2337,86 @@ empathy_call_window_video_stream_error (TpyCallChannel *call,
 #endif
 
 static void
+got_balance_props (TpProxy *proxy,
+   GHashTable *props,
+    const GError *error,
+    gpointer user_data,
+    GObject *weak_object)
+{
+  EmpathyCallWindow *self = EMPATHY_CALL_WINDOW (weak_object);
+  GValueArray *balance;
+  gchar *balance_str, *currency, *tmp;
+  const gchar *uri;
+  gint amount, scale;
+
+  if (error != NULL)
+    {
+      DEBUG ("Failed to get Balance: %s", error->message);
+      return;
+    }
+
+  balance = tp_asv_get_boxed (props, "AccountBalance",
+      TP_STRUCT_TYPE_CURRENCY_AMOUNT);
+  uri = tp_asv_get_string (props, "ManageCreditURI");
+  tp_value_array_unpack (balance, 3,
+      &amount,
+      &scale,
+      &currency);
+
+  if (amount == 0 &&
+      scale == G_MAXINT32 &&
+      tp_str_empty (currency))
+    {
+      /* unknown balance */
+      balance_str = g_strdup ("(--)");
+    }
+  else
+    {
+      char *money = empathy_format_currency (amount, scale, currency);
+
+      balance_str = g_strdup_printf ("%s %s",
+          currency, money);
+      g_free (money);
+    }
+
+  /* FIXME: don't hardcode Skype here */
+  display_error (self,
+      NULL,
+      _("Sorry, you don’t have enough Skype Credit for that call."),
+      tmp = g_strdup_printf (_("Your current balance is %s."),
+          balance_str),
+      NULL,
+      _("Buy Skype credit..."),
+      uri,
+      EMP_RESPONSE_BALANCE);
+  g_free (tmp);
+}
+
+static void
 empathy_call_window_state_changed_cb (EmpathyCallHandler *handler,
     TpyCallState state,
+    gchar *reason,
     EmpathyCallWindow *self)
 {
   EmpathyCallWindowPriv *priv = GET_PRIV (self);
   TpyCallChannel *call;
   gboolean can_send_video;
+
+  if (state == TPY_CALL_STATE_ENDED &&
+      !tp_strdiff (reason, TP_ERROR_STR_INSUFFICIENT_BALANCE))
+    {
+      g_object_get (handler, "call-channel", &call, NULL);
+
+      tp_cli_dbus_properties_call_get_all (
+          tp_channel_borrow_connection (TP_CHANNEL (call)),
+          -1,
+          TP_IFACE_CONNECTION_INTERFACE_BALANCE,
+          got_balance_props,
+          NULL, NULL, G_OBJECT (self));
+
+      g_object_unref (call);
+      return;
+    }
 
   if (state != TPY_CALL_STATE_ACCEPTED)
     return;
