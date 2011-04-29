@@ -259,7 +259,7 @@ dist_man_MANS =			\
 src-marshal.list: $(empathy_SOURCES) Makefile.am
 	$(AM_V_GEN)( cd $(srcdir) && \
 	sed -n -e 's/.*src_marshal_\([[:upper:][:digit:]]*__[[:upper:][:digit:]_]*\).*/\1/p' \
-	$(empathy_SOURCES) $(empathy_av_SOURCES) ) \
+	$(empathy_SOURCES) $(empathy_av_SOURCES) $(empathy_call_SOURCES) ) \
 	| sed -e 's/__/:/' -e 'y/_/,/' | sort -u > $@.tmp
 	@if cmp -s $@.tmp $@; then \
 		rm $@.tmp; \
