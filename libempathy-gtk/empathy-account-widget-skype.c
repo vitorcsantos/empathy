@@ -149,7 +149,6 @@ auth_observer_observe_channels (TpSimpleObserver *auth_observer,
   TpChannel *channel;
   GHashTable *props;
   GStrv available_mechanisms;
-  GtkWidget *password_entry = user_data;
   const char *password = NULL;
   gboolean remember;
 
@@ -157,11 +156,11 @@ auth_observer_observe_channels (TpSimpleObserver *auth_observer,
   if (tp_strdiff (
         tp_connection_get_connection_manager_name (connection),
         "psyke"))
-    goto except;
+    goto finally;
 
   /* can only deal with one channel */
   if (g_list_length (channels) != 1)
-    goto except;
+    goto finally;
 
   channel = channels->data;
   props = tp_channel_borrow_immutable_properties (channel);
@@ -172,18 +171,14 @@ auth_observer_observe_channels (TpSimpleObserver *auth_observer,
   /* must support X-TELEPATHY-PASSWORD */
   if (!tp_strv_contains ((const char * const *) available_mechanisms,
         "X-TELEPATHY-PASSWORD"))
-    goto except;
+    goto finally;
 
-  /* do we have a password */
-  if (g_object_get_data (G_OBJECT (password_entry), "fake-password") == NULL)
-    password = gtk_entry_get_text (GTK_ENTRY (password_entry));
+  password = g_object_get_data (G_OBJECT (auth_observer), "password");
+  remember = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (auth_observer),
+        "remember-password"));
 
   if (tp_str_empty (password))
-    goto except;
-
-  /* do we want to remember it */
-  remember = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (
-      g_object_get_data (G_OBJECT (password_entry), "remember-password")));
+    goto finally;
 
   DEBUG ("claiming auth channel");
 
@@ -191,12 +186,12 @@ auth_observer_observe_channels (TpSimpleObserver *auth_observer,
       auth_observer_claim_cb,
       observe_channels_data_new (account, channel, password, remember));
 
-except:
+finally:
   tp_observe_channels_context_accept (context);
 }
 
 static TpBaseClient *
-auth_observer_new (GtkWidget *password_entry)
+auth_observer_new (void)
 {
   TpDBusDaemon *dbus;
   TpBaseClient *auth_observer;
@@ -212,7 +207,7 @@ auth_observer_new (GtkWidget *password_entry)
     }
 
   auth_observer = tp_simple_observer_new (dbus, FALSE, "Empathy.PsykePreAuth",
-      FALSE, auth_observer_observe_channels, password_entry, NULL);
+      FALSE, auth_observer_observe_channels, NULL, NULL);
 
   tp_base_client_set_observer_delay_approvers (auth_observer, TRUE);
   tp_base_client_take_observer_filter (auth_observer, tp_asv_new (
@@ -365,7 +360,7 @@ account_widget_build_skype_get_password_saved_cb (TpProxy *account,
     gpointer user_data,
     GObject *password_entry)
 {
-  GtkWidget *remember_password;
+  GtkWidget *remember_password = user_data;
   gboolean password_saved;
 
   if (in_error != NULL)
@@ -384,9 +379,6 @@ account_widget_build_skype_get_password_saved_cb (TpProxy *account,
   if (g_object_get_data (password_entry, "fake-password") == NULL &&
       !tp_str_empty (gtk_entry_get_text (GTK_ENTRY (password_entry))))
     return;
-
-  remember_password =
-    GTK_WIDGET (g_object_get_data (password_entry, "remember-password"));
 
   gtk_entry_set_text (GTK_ENTRY (password_entry),
       password_saved ? "xxxxxxxxxxxx": "");
@@ -417,7 +409,7 @@ account_widget_build_skype_account_properties_changed_cb (TpProxy *account,
     return;
 
   account_widget_build_skype_get_password_saved_cb (account, value, NULL,
-      NULL, password_entry);
+      user_data, password_entry);
 }
 
 static void
@@ -453,6 +445,26 @@ account_widget_skype_additional_apply_async (EmpathyAccountWidget *self,
   TpAccount *account = empathy_account_settings_get_account (priv->settings);
   GSimpleAsyncResult *simple = g_simple_async_result_new (G_OBJECT (self),
       callback, user_data, NULL);
+  GtkWidget *password_entry, *remember_password;
+  GObject *auth_observer;
+  const char *password = NULL;
+  gboolean remember;
+
+  /* sync the password with the observer */
+  auth_observer = g_object_get_data (G_OBJECT (self), "auth-observer");
+  password_entry = g_object_get_data (G_OBJECT (self), "password-entry");
+  remember_password = g_object_get_data (G_OBJECT (self), "remember-password");
+
+  if (g_object_get_data (G_OBJECT (password_entry), "fake-password") == NULL)
+    password = gtk_entry_get_text (GTK_ENTRY (password_entry));
+
+  remember = gtk_toggle_button_get_active (
+      GTK_TOGGLE_BUTTON (remember_password));
+
+  g_object_set_data_full (auth_observer, "password",
+      g_strdup (password), g_free);
+  g_object_set_data (auth_observer, "remember-password",
+      GUINT_TO_POINTER (remember));
 
   /* we have to forget the password, else psyke won't query for the new one */
   emp_cli_account_interface_external_password_storage_call_forget_password (
@@ -782,6 +794,7 @@ void
 empathy_account_widget_build_skype (EmpathyAccountWidget *self,
     const char *filename)
 {
+  static TpBaseClient *auth_observer = NULL;
   EmpathyAccountWidgetPriv *priv = GET_PRIV (self);
   TpAccount *account = empathy_account_settings_get_account (priv->settings);
   GtkWidget *password_entry, *remember_password;
@@ -854,12 +867,17 @@ empathy_account_widget_build_skype (EmpathyAccountWidget *self,
       self->ui_details->default_focus = g_strdup ("entry_id");
     }
 
-  /* create the Psyke pre-authentication observer --
-   * tie the lifetime of the observer to the lifetime of the widget */
-  g_object_set_data_full (G_OBJECT (self->ui_details->widget), "auth-observer",
-      auth_observer_new (password_entry), g_object_unref);
-  g_object_set_data (G_OBJECT (password_entry), "remember-password",
-      remember_password);
+  /* create the Psyke pre-authentication observer */
+  if (auth_observer == NULL)
+    {
+      /* the auth observer lives for the lifetime of the process */
+      DEBUG ("Creating Psyke authentication observer");
+      auth_observer = auth_observer_new ();
+    }
+
+  g_object_set_data (G_OBJECT (self), "auth-observer", auth_observer);
+  g_object_set_data (G_OBJECT (self), "password-entry", password_entry);
+  g_object_set_data (G_OBJECT (self), "remember-password", remember_password);
 
   g_object_bind_property (remember_password, "active",
       password_entry, "sensitive", G_BINDING_SYNC_CREATE);
@@ -872,10 +890,10 @@ empathy_account_widget_build_skype (EmpathyAccountWidget *self,
           EMP_IFACE_ACCOUNT_INTERFACE_EXTERNAL_PASSWORD_STORAGE,
           "PasswordSaved",
           account_widget_build_skype_get_password_saved_cb,
-          NULL, NULL, G_OBJECT (password_entry));
+          remember_password, NULL, G_OBJECT (password_entry));
       tp_cli_dbus_properties_connect_to_properties_changed (account,
           account_widget_build_skype_account_properties_changed_cb,
-          NULL, NULL, G_OBJECT (password_entry), NULL);
+          remember_password, NULL, G_OBJECT (password_entry), NULL);
     }
 
   /* if the user changes the password, it's probably no longer a fake
@@ -962,12 +980,16 @@ static gboolean
 is_other_psyke_account (TpAccount *ours,
     TpAccount *other)
 {
-  if (ours == NULL)
-    return TRUE;
+  gboolean paths_diff;
 
-  return (tp_strdiff (
+  if (ours == NULL)
+    paths_diff = TRUE;
+  else
+    paths_diff = tp_strdiff (
         tp_proxy_get_object_path (ours),
-        tp_proxy_get_object_path (other)) &&
+        tp_proxy_get_object_path (other));
+
+  return (paths_diff &&
       tp_account_is_enabled (other) &&
       !tp_strdiff (tp_account_get_connection_manager (other), "psyke"));
 }

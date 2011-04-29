@@ -565,6 +565,11 @@ account_assistant_finish_enter_or_create_page (EmpathyAccountAssistant *self,
           _("Enter the details for the new account"));
     }
 
+  /* if someone clicked 'Back' this signal handler can be connected twice:
+   * disconnect any existing handlers */
+  g_signal_handlers_disconnect_by_func (priv->chooser,
+      account_assistant_protocol_changed_cb, self);
+
   g_signal_connect (priv->chooser, "changed",
       G_CALLBACK (account_assistant_protocol_changed_cb), self);
 

@@ -42,7 +42,7 @@ LIBCANBERRA_GTK_REQUIRED=0.4
 LIBNOTIFY_REQUIRED=0.7.0
 TELEPATHY_FARSIGHT_REQUIRED=0.0.14
 TELEPATHY_GLIB_REQUIRED=0.14.1
-TELEPATHY_LOGGER=0.2.0
+TELEPATHY_LOGGER=0.2.8
 UNIQUE_REQUIRED=1.1.2
 
 # Optionnal deps
@@ -199,6 +199,21 @@ if test "x$with_call" = "xyes" -a "x$have_farstream" != "xyes"; then
    AC_MSG_ERROR([Could not find Call handler dependencies.])
 fi
 AM_CONDITIONAL(HAVE_CALL, test "x$have_farstream" = "xyes")
+
+
+# -----------------------------------------------------------
+# Call support in tp-logger
+# -----------------------------------------------------------
+SAVE_CFLAGS=$CFLAGS
+SAVE_CPPFLAGS=$CPPFLAGS
+CFLAGS="$CFLAGS $EMPATHY_CFLAGS"
+CPPFLAGS="$CPPFLAGS $EMPATHY_CFLAGS"
+
+AC_CHECK_HEADER(telepathy-logger/call-event.h,,
+  AC_MSG_ERROR([tp-logger must be compiled with --enable-call]))
+
+CFLAGS=$SAVE_CFLAGS
+CPPFLAGS=$SAVE_CPPFLAGS
 
 # -----------------------------------------------------------
 # evolution-data-server (about-me)
