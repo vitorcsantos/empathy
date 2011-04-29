@@ -3,13 +3,13 @@
 +++ b/configure.ac
 @@ -44,6 +44,7 @@
  TELEPATHY_GLIB_REQUIRED=0.14.1
- TELEPATHY_LOGGER=0.2.0
+ TELEPATHY_LOGGER=0.2.8
  UNIQUE_REQUIRED=1.1.2
 +IDO_REQUIRED=0.1.14
  
  # Optionnal deps
  CLUTTER_GTK_REQUIRED=0.10
-@@ -162,6 +163,7 @@
+@@ -165,6 +166,7 @@
     libxml-2.0
     telepathy-glib >= $TELEPATHY_GLIB_REQUIRED
     telepathy-logger-0.2 >= $TELEPATHY_LOGGER
@@ -29,7 +29,7 @@
  #include "empathy-event-manager.h"
  #include "empathy-main-window.h"
  
-@@ -473,6 +476,7 @@
+@@ -474,6 +477,7 @@
      }
  }
  
@@ -37,7 +37,7 @@
  static void
  event_manager_call_window_confirmation_dialog_response_cb (GtkDialog *dialog,
    gint response, gpointer user_data)
-@@ -499,13 +503,75 @@
+@@ -500,13 +504,75 @@
  }
  
  static void
@@ -114,7 +114,7 @@
    EmpathyEventType etype = event->public.type;
  
    if (event->approval->dialog != NULL)
-@@ -532,33 +598,33 @@
+@@ -533,33 +599,33 @@
        return;
      }
  
@@ -167,7 +167,7 @@
  
    gtk_message_dialog_set_image (GTK_MESSAGE_DIALOG (dialog), image);
    gtk_widget_show (image);
-@@ -955,7 +1021,7 @@
+@@ -956,7 +1022,7 @@
    event_manager_add (approval->manager, NULL,
        approval->contact, EMPATHY_EVENT_TYPE_TRANSFER,
        EMPATHY_IMAGE_DOCUMENT_SEND, header, NULL,
