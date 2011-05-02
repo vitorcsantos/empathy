@@ -281,7 +281,7 @@ theme_adium_parse_body (EmpathyThemeAdium *self,
 static void
 escape_and_append_len (GString *string, const gchar *str, gint len)
 {
-	while (*str != '\0' && len != 0) {
+	while (str != NULL && *str != '\0' && len != 0) {
 		switch (*str) {
 		case '\\':
 			/* \ becomes \\ */
