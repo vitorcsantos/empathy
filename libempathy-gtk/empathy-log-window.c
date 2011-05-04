@@ -68,6 +68,9 @@ typedef struct
 
   GtkWidget *search_entry;
 
+  GtkWidget *notebook;
+  GtkWidget *spinner;
+
   GtkWidget *treeview_who;
   GtkWidget *treeview_what;
   GtkWidget *treeview_when;
@@ -125,6 +128,13 @@ empathy_account_chooser_filter_has_logs (TpAccount *account,
     EmpathyAccountChooserFilterResultCallback callback,
     gpointer callback_data,
     gpointer user_data);
+
+enum
+{
+  PAGE_EVENTS,
+  PAGE_SPINNER,
+  PAGE_EMPTY
+};
 
 enum
 {
@@ -454,6 +464,8 @@ empathy_log_window_show (TpAccount  *account,
       "treeview_what", &window->treeview_what,
       "treeview_when", &window->treeview_when,
       "treeview_events", &window->treeview_events,
+      "notebook", &window->notebook,
+      "spinner", &window->spinner,
       NULL);
   g_free (filename);
 
@@ -482,6 +494,7 @@ empathy_log_window_show (TpAccount  *account,
   empathy_account_chooser_set_has_all_option (account_chooser, TRUE);
   empathy_account_chooser_set_filter (account_chooser,
       empathy_account_chooser_filter_has_logs, NULL);
+  empathy_account_chooser_set_all (account_chooser);
 
   g_signal_connect (window->account_chooser, "changed",
       G_CALLBACK (log_window_chats_accounts_changed_cb),
@@ -825,7 +838,7 @@ log_window_append_call (TplEvent *event,
   TplCallEvent *call = TPL_CALL_EVENT (event);
   GtkTreeStore *store = log_window->store_events;
   GtkTreeIter iter, child;
-  gchar *pretty_date, *body, *duration, *finished;
+  gchar *pretty_date, *duration, *finished;
   GDateTime *started_date, *finished_date;
   GTimeSpan span;
 
@@ -848,6 +861,8 @@ log_window_append_call (TplEvent *event,
 
   if (tpl_call_event_get_end_reason (call) != TPL_CALL_END_REASON_NO_ANSWER)
     {
+      gchar *body;
+
       span = tpl_call_event_get_duration (TPL_CALL_EVENT (event));
       if (span < 60)
         duration = g_strdup_printf (_("%" G_GINT64_FORMAT " seconds"), span);
@@ -873,9 +888,10 @@ log_window_append_call (TplEvent *event,
           COL_EVENTS_TARGET, event_get_target (event),
           COL_EVENTS_EVENT, event,
           -1);
+
+      g_free (body);
     }
 
-  g_free (body);
   g_free (pretty_date);
   g_date_time_unref (started_date);
 }
@@ -1285,7 +1301,8 @@ populate_dates_from_search_hits (GList *accounts,
           COL_WHEN_TEXT, _("Anytime"),
           -1);
 
-      gtk_tree_selection_select_iter (selection, &iter);
+      if (gtk_tree_model_iter_nth_child (model, &iter, NULL, 2))
+        gtk_tree_selection_select_iter (selection, &iter);
     }
 }
 
@@ -2281,17 +2298,60 @@ log_window_what_setup (EmpathyLogWindow *window)
 }
 
 static void
+start_spinner (void)
+{
+  gtk_spinner_start (GTK_SPINNER (log_window->spinner));
+  gtk_notebook_set_current_page (GTK_NOTEBOOK (log_window->notebook),
+      PAGE_EMPTY);
+}
+
+static gboolean
+show_spinner (gpointer data)
+{
+  gboolean active;
+
+  if (log_window == NULL)
+    return FALSE;
+
+  g_object_get (log_window->spinner, "active", &active, NULL);
+
+  if (active)
+    gtk_notebook_set_current_page (GTK_NOTEBOOK (log_window->notebook),
+        PAGE_SPINNER);
+
+  return FALSE;
+}
+
+static void
+show_events (TplActionChain *chain,
+    gpointer user_data)
+{
+  gtk_spinner_stop (GTK_SPINNER (log_window->spinner));
+  gtk_notebook_set_current_page (GTK_NOTEBOOK (log_window->notebook),
+      PAGE_EVENTS);
+
+  _tpl_action_chain_continue (chain);
+}
+
+static void
 log_window_got_messages_for_date_cb (GObject *manager,
     GAsyncResult *result,
     gpointer user_data)
 {
   Ctx *ctx = user_data;
+  GtkTreeView *view;
+  GtkTreeModel *model;
+  GtkTreeIter iter;
   GList *events;
   GList *l;
   GError *error = NULL;
+  gint n;
 
   if (log_window == NULL)
-    goto out;
+    {
+      ctx_free (ctx);
+      return;
+    }
 
   if (log_window->count != ctx->count)
     goto out;
@@ -2356,6 +2416,19 @@ log_window_got_messages_for_date_cb (GObject *manager,
       g_object_unref (event);
     }
   g_list_free (events);
+
+  view = GTK_TREE_VIEW (log_window->treeview_events);
+  model = gtk_tree_view_get_model (view);
+  n = gtk_tree_model_iter_n_children (model, NULL) - 1;
+
+  if (n >= 0 && gtk_tree_model_iter_nth_child (model, &iter, NULL, n))
+    {
+      GtkTreePath *path;
+
+      path = gtk_tree_model_get_path (model, &iter);
+      gtk_tree_view_scroll_to_cell (view, path, NULL, FALSE, 0, 0);
+      gtk_tree_path_free (path);
+    }
 
  out:
   ctx_free (ctx);
@@ -2444,6 +2517,9 @@ log_window_get_messages_for_dates (EmpathyLogWindow *window,
         }
     }
 
+  start_spinner ();
+  g_timeout_add (1000, show_spinner, NULL);
+  _tpl_action_chain_append (window->chain, show_events, NULL);
   _tpl_action_chain_start (window->chain);
 
   g_list_free_full (accounts, g_object_unref);
@@ -2554,7 +2630,7 @@ select_first_date (TplActionChain *chain, gpointer user_data)
   selection = gtk_tree_view_get_selection (view);
 
   /* Show messages of the most recent date */
-  if (gtk_tree_model_get_iter_first (model, &iter))
+  if (gtk_tree_model_iter_nth_child (model, &iter, NULL, 2))
     gtk_tree_selection_select_iter (selection, &iter);
 
   _tpl_action_chain_continue (log_window->chain);

@@ -83,12 +83,13 @@ enum
   PROP_FEATURES,
 };
 
-enum DndDragType
+typedef enum
 {
-  DND_DRAG_TYPE_INDIVIDUAL_ID,
+  DND_DRAG_TYPE_UNKNOWN = -1,
+  DND_DRAG_TYPE_INDIVIDUAL_ID = 0,
   DND_DRAG_TYPE_PERSONA_ID,
   DND_DRAG_TYPE_STRING,
-};
+} DndDragType;
 
 #define DRAG_TYPE(T,I) \
   { (gchar *) T, 0, I }
@@ -106,7 +107,6 @@ static const GtkTargetEntry drag_types_source[] = {
 #undef DRAG_TYPE
 
 static GdkAtom drag_atoms_dest[G_N_ELEMENTS (drag_types_dest)];
-static GdkAtom drag_atoms_source[G_N_ELEMENTS (drag_types_source)];
 
 enum
 {
@@ -412,12 +412,24 @@ drag_motion (GtkWidget *widget,
   EmpathyPersonaView *self = EMPATHY_PERSONA_VIEW (widget);
   EmpathyPersonaViewPriv *priv;
   GdkAtom target;
+  guint i;
+  DndDragType drag_type = DND_DRAG_TYPE_UNKNOWN;
 
   priv = GET_PRIV (self);
 
   target = gtk_drag_dest_find_target (GTK_WIDGET (self), context, NULL);
 
-  if (target == drag_atoms_dest[DND_DRAG_TYPE_INDIVIDUAL_ID])
+  /* Determine the DndDragType of the data */
+  for (i = 0; i < G_N_ELEMENTS (drag_atoms_dest); i++)
+    {
+      if (target == drag_atoms_dest[i])
+        {
+          drag_type = drag_types_dest[i].info;
+          break;
+        }
+    }
+
+  if (drag_type == DND_DRAG_TYPE_INDIVIDUAL_ID)
     {
       GtkTreePath *path;
 
@@ -466,7 +478,8 @@ drag_data_get (GtkWidget *widget,
     return;
 
   persona_uid = folks_persona_get_uid (persona);
-  gtk_selection_data_set (selection, drag_atoms_source[info], 8,
+  gtk_selection_data_set (selection,
+      gdk_atom_intern ("text/persona-id", FALSE), 8,
       (guchar *) persona_uid, strlen (persona_uid) + 1);
 
   g_object_unref (persona);
@@ -614,9 +627,6 @@ constructed (GObject *object)
   /* Drag & Drop. */
   for (i = 0; i < G_N_ELEMENTS (drag_types_dest); ++i)
     drag_atoms_dest[i] = gdk_atom_intern (drag_types_dest[i].target, FALSE);
-
-  for (i = 0; i < G_N_ELEMENTS (drag_types_source); ++i)
-    drag_atoms_source[i] = gdk_atom_intern (drag_types_source[i].target, FALSE);
 }
 
 static void

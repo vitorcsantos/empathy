@@ -223,6 +223,8 @@ main_window_flash_foreach (GtkTreeModel *model,
 		pixbuf = empathy_individual_store_get_individual_status_icon (
 						GET_PRIV (data->window)->individual_store,
 						individual);
+		if (pixbuf != NULL)
+			g_object_ref (pixbuf);
 	}
 
 	gtk_tree_store_set (GTK_TREE_STORE (model), iter,
@@ -243,6 +245,7 @@ main_window_flash_foreach (GtkTreeModel *model,
 
 	g_object_unref (individual);
 	tp_clear_object (&contact);
+	tp_clear_object (&pixbuf);
 
 	return FALSE;
 }
@@ -941,10 +944,11 @@ main_window_balance_update_balance (GtkAction   *action,
 				    GValueArray *balance)
 {
 	TpAccount *account = g_object_get_data (G_OBJECT (action), "account");
+	GtkWidget *label;
 	int amount = 0;
 	guint scale = G_MAXINT32;
 	const char *currency = "";
-	char *str;
+	char *money, *str;
 
 	if (balance != NULL)
 		tp_value_array_unpack (balance, 3,
@@ -956,19 +960,28 @@ main_window_balance_update_balance (GtkAction   *action,
 	    scale == G_MAXINT32 &&
 	    tp_str_empty (currency)) {
 		/* unknown balance */
-		str = g_strdup_printf ("%s (--)",
-			tp_account_get_display_name (account));
+		money = g_strdup ("--");
 	} else {
-		char *money = empathy_format_currency (amount, scale, currency);
+		char *tmp = empathy_format_currency (amount, scale, currency);
 
-		str = g_strdup_printf ("%s (%s %s)",
-			tp_account_get_display_name (account),
-			currency, money);
-		g_free (money);
+		money = g_strdup_printf ("%s %s", currency, tmp);
+		g_free (tmp);
 	}
+
+	/* Translators: this string will be something like:
+	 *   Top up Skype ($1.23)..." */
+	str = g_strdup_printf (_("Top up %s (%s)..."),
+		tp_account_get_display_name (account),
+		money);
 
 	gtk_action_set_label (action, str);
 	g_free (str);
+
+	/* update the money label in the roster */
+	label = g_object_get_data (G_OBJECT (action), "money-label");
+
+	gtk_label_set_text (GTK_LABEL (label), money);
+	g_free (money);
 }
 
 static void
@@ -1079,34 +1092,41 @@ main_window_setup_balance_create_widget (EmpathyMainWindow *window,
 					 GtkAction         *action)
 {
 	EmpathyMainWindowPriv *priv = GET_PRIV (window);
+	TpAccount *account;
 	GtkWidget *hbox, *image, *label, *button;
+
+	account = g_object_get_data (G_OBJECT (action), "account");
+	g_return_val_if_fail (TP_IS_ACCOUNT (account), NULL);
 
 	hbox = gtk_hbox_new (FALSE, 6);
 
+	/* protocol icon */
 	image = gtk_image_new ();
 	gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, TRUE, 0);
-	gtk_widget_show (image);
+	g_object_bind_property (action, "icon-name", image, "icon-name",
+		G_BINDING_SYNC_CREATE);
 
+	/* account name label */
 	label = gtk_label_new ("");
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
-	gtk_widget_show (label);
+	g_object_bind_property (account, "display-name", label, "label",
+		G_BINDING_SYNC_CREATE);
 
+	/* balance label */
+	label = gtk_label_new ("");
+	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, TRUE, 0);
+	g_object_set_data (G_OBJECT (action), "money-label", label);
+
+	/* top up button */
 	button = gtk_button_new_with_label (_("Top Up..."));
 	gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, TRUE, 0);
-	gtk_widget_show (button);
+	g_signal_connect_swapped (button, "clicked",
+		G_CALLBACK (gtk_action_activate), action);
 
 	gtk_box_pack_start (GTK_BOX (priv->balance_vbox), hbox, FALSE, TRUE, 0);
 	gtk_widget_show_all (hbox);
-
-	/* bind the properties from the action to the widgets -- I could have
-	 * written a widget that implemented GtkActivatable, but effort */
-	g_object_bind_property (action, "label", label, "label",
-		G_BINDING_SYNC_CREATE);
-	g_object_bind_property (action, "icon-name", image, "icon-name",
-		G_BINDING_SYNC_CREATE);
-	g_signal_connect_swapped (button, "clicked",
-		G_CALLBACK (gtk_action_activate), action);
 
 	/* tie the lifetime of the widget to the lifetime of the action */
 	g_object_weak_ref (G_OBJECT (action),
