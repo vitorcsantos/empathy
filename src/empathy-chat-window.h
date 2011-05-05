@@ -71,7 +71,8 @@ void               empathy_chat_window_switch_to_chat (EmpathyChatWindow *window
 						       EmpathyChat       *chat);
 gboolean           empathy_chat_window_has_focus      (EmpathyChatWindow *window);
 EmpathyChat *      empathy_chat_window_find_chat      (TpAccount        *account,
-						       const gchar      *id);
+						       const gchar      *id,
+						       gboolean          sms_channel);
 void               empathy_chat_window_present_chat   (EmpathyChat      *chat,
 						       gint64 timestamp);
 

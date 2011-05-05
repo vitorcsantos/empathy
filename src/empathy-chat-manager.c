@@ -126,7 +126,8 @@ process_tp_chat (EmpathyTpChat *tp_chat,
   id = empathy_tp_chat_get_id (tp_chat);
   if (!tp_str_empty (id))
     {
-      chat = empathy_chat_window_find_chat (account, id);
+      chat = empathy_chat_window_find_chat (account, id,
+          empathy_tp_chat_is_sms_channel (tp_chat));
     }
 
   if (chat != NULL)
