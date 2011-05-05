@@ -146,8 +146,6 @@ static const GtkTargetEntry drag_types_dest_file[] = {
 
 static void chat_window_update (EmpathyChatWindow *window,
 		gboolean update_contact_menu);
-static EmpathyChat *empathy_chat_window_find_chat (TpAccount *account,
-		const gchar *id);
 
 G_DEFINE_TYPE (EmpathyChatWindow, empathy_chat_window, G_TYPE_OBJECT);
 
@@ -2395,7 +2393,7 @@ empathy_chat_window_has_focus (EmpathyChatWindow *window)
 	return has_focus;
 }
 
-static EmpathyChat *
+EmpathyChat *
 empathy_chat_window_find_chat (TpAccount   *account,
 			       const gchar *id)
 {
