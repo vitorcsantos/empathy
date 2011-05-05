@@ -461,16 +461,22 @@ account_widget_skype_additional_apply_async (EmpathyAccountWidget *self,
   remember = gtk_toggle_button_get_active (
       GTK_TOGGLE_BUTTON (remember_password));
 
+  DEBUG ("Setting password and remember-password (%u) on auth observer",
+      remember);
   g_object_set_data_full (auth_observer, "password",
       g_strdup (password), g_free);
   g_object_set_data (auth_observer, "remember-password",
       GUINT_TO_POINTER (remember));
 
-  /* we have to forget the password, else psyke won't query for the new one */
-  emp_cli_account_interface_external_password_storage_call_forget_password (
-      TP_PROXY (account), -1,
-      account_widget_skype_additional_apply_forget_passwd_cb,
-      NULL, NULL, G_OBJECT (simple));
+  if (priv->contains_pending_changes)
+    {
+      /* forget the password, else psyke won't query for the new one */
+      DEBUG ("Forget the password so that Psyke queries for a new one");
+      emp_cli_account_interface_external_password_storage_call_forget_password (
+          TP_PROXY (account), -1,
+          account_widget_skype_additional_apply_forget_passwd_cb,
+          NULL, NULL, G_OBJECT (simple));
+    }
 }
 
 static gboolean
@@ -494,8 +500,6 @@ account_widget_build_skype_password_entry_focus (GtkWidget *password_entry,
     {
       DEBUG ("Highlighting Apply/Cancel button");
 
-      self->ui_details->additional_apply_async =
-        account_widget_skype_additional_apply_async;
       empathy_account_widget_changed (self);
     }
 
@@ -798,6 +802,10 @@ empathy_account_widget_build_skype (EmpathyAccountWidget *self,
   EmpathyAccountWidgetPriv *priv = GET_PRIV (self);
   TpAccount *account = empathy_account_settings_get_account (priv->settings);
   GtkWidget *password_entry, *remember_password;
+
+  /* additional apply function */
+  self->ui_details->additional_apply_async =
+    account_widget_skype_additional_apply_async;
 
   if (priv->simple || priv->creating_account)
     {
