@@ -2068,19 +2068,6 @@ empathy_tp_chat_is_invited (EmpathyTpChat *self,
 	return tp_channel_group_get_local_pending_info (priv->channel, self_handle,
 		inviter, NULL, NULL);
 }
-
-const char *
-empathy_tp_chat_get_channel_path (EmpathyTpChat *self)
-{
-	EmpathyTpChatPriv *priv;
-
-	g_return_val_if_fail (EMPATHY_IS_TP_CHAT (self), NULL);
-
-	priv = GET_PRIV (self);
-
-	return tp_proxy_get_object_path (priv->channel);
-}
-
 gboolean
 empathy_tp_chat_is_sms_channel (EmpathyTpChat *self)
 {
