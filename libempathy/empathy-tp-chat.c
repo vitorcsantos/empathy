@@ -102,13 +102,14 @@ tp_chat_set_delivery_status (EmpathyTpChat         *self,
 			     EmpathyDeliveryStatus  delivery_status)
 {
 	EmpathyTpChatPriv *priv = GET_PRIV (self);
+	TpDeliveryReportingSupportFlags flags =
+		tp_text_channel_get_delivery_reporting_support (
+			TP_TEXT_CHANNEL (priv->channel));
 
 	/* channel must support receiving failures and successes */
 	if (!tp_str_empty (token) &&
-	    tp_text_channel_get_delivery_reporting_support (
-		TP_TEXT_CHANNEL (priv->channel)) &
-		(TP_DELIVERY_REPORTING_SUPPORT_FLAG_RECEIVE_FAILURES |
-		 TP_DELIVERY_REPORTING_SUPPORT_FLAG_RECEIVE_SUCCESSES)) {
+	    flags & TP_DELIVERY_REPORTING_SUPPORT_FLAG_RECEIVE_FAILURES &&
+	    flags & TP_DELIVERY_REPORTING_SUPPORT_FLAG_RECEIVE_SUCCESSES) {
 
 		DEBUG ("Delivery status (%s) = %u", token, delivery_status);
 
@@ -2067,19 +2068,6 @@ empathy_tp_chat_is_invited (EmpathyTpChat *self,
 	return tp_channel_group_get_local_pending_info (priv->channel, self_handle,
 		inviter, NULL, NULL);
 }
-
-const char *
-empathy_tp_chat_get_channel_path (EmpathyTpChat *self)
-{
-	EmpathyTpChatPriv *priv;
-
-	g_return_val_if_fail (EMPATHY_IS_TP_CHAT (self), NULL);
-
-	priv = GET_PRIV (self);
-
-	return tp_proxy_get_object_path (priv->channel);
-}
-
 gboolean
 empathy_tp_chat_is_sms_channel (EmpathyTpChat *self)
 {

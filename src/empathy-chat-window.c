@@ -146,8 +146,6 @@ static const GtkTargetEntry drag_types_dest_file[] = {
 
 static void chat_window_update (EmpathyChatWindow *window,
 		gboolean update_contact_menu);
-static EmpathyChat *empathy_chat_window_find_chat (TpAccount *account,
-		const gchar *id);
 
 G_DEFINE_TYPE (EmpathyChatWindow, empathy_chat_window, G_TYPE_OBJECT);
 
@@ -737,12 +735,17 @@ chat_window_update_chat_tab_full (EmpathyChat *chat,
 			      tp_account_get_display_name (account));
 
 	if (nb_sending > 0) {
-		append_markup_printf (tooltip, "\n");
-		append_markup_printf (tooltip,
-				      ngettext ("Sending %d message",
-					        "Sending %d messages",
-						nb_sending),
-				      nb_sending);
+		char *tmp = g_strdup_printf (
+			ngettext ("Sending %d message",
+				  "Sending %d messages",
+				  nb_sending),
+			nb_sending);
+
+		g_string_append (tooltip, "\n");
+		g_string_append (tooltip, tmp);
+
+		gtk_widget_set_tooltip_text (sending_spinner, tmp);
+		g_free (tmp);
 	}
 
 	if (!EMP_STR_EMPTY (status)) {
@@ -1814,7 +1817,7 @@ chat_window_drag_data_received (GtkWidget        *widget,
 			account =
 				tp_account_manager_ensure_account (account_manager, account_id);
 			if (account != NULL)
-				chat = empathy_chat_window_find_chat (account, contact_id);
+				chat = empathy_chat_window_find_chat (account, contact_id, FALSE);
 		}
 
 		if (account == NULL) {
@@ -2390,9 +2393,10 @@ empathy_chat_window_has_focus (EmpathyChatWindow *window)
 	return has_focus;
 }
 
-static EmpathyChat *
+EmpathyChat *
 empathy_chat_window_find_chat (TpAccount   *account,
-			       const gchar *id)
+			       const gchar *id,
+			       gboolean     sms_channel)
 {
 	GList *l;
 
@@ -2412,40 +2416,8 @@ empathy_chat_window_find_chat (TpAccount   *account,
 			chat = ll->data;
 
 			if (account == empathy_chat_get_account (chat) &&
-			    !tp_strdiff (id, empathy_chat_get_id (chat))) {
-				return chat;
-			}
-		}
-	}
-
-	return NULL;
-}
-
-EmpathyChat *
-empathy_chat_window_find_chat_by_channel (const char *channel_path)
-{
-	GList *l;
-
-	g_return_val_if_fail (!EMP_STR_EMPTY (channel_path), NULL);
-
-	for (l = chat_windows; l; l = l->next) {
-		EmpathyChatWindowPriv *priv;
-		EmpathyChatWindow     *window;
-		GList                *ll;
-
-		window = l->data;
-		priv = GET_PRIV (window);
-
-		for (ll = priv->chats; ll; ll = ll->next) {
-			EmpathyChat *chat;
-			EmpathyTpChat *tp_chat;
-			const char *path;
-
-			chat = ll->data;
-			tp_chat = empathy_chat_get_tp_chat (chat);
-			path = empathy_tp_chat_get_channel_path (tp_chat);
-
-			if (!tp_strdiff (channel_path, path)) {
+			    !tp_strdiff (id, empathy_chat_get_id (chat)) &&
+			    sms_channel == empathy_chat_is_sms_channel (chat)) {
 				return chat;
 			}
 		}

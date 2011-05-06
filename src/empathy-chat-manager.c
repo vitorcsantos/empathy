@@ -119,16 +119,19 @@ process_tp_chat (EmpathyTpChat *tp_chat,
     gint64 user_action_time)
 {
   EmpathyChat *chat = NULL;
-  const char *channel_path;
+  const gchar *id;
 
   tell_chatroom_manager_if_needed (account, tp_chat);
 
-  channel_path = empathy_tp_chat_get_channel_path (tp_chat);
-  chat = empathy_chat_window_find_chat_by_channel (channel_path);
+  id = empathy_tp_chat_get_id (tp_chat);
+  if (!tp_str_empty (id))
+    {
+      chat = empathy_chat_window_find_chat (account, id,
+          empathy_tp_chat_is_sms_channel (tp_chat));
+    }
 
   if (chat != NULL)
     {
-      DEBUG ("found chat %p for path %s", chat, channel_path);
       empathy_chat_set_tp_chat (chat, tp_chat);
     }
   else
