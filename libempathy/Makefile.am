@@ -29,7 +29,8 @@ libempathy_headers =				\
 	action-chain-internal.h			\
 	empathy-account-settings.h		\
 	empathy-auth-factory.h			\
-	empathy-channel-factory.h \
+	empathy-camera-monitor.h		\
+	empathy-channel-factory.h		\
 	empathy-chatroom-manager.h		\
 	empathy-chatroom.h			\
 	empathy-connection-managers.h		\
@@ -71,7 +72,8 @@ libempathy_handwritten_source =				\
 	action-chain.c					\
 	empathy-account-settings.c			\
 	empathy-auth-factory.c				\
-	empathy-channel-factory.c \
+	empathy-camera-monitor.c			\
+	empathy-channel-factory.c			\
 	empathy-chatroom-manager.c			\
 	empathy-chatroom.c				\
 	empathy-connection-managers.c			\
