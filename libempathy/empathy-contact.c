@@ -70,8 +70,6 @@ typedef struct {
    */
   GHashTable *location;
   GHashTable *groups;
-
-  gboolean keep_tpcontact;
 } EmpathyContactPriv;
 
 static void contact_finalize (GObject *object);
@@ -183,9 +181,6 @@ contact_dispose (GObject *object)
 
   if (priv->tp_contact != NULL)
     {
-      if (!priv->keep_tpcontact)
-        g_hash_table_remove (contacts_table, priv->tp_contact);
-
       g_signal_handlers_disconnect_by_func (priv->tp_contact,
           tp_contact_notify_cb, object);
     }
@@ -609,14 +604,27 @@ contact_set_property (GObject *object,
     };
 }
 
+static void
+remove_tp_contact (gpointer data,
+    GObject *object)
+{
+  g_hash_table_remove (contacts_table, data);
+}
+
 static EmpathyContact *
 empathy_contact_new (TpContact *tp_contact)
 {
+  EmpathyContact *retval;
+
   g_return_val_if_fail (TP_IS_CONTACT (tp_contact), NULL);
 
-  return g_object_new (EMPATHY_TYPE_CONTACT,
+  retval = g_object_new (EMPATHY_TYPE_CONTACT,
       "tp-contact", tp_contact,
       NULL);
+
+  g_object_weak_ref (G_OBJECT (retval), remove_tp_contact, tp_contact);
+
+  return retval;
 }
 
 static gboolean
@@ -647,15 +655,10 @@ empathy_contact_from_tpl_contact (TpAccount *account,
 
   if (existing_contact != NULL)
     {
-      EmpathyContactPriv *priv;
-
       retval = g_object_new (EMPATHY_TYPE_CONTACT,
           "tp-contact", empathy_contact_get_tp_contact (existing_contact),
           "alias", tpl_entity_get_alias (tpl_entity),
           NULL);
-
-      priv = GET_PRIV (retval);
-      priv->keep_tpcontact = TRUE;
     }
   else
     {
