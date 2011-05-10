@@ -13,6 +13,7 @@ AM_CPPFLAGS =                                           \
 	$(GEOCLUE_CFLAGS)				\
 	$(NETWORK_MANAGER_CFLAGS)			\
 	$(CONNMAN_CFLAGS)				\
+	$(UDEV_CFLAGS)					\
 	$(WARN_CFLAGS)					\
 	$(DISABLE_DEPRECATED)
 
@@ -121,7 +122,8 @@ libempathy_la_LIBADD =		\
 	$(EMPATHY_LIBS) \
 	$(GEOCLUE_LIBS) \
 	$(NETWORK_MANAGER_LIBS) \
-	$(CONNMAN_LIBS)
+	$(CONNMAN_LIBS) \
+	$(UDEV_LIBS)
 
 check_c_sources = \
     $(libempathy_handwritten_source)
