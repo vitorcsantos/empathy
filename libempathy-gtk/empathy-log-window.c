@@ -39,6 +39,7 @@
 #include <extensions/extensions.h>
 
 #include <libempathy/action-chain-internal.h>
+#include <libempathy/empathy-camera-monitor.h>
 #include <libempathy/empathy-chatroom-manager.h>
 #include <libempathy/empathy-chatroom.h>
 #include <libempathy/empathy-message.h>
@@ -84,6 +85,9 @@ typedef struct
 
   TplActionChain *chain;
   TplLogManager *log_manager;
+
+  EmpathyCameraMonitor *camera_monitor;
+  GBinding *button_video_binding;
 
   /* Used to cancel logger calls when no longer needed */
   guint count;
@@ -447,6 +451,7 @@ empathy_log_window_show (TpAccount  *account,
   log_window->chain = _tpl_action_chain_new_async (NULL, NULL, NULL);
 
   log_window->log_manager = tpl_log_manager_dup_singleton ();
+  log_window->camera_monitor = empathy_camera_monitor_dup_singleton ();
 
   window = log_window;
 
@@ -577,6 +582,7 @@ log_window_destroy_cb (GtkWidget *widget,
   g_free (window->last_find);
   _tpl_action_chain_free (window->chain);
   g_object_unref (window->log_manager);
+  tp_clear_object (&window->camera_monitor);
   tp_clear_object (&window->selected_account);
   g_free (window->selected_chat_id);
 
@@ -1513,6 +1519,8 @@ log_window_update_buttons_sensitivity (EmpathyLogWindow *window,
   GtkTreePath *path;
   gboolean profile, chat, call, video;
 
+  tp_clear_object (&window->button_video_binding);
+
   profile = chat = call = video = FALSE;
 
   if (!gtk_tree_model_get_iter_first (model, &iter))
@@ -1547,11 +1555,20 @@ log_window_update_buttons_sensitivity (EmpathyLogWindow *window,
   call = capabilities & EMPATHY_CAPABILITIES_AUDIO;
   video = capabilities & EMPATHY_CAPABILITIES_VIDEO;
 
+  if (video)
+    window->button_video_binding = g_object_bind_property (
+        window->camera_monitor, "available",
+        window->button_video, "sensitive",
+        G_BINDING_SYNC_CREATE);
+
  out:
   gtk_widget_set_sensitive (window->button_profile, profile);
   gtk_widget_set_sensitive (window->button_chat, chat);
   gtk_widget_set_sensitive (window->button_call, call);
-  gtk_widget_set_sensitive (window->button_video, video);
+
+  /* Don't override the binding */
+  if (!video)
+    gtk_widget_set_sensitive (window->button_video, video);
 }
 
 static void
