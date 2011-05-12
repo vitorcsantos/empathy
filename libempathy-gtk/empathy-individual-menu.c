@@ -499,7 +499,7 @@ empathy_individual_chat_menu_item_activated (GtkMenuItem *item,
 {
   g_return_if_fail (EMPATHY_IS_CONTACT (contact));
 
-  empathy_chat_with_contact (contact, gtk_get_current_event_time ());
+  empathy_chat_with_contact (contact, empathy_get_current_action_time ());
 }
 
 GtkWidget *
@@ -543,7 +543,7 @@ empathy_individual_audio_call_menu_item_activated (GtkMenuItem *item,
   g_return_if_fail (EMPATHY_IS_CONTACT (contact));
 
   empathy_call_new_with_streams (contact, TRUE, FALSE,
-      gtk_get_current_event_time ());
+      empathy_get_current_action_time ());
 }
 
 GtkWidget *
@@ -585,7 +585,7 @@ empathy_individual_video_call_menu_item_activated (GtkMenuItem *item,
   g_return_if_fail (EMPATHY_IS_CONTACT (contact));
 
   empathy_call_new_with_streams (contact, TRUE, TRUE,
-      gtk_get_current_event_time ());
+      empathy_get_current_action_time ());
 }
 
 GtkWidget *
