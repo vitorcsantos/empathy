@@ -36,6 +36,7 @@
 #include <gst/farsight/fs-element-added-notifier.h>
 #include <gst/farsight/fs-utils.h>
 
+#include <libempathy/empathy-camera-monitor.h>
 #include <libempathy/empathy-tp-contact-factory.h>
 #include <libempathy/empathy-utils.h>
 #include <libempathy-gtk/empathy-avatar-image.h>
@@ -55,8 +56,6 @@
 #include "empathy-audio-sink.h"
 #include "empathy-video-src.h"
 #include "empathy-sidebar.h"
-
-#define BUTTON_ID "empathy-call-dtmf-button-id"
 
 #define CONTENT_HBOX_BORDER_WIDTH 6
 #define CONTENT_HBOX_SPACING 3
@@ -103,6 +102,8 @@ struct _EmpathyCallWindowPriv
 
   EmpathyContact *contact;
 
+  EmpathyCameraMonitor *camera_monitor;
+
   guint call_state;
   gboolean outgoing;
 
@@ -124,6 +125,7 @@ struct _EmpathyCallWindowPriv
   GtkWidget *pane;
   GtkAction *redial;
   GtkAction *menu_fullscreen;
+  GtkAction *action_camera;
   GtkAction *action_camera_on;
   GtkWidget *tool_button_camera_off;
   GtkWidget *tool_button_camera_preview;
@@ -329,7 +331,7 @@ dtmf_button_pressed_cb (GtkButton *button, EmpathyCallWindow *window)
 
   g_object_get (priv->handler, "call-channel", &call, NULL);
 
-  button_quark = g_quark_from_static_string (BUTTON_ID);
+  button_quark = g_quark_from_static_string (EMPATHY_DTMF_BUTTON_ID);
   event = GPOINTER_TO_UINT (g_object_get_qdata (G_OBJECT (button),
     button_quark));
 
@@ -349,51 +351,6 @@ dtmf_button_released_cb (GtkButton *button, EmpathyCallWindow *window)
   tpy_call_channel_dtmf_stop_tone (call);
 
   g_object_unref (call);
-}
-
-static GtkWidget *
-empathy_call_window_create_dtmf (EmpathyCallWindow *self)
-{
-  GtkWidget *table;
-  int i;
-  GQuark button_quark;
-  struct {
-    const gchar *label;
-    TpDTMFEvent event;
-  } dtmfbuttons[] = { { "1", TP_DTMF_EVENT_DIGIT_1 },
-                      { "2", TP_DTMF_EVENT_DIGIT_2 },
-                      { "3", TP_DTMF_EVENT_DIGIT_3 },
-                      { "4", TP_DTMF_EVENT_DIGIT_4 },
-                      { "5", TP_DTMF_EVENT_DIGIT_5 },
-                      { "6", TP_DTMF_EVENT_DIGIT_6 },
-                      { "7", TP_DTMF_EVENT_DIGIT_7 },
-                      { "8", TP_DTMF_EVENT_DIGIT_8 },
-                      { "9", TP_DTMF_EVENT_DIGIT_9 },
-                      { "#", TP_DTMF_EVENT_HASH },
-                      { "0", TP_DTMF_EVENT_DIGIT_0 },
-                      { "*", TP_DTMF_EVENT_ASTERISK },
-                      { NULL, } };
-
-  button_quark = g_quark_from_static_string (BUTTON_ID);
-
-  table = gtk_table_new (4, 3, TRUE);
-
-  for (i = 0; dtmfbuttons[i].label != NULL; i++)
-    {
-      GtkWidget *button = gtk_button_new_with_label (dtmfbuttons[i].label);
-      gtk_table_attach (GTK_TABLE (table), button, i % 3, i % 3 + 1,
-        i/3, i/3 + 1, GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 1, 1);
-
-      g_object_set_qdata (G_OBJECT (button), button_quark,
-        GUINT_TO_POINTER (dtmfbuttons[i].event));
-
-      g_signal_connect (G_OBJECT (button), "pressed",
-        G_CALLBACK (dtmf_button_pressed_cb), self);
-      g_signal_connect (G_OBJECT (button), "released",
-        G_CALLBACK (dtmf_button_released_cb), self);
-    }
-
-  return table;
 }
 
 static GtkWidget *
@@ -1023,6 +980,7 @@ empathy_call_window_init (EmpathyCallWindow *self)
     "camera_off", &priv->tool_button_camera_off,
     "camera_preview", &priv->tool_button_camera_preview,
     "camera_on", &priv->tool_button_camera_on,
+    "camera", &priv->action_camera,
     "action_camera_on",  &priv->action_camera_on,
     "details_vbox",  &priv->details_vbox,
     "vcodec_encoding_label", &priv->vcodec_encoding_label,
@@ -1054,6 +1012,21 @@ empathy_call_window_init (EmpathyCallWindow *self)
     NULL);
 
   gtk_action_set_sensitive (priv->menu_fullscreen, FALSE);
+
+  priv->camera_monitor = empathy_camera_monitor_dup_singleton ();
+
+  g_object_bind_property (priv->camera_monitor, "available",
+      priv->tool_button_camera_off, "sensitive",
+      G_BINDING_SYNC_CREATE);
+  g_object_bind_property (priv->camera_monitor, "available",
+      priv->tool_button_camera_preview, "sensitive",
+      G_BINDING_SYNC_CREATE);
+  g_object_bind_property (priv->camera_monitor, "available",
+      priv->tool_button_camera_on, "sensitive",
+      G_BINDING_SYNC_CREATE);
+  g_object_bind_property (priv->camera_monitor, "available",
+      priv->action_camera, "sensitive",
+      G_BINDING_SYNC_CREATE);
 
   priv->lock = g_mutex_new ();
 
@@ -1138,7 +1111,9 @@ empathy_call_window_init (EmpathyCallWindow *self)
   empathy_sidebar_add_page (EMPATHY_SIDEBAR (priv->sidebar),
       _("Video input"), page);
 
-  priv->dtmf_panel = empathy_call_window_create_dtmf (self);
+  priv->dtmf_panel = empathy_create_dtmf_dialpad (G_OBJECT (self),
+      G_CALLBACK (dtmf_button_pressed_cb),
+      G_CALLBACK (dtmf_button_released_cb));
   empathy_sidebar_add_page (EMPATHY_SIDEBAR (priv->sidebar),
       _("Dialpad"), priv->dtmf_panel);
 
@@ -1649,6 +1624,7 @@ empathy_call_window_dispose (GObject *object)
   tp_clear_object (&priv->video_tee);
   tp_clear_object (&priv->ui_manager);
   tp_clear_object (&priv->fullscreen);
+  tp_clear_object (&priv->camera_monitor);
 
   g_list_free_full (priv->notifiers, g_object_unref);
 
@@ -2425,7 +2401,8 @@ empathy_call_window_state_changed_cb (EmpathyCallHandler *handler,
   empathy_sound_stop (EMPATHY_SOUND_PHONE_OUTGOING);
 
   can_send_video = priv->video_input != NULL &&
-    empathy_contact_can_voip_video (priv->contact);
+    empathy_contact_can_voip_video (priv->contact) &&
+    empathy_camera_monitor_get_available (priv->camera_monitor);
 
   g_object_get (priv->handler, "call-channel", &call, NULL);
 

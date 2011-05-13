@@ -40,6 +40,7 @@
 #endif
 
 #include "empathy-contact.h"
+#include "empathy-camera-monitor.h"
 #include "empathy-utils.h"
 #include "empathy-enum-types.h"
 #include "empathy-marshal.h"
@@ -179,14 +180,12 @@ contact_dispose (GObject *object)
 {
   EmpathyContactPriv *priv = GET_PRIV (object);
 
-  if (priv->tp_contact)
+  if (priv->tp_contact != NULL)
     {
-      g_hash_table_remove (contacts_table, priv->tp_contact);
       g_signal_handlers_disconnect_by_func (priv->tp_contact,
           tp_contact_notify_cb, object);
-      g_object_unref (priv->tp_contact);
     }
-  priv->tp_contact = NULL;
+  tp_clear_object (&priv->tp_contact);
 
   if (priv->account)
     g_object_unref (priv->account);
@@ -606,14 +605,39 @@ contact_set_property (GObject *object,
     };
 }
 
+static void
+remove_tp_contact (gpointer data,
+    GObject *object)
+{
+  g_hash_table_remove (contacts_table, data);
+}
+
 static EmpathyContact *
 empathy_contact_new (TpContact *tp_contact)
 {
+  EmpathyContact *retval;
+
   g_return_val_if_fail (TP_IS_CONTACT (tp_contact), NULL);
 
-  return g_object_new (EMPATHY_TYPE_CONTACT,
+  retval = g_object_new (EMPATHY_TYPE_CONTACT,
       "tp-contact", tp_contact,
       NULL);
+
+  g_object_weak_ref (G_OBJECT (retval), remove_tp_contact, tp_contact);
+
+  return retval;
+}
+
+static gboolean
+contact_is_tpl_entity (gpointer key,
+    gpointer value,
+    gpointer user_data)
+{
+  TpContact *contact = key;
+  TplEntity *entity = user_data;
+
+  return !tp_strdiff (tp_contact_get_identifier (contact),
+      tpl_entity_get_identifier (entity));
 }
 
 EmpathyContact *
@@ -622,17 +646,32 @@ empathy_contact_from_tpl_contact (TpAccount *account,
 {
   EmpathyContact *retval;
   gboolean is_user;
+  EmpathyContact *existing_contact = NULL;
 
   g_return_val_if_fail (TPL_IS_ENTITY (tpl_entity), NULL);
 
-  is_user = (TPL_ENTITY_SELF == tpl_entity_get_entity_type (tpl_entity));
+  if (contacts_table != NULL)
+    existing_contact = g_hash_table_find (contacts_table,
+        contact_is_tpl_entity, tpl_entity);
 
-  retval = g_object_new (EMPATHY_TYPE_CONTACT,
-      "id", tpl_entity_get_alias (tpl_entity),
-      "alias", tpl_entity_get_identifier (tpl_entity),
-      "account", account,
-      "is-user", is_user,
-      NULL);
+  if (existing_contact != NULL)
+    {
+      retval = g_object_new (EMPATHY_TYPE_CONTACT,
+          "tp-contact", empathy_contact_get_tp_contact (existing_contact),
+          "alias", tpl_entity_get_alias (tpl_entity),
+          NULL);
+    }
+  else
+    {
+      is_user = (TPL_ENTITY_SELF == tpl_entity_get_entity_type (tpl_entity));
+
+      retval = g_object_new (EMPATHY_TYPE_CONTACT,
+          "id", tpl_entity_get_identifier (tpl_entity),
+          "alias", tpl_entity_get_alias (tpl_entity),
+          "account", account,
+          "is-user", is_user,
+          NULL);
+    }
 
   if (!EMP_STR_EMPTY (tpl_entity_get_avatar_token (tpl_entity)))
     contact_load_avatar_cache (retval,
@@ -672,16 +711,16 @@ const gchar *
 empathy_contact_get_alias (EmpathyContact *contact)
 {
   EmpathyContactPriv *priv;
-  const gchar        *alias;
+  const gchar        *alias = NULL;
 
   g_return_val_if_fail (EMPATHY_IS_CONTACT (contact), NULL);
 
   priv = GET_PRIV (contact);
 
-  if (priv->tp_contact != NULL)
-    alias = tp_contact_get_alias (priv->tp_contact);
-  else
+  if (!EMP_STR_EMPTY (priv->alias))
     alias = priv->alias;
+  else if (priv->tp_contact != NULL)
+    alias = tp_contact_get_alias (priv->tp_contact);
 
   if (!EMP_STR_EMPTY (alias))
     return alias;
@@ -1185,8 +1224,18 @@ empathy_contact_can_do_action (EmpathyContact *self,
         sensitivity = empathy_contact_can_voip_audio (self);
         break;
       case EMPATHY_ACTION_VIDEO_CALL:
-        sensitivity = empathy_contact_can_voip_video (self);
-        break;
+        {
+          EmpathyCameraMonitor *monitor;
+
+          monitor = empathy_camera_monitor_dup_singleton ();
+
+          sensitivity = empathy_contact_can_voip_video (self);
+          sensitivity = sensitivity &&
+              empathy_camera_monitor_get_available (monitor);
+
+          g_object_unref (monitor);
+          break;
+        }
       case EMPATHY_ACTION_VIEW_LOGS:
         sensitivity = contact_has_log (self);
         break;

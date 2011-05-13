@@ -39,6 +39,7 @@
 #include <extensions/extensions.h>
 
 #include <libempathy/action-chain-internal.h>
+#include <libempathy/empathy-camera-monitor.h>
 #include <libempathy/empathy-chatroom-manager.h>
 #include <libempathy/empathy-chatroom.h>
 #include <libempathy/empathy-message.h>
@@ -84,6 +85,9 @@ typedef struct
 
   TplActionChain *chain;
   TplLogManager *log_manager;
+
+  EmpathyCameraMonitor *camera_monitor;
+  GBinding *button_video_binding;
 
   /* Used to cancel logger calls when no longer needed */
   guint count;
@@ -447,6 +451,7 @@ empathy_log_window_show (TpAccount  *account,
   log_window->chain = _tpl_action_chain_new_async (NULL, NULL, NULL);
 
   log_window->log_manager = tpl_log_manager_dup_singleton ();
+  log_window->camera_monitor = empathy_camera_monitor_dup_singleton ();
 
   window = log_window;
 
@@ -577,6 +582,7 @@ log_window_destroy_cb (GtkWidget *widget,
   g_free (window->last_find);
   _tpl_action_chain_free (window->chain);
   g_object_unref (window->log_manager);
+  tp_clear_object (&window->camera_monitor);
   tp_clear_object (&window->selected_account);
   g_free (window->selected_chat_id);
 
@@ -1499,9 +1505,71 @@ log_window_search_entry_icon_pressed_cb (GtkEntry *entry,
     "", -1);
 }
 
-/*
- * Chats Code
- */
+static void
+log_window_update_buttons_sensitivity (EmpathyLogWindow *window,
+    GtkTreeModel *model,
+    GtkTreeSelection *selection)
+{
+  EmpathyContact *contact;
+  EmpathyCapabilities capabilities;
+  TpAccount *account;
+  TplEntity *target;
+  GtkTreeIter iter;
+  GList *paths;
+  GtkTreePath *path;
+  gboolean profile, chat, call, video;
+
+  tp_clear_object (&window->button_video_binding);
+
+  profile = chat = call = video = FALSE;
+
+  if (!gtk_tree_model_get_iter_first (model, &iter))
+    goto out;
+
+  if (gtk_tree_selection_count_selected_rows (selection) != 1)
+    goto out;
+
+  if (gtk_tree_selection_iter_is_selected (selection, &iter))
+    goto out;
+
+  paths = gtk_tree_selection_get_selected_rows (selection, &model);
+  g_return_if_fail (paths != NULL);
+
+  path = paths->data;
+  gtk_tree_model_get_iter (model, &iter, path);
+  gtk_tree_model_get (model, &iter,
+      COL_WHO_ACCOUNT, &account,
+      COL_WHO_TARGET, &target,
+      -1);
+
+  g_list_free_full (paths, (GDestroyNotify) gtk_tree_path_free);
+
+  contact = empathy_contact_from_tpl_contact (account, target);
+
+  g_object_unref (account);
+  g_object_unref (target);
+
+  capabilities = empathy_contact_get_capabilities (contact);
+
+  profile = chat = TRUE;
+  call = capabilities & EMPATHY_CAPABILITIES_AUDIO;
+  video = capabilities & EMPATHY_CAPABILITIES_VIDEO;
+
+  if (video)
+    window->button_video_binding = g_object_bind_property (
+        window->camera_monitor, "available",
+        window->button_video, "sensitive",
+        G_BINDING_SYNC_CREATE);
+
+ out:
+  gtk_widget_set_sensitive (window->button_profile, profile);
+  gtk_widget_set_sensitive (window->button_chat, chat);
+  gtk_widget_set_sensitive (window->button_call, call);
+
+  /* Don't override the binding */
+  if (!video)
+    gtk_widget_set_sensitive (window->button_video, video);
+}
 
 static void
 log_window_who_changed_cb (GtkTreeSelection *selection,
@@ -1510,7 +1578,6 @@ log_window_who_changed_cb (GtkTreeSelection *selection,
   GtkTreeView *view;
   GtkTreeModel *model;
   GtkTreeIter iter;
-  gboolean someone = FALSE;
 
   DEBUG ("log_window_who_changed_cb");
 
@@ -1533,16 +1600,9 @@ log_window_who_changed_cb (GtkTreeSelection *selection,
               log_window_who_changed_cb,
               window);
         }
-      else if (gtk_tree_selection_count_selected_rows (selection) == 1)
-        {
-          someone = TRUE;
-        }
     }
 
-  gtk_widget_set_sensitive (window->button_profile, someone);
-  gtk_widget_set_sensitive (window->button_chat, someone);
-  gtk_widget_set_sensitive (window->button_call, someone);
-  gtk_widget_set_sensitive (window->button_video, someone);
+  log_window_update_buttons_sensitivity (window, model, selection);
 
   /* The contact changed, so the dates need to be updated */
   log_window_chats_get_messages (window, TRUE);
@@ -1840,7 +1900,6 @@ log_window_events_setup (EmpathyLogWindow *window)
       "icon-name", COL_EVENTS_ICON);
 
   cell = gtk_cell_renderer_text_new ();
-  g_object_set (cell, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
   gtk_tree_view_column_pack_start (column, cell, TRUE);
   gtk_tree_view_column_add_attribute (column, cell,
       "text", COL_EVENTS_TEXT);
