@@ -32,7 +32,7 @@ DEB_DBG_PACKAGE_empathy = empathy-dbg
 DEB_BUILD_ARCH_OS := $(shell dpkg-architecture -qDEB_BUILD_ARCH_OS)
 
 ifeq ($(DEB_BUILD_ARCH_OS),linux)
-  DEB_CONFIGURE_EXTRA_FLAGS += --with-connectivity=nm --enable-location=no
+  DEB_CONFIGURE_EXTRA_FLAGS += --with-connectivity=nm --enable-location=no --enable-gudev
 else ifeq ($(DEB_BUILD_ARCH_OS),kfreebsd)
   DEB_CONFIGURE_EXTRA_FLAGS += --with-connectivity=no --enable-location=no
 else
