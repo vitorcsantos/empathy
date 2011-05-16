@@ -279,6 +279,23 @@ contact_info_field_spec_cmp (TpContactInfoFieldSpec *spec1,
   return contact_info_field_name_cmp (spec1->name, spec2->name);
 }
 
+static TpContactInfoFieldSpec *
+get_spec_from_list (GList *list,
+    const gchar *name)
+{
+  GList *l;
+
+  for (l = list; l != NULL; l = g_list_next (l))
+    {
+      TpContactInfoFieldSpec *spec = l->data;
+
+      if (!tp_strdiff (spec->name, name))
+        return spec;
+    }
+
+  return NULL;
+}
+
 static guint
 contact_widget_details_update_edit (EmpathyContactWidget *information)
 {
