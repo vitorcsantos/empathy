@@ -1200,6 +1200,57 @@ chat_message_received_cb (EmpathyTpChat  *tp_chat,
 }
 
 static void
+got_credit_uri_prop (TpProxy *proxy,
+		     const GValue *value,
+		     const GError *in_error,
+		     gpointer user_data,
+		     GObject *weak_object)
+{
+	EmpathyChat *chat = EMPATHY_CHAT (weak_object);
+	const gchar *uri = g_value_get_string (value);
+	const gchar *error = _("insufficient balance to send message");
+	const gchar *message_body = user_data;
+	gchar *str, *str_markup = NULL;
+
+	if (in_error != NULL) {
+		DEBUG ("Failed to get ManageCreditURI: %s", in_error->message);
+		/* Not fatal, just don't display a 'Top up' link */
+	}
+
+	if (message_body != NULL) {
+		str = g_strdup_printf (_("Error sending message '%s': %s"), message_body, error);
+	} else {
+		str = g_strdup_printf (_("Error sending message: %s"), error);
+	}
+
+	if (!tp_str_empty (uri)) {
+		gchar *markup_error = g_strdup_printf (_("insufficient balance to send message."
+							 " <a href='%s'>Top up</a>."), uri);
+
+		if (message_body != NULL) {
+			gchar *escaped_body = g_markup_escape_text (message_body, -1);
+
+			str_markup = g_strdup_printf (_("Error sending message '%s': %s"),
+				escaped_body, markup_error);
+
+			g_free (escaped_body);
+		} else {
+			str_markup = g_strdup_printf (_("Error sending message: %s"), markup_error);
+		}
+
+		g_free (markup_error);
+	}
+
+	if (str_markup != NULL)
+		empathy_chat_view_append_event_markup (chat->view, str_markup, str);
+	else
+		empathy_chat_view_append_event (chat->view, str);
+
+	g_free (str);
+	g_free (str_markup);
+}
+
+static void
 chat_send_error_cb (EmpathyTpChat          *tp_chat,
 		    const gchar            *message_body,
 		    TpChannelTextSendError  error_code,
@@ -1210,7 +1261,14 @@ chat_send_error_cb (EmpathyTpChat          *tp_chat,
 	gchar       *str;
 
 	if (!tp_strdiff (dbus_error, TP_ERROR_STR_INSUFFICIENT_BALANCE)) {
-		error = _("insufficient balance to send message");
+		tp_cli_dbus_properties_call_get (
+			empathy_tp_chat_get_connection (tp_chat),
+			-1,
+			TP_IFACE_CONNECTION_INTERFACE_BALANCE,
+			"ManageCreditURI",
+			got_credit_uri_prop,
+			g_strdup (message_body), g_free, G_OBJECT (chat));
+		return;
 	} else if (!tp_strdiff (dbus_error, TP_ERROR_STR_NOT_CAPABLE)) {
 		error = _("not capable");
 	}
