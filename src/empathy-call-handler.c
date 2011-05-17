@@ -30,11 +30,13 @@
 
 #include <telepathy-farstream/telepathy-farstream.h>
 
+#include <libempathy/empathy-channel-factory.h>
 #include <libempathy/empathy-utils.h>
 #include <libempathy/empathy-tp-contact-factory.h>
 
+#include <libempathy-gtk/empathy-call-utils.h>
+
 #include "empathy-call-handler.h"
-#include "empathy-call-factory.h"
 #include "src-marshal.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_VOIP
@@ -179,7 +181,8 @@ on_call_invalidated_cb (TpyCallChannel *call,
   if (priv->call == call)
     {
       /* Invalidated unexpectedly? Fake call ending */
-      g_signal_emit (self, signals[STATE_CHANGED], 0, TPY_CALL_STATE_ENDED);
+      g_signal_emit (self, signals[STATE_CHANGED], 0,
+          TPY_CALL_STATE_ENDED, NULL);
       tp_clear_object (&priv->call);
       tp_clear_object (&priv->tfchannel);
     }
@@ -888,7 +891,21 @@ empathy_call_handler_start_tpfs (EmpathyCallHandler *self)
       on_tf_channel_ready, self);
 }
 
-#if 0
+static void
+on_call_accepted_cb (GObject *source_object,
+    GAsyncResult *res,
+    gpointer user_data)
+{
+  TpyCallChannel *call = TPY_CALL_CHANNEL (source_object);
+  GError *error = NULL;
+
+  if (!tpy_call_channel_accept_finish (call, res, &error))
+    {
+      g_warning ("could not accept Call: %s", error->message);
+      g_error_free (error);
+    }
+}
+
 static void
 empathy_call_handler_request_cb (GObject *source,
     GAsyncResult *result,
@@ -916,26 +933,15 @@ empathy_call_handler_request_cb (GObject *source,
     }
 
   priv->call = TPY_CALL_CHANNEL (channel);
+  tp_g_signal_connect_object (priv->call, "state-changed",
+    G_CALLBACK (on_call_state_changed_cb), self, 0);
+  tp_g_signal_connect_object (priv->call, "invalidated",
+    G_CALLBACK (on_call_invalidated_cb), self, 0);
 
   g_object_notify (G_OBJECT (self), "call-channel");
 
   empathy_call_handler_start_tpfs (self);
-}
-#endif
-
-static void
-on_call_accepted_cb (GObject *source_object,
-    GAsyncResult *res,
-    gpointer user_data)
-{
-  TpyCallChannel *call = TPY_CALL_CHANNEL (source_object);
-  GError *error = NULL;
-
-  if (!tpy_call_channel_accept_finish (call, res, &error))
-    {
-      g_warning ("could not accept Call: %s", error->message);
-      g_error_free (error);
-    }
+  tpy_call_channel_accept_async (priv->call, on_call_accepted_cb, NULL);
 }
 
 void
@@ -943,9 +949,10 @@ empathy_call_handler_start_call (EmpathyCallHandler *handler,
     gint64 timestamp)
 {
   EmpathyCallHandlerPriv *priv = GET_PRIV (handler);
-/*TpAccountChannelRequest *req;
+  EmpathyChannelFactory *channel_factory;
+  TpAccountChannelRequest *req;
   TpAccount *account;
-  GHashTable *request;*/
+  GHashTable *request;
 
   if (priv->call != NULL)
     {
@@ -953,27 +960,27 @@ empathy_call_handler_start_call (EmpathyCallHandler *handler,
       tpy_call_channel_accept_async (priv->call, on_call_accepted_cb, NULL);
       return;
     }
-  else
-    {
-      g_warning ("No Call channel!");
-    }
 
-#if 0
   /* No TpyCallChannel (we are redialing). Request a new call channel */
   g_assert (priv->contact != NULL);
 
   account = empathy_contact_get_account (priv->contact);
-  request = empathy_call_create_call_request (priv->contact,
+  request = empathy_call_create_call_request (
+      empathy_contact_get_id (priv->contact),
       priv->initial_audio, priv->initial_video);
 
   req = tp_account_channel_request_new (account, request, timestamp);
+
+  channel_factory = empathy_channel_factory_dup ();
+  tp_account_channel_request_set_channel_factory (req,
+      TP_CLIENT_CHANNEL_FACTORY (channel_factory));
+  g_object_unref (channel_factory);
 
   tp_account_channel_request_create_and_handle_channel_async (req, NULL,
       empathy_call_handler_request_cb, handler);
 
   g_object_unref (req);
   g_hash_table_unref (request);
-#endif
 }
 
 /**
