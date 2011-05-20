@@ -318,7 +318,7 @@ empathy_message_from_tpl_log_event (TplEvent *logevent)
 	TpAccount *account = NULL;
 	TplEntity *receiver = NULL;
 	TplEntity *sender = NULL;
-	gchar *body= NULL;
+	gchar *body = NULL;
 	EmpathyContact *contact;
 
 	g_return_val_if_fail (TPL_IS_EVENT (logevent), NULL);
@@ -340,11 +340,14 @@ empathy_message_from_tpl_log_event (TplEvent *logevent)
 	g_object_unref (acc_man);
 
 	if (TPL_IS_TEXT_EVENT (logevent)) {
-		body = g_strdup (tpl_text_event_get_message (
-			TPL_TEXT_EVENT (logevent)));
+		TplTextEvent *textevent = TPL_TEXT_EVENT (logevent);
+
+		body = g_strdup (tpl_text_event_get_message (textevent));
 
 		retval = g_object_new (EMPATHY_TYPE_MESSAGE,
-			"type", tpl_text_event_get_message_type (TPL_TEXT_EVENT (logevent)),
+			"type", tpl_text_event_get_message_type (textevent),
+			"token", tpl_text_event_get_message_token (textevent),
+			"supersedes", tpl_text_event_get_supersedes_token (textevent),
 			"body", body,
 			"timestamp", tpl_event_get_timestamp (logevent),
 			"is-backlog", TRUE,
