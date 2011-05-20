@@ -786,6 +786,13 @@ get_icon_for_event (TplEvent *event)
       else if (tpl_entity_get_entity_type (receiver) == TPL_ENTITY_SELF)
         icon = EMPATHY_IMAGE_CALL_INCOMING;
     }
+  else if (TPL_IS_TEXT_EVENT (event))
+    {
+      TplTextEvent *text = TPL_TEXT_EVENT (event);
+
+      if (!tp_str_empty (tpl_text_event_get_supersedes_token (text)))
+        icon = EMPATHY_IMAGE_EDIT_MESSAGE;
+    }
 
   return icon;
 }
