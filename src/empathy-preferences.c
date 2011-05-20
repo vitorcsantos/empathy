@@ -750,9 +750,7 @@ preferences_themes_setup (EmpathyPreferences *preferences)
 	GtkCellLayout *cell_layout;
 	GtkCellRenderer *renderer;
 	GtkListStore  *store;
-	const gchar  **themes;
 	GList         *adium_themes;
-	gint           i;
 
 	combo = GTK_COMBO_BOX (priv->combobox_chat_theme);
 	cell_layout = GTK_CELL_LAYOUT (combo);
@@ -767,6 +765,7 @@ preferences_themes_setup (EmpathyPreferences *preferences)
 		COL_COMBO_VISIBLE_NAME, GTK_SORT_ASCENDING);
 
 	/* Fill the model */
+#if 0
 	themes = empathy_theme_manager_get_themes ();
 	for (i = 0; themes[i]; i += 2) {
 		gtk_list_store_insert_with_values (store, NULL, -1,
@@ -776,6 +775,7 @@ preferences_themes_setup (EmpathyPreferences *preferences)
 			COL_COMBO_PATH, NULL,
 			-1);
 	}
+#endif
 
 	adium_themes = empathy_theme_manager_get_adium_themes ();
 	while (adium_themes != NULL) {
