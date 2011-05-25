@@ -1173,6 +1173,9 @@ chat_message_received (EmpathyChat *chat,
 	gboolean pending)
 {
 	EmpathyChatPriv *priv = GET_PRIV (chat);
+	EmpathyContact  *sender;
+
+	sender = empathy_message_get_sender (message);
 
 	if (empathy_message_is_edit (message)) {
 		DEBUG ("Editing message '%s' to '%s'",
@@ -1180,13 +1183,7 @@ chat_message_received (EmpathyChat *chat,
 			empathy_message_get_body (message));
 
 		empathy_chat_view_edit_message (chat->view, message);
-
-		/* FIXME: do we need to do things like edit the chat state? */
 	} else {
-		EmpathyContact  *sender;
-
-		sender = empathy_message_get_sender (message);
-
 		DEBUG ("Appending new message '%s' from %s (%d)",
 			empathy_message_get_token (message),
 			empathy_contact_get_alias (sender),
@@ -1194,15 +1191,15 @@ chat_message_received (EmpathyChat *chat,
 
 		empathy_chat_view_append_message (chat->view, message);
 
-		/* We received a message so the contact is no longer
-		 * composing */
-		chat_state_changed_cb (priv->tp_chat, sender,
-				       TP_CHANNEL_CHAT_STATE_ACTIVE,
-				       chat);
-
 		priv->unread_messages++;
 		g_signal_emit (chat, signals[NEW_MESSAGE], 0, message, pending);
 	}
+
+	/* We received a message so the contact is no longer
+	 * composing */
+	chat_state_changed_cb (priv->tp_chat, sender,
+			       TP_CHANNEL_CHAT_STATE_ACTIVE,
+			       chat);
 }
 
 static void
