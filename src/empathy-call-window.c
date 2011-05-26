@@ -85,6 +85,7 @@ enum {
 typedef enum {
   CONNECTING,
   CONNECTED,
+  HELD,
   DISCONNECTED,
   REDIALING
 } CallState;
@@ -1744,6 +1745,10 @@ empathy_call_window_reset_pipeline (EmpathyCallWindow *self)
       g_signal_handlers_disconnect_by_func (priv->audio_input_adj,
           empathy_call_window_mic_volume_changed_cb, self);
 
+      if (priv->audio_output != NULL)
+        g_object_unref (priv->audio_output);
+      priv->audio_output = NULL;
+
       if (priv->video_tee != NULL)
         g_object_unref (priv->video_tee);
       priv->video_tee = NULL;
@@ -2022,6 +2027,7 @@ empathy_call_window_get_audio_sink_pad (EmpathyCallWindow *self)
   if (priv->audio_output == NULL)
     {
       priv->audio_output = empathy_audio_sink_new ();
+      g_object_ref_sink (priv->audio_output);
 
       if (!gst_bin_add (GST_BIN (priv->pipeline), priv->audio_output))
         {
@@ -2072,9 +2078,10 @@ empathy_call_window_update_timer (gpointer user_data)
 
   time_ = g_timer_elapsed (priv->timer, NULL);
 
-  /* Translators: number of minutes:seconds the caller has been connected */
-  str = g_strdup_printf (_("Connected — %d:%02dm"), (int) time_ / 60,
-    (int) time_ % 60);
+  /* Translators: 'status - minutes:seconds' the caller has been connected */
+  str = g_strdup_printf (_("%s — %d:%02dm"),
+      priv->call_state == HELD ? _("On hold") : _("Connected"),
+      (int) time_ / 60, (int) time_ % 60);
   empathy_call_window_status_message (self, str);
   g_free (str);
 
@@ -2745,6 +2752,35 @@ empathy_call_window_bus_message (GstBus *bus, GstMessage *message,
 }
 
 static void
+empathy_call_window_members_changed_cb (TpyCallChannel *call,
+    GHashTable *members,
+    EmpathyCallWindow *self)
+{
+  EmpathyCallWindowPriv *priv = GET_PRIV (self);
+  GHashTableIter iter;
+  gpointer key, value;
+  gboolean held = FALSE;
+
+  g_hash_table_iter_init (&iter, members);
+  while (g_hash_table_iter_next (&iter, &key, &value))
+    {
+      if (GPOINTER_TO_INT (value) & TPY_CALL_MEMBER_FLAG_HELD)
+        {
+          /* This assumes this is a 1-1 call, otherwise one participant
+           * putting the call on hold wouldn't mean the call is on hold
+           * for everyone. */
+          held = TRUE;
+          break;
+        }
+    }
+
+  if (held)
+    priv->call_state = HELD;
+  else if (priv->call_state == HELD)
+    priv->call_state = CONNECTED;
+}
+
+static void
 call_handler_notify_call_cb (EmpathyCallHandler *handler,
     GParamSpec *spec,
     EmpathyCallWindow *self)
@@ -2762,6 +2798,10 @@ call_handler_notify_call_cb (EmpathyCallHandler *handler,
   tp_g_signal_connect_object (call, "video-stream-error",
       G_CALLBACK (empathy_call_window_video_stream_error), self, 0);
 */
+
+  tp_g_signal_connect_object (call, "members-changed",
+      G_CALLBACK (empathy_call_window_members_changed_cb), self, 0);
+
   g_object_unref (call);
 }
 
@@ -2789,14 +2829,7 @@ empathy_call_window_realized_cb (GtkWidget *widget, EmpathyCallWindow *window)
   g_object_get (priv->handler, "call-channel", &call, NULL);
   if (call != NULL)
     {
-/* FIXME: part of the improvements for DRAFT2
-      tp_g_signal_connect_object (call, "audio-stream-error",
-        G_CALLBACK (empathy_call_window_audio_stream_error), window,
-        0);
-      tp_g_signal_connect_object (call, "video-stream-error",
-        G_CALLBACK (empathy_call_window_video_stream_error), window,
-        0);
-*/
+      call_handler_notify_call_cb (priv->handler, NULL, window);
       g_object_unref (call);
     }
   else

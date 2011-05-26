@@ -491,7 +491,7 @@ empathy_dispatcher_chat_with_contact (EmpathyContact *contact,
 {
   empathy_dispatcher_chat_with_contact_id (
       empathy_contact_get_account (contact), empathy_contact_get_id (contact),
-      timestamp);
+      timestamp, NULL, NULL);
 }
 
 static void
@@ -514,7 +514,9 @@ empathy_dispatcher_create_text_channel (TpAccount *account,
     TpHandleType target_handle_type,
     const gchar *target_id,
     gboolean sms_channel,
-    gint64 timestamp)
+    gint64 timestamp,
+    GAsyncReadyCallback callback,
+    gpointer user_data)
 {
   GHashTable *request;
   TpAccountChannelRequest *req;
@@ -533,19 +535,23 @@ empathy_dispatcher_create_text_channel (TpAccount *account,
   req = tp_account_channel_request_new (account, request, timestamp);
 
   tp_account_channel_request_ensure_channel_async (req, NULL, NULL,
-      ensure_text_channel_cb, NULL);
+      callback ? callback : ensure_text_channel_cb, user_data);
 
   g_hash_table_unref (request);
   g_object_unref (req);
 }
 
+/* @callback is optional, but if it's provided, it should call the right
+ * _finish() func that we call in ensure_text_channel_cb() */
 void
 empathy_dispatcher_chat_with_contact_id (TpAccount *account,
     const gchar *contact_id,
-    gint64 timestamp)
+    gint64 timestamp,
+    GAsyncReadyCallback callback,
+    gpointer user_data)
 {
   empathy_dispatcher_create_text_channel (account, TP_HANDLE_TYPE_CONTACT,
-      contact_id, FALSE, timestamp);
+      contact_id, FALSE, timestamp, callback, user_data);
 }
 
 void
@@ -554,16 +560,18 @@ empathy_dispatcher_join_muc (TpAccount *account,
     gint64 timestamp)
 {
   empathy_dispatcher_create_text_channel (account, TP_HANDLE_TYPE_ROOM,
-      room_name, FALSE, timestamp);
+      room_name, FALSE, timestamp, NULL, NULL);
 }
 
 void
 empathy_dispatcher_sms_contact_id (TpAccount *account,
     const gchar *contact_id,
-    gint64 timestamp)
+    gint64 timestamp,
+    GAsyncReadyCallback callback,
+    gpointer user_data)
 {
   empathy_dispatcher_create_text_channel (account, TP_HANDLE_TYPE_CONTACT,
-      contact_id, TRUE, timestamp);
+      contact_id, TRUE, timestamp, callback, user_data);
 }
 
 static gboolean

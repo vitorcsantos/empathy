@@ -60,9 +60,11 @@ GType empathy_dispatcher_get_type (void) G_GNUC_CONST;
 /* Requesting 1 to 1 text channels */
 void empathy_dispatcher_chat_with_contact_id (TpAccount *account,
   const gchar *contact_id,
-  gint64 timestamp);
+  gint64 timestamp,
+  GAsyncReadyCallback callback,
+  gpointer user_data);
 
-void  empathy_dispatcher_chat_with_contact (EmpathyContact *contact,
+void empathy_dispatcher_chat_with_contact (EmpathyContact *contact,
   gint64 timestamp);
 
 /* Request a muc channel */
@@ -70,10 +72,11 @@ void empathy_dispatcher_join_muc (TpAccount *account,
   const gchar *roomname,
   gint64 timestamp);
 
-void
-empathy_dispatcher_sms_contact_id (TpAccount *account,
+void empathy_dispatcher_sms_contact_id (TpAccount *account,
   const gchar *contact_id,
-  gint64 timestamp);
+  gint64 timestamp,
+  GAsyncReadyCallback callback,
+  gpointer user_data);
 
 void empathy_dispatcher_find_requestable_channel_classes_async
     (EmpathyDispatcher *dispatcher, TpConnection *connection,
