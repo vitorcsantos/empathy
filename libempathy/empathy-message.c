@@ -46,8 +46,11 @@ typedef struct {
 	TpChannelTextMessageType  type;
 	EmpathyContact           *sender;
 	EmpathyContact           *receiver;
+	gchar                    *token;
+	gchar                    *supersedes;
 	gchar                    *body;
 	gint64                    timestamp;
+	gint64                    original_timestamp;
 	gboolean                  is_backlog;
 	guint                     id;
 	gboolean                  incoming;
@@ -71,8 +74,11 @@ enum {
 	PROP_TYPE,
 	PROP_SENDER,
 	PROP_RECEIVER,
+	PROP_TOKEN,
+	PROP_SUPERSEDES,
 	PROP_BODY,
 	PROP_TIMESTAMP,
+	PROP_ORIGINAL_TIMESTAMP,
 	PROP_IS_BACKLOG,
 	PROP_INCOMING,
 	PROP_FLAGS,
@@ -113,6 +119,20 @@ empathy_message_class_init (EmpathyMessageClass *class)
 							      EMPATHY_TYPE_CONTACT,
 							      G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 	g_object_class_install_property (object_class,
+					 PROP_TOKEN,
+					 g_param_spec_string ("token",
+						 	      "Message Token",
+							      "The message-token",
+							      NULL,
+							      G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS | G_PARAM_CONSTRUCT_ONLY));
+	g_object_class_install_property (object_class,
+					 PROP_SUPERSEDES,
+					 g_param_spec_string ("supersedes",
+							      "Supersedes Token",
+							      "The message-token this message supersedes",
+							      NULL,
+							      G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS | G_PARAM_CONSTRUCT_ONLY));
+	g_object_class_install_property (object_class,
 					 PROP_BODY,
 					 g_param_spec_string ("body",
 							      "Message Body",
@@ -128,6 +148,13 @@ empathy_message_class_init (EmpathyMessageClass *class)
 							    G_MININT64, G_MAXINT64, 0,
 							    G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS |
 							    G_PARAM_CONSTRUCT_ONLY));
+	g_object_class_install_property (object_class,
+					 PROP_ORIGINAL_TIMESTAMP,
+					 g_param_spec_int64 ("original-timestamp",
+							     "Original Timestamp",
+							     "Timestamp of the original message",
+							     G_MININT64, G_MAXINT64, 0,
+							     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS | G_PARAM_CONSTRUCT_ONLY));
 	g_object_class_install_property (object_class,
 					 PROP_IS_BACKLOG,
 					 g_param_spec_boolean ("is-backlog",
@@ -184,6 +211,8 @@ empathy_message_finalize (GObject *object)
 		g_object_unref (priv->receiver);
 	}
 
+	g_free (priv->token);
+	g_free (priv->supersedes);
 	g_free (priv->body);
 
 	G_OBJECT_CLASS (empathy_message_parent_class)->finalize (object);
@@ -209,11 +238,20 @@ message_get_property (GObject    *object,
 	case PROP_RECEIVER:
 		g_value_set_object (value, priv->receiver);
 		break;
+	case PROP_TOKEN:
+		g_value_set_string (value, priv->token);
+		break;
+	case PROP_SUPERSEDES:
+		g_value_set_string (value, priv->supersedes);
+		break;
 	case PROP_BODY:
 		g_value_set_string (value, priv->body);
 		break;
 	case PROP_TIMESTAMP:
 		g_value_set_int64 (value, priv->timestamp);
+		break;
+	case PROP_ORIGINAL_TIMESTAMP:
+		g_value_set_int64 (value, priv->original_timestamp);
 		break;
 	case PROP_IS_BACKLOG:
 		g_value_set_boolean (value, priv->is_backlog);
@@ -252,6 +290,14 @@ message_set_property (GObject      *object,
 		empathy_message_set_receiver (EMPATHY_MESSAGE (object),
 					     EMPATHY_CONTACT (g_value_get_object (value)));
 		break;
+	case PROP_TOKEN:
+		g_assert (priv->token == NULL); /* construct only */
+		priv->token = g_value_dup_string (value);
+		break;
+	case PROP_SUPERSEDES:
+		g_assert (priv->supersedes == NULL); /* construct only */
+		priv->supersedes = g_value_dup_string (value);
+		break;
 	case PROP_BODY:
 		g_assert (priv->body == NULL); /* construct only */
 		priv->body = g_value_dup_string (value);
@@ -260,6 +306,9 @@ message_set_property (GObject      *object,
 		priv->timestamp = g_value_get_int64 (value);
 		if (priv->timestamp <= 0)
 			priv->timestamp = empathy_time_get_current ();
+		break;
+	case PROP_ORIGINAL_TIMESTAMP:
+		priv->original_timestamp = g_value_get_int64 (value);
 		break;
 	case PROP_IS_BACKLOG:
 		priv->is_backlog = g_value_get_boolean (value);
@@ -284,7 +333,7 @@ empathy_message_from_tpl_log_event (TplEvent *logevent)
 	TpAccount *account = NULL;
 	TplEntity *receiver = NULL;
 	TplEntity *sender = NULL;
-	gchar *body= NULL;
+	gchar *body = NULL;
 	EmpathyContact *contact;
 
 	g_return_val_if_fail (TPL_IS_EVENT (logevent), NULL);
@@ -306,13 +355,35 @@ empathy_message_from_tpl_log_event (TplEvent *logevent)
 	g_object_unref (acc_man);
 
 	if (TPL_IS_TEXT_EVENT (logevent)) {
-		body = g_strdup (tpl_text_event_get_message (
-			TPL_TEXT_EVENT (logevent)));
+		TplTextEvent *textevent = TPL_TEXT_EVENT (logevent);
+		const gchar *supersedes;
+		gint64 timestamp;
+		gint64 original_timestamp = 0;
+
+		supersedes = tpl_text_event_get_supersedes_token (textevent);
+
+		/* tp-logger is kind of messy in that instead of having
+		 * timestamp and original-timestamp like Telepathy it has
+		 * timestamp (which is the original) and edited-timestamp,
+		 * (which is when the message was edited) */
+		if (tp_str_empty (supersedes)) {
+			/* not an edited message */
+			timestamp = tpl_event_get_timestamp (logevent);
+		} else {
+			/* this is an edited event */
+			original_timestamp = tpl_event_get_timestamp (logevent);
+			timestamp = tpl_text_event_get_edit_timestamp (textevent);
+		}
+
+		body = g_strdup (tpl_text_event_get_message (textevent));
 
 		retval = g_object_new (EMPATHY_TYPE_MESSAGE,
-			"type", tpl_text_event_get_message_type (TPL_TEXT_EVENT (logevent)),
+			"type", tpl_text_event_get_message_type (textevent),
+			"token", tpl_text_event_get_message_token (textevent),
+			"supersedes", supersedes,
 			"body", body,
-			"timestamp", tpl_event_get_timestamp (logevent),
+			"timestamp", timestamp,
+			"original-timestamp", original_timestamp,
 			"is-backlog", TRUE,
 			NULL);
 
@@ -436,6 +507,42 @@ empathy_message_set_receiver (EmpathyMessage *message, EmpathyContact *contact)
 }
 
 const gchar *
+empathy_message_get_token (EmpathyMessage *message)
+{
+	EmpathyMessagePriv *priv;
+
+	g_return_val_if_fail (EMPATHY_IS_MESSAGE (message), NULL);
+
+	priv = GET_PRIV (message);
+
+	return priv->token;
+}
+
+const gchar *
+empathy_message_get_supersedes (EmpathyMessage *message)
+{
+	EmpathyMessagePriv *priv;
+
+	g_return_val_if_fail (EMPATHY_IS_MESSAGE (message), NULL);
+
+	priv = GET_PRIV (message);
+
+	return priv->supersedes;
+}
+
+gboolean
+empathy_message_is_edit (EmpathyMessage *message)
+{
+	EmpathyMessagePriv *priv;
+
+	g_return_val_if_fail (EMPATHY_IS_MESSAGE (message), FALSE);
+
+	priv = GET_PRIV (message);
+
+	return !tp_str_empty (priv->supersedes);
+}
+
+const gchar *
 empathy_message_get_body (EmpathyMessage *message)
 {
 	EmpathyMessagePriv *priv;
@@ -457,6 +564,18 @@ empathy_message_get_timestamp (EmpathyMessage *message)
 	priv = GET_PRIV (message);
 
 	return priv->timestamp;
+}
+
+gint64
+empathy_message_get_original_timestamp (EmpathyMessage *message)
+{
+	EmpathyMessagePriv *priv;
+
+	g_return_val_if_fail (EMPATHY_IS_MESSAGE (message), -1);
+
+	priv = GET_PRIV (message);
+
+	return priv->original_timestamp;
 }
 
 gboolean
@@ -636,15 +755,23 @@ empathy_message_new_from_tp_message (TpMessage *tp_msg,
 	gchar *body;
 	TpChannelTextMessageFlags flags;
 	guint id;
+	gint64 original_timestamp;
+	const GHashTable *part = tp_message_peek (tp_msg, 0);
 
 	g_return_val_if_fail (TP_IS_MESSAGE (tp_msg), NULL);
 
 	body = tp_message_to_text (tp_msg, &flags);
 
+	original_timestamp = tp_asv_get_int64 (part,
+		"original-message-received", NULL);
+
 	message = g_object_new (EMPATHY_TYPE_MESSAGE,
 		"body", body,
+		"token", tp_message_get_token (tp_msg),
+		"supersedes", tp_message_get_supersedes (tp_msg),
 		"type", tp_message_get_message_type (tp_msg),
 		"timestamp", tp_message_get_received_timestamp (tp_msg),
+		"original-timestamp", original_timestamp,
 		"flags", flags,
 		"is-backlog", flags & TP_CHANNEL_TEXT_MESSAGE_FLAG_SCROLLBACK,
 		"incoming", incoming,
@@ -654,9 +781,7 @@ empathy_message_new_from_tp_message (TpMessage *tp_msg,
 
 	/* FIXME: this is pretty low level, ideally we shouldn't have to use the
 	 * ID directly but we don't use TpTextChannel's ack API everywhere yet. */
-	id = tp_asv_get_uint32 (tp_message_peek (tp_msg, 0),
-		"pending-message-id", NULL);
-
+	id = tp_asv_get_uint32 (part, "pending-message-id", NULL);
 	priv->id = id;
 
 	g_free (body);
