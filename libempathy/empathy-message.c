@@ -356,16 +356,34 @@ empathy_message_from_tpl_log_event (TplEvent *logevent)
 
 	if (TPL_IS_TEXT_EVENT (logevent)) {
 		TplTextEvent *textevent = TPL_TEXT_EVENT (logevent);
+		const gchar *supersedes;
+		gint64 timestamp;
+		gint64 original_timestamp = 0;
+
+		supersedes = tpl_text_event_get_supersedes_token (textevent);
+
+		/* tp-logger is kind of messy in that instead of having
+		 * timestamp and original-timestamp like Telepathy it has
+		 * timestamp (which is the original) and edited-timestamp,
+		 * (which is when the message was edited) */
+		if (tp_str_empty (supersedes)) {
+			/* not an edited message */
+			timestamp = tpl_event_get_timestamp (logevent);
+		} else {
+			/* this is an edited event */
+			original_timestamp = tpl_event_get_timestamp (logevent);
+			timestamp = tpl_text_event_get_edit_timestamp (textevent);
+		}
 
 		body = g_strdup (tpl_text_event_get_message (textevent));
 
 		retval = g_object_new (EMPATHY_TYPE_MESSAGE,
 			"type", tpl_text_event_get_message_type (textevent),
 			"token", tpl_text_event_get_message_token (textevent),
-			"supersedes", tpl_text_event_get_supersedes_token (textevent),
+			"supersedes", supersedes,
 			"body", body,
-			"timestamp", tpl_event_get_timestamp (logevent),
-			"original-timestamp", tpl_text_event_get_original_timestamp (textevent),
+			"timestamp", timestamp,
+			"original-timestamp", original_timestamp,
 			"is-backlog", TRUE,
 			NULL);
 
