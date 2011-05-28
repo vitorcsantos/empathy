@@ -82,6 +82,8 @@ struct _EmpathyChatWindowPriv
   GtkUIManager *ui_manager;
   GtkAction *menu_conv_insert_smiley;
   GtkAction *menu_conv_favorite;
+  GtkAction *menu_conv_join_chat;
+  GtkAction *menu_conv_leave_chat;
   GtkAction *menu_conv_always_urgent;
   GtkAction *menu_conv_toggle_contacts;
 
@@ -1084,6 +1086,7 @@ chat_window_conv_activate_cb (GtkAction *action,
   gboolean is_room;
   gboolean active;
   EmpathyContact *remote_contact = NULL;
+  gboolean disconnected;
 
   /* Favorite room menu */
   is_room = empathy_chat_is_room (self->priv->current_chat);
@@ -1128,8 +1131,35 @@ chat_window_conv_activate_cb (GtkAction *action,
         GTK_TOGGLE_ACTION (self->priv->menu_conv_toggle_contacts), active);
     }
 
+  /* Menu-items to be visible for MUCs only */
   gtk_action_set_visible (self->priv->menu_conv_toggle_contacts,
       (remote_contact == NULL));
+
+  disconnected = (empathy_chat_get_tp_chat (self->priv->current_chat) == NULL);
+  if (disconnected)
+    {
+      gtk_action_set_visible (self->priv->menu_conv_join_chat, TRUE);
+      gtk_action_set_visible (self->priv->menu_conv_leave_chat, FALSE);
+    }
+  else
+    {
+      TpChannel *channel = NULL;
+      TpHandle  self_handle = 0;
+
+      channel = (TpChannel *) (empathy_chat_get_tp_chat (
+          self->priv->current_chat));
+      self_handle = tp_contact_get_handle (tp_channel_group_get_self_contact (
+          channel));
+      /* There is sometimes a lag between the members-changed signal
+         emitted on tp-chat and invalidated signal being emitted on the channel.
+         Leave Chat menu-item should be sensitive only till our self-handle is
+         a part of channel-members */
+      gtk_action_set_visible (self->priv->menu_conv_leave_chat,
+          self_handle != 0);
+
+      /* Join Chat is insensitive for a connected chat */
+      gtk_action_set_visible (self->priv->menu_conv_join_chat, FALSE);
+    }
 
   if (remote_contact != NULL)
     g_object_unref (remote_contact);
@@ -1237,6 +1267,29 @@ chat_window_invite_participant_activate_cb (GtkAction *action,
 
 out:
   gtk_widget_destroy (dialog);
+}
+
+static void
+chat_window_join_chat_activate_cb (GtkAction *action,
+    EmpathyChatWindow *self)
+{
+    g_return_if_fail (self->priv->current_chat != NULL);
+
+    empathy_chat_join_muc (self->priv->current_chat,
+        empathy_chat_get_id (self->priv->current_chat));
+}
+
+static void
+chat_window_leave_chat_activate_cb (GtkAction *action,
+    EmpathyChatWindow *self)
+{
+    EmpathyTpChat * tp_chat;
+
+    g_return_if_fail (self->priv->current_chat != NULL);
+
+    tp_chat = empathy_chat_get_tp_chat (self->priv->current_chat);
+    if (tp_chat != NULL)
+        empathy_tp_chat_leave (tp_chat, "");
 }
 
 static void
@@ -2354,6 +2407,8 @@ empathy_chat_window_init (EmpathyChatWindow *self)
       "ui_manager", &self->priv->ui_manager,
       "menu_conv_insert_smiley", &self->priv->menu_conv_insert_smiley,
       "menu_conv_favorite", &self->priv->menu_conv_favorite,
+      "menu_conv_join_chat", &self->priv->menu_conv_join_chat,
+      "menu_conv_leave_chat", &self->priv->menu_conv_leave_chat,
       "menu_conv_always_urgent", &self->priv->menu_conv_always_urgent,
       "menu_conv_toggle_contacts", &self->priv->menu_conv_toggle_contacts,
       "menu_edit_cut", &self->priv->menu_edit_cut,
@@ -2376,6 +2431,8 @@ empathy_chat_window_init (EmpathyChatWindow *self)
       "menu_conv_always_urgent", "toggled", chat_window_always_urgent_toggled_cb,
       "menu_conv_toggle_contacts", "toggled", chat_window_contacts_toggled_cb,
       "menu_conv_invite_participant", "activate", chat_window_invite_participant_activate_cb,
+      "menu_conv_join_chat", "activate", chat_window_join_chat_activate_cb,
+      "menu_conv_leave_chat", "activate", chat_window_leave_chat_activate_cb,
       "menu_conv_close", "activate", chat_window_close_activate_cb,
       "menu_edit", "activate", chat_window_edit_activate_cb,
       "menu_edit_cut", "activate", chat_window_cut_activate_cb,

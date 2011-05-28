@@ -52,6 +52,18 @@
           </object>
         </child>
         <child>
+          <object class="GtkAction" id="menu_conv_join_chat">
+            <property name="name">menu_conv_join_chat</property>
+            <property name="label" translatable="yes">_Join Chat</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="menu_conv_leave_chat">
+            <property name="name">menu_conv_leave_chat</property>
+            <property name="label" translatable="yes">Le_ave Chat</property>
+          </object>
+        </child>
+        <child>
           <object class="GtkAction" id="menu_conv_close">
             <property name="stock_id">gtk-close</property>
             <property name="name">menu_conv_close</property>
@@ -170,6 +182,9 @@
     <ui>
       <menubar name="chats_menubar">
         <menu action="menu_conv">
+          <menuitem action="menu_conv_join_chat"/>
+          <menuitem action="menu_conv_leave_chat"/>
+          <separator/>
           <menuitem action="menu_conv_clear"/>
           <menuitem action="menu_conv_insert_smiley"/>
           <menuitem action="menu_conv_favorite"/>
