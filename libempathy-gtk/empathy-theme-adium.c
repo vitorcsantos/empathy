@@ -252,7 +252,8 @@ static EmpathyStringParser string_parsers_with_smiley[] = {
 };
 
 static gchar *
-theme_adium_parse_body (const gchar *text)
+theme_adium_parse_body (const gchar *text,
+			const gchar *token)
 {
 	EmpathyStringParser *parsers;
 	GString *string;
@@ -268,7 +269,18 @@ theme_adium_parse_body (const gchar *text)
 	 * by html tags. Also escape text to make sure html code is
 	 * displayed verbatim. */
 	string = g_string_sized_new (strlen (text));
+
+	/* wrap this in HTML that allows us to find the message for later
+	 * editing */
+	if (!tp_str_empty (token))
+		g_string_append_printf (string,
+			"<span id=\"message-token-%s\">",
+			token);
+
 	empathy_string_parser_substr (text, -1, parsers, string);
+
+	if (!tp_str_empty (token))
+		g_string_append (string, "</span>");
 
 	g_object_unref (gsettings);
 
@@ -437,7 +449,6 @@ theme_adium_append_message (EmpathyChatView *view,
 	EmpathyContact        *sender;
 	TpAccount             *account;
 	gchar                 *body_escaped;
-	const gchar           *body;
 	const gchar           *name;
 	const gchar           *contact_id;
 	EmpathyAvatar         *avatar;
@@ -465,8 +476,9 @@ theme_adium_append_message (EmpathyChatView *view,
 	if (service_name == NULL)
 		service_name = tp_account_get_protocol (account);
 	timestamp = empathy_message_get_timestamp (msg);
-	body = empathy_message_get_body (msg);
-	body_escaped = theme_adium_parse_body (body);
+	body_escaped = theme_adium_parse_body (
+		empathy_message_get_body (msg),
+		empathy_message_get_token (msg));
 	name = empathy_contact_get_alias (sender);
 	contact_id = empathy_contact_get_id (sender);
 
@@ -636,6 +648,105 @@ theme_adium_append_event_markup (EmpathyChatView *view,
 				 const gchar     *fallback_text)
 {
 	theme_adium_append_event_escaped (view, markup_text);
+}
+
+static void
+theme_adium_edit_message (EmpathyChatView *view,
+			  EmpathyMessage  *message)
+{
+	EmpathyThemeAdiumPriv *priv = GET_PRIV (view);
+	WebKitDOMDocument *doc;
+	WebKitDOMElement *span;
+	gchar *id, *parsed_body;
+	gchar *tooltip, *timestamp;
+	GtkIconInfo *icon_info;
+	GError *error = NULL;
+
+	if (priv->pages_loading != 0) {
+		priv->message_queue = g_list_prepend (priv->message_queue,
+						      g_object_ref (message));
+		return;
+	}
+
+	id = g_strdup_printf ("message-token-%s",
+		empathy_message_get_supersedes (message));
+	/* we don't pass a token here, because doing so will return another
+	 * <span> element, and we don't want nested <span> elements */
+	parsed_body = theme_adium_parse_body (
+		empathy_message_get_body (message), NULL);
+
+	/* find the element */
+	doc = webkit_web_view_get_dom_document (WEBKIT_WEB_VIEW (view));
+	span = webkit_dom_document_get_element_by_id (doc, id);
+
+	if (span == NULL) {
+		DEBUG ("Failed to find id '%s'", id);
+		goto except;
+	}
+
+	if (!WEBKIT_DOM_IS_HTML_ELEMENT (span)) {
+		DEBUG ("Not a HTML element");
+		goto except;
+	}
+
+	/* update the HTML */
+	webkit_dom_html_element_set_inner_html (WEBKIT_DOM_HTML_ELEMENT (span),
+		parsed_body, &error);
+
+	if (error != NULL) {
+		DEBUG ("Error setting new inner-HTML: %s", error->message);
+		g_error_free (error);
+		goto except;
+	}
+
+	/* set a tooltip */
+	timestamp = empathy_time_to_string_local (
+		empathy_message_get_timestamp (message),
+		"%H:%M:%S");
+	tooltip = g_strdup_printf (_("Message edited at %s"), timestamp);
+
+	webkit_dom_html_element_set_title (WEBKIT_DOM_HTML_ELEMENT (span),
+		tooltip);
+
+	g_free (tooltip);
+	g_free (timestamp);
+
+	/* mark this message as edited */
+	icon_info = gtk_icon_theme_lookup_icon (gtk_icon_theme_get_default (),
+		EMPATHY_IMAGE_EDIT_MESSAGE, 16, 0);
+
+	if (icon_info != NULL) {
+		/* set the icon as a background image using CSS
+		 * FIXME: the icon won't update in response to theme changes */
+		gchar *style = g_strdup_printf (
+			"background-image:url('%s');"
+			"background-repeat:no-repeat;"
+			"background-position:left center;"
+			"padding-left:19px;", /* 16px icon + 3px padding */
+			gtk_icon_info_get_filename (icon_info));
+
+		webkit_dom_element_set_attribute (span, "style", style, &error);
+
+		if (error != NULL) {
+			DEBUG ("Error setting element style: %s",
+				error->message);
+			g_clear_error (&error);
+			/* not fatal */
+		}
+
+		g_free (style);
+		gtk_icon_info_free (icon_info);
+	}
+
+	goto finally;
+
+except:
+	DEBUG ("Could not find message to edit with: %s",
+		empathy_message_get_body (message));
+
+finally:
+	g_free (id);
+	g_free (parsed_body);
 }
 
 static void
@@ -849,6 +960,7 @@ theme_adium_iface_init (EmpathyChatViewIface *iface)
 	iface->append_message = theme_adium_append_message;
 	iface->append_event = theme_adium_append_event;
 	iface->append_event_markup = theme_adium_append_event_markup;
+	iface->edit_message = theme_adium_edit_message;
 	iface->scroll = theme_adium_scroll;
 	iface->scroll_down = theme_adium_scroll_down;
 	iface->get_has_selection = theme_adium_get_has_selection;
@@ -879,7 +991,11 @@ theme_adium_load_finished_cb (WebKitWebView  *view,
 	while (priv->message_queue) {
 		EmpathyMessage *message = priv->message_queue->data;
 
-		theme_adium_append_message (chat_view, message);
+		if (empathy_message_is_edit (message))
+			theme_adium_edit_message (chat_view, message);
+		else
+			theme_adium_append_message (chat_view, message);
+
 		priv->message_queue = g_list_remove (priv->message_queue, message);
 		g_object_unref (message);
 	}

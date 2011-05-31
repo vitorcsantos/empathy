@@ -49,6 +49,8 @@ struct _EmpathyChatViewIface {
 	void             (*append_event_markup)  (EmpathyChatView *view,
 						  const gchar     *markup_text,
 						  const gchar     *fallback_text);
+	void             (*edit_message)         (EmpathyChatView *view,
+						  EmpathyMessage  *message);
 	void             (*scroll)               (EmpathyChatView *view,
 						  gboolean         allow_scrolling);
 	void             (*scroll_down)          (EmpathyChatView *view);
@@ -81,6 +83,8 @@ void             empathy_chat_view_append_event         (EmpathyChatView *view,
 void             empathy_chat_view_append_event_markup  (EmpathyChatView *view,
 							 const gchar     *markup_text,
 							 const gchar     *fallback_text);
+void             empathy_chat_view_edit_message         (EmpathyChatView *view,
+							 EmpathyMessage  *message);
 void             empathy_chat_view_scroll               (EmpathyChatView *view,
 							 gboolean         allow_scrolling);
 void             empathy_chat_view_scroll_down          (EmpathyChatView *view);
