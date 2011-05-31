@@ -4,7 +4,7 @@ Bug: bugs.launchpad.net/bugs/503052
 === modified file 'src/empathy-status-icon.c'
 --- a/src/empathy-status-icon.c
 +++ b/src/empathy-status-icon.c
-@@ -897,6 +897,9 @@
+@@ -898,6 +898,9 @@
  #ifdef HAVE_LIBINDICATE
  	gboolean               use_libindicate;
  #endif
@@ -14,7 +14,7 @@ Bug: bugs.launchpad.net/bugs/503052
  
  	g_return_val_if_fail (GTK_IS_WINDOW (window), NULL);
  
-@@ -932,8 +935,16 @@
+@@ -933,8 +936,16 @@
  			  icon);
  
  	if (!hide_contact_list) {

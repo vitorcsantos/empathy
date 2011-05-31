@@ -9,7 +9,7 @@
  
  # telepathy-yell
  prev_top_build_prefix=$ac_top_build_prefix
-@@ -524,12 +525,41 @@
+@@ -549,12 +550,41 @@
  fi
  
  if test "x$enable_libindicate" = "xyes" -a "x$have_libindicate" != "xyes"; then
@@ -52,7 +52,7 @@
  # nautilus-sendto
  # -----------------------------------------------------------
  AC_ARG_ENABLE(nautilus-sendto,
-@@ -632,6 +662,7 @@
+@@ -657,6 +687,7 @@
  
      Features:
  	Message indicator support (libindicate):  ${have_libindicate}
@@ -109,7 +109,7 @@
  	GtkTargetList *contact_targets;
  	GtkTargetList *file_targets;
  
-@@ -1381,8 +1388,19 @@
+@@ -1384,8 +1391,19 @@
  			sender, body);
  		g_signal_connect (indicator, "activate",
  				  G_CALLBACK (chat_window_indicator_activate_cb), chat);
@@ -130,7 +130,7 @@
  	}
  	empathy_indicator_show (indicator);
  }
-@@ -1399,6 +1417,25 @@
+@@ -1402,6 +1420,25 @@
  		DEBUG ("indicator is %p", indicator);
  		empathy_indicator_hide (indicator);
  		g_hash_table_remove (priv->indicators, chat);
@@ -156,7 +156,7 @@
  	} else {
  		DEBUG ("indicator is NULL, nothing to remove");
  	}
-@@ -2034,6 +2071,11 @@
+@@ -2040,6 +2077,11 @@
  		priv->chat_manager = NULL;
  	}
  
@@ -168,7 +168,7 @@
  	chat_windows = g_list_remove (chat_windows, window);
  	gtk_widget_destroy (priv->dialog);
  
-@@ -2132,6 +2174,9 @@
+@@ -2138,6 +2180,9 @@
  	priv->indicators = g_hash_table_new_full (g_direct_hash, g_direct_equal,
  			      NULL, g_object_unref);
  #endif
