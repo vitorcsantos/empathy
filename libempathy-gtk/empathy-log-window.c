@@ -163,7 +163,6 @@ enum
   COL_WHAT_SUBTYPE,
   COL_WHAT_TEXT,
   COL_WHAT_ICON,
-  COL_WHAT_EXPANDER,
   COL_WHAT_COUNT
 };
 
@@ -745,7 +744,7 @@ get_parent_iter_for_message (TplEvent *event,
       pretty_date = g_date_time_format (date,
           C_("A date with the time", "%A, %e %B %Y %X"));
 
-      body = g_strdup_printf (_("Chat with %s"),
+      body = g_markup_printf_escaped (_("Chat with %s"),
           get_contact_alias_for_message (message));
 
       gtk_tree_store_append (store, &iter, NULL);
@@ -816,14 +815,16 @@ log_window_append_chat_message (TplEvent *event,
   if (tpl_text_event_get_message_type (TPL_TEXT_EVENT (event))
       == TP_CHANNEL_TEXT_MESSAGE_TYPE_ACTION)
     {
-      body = g_strdup_printf ("* %s %s",
+      /* Translators: this is an emote: '* Danielle waves' */
+      body = g_markup_printf_escaped (_("<i>* %s %s</i>"),
           tpl_entity_get_alias (tpl_event_get_sender (event)),
           empathy_message_get_body (message));
     }
   else
     {
-      body = g_strdup_printf (
-          C_("First is a contact, second is what was said", "%s: %s"),
+      /* Translators: this is a message: 'Danielle: hello'
+       * The string in bold is the sender's name */
+      body = g_markup_printf_escaped (_("<b>%s:</b> %s"),
           tpl_entity_get_alias (tpl_event_get_sender (event)),
           empathy_message_get_body (message));
     }
@@ -1909,7 +1910,7 @@ log_window_events_setup (EmpathyLogWindow *window)
   cell = gtk_cell_renderer_text_new ();
   gtk_tree_view_column_pack_start (column, cell, TRUE);
   gtk_tree_view_column_add_attribute (column, cell,
-      "text", COL_EVENTS_TEXT);
+      "markup", COL_EVENTS_TEXT);
 
   cell = gtk_cell_renderer_text_new ();
   g_object_set (cell, "xalign", 1.0, NULL);
@@ -1926,6 +1927,8 @@ log_window_events_setup (EmpathyLogWindow *window)
   gtk_tree_sortable_set_sort_column_id (sortable,
       COL_EVENTS_TS,
       GTK_SORT_ASCENDING);
+
+  gtk_tree_view_set_enable_search (view, FALSE);
 
   g_object_unref (store);
 }
@@ -1987,6 +1990,8 @@ log_window_who_setup (EmpathyLogWindow *window)
   gtk_tree_sortable_set_sort_func (sortable,
       COL_WHO_NAME, sort_by_name,
       NULL, NULL);
+
+  gtk_tree_view_set_search_column (view, COL_WHO_NAME);
 
   /* set up signals */
   g_signal_connect (selection, "changed",
@@ -2187,6 +2192,8 @@ log_window_when_setup (EmpathyLogWindow *window)
       COL_WHEN_DATE, sort_by_date,
       NULL, NULL);
 
+  gtk_tree_view_set_search_column (view, COL_WHEN_TEXT);
+
   /* set up signals */
   g_signal_connect (selection, "changed",
       G_CALLBACK (log_window_when_changed_cb),
@@ -2294,8 +2301,7 @@ log_window_what_setup (EmpathyLogWindow *window)
       G_TYPE_INT,         /* history type */
       G_TYPE_INT,         /* history subtype */
       G_TYPE_STRING,      /* stringified history type */
-      G_TYPE_STRING,      /* icon */
-      G_TYPE_BOOLEAN);    /* expander (hidden) */
+      G_TYPE_STRING);     /* icon */
 
   model = GTK_TREE_MODEL (store);
   sortable = GTK_TREE_SORTABLE (store);
@@ -2318,6 +2324,7 @@ log_window_what_setup (EmpathyLogWindow *window)
       "text", COL_WHAT_TEXT);
 
   gtk_tree_view_append_column (view, column);
+  gtk_tree_view_set_search_column (view, COL_WHAT_TEXT);
 
   /* set up treeview properties */
   gtk_tree_selection_set_mode (selection, GTK_SELECTION_MULTIPLE);
