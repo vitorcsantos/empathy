@@ -207,10 +207,8 @@ main_window_flash_foreach (GtkTreeModel *model,
 		return FALSE;
 
 	contact = empathy_contact_dup_from_folks_individual (individual);
-	if (contact != data->event->contact) {
-		tp_clear_object (&contact);
-		return FALSE;
-	}
+	if (contact != data->event->contact)
+		goto out;
 
 	if (data->on) {
 		icon_name = data->event->icon_name;
@@ -239,6 +237,7 @@ main_window_flash_foreach (GtkTreeModel *model,
 		gtk_tree_path_free (parent_path);
 	}
 
+out:
 	g_object_unref (individual);
 	tp_clear_object (&contact);
 	tp_clear_object (&pixbuf);
