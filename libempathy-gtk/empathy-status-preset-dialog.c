@@ -465,6 +465,7 @@ status_preset_dialog_add_preset (GtkWidget *widget,
 					GTK_TREE_VIEW (priv->presets_treeview),
 					path, NULL,
 					FALSE, 0., 0.);
+			gtk_tree_path_free (path);
 			break;
 		}
         }
