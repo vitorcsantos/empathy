@@ -795,7 +795,7 @@ empathy_account_widget_build_skype (EmpathyAccountWidget *self,
   static TpBaseClient *auth_observer = NULL;
   EmpathyAccountWidgetPriv *priv = GET_PRIV (self);
   TpAccount *account = empathy_account_settings_get_account (priv->settings);
-  GtkWidget *password_entry, *remember_password;
+  GtkWidget *password_entry, *password_label, *remember_password;
 
   /* additional apply function */
   self->ui_details->additional_apply_async =
@@ -810,9 +810,20 @@ empathy_account_widget_build_skype (EmpathyAccountWidget *self,
           "table_common_skype_settings_setup", &priv->table_common_settings,
           "vbox_skype_settings_setup", &self->ui_details->widget,
           "skype-info-vbox", &skype_info,
+          "label_password_setup", &password_label,
           "entry_password_setup", &password_entry,
           "remember-password-setup", &remember_password,
           NULL);
+
+      if (priv->simple)
+        {
+          /* The assistant doesn't work well with Skype passwords as
+           * the observer goes away before the account goes offline,
+           * so just hide the password and let Empathy ask for it later. */
+          gtk_widget_hide (password_label);
+          gtk_widget_hide (password_entry);
+          gtk_widget_hide (remember_password);
+        }
 
       account_widget_build_skype_set_pixmap (self->ui_details->gui,
           "plugged-into-skype-logo", "plugged-into-skype.png");
