@@ -54,6 +54,8 @@ struct _EmpathyContactSelectorDialogPriv {
   GtkWidget *account_chooser_label;
   GtkWidget *account_chooser;
   GtkWidget *entry_id;
+  GtkWidget *dialpad_toggle;
+  GtkWidget *dialpad;
   EmpathyContactManager *contact_manager;
   TpAccount *filter_account;
 
@@ -288,6 +290,73 @@ contact_selector_dialog_filter_visible (GtkTreeModel *model,
   return r;
 }
 
+/* empathy_create_dtmf_dialpad() forces us to add a callback even if empty */
+static void
+dtmf_button_pressed_cb (GtkButton *button,
+    EmpathyContactSelectorDialog *self)
+{
+}
+
+static void
+dtmf_button_released_cb (GtkButton *button,
+    EmpathyContactSelectorDialog *self)
+{
+  EmpathyContactSelectorDialogPriv *priv = GET_PRIV (self);
+  GQuark button_quark;
+  TpDTMFEvent event;
+  const gchar *str;
+  gint position = -1;
+
+  button_quark = g_quark_from_static_string (EMPATHY_DTMF_BUTTON_ID);
+  event = GPOINTER_TO_UINT (g_object_get_qdata (G_OBJECT (button),
+    button_quark));
+
+  switch (event)
+    {
+    case TP_DTMF_EVENT_DIGIT_0:
+      str = "0";
+      break;
+    case TP_DTMF_EVENT_DIGIT_1:
+      str = "1";
+      break;
+    case TP_DTMF_EVENT_DIGIT_2:
+      str = "2";
+      break;
+    case TP_DTMF_EVENT_DIGIT_3:
+      str = "3";
+      break;
+    case TP_DTMF_EVENT_DIGIT_4:
+      str = "4";
+      break;
+    case TP_DTMF_EVENT_DIGIT_5:
+      str = "5";
+      break;
+    case TP_DTMF_EVENT_DIGIT_6:
+      str = "6";
+      break;
+    case TP_DTMF_EVENT_DIGIT_7:
+      str = "7";
+      break;
+    case TP_DTMF_EVENT_DIGIT_8:
+      str = "8";
+      break;
+    case TP_DTMF_EVENT_DIGIT_9:
+      str = "9";
+      break;
+    case TP_DTMF_EVENT_ASTERISK:
+      str = "*";
+      break;
+    case TP_DTMF_EVENT_HASH:
+      str = "#";
+      break;
+    default:
+      g_return_if_reached ();
+    }
+
+  gtk_editable_insert_text (GTK_EDITABLE (priv->entry_id),
+      str, -1, &position);
+}
+
 static void
 empathy_contact_selector_dialog_init (EmpathyContactSelectorDialog *dialog)
 {
@@ -297,6 +366,7 @@ empathy_contact_selector_dialog_init (EmpathyContactSelectorDialog *dialog)
   GtkEntryCompletion *completion;
   GtkWidget *content_area;
   GtkWidget *table_contact;
+  GtkWidget *keyboard;
 
   dialog->vbox = gtk_vbox_new (FALSE, 3);
 
@@ -309,6 +379,7 @@ empathy_contact_selector_dialog_init (EmpathyContactSelectorDialog *dialog)
                 "table_contact", &table_contact,
                 "account_chooser_label", &priv->account_chooser_label,
                 "entry_id", &priv->entry_id,
+                "dialpad_button", &priv->dialpad_toggle,
                 NULL);
   g_free (filename);
 
@@ -359,7 +430,7 @@ empathy_contact_selector_dialog_init (EmpathyContactSelectorDialog *dialog)
   priv->account_chooser = empathy_account_chooser_new ();
   gtk_table_attach_defaults (GTK_TABLE (table_contact),
            priv->account_chooser,
-           1, 2, 0, 1);
+           1, 3, 0, 1);
   empathy_account_chooser_set_filter (
       EMPATHY_ACCOUNT_CHOOSER (priv->account_chooser),
       account_chooser_filter,
@@ -370,6 +441,22 @@ empathy_contact_selector_dialog_init (EmpathyContactSelectorDialog *dialog)
   g_signal_connect (priv->account_chooser, "changed",
         G_CALLBACK (contact_selector_dialog_account_changed_cb),
         dialog);
+
+  /* Dialpad */
+  priv->dialpad = empathy_create_dtmf_dialpad (G_OBJECT (dialog),
+      G_CALLBACK (dtmf_button_pressed_cb),
+      G_CALLBACK (dtmf_button_released_cb));
+  gtk_table_attach_defaults (GTK_TABLE (table_contact),
+           priv->dialpad,
+           1, 3, 2, 3);
+  gtk_widget_show_all (priv->dialpad);
+
+  g_object_bind_property (priv->dialpad_toggle, "active",
+      priv->dialpad, "visible",
+      G_BINDING_SYNC_CREATE);
+
+  keyboard = gtk_image_new_from_icon_name ("keyboard", GTK_ICON_SIZE_BUTTON);
+  gtk_button_set_image (GTK_BUTTON (priv->dialpad_toggle), keyboard);
 }
 
 static void
