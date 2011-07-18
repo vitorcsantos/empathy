@@ -1168,6 +1168,21 @@ log_window_append_call (TplEvent *event,
   GDateTime *started_date, *finished_date;
   GTimeSpan span;
 
+  /* If searching, only add the call if the search string appears anywhere */
+  if (!EMP_STR_EMPTY (log_window->priv->last_find))
+    {
+      if (strstr (tpl_entity_get_identifier (tpl_event_get_sender (event)),
+              log_window->priv->last_find) == NULL &&
+          strstr (tpl_entity_get_identifier (tpl_event_get_receiver (event)),
+              log_window->priv->last_find) == NULL &&
+          strstr (tpl_call_event_get_detailed_end_reason (call),
+              log_window->priv->last_find) == NULL)
+        {
+          DEBUG ("TplCallEvent doesn't match search string, ignoring");
+          return;
+        }
+    }
+
   started_date = g_date_time_new_from_unix_utc (
       tpl_event_get_timestamp (event));
 
@@ -1644,6 +1659,7 @@ populate_entities_from_search_hits (void)
   TpAccount *account;
   GtkTreeView *view;
   GtkTreeModel *model;
+  GtkTreeSelection *selection;
   GtkTreeIter iter;
   GtkListStore *store;
   GList *l;
@@ -1651,6 +1667,7 @@ populate_entities_from_search_hits (void)
   view = GTK_TREE_VIEW (log_window->priv->treeview_who);
   model = gtk_tree_view_get_model (view);
   store = GTK_LIST_STORE (model);
+  selection = gtk_tree_view_get_selection (view);
 
   gtk_list_store_clear (store);
 
@@ -1704,7 +1721,9 @@ populate_entities_from_search_hits (void)
           -1);
     }
 
-  /* FIXME: select old entity if still available */
+  /* Select 'Anyone' */
+  if (gtk_tree_model_get_iter_first (model, &iter))
+    gtk_tree_selection_select_iter (selection, &iter);
 }
 
 static void
@@ -1731,14 +1750,14 @@ log_manager_searched_new_cb (GObject *manager,
   tp_clear_pointer (&log_window->priv->hits, tpl_log_manager_search_free);
   log_window->priv->hits = hits;
 
-  populate_entities_from_search_hits ();
-
   view = GTK_TREE_VIEW (log_window->priv->treeview_when);
   selection = gtk_tree_view_get_selection (view);
 
   g_signal_handlers_unblock_by_func (selection,
       log_window_when_changed_cb,
       log_window);
+
+  populate_entities_from_search_hits ();
 }
 
 static void
