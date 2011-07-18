@@ -1,0 +1,430 @@
+=== added file 'help/C/account-balance.page'
+--- old/help/C/account-balance.page	1970-01-01 00:00:00 +0000
++++ new/help/C/account-balance.page	2011-07-11 17:45:15 +0000
+@@ -0,0 +1,25 @@
++<?xml version="1.0" encoding="utf-8"?>
++<page xmlns="http://projectmallard.org/1.0/"
++      type="topic"
++      id="Account-balance"
++      >
++
++  <info>
++    <link type="guide" xref="index#accounts"/>
++    <desc>See and top off account credit balance</desc>
++  </info>
++
++  <title>Account balance</title>
++
++  <p>You may have an account (for example with Skype) that allows you to maintain a credit balance to make calls that cost money.</p>
++
++  <list>
++    <item>
++      <p>To display your current credit balance, use <guiseq><gui>View</gui><gui>Credit Balance</gui></guiseq>. This displays your credit balance in the <gui>Contacts List</gui>.</p>
++    </item>
++    <item>
++      <p>To add money to your credit balance, use <guiseq><gui>View</gui><gui>Top up &lt;account&gt;</gui></guiseq>. This open your account web page where you can top up the balance.</p>
++    </item>
++    </list>
++
++</page>
+
+=== added file 'help/C/account-skype.page'
+--- old/help/C/account-skype.page	1970-01-01 00:00:00 +0000
++++ new/help/C/account-skype.page	2011-07-11 17:45:15 +0000
+@@ -0,0 +1,44 @@
++<?xml version="1.0" encoding="utf-8"?>
++<page xmlns="http://projectmallard.org/1.0/"
++      type="topic" style="screen"
++      id="account-skype">
++      >
++
++  <info>
++    <link type="topic" xref="add-account#details"/>
++  </info>
++
++  <title>Skype account details</title>
++
++  <p>Adding a Skype account to <app>Empathy</app> is almost the same as adding other accounts. Skype accounts have some specific features:</p>
++
++  <list>
++    <item>
++      <p>Use <link href="http://skype.com">skype.com</link> to create your account at Skype if you don't already have one.</p>
++    </item>
++    <item>
++      <p>Use the <gui>Remember password</gui> check box to set whether you want to enter your password every time you log on or whether you want <app>Empathy</app> to remember the password for you.</p>
++    </item>
++    <item>
++      <p>Use the <gui>Privacy Settings</gui> to set:</p>
++      <list>
++        <item>
++          <p>Whether anyone or only your contacts can start chats with you</p>
++        </item>
++        <item>
++          <p>Whether anyone or only your contacts can call you</p>
++        </item>
++        <item>
++          <p>Who can see whether you have video chat</p>
++        </item>
++        <item>
++          <p>Who can see your profile picture</p>
++        </item>
++        <item>
++          <p>Whether your online status is displayed in people's Skype Web buttons</p>
++        </item>
++      </list>
++    </item>
++  </list>
++
++</page>
+
+=== modified file 'help/C/accounts-window.page'
+--- old/help/C/accounts-window.page	2010-02-22 23:45:14 +0000
++++ new/help/C/accounts-window.page	2011-07-11 17:45:15 +0000
+@@ -37,13 +37,14 @@
+ 
+   <section id="details">
+     <info>
++      <link type="topic" xref="account-skype"/>
+       <link type="topic" xref="account-jabber"/>
+       <link type="topic" xref="account-irc"/>
+     </info>
+     <title>Account Details</title>
+     <p>For most types of accounts, you can simply enter a login ID and
+     a password.  Certain accounts or account types, however, may require
+-    additional information.</p>
++    additional information or provide additional features.</p>
+   </section>
+ 
+ </page>
+
+=== modified file 'help/C/add-account.page'
+--- old/help/C/add-account.page	2010-06-18 11:50:45 +0000
++++ new/help/C/add-account.page	2011-07-11 17:45:15 +0000
+@@ -58,7 +58,7 @@
+       to add.</p>
+     </item>
+     <item>
+-      <p>If you do not already have a registered account, select <gui>Create a new account on the server</gui>.
++      <p>If you do not already have a registered account, select <gui>Create a new account on the server</gui>, or equivalent.
+       This feature is not available for all account types, and may not work with some account
+       providers.  See <link xref="create-account"/> for more information.</p>
+     </item>
+
+=== modified file 'help/C/audio-video.page'
+--- old/help/C/audio-video.page	2010-02-22 23:45:14 +0000
++++ new/help/C/audio-video.page	2011-07-11 17:45:15 +0000
+@@ -207,6 +207,11 @@
+         <td><p>Yes</p></td>
+       </tr>
+       <tr>
++        <td><p>Skype</p></td>
++        <td><p>Yes</p></td>
++        <td><p>Yes</p></td>
++      </tr>
++      <tr>
+         <td><p>Yahoo!</p></td>
+         <td><p>No</p></td>
+         <td><p>No</p></td>
+
+=== added file 'help/C/block-contact.page'
+--- old/help/C/block-contact.page	1970-01-01 00:00:00 +0000
++++ new/help/C/block-contact.page	2011-07-11 17:45:15 +0000
+@@ -0,0 +1,24 @@
++<?xml version="1.0" encoding="utf-8"?>
++<page xmlns="http://projectmallard.org/1.0/"
++      type="topic"
++      id="skype-block-account"
++      >
++
++  <info>
++    <link type="guide" xref="index#contacts"/>
++    <desc>Prevent a contact from communicating with you.</desc>
++  </info>
++
++  <title>Block a contact</title>
++
++  <p>A blocked contact cannot contact you.</p>
++
++  <p>There are two ways to block a contact:</p>
++
++  <list>
++    <item><p>You can right click a contact in <gui>Contacts List</gui> and choose <gui>Remove</gui>. A pop-up displays that gives you the choice of also blocking the contact.</p></item>
++    <item><p>You can block a contact without removing the contact with <guiseq><gui>Edit</gui><gui>Blocked Contacts</gui></guiseq>. From here you can <gui>Add</gui> a contact to the blocked list and <gui>Unblock</gui> a contact.</p></item>
++
++  </list>
++
++</page>
+
+=== modified file 'help/C/create-account.page'
+--- old/help/C/create-account.page	2010-06-18 11:50:45 +0000
++++ new/help/C/create-account.page	2011-07-11 17:45:15 +0000
+@@ -148,6 +148,11 @@
+       </item>
+       <item>
+         <p>
++          <link href="http://skype.com">Skype</link>
++        </p>
++      </item>
++      <item>
++        <p>
+           <link href="https://login.yahoo.com/config/login">Yahoo!</link>
+         </p>
+       </item>
+
+=== modified file 'help/C/disable-account.page'
+--- old/help/C/disable-account.page	2010-02-22 23:45:14 +0000
++++ new/help/C/disable-account.page	2011-07-11 17:45:15 +0000
+@@ -38,10 +38,9 @@
+ 
+   <title>Disable an account</title>
+ 
+-  <p>You can disable an account to prevent <app>Empathy</app> from logging in to
+-  it without removing the account entirely.  You may wish to disable and re-enable
+-  an account if you only want to be logged in to the account at certain times,
+-  but you still want to use <app>Empathy</app> for other accounts.</p>
++  <p>You can set an account to On or Off. When Off, <app>Empathy</app> does not log 
++  into the account automatically. This allows you to have an account and only use 
++  it when you want to.</p>
+ 
+   <steps>
+     <item>
+@@ -49,17 +48,12 @@
+       <gui>Accounts</gui></guiseq>, or press <key>F4</key>.</p>
+     </item>
+     <item>
+-      <p>Select the account you wish to disable from the accounts list on the left
+-      side of the window.</p>
++      <p>Select the account you want to manage.</p>
+     </item>
+     <item>
+-      <p>Deselect <gui style="checkbox">Enabled</gui> on the right side of the
+-      window.
++      <p>The button at the top right shows the current account status: <gui>On</gui> or <gui>Off</gui>. Click the button to change the status.
+       </p>
+     </item>
+   </steps>
+ 
+-  <p>
+-    To re-enable the account, simply select <gui style="checkbox">Enabled</gui>.
+-  </p>
+ </page>
+
+=== modified file 'help/C/geolocation.page'
+--- old/help/C/geolocation.page	2010-02-22 23:45:14 +0000
++++ new/help/C/geolocation.page	2011-07-11 17:45:15 +0000
+@@ -4,7 +4,7 @@
+       id="geolocation">
+ 
+   <info>
+-    <link type="guide" xref="index#advanced"/>
++    <link type="guide" xref="index#more"/>
+     <desc>
+       Use and understand geolocation in <app>Empathy</app>.
+     </desc>
+
+=== modified file 'help/C/index.page'
+--- old/help/C/index.page	2010-09-14 13:05:00 +0000
++++ new/help/C/index.page	2011-07-11 17:45:15 +0000
+@@ -47,8 +47,8 @@
+     <title>Audio and Video Conversations</title>
+   </section>
+   
+-  <section id="advanced" style="2column">
+-    <title>Advanced Actions</title>
++  <section id="more" style="2column">
++    <title>More</title>
+   </section>
+ 
+   <section id="problems">
+
+=== modified file 'help/C/prev-conv.page'
+--- old/help/C/prev-conv.page	2010-02-22 23:45:14 +0000
++++ new/help/C/prev-conv.page	2011-07-11 17:45:15 +0000
+@@ -4,8 +4,8 @@
+       id="prev-conv">
+ 
+   <info>
+-    <link type="guide" xref="index#text-conv"/>
+-    <desc>Browse or search your previous conversations.</desc>
++    <link type="guide" xref="index#more"/>
++    <desc>Search your previous conversations and calls.</desc>
+     <revision pkgversion="2.28" version="0.1" date="2009-08-17" status="stub"/>
+     <revision pkgversion="2.28" version="0.2" date="2009-08-31" status="review">
+       <!--
+@@ -32,7 +32,7 @@
+ -->
+   </info>
+ 
+-  <title>View previous conversations</title>
++  <title>View previous conversations and calls</title>
+ 
+   <comment>
+     <cite date="2009-08-31">Shaun McCance</cite>
+@@ -44,86 +44,82 @@
+   </comment>
+ 
+   <p>
+-    <app>Empathy</app> automatically saves all your text conversations you have
+-    with your contacts.  You can <link xref="#search">search through all of your
+-    previous conversations</link> or <link xref="#browse">browse previous
+-    conversations</link> by contact and date.
++    <app>Empathy</app> saves information about your calls and transcripts of 
++    your conversations (text chats). You can <link xref="#search">search them
++    for text</link> and <link xref="#sort">sort them</link> to find the ones
++    you want.
+   </p>
+ 
++  <list>
++    <item>
++      <p>To display all previous conversations, choose <guiseq><gui>View</gui>
++    <gui>Previous Conversations</gui></guiseq>. Or press <key>F3</key>.</p>
++    </item>
++    <item>
++      <p>To display previous conversations for a particular contact, right click the contact in <gui>Contact List</gui> and choose <gui>Previous Conversations</gui>.</p>
++    </item>
++  </list>
++
+   <note>
+-    <p>
+-      You do not need to be connected to the Internet to view and search your previous
+-      conversations.
+-    </p>
++    <p>You do not need to be connected to the Internet to view and search your previous
++      conversations.</p>
++  </note>
++
++  <note style="tip">
++    <p>You can start calls and conversations from this page. Just select a contact and click one of the <gui>Chat</gui>, <gui>Call</gui>, or <gui>Video</gui> buttons. Buttons for services that are not available for the contact are grayed out.</p>
+   </note>
+ 
+   <section id="search" style="task">
+-  <title>Search previous conversations</title>
++  <title>Search</title>
+ 
+-  <p>You can perform a full-text search through all of your previous conversations.</p>
++  <p>When you search for text, only chats and contact names that match your text are
++  displayed.</p>
+ 
+   <steps>
+     <item>
+-      <p>From the <gui>Contact List</gui> window, choose <guiseq><gui>View</gui>
+-      <gui>Previous Conversations</gui></guiseq>.  Alternatively, press <key>F3</key>.</p>
+-    </item>
+-    <item>
+-      <p>Select the <gui>Search</gui> tab.</p>
+-    </item>
+-    <item>
+-      <p>In the <gui>For</gui> field, type the text you want to search for.
+-      Click <gui>Find</gui> or press <key>Enter</key>.</p>
+-    </item>
+-    <item>
+-      <p>Any conversations that matched your search terms will be shown in the list below
+-      the search field.  By default, conversations are ordered by date.</p>
+-    </item>
+-    <item>
+-      <p>Click on a conversation to view it.  <app>Empathy</app> will select the text
+-      in the conversation that matched your search terms.</p>
++      <p>Enter the text you want to search for in the <gui>Search</gui> box and press
++      <key>Enter</key>.</p>
++    </item>
++    <item>
++      <p>Text chats and contacts that match your search text are displayed.</p>
++    </item>
++    <item>
++      <p>Click on a text chat to see its transcript.</p>
++    </item>
++    <item>
++      <p>Click on a call to view information about it.</p>
+     </item>
+   </steps>
++
+   </section>
+ 
+-  <section id="browse" style="task">
+-  <title>Browse previous conversations</title>
++  <section id="sort" style="task">
++  <title>Sort</title>
+ 
+-  <p>You can browse your previous conversations with your contacts or in
+-  chat rooms by date.</p>
++  <p>You can sort to find calls and conversations of interest.</p>
++  <p>The middle part of the page has three columns. When you select items in the columns, the bottom part shows matching calls and conversations. For example, if you click a contact and a day, then all calls and conversations with that contact on that day are displayed.</p>
++  <list>
++    <item><p><gui>Who</gui>: lists contacts. Select <gui>Anyone</gui> to display all contacts</p></item>
++    <item><p><gui>What</gui>: lists types of communications, like text chats and calls. Select <gui>Anything</gui> to display all types of communications.</p></item>
++    <item><p><gui>When</gui>: lists days. Select <gui>Anytime</gui> to display all times</p></item>
++  </list>
+ 
+   <steps>
+     <item>
+-      <p>From the <gui>Contact List</gui> window, choose <guiseq><gui>View</gui>
+-      <gui>Previous Conversations</gui></guiseq>.  Alternatively, press <key>F3</key>.</p>
+-    </item>
+-    <item>
+-      <p>Select the <gui>Conversations</gui> tab.</p>
+-    </item>
+-    <item>
+-      <p>Select an account from the drop-down list in the top left.  A list of
+-      contacts and chat room for that account will be shown below.</p>
+-    </item>
+-    <item>
+-      <p>Select a contact or chat room to view your previous conversations from.
+-      By default the most recent conversation will be shown.</p>
+-    </item>
+-    <item>
+-      <p>You can browse your conversations by date.  Days on which you had a conversation
+-      with the selected contact will be shown in bold text.  Click a date to select it.
+-      Click the arrows next to the month and year to browse earlier dates.</p>
++      <p>Make selections in the three columns to refine your sort.</p>
++    </item>
++    <item>
++      <p>Text chats and contacts that match your search text are displayed.</p>
++    </item>
++    <item>
++      <p>Click on a text chat to see its transcript.</p>
++    </item>
++    <item>
++      <p>Click on a call to view information about it.</p>
+     </item>
+   </steps>
+ 
+-  <p>You can search for text in the displayed conversation by typing into the
+-  search field at the top.  The matching text will be highlighted.</p>
+ 
+-  <note style="tip">
+-    <p>You can quickly view the previous conversations with one of your contacts
+-    from the <gui>Contact List</gui> window.  Simply right click the contact and
+-    choose <gui>View Previous Conversations</gui>.  The <gui>Previous
+-    Conversations</gui> window will open with that contact already selected.</p>
+-  </note>
+-    
+   </section>
+ 
+ </page>
+
+=== modified file 'help/C/send-file.page'
+--- old/help/C/send-file.page	2010-02-22 23:45:14 +0000
++++ new/help/C/send-file.page	2011-07-11 17:45:15 +0000
+@@ -4,7 +4,7 @@
+       id="send-file">
+ 
+   <info>
+-    <link type="guide" xref="index#advanced"/>
++    <link type="guide" xref="index#more"/>
+     <desc>Send a file from your computer to one of your contacts.</desc>
+     <revision pkgversion="2.28" version="0.1" date="2009-06-14" status="draft"/>
+     <revision pkgversion="2.28" version="0.2" date="2009-07-21" status="draft"/>
+
+=== modified file 'help/C/share-desktop.page'
+--- old/help/C/share-desktop.page	2010-02-22 23:45:14 +0000
++++ new/help/C/share-desktop.page	2011-07-11 17:45:15 +0000
+@@ -3,7 +3,7 @@
+   id="share-desktop">
+ 
+   <info>
+-    <link type="guide" xref="index#advanced"/>
++    <link type="guide" xref="index#more"/>
+     <desc>
+       Share the desktop with your contacts.
+     </desc>
+
