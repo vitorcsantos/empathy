@@ -578,7 +578,7 @@ sort_personas (FolksPersona *persona_a,
 
   /* protocol */
   ret_val = strcmp (tp_account_get_protocol (account_a),
-        tp_account_get_protocol (account_a));
+        tp_account_get_protocol (account_b));
 
   if (ret_val != 0)
     goto out;
