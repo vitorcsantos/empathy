@@ -266,13 +266,10 @@ static gboolean
 chatroom_manager_file_parse (EmpathyChatroomManager *manager,
 			     const gchar           *filename)
 {
-	EmpathyChatroomManagerPriv *priv;
 	xmlParserCtxtPtr           ctxt;
 	xmlDocPtr                  doc;
 	xmlNodePtr                 chatrooms;
 	xmlNodePtr                 node;
-
-	priv = GET_PRIV (manager);
 
 	DEBUG ("Attempting to parse file:'%s'...", filename);
 
@@ -301,8 +298,6 @@ chatroom_manager_file_parse (EmpathyChatroomManager *manager,
 			chatroom_manager_parse_chatroom (manager, node);
 		}
 	}
-
-	DEBUG ("Parsed %d chatrooms", g_list_length (priv->chatrooms));
 
 	xmlFreeDoc (doc);
 	xmlFreeParserCtxt (ctxt);
@@ -542,12 +537,8 @@ gboolean
 empathy_chatroom_manager_add (EmpathyChatroomManager *manager,
 			     EmpathyChatroom        *chatroom)
 {
-  EmpathyChatroomManagerPriv *priv;
-
   g_return_val_if_fail (EMPATHY_IS_CHATROOM_MANAGER (manager), FALSE);
   g_return_val_if_fail (EMPATHY_IS_CHATROOM (chatroom), FALSE);
-
-  priv = GET_PRIV (manager);
 
   /* don't add more than once */
   if (!empathy_chatroom_manager_find (manager,

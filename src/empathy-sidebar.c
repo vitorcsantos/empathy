@@ -196,11 +196,9 @@ static void
 empathy_sidebar_class_init (EmpathySidebarClass *empathy_sidebar_class)
 {
   GObjectClass *g_object_class;
-  GtkWidgetClass *widget_class;
   GtkObjectClass *gtk_object_klass;
 
   g_object_class = G_OBJECT_CLASS (empathy_sidebar_class);
-  widget_class = GTK_WIDGET_CLASS (empathy_sidebar_class);
   gtk_object_klass = GTK_OBJECT_CLASS (empathy_sidebar_class);
 
   g_type_class_add_private (g_object_class, sizeof (EmpathySidebarPrivate));

@@ -360,10 +360,8 @@ idle_get_property (GObject    *object,
 		   GValue     *value,
 		   GParamSpec *pspec)
 {
-	EmpathyIdlePriv *priv;
 	EmpathyIdle     *idle;
 
-	priv = GET_PRIV (object);
 	idle = EMPATHY_IDLE (object);
 
 	switch (param_id) {
@@ -388,10 +386,8 @@ idle_set_property (GObject      *object,
 		   const GValue *value,
 		   GParamSpec   *pspec)
 {
-	EmpathyIdlePriv *priv;
 	EmpathyIdle     *idle;
 
-	priv = GET_PRIV (object);
 	idle = EMPATHY_IDLE (object);
 
 	switch (param_id) {

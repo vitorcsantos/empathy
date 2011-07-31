@@ -695,10 +695,7 @@ static void
 ft_manager_start_transfer (EmpathyFTManager *manager,
                            EmpathyFTHandler *handler)
 {
-  EmpathyFTManagerPriv *priv;
   gboolean is_outgoing;
-
-  priv = GET_PRIV (manager);
 
   is_outgoing = !empathy_ft_handler_is_incoming (handler);
 

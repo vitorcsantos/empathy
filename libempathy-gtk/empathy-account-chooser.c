@@ -252,10 +252,6 @@ account_chooser_set_property (GObject      *object,
 			      const GValue *value,
 			      GParamSpec   *pspec)
 {
-	EmpathyAccountChooserPriv *priv;
-
-	priv = GET_PRIV (object);
-
 	switch (param_id) {
 	case PROP_HAS_ALL_OPTION:
 		empathy_account_chooser_set_has_all_option (EMPATHY_ACCOUNT_CHOOSER (object),
@@ -321,14 +317,11 @@ empathy_account_chooser_has_all_selected (EmpathyAccountChooser *chooser)
 TpAccount *
 empathy_account_chooser_dup_account (EmpathyAccountChooser *chooser)
 {
-	EmpathyAccountChooserPriv *priv;
 	TpAccount                 *account;
 	GtkTreeModel             *model;
 	GtkTreeIter               iter;
 
 	g_return_val_if_fail (EMPATHY_IS_ACCOUNT_CHOOSER (chooser), NULL);
-
-	priv = GET_PRIV (chooser);
 
 	model = gtk_combo_box_get_model (GTK_COMBO_BOX (chooser));
 	if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX (chooser), &iter)) {
@@ -354,13 +347,10 @@ empathy_account_chooser_dup_account (EmpathyAccountChooser *chooser)
 TpConnection *
 empathy_account_chooser_get_connection (EmpathyAccountChooser *chooser)
 {
-	EmpathyAccountChooserPriv *priv;
 	TpAccount                 *account;
 	TpConnection              *connection;
 
 	g_return_val_if_fail (EMPATHY_IS_ACCOUNT_CHOOSER (chooser), NULL);
-
-	priv = GET_PRIV (chooser);
 
 	account = empathy_account_chooser_dup_account (chooser);
 

@@ -411,10 +411,6 @@ contact_list_store_set_property (GObject      *object,
 				 const GValue *value,
 				 GParamSpec   *pspec)
 {
-	EmpathyContactListStorePriv *priv;
-
-	priv = GET_PRIV (object);
-
 	switch (param_id) {
 	case PROP_CONTACT_LIST:
 		contact_list_store_set_contact_list (EMPATHY_CONTACT_LIST_STORE (object),
@@ -890,10 +886,6 @@ contact_list_store_members_changed_cb (EmpathyContactList      *list_iface,
 				       gboolean                 is_member,
 				       EmpathyContactListStore *store)
 {
-	EmpathyContactListStorePriv *priv;
-
-	priv = GET_PRIV (store);
-
 	DEBUG ("Contact %s (%d) %s",
 		empathy_contact_get_id (contact),
 		empathy_contact_get_handle (contact),
@@ -912,10 +904,6 @@ contact_list_store_favourites_changed_cb (EmpathyContactList      *list_iface,
 					  gboolean                 is_favourite,
 					  EmpathyContactListStore *store)
 {
-	EmpathyContactListStorePriv *priv;
-
-	priv = GET_PRIV (store);
-
 	DEBUG ("Contact %s (%d) is %s a favourite",
 		empathy_contact_get_id (contact),
 		empathy_contact_get_handle (contact),
@@ -933,10 +921,6 @@ contact_list_store_member_renamed_cb (EmpathyContactList      *list_iface,
 				      gchar                   *message,
 				      EmpathyContactListStore *store)
 {
-	EmpathyContactListStorePriv *priv;
-
-	priv = GET_PRIV (store);
-
 	DEBUG ("Contact %s (%d) renamed to %s (%d)",
 		empathy_contact_get_id (old_contact),
 		empathy_contact_get_handle (old_contact),
@@ -1082,11 +1066,8 @@ static void
 contact_list_store_remove_contact (EmpathyContactListStore *store,
 				   EmpathyContact          *contact)
 {
-	EmpathyContactListStorePriv *priv;
 	GtkTreeModel               *model;
 	GList                      *iters, *l;
-
-	priv = GET_PRIV (store);
 
 	iters = contact_list_store_find_contact (store, contact);
 	if (!iters) {
@@ -1292,11 +1273,9 @@ contact_list_store_contact_set_active (EmpathyContactListStore *store,
 				       gboolean                active,
 				       gboolean                set_changed)
 {
-	EmpathyContactListStorePriv *priv;
 	GtkTreeModel               *model;
 	GList                      *iters, *l;
 
-	priv = GET_PRIV (store);
 	model = GTK_TREE_MODEL (store);
 
 	iters = contact_list_store_find_contact (store, contact);
@@ -1415,13 +1394,10 @@ contact_list_store_get_group (EmpathyContactListStore *store,
 			      gboolean               *created,
 			      gboolean               is_fake_group)
 {
-	EmpathyContactListStorePriv *priv;
 	GtkTreeModel                *model;
 	GtkTreeIter                  iter_group;
 	GtkTreeIter                  iter_separator;
 	FindGroup                    fg;
-
-	priv = GET_PRIV (store);
 
 	memset (&fg, 0, sizeof (fg));
 
@@ -1736,12 +1712,9 @@ static GList *
 contact_list_store_find_contact (EmpathyContactListStore *store,
 				 EmpathyContact          *contact)
 {
-	EmpathyContactListStorePriv *priv;
 	GtkTreeModel              *model;
 	GList                     *l = NULL;
 	FindContact                fc;
-
-	priv = GET_PRIV (store);
 
 	memset (&fc, 0, sizeof (fc));
 

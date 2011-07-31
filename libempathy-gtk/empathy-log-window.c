@@ -157,7 +157,6 @@ account_manager_prepared_cb (GObject *source_object,
 {
 	TpAccountManager *account_manager = TP_ACCOUNT_MANAGER (source_object);
 	EmpathyLogWindow *window = user_data;
-	guint account_num;
 	GList *accounts;
 	GError *error = NULL;
 
@@ -171,7 +170,6 @@ account_manager_prepared_cb (GObject *source_object,
 	}
 
 	accounts = tp_account_manager_get_valid_accounts (account_manager);
-	account_num = g_list_length (accounts);
 	g_list_free (accounts);
 
 	gtk_widget_show_all (window->hbox_chats);
@@ -583,12 +581,10 @@ log_window_find_populate (EmpathyLogWindow *window,
 {
 	GtkTreeView        *view;
 	GtkTreeModel       *model;
-	GtkTreeSelection   *selection;
 	GtkListStore       *store;
 
 	view = GTK_TREE_VIEW (window->treeview_find);
 	model = gtk_tree_view_get_model (view);
-	selection = gtk_tree_view_get_selection (view);
 	store = GTK_LIST_STORE (model);
 
 	empathy_chat_view_clear (window->chatview_find);

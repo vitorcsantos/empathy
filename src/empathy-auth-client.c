@@ -156,7 +156,6 @@ verifier_verify_cb (GObject *source,
     GAsyncResult *result,
     gpointer user_data)
 {
-  gboolean res;
   EmpTLSCertificateRejectReason reason;
   GError *error = NULL;
   EmpathyTLSCertificate *certificate = NULL;
@@ -166,7 +165,7 @@ verifier_verify_cb (GObject *source,
       "certificate", &certificate,
       NULL);
 
-  res = empathy_tls_verifier_verify_finish (EMPATHY_TLS_VERIFIER (source),
+  empathy_tls_verifier_verify_finish (EMPATHY_TLS_VERIFIER (source),
       result, &reason, &details, &error);
 
   if (error != NULL)

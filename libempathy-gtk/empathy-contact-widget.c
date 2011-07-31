@@ -665,8 +665,6 @@ contact_widget_location_update (EmpathyContactWidget *information)
 {
   GHashTable *location;
   GValue *value;
-  gdouble lat = 0.0, lon = 0.0;
-  gboolean has_position = TRUE;
   GtkWidget *label;
   guint row = 0;
   static const gchar* ordered_geolocation_keys[] = {
@@ -699,18 +697,6 @@ contact_widget_location_update (EmpathyContactWidget *information)
       gtk_widget_hide (information->vbox_location);
       return;
     }
-
-  value = g_hash_table_lookup (location, EMPATHY_LOCATION_LAT);
-  if (value == NULL)
-      has_position = FALSE;
-  else
-      lat = g_value_get_double (value);
-
-  value = g_hash_table_lookup (location, EMPATHY_LOCATION_LON);
-  if (value == NULL)
-      has_position = FALSE;
-  else
-      lon = g_value_get_double (value);
 
   value = g_hash_table_lookup (location, EMPATHY_LOCATION_TIMESTAMP);
   if (value == NULL)

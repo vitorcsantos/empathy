@@ -186,11 +186,8 @@ persona_set_active (EmpathyPersonaStore *self,
     gboolean active,
     gboolean set_changed)
 {
-  EmpathyPersonaStorePriv *priv;
   GtkTreePath *path;
   GtkTreeIter iter;
-
-  priv = GET_PRIV (self);
 
   path = find_persona (self, persona);
   if (path == NULL)

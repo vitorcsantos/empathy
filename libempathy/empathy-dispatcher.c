@@ -279,7 +279,6 @@ dispatcher_constructor (GType type,
                         GObjectConstructParam *construct_params)
 {
   GObject *retval;
-  EmpathyDispatcherPriv *priv;
 
   if (dispatcher != NULL)
     return g_object_ref (dispatcher);
@@ -289,8 +288,6 @@ dispatcher_constructor (GType type,
 
   dispatcher = EMPATHY_DISPATCHER (retval);
   g_object_add_weak_pointer (retval, (gpointer) &dispatcher);
-
-  priv = GET_PRIV (dispatcher);
 
   return retval;
 }
@@ -788,7 +785,6 @@ empathy_dispatcher_find_requestable_channel_classes
 {
   va_list var_args;
   GArray *properties;
-  EmpathyDispatcherPriv *priv;
   GList *retval;
   guint idx;
   char *str;
@@ -796,8 +792,6 @@ empathy_dispatcher_find_requestable_channel_classes
   g_return_val_if_fail (EMPATHY_IS_DISPATCHER (self), NULL);
   g_return_val_if_fail (TP_IS_CONNECTION (connection), NULL);
   g_return_val_if_fail (channel_type != NULL, NULL);
-
-  priv = GET_PRIV (self);
 
   va_start (var_args, first_property_name);
 

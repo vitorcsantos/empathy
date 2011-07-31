@@ -516,12 +516,9 @@ gboolean
 empathy_individual_manager_supports_blocking (EmpathyIndividualManager *self,
     FolksIndividual *individual)
 {
-  EmpathyIndividualManagerPriv *priv;
   GList *personas, *l;
 
   g_return_val_if_fail (EMPATHY_IS_INDIVIDUAL_MANAGER (self), FALSE);
-
-  priv = GET_PRIV (self);
 
   personas = folks_individual_get_personas (individual);
 

@@ -273,12 +273,9 @@ chat_new_connection_cb (TpAccount   *account,
 			EmpathyChat *chat)
 {
 	EmpathyChatPriv *priv = GET_PRIV (chat);
-	TpConnection *connection;
 
 	if (new_status != TP_CONNECTION_STATUS_CONNECTED)
 		return;
-
-	connection = tp_account_get_connection (account);
 
 	if (priv->tp_chat != NULL || account != priv->account ||
 	    priv->handle_type == TP_HANDLE_TYPE_NONE ||
@@ -720,9 +717,6 @@ chat_command_join (EmpathyChat *chat,
 	while (rooms[i] != NULL) {
 		/* ignore empty strings */
 		if (!EMP_STR_EMPTY (rooms[i])) {
-			TpConnection *connection;
-
-			connection = empathy_tp_chat_get_connection (priv->tp_chat);
 			empathy_dispatcher_join_muc (priv->account, rooms[i],
 				gtk_get_current_event_time ());
 		}
@@ -1041,12 +1035,9 @@ chat_send (EmpathyChat  *chat,
 static void
 chat_input_text_view_send (EmpathyChat *chat)
 {
-	EmpathyChatPriv *priv;
 	GtkTextBuffer  *buffer;
 	GtkTextIter     start, end;
 	gchar	       *msg;
-
-	priv = GET_PRIV (chat);
 
 	buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (chat->input_text_view));
 
@@ -1822,7 +1813,6 @@ chat_input_populate_popup_cb (GtkTextView *view,
 			      GtkMenu     *menu,
 			      EmpathyChat *chat)
 {
-	EmpathyChatPriv      *priv;
 	GtkTextBuffer        *buffer;
 	GtkTextTagTable      *table;
 	GtkTextTag           *tag;
@@ -1836,7 +1826,6 @@ chat_input_populate_popup_cb (GtkTextView *view,
 	GtkWidget            *smiley_menu;
 	GtkWidget            *image;
 
-	priv = GET_PRIV (chat);
 	buffer = gtk_text_view_get_buffer (view);
 
 	/* Add the emoticon menu. */
@@ -3034,7 +3023,6 @@ empathy_chat_set_tp_chat (EmpathyChat   *chat,
 			  EmpathyTpChat *tp_chat)
 {
 	EmpathyChatPriv *priv = GET_PRIV (chat);
-	TpConnection    *connection;
 	GPtrArray       *properties;
 
 	g_return_if_fail (EMPATHY_IS_CHAT (chat));
@@ -3050,7 +3038,6 @@ empathy_chat_set_tp_chat (EmpathyChat   *chat,
 	}
 
 	priv->tp_chat = g_object_ref (tp_chat);
-	connection = empathy_tp_chat_get_connection (priv->tp_chat);
 	priv->account = g_object_ref (empathy_tp_chat_get_account (priv->tp_chat));
 
 	g_signal_connect (tp_chat, "destroy",

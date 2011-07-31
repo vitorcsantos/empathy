@@ -720,10 +720,7 @@ avatar_chooser_drag_motion_cb (GtkWidget          *widget,
 			      guint               time_,
 			      EmpathyAvatarChooser *chooser)
 {
-	EmpathyAvatarChooserPriv *priv;
 	GList                  *p;
-
-	priv = GET_PRIV (chooser);
 
 	for (p = gdk_drag_context_list_targets (context); p != NULL;
 	     p = p->next) {
@@ -760,10 +757,7 @@ avatar_chooser_drag_drop_cb (GtkWidget          *widget,
 			    guint               time_,
 			    EmpathyAvatarChooser *chooser)
 {
-	EmpathyAvatarChooserPriv *priv;
 	GList                  *p;
-
-	priv = GET_PRIV (chooser);
 
 	if (gdk_drag_context_list_targets (context) == NULL) {
 		return FALSE;
