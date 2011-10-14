@@ -47,8 +47,16 @@ struct _EmpathyTpChatPrivate {
 	GQueue                *messages_queue;
 	/* Queue of messages signalled but not acked yet */
 	GQueue                *pending_messages_queue;
-	gboolean               had_properties_list;
-	GPtrArray             *properties;
+
+	/* Subject */
+	gboolean               supports_subject;
+	gboolean               can_set_subject;
+	gchar                 *subject;
+
+	/* Room config (for now, we only track the title and don't support
+	 * setting it) */
+	gchar                 *title;
+
 	gboolean               can_upgrade_to_muc;
 
 	GHashTable            *messages_being_sent;
@@ -64,13 +72,14 @@ enum {
 	PROP_ACCOUNT,
 	PROP_REMOTE_CONTACT,
 	PROP_N_MESSAGES_SENDING,
+	PROP_TITLE,
+	PROP_SUBJECT,
 };
 
 enum {
 	MESSAGE_RECEIVED,
 	SEND_ERROR,
 	CHAT_STATE_CHANGED,
-	PROPERTY_CHANGED,
 	MESSAGE_ACKNOWLEDGED,
 	LAST_SIGNAL
 };
@@ -585,220 +594,142 @@ list_pending_messages (EmpathyTpChat *self)
 }
 
 static void
-tp_chat_property_flags_changed_cb (TpProxy         *proxy,
-				   const GPtrArray *properties,
-				   gpointer         user_data,
-				   GObject         *chat)
+update_subject (EmpathyTpChat *self,
+		GHashTable *properties)
 {
-	EmpathyTpChat *self = (EmpathyTpChat *) chat;
-	guint              i, j;
+	EmpathyTpChatPrivate *priv = self->priv;
+	gboolean can_set, valid;
+	const gchar *subject;
 
-	if (!self->priv->had_properties_list || !properties) {
-		return;
+	can_set = tp_asv_get_boolean (properties, "CanSet", &valid);
+	if (valid) {
+		priv->can_set_subject = can_set;
 	}
 
-	for (i = 0; i < properties->len; i++) {
-		GValueArray           *prop_struct;
-		EmpathyTpChatProperty *property;
-		guint                  id;
-		guint                  flags;
-
-		prop_struct = g_ptr_array_index (properties, i);
-		id = g_value_get_uint (g_value_array_get_nth (prop_struct, 0));
-		flags = g_value_get_uint (g_value_array_get_nth (prop_struct, 1));
-
-		for (j = 0; j < self->priv->properties->len; j++) {
-			property = g_ptr_array_index (self->priv->properties, j);
-			if (property->id == id) {
-				property->flags = flags;
-				DEBUG ("property %s flags changed: %d",
-					property->name, property->flags);
-				break;
-			}
-		}
+	subject = tp_asv_get_string (properties, "Subject");
+	if (subject != NULL) {
+		g_free (priv->subject);
+		priv->subject = g_strdup (subject);
+		g_object_notify (G_OBJECT (self), "subject");
 	}
+
+	/* TODO: track Actor and Timestamp. */
 }
 
 static void
-tp_chat_properties_changed_cb (TpProxy         *proxy,
-			       const GPtrArray *properties,
-			       gpointer         user_data,
-			       GObject         *chat)
+tp_chat_get_all_subject_cb (TpProxy      *proxy,
+			    GHashTable   *properties,
+			    const GError *error,
+			    gpointer      user_data G_GNUC_UNUSED,
+			    GObject      *chat)
 {
-	EmpathyTpChat *self = (EmpathyTpChat *) chat;
-	guint              i, j;
-
-	if (!self->priv->had_properties_list || !properties) {
-		return;
-	}
-
-	for (i = 0; i < properties->len; i++) {
-		GValueArray           *prop_struct;
-		EmpathyTpChatProperty *property;
-		guint                  id;
-		GValue                *src_value;
-
-		prop_struct = g_ptr_array_index (properties, i);
-		id = g_value_get_uint (g_value_array_get_nth (prop_struct, 0));
-		src_value = g_value_get_boxed (g_value_array_get_nth (prop_struct, 1));
-
-		for (j = 0; j < self->priv->properties->len; j++) {
-			property = g_ptr_array_index (self->priv->properties, j);
-			if (property->id == id) {
-				if (property->value) {
-					g_value_copy (src_value, property->value);
-				} else {
-					property->value = tp_g_value_slice_dup (src_value);
-				}
-
-				DEBUG ("property %s changed", property->name);
-				g_signal_emit (chat, signals[PROPERTY_CHANGED], 0,
-					       property->name, property->value);
-				break;
-			}
-		}
-	}
-}
-
-static void
-tp_chat_get_properties_cb (TpProxy         *proxy,
-			   const GPtrArray *properties,
-			   const GError    *error,
-			   gpointer         user_data,
-			   GObject         *chat)
-{
-	if (error) {
-		DEBUG ("Error getting properties: %s", error->message);
-		return;
-	}
-
-	tp_chat_properties_changed_cb (proxy, properties, user_data, chat);
-}
-
-static void
-tp_chat_list_properties_cb (TpProxy         *proxy,
-			    const GPtrArray *properties,
-			    const GError    *error,
-			    gpointer         user_data,
-			    GObject         *chat)
-{
-	EmpathyTpChat *self = (EmpathyTpChat *) chat;
-	GArray            *ids;
-	guint              i;
+	EmpathyTpChat *self = EMPATHY_TP_CHAT (chat);
+	EmpathyTpChatPrivate *priv = self->priv;
 
 	if (error) {
-		DEBUG ("Error listing properties: %s", error->message);
+		DEBUG ("Error fetching subject: %s", error->message);
 		return;
 	}
 
-	self->priv->had_properties_list = TRUE;
+	priv->supports_subject = TRUE;
+	update_subject (self, properties);
+}
 
-	ids = g_array_sized_new (FALSE, FALSE, sizeof (guint), properties->len);
-	self->priv->properties = g_ptr_array_sized_new (properties->len);
-	for (i = 0; i < properties->len; i++) {
-		GValueArray           *prop_struct;
-		EmpathyTpChatProperty *property;
+static void
+update_title (EmpathyTpChat *self,
+	      GHashTable *properties)
+{
+	EmpathyTpChatPrivate *priv = self->priv;
+	const gchar *title = tp_asv_get_string (properties, "Title");
 
-		prop_struct = g_ptr_array_index (properties, i);
-		property = g_slice_new0 (EmpathyTpChatProperty);
-		property->id = g_value_get_uint (g_value_array_get_nth (prop_struct, 0));
-		property->name = g_value_dup_string (g_value_array_get_nth (prop_struct, 1));
-		property->flags = g_value_get_uint (g_value_array_get_nth (prop_struct, 3));
-
-		DEBUG ("Adding property name=%s id=%d flags=%d",
-			property->name, property->id, property->flags);
-		g_ptr_array_add (self->priv->properties, property);
-		if (property->flags & TP_PROPERTY_FLAG_READ) {
-			g_array_append_val (ids, property->id);
+	if (title != NULL) {
+		if (tp_str_empty (title)) {
+			title = NULL;
 		}
+
+		g_free (priv->title);
+		priv->title = g_strdup (title);
+		g_object_notify (G_OBJECT (self), "title");
+	}
+}
+
+static void
+tp_chat_get_all_room_config_cb (TpProxy      *proxy,
+				GHashTable   *properties,
+				const GError *error,
+				gpointer      user_data G_GNUC_UNUSED,
+				GObject      *chat)
+{
+	EmpathyTpChat *self = EMPATHY_TP_CHAT (chat);
+
+	if (error) {
+		DEBUG ("Error fetching room config: %s", error->message);
+		return;
 	}
 
-	tp_cli_properties_interface_call_get_properties (proxy, -1,
-							 ids,
-							 tp_chat_get_properties_cb,
-							 NULL, NULL,
-							 chat);
+	update_title (self, properties);
+}
 
-	g_array_free (ids, TRUE);
+static void
+tp_chat_dbus_properties_changed_cb (TpProxy *proxy,
+				    const gchar *interface_name,
+				    GHashTable *changed,
+				    const gchar **invalidated,
+				    gpointer user_data,
+				    GObject *chat)
+{
+	EmpathyTpChat *self = EMPATHY_TP_CHAT (chat);
+
+	if (!tp_strdiff (interface_name, TP_IFACE_CHANNEL_INTERFACE_SUBJECT)) {
+		update_subject (self, changed);
+	}
+
+	if (!tp_strdiff (interface_name, TP_IFACE_CHANNEL_INTERFACE_ROOM_CONFIG)) {
+		update_title (self, changed);
+	}
 }
 
 void
-empathy_tp_chat_set_property (EmpathyTpChat *self,
-			      const gchar   *name,
-			      const GValue  *value)
+empathy_tp_chat_set_subject (EmpathyTpChat *self,
+			     const gchar   *subject)
 {
-	EmpathyTpChatProperty *property;
-	guint                  i;
-
-	if (!self->priv->had_properties_list) {
-		return;
-	}
-
-	for (i = 0; i < self->priv->properties->len; i++) {
-		property = g_ptr_array_index (self->priv->properties, i);
-		if (!tp_strdiff (property->name, name)) {
-			GPtrArray   *properties;
-			GValueArray *prop;
-			GValue       id = {0, };
-			GValue       dest_value = {0, };
-
-			if (!(property->flags & TP_PROPERTY_FLAG_WRITE)) {
-				break;
-			}
-
-			g_value_init (&id, G_TYPE_UINT);
-			g_value_init (&dest_value, G_TYPE_VALUE);
-			g_value_set_uint (&id, property->id);
-			g_value_set_boxed (&dest_value, value);
-
-			prop = g_value_array_new (2);
-			g_value_array_append (prop, &id);
-			g_value_array_append (prop, &dest_value);
-
-			properties = g_ptr_array_sized_new (1);
-			g_ptr_array_add (properties, prop);
-
-			DEBUG ("Set property %s", name);
-			tp_cli_properties_interface_call_set_properties (self, -1,
-									 properties,
-									 (tp_cli_properties_interface_callback_for_set_properties)
-									 tp_chat_async_cb,
-									 "Seting property", NULL,
-									 G_OBJECT (self));
-
-			g_ptr_array_free (properties, TRUE);
-			g_value_array_free (prop);
-
-			break;
-		}
-	}
+	tp_cli_channel_interface_subject_call_set_subject (TP_CHANNEL (self), -1,
+							   subject,
+							   tp_chat_async_cb,
+							   "while setting subject", NULL,
+							   G_OBJECT (self));
 }
 
-EmpathyTpChatProperty *
-empathy_tp_chat_get_property (EmpathyTpChat *self,
-			      const gchar   *name)
+const gchar *
+empathy_tp_chat_get_title (EmpathyTpChat *self)
 {
-	EmpathyTpChatProperty *property;
-	guint                  i;
+	EmpathyTpChatPrivate *priv = self->priv;
 
-	if (!self->priv->had_properties_list) {
-		return NULL;
-	}
-
-	for (i = 0; i < self->priv->properties->len; i++) {
-		property = g_ptr_array_index (self->priv->properties, i);
-		if (!tp_strdiff (property->name, name)) {
-			return property;
-		}
-	}
-
-	return NULL;
+	return priv->title;
 }
 
-GPtrArray *
-empathy_tp_chat_get_properties (EmpathyTpChat *self)
+gboolean
+empathy_tp_chat_supports_subject (EmpathyTpChat *self)
 {
-	return self->priv->properties;
+	EmpathyTpChatPrivate *priv = self->priv;
+
+	return priv->supports_subject;
+}
+
+gboolean
+empathy_tp_chat_can_set_subject (EmpathyTpChat *self)
+{
+	EmpathyTpChatPrivate *priv = self->priv;
+
+	return priv->can_set_subject;
+}
+
+const gchar *
+empathy_tp_chat_get_subject (EmpathyTpChat *self)
+{
+	EmpathyTpChatPrivate *priv = self->priv;
+
+	return priv->subject;
 }
 
 static void
@@ -827,27 +758,15 @@ static void
 tp_chat_finalize (GObject *object)
 {
 	EmpathyTpChat *self = (EmpathyTpChat *) object;
-	guint              i;
 
 	DEBUG ("Finalize: %p", object);
-
-	if (self->priv->properties) {
-		for (i = 0; i < self->priv->properties->len; i++) {
-			EmpathyTpChatProperty *property;
-
-			property = g_ptr_array_index (self->priv->properties, i);
-			g_free (property->name);
-			if (property->value) {
-				tp_g_value_slice_free (property->value);
-			}
-			g_slice_free (EmpathyTpChatProperty, property);
-		}
-		g_ptr_array_free (self->priv->properties, TRUE);
-	}
 
 	g_queue_free (self->priv->messages_queue);
 	g_queue_free (self->priv->pending_messages_queue);
 	g_hash_table_destroy (self->priv->messages_being_sent);
+
+	g_free (self->priv->title);
+	g_free (self->priv->subject);
 
 	G_OBJECT_CLASS (empathy_tp_chat_parent_class)->finalize (object);
 }
@@ -1235,6 +1154,14 @@ tp_chat_get_property (GObject    *object,
 		g_value_set_uint (value,
 			g_hash_table_size (self->priv->messages_being_sent));
 		break;
+	case PROP_TITLE:
+		g_value_set_string (value,
+			empathy_tp_chat_get_title (self));
+		break;
+	case PROP_SUBJECT:
+		g_value_set_string (value,
+			empathy_tp_chat_get_subject (self));
+		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, param_id, pspec);
 		break;
@@ -1324,6 +1251,24 @@ empathy_tp_chat_class_init (EmpathyTpChatClass *klass)
 							    0, G_MAXUINT, 0,
 							    G_PARAM_READABLE));
 
+	g_object_class_install_property (object_class,
+					 PROP_TITLE,
+					 g_param_spec_string ("title",
+							      "Title",
+							      "A human-readable name for the room, if any",
+							      NULL,
+							      G_PARAM_READABLE |
+							      G_PARAM_STATIC_STRINGS));
+
+	g_object_class_install_property (object_class,
+					 PROP_SUBJECT,
+					 g_param_spec_string ("subject",
+							      "Subject",
+							      "The room's current subject, if any",
+							      NULL,
+							      G_PARAM_READABLE |
+							      G_PARAM_STATIC_STRINGS));
+
 	/* Signals */
 	signals[MESSAGE_RECEIVED] =
 		g_signal_new ("message-received-empathy",
@@ -1354,16 +1299,6 @@ empathy_tp_chat_class_init (EmpathyTpChatClass *klass)
 			      _empathy_marshal_VOID__OBJECT_UINT,
 			      G_TYPE_NONE,
 			      2, EMPATHY_TYPE_CONTACT, G_TYPE_UINT);
-
-	signals[PROPERTY_CHANGED] =
-		g_signal_new ("property-changed",
-			      G_TYPE_FROM_CLASS (klass),
-			      G_SIGNAL_RUN_LAST,
-			      0,
-			      NULL, NULL,
-			      _empathy_marshal_VOID__STRING_BOXED,
-			      G_TYPE_NONE,
-			      2, G_TYPE_STRING, G_TYPE_VALUE);
 
 	signals[MESSAGE_ACKNOWLEDGED] =
 		g_signal_new ("message-acknowledged",
@@ -1622,6 +1557,7 @@ tp_chat_prepare_ready_async (TpProxy *proxy,
 	EmpathyTpChat *self = (EmpathyTpChat *) proxy;
 	TpChannel *channel = (TpChannel *) proxy;
 	TpConnection *connection;
+	gboolean listen_for_dbus_properties_changed = FALSE;
 
 	g_assert (self->priv->ready_result == NULL);
 	self->priv->ready_result = g_simple_async_result_new (G_OBJECT (self),
@@ -1688,18 +1624,29 @@ tp_chat_prepare_ready_async (TpProxy *proxy,
 	}
 
 	if (tp_proxy_has_interface_by_id (self,
-					  TP_IFACE_QUARK_PROPERTIES_INTERFACE)) {
-		tp_cli_properties_interface_call_list_properties (channel, -1,
-								  tp_chat_list_properties_cb,
-								  NULL, NULL,
-								  G_OBJECT (self));
-		tp_cli_properties_interface_connect_to_properties_changed (channel,
-									   tp_chat_properties_changed_cb,
-									   NULL, NULL,
-									   G_OBJECT (self), NULL);
-		tp_cli_properties_interface_connect_to_property_flags_changed (channel,
-									       tp_chat_property_flags_changed_cb,
-									       NULL, NULL,
-									       G_OBJECT (self), NULL);
+					  TP_IFACE_QUARK_CHANNEL_INTERFACE_SUBJECT)) {
+		tp_cli_dbus_properties_call_get_all (channel, -1,
+						     TP_IFACE_CHANNEL_INTERFACE_SUBJECT,
+						     tp_chat_get_all_subject_cb,
+						     NULL, NULL,
+						     G_OBJECT (self));
+		listen_for_dbus_properties_changed = TRUE;
+	}
+
+	if (tp_proxy_has_interface_by_id (self,
+					  TP_IFACE_QUARK_CHANNEL_INTERFACE_ROOM_CONFIG)) {
+		tp_cli_dbus_properties_call_get_all (channel, -1,
+						     TP_IFACE_CHANNEL_INTERFACE_ROOM_CONFIG,
+						     tp_chat_get_all_room_config_cb,
+						     NULL, NULL,
+						     G_OBJECT (self));
+		listen_for_dbus_properties_changed = TRUE;
+	}
+
+	if (listen_for_dbus_properties_changed) {
+		tp_cli_dbus_properties_connect_to_properties_changed (channel,
+								      tp_chat_dbus_properties_changed_cb,
+								      NULL, NULL,
+								      G_OBJECT (self), NULL);
 	}
 }
