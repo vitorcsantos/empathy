@@ -816,6 +816,8 @@ theme_adium_append_message (EmpathyChatView *view,
 	contact_id = empathy_contact_get_id (sender);
 	action = (empathy_message_get_tptype (msg) == TP_CHANNEL_TEXT_MESSAGE_TYPE_ACTION);
 
+	name_escaped = g_markup_escape_text (name, -1);
+
 	/* If this is a /me probably */
 	if (action) {
 		gchar *str;
@@ -823,7 +825,7 @@ theme_adium_append_message (EmpathyChatView *view,
 		if (priv->data->version >= 4 || !priv->data->custom_template) {
 			str = g_strdup_printf ("<span class='actionMessageUserName'>%s</span>"
 					       "<span class='actionMessageBody'>%s</span>",
-					       name, body_escaped);
+					       name_escaped, body_escaped);
 		} else {
 			str = g_strdup_printf ("*%s*", body_escaped);
 		}
