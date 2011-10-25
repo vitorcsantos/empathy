@@ -54,20 +54,18 @@
 static gboolean only_if_needed = FALSE;
 static gboolean hidden = FALSE;
 static gchar *selected_account_name = NULL;
-<<<<<<< HEAD
-static gboolean account_manager_prepared = FALSE;
-=======
-static gboolean assistant = FALSE;
->>>>>>> cf3a9f5... empathy-accounts: prepare the AM in app_command_line_cb
 
 static void
-maybe_show_accounts_ui (TpAccountManager *manager)
+maybe_show_accounts_ui (TpAccountManager *manager,
+    GApplication *app)
 {
-  if (hidden ||
-      (only_if_needed && empathy_accounts_has_non_salut_accounts (manager)))
-    gtk_main_quit ();
-  else
-    empathy_accounts_show_accounts_ui (manager, NULL, gtk_main_quit);
+  if (hidden)
+    return;
+
+  if (only_if_needed && empathy_accounts_has_non_salut_accounts (manager))
+    return;
+
+  empathy_accounts_show_accounts_ui (manager, NULL, app);
 }
 
 static TpAccount *
@@ -98,12 +96,13 @@ account_manager_ready_for_accounts_cb (GObject *source_object,
 {
   TpAccountManager *manager = TP_ACCOUNT_MANAGER (source_object);
   GError *error = NULL;
+  GApplication *app = G_APPLICATION (user_data);
 
   if (!tp_proxy_prepare_finish (manager, result, &error))
     {
       DEBUG ("Failed to prepare account manager: %s", error->message);
       g_clear_error (&error);
-      return;
+      goto out;
     }
 
   if (selected_account_name != NULL)
@@ -123,10 +122,8 @@ account_manager_ready_for_accounts_cb (GObject *source_object,
 
       if (account != NULL)
         {
-          empathy_accounts_show_accounts_ui (manager, account,
-              G_CALLBACK (gtk_main_quit));
-
-          return;
+          empathy_accounts_show_accounts_ui (manager, account, app);
+          goto out;
         }
       else
         {
@@ -134,15 +131,18 @@ account_manager_ready_for_accounts_cb (GObject *source_object,
 
           g_clear_error (&error);
 
-          maybe_show_accounts_ui (manager);
+          maybe_show_accounts_ui (manager, app);
         }
 
       g_free (account_path);
     }
   else
     {
-      maybe_show_accounts_ui (manager);
+      maybe_show_accounts_ui (manager, app);
     }
+
+out:
+  g_application_release (app);
 }
 
 static int
@@ -151,12 +151,13 @@ app_command_line_cb (GApplication *app,
 {
   TpAccountManager *account_manager;
 
-  g_application_hold (app);
-
   account_manager = tp_account_manager_dup ();
 
+  /* Hold the application while preparing the AM */
+  g_application_hold (app);
+
   tp_proxy_prepare_async (account_manager, NULL,
-    account_manager_ready_for_accounts_cb, NULL);
+    account_manager_ready_for_accounts_cb, app);
 
   g_object_unref (account_manager);
 
