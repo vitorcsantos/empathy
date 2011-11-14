@@ -1634,9 +1634,11 @@ model_has_date (GtkTreeModel *model,
   if (!g_date_compare (date, d))
     {
       has_element = TRUE;
+      g_date_free (d);
       return TRUE;
     }
 
+  g_date_free (d);
   return FALSE;
 }
 
@@ -2805,6 +2807,7 @@ sort_by_date (GtkTreeModel *model,
     gpointer user_data)
 {
   GDate *date1, *date2;
+  gint result;
 
   gtk_tree_model_get (model, a,
       COL_WHEN_DATE, &date1,
@@ -2814,7 +2817,11 @@ sort_by_date (GtkTreeModel *model,
       COL_WHEN_DATE, &date2,
       -1);
 
-  return g_date_compare (date1, date2);
+  result =  g_date_compare (date1, date2);
+
+  g_date_free (date1);
+  g_date_free (date2);
+  return result;
 }
 
 static gboolean
@@ -3357,6 +3364,8 @@ log_window_get_messages_for_dates (EmpathyLogWindow *self,
                           event_mask, subtype, self->priv->count);
                       _tpl_action_chain_append (self->priv->chain, get_events_for_date, ctx);
                     }
+
+                  g_date_free (d);
                 }
             }
         }
