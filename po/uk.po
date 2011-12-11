@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Empathy\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-28 02:20+0300\n"
+"POT-Creation-Date: 2011-12-11 16:20+0200\n"
 "PO-Revision-Date: 2011-09-28 02:17+0300\n"
 "Last-Translator: Korostil Daniel <ted.korostiled@gmail.com>\n"
 "Language-Team: translation@linux.org.ua\n"
@@ -493,7 +493,7 @@ msgstr "Керування обліковими записами повідом�
 
 #. Tweak the dialog
 #: ../data/empathy-accounts.desktop.in.in.h:2
-#: ../src/empathy-accounts-dialog.c:2324
+#: ../src/empathy-accounts-dialog.c:2312
 msgid "Messaging and VoIP Accounts"
 msgstr "Листування й облікові записи VoIP"
 
@@ -802,48 +802,48 @@ msgstr "%s:"
 msgid "My Web Accounts"
 msgstr "Мій мережевий обліковий запис"
 
-#: ../libempathy-gtk/empathy-account-widget.c:1208
+#: ../libempathy-gtk/empathy-account-widget.c:1209
 #, c-format
 msgid "The account %s is edited via %s."
 msgstr "Обліковий запис %s — змінено через %s."
 
-#: ../libempathy-gtk/empathy-account-widget.c:1214
+#: ../libempathy-gtk/empathy-account-widget.c:1215
 #, c-format
 msgid "The account %s cannot be edited in Empathy."
 msgstr "Обліковий запис %s неможливо редагувати в Empathy."
 
-#: ../libempathy-gtk/empathy-account-widget.c:1233
+#: ../libempathy-gtk/empathy-account-widget.c:1234
 msgid "Launch My Web Accounts"
 msgstr "Запустити мій обліковий запис із сайту"
 
 #. general handler
-#: ../libempathy-gtk/empathy-account-widget.c:1241
+#: ../libempathy-gtk/empathy-account-widget.c:1242
 #, c-format
 msgid "Edit %s"
 msgstr "Редагувати %s"
 
-#: ../libempathy-gtk/empathy-account-widget.c:1591
+#: ../libempathy-gtk/empathy-account-widget.c:1592
 #: ../libempathy-gtk/empathy-account-widget-irc.ui.h:11
 msgid "Username:"
 msgstr "Користувач:"
 
-#: ../libempathy-gtk/empathy-account-widget.c:1909
+#: ../libempathy-gtk/empathy-account-widget.c:1910
 msgid "A_pply"
 msgstr "_Застосувати"
 
-#: ../libempathy-gtk/empathy-account-widget.c:1939
+#: ../libempathy-gtk/empathy-account-widget.c:1940
 msgid "L_og in"
 msgstr "_Увійти"
 
-#: ../libempathy-gtk/empathy-account-widget.c:2013
+#: ../libempathy-gtk/empathy-account-widget.c:2014
 msgid "This account already exists on the server"
 msgstr "Цей обліковий запис вже існує на сервері"
 
-#: ../libempathy-gtk/empathy-account-widget.c:2016
+#: ../libempathy-gtk/empathy-account-widget.c:2017
 msgid "Create a new account on the server"
 msgstr "Створити новий обліковий запис на сервері"
 
-#: ../libempathy-gtk/empathy-account-widget.c:2208
+#: ../libempathy-gtk/empathy-account-widget.c:2209
 msgid "Ca_ncel"
 msgstr "_Скасувати"
 
@@ -852,19 +852,19 @@ msgstr "_Скасувати"
 #. * like: "MyUserName on freenode".
 #. * You should reverse the order of these arguments if the
 #. * server should come before the login id in your locale.
-#: ../libempathy-gtk/empathy-account-widget.c:2486
+#: ../libempathy-gtk/empathy-account-widget.c:2487
 #, c-format
 msgid "%1$s on %2$s"
 msgstr "%1$s на %2$s"
 
 #. To translators: The parameter is the protocol name. The resulting
 #. * string will be something like: "Jabber Account"
-#: ../libempathy-gtk/empathy-account-widget.c:2512
+#: ../libempathy-gtk/empathy-account-widget.c:2513
 #, c-format
 msgid "%s Account"
 msgstr "Обліковий запис %s"
 
-#: ../libempathy-gtk/empathy-account-widget.c:2516
+#: ../libempathy-gtk/empathy-account-widget.c:2517
 msgid "New account"
 msgstr "Новий обліковий запис"
 
@@ -1345,59 +1345,59 @@ msgstr "Екстрені виклики не підтримуються цим �
 msgid "Failed to open private chat"
 msgstr "Не вдалось відкрити приватну кімнату"
 
-#: ../libempathy-gtk/empathy-chat.c:765
+#: ../libempathy-gtk/empathy-chat.c:762
 msgid "Topic not supported on this conversation"
 msgstr "Тема не підтримується у цій бесіді"
 
-#: ../libempathy-gtk/empathy-chat.c:771
+#: ../libempathy-gtk/empathy-chat.c:768
 msgid "You are not allowed to change the topic"
 msgstr "У вас немає прав змінювати тему"
 
-#: ../libempathy-gtk/empathy-chat.c:975
+#: ../libempathy-gtk/empathy-chat.c:969
 #, c-format
 msgid "“%s” is not a valid contact ID"
 msgstr "«%s» — недійсний ідентифікатор контакту"
 
-#: ../libempathy-gtk/empathy-chat.c:1060
+#: ../libempathy-gtk/empathy-chat.c:1054
 msgid "/clear: clear all messages from the current conversation"
 msgstr "/clear: очистити всі повідомлення з поточної бесіди"
 
-#: ../libempathy-gtk/empathy-chat.c:1063
+#: ../libempathy-gtk/empathy-chat.c:1057
 msgid "/topic <topic>: set the topic of the current conversation"
 msgstr "/topic <topic>: встановити тему поточної бесіди"
 
-#: ../libempathy-gtk/empathy-chat.c:1066
+#: ../libempathy-gtk/empathy-chat.c:1060
 msgid "/join <chat room ID>: join a new chat room"
 msgstr "/join <chat room ID>: приєднатися до нової кімнати розмов"
 
-#: ../libempathy-gtk/empathy-chat.c:1069
+#: ../libempathy-gtk/empathy-chat.c:1063
 msgid "/j <chat room ID>: join a new chat room"
 msgstr "/j <chat room ID>: приєднатися до нової кімнати розмов"
 
-#: ../libempathy-gtk/empathy-chat.c:1073
+#: ../libempathy-gtk/empathy-chat.c:1067
 msgid ""
 "/part [<chat room ID>] [<reason>]: leave the chat room, by default the "
 "current one"
 msgstr ""
 "/part [<chat room ID>] [<reason>]: покинути кімнату бесіди, типово теперішню"
 
-#: ../libempathy-gtk/empathy-chat.c:1077
+#: ../libempathy-gtk/empathy-chat.c:1071
 msgid "/query <contact ID> [<message>]: open a private chat"
 msgstr "/query <contact ID> [<message>]: відкрити приватну бесіду"
 
-#: ../libempathy-gtk/empathy-chat.c:1080
+#: ../libempathy-gtk/empathy-chat.c:1074
 msgid "/msg <contact ID> <message>: open a private chat"
 msgstr "/msg <contact ID> <message>: відкрити приватну бесіду"
 
-#: ../libempathy-gtk/empathy-chat.c:1083
+#: ../libempathy-gtk/empathy-chat.c:1077
 msgid "/nick <nickname>: change your nickname on the current server"
 msgstr "/nick <nickname>: змінити назву на поточному сервері"
 
-#: ../libempathy-gtk/empathy-chat.c:1086
+#: ../libempathy-gtk/empathy-chat.c:1080
 msgid "/me <message>: send an ACTION message to the current conversation"
 msgstr "/me <message>: надіслати повідомлення ACTION до поточної бесіди"
 
-#: ../libempathy-gtk/empathy-chat.c:1089
+#: ../libempathy-gtk/empathy-chat.c:1083
 msgid ""
 "/say <message>: send <message> to the current conversation. This is used to "
 "send a message starting with a '/'. For example: \"/say /join is used to "
@@ -1407,11 +1407,11 @@ msgstr ""
 "для надсилання нового повідомлення, що починається з '/'. Наприклад: \"/"
 "скажіть /join для приєднання до нової кімнати розмов\""
 
-#: ../libempathy-gtk/empathy-chat.c:1094
+#: ../libempathy-gtk/empathy-chat.c:1088
 msgid "/whois <contact ID>: display information about a contact"
 msgstr "/whois <contact ID>: показує інформацію про контакт"
 
-#: ../libempathy-gtk/empathy-chat.c:1097
+#: ../libempathy-gtk/empathy-chat.c:1091
 msgid ""
 "/help [<command>]: show all supported commands. If <command> is defined, "
 "show its usage."
@@ -1419,113 +1419,113 @@ msgstr ""
 "/help [<command>]: показати довідку. Якщо визначено <command>, показати "
 "синтаксис команди."
 
-#: ../libempathy-gtk/empathy-chat.c:1114
+#: ../libempathy-gtk/empathy-chat.c:1108
 #, c-format
 msgid "Usage: %s"
 msgstr "Використання: %s"
 
-#: ../libempathy-gtk/empathy-chat.c:1159
+#: ../libempathy-gtk/empathy-chat.c:1153
 msgid "Unknown command"
 msgstr "Невідома команда"
 
-#: ../libempathy-gtk/empathy-chat.c:1285
+#: ../libempathy-gtk/empathy-chat.c:1279
 msgid "Unknown command; see /help for the available commands"
 msgstr "Невідома команда; для виводу списку доступних команд введіть /help"
 
 #. translators: error used when user doesn't have enough credit on his
 #. * account to send the message.
-#: ../libempathy-gtk/empathy-chat.c:1455
+#: ../libempathy-gtk/empathy-chat.c:1449
 msgid "insufficient balance to send message"
 msgstr "недостатній залишок для надсилання повідомлення"
 
-#: ../libempathy-gtk/empathy-chat.c:1457
+#: ../libempathy-gtk/empathy-chat.c:1451
 msgid "not capable"
 msgstr "не здатен"
 
-#: ../libempathy-gtk/empathy-chat.c:1464
+#: ../libempathy-gtk/empathy-chat.c:1458
 msgid "offline"
 msgstr "поза мережею"
 
-#: ../libempathy-gtk/empathy-chat.c:1467
+#: ../libempathy-gtk/empathy-chat.c:1461
 msgid "invalid contact"
 msgstr "неправильний контакт"
 
-#: ../libempathy-gtk/empathy-chat.c:1470
+#: ../libempathy-gtk/empathy-chat.c:1464
 msgid "permission denied"
 msgstr "відмовлено у доступі"
 
-#: ../libempathy-gtk/empathy-chat.c:1473
+#: ../libempathy-gtk/empathy-chat.c:1467
 msgid "too long message"
 msgstr "надто довге повідомлення"
 
-#: ../libempathy-gtk/empathy-chat.c:1476
+#: ../libempathy-gtk/empathy-chat.c:1470
 msgid "not implemented"
 msgstr "не реалізовано"
 
-#: ../libempathy-gtk/empathy-chat.c:1480
+#: ../libempathy-gtk/empathy-chat.c:1474
 msgid "unknown"
 msgstr "невідомо"
 
-#: ../libempathy-gtk/empathy-chat.c:1486
+#: ../libempathy-gtk/empathy-chat.c:1480
 #, c-format
 msgid "Error sending message '%s': %s"
 msgstr "Помилка при надсиланні повідомлення «%s»: %s"
 
-#: ../libempathy-gtk/empathy-chat.c:1490
+#: ../libempathy-gtk/empathy-chat.c:1484
 #, c-format
 msgid "Error sending message: %s"
 msgstr "Помилка надсилання повідомлення: %s"
 
-#: ../libempathy-gtk/empathy-chat.c:1551 ../src/empathy-chat-window.c:761
+#: ../libempathy-gtk/empathy-chat.c:1541 ../src/empathy-chat-window.c:761
 msgid "Topic:"
 msgstr "Тема:"
 
-#: ../libempathy-gtk/empathy-chat.c:1563
+#: ../libempathy-gtk/empathy-chat.c:1553
 #, c-format
 msgid "Topic set to: %s"
 msgstr "Тема: %s"
 
-#: ../libempathy-gtk/empathy-chat.c:1565
+#: ../libempathy-gtk/empathy-chat.c:1555
 msgid "No topic defined"
 msgstr "Тему не встановлено"
 
-#: ../libempathy-gtk/empathy-chat.c:2074
+#: ../libempathy-gtk/empathy-chat.c:2068
 msgid "(No Suggestions)"
 msgstr "(Нема пропозицій)"
 
 #. translators: %s is the selected word
-#: ../libempathy-gtk/empathy-chat.c:2142
+#: ../libempathy-gtk/empathy-chat.c:2136
 #, c-format
 msgid "Add '%s' to Dictionary"
 msgstr "Додати «%s» до словника"
 
 #. translators: first %s is the selected word,
 #. * second %s is the language name of the target dictionary
-#: ../libempathy-gtk/empathy-chat.c:2179
+#: ../libempathy-gtk/empathy-chat.c:2173
 #, c-format
 msgid "Add '%s' to %s Dictionary"
 msgstr "Додати «%s» до словника %s"
 
-#: ../libempathy-gtk/empathy-chat.c:2249
+#: ../libempathy-gtk/empathy-chat.c:2243
 msgid "Insert Smiley"
 msgstr "Вставити емоційку"
 
 #. send button
-#: ../libempathy-gtk/empathy-chat.c:2267
-#: ../libempathy-gtk/empathy-ui-utils.c:1839
+#: ../libempathy-gtk/empathy-chat.c:2261
+#: ../libempathy-gtk/empathy-ui-utils.c:1840
 msgid "_Send"
 msgstr "_Надіслати"
 
 #. Spelling suggestions
-#: ../libempathy-gtk/empathy-chat.c:2321
+#: ../libempathy-gtk/empathy-chat.c:2315
 msgid "_Spelling Suggestions"
 msgstr "_Пропозиції з правопису"
 
-#: ../libempathy-gtk/empathy-chat.c:2410
+#: ../libempathy-gtk/empathy-chat.c:2404
 msgid "Failed to retrieve recent logs"
 msgstr "Не вдалось одержати останні журнали"
 
-#: ../libempathy-gtk/empathy-chat.c:2547
+#: ../libempathy-gtk/empathy-chat.c:2541
 #, c-format
 msgid "%s has disconnected"
 msgstr "%s від'єднано"
@@ -1533,12 +1533,12 @@ msgstr "%s від'єднано"
 #. translators: reverse the order of these arguments
 #. * if the kicked should come before the kicker in your locale.
 #.
-#: ../libempathy-gtk/empathy-chat.c:2554
+#: ../libempathy-gtk/empathy-chat.c:2548
 #, c-format
 msgid "%1$s was kicked by %2$s"
 msgstr "%1$s викинено користувачем %2$s"
 
-#: ../libempathy-gtk/empathy-chat.c:2557
+#: ../libempathy-gtk/empathy-chat.c:2551
 #, c-format
 msgid "%s was kicked"
 msgstr "%s викинено"
@@ -1546,17 +1546,17 @@ msgstr "%s викинено"
 #. translators: reverse the order of these arguments
 #. * if the banned should come before the banner in your locale.
 #.
-#: ../libempathy-gtk/empathy-chat.c:2565
+#: ../libempathy-gtk/empathy-chat.c:2559
 #, c-format
 msgid "%1$s was banned by %2$s"
 msgstr "%1$s заблоковано користувачем %2$s"
 
-#: ../libempathy-gtk/empathy-chat.c:2568
+#: ../libempathy-gtk/empathy-chat.c:2562
 #, c-format
 msgid "%s was banned"
 msgstr "%s заблоковано"
 
-#: ../libempathy-gtk/empathy-chat.c:2572
+#: ../libempathy-gtk/empathy-chat.c:2566
 #, c-format
 msgid "%s has left the room"
 msgstr "%s покинув кімнату"
@@ -1566,17 +1566,17 @@ msgstr "%s покинув кімнату"
 #. * given by the user living the room. If this poses a problem,
 #. * please let us know. :-)
 #.
-#: ../libempathy-gtk/empathy-chat.c:2581
+#: ../libempathy-gtk/empathy-chat.c:2575
 #, c-format
 msgid " (%s)"
 msgstr " (%s)"
 
-#: ../libempathy-gtk/empathy-chat.c:2606
+#: ../libempathy-gtk/empathy-chat.c:2600
 #, c-format
 msgid "%s has joined the room"
 msgstr "%s приєднався до бесіди"
 
-#: ../libempathy-gtk/empathy-chat.c:2631
+#: ../libempathy-gtk/empathy-chat.c:2625
 #, c-format
 msgid "%s is now known as %s"
 msgstr "%s тепер відомий як %s"
@@ -1584,54 +1584,54 @@ msgstr "%s тепер відомий як %s"
 #. We don't know if the incoming call has been accepted or not, so we
 #. * assume it hasn't and if it has, we'll set the proper status when
 #. * we get the new handler.
-#: ../libempathy-gtk/empathy-chat.c:2784
-#: ../src/empathy-streamed-media-window.c:1894
-#: ../src/empathy-event-manager.c:1240 ../src/empathy-call-window.c:1432
-#: ../src/empathy-call-window.c:1482 ../src/empathy-call-window.c:2527
+#: ../libempathy-gtk/empathy-chat.c:2778
+#: ../src/empathy-streamed-media-window.c:1895
+#: ../src/empathy-event-manager.c:1240 ../src/empathy-call-window.c:1433
+#: ../src/empathy-call-window.c:1483 ../src/empathy-call-window.c:2528
 msgid "Disconnected"
 msgstr "Від'єднаний"
 
 #. Add message
-#: ../libempathy-gtk/empathy-chat.c:3428
+#: ../libempathy-gtk/empathy-chat.c:3424
 msgid "Would you like to store this password?"
 msgstr "Зберегти цей пароль?"
 
-#: ../libempathy-gtk/empathy-chat.c:3434
+#: ../libempathy-gtk/empathy-chat.c:3430
 msgid "Remember"
 msgstr "Запам'ятати"
 
-#: ../libempathy-gtk/empathy-chat.c:3444
+#: ../libempathy-gtk/empathy-chat.c:3440
 msgid "Not now"
 msgstr "Не зараз"
 
-#: ../libempathy-gtk/empathy-chat.c:3488
+#: ../libempathy-gtk/empathy-chat.c:3484
 msgid "Retry"
 msgstr "Повторити"
 
-#: ../libempathy-gtk/empathy-chat.c:3492
+#: ../libempathy-gtk/empathy-chat.c:3488
 msgid "Wrong password; please try again:"
 msgstr "Неправильний пароль; введіть пароль ще раз:"
 
 #. Add message
-#: ../libempathy-gtk/empathy-chat.c:3622
+#: ../libempathy-gtk/empathy-chat.c:3618
 msgid "This room is protected by a password:"
 msgstr "Цю кімнату захищено паролем:"
 
-#: ../libempathy-gtk/empathy-chat.c:3649
+#: ../libempathy-gtk/empathy-chat.c:3645
 msgid "Join"
 msgstr "Увійти"
 
-#: ../libempathy-gtk/empathy-chat.c:3851 ../src/empathy-event-manager.c:1261
+#: ../libempathy-gtk/empathy-chat.c:3833 ../src/empathy-event-manager.c:1261
 msgid "Connected"
 msgstr "З'єднаний"
 
-#: ../libempathy-gtk/empathy-chat.c:3906
+#: ../libempathy-gtk/empathy-chat.c:3888
 msgid "Conversation"
 msgstr "Розмова"
 
 #. Translators: this string is a something like
 #. * "Escher Cat (SMS)"
-#: ../libempathy-gtk/empathy-chat.c:3911
+#: ../libempathy-gtk/empathy-chat.c:3893
 #, c-format
 msgid "%s (SMS)"
 msgstr "%s (SMS)"
@@ -2203,7 +2203,7 @@ msgstr "Вибрати обліковий запис, щоб зробити ви
 #. * title
 #: ../libempathy-gtk/empathy-individual-menu.c:313
 #: ../libempathy-gtk/empathy-log-window.ui.h:2
-#: ../src/empathy-streamed-media-window.c:1299
+#: ../src/empathy-streamed-media-window.c:1300
 #: ../src/empathy-call-window.ui.h:2
 msgid "Call"
 msgstr "Виклик"
@@ -2335,48 +2335,48 @@ msgctxt "Unlink individual (button)"
 msgid "_Unlink"
 msgstr "_Роз'єднати"
 
-#: ../libempathy-gtk/empathy-log-window.c:634
+#: ../libempathy-gtk/empathy-log-window.c:635
 msgid "History"
 msgstr "Історія"
 
-#: ../libempathy-gtk/empathy-log-window.c:689
+#: ../libempathy-gtk/empathy-log-window.c:690
 msgid "Show"
 msgstr "Показати"
 
-#: ../libempathy-gtk/empathy-log-window.c:711
+#: ../libempathy-gtk/empathy-log-window.c:712
 msgid "Search"
 msgstr "Пошук"
 
-#: ../libempathy-gtk/empathy-log-window.c:1159
+#: ../libempathy-gtk/empathy-log-window.c:1161
 #, c-format
 msgid "Chat in %s"
 msgstr "Балачка в %s"
 
-#: ../libempathy-gtk/empathy-log-window.c:1161
+#: ../libempathy-gtk/empathy-log-window.c:1163
 #, c-format
 msgid "Chat with %s"
 msgstr "Балачка з %s"
 
-#: ../libempathy-gtk/empathy-log-window.c:1211
-#: ../libempathy-gtk/empathy-log-window.c:1358
+#: ../libempathy-gtk/empathy-log-window.c:1213
+#: ../libempathy-gtk/empathy-log-window.c:1360
 msgctxt "A date with the time"
 msgid "%A, %e %B %Y %X"
 msgstr "%A, %e %B %Y, %X"
 
 #. Translators: this is an emote: '* Danielle waves'
-#: ../libempathy-gtk/empathy-log-window.c:1300
+#: ../libempathy-gtk/empathy-log-window.c:1302
 #, c-format
 msgid "<i>* %s %s</i>"
 msgstr "<i>* %s %s</i>"
 
 #. Translators: this is a message: 'Danielle: hello'
 #. * The string in bold is the sender's name
-#: ../libempathy-gtk/empathy-log-window.c:1306
+#: ../libempathy-gtk/empathy-log-window.c:1308
 #, c-format
 msgid "<b>%s:</b> %s"
 msgstr "<b>%s:</b> %s"
 
-#: ../libempathy-gtk/empathy-log-window.c:1382
+#: ../libempathy-gtk/empathy-log-window.c:1384
 #, c-format
 msgid "%s second"
 msgid_plural "%s seconds"
@@ -2384,7 +2384,7 @@ msgstr[0] "%s секунда"
 msgstr[1] "%s секунди"
 msgstr[2] "%s секунд"
 
-#: ../libempathy-gtk/empathy-log-window.c:1389
+#: ../libempathy-gtk/empathy-log-window.c:1391
 #, c-format
 msgid "%s minute"
 msgid_plural "%s minutes"
@@ -2392,80 +2392,80 @@ msgstr[0] "%s хвилина"
 msgstr[1] "%s хвилини"
 msgstr[2] "%s хвилин"
 
-#: ../libempathy-gtk/empathy-log-window.c:1397
+#: ../libempathy-gtk/empathy-log-window.c:1399
 #, c-format
 msgid "Call took %s, ended at %s"
 msgstr "Виклик прийнято в %s, закінчено о %s"
 
-#: ../libempathy-gtk/empathy-log-window.c:1729
+#: ../libempathy-gtk/empathy-log-window.c:1733
 msgid "Today"
 msgstr "Сьогодні"
 
-#: ../libempathy-gtk/empathy-log-window.c:1733
+#: ../libempathy-gtk/empathy-log-window.c:1737
 msgid "Yesterday"
 msgstr "Вчора"
 
 #. Translators: A date such as '23 May 2010' (strftime format)
-#: ../libempathy-gtk/empathy-log-window.c:1748
+#: ../libempathy-gtk/empathy-log-window.c:1752
 msgid "%e %B %Y"
 msgstr "%e %B %Y"
 
-#: ../libempathy-gtk/empathy-log-window.c:1829
-#: ../libempathy-gtk/empathy-log-window.c:3444
+#: ../libempathy-gtk/empathy-log-window.c:1840
+#: ../libempathy-gtk/empathy-log-window.c:3472
 msgid "Anytime"
 msgstr "Будь-коли"
 
-#: ../libempathy-gtk/empathy-log-window.c:1916
-#: ../libempathy-gtk/empathy-log-window.c:2372
+#: ../libempathy-gtk/empathy-log-window.c:1929
+#: ../libempathy-gtk/empathy-log-window.c:2385
 msgid "Anyone"
 msgstr "Будь-хто"
 
-#: ../libempathy-gtk/empathy-log-window.c:2685
+#: ../libempathy-gtk/empathy-log-window.c:2698
 msgid "Who"
 msgstr "Хто"
 
-#: ../libempathy-gtk/empathy-log-window.c:2889
+#: ../libempathy-gtk/empathy-log-window.c:2907
 msgid "When"
 msgstr "Коли"
 
-#: ../libempathy-gtk/empathy-log-window.c:3005
+#: ../libempathy-gtk/empathy-log-window.c:3023
 msgid "Anything"
 msgstr "Будь-що"
 
-#: ../libempathy-gtk/empathy-log-window.c:3007
+#: ../libempathy-gtk/empathy-log-window.c:3025
 msgid "Text chats"
 msgstr "Текстова балачка"
 
-#: ../libempathy-gtk/empathy-log-window.c:3009
+#: ../libempathy-gtk/empathy-log-window.c:3027
 #: ../src/empathy-preferences.ui.h:4
 msgid "Calls"
 msgstr "Виклики"
 
-#: ../libempathy-gtk/empathy-log-window.c:3014
+#: ../libempathy-gtk/empathy-log-window.c:3032
 msgid "Incoming calls"
 msgstr "Вхідні виклики"
 
-#: ../libempathy-gtk/empathy-log-window.c:3015
+#: ../libempathy-gtk/empathy-log-window.c:3033
 msgid "Outgoing calls"
 msgstr "Вихідні виклики"
 
-#: ../libempathy-gtk/empathy-log-window.c:3016
+#: ../libempathy-gtk/empathy-log-window.c:3034
 msgid "Missed calls"
 msgstr "Пропущені виклики"
 
-#: ../libempathy-gtk/empathy-log-window.c:3038
+#: ../libempathy-gtk/empathy-log-window.c:3056
 msgid "What"
 msgstr "Що"
 
-#: ../libempathy-gtk/empathy-log-window.c:3747
+#: ../libempathy-gtk/empathy-log-window.c:3779
 msgid "Are you sure you want to delete all logs of previous conversations?"
 msgstr "Вилучити всі журнали з попередньої розмови?"
 
-#: ../libempathy-gtk/empathy-log-window.c:3751
+#: ../libempathy-gtk/empathy-log-window.c:3783
 msgid "Clear All"
 msgstr "Очистити все"
 
-#: ../libempathy-gtk/empathy-log-window.c:3758
+#: ../libempathy-gtk/empathy-log-window.c:3790
 msgid "Delete from:"
 msgstr "Вилучити з:"
 
@@ -2654,12 +2654,12 @@ msgstr "Голосовий виклик закінчено"
 msgid "Edit Custom Messages"
 msgstr "Редагувати власні повідомлення"
 
-#: ../libempathy-gtk/empathy-theme-adium.c:1036
+#: ../libempathy-gtk/empathy-theme-adium.c:1041
 #, c-format
 msgid "Message edited at %s"
 msgstr "Повідомлення змінено в %s"
 
-#: ../libempathy-gtk/empathy-theme-adium.c:1726
+#: ../libempathy-gtk/empathy-theme-adium.c:1731
 msgid "Normal"
 msgstr "Звичайна"
 
@@ -2750,19 +2750,19 @@ msgstr "Запам'ятати вибір для подальших з'єднан
 msgid "Certificate Details"
 msgstr "Подробиці про сертифікат"
 
-#: ../libempathy-gtk/empathy-ui-utils.c:1735
+#: ../libempathy-gtk/empathy-ui-utils.c:1736
 msgid "Unable to open URI"
 msgstr "Неможливо відкрити URI"
 
-#: ../libempathy-gtk/empathy-ui-utils.c:1831
+#: ../libempathy-gtk/empathy-ui-utils.c:1832
 msgid "Select a file"
 msgstr "Вибрати файл"
 
-#: ../libempathy-gtk/empathy-ui-utils.c:1903
+#: ../libempathy-gtk/empathy-ui-utils.c:1904
 msgid "Insufficient free space to save file"
 msgstr "Недостатньо вільного місця для збереження файла"
 
-#: ../libempathy-gtk/empathy-ui-utils.c:1911
+#: ../libempathy-gtk/empathy-ui-utils.c:1912
 #, c-format
 msgid ""
 "%s of free space are required to save this file, but only %s is available. "
@@ -2771,7 +2771,7 @@ msgstr ""
 "Потрібно %s вільного місця для збереження цього файла, проте доступно лише "
 "%s. Будь ласка, виберіть інакше місце."
 
-#: ../libempathy-gtk/empathy-ui-utils.c:1955
+#: ../libempathy-gtk/empathy-ui-utils.c:1956
 #, c-format
 msgid "Incoming file from %s"
 msgstr "Вхідний файл з %s"
@@ -2959,23 +2959,23 @@ msgstr "Немає повідомлення про помилку"
 msgid "Instant Message (Empathy)"
 msgstr "Миттєві повідомлення (Empathy)"
 
-#: ../src/empathy.c:431
+#: ../src/empathy.c:430
 msgid "Don't connect on startup"
 msgstr "Не з'єднуватися під час запуску"
 
-#: ../src/empathy.c:435
+#: ../src/empathy.c:434
 msgid "Don't display the contact list or any other dialogs on startup"
 msgstr "Не показувати список контактів чи інші вікна під час запуску"
 
-#: ../src/empathy.c:450
+#: ../src/empathy.c:449
 msgid "- Empathy IM Client"
 msgstr "— клієнт обміну миттєвими повідомленнями Empathy"
 
-#: ../src/empathy.c:637
+#: ../src/empathy.c:636
 msgid "Error contacting the Account Manager"
 msgstr "Помилка менеджера облікових записів"
 
-#: ../src/empathy.c:639
+#: ../src/empathy.c:638
 #, c-format
 msgid ""
 "There was an error while trying to connect to the Telepathy Account Manager. "
@@ -3205,8 +3205,8 @@ msgid "Your new account has not been saved yet."
 msgstr "Новий обліковий запис ще не збережено."
 
 #: ../src/empathy-accounts-dialog.c:345
-#: ../src/empathy-streamed-media-window.c:754
-#: ../src/empathy-call-window.c:1216
+#: ../src/empathy-streamed-media-window.c:755
+#: ../src/empathy-call-window.c:1217
 msgid "Connecting…"
 msgstr "З'єднання…"
 
@@ -3302,11 +3302,11 @@ msgstr ""
 msgid "_Import…"
 msgstr "_Імпортувати…"
 
-#: ../src/empathy-auth-client.c:249
+#: ../src/empathy-auth-client.c:251
 msgid " - Empathy authentication client"
 msgstr " — клієнт автентифікації Empathy"
 
-#: ../src/empathy-auth-client.c:265
+#: ../src/empathy-auth-client.c:267
 msgid "Empathy authentication client"
 msgstr "Клієнт аутентифікація Empathy"
 
@@ -3322,108 +3322,108 @@ msgstr "— аудіо- та відеоклієнт Empathy"
 msgid "Empathy Audio/Video Client"
 msgstr "Аудіо- та відеоклієнт Empathy"
 
-#: ../src/empathy-streamed-media-window.c:431
+#: ../src/empathy-streamed-media-window.c:432
 msgid "Contrast"
 msgstr "Контраст"
 
-#: ../src/empathy-streamed-media-window.c:434
+#: ../src/empathy-streamed-media-window.c:435
 msgid "Brightness"
 msgstr "Яскравість"
 
-#: ../src/empathy-streamed-media-window.c:437
+#: ../src/empathy-streamed-media-window.c:438
 msgid "Gamma"
 msgstr "Гамма"
 
-#: ../src/empathy-streamed-media-window.c:542
+#: ../src/empathy-streamed-media-window.c:543
 msgid "Volume"
 msgstr "Гучність"
 
-#: ../src/empathy-streamed-media-window.c:1110
+#: ../src/empathy-streamed-media-window.c:1111
 msgid "_Sidebar"
 msgstr "_Бічна панель"
 
-#: ../src/empathy-streamed-media-window.c:1130
+#: ../src/empathy-streamed-media-window.c:1131
 msgid "Audio input"
 msgstr "Звуковий вхід"
 
-#: ../src/empathy-streamed-media-window.c:1134
+#: ../src/empathy-streamed-media-window.c:1135
 msgid "Video input"
 msgstr "Відеовхід"
 
-#: ../src/empathy-streamed-media-window.c:1140
+#: ../src/empathy-streamed-media-window.c:1141
 msgid "Dialpad"
 msgstr "Панель набору"
 
-#: ../src/empathy-streamed-media-window.c:1151
+#: ../src/empathy-streamed-media-window.c:1152
 msgid "Details"
 msgstr "Подробиці"
 
 #. translators: Call is a noun and %s is the contact name. This string
 #. * is used in the window title
-#: ../src/empathy-streamed-media-window.c:1220
-#: ../src/empathy-call-window.c:1825
+#: ../src/empathy-streamed-media-window.c:1221
+#: ../src/empathy-call-window.c:1826
 #, c-format
 msgid "Call with %s"
 msgstr "Виклик з %s"
 
-#: ../src/empathy-streamed-media-window.c:1453
-#: ../src/empathy-call-window.c:2069
+#: ../src/empathy-streamed-media-window.c:1454
+#: ../src/empathy-call-window.c:2070
 msgid "The IP address as seen by the machine"
 msgstr "Адреса IP, яку показано на машині"
 
-#: ../src/empathy-streamed-media-window.c:1455
-#: ../src/empathy-call-window.c:2071
+#: ../src/empathy-streamed-media-window.c:1456
+#: ../src/empathy-call-window.c:2072
 msgid "The IP address as seen by a server on the Internet"
 msgstr "Адреса IP, яку показано на сервері через інтернет"
 
-#: ../src/empathy-streamed-media-window.c:1457
-#: ../src/empathy-call-window.c:2073
+#: ../src/empathy-streamed-media-window.c:1458
+#: ../src/empathy-call-window.c:2074
 msgid "The IP address of the peer as seen by the other side"
 msgstr "Адреса IP вузла, яку показано по ту сторону"
 
-#: ../src/empathy-streamed-media-window.c:1459
-#: ../src/empathy-call-window.c:2075
+#: ../src/empathy-streamed-media-window.c:1460
+#: ../src/empathy-call-window.c:2076
 msgid "The IP address of a relay server"
 msgstr "Адреса IP сервера ретрансляції"
 
-#: ../src/empathy-streamed-media-window.c:1461
-#: ../src/empathy-call-window.c:2077
+#: ../src/empathy-streamed-media-window.c:1462
+#: ../src/empathy-call-window.c:2078
 msgid "The IP address of the multicast group"
 msgstr "Адреса IP групової трансляції"
 
-#: ../src/empathy-streamed-media-window.c:1843
+#: ../src/empathy-streamed-media-window.c:1844
 msgctxt "encoding video codec"
 msgid "Unknown"
 msgstr "Невідомо"
 
-#: ../src/empathy-streamed-media-window.c:1846
+#: ../src/empathy-streamed-media-window.c:1847
 msgctxt "encoding audio codec"
 msgid "Unknown"
 msgstr "Невідомо"
 
-#: ../src/empathy-streamed-media-window.c:1849
+#: ../src/empathy-streamed-media-window.c:1850
 msgctxt "decoding video codec"
 msgid "Unknown"
 msgstr "Невідомо"
 
-#: ../src/empathy-streamed-media-window.c:1852
+#: ../src/empathy-streamed-media-window.c:1853
 msgctxt "decoding audio codec"
 msgid "Unknown"
 msgstr "Невідомо"
 
 #. Translators: number of minutes:seconds the caller has been connected
-#: ../src/empathy-streamed-media-window.c:2144
+#: ../src/empathy-streamed-media-window.c:2145
 #, c-format
 msgid "Connected — %d:%02dm"
 msgstr "З'єднання — %d:%02dm "
 
-#: ../src/empathy-streamed-media-window.c:2205
-#: ../src/empathy-call-window.c:2846
+#: ../src/empathy-streamed-media-window.c:2206
+#: ../src/empathy-call-window.c:2847
 msgid "Technical Details"
 msgstr "Технічні подробиці"
 
-#: ../src/empathy-streamed-media-window.c:2243
-#: ../src/empathy-call-window.c:2884
+#: ../src/empathy-streamed-media-window.c:2244
+#: ../src/empathy-call-window.c:2885
 #, c-format
 msgid ""
 "%s's software does not understand any of the audio formats supported by your "
@@ -3431,8 +3431,8 @@ msgid ""
 msgstr ""
 "Програма %s не розпізнає аудіоформати, що підтримуються вашим комп'ютером"
 
-#: ../src/empathy-streamed-media-window.c:2248
-#: ../src/empathy-call-window.c:2889
+#: ../src/empathy-streamed-media-window.c:2249
+#: ../src/empathy-call-window.c:2890
 #, c-format
 msgid ""
 "%s's software does not understand any of the video formats supported by your "
@@ -3440,8 +3440,8 @@ msgid ""
 msgstr ""
 "Програма %s не розпізнає відеоформати, що підтримуються вашим комп'ютером"
 
-#: ../src/empathy-streamed-media-window.c:2254
-#: ../src/empathy-call-window.c:2895
+#: ../src/empathy-streamed-media-window.c:2255
+#: ../src/empathy-call-window.c:2896
 #, c-format
 msgid ""
 "Can't establish a connection to %s. One of you might be on a network that "
@@ -3450,29 +3450,29 @@ msgstr ""
 "Не вдалось встановити з'єднання з %s. Один з вас може знаходитися у мережі, "
 "яка не підтримує прямі з'єднання."
 
-#: ../src/empathy-streamed-media-window.c:2260
-#: ../src/empathy-call-window.c:2901
+#: ../src/empathy-streamed-media-window.c:2261
+#: ../src/empathy-call-window.c:2902
 msgid "There was a failure on the network"
 msgstr "Помилка мережі"
 
-#: ../src/empathy-streamed-media-window.c:2264
-#: ../src/empathy-call-window.c:2905
+#: ../src/empathy-streamed-media-window.c:2265
+#: ../src/empathy-call-window.c:2906
 msgid ""
 "The audio formats necessary for this call are not installed on your computer"
 msgstr ""
 "Аудіоформати, що потрібні для цього виклику, не встановлено на вашому "
 "комп'ютері"
 
-#: ../src/empathy-streamed-media-window.c:2267
-#: ../src/empathy-call-window.c:2908
+#: ../src/empathy-streamed-media-window.c:2268
+#: ../src/empathy-call-window.c:2909
 msgid ""
 "The video formats necessary for this call are not installed on your computer"
 msgstr ""
 "Відеоформати, що потрібні для цього виклику, не встановлено на вашому "
 "комп'ютері"
 
-#: ../src/empathy-streamed-media-window.c:2277
-#: ../src/empathy-call-window.c:2920
+#: ../src/empathy-streamed-media-window.c:2278
+#: ../src/empathy-call-window.c:2921
 #, c-format
 msgid ""
 "Something unexpected happened in a Telepathy component. Please <a href=\"%s"
@@ -3483,23 +3483,23 @@ msgstr ""
 "помилку</a> та прикріпіть журнали, зібрані з вікна зневадження у меню "
 "«Довідка»."
 
-#: ../src/empathy-streamed-media-window.c:2285
-#: ../src/empathy-call-window.c:2929
+#: ../src/empathy-streamed-media-window.c:2286
+#: ../src/empathy-call-window.c:2930
 msgid "There was a failure in the call engine"
 msgstr "Помилка у рушії виклику"
 
-#: ../src/empathy-streamed-media-window.c:2288
-#: ../src/empathy-call-window.c:2932
+#: ../src/empathy-streamed-media-window.c:2289
+#: ../src/empathy-call-window.c:2933
 msgid "The end of the stream was reached"
 msgstr "Досягнуто кінця потоку"
 
-#: ../src/empathy-streamed-media-window.c:2328
-#: ../src/empathy-call-window.c:2972
+#: ../src/empathy-streamed-media-window.c:2329
+#: ../src/empathy-call-window.c:2973
 msgid "Can't establish audio stream"
 msgstr "Не вдалось встановити аудіопотік"
 
-#: ../src/empathy-streamed-media-window.c:2338
-#: ../src/empathy-call-window.c:2982
+#: ../src/empathy-streamed-media-window.c:2339
+#: ../src/empathy-call-window.c:2983
 msgid "Can't establish video stream"
 msgstr "Не вдалось встановити відеопотік"
 
@@ -3590,8 +3590,8 @@ msgstr "Перемкнути передавання відео"
 
 #: ../src/empathy-call-window.ui.h:21
 #: ../src/empathy-streamed-media-window.ui.h:18
-#: ../src/empathy-call-window.c:2476 ../src/empathy-call-window.c:2477
-#: ../src/empathy-call-window.c:2478 ../src/empathy-call-window.c:2479
+#: ../src/empathy-call-window.c:2477 ../src/empathy-call-window.c:2478
+#: ../src/empathy-call-window.c:2479 ../src/empathy-call-window.c:2480
 msgid "Unknown"
 msgstr "Невідомо"
 
@@ -3765,7 +3765,7 @@ msgstr "Керування улюбленими кімнатами"
 msgid "Incoming video call"
 msgstr "Вхідний відеовиклик"
 
-#: ../src/empathy-event-manager.c:521 ../src/empathy-call-window.c:1449
+#: ../src/empathy-event-manager.c:521 ../src/empathy-call-window.c:1450
 msgid "Incoming call"
 msgstr "Вхідний виклик"
 
@@ -3780,7 +3780,7 @@ msgid "%s is calling you. Do you want to answer?"
 msgstr "Виклик від %s, відповісти?"
 
 #: ../src/empathy-event-manager.c:529 ../src/empathy-event-manager.c:730
-#: ../src/empathy-event-manager.c:763 ../src/empathy-call-window.c:1455
+#: ../src/empathy-event-manager.c:763 ../src/empathy-call-window.c:1456
 #, c-format
 msgid "Incoming call from %s"
 msgstr "Вхідний виклик від %s"
@@ -3798,7 +3798,7 @@ msgid "_Answer with video"
 msgstr "_Відповісти через відео"
 
 #: ../src/empathy-event-manager.c:730 ../src/empathy-event-manager.c:763
-#: ../src/empathy-call-window.c:1455
+#: ../src/empathy-call-window.c:1456
 #, c-format
 msgid "Incoming video call from %s"
 msgstr "Вхідний відеовиклик від %s"
@@ -4271,7 +4271,7 @@ msgstr "Послухать — чи відповісти відразу?"
 msgid "Juliet has disconnected"
 msgstr "Джульєтта від'єдналась."
 
-#: ../src/empathy-preferences.c:1166
+#: ../src/empathy-preferences.c:1175
 msgid "Preferences"
 msgstr "Параметри"
 
@@ -4397,43 +4397,47 @@ msgid "Themes"
 msgstr "Теми"
 
 #: ../src/empathy-preferences.ui.h:30
+msgid "Use _echo cancellation to improve call quality"
+msgstr ""
+
+#: ../src/empathy-preferences.ui.h:31
 msgid "Variant:"
 msgstr "Варіант:"
 
-#: ../src/empathy-preferences.ui.h:31
+#: ../src/empathy-preferences.ui.h:32
 msgid "_Automatically connect on startup"
 msgstr "_Автоматично з'єднуватись при запуску"
 
-#: ../src/empathy-preferences.ui.h:32
+#: ../src/empathy-preferences.ui.h:33
 msgid "_Cellphone"
 msgstr "_Мобільний телефон"
 
-#: ../src/empathy-preferences.ui.h:33
+#: ../src/empathy-preferences.ui.h:34
 msgid "_Enable bubble notifications"
 msgstr "_Ввімкнути контекстні сповіщення"
 
-#: ../src/empathy-preferences.ui.h:34
+#: ../src/empathy-preferences.ui.h:35
 msgid "_Enable sound notifications"
 msgstr "_Ввімкнути звукові сповіщення"
 
-#: ../src/empathy-preferences.ui.h:35
+#: ../src/empathy-preferences.ui.h:36
 msgid "_GPS"
 msgstr "_GPS"
 
-#: ../src/empathy-preferences.ui.h:36
+#: ../src/empathy-preferences.ui.h:37
 msgid "_Network (IP, Wi-Fi)"
 msgstr "_Мережа (IP, Wi-Fi)"
 
-#: ../src/empathy-preferences.ui.h:37
+#: ../src/empathy-preferences.ui.h:38
 msgid "_Open new chats in separate windows"
 msgstr "_Відкривати нові бесіди в окремому вікні"
 
-#: ../src/empathy-preferences.ui.h:38
+#: ../src/empathy-preferences.ui.h:39
 msgid "_Publish location to my contacts"
 msgstr "_Публікувати місцевості моїм контактам"
 
 #. To translators: The longitude and latitude are rounded to closest 0,1 degrees, so for example 146,2345° is rounded to round(146,2345*10)/10 = 146,2 degrees.
-#: ../src/empathy-preferences.ui.h:40
+#: ../src/empathy-preferences.ui.h:41
 msgid "_Reduce location accuracy"
 msgstr "По_низити точність визначення місцевості"
 
@@ -4573,44 +4577,44 @@ msgstr "Виберіть контакт для запрошення до бес�
 msgid "Invite"
 msgstr "Запросити"
 
-#: ../src/empathy-accounts.c:183
+#: ../src/empathy-accounts.c:182
 msgid "Don't display any dialogs; do any work (eg, importing) and exit"
 msgstr ""
 "Не показувати вікна; виконати роботу (наприклад, імпортування) та вийти"
 
-#: ../src/empathy-accounts.c:187
+#: ../src/empathy-accounts.c:186
 msgid ""
 "Don't display any dialogs unless there are only \"People Nearby\" accounts"
 msgstr ""
 "Не показувати які-небудь вікна, якщо це не обліковий запис «Людей поблизу»"
 
-#: ../src/empathy-accounts.c:191
+#: ../src/empathy-accounts.c:190
 msgid "Initially select given account (eg, gabble/jabber/foo_40example_2eorg0)"
 msgstr ""
 "Спочатку виберіть заданий обліковий запис (наприклад, gabble/jabber/"
 "foo_40example_2eorg0)"
 
-#: ../src/empathy-accounts.c:193
+#: ../src/empathy-accounts.c:192
 msgid "<account-id>"
 msgstr "<account-id>"
 
-#: ../src/empathy-accounts.c:198
+#: ../src/empathy-accounts.c:197
 msgid "- Empathy Accounts"
 msgstr "— облікові записи Empathy"
 
-#: ../src/empathy-accounts.c:237
+#: ../src/empathy-accounts.c:233
 msgid "Empathy Accounts"
 msgstr "Облікові записи Empathy"
 
-#: ../src/empathy-debugger.c:70
+#: ../src/empathy-debugger.c:69
 msgid "Show a particular service"
 msgstr "Показати конкретну службу"
 
-#: ../src/empathy-debugger.c:75
+#: ../src/empathy-debugger.c:74
 msgid "- Empathy Debugger"
 msgstr "— Зневадження Empathy"
 
-#: ../src/empathy-debugger.c:114
+#: ../src/empathy-debugger.c:113
 msgid "Empathy Debugger"
 msgstr "Зневадження Empathy"
 
@@ -4623,13 +4627,13 @@ msgid "Respond"
 msgstr "Відгукнутись"
 
 #: ../src/empathy-notifications-approver.c:217
-#: ../src/empathy-call-window.c:1459
+#: ../src/empathy-call-window.c:1460
 msgid "Reject"
 msgstr "Відкинути"
 
 #: ../src/empathy-notifications-approver.c:222
 #: ../src/empathy-notifications-approver.c:227
-#: ../src/empathy-call-window.c:1460
+#: ../src/empathy-call-window.c:1461
 msgid "Answer"
 msgstr "Відповісти"
 
@@ -4661,24 +4665,24 @@ msgstr "%s намагався зв'язатись з вами, але втой �
 
 #. Translators: this is an "Info" label. It should be as short
 #. * as possible.
-#: ../src/empathy-call-window.c:1088 ../src/empathy-call-window.c:1111
+#: ../src/empathy-call-window.c:1089 ../src/empathy-call-window.c:1112
 msgid "i"
 msgstr "і"
 
-#: ../src/empathy-call-window.c:2775
+#: ../src/empathy-call-window.c:2776
 msgid "On hold"
 msgstr "В очікуванні"
 
-#: ../src/empathy-call-window.c:2778
+#: ../src/empathy-call-window.c:2779
 msgid "Mute"
 msgstr "Приглушити"
 
-#: ../src/empathy-call-window.c:2780
+#: ../src/empathy-call-window.c:2781
 msgid "Duration"
 msgstr "Тривалість"
 
 #. Translators: 'status - minutes:seconds' the caller has been connected
-#: ../src/empathy-call-window.c:2783
+#: ../src/empathy-call-window.c:2784
 #, c-format
 msgid "%s — %d:%02dm"
 msgstr "%s — %d:%02dm"
