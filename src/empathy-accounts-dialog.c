@@ -1042,15 +1042,23 @@ accounts_dialog_model_status_pixbuf_data_func (GtkTreeViewColumn *tree_column,
     EmpathyAccountsDialog *dialog)
 {
   TpAccount *account;
+  const gchar *icon_name;
+  GdkPixbuf *pixbuf;
 
   gtk_tree_model_get (model, iter, COL_ACCOUNT, &account, -1);
 
+  icon_name = get_status_icon_for_account (dialog, account);
+  pixbuf = empathy_pixbuf_from_icon_name (icon_name, GTK_ICON_SIZE_BUTTON);
+
   g_object_set (cell,
-      "icon-name", get_status_icon_for_account (dialog, account),
+      "pixbuf", pixbuf,
       NULL);
 
   if (account != NULL)
     g_object_unref (account);
+
+  if (pixbuf != NULL)
+    g_object_unref (pixbuf);
 }
 
 static void
