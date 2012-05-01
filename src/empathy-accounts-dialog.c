@@ -145,6 +145,8 @@ typedef struct {
    * EmpathyAccountsDialog object. */
   gboolean force_change_row;
   GtkTreeRowReference *destination_row;
+
+  GHashTable *icons_cache;
 } EmpathyAccountsDialogPriv;
 
 enum {
@@ -1034,6 +1036,28 @@ get_status_icon_for_account (EmpathyAccountsDialog *self,
   return empathy_icon_name_for_presence (presence);
 }
 
+static GdkPixbuf *
+ensure_icon (EmpathyAccountsDialog *self,
+    const gchar *icon_name)
+{
+  EmpathyAccountsDialogPriv *priv = GET_PRIV (self);
+  GdkPixbuf *pixbuf;
+
+  pixbuf = g_hash_table_lookup (priv->icons_cache, icon_name);
+  if (pixbuf == NULL)
+    {
+      pixbuf = empathy_pixbuf_from_icon_name (icon_name, GTK_ICON_SIZE_BUTTON);
+
+      if (pixbuf == NULL)
+        return NULL;
+
+      g_hash_table_insert (priv->icons_cache, g_strdup (icon_name),
+          pixbuf);
+    }
+
+  return g_object_ref (pixbuf);
+}
+
 static void
 accounts_dialog_model_status_pixbuf_data_func (GtkTreeViewColumn *tree_column,
     GtkCellRenderer *cell,
@@ -1048,7 +1072,7 @@ accounts_dialog_model_status_pixbuf_data_func (GtkTreeViewColumn *tree_column,
   gtk_tree_model_get (model, iter, COL_ACCOUNT, &account, -1);
 
   icon_name = get_status_icon_for_account (dialog, account);
-  pixbuf = empathy_pixbuf_from_icon_name (icon_name, GTK_ICON_SIZE_BUTTON);
+  pixbuf = ensure_icon (dialog, icon_name);
 
   g_object_set (cell,
       "pixbuf", pixbuf,
@@ -1079,7 +1103,7 @@ accounts_dialog_model_protocol_pixbuf_data_func (GtkTreeViewColumn *tree_column,
       -1);
 
   icon_name = empathy_account_settings_get_icon_name (settings);
-  pixbuf = empathy_pixbuf_from_icon_name (icon_name, GTK_ICON_SIZE_BUTTON);
+  pixbuf = ensure_icon (dialog, icon_name);
 
   g_object_set (cell,
       "visible", TRUE,
@@ -2478,6 +2502,8 @@ do_dispose (GObject *obj)
       priv->initial_selection = NULL;
     }
 
+  tp_clear_pointer (&priv->icons_cache, g_hash_table_unref);
+
   G_OBJECT_CLASS (empathy_accounts_dialog_parent_class)->dispose (obj);
 }
 
@@ -2572,6 +2598,9 @@ empathy_accounts_dialog_init (EmpathyAccountsDialog *dialog)
       EMPATHY_TYPE_ACCOUNTS_DIALOG,
       EmpathyAccountsDialogPriv);
   dialog->priv = priv;
+
+  priv->icons_cache = g_hash_table_new_full (g_str_hash, g_str_equal,
+      g_free, g_object_unref);
 }
 
 /* public methods */
