@@ -1,3 +1,12 @@
+NEW in 3.4.2.2 (27/06/2012)
+==============
+
+This releases fixes an empathy-chat crash caused by a race in telepathy-glib.
+
+Bugs fixed:
+ - Fixed #678307, irc connection parameters dialog: "apply" button stays unsensitive (Guillaume Desmottes)
+ - Fixed #678807, empathy-chat crashed with SIGSEGV in _tp_base_client_handle_channels() (Guillaume Desmottes)
+
 NEW in 3.4.2.1 (21/05/2012)
 ==============
 
