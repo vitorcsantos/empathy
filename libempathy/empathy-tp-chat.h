@@ -66,7 +66,6 @@ GType          empathy_tp_chat_get_type             (void) G_GNUC_CONST;
 
 EmpathyTpChat *empathy_tp_chat_new                  (
 						     TpSimpleClientFactory *factory,
-						     TpAccount *account,
 						     TpConnection *connection,
 						     const gchar *object_path,
 						     const GHashTable *immutable_properties);
