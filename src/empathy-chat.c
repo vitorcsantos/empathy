@@ -34,6 +34,7 @@
 #include <libempathy-gtk/empathy-ui-utils.h>
 
 #include "empathy-chat-manager.h"
+#include "empathy-chat-resources.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_CHAT
 #include <libempathy/empathy-debug.h>
@@ -91,6 +92,7 @@ main (int argc,
   GOptionEntry options[] = {
       { NULL }
   };
+  GResource *resource;
 #ifdef ENABLE_DEBUG
   TpDebugSender *debug_sender;
 #endif
@@ -123,6 +125,9 @@ main (int argc,
   textdomain (GETTEXT_PACKAGE);
 
   notify_init (_(PACKAGE_NAME));
+
+  resource = empathy_chat_get_resource ();
+  g_resources_register (resource);
 
   app = gtk_application_new (EMPATHY_CHAT_DBUS_NAME, G_APPLICATION_FLAGS_NONE);
   g_signal_connect (app, "activate", G_CALLBACK (activate_cb), NULL);
@@ -163,6 +168,9 @@ main (int argc,
 #ifdef ENABLE_DEBUG
   g_object_unref (debug_sender);
 #endif
+
+  g_resources_unregister (resource);
+  g_resource_unref (resource);
 
   notify_uninit ();
 
