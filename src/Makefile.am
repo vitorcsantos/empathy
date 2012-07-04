@@ -85,6 +85,11 @@ empathy_chat_SOURCES =						\
 	empathy-chat.c \
 	$(NULL)
 
+nodist_empathy_chat_SOURCES = \
+	empathy-chat-resources.c \
+	empathy-chat-resources.h \
+	$(NULL)
+
 empathy_call_SOURCES = \
        empathy-call.c \
        empathy-call-factory.c \
@@ -182,9 +187,28 @@ ui_DATA = 					\
 
 EXTRA_DIST =			\
 	$(autostart_DATA)	\
-	$(ui_DATA)
+	$(ui_DATA)		\
+	empathy-chat.js		\
+	empathy-chat.gresource.xml
 
 dist_man_MANS =			\
 	empathy.1 \
 	empathy-accounts.1
 
+BUILT_SOURCES = \
+	$(nodist_empathy_chat_SOURCES) \
+	$(NULL)
+
+CLEANFILES = $(BUILT_SOURCES)
+
+empathy-chat-resources.c: empathy-chat.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --generate-dependencies $(srcdir)/empathy-chat.gresource.xml)
+	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ \
+		--sourcedir=$(srcdir) \
+		--generate-source \
+		$<
+
+empathy-chat-resources.h: empathy-chat.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --generate-dependencies $(srcdir)/empathy-chat.gresource.xml)
+	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ \
+		--sourcedir=$(srcdir) \
+		--generate-header \
+		$<
