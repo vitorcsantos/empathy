@@ -87,6 +87,10 @@ void empathy_theme_adium_append_event_markup (EmpathyThemeAdium *self,
     const gchar *markup_text,
     const gchar *fallback_text);
 
+void empathy_theme_adium_prepend_message (EmpathyThemeAdium *self,
+    EmpathyMessage *msg,
+    gboolean should_highlight);
+
 void empathy_theme_adium_edit_message (EmpathyThemeAdium *self,
     EmpathyMessage *message);
 

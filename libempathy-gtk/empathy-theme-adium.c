@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2008-2012 Collabora Ltd.
+ * Copyright (C) 2012 Red Hat, Inc.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -52,8 +53,11 @@ struct _EmpathyThemeAdiumPriv
 {
   EmpathyAdiumData *data;
   EmpathySmileyManager *smiley_manager;
+  EmpathyContact *first_contact;
   EmpathyContact *last_contact;
+  gint64 first_timestamp;
   gint64 last_timestamp;
+  gboolean first_is_backlog;
   gboolean last_is_backlog;
   guint pages_loading;
   /* Queue of QueuedItem*s containing an EmpathyMessage or string */
@@ -140,7 +144,8 @@ queue_item (GQueue *queue,
     guint type,
     EmpathyMessage *msg,
     const char *str,
-    gboolean should_highlight)
+    gboolean should_highlight,
+    gboolean prepend)
 {
   QueuedItem *item = g_slice_new0 (QueuedItem);
 
@@ -150,7 +155,10 @@ queue_item (GQueue *queue,
   item->str = g_strdup (str);
   item->should_highlight = should_highlight;
 
-  g_queue_push_tail (queue, item);
+  if (prepend)
+    g_queue_push_head (queue, item);
+  else
+    g_queue_push_tail (queue, item);
 
   return item;
 }
@@ -518,9 +526,8 @@ nsdate_to_strftime (EmpathyAdiumData *data, const gchar *nsdate)
   return g_string_free (string, FALSE);
 }
 
-
 static void
-theme_adium_append_html (EmpathyThemeAdium *self,
+theme_adium_add_html (EmpathyThemeAdium *self,
     const gchar *func,
     const gchar *html,
     const gchar *message,
@@ -534,8 +541,10 @@ theme_adium_append_html (EmpathyThemeAdium *self,
     gboolean outgoing,
     PangoDirection direction)
 {
+  GBytes *bytes;
   GString *string;
   const gchar *cur = NULL;
+  const gchar *js;
   gchar *script;
 
   /* Make some search-and-replace in the html code */
@@ -725,6 +734,13 @@ theme_adium_append_html (EmpathyThemeAdium *self,
     }
   g_string_append (string, "\")");
 
+  bytes = g_resources_lookup_data ("/org/gnome/Empathy/Chat/empathy-chat.js",
+      G_RESOURCE_LOOKUP_FLAGS_NONE,
+      NULL);
+  js = (const gchar *) g_bytes_get_data (bytes, NULL);
+  g_string_prepend (string, js);
+  g_bytes_unref (bytes);
+
   script = g_string_free (string, FALSE);
   webkit_web_view_execute_script (WEBKIT_WEB_VIEW (self), script);
   g_free (script);
@@ -735,7 +751,7 @@ theme_adium_append_event_escaped (EmpathyThemeAdium *self,
     const gchar *escaped,
     PangoDirection direction)
 {
-  theme_adium_append_html (self, "appendMessage",
+  theme_adium_add_html (self, "appendMessage",
       self->priv->data->status_html, escaped, NULL, NULL, NULL,
       NULL, "event", empathy_time_get_current (), FALSE, FALSE, direction);
 
@@ -821,10 +837,55 @@ theme_adium_remove_all_focus_marks (EmpathyThemeAdium *self)
   theme_adium_remove_focus_marks (self, nodes);
 }
 
-void
-empathy_theme_adium_append_message (EmpathyThemeAdium *self,
+enum
+{
+  ADD_CONSECUTIVE_MSG_SCROLL = 0,
+  ADD_CONSECUTIVE_MSG_NO_SCROLL = 1,
+  ADD_MSG_SCROLL = 2,
+  ADD_MSG_NO_SCROLL = 3
+};
+
+/*
+ * theme_adium_add_message:
+ * @self: The #EmpathyThemeAdium used by the view.
+ * @msg: An #EmpathyMessage that is to be added to the view.
+ * @prev_contact: (out): The #EmpathyContact that sent the previous message.
+ * @prev_timestamp: (out): Timestamp of the previous message.
+ * @prev_is_backlog: (out): Whether the previous message was fetched
+ * from the logs.
+ * @should_highlight: Whether the message should be highlighted. eg.,
+ * if it matches the user's username in multi-user chat.
+ * @js_funcs: An array of JavaScript function names
+ *
+ * Shows @msg in the chat view by adding to @self. Addition is defined
+ * by the JavaScript functions listed in @js_funcs. Common examples
+ * are appending new incoming messages or prepending old messages from
+ * the logs.
+ *
+ * @js_funcs should be an array with exactly 4 entries. The entries
+ * should be the names of JavaScript functions that take the raw HTML
+ * that is to be added to the view as an argument and take the following
+ * actions, in this order:
+ * - add a new consecutive message and scroll to it if needed,
+ * - add a new consecutive message and do not scroll,
+ * - add a new non-consecutive message and scroll to it if needed, and
+ * - add a new non-consecutive message and do not scroll
+ *
+ * A message is considered to be consecutive with the previous one if
+ * all the following conditions are met:
+ * - senders are the same contact,
+ * - last message was recieved recently,
+ * - last message and this message both are/aren't backlog, and
+ * - DisableCombineConsecutive is not set in theme's settings
+ */
+static void
+theme_adium_add_message (EmpathyThemeAdium *self,
     EmpathyMessage *msg,
-    gboolean should_highlight)
+    EmpathyContact **prev_contact,
+    gint64 *prev_timestamp,
+    gboolean *prev_is_backlog,
+    gboolean should_highlight,
+    const gchar *js_funcs[])
 {
   EmpathyContact *sender;
   TpMessage *tp_msg;
@@ -844,12 +905,6 @@ empathy_theme_adium_append_message (EmpathyThemeAdium *self,
   gboolean action;
   PangoDirection direction;
 
-  if (self->priv->pages_loading != 0)
-    {
-      queue_item (&self->priv->message_queue, QUEUED_MESSAGE, msg, NULL,
-          should_highlight);
-      return;
-    }
 
   /* Get information */
   sender = empathy_message_get_sender (msg);
@@ -912,15 +967,10 @@ empathy_theme_adium_append_message (EmpathyThemeAdium *self,
         }
     }
 
-  /* We want to join this message with the last one if
-   * - senders are the same contact,
-   * - last message was recieved recently,
-   * - last message and this message both are/aren't backlog, and
-   * - DisableCombineConsecutive is not set in theme's settings */
   is_backlog = empathy_message_is_backlog (msg);
-  consecutive = empathy_contact_equal (self->priv->last_contact, sender) &&
-    (timestamp - self->priv->last_timestamp < MESSAGE_JOIN_PERIOD) &&
-    (is_backlog == self->priv->last_is_backlog) &&
+  consecutive = empathy_contact_equal (*prev_contact, sender) &&
+    (ABS (timestamp - *prev_timestamp) < MESSAGE_JOIN_PERIOD) &&
+    (is_backlog == *prev_is_backlog) &&
     !tp_asv_get_boolean (self->priv->data->info,
              "DisableCombineConsecutive", NULL);
 
@@ -961,7 +1011,7 @@ empathy_theme_adium_append_message (EmpathyThemeAdium *self,
    * status - the message is a status change
    * event - the message is a notification of something happening
    *         (for example, encryption being turned on)
-   * %status% - See %status% in theme_adium_append_html ()
+   * %status% - See %status% in theme_adium_add_html ()
    */
 
   /* This is slightly a hack, but it's the only way to add
@@ -983,10 +1033,11 @@ empathy_theme_adium_append_message (EmpathyThemeAdium *self,
 
   /* Define javascript function to use */
   if (consecutive)
-    func = self->priv->allow_scrolling ? "appendNextMessage" :
-      "appendNextMessageNoScroll";
+    func = self->priv->allow_scrolling ? js_funcs[ADD_CONSECUTIVE_MSG_SCROLL] :
+      js_funcs[ADD_CONSECUTIVE_MSG_NO_SCROLL];
   else
-    func = self->priv->allow_scrolling ? "appendMessage" : "appendMessageNoScroll";
+    func = self->priv->allow_scrolling ? js_funcs[ADD_MSG_SCROLL] :
+      js_funcs[ADD_MSG_NO_SCROLL];
 
   if (empathy_contact_is_user (sender))
     {
@@ -1018,22 +1069,44 @@ empathy_theme_adium_append_message (EmpathyThemeAdium *self,
 
   direction = pango_find_base_dir (empathy_message_get_body (msg), -1);
 
-  theme_adium_append_html (self, func, html, body_escaped,
+  theme_adium_add_html (self, func, html, body_escaped,
       avatar_filename, name_escaped, contact_id,
       service_name, message_classes->str,
       timestamp, is_backlog, empathy_contact_is_user (sender), direction);
 
   /* Keep the sender of the last displayed message */
-  if (self->priv->last_contact)
-    g_object_unref (self->priv->last_contact);
+  if (*prev_contact)
+    g_object_unref (*prev_contact);
 
-  self->priv->last_contact = g_object_ref (sender);
-  self->priv->last_timestamp = timestamp;
-  self->priv->last_is_backlog = is_backlog;
+  *prev_contact = g_object_ref (sender);
+  *prev_timestamp = timestamp;
+  *prev_is_backlog = is_backlog;
 
   g_free (body_escaped);
   g_free (name_escaped);
   g_string_free (message_classes, TRUE);
+}
+
+void
+empathy_theme_adium_append_message (EmpathyThemeAdium *self,
+    EmpathyMessage *msg,
+    gboolean should_highlight)
+{
+  const gchar *js_funcs[] = { "appendNextMessage",
+      "appendNextMessageNoScroll",
+      "appendMessage",
+      "appendMessageNoScroll" };
+
+  if (self->priv->pages_loading != 0)
+    {
+      queue_item (&self->priv->message_queue, QUEUED_MESSAGE, msg, NULL,
+          should_highlight, FALSE);
+      return;
+    }
+
+  theme_adium_add_message (self, msg, &self->priv->last_contact,
+      &self->priv->last_timestamp, &self->priv->last_is_backlog,
+      should_highlight, js_funcs);
 }
 
 void
@@ -1045,7 +1118,7 @@ empathy_theme_adium_append_event (EmpathyThemeAdium *self,
 
   if (self->priv->pages_loading != 0)
     {
-      queue_item (&self->priv->message_queue, QUEUED_EVENT, NULL, str, FALSE);
+      queue_item (&self->priv->message_queue, QUEUED_EVENT, NULL, str, FALSE, FALSE);
       return;
     }
 
@@ -1067,6 +1140,28 @@ empathy_theme_adium_append_event_markup (EmpathyThemeAdium *self,
 }
 
 void
+empathy_theme_adium_prepend_message (EmpathyThemeAdium *self,
+    EmpathyMessage *msg,
+    gboolean should_highlight)
+{
+  const gchar *js_funcs[] = { "prependPrev",
+      "prependPrev",
+      "prepend",
+      "prepend" };
+
+  if (self->priv->pages_loading != 0)
+    {
+      queue_item (&self->priv->message_queue, QUEUED_MESSAGE, msg, NULL,
+          should_highlight, TRUE);
+      return;
+    }
+
+  theme_adium_add_message (self, msg, &self->priv->first_contact,
+      &self->priv->first_timestamp, &self->priv->first_is_backlog,
+      should_highlight, js_funcs);
+}
+
+void
 empathy_theme_adium_edit_message (EmpathyThemeAdium *self,
     EmpathyMessage *message)
 {
@@ -1079,7 +1174,7 @@ empathy_theme_adium_edit_message (EmpathyThemeAdium *self,
 
   if (self->priv->pages_loading != 0)
     {
-      queue_item (&self->priv->message_queue, QUEUED_EDIT, message, NULL, FALSE);
+      queue_item (&self->priv->message_queue, QUEUED_EDIT, message, NULL, FALSE, FALSE);
       return;
     }
 
@@ -1449,6 +1544,8 @@ theme_adium_dispose (GObject *object)
       g_object_unref (self->priv->smiley_manager);
       self->priv->smiley_manager = NULL;
     }
+
+  g_clear_object (&self->priv->first_contact);
 
   if (self->priv->last_contact)
     {
