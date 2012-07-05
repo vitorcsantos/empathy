@@ -2,6 +2,7 @@
 /*
  * Copyright (C) 2002-2007 Imendio AB
  * Copyright (C) 2007-2010 Collabora Ltd.
+ * Copyright (C) 2012 Red Hat, Inc.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -80,6 +81,17 @@ struct _EmpathyChatPriv {
 	GSettings         *gsettings_ui;
 
 	TplLogManager     *log_manager;
+	TplLogWalker      *log_walker;
+	/* Are we watching for scrolling movements? */
+	gboolean           watch_scroll;
+	/* Maximum page size of the chat->view. */
+	guint              max_page_size;
+	/* The offset from the lower edge of the chat->view before it
+	 * expanded to fit in the newly fetched logs. This is to
+	 * restore the chat->view to the page it was on before the
+	 * latest batch of logs were inserted. */
+	guint              scroll_offset;
+
 	TpAccountManager  *account_manager;
 	GList             *input_history;
 	GList             *input_history_current;
@@ -197,6 +209,7 @@ static guint signals[LAST_SIGNAL] = { 0 };
 
 G_DEFINE_TYPE (EmpathyChat, empathy_chat, GTK_TYPE_BOX);
 
+static gboolean chat_scrollable_connect (gpointer user_data);
 static gboolean update_misspelled_words (gpointer data);
 
 static void
@@ -2494,20 +2507,14 @@ static gboolean
 chat_log_filter (TplEvent *event,
 		 gpointer user_data)
 {
-	TpWeakRef *wr = user_data;
-	EmpathyChat *chat = tp_weak_ref_dup_object (wr);
+	EmpathyChat *chat = EMPATHY_CHAT (user_data);
+	EmpathyChatPriv *priv = GET_PRIV (chat);
 	EmpathyMessage *message;
-	EmpathyChatPriv *priv;
 	const GList *pending;
 	bool retval = FALSE;
 
-	if (chat == NULL)
-		return FALSE;
-
 	g_return_val_if_fail (TPL_IS_EVENT (event), FALSE);
 	g_return_val_if_fail (EMPATHY_IS_CHAT (chat), FALSE);
-
-	priv = GET_PRIV (chat);
 
 	pending = empathy_tp_chat_get_pending_messages (priv->tp_chat);
 	message = empathy_message_from_tpl_log_event (event);
@@ -2521,7 +2528,6 @@ chat_log_filter (TplEvent *event,
 
 out:
 	g_object_unref (message);
-	g_object_unref (chat);
 	return retval;
 }
 
@@ -2548,26 +2554,38 @@ show_pending_messages (EmpathyChat *chat) {
 }
 
 
+static gboolean
+chat_scrollable_set_value (gpointer user_data)
+{
+	EmpathyChat *chat = EMPATHY_CHAT (user_data);
+	EmpathyChatPriv *priv = GET_PRIV (chat);
+	GtkAdjustment *adjustment;
+	guint upper;
+
+	adjustment = gtk_scrollable_get_vadjustment (
+	    GTK_SCROLLABLE (chat->view));
+
+	/* Set the chat->view's adjustment back to the value it had
+	 * before it grew as a result of new logs being inserted.
+	 */
+	upper  = (guint) gtk_adjustment_get_upper (adjustment);
+	gtk_adjustment_set_value (adjustment, upper - priv->scroll_offset);
+
+	return G_SOURCE_REMOVE;
+}
+
 static void
-got_filtered_messages_cb (GObject *manager,
+got_filtered_messages_cb (GObject *walker,
 		GAsyncResult *result,
 		gpointer user_data)
 {
 	GList *l;
 	GList *messages;
-	TpWeakRef *wr = user_data;
-	EmpathyChat *chat = tp_weak_ref_dup_object (wr);
-	EmpathyChatPriv *priv;
+	EmpathyChat *chat = EMPATHY_CHAT (user_data);
+	EmpathyChatPriv *priv = GET_PRIV (chat);
 	GError *error = NULL;
 
-	if (chat == NULL) {
-		tp_weak_ref_destroy (wr);
-		return;
-	}
-
-	priv = GET_PRIV (chat);
-
-	if (!tpl_log_manager_get_filtered_events_finish (TPL_LOG_MANAGER (manager),
+	if (!tpl_log_walker_get_events_finish (TPL_LOG_WALKER (walker),
 		result, &messages, &error)) {
 		DEBUG ("%s. Aborting.", error->message);
 		empathy_theme_adium_append_event (chat->view,
@@ -2576,7 +2594,7 @@ got_filtered_messages_cb (GObject *manager,
 		goto out;
 	}
 
-	for (l = messages; l; l = g_list_next (l)) {
+	for (l = g_list_last (messages); l; l = g_list_previous (l)) {
 		EmpathyMessage *message;
 
 		g_assert (TPL_IS_EVENT (l->data));
@@ -2601,14 +2619,14 @@ got_filtered_messages_cb (GObject *manager,
 				"sender", empathy_message_get_sender (message),
 				NULL);
 
-			empathy_theme_adium_append_message (chat->view, syn_msg,
+			empathy_theme_adium_prepend_message (chat->view, syn_msg,
 							  chat_should_highlight (chat, syn_msg));
 			empathy_theme_adium_edit_message (chat->view, message);
 
 			g_object_unref (syn_msg);
 		} else {
 			/* append the latest message */
-			empathy_theme_adium_append_message (chat->view, message,
+			empathy_theme_adium_prepend_message (chat->view, message,
 							  chat_should_highlight (chat, message));
 		}
 
@@ -2629,43 +2647,141 @@ out:
 	/* Turn back on scrolling */
 	empathy_theme_adium_scroll (chat->view, TRUE);
 
+	/* We start watching the scrolling movements only after the first
+	 * batch of logs have been fetched. Otherwise, if the
+	 * chat->view's page size is too small the scrollbar might hit
+	 * the upper edge and trigger another batch of logs to be
+	 * fetched.
+	 */
+	if (G_UNLIKELY (!priv->watch_scroll &&
+			!tpl_log_walker_is_end (priv->log_walker))) {
+		priv->watch_scroll = TRUE;
+		g_idle_add_full (G_PRIORITY_LOW, chat_scrollable_connect,
+		    g_object_ref (chat), g_object_unref);
+	}
+	else {
+		GtkAdjustment *adjustment;
+		guint upper;
+		guint value;
+
+		/* The chat->view's adjustment won't change unless we
+		 * return to the main loop. Save the current offset
+		 * from the lower edge (or the upper value of the
+		 * adjustment) so that we can restore it later once the
+		 * adjustment grows.
+		 */
+		adjustment = gtk_scrollable_get_vadjustment (
+		    GTK_SCROLLABLE (chat->view));
+		upper = (guint) gtk_adjustment_get_upper (adjustment);
+		value = (guint) gtk_adjustment_get_value (adjustment);
+		priv->scroll_offset = upper - value;
+
+		g_idle_add_full (G_PRIORITY_LOW, chat_scrollable_set_value,
+		    g_object_ref (chat), g_object_unref);
+	}
+
 	g_object_unref (chat);
-	tp_weak_ref_destroy (wr);
 }
 
-static void
+static gboolean
 chat_add_logs (EmpathyChat *chat)
 {
 	EmpathyChatPriv *priv = GET_PRIV (chat);
-	TplEntity       *target;
-	TpWeakRef       *wr;
 
 	if (!priv->id) {
-		return;
+		return G_SOURCE_REMOVE;
 	}
 
 	/* Turn off scrolling temporarily */
 	empathy_theme_adium_scroll (chat->view, FALSE);
 
-	/* Add messages from last conversation */
-	if (priv->handle_type == TP_HANDLE_TYPE_ROOM)
-	  target = tpl_entity_new_from_room_id (priv->id);
-	else
-	  target = tpl_entity_new (priv->id, TPL_ENTITY_CONTACT, NULL, NULL);
+	tpl_log_walker_get_events_async (priv->log_walker, 5,
+	    got_filtered_messages_cb, g_object_ref (chat));
+
+	return G_SOURCE_REMOVE;
+}
+
+static void
+chat_schedule_logs (EmpathyChat *chat)
+{
+	EmpathyChatPriv *priv = GET_PRIV (chat);
+
+	if (priv->retrieving_backlogs)
+		return;
 
 	priv->retrieving_backlogs = TRUE;
-	wr = tp_weak_ref_new (chat, NULL, NULL);
-	tpl_log_manager_get_filtered_events_async (priv->log_manager,
-						   priv->account,
-						   target,
-						   TPL_EVENT_MASK_TEXT,
-						   5,
-						   chat_log_filter,
-						   wr,
-						   got_filtered_messages_cb,
-						   wr);
+	g_timeout_add_full (G_PRIORITY_LOW, 500, /* ms */
+	    (GSourceFunc) chat_add_logs, g_object_ref (chat), g_object_unref);
+}
 
-	g_object_unref (target);
+static void
+chat_view_adjustment_changed_cb (GtkAdjustment *adjustment,
+				 gpointer user_data)
+{
+	EmpathyChat *chat = EMPATHY_CHAT (user_data);
+	EmpathyChatPriv *priv = GET_PRIV (chat);
+	guint page_size;
+
+	if (tpl_log_walker_is_end (priv->log_walker)) {
+		g_signal_handlers_disconnect_by_func (adjustment,
+		    chat_view_adjustment_changed_cb, user_data);
+		return;
+	}
+
+	page_size = (guint) gtk_adjustment_get_page_size (adjustment);
+	if (page_size <= priv->max_page_size)
+		return;
+
+	/* We need to fetch more logs if the page size of the view
+	 * increases, so that there is no empty space at the top.
+	 */
+	if (G_LIKELY (priv->max_page_size != 0))
+		chat_schedule_logs (chat);
+
+	priv->max_page_size = page_size;
+}
+
+static void
+chat_view_adjustment_value_changed_cb (GtkAdjustment *adjustment,
+				       gpointer user_data)
+{
+	EmpathyChat *chat = EMPATHY_CHAT (user_data);
+	EmpathyChatPriv *priv = GET_PRIV (chat);
+	guint lower;
+	guint value;
+
+	if (tpl_log_walker_is_end (priv->log_walker)) {
+		g_signal_handlers_disconnect_by_func (adjustment,
+		    chat_view_adjustment_value_changed_cb, user_data);
+		return;
+	}
+
+	lower = (guint) gtk_adjustment_get_lower (adjustment);
+	value = (guint) gtk_adjustment_get_value (adjustment);
+	if (value != lower)
+		return;
+
+	/* Request for more logs to be fetched if the user hit the
+	 * upper edge of the chat->view.
+	 */
+	chat_schedule_logs (chat);
+}
+
+static gboolean
+chat_scrollable_connect (gpointer user_data)
+{
+	EmpathyChat *chat = EMPATHY_CHAT (user_data);
+	GtkAdjustment *adjustment;
+
+	adjustment = gtk_scrollable_get_vadjustment (
+	    GTK_SCROLLABLE (chat->view));
+
+	g_signal_connect (adjustment, "changed",
+	    G_CALLBACK (chat_view_adjustment_changed_cb), chat);
+	g_signal_connect (adjustment, "value-changed",
+	    G_CALLBACK (chat_view_adjustment_value_changed_cb), chat);
+
+	return G_SOURCE_REMOVE;
 }
 
 static gint
@@ -3278,6 +3394,7 @@ chat_finalize (GObject *object)
 
 	g_object_unref (priv->account_manager);
 	g_object_unref (priv->log_manager);
+	g_object_unref (priv->log_walker);
 
 	if (priv->tp_chat) {
 		g_signal_handlers_disconnect_by_func (priv->tp_chat,
@@ -3335,6 +3452,7 @@ chat_constructed (GObject *object)
 {
 	EmpathyChat *chat = EMPATHY_CHAT (object);
 	EmpathyChatPriv *priv = GET_PRIV (chat);
+	TplEntity *target;
 
 	if (priv->tp_chat != NULL) {
 		TpChannel *channel = TP_CHANNEL (priv->tp_chat);
@@ -3346,6 +3464,16 @@ chat_constructed (GObject *object)
 		empathy_theme_adium_set_show_avatars (chat->view,
 						    supports_avatars);
 	}
+
+	/* Add messages from last conversation */
+	if (priv->handle_type == TP_HANDLE_TYPE_ROOM)
+		target = tpl_entity_new_from_room_id (priv->id);
+	else
+		target = tpl_entity_new (priv->id, TPL_ENTITY_CONTACT, NULL, NULL);
+
+	priv->log_walker = tpl_log_manager_walk_filtered_events (priv->log_manager, priv->account, target,
+								 TPL_EVENT_MASK_TEXT, chat_log_filter, chat);
+	g_object_unref (target);
 
 	if (priv->handle_type != TP_HANDLE_TYPE_ROOM) {
 		/* First display logs from the logger and then display pending messages */
