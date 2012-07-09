@@ -2635,10 +2635,6 @@ got_filtered_messages_cb (GObject *walker,
 	g_list_free (messages);
 
 out:
-	/* in case of TPL error, skip backlog and show pending messages */
-	priv->can_show_pending = TRUE;
-	show_pending_messages (chat);
-
 	/* FIXME: See Bug#610994, we are forcing the ACK of the queue. See comments
 	 * about it in EmpathyChatPriv definition */
 	priv->retrieving_backlogs = FALSE;
@@ -2655,6 +2651,11 @@ out:
 	 */
 	if (G_UNLIKELY (!priv->watch_scroll &&
 			!tpl_log_walker_is_end (priv->log_walker))) {
+		/* The pending messages need not be shown after the
+		 * first batch of logs have been displayed */
+		priv->can_show_pending = TRUE;
+		show_pending_messages (chat);
+
 		priv->watch_scroll = TRUE;
 		g_idle_add_full (G_PRIORITY_LOW, chat_scrollable_connect,
 		    g_object_ref (chat), g_object_unref);
