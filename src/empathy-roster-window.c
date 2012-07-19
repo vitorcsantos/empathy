@@ -944,13 +944,30 @@ roster_window_key_press_event_cb  (GtkWidget *window,
 }
 
 static void
+unprepare_cb (GObject *source,
+    GAsyncResult *result,
+    gpointer user_data)
+{
+  GtkWidget *self = user_data;
+
+  gtk_widget_destroy (self);
+}
+
+static void
 roster_window_chat_quit_cb (GSimpleAction *action,
     GVariant *parameter,
     gpointer user_data)
 {
   EmpathyRosterWindow *self = user_data;
 
-  gtk_widget_destroy (GTK_WIDGET (self));
+  /* Destroying the window will make us leave the main loop and so exit the
+   * process. Before doing so we want to unprepare the individual manager.
+   * Just hide the window now and actually destroy it once Folks is done.
+   */
+  gtk_widget_hide (GTK_WIDGET (self));
+
+  empathy_individual_manager_unprepare_async (self->priv->individual_manager,
+      unprepare_cb, self);
 }
 
 static void
