@@ -440,6 +440,7 @@ individual_manager_dispose (GObject *object)
   EmpathyIndividualManagerPriv *priv = GET_PRIV (object);
 
   g_hash_table_unref (priv->individuals);
+
   tp_clear_object (&priv->aggregator);
 
   G_OBJECT_CLASS (empathy_individual_manager_parent_class)->dispose (object);
@@ -907,4 +908,51 @@ empathy_individual_manager_get_top_individuals (EmpathyIndividualManager *self)
   EmpathyIndividualManagerPriv *priv = GET_PRIV (self);
 
   return priv->top_individuals;
+}
+
+static void
+unprepare_cb (GObject *source,
+    GAsyncResult *result,
+    gpointer user_data)
+{
+  GError *error = NULL;
+  GSimpleAsyncResult *my_result = user_data;
+
+  folks_individual_aggregator_unprepare_finish (
+      FOLKS_INDIVIDUAL_AGGREGATOR (source), result, &error);
+
+  if (error != NULL)
+    {
+      DEBUG ("Failed to unprepare the aggregator: %s", error->message);
+      g_simple_async_result_take_error (my_result, error);
+    }
+
+  g_simple_async_result_complete (my_result);
+  g_object_unref (my_result);
+}
+
+void
+empathy_individual_manager_unprepare_async (
+    EmpathyIndividualManager *self,
+    GAsyncReadyCallback callback,
+    gpointer user_data)
+{
+  EmpathyIndividualManagerPriv *priv = GET_PRIV (self);
+  GSimpleAsyncResult *result;
+
+  result = g_simple_async_result_new (G_OBJECT (self), callback, user_data,
+      empathy_individual_manager_unprepare_async);
+
+  folks_individual_aggregator_unprepare (priv->aggregator, unprepare_cb,
+      result);
+}
+
+gboolean
+empathy_individual_manager_unprepare_finish (
+    EmpathyIndividualManager *self,
+    GAsyncResult *result,
+    GError **error)
+{
+  empathy_implement_finish_void (self,
+      empathy_individual_manager_unprepare_async)
 }

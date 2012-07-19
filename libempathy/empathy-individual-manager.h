@@ -89,5 +89,15 @@ gboolean empathy_individual_manager_get_contacts_loaded (
 GList * empathy_individual_manager_get_top_individuals (
     EmpathyIndividualManager *self);
 
+void empathy_individual_manager_unprepare_async (
+    EmpathyIndividualManager *self,
+    GAsyncReadyCallback callback,
+    gpointer user_data);
+
+gboolean empathy_individual_manager_unprepare_finish (
+    EmpathyIndividualManager *self,
+    GAsyncResult *result,
+    GError **error);
+
 G_END_DECLS
 #endif /* __EMPATHY_INDIVIDUAL_MANAGER_H__ */
