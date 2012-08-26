@@ -37,21 +37,9 @@
 
 G_DEFINE_TYPE(EmpathyGstAudioSrc, empathy_audio_src, GST_TYPE_BIN)
 
-/* signal enum */
-enum
-{
-    PEAK_LEVEL_CHANGED,
-    RMS_LEVEL_CHANGED,
-    LAST_SIGNAL
-};
-
-static guint signals[LAST_SIGNAL] = {0};
-
 enum {
     PROP_VOLUME = 1,
     PROP_MUTE,
-    PROP_RMS_LEVEL,
-    PROP_PEAK_LEVEL,
     PROP_MICROPHONE,
 };
 
@@ -60,7 +48,6 @@ struct _EmpathyGstAudioSrcPrivate
 {
   gboolean dispose_has_run;
   GstElement *src;
-  GstElement *level;
   GstElement *volume_element;
 
   EmpathyMicMonitor *mic_monitor;
@@ -70,15 +57,11 @@ struct _EmpathyGstAudioSrcPrivate
   /* G_MAXUINT if not known yet */
   guint source_idx;
 
-  gdouble peak_level;
-  gdouble rms_level;
-
   gdouble volume;
   gboolean mute;
   gboolean have_stream_volume;
 
   GMutex lock;
-  guint level_idle_id;
   guint volume_idle_id;
 };
 
@@ -284,7 +267,6 @@ empathy_audio_src_init (EmpathyGstAudioSrc *obj)
   GstCaps *caps;
 
   obj->priv = priv;
-  priv->peak_level = -G_MAXDOUBLE;
   g_mutex_init (&priv->lock);
 
   priv->volume = 1.0;
@@ -345,13 +327,9 @@ empathy_audio_src_init (EmpathyGstAudioSrc *obj)
 
   priv->volume_element = gst_element_factory_make ("volume", NULL);
   gst_bin_add (GST_BIN (obj), priv->volume_element);
-  gst_element_link (capsfilter, priv->volume_element);
+  gst_element_link (priv->src, priv->volume_element);
 
-  priv->level = gst_element_factory_make ("level", NULL);
-  gst_bin_add (GST_BIN (obj), priv->level);
-  gst_element_link (priv->volume_element, priv->level);
-
-  src = gst_element_get_static_pad (priv->level, "src");
+  src = gst_element_get_static_pad (priv->volume_element, "src");
 
   ghost = gst_ghost_pad_new ("src", src);
   gst_element_add_pad (GST_ELEMENT (obj), ghost);
@@ -374,10 +352,6 @@ empathy_audio_src_init (EmpathyGstAudioSrc *obj)
 
 static void empathy_audio_src_dispose (GObject *object);
 static void empathy_audio_src_finalize (GObject *object);
-static void empathy_audio_src_handle_message (GstBin *bin,
-  GstMessage *message);
-
-static gboolean empathy_audio_src_levels_updated (gpointer user_data);
 
 static void
 empathy_audio_src_set_property (GObject *object,
@@ -413,16 +387,6 @@ empathy_audio_src_get_property (GObject *object,
       case PROP_MUTE:
         g_value_set_boolean (value, priv->mute);
         break;
-      case PROP_PEAK_LEVEL:
-        g_mutex_lock (&priv->lock);
-        g_value_set_double (value, priv->peak_level);
-        g_mutex_unlock (&priv->lock);
-        break;
-      case PROP_RMS_LEVEL:
-        g_mutex_lock (&priv->lock);
-        g_value_set_double (value, priv->rms_level);
-        g_mutex_unlock (&priv->lock);
-        break;
       case PROP_MICROPHONE:
         g_value_set_uint (value, priv->source_idx);
         break;
@@ -436,7 +400,6 @@ empathy_audio_src_class_init (EmpathyGstAudioSrcClass
   *empathy_audio_src_class)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (empathy_audio_src_class);
-  GstBinClass *gstbin_class = GST_BIN_CLASS (empathy_audio_src_class);
   GParamSpec *param_spec;
 
   g_type_class_add_private (empathy_audio_src_class,
@@ -448,9 +411,6 @@ empathy_audio_src_class_init (EmpathyGstAudioSrcClass
   object_class->set_property = empathy_audio_src_set_property;
   object_class->get_property = empathy_audio_src_get_property;
 
-  gstbin_class->handle_message =
-    GST_DEBUG_FUNCPTR (empathy_audio_src_handle_message);
-
   param_spec = g_param_spec_double ("volume", "Volume", "volume contol",
     0.0, 5.0, 1.0,
     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
@@ -461,36 +421,10 @@ empathy_audio_src_class_init (EmpathyGstAudioSrcClass
     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
   g_object_class_install_property (object_class, PROP_MUTE, param_spec);
 
-  param_spec = g_param_spec_double ("peak-level", "peak level", "peak level",
-    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-    G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
-  g_object_class_install_property (object_class, PROP_PEAK_LEVEL, param_spec);
-
   param_spec = g_param_spec_uint ("microphone", "microphone", "microphone",
     0, G_MAXUINT, G_MAXUINT,
     G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
   g_object_class_install_property (object_class, PROP_MICROPHONE, param_spec);
-
-  signals[PEAK_LEVEL_CHANGED] = g_signal_new ("peak-level-changed",
-    G_TYPE_FROM_CLASS (empathy_audio_src_class),
-    G_SIGNAL_RUN_LAST,
-    0,
-    NULL, NULL,
-    g_cclosure_marshal_generic,
-    G_TYPE_NONE, 1, G_TYPE_DOUBLE);
-
-  param_spec = g_param_spec_double ("rms-level", "RMS level", "RMS level",
-    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-    G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
-  g_object_class_install_property (object_class, PROP_RMS_LEVEL, param_spec);
-
-  signals[RMS_LEVEL_CHANGED] = g_signal_new ("rms-level-changed",
-    G_TYPE_FROM_CLASS (empathy_audio_src_class),
-    G_SIGNAL_RUN_LAST,
-    0,
-    NULL, NULL,
-    g_cclosure_marshal_generic,
-    G_TYPE_NONE, 1, G_TYPE_DOUBLE);
 }
 
 void
@@ -503,10 +437,6 @@ empathy_audio_src_dispose (GObject *object)
     return;
 
   priv->dispose_has_run = TRUE;
-
-  if (priv->level_idle_id != 0)
-    g_source_remove (priv->level_idle_id);
-  priv->level_idle_id = 0;
 
   if (priv->volume_idle_id != 0)
     g_source_remove (priv->volume_idle_id);
@@ -530,23 +460,6 @@ empathy_audio_src_finalize (GObject *object)
   g_mutex_clear (&priv->lock);
 
   G_OBJECT_CLASS (empathy_audio_src_parent_class)->finalize (object);
-}
-
-static gboolean
-empathy_audio_src_levels_updated (gpointer user_data)
-{
-  EmpathyGstAudioSrc *self = EMPATHY_GST_AUDIO_SRC (user_data);
-  EmpathyGstAudioSrcPrivate *priv = EMPATHY_GST_AUDIO_SRC_GET_PRIVATE (self);
-
-  g_mutex_lock (&priv->lock);
-
-  g_signal_emit (self, signals[PEAK_LEVEL_CHANGED], 0, priv->peak_level);
-  g_signal_emit (self, signals[RMS_LEVEL_CHANGED], 0, priv->rms_level);
-  priv->level_idle_id = 0;
-
-  g_mutex_unlock (&priv->lock);
-
-  return FALSE;
 }
 
 static gboolean
@@ -595,69 +508,6 @@ empathy_audio_src_volume_changed (GObject *object,
   g_mutex_unlock (&self->priv->lock);
 
   return FALSE;
-}
-
-static void
-empathy_audio_src_handle_message (GstBin *bin, GstMessage *message)
-{
-  EmpathyGstAudioSrc *self = EMPATHY_GST_AUDIO_SRC (bin);
-  EmpathyGstAudioSrcPrivate *priv = EMPATHY_GST_AUDIO_SRC_GET_PRIVATE (self);
-
-  if (GST_MESSAGE_TYPE (message) == GST_MESSAGE_ELEMENT &&
-      GST_MESSAGE_SRC (message) == GST_OBJECT (priv->level))
-    {
-      const GstStructure *s;
-      const gchar *name;
-      const GValue *list;
-      guint i, len;
-      gdouble peak = -G_MAXDOUBLE;
-      gdouble rms = -G_MAXDOUBLE;
-
-      s = gst_message_get_structure (message);
-      name = gst_structure_get_name (s);
-
-      if (g_strcmp0 ("level", name) != 0)
-        goto out;
-
-      list = gst_structure_get_value (s, "peak");
-      len = gst_value_list_get_size (list);
-
-      for (i =0 ; i < len; i++)
-        {
-          const GValue *value;
-          gdouble db;
-
-          value = gst_value_list_get_value (list, i);
-          db = g_value_get_double (value);
-          peak = MAX (db, peak);
-        }
-
-      list = gst_structure_get_value (s, "rms");
-      len = gst_value_list_get_size (list);
-
-      for (i =0 ; i < len; i++)
-        {
-          const GValue *value;
-          gdouble db;
-
-          value = gst_value_list_get_value (list, i);
-          db = g_value_get_double (value);
-          rms = MAX (db, rms);
-        }
-
-      g_mutex_lock (&priv->lock);
-
-      priv->peak_level = peak;
-      priv->rms_level = rms;
-      if (priv->level_idle_id == 0)
-        priv->level_idle_id = g_idle_add (
-          empathy_audio_src_levels_updated, self);
-
-      g_mutex_unlock (&priv->lock);
-    }
-out:
-   GST_BIN_CLASS (empathy_audio_src_parent_class)->handle_message (bin,
-    message);
 }
 
 GstElement *
