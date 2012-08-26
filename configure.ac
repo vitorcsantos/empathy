@@ -203,8 +203,6 @@ PKG_CHECK_MODULES(EMPATHY,
    gmodule-export-2.0
    gobject-2.0
    gsettings-desktop-schemas
-   gstreamer-0.10 >= $GSTREAMER_REQUIRED
-   gstreamer-interfaces-0.10
    libxml-2.0
    telepathy-glib >= $TELEPATHY_GLIB_REQUIRED
    telepathy-logger-0.2 >= $TELEPATHY_LOGGER
@@ -227,6 +225,8 @@ PKG_CHECK_MODULES(EMPATHY_CALL,
    clutter-1.0 >= $CLUTTER_REQUIRED
    clutter-gtk-1.0 >= $CLUTTER_GTK_REQUIRED
    clutter-gst-1.0 >= $CLUTTER_GST_REQUIRED
+   gstreamer-0.10 >= $GSTREAMER_REQUIRED
+   gstreamer-interfaces-0.10
 ])
 
 AC_DEFINE(EMPATHY_GOA_PROVIDER, "org.gnome.OnlineAccounts",

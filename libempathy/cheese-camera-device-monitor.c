@@ -69,8 +69,8 @@ G_DEFINE_TYPE (EmpathyCameraDeviceMonitor, empathy_camera_device_monitor, G_TYPE
 
 #define EMPATHY_CAMERA_DEVICE_MONITOR_ERROR empathy_camera_device_monitor_error_quark ()
 
-GST_DEBUG_CATEGORY (empathy_device_monitor_cat);
-#define GST_CAT_DEFAULT empathy_device_monitor_cat
+#define DEBUG_FLAG EMPATHY_DEBUG_OTHER
+#include <libempathy/empathy-debug.h>
 
 enum EmpathyCameraDeviceMonitorError
 {
@@ -120,7 +120,7 @@ empathy_camera_device_monitor_added (EmpathyCameraDeviceMonitor *monitor,
 
   const gchar *devpath = g_udev_device_get_property (udevice, "DEVPATH");
 
-  GST_INFO ("Checking udev device '%s'", devpath);
+  DEBUG ("Checking udev device '%s'", devpath);
 
   bus = g_udev_device_get_property (udevice, "ID_BUS");
   if (g_strcmp0 (bus, "usb") == 0)
@@ -133,22 +133,22 @@ empathy_camera_device_monitor_added (EmpathyCameraDeviceMonitor *monitor,
       product_id = g_ascii_strtoll (product, NULL, 16);
     if (vendor_id == 0 || product_id == 0)
     {
-      GST_WARNING ("Error getting vendor and product id");
+      DEBUG ("Error getting vendor and product id");
     }
     else
     {
-      GST_INFO ("Found device %04x:%04x, getting capabilities...", vendor_id, product_id);
+      DEBUG ("Found device %04x:%04x, getting capabilities...", vendor_id, product_id);
     }
   }
   else
   {
-    GST_INFO ("Not an usb device, skipping vendor and model id retrieval");
+    DEBUG ("Not an usb device, skipping vendor and model id retrieval");
   }
 
   device_file = g_udev_device_get_device_file (udevice);
   if (device_file == NULL)
   {
-    GST_WARNING ("Error getting V4L device");
+    DEBUG ("Error getting V4L device");
     return;
   }
 
@@ -156,7 +156,7 @@ empathy_camera_device_monitor_added (EmpathyCameraDeviceMonitor *monitor,
    * so detect them by device name */
   if (strstr (device_file, "vbi"))
   {
-    GST_INFO ("Skipping vbi device: %s", device_file);
+    DEBUG ("Skipping vbi device: %s", device_file);
     return;
   }
 
@@ -168,7 +168,7 @@ empathy_camera_device_monitor_added (EmpathyCameraDeviceMonitor *monitor,
     caps = g_udev_device_get_property (udevice, "ID_V4L_CAPABILITIES");
     if (caps == NULL || strstr (caps, ":capture:") == NULL)
     {
-      GST_WARNING ("Device %s seems to not have the capture capability, (radio tuner?)"
+      DEBUG ("Device %s seems to not have the capture capability, (radio tuner?)"
                    "Removing it from device list.", device_file);
       return;
     }
@@ -176,7 +176,7 @@ empathy_camera_device_monitor_added (EmpathyCameraDeviceMonitor *monitor,
   }
   else if (v4l_version == 0)
   {
-    GST_ERROR ("Fix your udev installation to include v4l_id, ignoring %s", device_file);
+    DEBUG ("Fix your udev installation to include v4l_id, ignoring %s", device_file);
     return;
   }
   else
@@ -230,7 +230,7 @@ empathy_camera_device_monitor_coldplug (EmpathyCameraDeviceMonitor *monitor)
   if (priv->client == NULL)
     return;
 
-  GST_INFO ("Probing devices with udev...");
+  DEBUG ("Probing devices with udev...");
 
   devices = g_udev_client_query_by_subsystem (priv->client, "video4linux");
 
@@ -243,7 +243,7 @@ empathy_camera_device_monitor_coldplug (EmpathyCameraDeviceMonitor *monitor)
   }
   g_list_free (devices);
 
-  if (i == 0) GST_WARNING ("No device found");
+  if (i == 0) DEBUG ("No device found");
 }
 
 #else /* HAVE_UDEV */
@@ -338,11 +338,6 @@ static void
 empathy_camera_device_monitor_class_init (EmpathyCameraDeviceMonitorClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  if (empathy_device_monitor_cat == NULL)
-    GST_DEBUG_CATEGORY_INIT (empathy_device_monitor_cat,
-                             "empathy-device-monitor",
-                             0, "Empathy Camera Device Monitor");
 
   object_class->finalize = empathy_camera_device_monitor_finalize;
 

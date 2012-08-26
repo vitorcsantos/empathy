@@ -26,7 +26,6 @@
 #define __EMPATHY_CAMERA_DEVICE_MONITOR_H__
 
 #include <glib-object.h>
-#include <gst/interfaces/xoverlay.h>
 
 G_BEGIN_DECLS
 

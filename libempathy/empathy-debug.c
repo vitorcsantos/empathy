@@ -54,6 +54,7 @@ static GDebugKey keys[] = {
   { "Voip", EMPATHY_DEBUG_VOIP },
   { "Tls", EMPATHY_DEBUG_TLS },
   { "Sasl", EMPATHY_DEBUG_SASL },
+  { "Camera", EMPATHY_DEBUG_CAMERA },
   { 0, }
 };
 
