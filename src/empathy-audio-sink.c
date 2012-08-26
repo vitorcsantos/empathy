@@ -28,7 +28,7 @@
 
 #include <telepathy-glib/telepathy-glib.h>
 
-#include <libempathy-gtk/empathy-call-utils.h>
+#include "empathy-audio-utils.h"
 
 #include "empathy-audio-sink.h"
 
@@ -219,7 +219,7 @@ create_sink (EmpathyGstAudioSink *self)
   if (sink == NULL)
     return NULL;
 
-  empathy_call_set_stream_properties (sink, self->priv->echo_cancel);
+  empathy_audio_set_stream_properties (sink, self->priv->echo_cancel);
 
   /* Set latency (buffering on the PulseAudio side) of 40ms and transfer data
    * in 10ms chunks */
@@ -402,6 +402,6 @@ empathy_audio_sink_set_echo_cancel (EmpathyGstAudioSink *sink,
   DEBUG ("Sink echo cancellation setting: %s", echo_cancel ? "on" : "off");
   sink->priv->echo_cancel = echo_cancel;
   if (sink->priv->sink != NULL)
-    empathy_call_set_stream_properties (sink->priv->sink,
+    empathy_audio_set_stream_properties (sink->priv->sink,
       sink->priv->echo_cancel);
 }

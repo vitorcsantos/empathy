@@ -26,7 +26,7 @@
 #include <gst/interfaces/streamvolume.h>
 
 #include <libempathy/empathy-utils.h>
-#include <libempathy-gtk/empathy-call-utils.h>
+#include "empathy-audio-utils.h"
 
 #include "empathy-audio-src.h"
 
@@ -267,7 +267,7 @@ create_src (void)
   if (src == NULL)
     return NULL;
 
-  empathy_call_set_stream_properties (src, TRUE);
+  empathy_audio_set_stream_properties (src, TRUE);
 
   /* Set latency (buffering on the PulseAudio side) of 20ms */
   g_object_set (src, "buffer-time", (gint64) 20000, NULL);
@@ -679,7 +679,7 @@ empathy_audio_src_set_echo_cancel (EmpathyGstAudioSrc *src,
   gboolean enable)
 {
   DEBUG ("Src echo cancellation setting: %s", enable ? "on" : "off");
-  empathy_call_set_stream_properties (src->priv->src, enable);
+  empathy_audio_set_stream_properties (src->priv->src, enable);
 }
 
 void

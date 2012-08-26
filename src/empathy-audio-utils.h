@@ -18,27 +18,16 @@
  * Authors: Emilio Pozuelo Monfort <emilio.pozuelo@collabora.co.uk>
  */
 
-#ifndef __EMPATHY_CALL_UTILS_H__
-#define __EMPATHY_CALL_UTILS_H__
+#ifndef __EMPATHY_AUDIO_UTILS_H__
+#define __EMPATHY_AUDIO_UTILS_H__
+
+#include <gst/gst.h>
 
 G_BEGIN_DECLS
 
-/* Calls */
-void empathy_call_new_with_streams (const gchar *contact,
-    TpAccount *account,
-    gboolean initial_audio,
-    gboolean initial_video,
-    gint64 timestamp);
-
-GHashTable * empathy_call_create_call_request (const gchar *contact,
-    gboolean initial_audio,
-    gboolean initial_video);
-
-TpSendingState empathy_call_channel_get_video_state (TpCallChannel *self);
-void empathy_call_channel_send_video (TpCallChannel *self,
-    gboolean send);
-
+void empathy_audio_set_stream_properties (GstElement *element,
+    gboolean echo_cancellation);
 
 G_END_DECLS
 
-#endif /*  __EMPATHY_CALL_UTILS_H__ */
+#endif
