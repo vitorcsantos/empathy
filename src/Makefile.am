@@ -120,7 +120,7 @@ empathy_call_SOURCES = \
        empathy-mic-monitor.c \
        empathy-mic-monitor.h
 
-empathy_call_CFLAGS = $(EMPATHY_CALL_CFLAGS)
+empathy_call_CFLAGS = $(EMPATHY_CALL_CFLAGS) -DGST_USE_UNSTABLE_API
 empathy_call_LDFLAGS = $(EMPATHY_CALL_LIBS)
 
 empathy_handwritten_source = \

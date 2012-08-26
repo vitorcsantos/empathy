@@ -50,7 +50,6 @@ AC_DEFINE(CLUTTER_VERSION_MIN_REQUIRED, CLUTTER_VERSION_1_8, [Ignore post 1.8 de
 AC_DEFINE(CLUTTER_VERSION_MAX_ALLOWED, CLUTTER_VERSION_1_10, [Prevent post 1.10 APIs])
 
 CLUTTER_GTK_REQUIRED=1.1.2
-CLUTTER_GST_REQUIRED=1.5.2
 
 TELEPATHY_GLIB_REQUIRED=0.19.6
 AC_DEFINE(TP_VERSION_MIN_REQUIRED, TP_VERSION_0_20, [Ignore post 0.20 deprecations])
@@ -62,7 +61,6 @@ LIBSECRET_REQUIRED=0.5
 GCR_REQUIRED=2.91.4
 LIBCANBERRA_GTK_REQUIRED=0.25
 LIBNOTIFY_REQUIRED=0.7.0
-TELEPATHY_FARSTREAM_REQUIRED=0.2.1
 TELEPATHY_LOGGER=0.2.13
 WEBKIT_REQUIRED=1.3.13
 GOA_REQUIRED=3.5.1
@@ -218,16 +216,48 @@ PKG_CHECK_MODULES(EMPATHY,
    gee-1.0
 ])
 
-PKG_CHECK_MODULES(EMPATHY_CALL,
-[
-   farstream-0.1
-   telepathy-farstream >= $TELEPATHY_FARSTREAM_REQUIRED
-   clutter-1.0 >= $CLUTTER_REQUIRED
-   clutter-gtk-1.0 >= $CLUTTER_GTK_REQUIRED
-   clutter-gst-1.0 >= $CLUTTER_GST_REQUIRED
-   gstreamer-0.10 >= $GSTREAMER_REQUIRED
-   gstreamer-interfaces-0.10
-])
+# -----------------------------------------------------------
+# GStreamer
+# -----------------------------------------------------------
+AC_ARG_ENABLE(gst-1.0,
+              AS_HELP_STRING([--enable-gst-1.0=@<:@no/yes/auto@:>@],
+                             [build with GStreamer 1.0]), enable_gst1=yes,
+                             enable_gst1=auto)
+
+# Try to use GStreamer 1.à if available
+if test "x$enable_gst1" != "xno"; then
+  PKG_CHECK_MODULES(EMPATHY_CALL,
+  [
+     farstream-0.2
+     telepathy-farstream >= 0.4.999
+     clutter-1.0 >= $CLUTTER_REQUIRED
+     clutter-gtk-1.0 >= $CLUTTER_GTK_REQUIRED
+     clutter-gst-2.0
+  ], have_gst1="yes", have_gst1="no")
+
+  if test "x$have_gst1" = "xyes"; then
+    AC_DEFINE(HAVE_GST1, 1, [Build with GStreamer 1.0])
+  fi
+fi
+
+if test "x$enable_gst1" = "xyes" -a "x$have_gst1" != "xyes"; then
+   AC_MSG_ERROR([Could not find GStreamer 1.0 dependencies:
+
+$EMPATHY_CALL_PKG_ERRORS])
+fi
+
+if test "x$have_gst1" != "xyes"; then
+  PKG_CHECK_MODULES(EMPATHY_CALL,
+  [
+     farstream-0.1
+     telepathy-farstream >= 0.2.1
+     clutter-1.0 >= $CLUTTER_REQUIRED
+     clutter-gtk-1.0 >= $CLUTTER_GTK_REQUIRED
+     clutter-gst-1.0 >= 1.5.2
+     gstreamer-0.10 >= $GSTREAMER_REQUIRED
+     gstreamer-interfaces-0.10
+  ])
+fi
 
 AC_DEFINE(EMPATHY_GOA_PROVIDER, "org.gnome.OnlineAccounts",
    [Name of provider for accounts imported from GOA])
@@ -623,6 +653,7 @@ Configure summary:
 	Linker Flags................:  ${LDFLAGS}
 	Prefix......................:  ${prefix}
 	Coding style checks.........:  ${ENABLE_CODING_STYLE_CHECKS}
+	Use GStreamer 1.0...........:  ${have_gst1}
 
     Features:
 	Spell checking (enchant)....:  ${have_enchant}

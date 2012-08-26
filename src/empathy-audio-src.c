@@ -263,8 +263,6 @@ empathy_audio_src_init (EmpathyGstAudioSrc *obj)
 {
   EmpathyGstAudioSrcPrivate *priv = EMPATHY_GST_AUDIO_SRC_GET_PRIVATE (obj);
   GstPad *ghost, *src;
-  GstElement *capsfilter;
-  GstCaps *caps;
 
   obj->priv = priv;
   g_mutex_init (&priv->lock);
@@ -309,21 +307,28 @@ empathy_audio_src_init (EmpathyGstAudioSrc *obj)
 
   gst_bin_add (GST_BIN (obj), priv->src);
 
-  /* Explicitly state what format we want from pulsesrc. This pushes resampling
-   * and format conversion as early as possible, lowering the amount of data
-   * transferred and thus improving performance. When moving to GStreamer
-   * 0.11/1.0, this should change so that we actually request what the encoder
-   * wants downstream. */
-  caps = gst_caps_new_simple ("audio/x-raw-int",
-      "channels", G_TYPE_INT, 1,
-      "width", G_TYPE_INT, 16,
-      "depth", G_TYPE_INT, 16,
-      "rate", G_TYPE_INT, 32000,
-      NULL);
-  capsfilter = gst_element_factory_make ("capsfilter", NULL);
-  g_object_set (G_OBJECT (capsfilter), "caps", caps, NULL);
-  gst_bin_add (GST_BIN (obj), capsfilter);
-  gst_element_link (priv->src, capsfilter);
+#ifndef HAVE_GST1
+  {
+    GstElement *capsfilter;
+    GstCaps *caps;
+
+    /* Explicitly state what format we want from pulsesrc. This pushes resampling
+     * and format conversion as early as possible, lowering the amount of data
+     * transferred and thus improving performance. When moving to GStreamer
+     * 0.11/1.0, this should change so that we actually request what the encoder
+     * wants downstream. */
+    caps = gst_caps_new_simple ("audio/x-raw-int",
+        "channels", G_TYPE_INT, 1,
+        "width", G_TYPE_INT, 16,
+        "depth", G_TYPE_INT, 16,
+        "rate", G_TYPE_INT, 32000,
+        NULL);
+    capsfilter = gst_element_factory_make ("capsfilter", NULL);
+    g_object_set (G_OBJECT (capsfilter), "caps", caps, NULL);
+    gst_bin_add (GST_BIN (obj), capsfilter);
+    gst_element_link (priv->src, capsfilter);
+  }
+#endif
 
   priv->volume_element = gst_element_factory_make ("volume", NULL);
   gst_bin_add (GST_BIN (obj), priv->volume_element);

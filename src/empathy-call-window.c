@@ -3255,6 +3255,27 @@ empathy_call_window_check_video_cb (gpointer data)
 }
 
 /* Called from the streaming thread */
+#ifdef HAVE_GST1
+static GstPadProbeReturn
+empathy_call_window_video_probe_cb (GstPad *pad,
+    GstPadProbeInfo *info,
+    gpointer user_data)
+{
+    EmpathyCallWindow *self = user_data;
+
+  if (G_UNLIKELY (!self->priv->got_video))
+    {
+      /* show the remote video */
+      g_idle_add_full (G_PRIORITY_DEFAULT_IDLE,
+          empathy_call_window_show_video_output_cb,
+          g_object_ref (self), g_object_unref);
+
+      self->priv->got_video = TRUE;
+    }
+
+  return GST_PAD_PROBE_OK;
+}
+#else
 static gboolean
 empathy_call_window_video_probe_cb (GstPad *pad,
     GstMiniObject *mini_obj,
@@ -3276,6 +3297,7 @@ empathy_call_window_video_probe_cb (GstPad *pad,
 
   return TRUE;
 }
+#endif
 
 /* Called from the streaming thread */
 static gboolean
@@ -3302,8 +3324,14 @@ empathy_call_window_src_added_cb (EmpathyCallHandler *handler,
         g_idle_add (empathy_call_window_show_video_output_cb, self);
         pad = empathy_call_window_get_video_sink_pad (self);
 
+#ifdef HAVE_GST1
+        gst_pad_add_probe (src,
+            GST_PAD_PROBE_TYPE_BUFFER | GST_PAD_PROBE_TYPE_BUFFER_LIST,
+            empathy_call_window_video_probe_cb, self, NULL);
+#else
         gst_pad_add_data_probe (src,
             G_CALLBACK (empathy_call_window_video_probe_cb), self);
+#endif
         if (priv->got_video_src > 0)
           g_source_remove (priv->got_video_src);
         priv->got_video_src = g_timeout_add_seconds (1,
@@ -3482,7 +3510,11 @@ empathy_call_window_content_added_cb (EmpathyCallHandler *handler,
       case FS_MEDIA_TYPE_VIDEO:
         if (priv->video_tee != NULL)
           {
+#ifdef HAVE_GST1
+            pad = gst_element_get_request_pad (priv->video_tee, "src_%u");
+#else
             pad = gst_element_get_request_pad (priv->video_tee, "src%d");
+#endif
             if (GST_PAD_LINK_FAILED (gst_pad_link (pad, sink)))
               {
                 g_warning ("Could not link video source input pipeline");
