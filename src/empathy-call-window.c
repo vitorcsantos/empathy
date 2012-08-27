@@ -1313,10 +1313,10 @@ enable_camera (EmpathyCallWindow *self)
 }
 
 static void
-empathy_call_window_camera_toggled_cb (GtkToggleToolButton *toggle,
+empathy_call_window_camera_toggled_cb (GtkToggleButton *toggle,
   EmpathyCallWindow *self)
 {
-  if (gtk_toggle_tool_button_get_active (toggle))
+  if (gtk_toggle_button_get_active (toggle))
     enable_camera (self);
   else
     disable_camera (self);
