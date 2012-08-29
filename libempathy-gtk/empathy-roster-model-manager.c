@@ -142,8 +142,7 @@ members_changed_cb (EmpathyIndividualManager *manager,
 
   for (l = removed; l != NULL; l = g_list_next (l))
     {
-      if (individual_in_top_group_members (self, l->data) &&
-          !individual_should_be_in_top_group_members (self, l->data))
+      if (individual_in_top_group_members (self, l->data))
         self->priv->top_group_members = g_list_remove (
             self->priv->top_group_members, l->data);
 
