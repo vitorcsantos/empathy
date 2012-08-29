@@ -1844,6 +1844,7 @@ am_prepared_cb (GObject *am,
   GtkListStore *level_store;
   GtkTreeIter iter;
   GError *error = NULL;
+  GtkWidget *infobar, *content;
 
   if (!tp_proxy_prepare_finish (am, res, &error))
     {
@@ -2020,6 +2021,32 @@ am_prepared_cb (GObject *am,
   gtk_combo_box_set_active (GTK_COMBO_BOX (self->priv->level_filter), 0);
   g_signal_connect (self->priv->level_filter, "changed",
       G_CALLBACK (debug_window_filter_changed_cb), object);
+
+  /* Info bar */
+  infobar = gtk_info_bar_new ();
+  gtk_info_bar_set_message_type (GTK_INFO_BAR (infobar), GTK_MESSAGE_INFO);
+
+  label = gtk_label_new (
+        _("Even if they don't display passwords, logs can contain sensible "
+          "information such as your list of contacts or the messages you "
+          "recently sent or received.\nIf you don't want to see such "
+          "information available in a public bug report, you "
+          "can choose to limit the visibility of your bug to "
+          "Empathy developpers when reporting it by displaying "
+          "the advanced fields in the "
+          "<a href=\"https://bugzilla.gnome.org/enter_bug.cgi?product=empathy\">"
+          "bug report</a>."));
+  gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
+  gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+  gtk_style_context_add_class (gtk_widget_get_style_context (label),
+      GTK_STYLE_CLASS_DIM_LABEL);
+
+  content = gtk_info_bar_get_content_area (GTK_INFO_BAR (infobar));
+  gtk_box_pack_start (GTK_BOX (content), label, FALSE, FALSE, 0);
+
+  gtk_widget_show (infobar);
+  gtk_widget_show (label);
+  gtk_box_pack_start (GTK_BOX (vbox), infobar, FALSE, FALSE, 0);
 
   /* Debug treeview */
   self->priv->view = gtk_tree_view_new ();
