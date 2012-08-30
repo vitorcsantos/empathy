@@ -283,7 +283,7 @@ empathy_roster_model_manager_constructed (GObject *object)
       G_CALLBACK (groups_changed_cb), self, 0);
   tp_g_signal_connect_object (self->priv->manager, "notify::top-individuals",
       G_CALLBACK (top_individuals_changed_cb), self, 0);
-  tp_g_signal_connect_object (self->priv->manager, "notify::favourites-changed",
+  tp_g_signal_connect_object (self->priv->manager, "favourites-changed",
       G_CALLBACK (favourites_changed_cb), self, 0);
 }
 
