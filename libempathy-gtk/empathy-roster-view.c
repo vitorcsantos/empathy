@@ -4,6 +4,8 @@
 
 #include <glib/gi18n-lib.h>
 
+#include <libempathy/empathy-contact-groups.h>
+
 #include <libempathy-gtk/empathy-roster-contact.h>
 #include <libempathy-gtk/empathy-roster-group.h>
 #include <libempathy-gtk/empathy-ui-utils.h>
@@ -200,6 +202,9 @@ group_expanded_cb (EmpathyRosterGroup *group,
     }
 
   g_list_free (widgets);
+
+  empathy_contact_group_set_expanded (empathy_roster_group_get_name (group),
+      gtk_expander_get_expanded (GTK_EXPANDER (group)));
 }
 
 static EmpathyRosterGroup *
@@ -225,6 +230,9 @@ ensure_roster_group (EmpathyRosterView *self,
     roster_group = empathy_roster_group_new (group, "im-local-xmpp");
   else
     roster_group = empathy_roster_group_new (group, NULL);
+
+  gtk_expander_set_expanded (GTK_EXPANDER (roster_group),
+      empathy_contact_group_get_expanded (group));
 
   g_signal_connect (roster_group, "notify::expanded",
       G_CALLBACK (group_expanded_cb), self);
@@ -931,6 +939,9 @@ empathy_roster_view_constructed (GObject *object)
     chain_up (object);
 
   g_assert (EMPATHY_IS_ROSTER_MODEL (self->priv->model));
+
+  /* Get saved group states. */
+  empathy_contact_groups_get_all ();
 
   populate_view (self);
 
