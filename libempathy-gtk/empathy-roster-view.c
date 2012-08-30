@@ -270,6 +270,9 @@ add_to_group (EmpathyRosterView *self,
   if (contacts == NULL)
     return;
 
+  if (g_hash_table_lookup (contacts, group) != NULL)
+    return;
+
   if (tp_strdiff (group, NO_GROUP))
     roster_group = ensure_roster_group (self, group);
 
