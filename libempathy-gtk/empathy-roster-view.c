@@ -346,6 +346,32 @@ add_to_group (EmpathyRosterView *self,
 }
 
 static void
+individual_favourite_change_cb (FolksIndividual *individual,
+    GParamSpec *spec,
+    EmpathyRosterView *self)
+{
+  /* We may have to refilter the contact as only favorite contacts are always
+   * displayed regardless of their presence. */
+  GHashTable *contacts;
+  GtkWidget *contact;
+
+  contacts = g_hash_table_lookup (self->priv->roster_contacts, individual);
+  if (contacts == NULL)
+    return;
+
+  if (self->priv->show_groups)
+    contact = g_hash_table_lookup (contacts,
+        EMPATHY_ROSTER_MODEL_GROUP_TOP_GROUP);
+  else
+    contact = g_hash_table_lookup (contacts, NO_GROUP);
+
+  if (contact == NULL)
+    return;
+
+  egg_list_box_child_changed (EGG_LIST_BOX (self), contact);
+}
+
+static void
 individual_added (EmpathyRosterView *self,
     FolksIndividual *individual)
 {
@@ -385,6 +411,9 @@ individual_added (EmpathyRosterView *self,
 
       g_list_free (groups);
     }
+
+  tp_g_signal_connect_object (individual, "notify::is-favourite",
+      G_CALLBACK (individual_favourite_change_cb), self, 0);
 }
 
 static void
@@ -793,6 +822,17 @@ remove_from_displayed (EmpathyRosterView *self,
   check_if_empty (self);
 }
 
+static gboolean
+contact_is_favorite (EmpathyRosterContact *contact)
+{
+  FolksIndividual *individual;
+
+  individual = empathy_roster_contact_get_individual (contact);
+
+  return folks_favourite_details_get_is_favourite (
+      FOLKS_FAVOURITE_DETAILS (individual));
+}
+
 /**
  * check if @contact should be displayed according to @self's current status
  * and without consideration for the state of @contact's groups.
@@ -815,7 +855,9 @@ contact_should_be_displayed (EmpathyRosterView *self,
   if (self->priv->show_offline)
       return TRUE;
 
-  if (contact_in_top (self, contact))
+  if (contact_in_top (self, contact) &&
+      contact_is_favorite (contact))
+    /* Favorite top contacts are always displayed */
     return TRUE;
 
   return empathy_roster_contact_is_online (contact);
