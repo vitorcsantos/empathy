@@ -247,6 +247,24 @@ ensure_roster_group (EmpathyRosterView *self,
 }
 
 static void
+update_empty (EmpathyRosterView *self,
+    gboolean empty)
+{
+  if (self->priv->empty == empty)
+    return;
+
+  self->priv->empty = empty;
+  g_object_notify (G_OBJECT (self), "empty");
+}
+
+static void
+check_if_empty (EmpathyRosterView *self)
+{
+  if (g_hash_table_size (self->priv->displayed_contacts) == 0)
+    update_empty (self, TRUE);
+}
+
+static void
 update_group_widgets (EmpathyRosterView *self,
     EmpathyRosterGroup *group,
     EmpathyRosterContact *contact,
@@ -694,17 +712,6 @@ is_searching (EmpathyRosterView *self)
 }
 
 static void
-update_empty (EmpathyRosterView *self,
-    gboolean empty)
-{
-  if (self->priv->empty == empty)
-    return;
-
-  self->priv->empty = empty;
-  g_object_notify (G_OBJECT (self), "empty");
-}
-
-static void
 add_to_displayed (EmpathyRosterView *self,
     EmpathyRosterContact *contact)
 {
@@ -750,8 +757,7 @@ remove_from_displayed (EmpathyRosterView *self,
 {
   g_hash_table_remove (self->priv->displayed_contacts, contact);
 
-  if (g_hash_table_size (self->priv->displayed_contacts) == 0)
-    update_empty (self, TRUE);
+  check_if_empty (self);
 }
 
 /**
