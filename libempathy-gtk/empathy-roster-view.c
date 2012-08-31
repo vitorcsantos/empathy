@@ -257,11 +257,40 @@ update_empty (EmpathyRosterView *self,
   g_object_notify (G_OBJECT (self), "empty");
 }
 
+static gboolean filter_group (EmpathyRosterView *self,
+    EmpathyRosterGroup *group);
+
+static gboolean
+at_least_one_group_displayed (EmpathyRosterView *self)
+{
+  GHashTableIter iter;
+  gpointer v;
+
+  g_hash_table_iter_init (&iter, self->priv->roster_groups);
+  while (g_hash_table_iter_next (&iter, NULL, &v))
+    {
+      EmpathyRosterGroup *group = EMPATHY_ROSTER_GROUP (v);
+
+      if (filter_group (self, group))
+        return TRUE;
+    }
+
+  return FALSE;
+}
+
 static void
 check_if_empty (EmpathyRosterView *self)
 {
-  if (g_hash_table_size (self->priv->displayed_contacts) == 0)
-    update_empty (self, TRUE);
+  /* Roster is considered as empty if there is no contact *and* no group
+   * currently displayed. */
+  if (g_hash_table_size (self->priv->displayed_contacts) != 0 ||
+      at_least_one_group_displayed (self))
+    {
+      update_empty (self, FALSE);
+      return;
+    }
+
+  update_empty (self, TRUE);
 }
 
 static void
@@ -280,7 +309,11 @@ update_group_widgets (EmpathyRosterView *self,
     count = empathy_roster_group_remove_widget (group, GTK_WIDGET (contact));
 
   if (count != old_count)
-    egg_list_box_child_changed (EGG_LIST_BOX (self), GTK_WIDGET (group));
+    {
+      egg_list_box_child_changed (EGG_LIST_BOX (self), GTK_WIDGET (group));
+
+      check_if_empty (self);
+    }
 }
 
 static void
