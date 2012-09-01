@@ -4,12 +4,18 @@
 # pomóc w jego rozwijaniu i pielęgnowaniu, napisz do nas:
 # gnomepl@aviary.pl
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+# Artur Flinta <aflinta@at.kernel.pl>, 2003.
+# Tomasz Dominikowski <dominikowski@gmail.com>, 2007-2009.
+# Wadim Dziedzic <wdziedzic@aviary.pl>, 2008.
+# Piotr Drąg <piotrdrag@gmail.com>, 2009-2012.
+# Asia Słowik <asiaslowik@gmail.com>, 2011.
+# Aviary.pl <gnomepl@aviary.pl>, 2007-2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: empathy\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-23 00:16+0200\n"
-"PO-Revision-Date: 2012-08-23 00:17+0200\n"
+"POT-Creation-Date: 2012-09-01 22:06+0200\n"
+"PO-Revision-Date: 2012-09-01 22:07+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -542,16 +548,16 @@ msgstr "Wybrany plik nie jest zwykłym plikiem"
 msgid "The selected file is empty"
 msgstr "Wybrany plik jest pusty"
 
-#: ../libempathy/empathy-keyring.c:75
+#: ../libempathy/empathy-keyring.c:85 ../libempathy/empathy-keyring.c:194
 msgid "Password not found"
 msgstr "Nie odnaleziono hasła"
 
-#: ../libempathy/empathy-keyring.c:202
+#: ../libempathy/empathy-keyring.c:594
 #, c-format
 msgid "IM account password for %s (%s)"
 msgstr "Hasło konta komunikatora dla %s (%s)"
 
-#: ../libempathy/empathy-keyring.c:237
+#: ../libempathy/empathy-keyring.c:631
 #, c-format
 msgid "Password for chatroom '%s' on account %s (%s)"
 msgstr "Hasło dla pokoju rozmowy \"%s\" na koncie %s (%s)"
@@ -926,19 +932,19 @@ msgstr "Utworzenie nowego konta na serwerze"
 #. * like: "MyUserName on freenode".
 #. * You should reverse the order of these arguments if the
 #. * server should come before the login id in your locale.
-#: ../libempathy-gtk/empathy-account-widget.c:2269
+#: ../libempathy-gtk/empathy-account-widget.c:2263
 #, c-format
 msgid "%1$s on %2$s"
 msgstr "%1$s na %2$s"
 
 #. To translators: The parameter is the protocol name. The resulting
 #. * string will be something like: "Jabber Account"
-#: ../libempathy-gtk/empathy-account-widget.c:2295
+#: ../libempathy-gtk/empathy-account-widget.c:2289
 #, c-format
 msgid "%s Account"
 msgstr "Konto %s"
 
-#: ../libempathy-gtk/empathy-account-widget.c:2299
+#: ../libempathy-gtk/empathy-account-widget.c:2293
 msgid "New account"
 msgstr "Nowe konto"
 
@@ -3028,7 +3034,13 @@ msgstr "Komunikator dla środowiska GNOME"
 
 #: ../src/empathy-about-dialog.c:115
 msgid "translator-credits"
-msgstr "Aviary.pl <gnomepl@aviary.pl>, 2008, 2009, 2010, 2011, 2012"
+msgstr ""
+"Artur Flinta <aflinta@at.kernel.pl>, 2003\n"
+"Tomasz Dominikowski <dominikowski@gmail.com>, 2007-2009\n"
+"Wadim Dziedzic <wdziedzic@aviary.pl>, 2008\n"
+"Piotr Drąg <piotrdrag@gmail.com>, 2009-2012\n"
+"Asia Słowik <asiaslowik@gmail.com>, 2011\n"
+"Aviary.pl <gnomepl@aviary.pl>, 2007-2012"
 
 #: ../src/empathy-accounts.c:184
 msgid "Don't display any dialogs; do any work (eg, importing) and exit"
@@ -3184,11 +3196,11 @@ msgstr ""
 msgid "No protocol backends installed"
 msgstr "Brak zainstalowanych mechanizmów protokołów"
 
-#: ../src/empathy-auth-client.c:288
+#: ../src/empathy-auth-client.c:296
 msgid " - Empathy authentication client"
 msgstr " - klient uwierzytelniania komunikatora Empathy"
 
-#: ../src/empathy-auth-client.c:304
+#: ../src/empathy-auth-client.c:312
 msgid "Empathy authentication client"
 msgstr "Klient uwierzytelniania komunikatora Empathy"
 
