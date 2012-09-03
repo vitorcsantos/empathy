@@ -1632,6 +1632,7 @@ chat_window_new_message_cb (EmpathyChat *chat,
     {
       empathy_sound_manager_play (self->priv->sound_mgr, GTK_WIDGET (self->priv->dialog),
           EMPATHY_SOUND_MESSAGE_OUTGOING);
+      return;
     }
 
   if (has_focus && self->priv->current_chat == chat)
