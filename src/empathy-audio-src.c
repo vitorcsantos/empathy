@@ -307,6 +307,9 @@ empathy_audio_src_init (EmpathyGstAudioSrc *obj)
 
   gst_bin_add (GST_BIN (obj), priv->src);
 
+  priv->volume_element = gst_element_factory_make ("volume", NULL);
+  gst_bin_add (GST_BIN (obj), priv->volume_element);
+
 #ifndef HAVE_GST1
   {
     GstElement *capsfilter;
@@ -327,12 +330,11 @@ empathy_audio_src_init (EmpathyGstAudioSrc *obj)
     g_object_set (G_OBJECT (capsfilter), "caps", caps, NULL);
     gst_bin_add (GST_BIN (obj), capsfilter);
     gst_element_link (priv->src, capsfilter);
+    gst_element_link (capsfilter, priv->volume_element);
   }
-#endif
-
-  priv->volume_element = gst_element_factory_make ("volume", NULL);
-  gst_bin_add (GST_BIN (obj), priv->volume_element);
+#else
   gst_element_link (priv->src, priv->volume_element);
+#endif
 
   src = gst_element_get_static_pad (priv->volume_element, "src");
 
