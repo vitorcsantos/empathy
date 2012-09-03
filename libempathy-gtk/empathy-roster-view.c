@@ -1337,12 +1337,12 @@ empathy_roster_view_show_offline (EmpathyRosterView *self,
 static void
 clear_view (EmpathyRosterView *self)
 {
-  gtk_container_foreach (GTK_CONTAINER (self),
-      (GtkCallback) gtk_widget_destroy, NULL);
-
   g_hash_table_remove_all (self->priv->roster_contacts);
   g_hash_table_remove_all (self->priv->roster_groups);
   g_hash_table_remove_all (self->priv->displayed_contacts);
+
+  gtk_container_foreach (GTK_CONTAINER (self),
+      (GtkCallback) gtk_widget_destroy, NULL);
 }
 
 void
