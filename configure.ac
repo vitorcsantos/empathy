@@ -221,10 +221,12 @@ PKG_CHECK_MODULES(EMPATHY,
 # -----------------------------------------------------------
 AC_ARG_ENABLE(gst-1.0,
               AS_HELP_STRING([--enable-gst-1.0=@<:@no/yes/auto@:>@],
-                             [build with GStreamer 1.0]), enable_gst1=yes,
+                             [build with GStreamer 1.0]),
+                             enable_gst1=$enableval,
                              enable_gst1=auto)
 
 # Try to use GStreamer 1.à if available
+have_gst1="no"
 if test "x$enable_gst1" != "xno"; then
   PKG_CHECK_MODULES(EMPATHY_CALL,
   [
