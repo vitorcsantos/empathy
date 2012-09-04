@@ -591,7 +591,8 @@ contact_in_top (EmpathyRosterView *self,
       groups = empathy_roster_model_get_groups_for_individual (
           self->priv->model, individual);
 
-      if (g_list_find (groups, EMPATHY_ROSTER_MODEL_GROUP_TOP_GROUP) != NULL)
+      if (g_list_find_custom (groups, EMPATHY_ROSTER_MODEL_GROUP_TOP_GROUP,
+            (GCompareFunc) g_strcmp0) != NULL)
         result = TRUE;
 
       g_list_free (groups);
