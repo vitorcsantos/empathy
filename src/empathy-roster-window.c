@@ -41,6 +41,7 @@
 #include <libempathy/empathy-individual-manager.h>
 #include <libempathy/empathy-gsettings.h>
 #include <libempathy/empathy-status-presets.h>
+#include <libempathy/empathy-presence-manager.h>
 
 #include <libempathy-gtk/empathy-live-search.h>
 #include <libempathy-gtk/empathy-contact-blocking-dialog.h>
@@ -124,6 +125,7 @@ struct _EmpathyRosterWindowPriv {
   GtkWidget *notebook;
   GtkWidget *no_entry_label;
   GtkWidget *button_account_settings;
+  GtkWidget *button_online;
   GtkWidget *spinner_loading;
   GtkWidget *tooltip_widget;
 
@@ -379,11 +381,26 @@ button_account_settings_clicked_cb (GtkButton *button,
       NULL, FALSE, FALSE);
 }
 
+static void
+button_online_clicked_cb (GtkButton *button,
+    EmpathyRosterWindow *self)
+{
+  EmpathyPresenceManager *mgr;
+
+  mgr = empathy_presence_manager_dup_singleton ();
+
+  empathy_presence_manager_set_state (mgr,
+      TP_CONNECTION_PRESENCE_TYPE_AVAILABLE);
+
+  g_object_unref (mgr);
+}
+
 typedef enum
 {
   PAGE_MESSAGE_FLAG_NONE = 0,
   PAGE_MESSAGE_FLAG_ACCOUNTS = 1 << 0,
   PAGE_MESSAGE_FLAG_SPINNER = 1 << 2,
+  PAGE_MESSAGE_FLAG_ONLINE = 1 << 3,
 } PageMessageFlags;
 
 static void
@@ -412,6 +429,8 @@ display_page_message (EmpathyRosterWindow *self,
       (flags & PAGE_MESSAGE_FLAG_ACCOUNTS) != 0);
   gtk_widget_set_visible (self->priv->spinner_loading,
       (flags & PAGE_MESSAGE_FLAG_SPINNER) != 0);
+  gtk_widget_set_visible (self->priv->button_online,
+      (flags & PAGE_MESSAGE_FLAG_ONLINE) != 0);
 
   gtk_notebook_set_current_page (GTK_NOTEBOOK (self->priv->notebook),
       PAGE_MESSAGE);
@@ -2180,6 +2199,7 @@ empathy_roster_window_init (EmpathyRosterWindow *self)
       "no_entry_label", &self->priv->no_entry_label,
       "roster_scrolledwindow", &sw,
       "button_account_settings", &self->priv->button_account_settings,
+      "button_online", &self->priv->button_online,
       "spinner_loading", &self->priv->spinner_loading,
       NULL);
   g_free (filename);
@@ -2343,6 +2363,8 @@ empathy_roster_window_init (EmpathyRosterWindow *self)
 
   g_signal_connect (self->priv->button_account_settings, "clicked",
       G_CALLBACK (button_account_settings_clicked_cb), self);
+  g_signal_connect (self->priv->button_online, "clicked",
+      G_CALLBACK (button_online_clicked_cb), self);
 }
 
 GtkWidget *
