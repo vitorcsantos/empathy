@@ -1,3 +1,42 @@
+NEW in 3.5.91 (04/09/2012)
+=============
+
+Empathy can now be built with GStreamer 1.0 support (--enable-gst-1.0=yes).
+This is currently very experimental and requires not yet released versions of
+Farstream and telepathy-farstream. See bgo#674179 for known issues and current
+blockers.
+
+Bugs fixed:
+ - Fixed #679259, [new roster] no longer remember expanded status of groups (Guillaume Desmottes)
+ - Fixed #680776, Store passwords in libaccounts (Xavier Claessens)
+ - Fixed #682802, Try installing missing UOA plugin when migrating (Guillaume Desmottes)
+ - Fixed #682926, After all groups are collapsed, Empathy indicates that there are no users online and all groups disappeared (Guillaume Desmottes)
+ - Fixed #682938, Crash when disconnecting account (Guillaume Desmottes)
+ - Fixed #683022, Only favorite top contact should be displayed when offline (Guillaume Desmottes)
+ - Fixed #683025, Contacts in groups are duplicated (Guillaume Desmottes)
+ - Fixed #683258, Can't make audio calls with master (Sjoerd Simons)
+ - Fixed #683275, [new roster] Crash when disabling groups (Guillaume Desmottes)
+ - Fixed #683314, [new roster] top contacts not displayed on top in non group mode (Guillaume Desmottes)
+
+Translations:
+ - Updated as Translation (Nilamdyuti Goswami)
+ - Updated el Translation (Tom Tryfonidis)
+ - Updated es Translation (Daniel Mustieles)
+ - Updated gl Translation (Fran Diéguez)
+ - Updated he Translation (Yaron Shahrabani)
+ - Updated hu Translation (Gabor Kelemen)
+ - Updated id Translation (Andika Triwidada)
+ - Updated it Translation (Milo Casagrande)
+ - Updated lt Translation (Aurimas Černius)
+ - Updated nb Translation (Kjartan Maraas)
+ - Updated pl Translation (Piotr Drąg)
+ - Updated pt Translation (Duarte Loreto)
+ - Updated ru Translation (Yuri Myasoedov)
+ - Updated ta Translation (Dr.T.Vasudevan)
+ - Updated vi Translation (Nguyễn Thái Ngọc Duy)
+ - Updated zh_HK Translation (Chao-Hsiung Liao)
+ - Updated zh_TW Translation (Chao-Hsiung Liao)
+
 NEW in 3.5.90 (20/08/2012)
 =============
 
