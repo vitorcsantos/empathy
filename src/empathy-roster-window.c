@@ -379,11 +379,17 @@ button_account_settings_clicked_cb (GtkButton *button,
       NULL, FALSE, FALSE);
 }
 
+typedef enum
+{
+  PAGE_MESSAGE_FLAG_NONE = 0,
+  PAGE_MESSAGE_FLAG_ACCOUNTS = 1 << 0,
+  PAGE_MESSAGE_FLAG_SPINNER = 1 << 2,
+} PageMessageFlags;
+
 static void
 display_page_message (EmpathyRosterWindow *self,
     const gchar *msg,
-    gboolean display_accounts_button,
-    gboolean display_spinner)
+    PageMessageFlags flags)
 {
   if (msg != NULL)
     {
@@ -403,9 +409,9 @@ display_page_message (EmpathyRosterWindow *self,
     }
 
   gtk_widget_set_visible (self->priv->button_account_settings,
-      display_accounts_button);
+      (flags & PAGE_MESSAGE_FLAG_ACCOUNTS) != 0);
   gtk_widget_set_visible (self->priv->spinner_loading,
-      display_spinner);
+      (flags & PAGE_MESSAGE_FLAG_SPINNER) != 0);
 
   gtk_notebook_set_current_page (GTK_NOTEBOOK (self->priv->notebook),
       PAGE_MESSAGE);
@@ -415,7 +421,8 @@ static void
 display_page_no_account (EmpathyRosterWindow *self)
 {
   display_page_message (self,
-      _("You need to setup an account to see contacts here."), TRUE, FALSE);
+      _("You need to setup an account to see contacts here."),
+      PAGE_MESSAGE_FLAG_ACCOUNTS);
 }
 
 static void
@@ -1528,7 +1535,7 @@ display_page_account_not_enabled (EmpathyRosterWindow *self,
     {
       display_page_message (self,
           _("You need to enable one of your accounts to see contacts here."),
-          TRUE, FALSE);
+          PAGE_MESSAGE_FLAG_ACCOUNTS);
     }
   else
     {
@@ -1538,7 +1545,7 @@ display_page_account_not_enabled (EmpathyRosterWindow *self,
       tmp = g_strdup_printf (_("You need to enable %s to see contacts here."),
           tp_account_get_display_name (account));
 
-      display_page_message (self, tmp, TRUE, FALSE);
+      display_page_message (self, tmp, PAGE_MESSAGE_FLAG_ACCOUNTS);
       g_free (tmp);
     }
 }
@@ -1596,7 +1603,7 @@ set_notebook_page (EmpathyRosterWindow *self)
     {
       display_page_message (self,
           _("Change your presence to see contacts here"),
-          FALSE, FALSE);
+          PAGE_MESSAGE_FLAG_NONE);
       goto out;
     }
 
@@ -1604,11 +1611,13 @@ set_notebook_page (EmpathyRosterWindow *self)
     {
       if (empathy_roster_view_is_searching (self->priv->view))
         {
-          display_page_message (self, _("No match found"), FALSE, FALSE);
+          display_page_message (self, _("No match found"),
+              PAGE_MESSAGE_FLAG_NONE);
         }
       else
         {
-          display_page_message (self, _("No online contacts"), FALSE, FALSE);
+          display_page_message (self, _("No online contacts"),
+              PAGE_MESSAGE_FLAG_NONE);
         }
       goto out;
     }
@@ -1835,7 +1844,7 @@ empathy_roster_window_class_init (EmpathyRosterWindowClass *klass)
 static void
 show_contacts_loading (EmpathyRosterWindow *self)
 {
-  display_page_message (self, NULL, FALSE, TRUE);
+  display_page_message (self, NULL, PAGE_MESSAGE_FLAG_SPINNER);
 
   gtk_spinner_start (GTK_SPINNER (self->priv->spinner_loading));
 }
