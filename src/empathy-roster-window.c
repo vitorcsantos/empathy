@@ -1563,6 +1563,7 @@ set_notebook_page (EmpathyRosterWindow *self)
 {
   GList *accounts;
   guint len;
+  TpConnectionPresenceType presence;
 
   accounts = tp_account_manager_get_valid_accounts (
       self->priv->account_manager);
@@ -1585,6 +1586,17 @@ set_notebook_page (EmpathyRosterWindow *self)
         account = accounts->data;
 
       display_page_account_not_enabled (self, account);
+      goto out;
+    }
+
+  presence = tp_account_manager_get_most_available_presence (
+      self->priv->account_manager, NULL, NULL);
+
+  if (presence == TP_CONNECTION_PRESENCE_TYPE_OFFLINE)
+    {
+      display_page_message (self,
+          _("Change your presence to see contacts here"),
+          FALSE, FALSE);
       goto out;
     }
 
