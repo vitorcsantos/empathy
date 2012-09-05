@@ -3,6 +3,8 @@
 
 #include <glib-object.h>
 
+#include <libaccounts-glib/ag-manager.h>
+
 G_BEGIN_DECLS
 
 typedef struct _EmpathyWebcredentialsMonitor EmpathyWebcredentialsMonitor;
@@ -46,7 +48,11 @@ GType empathy_webcredentials_monitor_get_type (void);
     EMPATHY_TYPE_WEBCREDENTIALS_MONITOR, \
     EmpathyWebcredentialsMonitorClass))
 
-EmpathyWebcredentialsMonitor * empathy_webcredentials_monitor_new (void);
+EmpathyWebcredentialsMonitor * empathy_webcredentials_monitor_new (
+    AgManager *manager);
+
+GPtrArray * empathy_webcredentials_get_failures (
+    EmpathyWebcredentialsMonitor *self);
 
 G_END_DECLS
 
