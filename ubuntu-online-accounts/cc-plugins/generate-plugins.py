@@ -27,12 +27,168 @@ class Plugin:
 
 ##### The plugin itself #####
 
+def magic_replace(text, protocol):
+    p = protocol.replace('-', '_')
+
+    l = protocol.split('-')
+    l = map(str.title, l)
+    camel = ''.join(l)
+
+    text = text.replace('$lower', p)
+    text = text.replace('$UPPER', p.upper())
+    text = text.replace('$Camel', camel)
+
+    return text
+
+def generate_plugin_header(p):
+    # header
+    f = open('empathy-accounts-plugin-%s.h' % p.protocol, 'w')
+
+    tmp = '''/* # Generated using empathy/ubuntu-online-accounts/cc-plugins/generate-plugins.py
+ * Do NOT edit manually */
+
+/*
+ * empathy-accounts-plugin-%s.h
+ *
+ * Copyright (C) 2012 Collabora Ltd. <http://www.collabora.co.uk/>
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
+
+
+#ifndef __EMPATHY_ACCOUNTS_PLUGIN_$UPPER_H__
+#define __EMPATHY_ACCOUNTS_PLUGIN_$UPPER_H__
+
+#include "empathy-accounts-plugin.h"
+
+G_BEGIN_DECLS
+
+typedef struct _EmpathyAccountsPlugin$Camel EmpathyAccountsPlugin$Camel;
+typedef struct _EmpathyAccountsPlugin$CamelClass EmpathyAccountsPlugin$CamelClass;
+
+struct _EmpathyAccountsPlugin$CamelClass
+{
+  /*<private>*/
+  EmpathyAccountsPluginClass parent_class;
+};
+
+struct _EmpathyAccountsPlugin$Camel
+{
+  /*<private>*/
+  EmpathyAccountsPlugin parent;
+};
+
+GType empathy_accounts_plugin_$lower_get_type (void);
+
+/* TYPE MACROS */
+#define EMPATHY_TYPE_ACCOUNTS_PLUGIN_$UPPER \\
+  (empathy_accounts_plugin_$lower_get_type ())
+#define EMPATHY_ACCOUNTS_PLUGIN_$UPPER(obj) \\
+  (G_TYPE_CHECK_INSTANCE_CAST((obj), \\
+    EMPATHY_TYPE_ACCOUNTS_PLUGIN_$UPPER, \\
+    EmpathyAccountsPlugin$Camel))
+#define EMPATHY_ACCOUNTS_PLUGIN_$UPPER_CLASS(klass) \\
+  (G_TYPE_CHECK_CLASS_CAST((klass), \\
+    EMPATHY_TYPE_ACCOUNTS_PLUGIN_$UPPER, \\
+    EmpathyAccountsPlugin$CamelClass))
+#define EMPATHY_IS_ACCOUNTS_PLUGIN_$UPPER(obj) \\
+  (G_TYPE_CHECK_INSTANCE_TYPE((obj), \\
+    EMPATHY_TYPE_ACCOUNTS_PLUGIN_$UPPER))
+#define EMPATHY_IS_ACCOUNTS_PLUGIN_$UPPER_CLASS(klass) \\
+  (G_TYPE_CHECK_CLASS_TYPE((klass), \\
+    EMPATHY_TYPE_ACCOUNTS_PLUGIN_$UPPER))
+#define EMPATHY_ACCOUNTS_PLUGIN_$UPPER_GET_CLASS(obj) \\
+  (G_TYPE_INSTANCE_GET_CLASS ((obj), \\
+    EMPATHY_TYPE_ACCOUNTS_PLUGIN_$UPPER, \\
+    EmpathyAccountsPlugin$CamelClass))
+
+GType ap_module_get_object_type (void);
+
+G_END_DECLS
+
+#endif /* #ifndef __EMPATHY_ACCOUNTS_PLUGIN_$UPPER_H__*/''' % (p.protocol)
+
+    f.write(magic_replace (tmp, p.protocol))
+
+def generate_plugin_code(p):
+    # header
+    f = open('empathy-accounts-plugin-%s.c' % p.protocol, 'w')
+
+    tmp = '''/* # Generated using empathy/ubuntu-online-accounts/cc-plugins/generate-plugins.py
+ * Do NOT edit manually */
+
+/*
+ * empathy-accounts-plugin-%s.c
+ *
+ * Copyright (C) 2012 Collabora Ltd. <http://www.collabora.co.uk/>
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
+
+#include "config.h"
+
+#include "empathy-accounts-plugin-%s.h"
+
+G_DEFINE_TYPE (EmpathyAccountsPlugin$Camel, empathy_accounts_plugin_$lower,\\
+        EMPATHY_TYPE_ACCOUNTS_PLUGIN)
+
+static void
+empathy_accounts_plugin_$lower_class_init (
+    EmpathyAccountsPlugin$CamelClass *klass)
+{
+}
+
+static void
+empathy_accounts_plugin_$lower_init (EmpathyAccountsPlugin$Camel *self)
+{
+}
+
+GType
+ap_module_get_object_type (void)
+{
+  return EMPATHY_TYPE_ACCOUNTS_PLUGIN_$UPPER;
+}''' % (p.protocol, p.protocol)
+
+    f.write(magic_replace (tmp, p.protocol))
+
+def generate_plugins(plugins):
+    '''empathy-accounts-plugin-$protocol.[ch]'''
+    for p in plugins:
+        generate_plugin_header(p)
+        generate_plugin_code(p)
+
 def generate_build_block(p):
     la = 'lib%s_la' % p.protocol.replace('-', '_')
 
     output = '''%s_SOURCES = \\
 	empathy-accounts-plugin.c \\
 	empathy-accounts-plugin.h \\
+	empathy-accounts-plugin-%s.c \\
+	empathy-accounts-plugin-%s.h \\
 	empathy-accounts-plugin-widget.c \\
 	empathy-accounts-plugin-widget.h
 %s_LDFLAGS = -module -avoid-version
@@ -40,7 +196,7 @@ def generate_build_block(p):
 	$(UOA_LIBS)					\\
 	$(top_builddir)/libempathy/libempathy.la \\
 	$(top_builddir)/libempathy-gtk/libempathy-gtk.la
-''' % (la, la, la)
+''' % (la, p.protocol, p.protocol, la, la)
 
     return output
 
@@ -177,6 +333,7 @@ def generate_all():
     for name, cm, protocol, icon in ALL:
         plugins.append(Plugin(name, cm, protocol, icon))
 
+    generate_plugins(plugins)
     generate_makefile_am(plugins)
     generate_providers(plugins)
     generate_services(plugins)

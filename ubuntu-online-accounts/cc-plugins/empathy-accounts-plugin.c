@@ -123,9 +123,3 @@ empathy_accounts_plugin_init (EmpathyAccountsPlugin *self)
     }
 
 }
-
-GType
-ap_module_get_object_type (void)
-{
-  return EMPATHY_TYPE_ACCOUNTS_PLUGIN;
-}

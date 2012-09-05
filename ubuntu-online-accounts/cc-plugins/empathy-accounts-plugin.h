@@ -64,8 +64,6 @@ GType empathy_accounts_plugin_get_type (void);
     EMPATHY_TYPE_ACCOUNTS_PLUGIN, \
     EmpathyAccountsPluginClass))
 
-GType ap_module_get_object_type (void);
-
 G_END_DECLS
 
 #endif /* #ifndef __EMPATHY_ACCOUNTS_PLUGIN_H__*/
