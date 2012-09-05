@@ -9,6 +9,7 @@ plugins_LTLIBRARIES = \
 mcp_account_manager_uoa_la_SOURCES = \
         mission-control-plugin.c \
         mcp-account-manager-uoa.c mcp-account-manager-uoa.h \
+        empathy-webcredentials-monitor.c empathy-webcredentials-monitor.h \
 	$(NULL)
 
 mcp_account_manager_uoa_la_LIBADD = \
