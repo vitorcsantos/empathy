@@ -29,6 +29,8 @@
 #include <string.h>
 #include <ctype.h>
 
+#include "empathy-webcredentials-monitor.h"
+
 #define PLUGIN_NAME "uoa"
 #define PLUGIN_PRIORITY (MCP_ACCOUNT_STORAGE_PLUGIN_PRIO_KEYRING + 10)
 #define PLUGIN_DESCRIPTION "Provide Telepathy Accounts from UOA via libaccounts-glib"
@@ -53,6 +55,7 @@ struct _McpAccountManagerUoaPrivate
   McpAccountManager *am;
 
   AgManager *manager;
+  EmpathyWebcredentialsMonitor *monitor;
 
   /* alloc'ed string -> ref'ed AgAccountService
    * The key is the account_name, an MC unique identifier.
@@ -333,6 +336,7 @@ mcp_account_manager_uoa_dispose (GObject *object)
   tp_clear_object (&self->priv->am);
   tp_clear_object (&self->priv->manager);
   tp_clear_pointer (&self->priv->accounts, g_hash_table_unref);
+  tp_clear_object (&self->priv->monitor);
 
   G_OBJECT_CLASS (mcp_account_manager_uoa_parent_class)->dispose (object);
 }
@@ -355,6 +359,9 @@ mcp_account_manager_uoa_init (McpAccountManagerUoa *self)
       G_CALLBACK (_account_created_cb), self);
   g_signal_connect (self->priv->manager, "account-deleted",
       G_CALLBACK (_account_deleted_cb), self);
+
+  self->priv->monitor = empathy_webcredentials_monitor_new (
+      self->priv->manager);
 }
 
 static void
@@ -663,6 +670,33 @@ account_manager_uoa_commit (const McpAccountStorage *storage,
 }
 
 static void
+failure_removed_cb (EmpathyWebcredentialsMonitor *monitor,
+    AgAccount *account,
+    McpAccountManagerUoa *self)
+{
+  GList *l;
+
+  DEBUG ("Account '%u' is not failing any more", account->id);
+
+  l = ag_account_list_services_by_type (account, SERVICE_TYPE);
+  while (l != NULL)
+    {
+      AgAccountService *service = ag_account_service_new (account, l->data);
+      gchar *account_name = _service_dup_tp_account_name (service);
+
+      DEBUG ("Reconnect account %s", account_name);
+
+      mcp_account_storage_emit_reconnect (MCP_ACCOUNT_STORAGE (self),
+          account_name);
+
+      g_free (account_name);
+      g_object_unref (service);
+      ag_service_unref (l->data);
+      l = g_list_delete_link (l, l);
+    }
+}
+
+static void
 account_manager_uoa_ready (const McpAccountStorage *storage,
     const McpAccountManager *am)
 {
@@ -696,6 +730,9 @@ account_manager_uoa_ready (const McpAccountStorage *storage,
 
   g_queue_free (self->priv->pending_signals);
   self->priv->pending_signals = NULL;
+
+  g_signal_connect (self->priv->monitor, "failure-removed",
+      G_CALLBACK (failure_removed_cb), self);
 }
 
 static void
