@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: empathy\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-01 22:06+0200\n"
-"PO-Revision-Date: 2012-09-01 22:07+0200\n"
+"POT-Creation-Date: 2012-09-05 19:31+0200\n"
+"PO-Revision-Date: 2012-09-05 19:32+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -1900,7 +1900,7 @@ msgstr ""
 
 #: ../libempathy-gtk/empathy-groups-widget.c:358
 msgid "_Add Group"
-msgstr "Dod_aj grupę"
+msgstr "_Dodaj grupę"
 
 #: ../libempathy-gtk/empathy-groups-widget.c:393
 msgctxt "verb in a column header displaying group names"
@@ -3852,7 +3852,7 @@ msgstr "Zaproszono użytkownika do dołączenia do %s"
 msgid "Incoming file transfer from %s"
 msgstr "Plik przychodzący od użytkownika %s"
 
-#: ../src/empathy-event-manager.c:983 ../src/empathy-roster-window.c:224
+#: ../src/empathy-event-manager.c:983 ../src/empathy-roster-window.c:226
 msgid "Password required"
 msgstr "Hasło wymagane"
 
@@ -4205,7 +4205,7 @@ msgstr "Wyświetlanie grup"
 msgid "Show account balances"
 msgstr "Wyświetlanie salda konta"
 
-#: ../src/empathy-preferences.ui.h:4 ../src/empathy-roster-window.c:2141
+#: ../src/empathy-preferences.ui.h:4 ../src/empathy-roster-window.c:2181
 msgid "Contact List"
 msgstr "Lista kontaktów"
 
@@ -4370,60 +4370,64 @@ msgstr "Wariant:"
 msgid "Themes"
 msgstr "Motywy"
 
-#: ../src/empathy-roster-window.c:241
+#: ../src/empathy-roster-window.c:243
 msgid "Provide Password"
 msgstr "Wprowadź hasło"
 
-#: ../src/empathy-roster-window.c:247
+#: ../src/empathy-roster-window.c:249
 msgid "Disconnect"
 msgstr "Rozłącz"
 
-#: ../src/empathy-roster-window.c:418
+#: ../src/empathy-roster-window.c:443
 msgid "You need to setup an account to see contacts here."
 msgstr "Należy ustawić konto, aby wyświetlić kontakty."
 
-#: ../src/empathy-roster-window.c:505
+#: ../src/empathy-roster-window.c:531
 #, c-format
 msgid "Sorry, %s accounts can’t be used until your %s software is updated."
 msgstr ""
 "Konta %s nie mogą być używane, dopóki oprogramowanie %s nie zostanie "
 "zaktualizowane."
 
-#: ../src/empathy-roster-window.c:571
+#: ../src/empathy-roster-window.c:597
 msgid "Update software..."
 msgstr "Zaktualizuj oprogramowanie..."
 
-#: ../src/empathy-roster-window.c:577 ../src/empathy-roster-window.c:694
+#: ../src/empathy-roster-window.c:603 ../src/empathy-roster-window.c:720
 msgid "Close"
 msgstr "Zamknij"
 
-#: ../src/empathy-roster-window.c:682
+#: ../src/empathy-roster-window.c:708
 msgid "Reconnect"
 msgstr "Połącz ponownie"
 
-#: ../src/empathy-roster-window.c:688
+#: ../src/empathy-roster-window.c:714
 msgid "Edit Account"
 msgstr "Modyfikuj konto"
 
-#: ../src/empathy-roster-window.c:868
+#: ../src/empathy-roster-window.c:894
 msgid "Top up account"
 msgstr "Doładuj konto"
 
-#: ../src/empathy-roster-window.c:1530
+#: ../src/empathy-roster-window.c:1556
 msgid "You need to enable one of your accounts to see contacts here."
 msgstr "Należy włączyć jedno z kont, aby wyświetlić kontakty."
 
 #. translators: argument is an account name
-#: ../src/empathy-roster-window.c:1538
+#: ../src/empathy-roster-window.c:1564
 #, c-format
 msgid "You need to enable %s to see contacts here."
 msgstr "Należy włączyć konto %s, aby wyświetlić kontakty."
 
-#: ../src/empathy-roster-window.c:1595
+#: ../src/empathy-roster-window.c:1624
+msgid "Change your presence to see contacts here"
+msgstr "Należy zmienić stan, aby wyświetlić kontakty"
+
+#: ../src/empathy-roster-window.c:1633
 msgid "No match found"
 msgstr "Nie odnaleziono wyników"
 
-#: ../src/empathy-roster-window.c:1599
+#: ../src/empathy-roster-window.c:1638
 msgid "No online contacts"
 msgstr "Brak kontaktów w trybie online"
 
@@ -4495,6 +4499,10 @@ msgstr "Za_kończ"
 #: ../src/empathy-roster-window.ui.h:1
 msgid "Account settings"
 msgstr "Ustawienia konta"
+
+#: ../src/empathy-roster-window.ui.h:2
+msgid "Go _Online"
+msgstr "Przejdź do trybu _online"
 
 #: ../src/empathy-status-icon.ui.h:2
 msgid "_New Conversation…"
