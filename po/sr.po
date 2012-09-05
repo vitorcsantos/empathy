@@ -17,8 +17,8 @@ msgstr ""
 "Project-Id-Version: empathy\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=empath"
 "y&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2012-08-07 10:12+0000\n"
-"PO-Revision-Date: 2012-08-08 23:18+0200\n"
+"POT-Creation-Date: 2012-09-05 07:14+0000\n"
+"PO-Revision-Date: 2012-09-05 11:50+0200\n"
 "Last-Translator: Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
 "Language-Team: Serbian <gnom@prevod.org>\n"
 "Language: sr\n"
@@ -540,16 +540,16 @@ msgstr "Изабрана датотека није обична датотека
 msgid "The selected file is empty"
 msgstr "Изабрана датотека је празна"
 
-#: ../libempathy/empathy-keyring.c:75
+#: ../libempathy/empathy-keyring.c:85 ../libempathy/empathy-keyring.c:194
 msgid "Password not found"
 msgstr "Лозинка није пронађена"
 
-#: ../libempathy/empathy-keyring.c:202
+#: ../libempathy/empathy-keyring.c:594
 #, c-format
 msgid "IM account password for %s (%s)"
 msgstr "Лозинка ТП налога за %s (%s)"
 
-#: ../libempathy/empathy-keyring.c:237
+#: ../libempathy/empathy-keyring.c:631
 #, c-format
 msgid "Password for chatroom '%s' on account %s (%s)"
 msgstr "Лозинка за причаоницу „%s“ на налогу %s (%s)"
@@ -928,19 +928,19 @@ msgstr "Направи нови налог на серверу"
 #. * like: "MyUserName on freenode".
 #. * You should reverse the order of these arguments if the
 #. * server should come before the login id in your locale.
-#: ../libempathy-gtk/empathy-account-widget.c:2269
+#: ../libempathy-gtk/empathy-account-widget.c:2263
 #, c-format
 msgid "%1$s on %2$s"
 msgstr "%1$s на %2$s"
 
 #. To translators: The parameter is the protocol name. The resulting
 #. * string will be something like: "Jabber Account"
-#: ../libempathy-gtk/empathy-account-widget.c:2295
+#: ../libempathy-gtk/empathy-account-widget.c:2289
 #, c-format
 msgid "%s Account"
 msgstr "%s налог"
 
-#: ../libempathy-gtk/empathy-account-widget.c:2299
+#: ../libempathy-gtk/empathy-account-widget.c:2293
 msgid "New account"
 msgstr "Нови налог"
 
@@ -1300,36 +1300,36 @@ msgstr "Који је ваш Јаху! ИБ?"
 msgid "What is your Yahoo! password?"
 msgstr "Која је ваша Јаху! лозинка?"
 
-#: ../libempathy-gtk/empathy-avatar-chooser.c:542
-#: ../libempathy-gtk/empathy-avatar-chooser.c:627
+#: ../libempathy-gtk/empathy-avatar-chooser.c:545
+#: ../libempathy-gtk/empathy-avatar-chooser.c:630
 msgid "Couldn't convert image"
 msgstr "Не могу да претворим слику"
 
-#: ../libempathy-gtk/empathy-avatar-chooser.c:543
+#: ../libempathy-gtk/empathy-avatar-chooser.c:546
 msgid "None of the accepted image formats are supported on your system"
 msgstr "Ниједан од прихваћених формата слика није подржан на вашем систему"
 
-#: ../libempathy-gtk/empathy-avatar-chooser.c:903
+#: ../libempathy-gtk/empathy-avatar-chooser.c:906
 msgid "Couldn't save picture to file"
 msgstr "Не могу да сачувам слику у датотеку"
 
-#: ../libempathy-gtk/empathy-avatar-chooser.c:1027
+#: ../libempathy-gtk/empathy-avatar-chooser.c:1030
 msgid "Select Your Avatar Image"
 msgstr "Изаберите вашу слику"
 
-#: ../libempathy-gtk/empathy-avatar-chooser.c:1035
+#: ../libempathy-gtk/empathy-avatar-chooser.c:1038
 msgid "Take a picture..."
 msgstr "Изаберите слику..."
 
-#: ../libempathy-gtk/empathy-avatar-chooser.c:1048
+#: ../libempathy-gtk/empathy-avatar-chooser.c:1051
 msgid "No Image"
 msgstr "Без слике"
 
-#: ../libempathy-gtk/empathy-avatar-chooser.c:1105
+#: ../libempathy-gtk/empathy-avatar-chooser.c:1108
 msgid "Images"
 msgstr "Слике"
 
-#: ../libempathy-gtk/empathy-avatar-chooser.c:1109
+#: ../libempathy-gtk/empathy-avatar-chooser.c:1112
 msgid "All Files"
 msgstr "Све датотеке"
 
@@ -1573,7 +1573,7 @@ msgstr "Убаци смешак"
 
 #. send button
 #: ../libempathy-gtk/empathy-chat.c:2412
-#: ../libempathy-gtk/empathy-ui-utils.c:1179
+#: ../libempathy-gtk/empathy-ui-utils.c:1180
 msgid "_Send"
 msgstr "_Пошаљи"
 
@@ -2576,8 +2576,8 @@ msgid ""
 "<small><i>Press Enter to set the new message or Esc to cancel.</i></small>"
 msgstr ""
 "<b>Тренутна порука: %s</b>\n"
-"<small><i>Притисните „Унеси“ да подесите нову поруку или „Изађи“ да "
-"откажете.</i></small>"
+"<small><i>Притисните „Унеси“ да подесите нову поруку или „Изађи“ да откажете."
+"</i></small>"
 
 #: ../libempathy-gtk/empathy-presence-chooser.c:394
 msgid "Set status"
@@ -2769,19 +2769,19 @@ msgstr "Запамти овај избор за наредне везе"
 msgid "Certificate Details"
 msgstr "Детаљи уверења"
 
-#: ../libempathy-gtk/empathy-ui-utils.c:1049
+#: ../libempathy-gtk/empathy-ui-utils.c:1050
 msgid "Unable to open URI"
 msgstr "Не могу да отворим адресу"
 
-#: ../libempathy-gtk/empathy-ui-utils.c:1173
+#: ../libempathy-gtk/empathy-ui-utils.c:1174
 msgid "Select a file"
 msgstr "Изаберите датотеку"
 
-#: ../libempathy-gtk/empathy-ui-utils.c:1247
+#: ../libempathy-gtk/empathy-ui-utils.c:1248
 msgid "Insufficient free space to save file"
 msgstr "Нема довољно слободног места за чување датотеке"
 
-#: ../libempathy-gtk/empathy-ui-utils.c:1255
+#: ../libempathy-gtk/empathy-ui-utils.c:1256
 #, c-format
 msgid ""
 "%s of free space are required to save this file, but only %s is available. "
@@ -2790,7 +2790,7 @@ msgstr ""
 "Потребно је %s за снимање ове датотеке, али је доступно само %s. Одаберите "
 "друго место за снимање."
 
-#: ../libempathy-gtk/empathy-ui-utils.c:1301
+#: ../libempathy-gtk/empathy-ui-utils.c:1302
 #, c-format
 msgid "Incoming file from %s"
 msgstr "Долазећа датотека од %s"
@@ -3020,8 +3020,8 @@ msgid ""
 msgstr ""
 "Требали сте да примите примерак Гнуове опште јавне лиценце уз Интернет "
 "писмоношу; ако нисте, пишите Задужбини слободног софтвера на следећу адресу: "
-"„Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, "
-"MA 02110-130159 USA“"
+"„Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA "
+"02110-130159 USA“"
 
 #: ../src/empathy-about-dialog.c:109
 msgid "An Instant Messaging client for GNOME"
@@ -3120,20 +3120,20 @@ msgstr "Неповезан — Налог је онемогућен"
 msgid "Edit Connection Parameters"
 msgstr "Уредите параметре повезивања"
 
-#: ../src/empathy-accounts-dialog.c:796
+#: ../src/empathy-accounts-dialog.c:733
 msgid "_Edit Connection Parameters..."
 msgstr "_Уреди параметре повезивања..."
 
-#: ../src/empathy-accounts-dialog.c:1298
+#: ../src/empathy-accounts-dialog.c:1235
 #, c-format
 msgid "Do you want to remove %s from your computer?"
 msgstr "Да ли сте сигурни да желите да уклоните „%s“ са вашег рачунара?"
 
-#: ../src/empathy-accounts-dialog.c:1302
+#: ../src/empathy-accounts-dialog.c:1239
 msgid "This will not remove your account on the server."
 msgstr "Ово неће уклонити ваш налог на серверу."
 
-#: ../src/empathy-accounts-dialog.c:1507
+#: ../src/empathy-accounts-dialog.c:1444
 msgid ""
 "You are about to select another account, which will discard\n"
 "your changes. Are you sure you want to proceed?"
@@ -3142,24 +3142,24 @@ msgstr ""
 "Да ли сигурно желите да наставите?"
 
 #. Menu item: to enabled/disable the account
-#: ../src/empathy-accounts-dialog.c:1698
+#: ../src/empathy-accounts-dialog.c:1635
 msgid "_Enabled"
 msgstr "_Укључен"
 
 #. Menu item: Rename
-#: ../src/empathy-accounts-dialog.c:1721
+#: ../src/empathy-accounts-dialog.c:1658
 msgid "Rename"
 msgstr "Преименуј"
 
-#: ../src/empathy-accounts-dialog.c:2137
+#: ../src/empathy-accounts-dialog.c:2074
 msgid "_Skip"
 msgstr "_Прескочи"
 
-#: ../src/empathy-accounts-dialog.c:2141
+#: ../src/empathy-accounts-dialog.c:2078
 msgid "_Connect"
 msgstr "_Повежи се"
 
-#: ../src/empathy-accounts-dialog.c:2320
+#: ../src/empathy-accounts-dialog.c:2257
 msgid ""
 "You are about to close the window, which will discard\n"
 "your changes. Are you sure you want to proceed?"
@@ -3168,7 +3168,7 @@ msgstr ""
 "Да ли сигурно желите да наставите?"
 
 #. Tweak the dialog
-#: ../src/empathy-accounts-dialog.c:2463
+#: ../src/empathy-accounts-dialog.c:2400
 msgid "Messaging and VoIP Accounts"
 msgstr "Налози за дописивање и VoIP"
 
@@ -3192,11 +3192,11 @@ msgstr ""
 msgid "No protocol backends installed"
 msgstr "Нису инсталирани позадинци протокола"
 
-#: ../src/empathy-auth-client.c:288
+#: ../src/empathy-auth-client.c:296
 msgid " - Empathy authentication client"
 msgstr " — Интернет писмоноша клијент пријаве"
 
-#: ../src/empathy-auth-client.c:304
+#: ../src/empathy-auth-client.c:312
 msgid "Empathy authentication client"
 msgstr "Интернет писмоноша клијент пријаве"
 
@@ -3851,7 +3851,7 @@ msgstr "Позвани сте да се придружите у %s"
 msgid "Incoming file transfer from %s"
 msgstr "Долазни пренос датотеке од %s"
 
-#: ../src/empathy-event-manager.c:983 ../src/empathy-roster-window.c:224
+#: ../src/empathy-event-manager.c:983 ../src/empathy-roster-window.c:226
 msgid "Password required"
 msgstr "Потребна је лозинка"
 
@@ -4203,7 +4203,7 @@ msgstr "Приказује групе"
 msgid "Show account balances"
 msgstr "Приказује помоћника налога"
 
-#: ../src/empathy-preferences.ui.h:4 ../src/empathy-roster-window.c:2134
+#: ../src/empathy-preferences.ui.h:4 ../src/empathy-roster-window.c:2181
 msgid "Contact List"
 msgstr "Списак пријатеља"
 
@@ -4369,59 +4369,69 @@ msgstr "Варијанта:"
 msgid "Themes"
 msgstr "Теме"
 
-#: ../src/empathy-roster-window.c:241
+#: ../src/empathy-roster-window.c:243
 msgid "Provide Password"
 msgstr "Унесите лозинку"
 
-#: ../src/empathy-roster-window.c:247
+#: ../src/empathy-roster-window.c:249
 msgid "Disconnect"
 msgstr "Прекини везу"
 
-#: ../src/empathy-roster-window.c:418
+#: ../src/empathy-roster-window.c:443
 msgid "You need to setup an account to see contacts here."
 msgstr "Морате да подесите налог да бисте овде видели контакте."
 
-#: ../src/empathy-roster-window.c:505
+#: ../src/empathy-roster-window.c:531
 #, c-format
 msgid "Sorry, %s accounts can’t be used until your %s software is updated."
 msgstr ""
 "Извините, %s налози не могу бити коришћени све док не ажурирате ваш %s "
 "софтвер."
 
-#: ../src/empathy-roster-window.c:571
+#: ../src/empathy-roster-window.c:597
 msgid "Update software..."
 msgstr "Ажурирај софтвер..."
 
-#: ../src/empathy-roster-window.c:577 ../src/empathy-roster-window.c:694
+#: ../src/empathy-roster-window.c:603 ../src/empathy-roster-window.c:720
 msgid "Close"
 msgstr "Затвори"
 
-#: ../src/empathy-roster-window.c:682
+#: ../src/empathy-roster-window.c:708
 msgid "Reconnect"
 msgstr "Поново се повежи"
 
-#: ../src/empathy-roster-window.c:688
+#: ../src/empathy-roster-window.c:714
 msgid "Edit Account"
 msgstr "Измени налог"
 
-#: ../src/empathy-roster-window.c:868
+#: ../src/empathy-roster-window.c:894
 msgid "Top up account"
 msgstr "Допуните кредит налога"
 
-#: ../src/empathy-roster-window.c:1530
+#: ../src/empathy-roster-window.c:1556
 msgid "You need to enable one of your accounts to see contacts here."
 msgstr ""
 "Морате да укључите један од ваших налога да бисте овде видели контакте."
 
 #. translators: argument is an account name
-#: ../src/empathy-roster-window.c:1538
+#: ../src/empathy-roster-window.c:1564
 #, c-format
 msgid "You need to enable %s to see contacts here."
 msgstr "Морате да укључите %s да бисте овде видели контакте."
 
-#: ../src/empathy-roster-window.c:1902
+#: ../src/empathy-roster-window.c:1624
+#| msgid "You need to enable %s to see contacts here."
+msgid "Change your presence to see contacts here"
+msgstr "Измените ваше присуство да видите контакте"
+
+#: ../src/empathy-roster-window.c:1633
 msgid "No match found"
 msgstr "Нема поклапања"
+
+#: ../src/empathy-roster-window.c:1638
+#| msgid "Show offline contacts"
+msgid "No online contacts"
+msgstr "Нема конаката на мрежи"
 
 #: ../src/empathy-roster-window-menubar.ui.h:1
 msgid "_New Conversation..."
@@ -4491,6 +4501,10 @@ msgstr "_Изађи"
 #: ../src/empathy-roster-window.ui.h:1
 msgid "Account settings"
 msgstr "Подешавања налога"
+
+#: ../src/empathy-roster-window.ui.h:2
+msgid "Go _Online"
+msgstr "Иди _на мрежу"
 
 #: ../src/empathy-status-icon.ui.h:2
 msgid "_New Conversation…"
