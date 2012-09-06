@@ -2160,6 +2160,16 @@ out:
 }
 
 static void
+roster_window_most_available_presence_changed_cb (TpAccountManager *manager,
+    TpConnectionPresenceType presence,
+    const gchar *status,
+    const gchar *message,
+    EmpathyRosterWindow *self)
+{
+  set_notebook_page (self);
+}
+
+static void
 empathy_roster_window_init (EmpathyRosterWindow *self)
 {
   GtkBuilder *gui;
@@ -2350,6 +2360,9 @@ empathy_roster_window_init (EmpathyRosterWindow *self)
       G_CALLBACK (roster_window_account_removed_cb), self);
   g_signal_connect (self->priv->account_manager, "account-disabled",
       G_CALLBACK (roster_window_account_disabled_cb), self);
+  g_signal_connect (self->priv->account_manager,
+      "most-available-presence-changed",
+      G_CALLBACK (roster_window_most_available_presence_changed_cb), self);
 
   g_settings_bind (self->priv->gsettings_ui, EMPATHY_PREFS_UI_SHOW_OFFLINE,
       self->priv->view, "show-offline",
