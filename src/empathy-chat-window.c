@@ -964,7 +964,7 @@ chat_window_update_chat_tab_full (EmpathyChat *chat,
   if (!EMP_STR_EMPTY (status))
     append_markup_printf (tooltip, "\n<i>%s</i>", status);
 
-  if (subject)
+  if (!EMP_STR_EMPTY (subject))
     append_markup_printf (tooltip, "\n<b>%s</b> %s",
         _("Topic:"), subject);
 
