@@ -1591,6 +1591,16 @@ set_notebook_page (EmpathyRosterWindow *self)
   guint len;
   TpConnectionPresenceType presence;
 
+  if (!empathy_individual_manager_get_contacts_loaded (
+        self->priv->individual_manager))
+    {
+      display_page_message (self, NULL, PAGE_MESSAGE_FLAG_SPINNER);
+      gtk_spinner_start (GTK_SPINNER (self->priv->spinner_loading));
+      return;
+    }
+
+  gtk_spinner_stop (GTK_SPINNER (self->priv->spinner_loading));
+
   accounts = tp_account_manager_get_valid_accounts (
       self->priv->account_manager);
 
@@ -1861,26 +1871,10 @@ empathy_roster_window_class_init (EmpathyRosterWindowClass *klass)
 }
 
 static void
-show_contacts_loading (EmpathyRosterWindow *self)
-{
-  display_page_message (self, NULL, PAGE_MESSAGE_FLAG_SPINNER);
-
-  gtk_spinner_start (GTK_SPINNER (self->priv->spinner_loading));
-}
-
-static void
-hide_contacts_loading (EmpathyRosterWindow *self)
-{
-  gtk_spinner_stop (GTK_SPINNER (self->priv->spinner_loading));
-
-  set_notebook_page (self);
-}
-
-static void
 contacts_loaded_cb (EmpathyIndividualManager *manager,
     EmpathyRosterWindow *self)
 {
-  hide_contacts_loading (self);
+  set_notebook_page (self);
 }
 
 static void
@@ -2281,14 +2275,8 @@ empathy_roster_window_init (EmpathyRosterWindow *self)
 
   model = EMPATHY_ROSTER_MODEL (empathy_roster_model_manager_new (self->priv->individual_manager));
 
-  if (!empathy_individual_manager_get_contacts_loaded (
-        self->priv->individual_manager))
-    {
-      show_contacts_loading (self);
-
-      tp_g_signal_connect_object (self->priv->individual_manager,
-          "contacts-loaded", G_CALLBACK (contacts_loaded_cb), self, 0);
-    }
+  tp_g_signal_connect_object (self->priv->individual_manager,
+      "contacts-loaded", G_CALLBACK (contacts_loaded_cb), self, 0);
 
   self->priv->view = EMPATHY_ROSTER_VIEW (
       empathy_roster_view_new (model));
@@ -2378,6 +2366,8 @@ empathy_roster_window_init (EmpathyRosterWindow *self)
       G_CALLBACK (button_account_settings_clicked_cb), self);
   g_signal_connect (self->priv->button_online, "clicked",
       G_CALLBACK (button_online_clicked_cb), self);
+
+  set_notebook_page (self);
 }
 
 GtkWidget *
