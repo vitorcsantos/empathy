@@ -927,6 +927,8 @@ roster_window_remove_balance_action (EmpathyRosterWindow *self,
   gtk_widget_destroy (hbox);
 }
 
+static void set_notebook_page (EmpathyRosterWindow *self);
+
 static void
 roster_window_connection_changed_cb (TpAccount  *account,
     guint old_status,
@@ -937,6 +939,7 @@ roster_window_connection_changed_cb (TpAccount  *account,
     EmpathyRosterWindow *self)
 {
   roster_window_update_status (self);
+  set_notebook_page (self);
 
   if (current == TP_CONNECTION_STATUS_DISCONNECTED &&
       reason != TP_CONNECTION_STATUS_REASON_REQUESTED)
@@ -1590,9 +1593,17 @@ set_notebook_page (EmpathyRosterWindow *self)
   GList *accounts;
   guint len;
   TpConnectionPresenceType presence;
+  gboolean connected, connecting;
 
+  connected = empathy_account_manager_get_accounts_connected (&connecting);
+
+  /* Display the loading page if either:
+   * - We are fetching contacts from Folks (startup)
+   * - There is no account connected but at least one is connecting
+   */
   if (!empathy_individual_manager_get_contacts_loaded (
-        self->priv->individual_manager))
+        self->priv->individual_manager) ||
+      (!connected && connecting))
     {
       display_page_message (self, NULL, PAGE_MESSAGE_FLAG_SPINNER);
       gtk_spinner_start (GTK_SPINNER (self->priv->spinner_loading));
