@@ -8,10 +8,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Empathy\n"
+"Project-Id-Version: empathy\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-24 16:16+0200\n"
-"PO-Revision-Date: 2012-08-24 16:13+0200\n"
+"POT-Creation-Date: 2012-09-06 22:14+0200\n"
+"PO-Revision-Date: 2012-09-06 22:16+0200\n"
 "Last-Translator: Milo Casagrande <milo@ubuntu.com>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "Language: it\n"
@@ -575,16 +575,16 @@ msgstr "Il file selezionato non è un file regolare"
 msgid "The selected file is empty"
 msgstr "Il file selezionato è vuoto"
 
-#: ../libempathy/empathy-keyring.c:75
+#: ../libempathy/empathy-keyring.c:85 ../libempathy/empathy-keyring.c:194
 msgid "Password not found"
 msgstr "Password non trovata"
 
-#: ../libempathy/empathy-keyring.c:202
+#: ../libempathy/empathy-keyring.c:594
 #, c-format
 msgid "IM account password for %s (%s)"
 msgstr "Password account messaggistica per %s (%s)"
 
-#: ../libempathy/empathy-keyring.c:237
+#: ../libempathy/empathy-keyring.c:631
 #, c-format
 msgid "Password for chatroom '%s' on account %s (%s)"
 msgstr "Password per la stanza «%s» sull'account %s (%s)"
@@ -959,7 +959,7 @@ msgstr "Creare un nuovo account sul server"
 #. * like: "MyUserName on freenode".
 #. * You should reverse the order of these arguments if the
 #. * server should come before the login id in your locale.
-#: ../libempathy-gtk/empathy-account-widget.c:2269
+#: ../libempathy-gtk/empathy-account-widget.c:2263
 #, c-format
 msgid "%1$s on %2$s"
 msgstr "%1$s su %2$s"
@@ -967,12 +967,12 @@ msgstr "%1$s su %2$s"
 # (ndt) il %s pare sia il protocollo
 #. To translators: The parameter is the protocol name. The resulting
 #. * string will be something like: "Jabber Account"
-#: ../libempathy-gtk/empathy-account-widget.c:2295
+#: ../libempathy-gtk/empathy-account-widget.c:2289
 #, c-format
 msgid "%s Account"
 msgstr "Account %s"
 
-#: ../libempathy-gtk/empathy-account-widget.c:2299
+#: ../libempathy-gtk/empathy-account-widget.c:2293
 msgid "New account"
 msgstr "Nuovo account"
 
@@ -3269,11 +3269,11 @@ msgstr ""
 msgid "No protocol backends installed"
 msgstr "Nessun protocollo installato"
 
-#: ../src/empathy-auth-client.c:288
+#: ../src/empathy-auth-client.c:296
 msgid " - Empathy authentication client"
 msgstr " - Client autenticazione Empathy"
 
-#: ../src/empathy-auth-client.c:304
+#: ../src/empathy-auth-client.c:312
 msgid "Empathy authentication client"
 msgstr "Client autenticazione Empathy"
 
@@ -3926,7 +3926,7 @@ msgstr "C'è un invito per entrare in %s"
 msgid "Incoming file transfer from %s"
 msgstr "Trasferimento file in arrivo da %s"
 
-#: ../src/empathy-event-manager.c:983 ../src/empathy-roster-window.c:224
+#: ../src/empathy-event-manager.c:983 ../src/empathy-roster-window.c:226
 msgid "Password required"
 msgstr "Password richiesta"
 
@@ -4292,7 +4292,7 @@ msgstr "Mostrare i gruppi"
 msgid "Show account balances"
 msgstr "Mostrare i bilanci dell'account"
 
-#: ../src/empathy-preferences.ui.h:4 ../src/empathy-roster-window.c:2141
+#: ../src/empathy-preferences.ui.h:4 ../src/empathy-roster-window.c:2196
 msgid "Contact List"
 msgstr "Elenco contatti"
 
@@ -4476,65 +4476,68 @@ msgid "Themes"
 msgstr "Temi"
 
 # (ndt) pare tooltip... mah...
-#: ../src/empathy-roster-window.c:241
+#: ../src/empathy-roster-window.c:243
 msgid "Provide Password"
 msgstr "Fornisce password"
 
 # (ndt) tooltip
-#: ../src/empathy-roster-window.c:247
+#: ../src/empathy-roster-window.c:249
 msgid "Disconnect"
 msgstr "Disconnette"
 
-#: ../src/empathy-roster-window.c:418
+#: ../src/empathy-roster-window.c:443
 msgid "You need to setup an account to see contacts here."
 msgstr "È necessario configurare un account per poter visualizzare i contatti."
 
-#: ../src/empathy-roster-window.c:505
+#: ../src/empathy-roster-window.c:531
 #, c-format
 msgid "Sorry, %s accounts can’t be used until your %s software is updated."
 msgstr ""
 "L'account «%s» non può essere utilizzato fino all'aggiornamento del software "
 "«%s»."
 
-#: ../src/empathy-roster-window.c:571
+#: ../src/empathy-roster-window.c:597
 msgid "Update software..."
 msgstr "Aggiorna software..."
 
 # (ndt) suggerimento
-#: ../src/empathy-roster-window.c:577 ../src/empathy-roster-window.c:694
+#: ../src/empathy-roster-window.c:603 ../src/empathy-roster-window.c:720
 msgid "Close"
 msgstr "Chiude"
 
 # (ndt) suggerimento
-#: ../src/empathy-roster-window.c:682
+#: ../src/empathy-roster-window.c:708
 msgid "Reconnect"
 msgstr "Riconnette"
 
 # (ndt) suggerimento
-#: ../src/empathy-roster-window.c:688
+#: ../src/empathy-roster-window.c:714
 msgid "Edit Account"
 msgstr "Modifica account"
 
-#: ../src/empathy-roster-window.c:868
+#: ../src/empathy-roster-window.c:894
 msgid "Top up account"
 msgstr "Ricarica account"
 
-#: ../src/empathy-roster-window.c:1530
+#: ../src/empathy-roster-window.c:1559
 msgid "You need to enable one of your accounts to see contacts here."
-msgstr ""
-"È necessario abilitare uno degli account per poter visualizzare i contatti."
+msgstr "È necessario abilitare uno degli account per visualizzare i contatti."
 
 #. translators: argument is an account name
-#: ../src/empathy-roster-window.c:1538
+#: ../src/empathy-roster-window.c:1567
 #, c-format
 msgid "You need to enable %s to see contacts here."
-msgstr "È necessario abilitare «%s» per poter visualizzare i contatti."
+msgstr "È necessario abilitare «%s» per visualizzare i contatti."
 
-#: ../src/empathy-roster-window.c:1595
+#: ../src/empathy-roster-window.c:1645
+msgid "Change your presence to see contacts here"
+msgstr "Modificare la propria presenza per visualizzare i contatti"
+
+#: ../src/empathy-roster-window.c:1654
 msgid "No match found"
 msgstr "Nessun risultato"
 
-#: ../src/empathy-roster-window.c:1599
+#: ../src/empathy-roster-window.c:1659
 msgid "No online contacts"
 msgstr "Nessun contatto collegato"
 
@@ -4612,6 +4615,10 @@ msgstr "_Esci"
 msgid "Account settings"
 msgstr "Impostazioni account"
 
+#: ../src/empathy-roster-window.ui.h:2
+msgid "Go _Online"
+msgstr "C_ollegati"
+
 #: ../src/empathy-status-icon.ui.h:2
 msgid "_New Conversation…"
 msgstr "_Nuova conversazione..."
@@ -4624,12 +4631,12 @@ msgstr "Nuova c_hiamata..."
 msgid "Status"
 msgstr "Stato"
 
-#: ../ubuntu-online-accounts/cc-plugins/empathy-accounts-plugin-widget.c:179
+#: ../ubuntu-online-accounts/cc-plugins/account-plugins/empathy-accounts-plugin-widget.c:179
 #: ../ubuntu-online-accounts/cc-plugins/app-plugin/empathy-app-plugin-widget.c:126
 msgid "Done"
 msgstr "Fatto"
 
-#: ../ubuntu-online-accounts/cc-plugins/empathy-accounts-plugin-widget.c:210
+#: ../ubuntu-online-accounts/cc-plugins/account-plugins/empathy-accounts-plugin-widget.c:210
 msgid "Please enter your account details"
 msgstr "Inserire i dettagli dell'account"
 
