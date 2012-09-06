@@ -25,7 +25,7 @@ class Plugin:
         self.protocol = protocol
         self.icon = icon
 
-##### The plugin itself #####
+##### account-plugins/ #####
 
 def magic_replace(text, protocol):
     p = protocol.replace('-', '_')
@@ -42,7 +42,7 @@ def magic_replace(text, protocol):
 
 def generate_plugin_header(p):
     # header
-    f = open('empathy-accounts-plugin-%s.h' % p.protocol, 'w')
+    f = open('account-plugins/empathy-accounts-plugin-%s.h' % p.protocol, 'w')
 
     tmp = '''/* # Generated using empathy/ubuntu-online-accounts/cc-plugins/generate-plugins.py
  * Do NOT edit manually */
@@ -124,7 +124,7 @@ G_END_DECLS
 
 def generate_plugin_code(p):
     # header
-    f = open('empathy-accounts-plugin-%s.c' % p.protocol, 'w')
+    f = open('account-plugins/empathy-accounts-plugin-%s.c' % p.protocol, 'w')
 
     tmp = '''/* # Generated using empathy/ubuntu-online-accounts/cc-plugins/generate-plugins.py
  * Do NOT edit manually */
@@ -175,12 +175,6 @@ ap_module_get_object_type (void)
 
     f.write(magic_replace (tmp, p.protocol))
 
-def generate_plugins(plugins):
-    '''empathy-accounts-plugin-$protocol.[ch]'''
-    for p in plugins:
-        generate_plugin_header(p)
-        generate_plugin_code(p)
-
 def generate_build_block(p):
     la = 'lib%s_la' % p.protocol.replace('-', '_')
 
@@ -200,24 +194,28 @@ def generate_build_block(p):
 
     return output
 
-def generate_makefile_am(plugins):
-    '''Generate Makefile.am'''
+
+def generate_account_plugins(plugins):
+    '''account-plugins/'''
     libs = []
     build_blocks = []
 
     for p in plugins:
+        # empathy-accounts-plugin-$protocol.[ch]'''
+        generate_plugin_header(p)
+        generate_plugin_code(p)
+
         name = '	lib%s.la' % p.protocol
         libs.append(name)
 
         build_blocks.append(generate_build_block(p))
 
-    f = open('Makefile.am', 'w')
+    # Makefile.am
+    f = open('account-plugins/Makefile.am', 'w')
 
     f.write(
 '''# Generated using empathy/ubuntu-online-accounts/cc-plugins/generate-plugins.py
 # Do NOT edit manually
-SUBDIRS = providers services app-plugin
-
 plugindir = $(ACCOUNTS_PROVIDER_PLUGIN_DIR)
 
 INCLUDES =					\\
@@ -236,7 +234,7 @@ plugin_LTLIBRARIES = \\
 
 %s''' % ('\\\n'.join(libs), '\n\n'.join(build_blocks)))
 
-##### Providers #####
+##### providers/ #####
 
 def generate_provider_file(p):
     f = open('providers/%s.provider' % p.protocol, 'w')
@@ -274,7 +272,7 @@ providers_DATA = \\
 EXTRA_DIST = $(providers_DATA)
 ''' % ('\\\n'.join(providers)))
 
-##### Services #####
+##### services/ #####
 
 def generate_service_file(p):
     f = open('services/%s-im.service' % p.protocol, 'w')
@@ -333,8 +331,7 @@ def generate_all():
     for name, cm, protocol, icon in ALL:
         plugins.append(Plugin(name, cm, protocol, icon))
 
-    generate_plugins(plugins)
-    generate_makefile_am(plugins)
+    generate_account_plugins(plugins)
     generate_providers(plugins)
     generate_services(plugins)
 

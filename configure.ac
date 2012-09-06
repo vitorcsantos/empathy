@@ -635,6 +635,7 @@ AC_CONFIG_FILES([
    ubuntu-online-accounts/Makefile
    ubuntu-online-accounts/mc-plugin/Makefile
    ubuntu-online-accounts/cc-plugins/Makefile
+   ubuntu-online-accounts/cc-plugins/account-plugins/Makefile
    ubuntu-online-accounts/cc-plugins/providers/Makefile
    ubuntu-online-accounts/cc-plugins/services/Makefile
    ubuntu-online-accounts/cc-plugins/app-plugin/Makefile
