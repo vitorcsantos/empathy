@@ -179,15 +179,11 @@ def generate_build_block(p):
     la = 'lib%s_la' % p.protocol.replace('-', '_')
 
     output = '''%s_SOURCES = \\
-	empathy-accounts-plugin.c \\
-	empathy-accounts-plugin.h \\
 	empathy-accounts-plugin-%s.c \\
-	empathy-accounts-plugin-%s.h \\
-	empathy-accounts-plugin-widget.c \\
-	empathy-accounts-plugin-widget.h
+	empathy-accounts-plugin-%s.h
 %s_LDFLAGS = -module -avoid-version
 %s_LIBADD = \\
-	$(UOA_LIBS)					\\
+	libempathy-uoa-account-plugin.la \\
 	$(top_builddir)/libempathy/libempathy.la \\
 	$(top_builddir)/libempathy-gtk/libempathy-gtk.la
 ''' % (la, p.protocol, p.protocol, la, la)
@@ -227,6 +223,23 @@ INCLUDES =					\\
 	$(ERROR_CFLAGS)				\\
 	$(DISABLE_DEPRECATED)			\\
 	$(EMPATHY_CFLAGS)
+
+pkglib_LTLIBRARIES = libempathy-uoa-account-plugin.la
+
+# this API is not stable and will never be, so use -release to make the
+# SONAME of the plugin library change with every Empathy release.
+libempathy_uoa_account_plugin_la_LDFLAGS = \\
+   -no-undefined \\
+   -release $(VERSION)
+
+libempathy_uoa_account_plugin_la_SOURCES = \\
+	empathy-accounts-plugin.c \\
+	empathy-accounts-plugin.h \\
+	empathy-accounts-plugin-widget.c \\
+	empathy-accounts-plugin-widget.h
+
+libempathy_uoa_account_plugin_la_LIBADD = \\
+	$(UOA_LIBS)
 
 plugin_LTLIBRARIES = \\
 %s \\
