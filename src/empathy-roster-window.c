@@ -1622,7 +1622,7 @@ set_notebook_page (EmpathyRosterWindow *self)
     {
       display_page_message (self,
           _("Change your presence to see contacts here"),
-          PAGE_MESSAGE_FLAG_NONE);
+          PAGE_MESSAGE_FLAG_ONLINE);
       goto out;
     }
 
