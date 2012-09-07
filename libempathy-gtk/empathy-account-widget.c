@@ -1988,6 +1988,9 @@ do_constructed (GObject *obj)
           password = empathy_account_settings_dup_string (self->priv->settings,
               "password");
 
+          /* FIXME: we should enable this checkbox only if the password is
+           * stored for good in the password storage, not only for the session
+           * (bgo #683571) */
           gtk_toggle_button_set_active (
               GTK_TOGGLE_BUTTON (self->priv->remember_password_widget),
               !EMP_STR_EMPTY (password));
