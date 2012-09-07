@@ -75,7 +75,7 @@ CHAMPLAIN_REQUIRED=0.12.1
 CHEESE_GTK_REQUIRED=3.4.0
 LIBACCOUNTS_REQUIRED=1.1
 LIBSIGNON_REQUIRED=1.1
-MC_PLUGINS_REQUIRED=5.13.0
+MC_PLUGINS_REQUIRED=5.13.1
 
 # Use --enable-maintainer-mode to disable deprecated symbols,
 # disable single include and enable GSEAL. If this is not a released empathy,
