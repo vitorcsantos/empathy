@@ -478,83 +478,142 @@ roster_window_account_disabled_cb (TpAccountManager  *manager,
   roster_window_remove_error (self, account);
 }
 
+typedef enum
+{
+  ERROR_RESPONSE_RETRY,
+  ERROR_RESPONSE_EDIT,
+  ERROR_RESPONSE_CLOSE,
+  ERROR_RESPONSE_UPGRADE,
+} ErrorResponse;
+
 static void
-roster_window_error_retry_clicked_cb (GtkButton *button,
+roster_window_error_response_cb (GtkInfoBar *infobar,
+    gint response_id,
     EmpathyRosterWindow *self)
 {
   TpAccount *account;
 
-  account = g_object_get_data (G_OBJECT (button), "account");
-  tp_account_reconnect_async (account, NULL, NULL);
+  account = g_object_get_data (G_OBJECT (infobar), "account");
+
+  switch (response_id)
+    {
+      case ERROR_RESPONSE_RETRY:
+        tp_account_reconnect_async (account, NULL, NULL);
+        break;
+
+      case ERROR_RESPONSE_EDIT:
+        empathy_accounts_dialog_show_application (
+            gtk_widget_get_screen (GTK_WIDGET (infobar)),
+            account, FALSE, FALSE);
+        break;
+
+      case ERROR_RESPONSE_CLOSE:
+        break;
+
+      case ERROR_RESPONSE_UPGRADE:
+        {
+          GtkWidget *dialog;
+
+          dialog = gtk_message_dialog_new (GTK_WINDOW (self),
+              GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+              _("Sorry, %s accounts can’t be used until your %s software is updated."),
+              tp_account_get_protocol_name (account),
+              tp_account_get_protocol_name (account));
+
+          g_signal_connect_swapped (dialog, "response",
+              G_CALLBACK (gtk_widget_destroy),
+              dialog);
+
+          gtk_widget_show (dialog);
+        }
+    }
 
   roster_window_remove_error (self, account);
 }
 
-static void
-roster_window_error_edit_clicked_cb (GtkButton *button,
-    EmpathyRosterWindow *self)
-{
-  TpAccount *account;
-
-  account = g_object_get_data (G_OBJECT (button), "account");
-
-  empathy_accounts_dialog_show_application (
-      gtk_widget_get_screen (GTK_WIDGET (button)),
-      account, FALSE, FALSE);
-
-  roster_window_remove_error (self, account);
-}
-
-static void
-roster_window_error_close_clicked_cb (GtkButton *button,
-    EmpathyRosterWindow *self)
-{
-  TpAccount *account;
-
-  account = g_object_get_data (G_OBJECT (button), "account");
-  roster_window_remove_error (self, account);
-}
-
-static void
-roster_window_error_upgrade_sw_clicked_cb (GtkButton *button,
-    EmpathyRosterWindow *self)
-{
-  TpAccount *account;
-  GtkWidget *dialog;
-
-  account = g_object_get_data (G_OBJECT (button), "account");
-  roster_window_remove_error (self, account);
-
-  dialog = gtk_message_dialog_new (GTK_WINDOW (self),
-      GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR,
-      GTK_BUTTONS_OK,
-      _("Sorry, %s accounts can’t be used until your %s software is updated."),
-      tp_account_get_protocol_name (account),
-      tp_account_get_protocol_name (account));
-
-  g_signal_connect_swapped (dialog, "response",
-      G_CALLBACK (gtk_widget_destroy),
-      dialog);
-
-  gtk_widget_show (dialog);
-}
-
-static void
-roster_window_upgrade_software_error (EmpathyRosterWindow *self,
-    TpAccount *account)
+static GtkWidget *
+roster_window_error_create_info_bar (EmpathyRosterWindow *self,
+    TpAccount *account,
+    GtkMessageType message_type,
+    const gchar *message_markup)
 {
   GtkWidget *info_bar;
   GtkWidget *content_area;
+  GtkWidget *action_area;
   GtkWidget *label;
   GtkWidget *image;
-  GtkWidget *upgrade_button;
-  GtkWidget *close_button;
-  GtkWidget *action_area;
-  GtkWidget *action_grid;
-  gchar *str;
   const gchar *icon_name;
+
+  /* If there are other errors, remove them */
+  roster_window_remove_error (self, account);
+
+  info_bar = gtk_info_bar_new ();
+  gtk_info_bar_set_message_type (GTK_INFO_BAR (info_bar), message_type);
+
+  gtk_widget_set_no_show_all (info_bar, TRUE);
+  gtk_box_pack_start (GTK_BOX (self->priv->errors_vbox), info_bar, FALSE, TRUE, 0);
+  gtk_widget_show (info_bar);
+
+  icon_name = tp_account_get_icon_name (account);
+  image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_SMALL_TOOLBAR);
+  gtk_widget_show (image);
+
+  label = gtk_label_new (message_markup);
+  gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
+  gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+  gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
+  gtk_widget_show (label);
+
+  content_area = gtk_info_bar_get_content_area (GTK_INFO_BAR (info_bar));
+  gtk_box_pack_start (GTK_BOX (content_area), image, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (content_area), label, TRUE, TRUE, 0);
+
+  action_area = gtk_info_bar_get_action_area (GTK_INFO_BAR (info_bar));
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (action_area),
+      GTK_ORIENTATION_HORIZONTAL);
+  gtk_style_context_add_class (gtk_widget_get_style_context (action_area),
+      "empathy-roster-window-error-button");
+
+  g_object_set_data_full (G_OBJECT (info_bar),
+      "account", g_object_ref (account),
+      g_object_unref);
+
+  g_signal_connect (info_bar, "response",
+      G_CALLBACK (roster_window_error_response_cb), self);
+
+  gtk_widget_show (self->priv->errors_vbox);
+
+  g_hash_table_insert (self->priv->errors, g_object_ref (account), info_bar);
+
+  return info_bar;
+}
+
+static void
+roster_window_error_add_stock_button (GtkInfoBar *info_bar,
+    const gchar *stock_id,
+    const gchar *tooltip,
+    ErrorResponse response_id)
+{
+  GtkWidget *image;
+  GtkWidget *button;
+
+  image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
+  button = gtk_button_new ();
+  gtk_button_set_image (GTK_BUTTON (button), image);
+  gtk_widget_set_tooltip_text (button, tooltip);
+  gtk_widget_show (button);
+
+  gtk_info_bar_add_action_widget (info_bar, button, response_id);
+}
+
+static void
+roster_window_error_display (EmpathyRosterWindow *self,
+    TpAccount *account)
+{
   const gchar *error_message;
   gboolean user_requested;
+  GtkWidget *info_bar;
+  gchar *str;
 
   error_message =
     empathy_account_get_error_message (account, &user_requested);
@@ -563,199 +622,35 @@ roster_window_upgrade_software_error (EmpathyRosterWindow *self,
     return;
 
   str = g_markup_printf_escaped ("<b>%s</b>\n%s",
-      tp_account_get_display_name (account),
-      error_message);
+      tp_account_get_display_name (account), error_message);
 
-  /* If there are other errors, remove them */
-  roster_window_remove_error (self, account);
-
-  info_bar = gtk_info_bar_new ();
-  gtk_info_bar_set_message_type (GTK_INFO_BAR (info_bar), GTK_MESSAGE_ERROR);
-
-  gtk_widget_set_no_show_all (info_bar, TRUE);
-  gtk_box_pack_start (GTK_BOX (self->priv->errors_vbox), info_bar, FALSE, TRUE, 0);
-  gtk_widget_show (info_bar);
-
-  icon_name = tp_account_get_icon_name (account);
-  image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_SMALL_TOOLBAR);
-  gtk_widget_show (image);
-
-  label = gtk_label_new (str);
-  gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
-  gtk_label_set_ellipsize (GTK_LABEL (label), PANGO_ELLIPSIZE_END);
-  gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
-  gtk_widget_show (label);
+  info_bar = roster_window_error_create_info_bar (self, account,
+      GTK_MESSAGE_ERROR, str);
   g_free (str);
 
-  content_area = gtk_info_bar_get_content_area (GTK_INFO_BAR (info_bar));
-  gtk_box_pack_start (GTK_BOX (content_area), image, FALSE, FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (content_area), label, TRUE, TRUE, 0);
-
-  image = gtk_image_new_from_stock (GTK_STOCK_REFRESH, GTK_ICON_SIZE_BUTTON);
-  upgrade_button = gtk_button_new ();
-  gtk_button_set_image (GTK_BUTTON (upgrade_button), image);
-  gtk_widget_set_tooltip_text (upgrade_button, _("Update software..."));
-  gtk_widget_show (upgrade_button);
-
-  image = gtk_image_new_from_stock (GTK_STOCK_CLOSE, GTK_ICON_SIZE_BUTTON);
-  close_button = gtk_button_new ();
-  gtk_button_set_image (GTK_BUTTON (close_button), image);
-  gtk_widget_set_tooltip_text (close_button, _("Close"));
-  gtk_widget_show (close_button);
-
-  action_grid = gtk_grid_new ();
-  gtk_grid_set_column_spacing (GTK_GRID (action_grid), 2);
-  gtk_widget_show (action_grid);
-
-  action_area = gtk_info_bar_get_action_area (GTK_INFO_BAR (info_bar));
-  gtk_box_pack_start (GTK_BOX (action_area), action_grid, FALSE, FALSE, 0);
-
-  gtk_grid_attach (GTK_GRID (action_grid), upgrade_button, 0, 0, 1, 1);
-  gtk_grid_attach (GTK_GRID (action_grid), close_button, 1, 0, 1, 1);
-
-  g_object_set_data (G_OBJECT (info_bar), "label", label);
-  g_object_set_data_full (G_OBJECT (info_bar),
-      "account", g_object_ref (account),
-      g_object_unref);
-  g_object_set_data_full (G_OBJECT (upgrade_button),
-      "account", g_object_ref (account),
-      g_object_unref);
-  g_object_set_data_full (G_OBJECT (close_button),
-      "account", g_object_ref (account),
-      g_object_unref);
-
-  g_signal_connect (upgrade_button, "clicked",
-      G_CALLBACK (roster_window_error_upgrade_sw_clicked_cb), self);
-  g_signal_connect (close_button, "clicked",
-      G_CALLBACK (roster_window_error_close_clicked_cb), self);
-
   gtk_widget_set_tooltip_text (self->priv->errors_vbox, error_message);
-  gtk_widget_show (self->priv->errors_vbox);
-
-  g_hash_table_insert (self->priv->errors, g_object_ref (account), info_bar);
-}
-
-static void
-roster_window_error_display (EmpathyRosterWindow *self,
-    TpAccount *account)
-{
-  GtkWidget *info_bar;
-  GtkWidget *content_area;
-  GtkWidget *label;
-  GtkWidget *image;
-  GtkWidget *retry_button;
-  GtkWidget *edit_button;
-  GtkWidget *close_button;
-  GtkWidget *action_area;
-  GtkWidget *action_grid;
-  gchar *str;
-  const gchar *icon_name;
-  const gchar *error_message;
-  gboolean user_requested;
 
   if (!tp_strdiff (TP_ERROR_STR_SOFTWARE_UPGRADE_REQUIRED,
        tp_account_get_detailed_error (account, NULL)))
     {
-      roster_window_upgrade_software_error (self, account);
-      return;
+      roster_window_error_add_stock_button (GTK_INFO_BAR (info_bar),
+          GTK_STOCK_REFRESH, _("Update software..."),
+          ERROR_RESPONSE_RETRY);
     }
-
-  error_message = empathy_account_get_error_message (account, &user_requested);
-
-  if (user_requested)
-    return;
-
-  str = g_markup_printf_escaped ("<b>%s</b>\n%s",
-      tp_account_get_display_name (account), error_message);
-
-  info_bar = g_hash_table_lookup (self->priv->errors, account);
-  if (info_bar)
+  else
     {
-      label = g_object_get_data (G_OBJECT (info_bar), "label");
+      roster_window_error_add_stock_button (GTK_INFO_BAR (info_bar),
+          GTK_STOCK_REFRESH, _("Reconnect"),
+          ERROR_RESPONSE_RETRY);
 
-      /* Just set the latest error and return */
-      gtk_label_set_markup (GTK_LABEL (label), str);
-      g_free (str);
-
-      return;
+      roster_window_error_add_stock_button (GTK_INFO_BAR (info_bar),
+          GTK_STOCK_EDIT, _("Edit Account"),
+          ERROR_RESPONSE_EDIT);
     }
 
-  info_bar = gtk_info_bar_new ();
-  gtk_info_bar_set_message_type (GTK_INFO_BAR (info_bar), GTK_MESSAGE_ERROR);
-
-  gtk_widget_set_no_show_all (info_bar, TRUE);
-  gtk_box_pack_start (GTK_BOX (self->priv->errors_vbox), info_bar, FALSE, TRUE, 0);
-  gtk_widget_show (info_bar);
-
-  icon_name = tp_account_get_icon_name (account);
-  image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_SMALL_TOOLBAR);
-  gtk_widget_show (image);
-
-  label = gtk_label_new (str);
-  gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
-  gtk_label_set_ellipsize (GTK_LABEL (label), PANGO_ELLIPSIZE_END);
-  gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
-  gtk_widget_show (label);
-  g_free (str);
-
-  content_area = gtk_info_bar_get_content_area (GTK_INFO_BAR (info_bar));
-  gtk_box_pack_start (GTK_BOX (content_area), image, FALSE, FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (content_area), label, TRUE, TRUE, 0);
-
-  image = gtk_image_new_from_stock (GTK_STOCK_REFRESH, GTK_ICON_SIZE_BUTTON);
-  retry_button = gtk_button_new ();
-  gtk_button_set_image (GTK_BUTTON (retry_button), image);
-  gtk_widget_set_tooltip_text (retry_button, _("Reconnect"));
-  gtk_widget_show (retry_button);
-
-  image = gtk_image_new_from_stock (GTK_STOCK_EDIT, GTK_ICON_SIZE_BUTTON);
-  edit_button = gtk_button_new ();
-  gtk_button_set_image (GTK_BUTTON (edit_button), image);
-  gtk_widget_set_tooltip_text (edit_button, _("Edit Account"));
-  gtk_widget_show (edit_button);
-
-  image = gtk_image_new_from_stock (GTK_STOCK_CLOSE, GTK_ICON_SIZE_BUTTON);
-  close_button = gtk_button_new ();
-  gtk_button_set_image (GTK_BUTTON (close_button), image);
-  gtk_widget_set_tooltip_text (close_button, _("Close"));
-  gtk_widget_show (close_button);
-
-  action_grid = gtk_grid_new ();
-  gtk_grid_set_column_spacing (GTK_GRID (action_grid), 2);
-  gtk_widget_show (action_grid);
-
-  action_area = gtk_info_bar_get_action_area (GTK_INFO_BAR (info_bar));
-  gtk_box_pack_start (GTK_BOX (action_area), action_grid, FALSE, FALSE, 0);
-
-  gtk_grid_attach (GTK_GRID (action_grid), retry_button, 0, 0, 1, 1);
-  gtk_grid_attach (GTK_GRID (action_grid), edit_button, 1, 0, 1, 1);
-  gtk_grid_attach (GTK_GRID (action_grid), close_button, 2, 0, 1, 1);
-
-  g_object_set_data (G_OBJECT (info_bar), "label", label);
-  g_object_set_data_full (G_OBJECT (info_bar),
-      "account", g_object_ref (account),
-      g_object_unref);
-  g_object_set_data_full (G_OBJECT (edit_button),
-      "account", g_object_ref (account),
-      g_object_unref);
-  g_object_set_data_full (G_OBJECT (close_button),
-      "account", g_object_ref (account),
-      g_object_unref);
-  g_object_set_data_full (G_OBJECT (retry_button),
-      "account", g_object_ref (account),
-      g_object_unref);
-
-  g_signal_connect (edit_button, "clicked",
-      G_CALLBACK (roster_window_error_edit_clicked_cb), self);
-  g_signal_connect (close_button, "clicked",
-      G_CALLBACK (roster_window_error_close_clicked_cb), self);
-  g_signal_connect (retry_button, "clicked",
-      G_CALLBACK (roster_window_error_retry_clicked_cb), self);
-
-  gtk_widget_set_tooltip_text (self->priv->errors_vbox, error_message);
-  gtk_widget_show (self->priv->errors_vbox);
-
-  g_hash_table_insert (self->priv->errors, g_object_ref (account), info_bar);
+  roster_window_error_add_stock_button (GTK_INFO_BAR (info_bar),
+      GTK_STOCK_CLOSE, _("Close"),
+      ERROR_RESPONSE_CLOSE);
 }
 
 static void
