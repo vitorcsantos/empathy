@@ -88,11 +88,14 @@ empathy_local_xmpp_assistant_widget_constructed (GObject *object)
   gtk_widget_show (w);
 
   pix = empathy_pixbuf_from_icon_name_sized ("im-local-xmpp", 48);
-  w = gtk_image_new_from_pixbuf (pix);
-  gtk_grid_attach (GTK_GRID (self), w, 1, 0, 1, 1);
-  gtk_widget_show (w);
+  if (pix != NULL)
+    {
+      w = gtk_image_new_from_pixbuf (pix);
+      gtk_grid_attach (GTK_GRID (self), w, 1, 0, 1, 1);
+      gtk_widget_show (w);
 
-  g_object_unref (pix);
+      g_object_unref (pix);
+    }
 
   self->priv->settings = empathy_account_settings_new ("salut", "local-xmpp",
       NULL, _("People nearby"));
