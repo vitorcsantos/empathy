@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: empathy\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=empathy&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2012-08-20 16:02+0000\n"
-"PO-Revision-Date: 2012-08-28 22:57+0300\n"
+"POT-Creation-Date: 2012-09-05 07:14+0000\n"
+"PO-Revision-Date: 2012-09-07 20:16+0300\n"
 "Last-Translator: Aurimas Černius <aurisc4@gmail.com>\n"
 "Language-Team: Lithuanian\n"
 "Language: lt\n"
@@ -477,16 +477,17 @@ msgstr "Pasirinktas failas nėra normalus failas"
 msgid "The selected file is empty"
 msgstr "Pasirinktas failas yra tuščias"
 
-#: ../libempathy/empathy-keyring.c:75
+#: ../libempathy/empathy-keyring.c:85
+#: ../libempathy/empathy-keyring.c:194
 msgid "Password not found"
 msgstr "Slaptažodis nerastas"
 
-#: ../libempathy/empathy-keyring.c:202
+#: ../libempathy/empathy-keyring.c:594
 #, c-format
 msgid "IM account password for %s (%s)"
 msgstr "Pranešimų paskyros %s slaptažodis (%s)"
 
-#: ../libempathy/empathy-keyring.c:237
+#: ../libempathy/empathy-keyring.c:631
 #, c-format
 msgid "Password for chatroom '%s' on account %s (%s)"
 msgstr "Pokalbių kambario „%s“ slaptažodis paskyrai %s (%s)"
@@ -864,19 +865,19 @@ msgstr "Sukurti naują paskyrą serveryje"
 #. * like: "MyUserName on freenode".
 #. * You should reverse the order of these arguments if the
 #. * server should come before the login id in your locale.
-#: ../libempathy-gtk/empathy-account-widget.c:2269
+#: ../libempathy-gtk/empathy-account-widget.c:2263
 #, c-format
 msgid "%1$s on %2$s"
 msgstr "%1$s serveryje %2$s"
 
 #. To translators: The parameter is the protocol name. The resulting
 #. * string will be something like: "Jabber Account"
-#: ../libempathy-gtk/empathy-account-widget.c:2295
+#: ../libempathy-gtk/empathy-account-widget.c:2289
 #, c-format
 msgid "%s Account"
 msgstr "%s paskyra"
 
-#: ../libempathy-gtk/empathy-account-widget.c:2299
+#: ../libempathy-gtk/empathy-account-widget.c:2293
 msgid "New account"
 msgstr "Nauja paskyra"
 
@@ -2691,7 +2692,6 @@ msgid "Go online to edit your personal information."
 msgstr "Eikite į internetą asmeniniams duomenims pakeisti."
 
 #: ../libempathy-gtk/empathy-user-info.c:464
-#| msgid "Personal Details"
 msgid "<b>Personal Details</b>"
 msgstr "<b>Asmeniniai duomenys</b>"
 
@@ -3043,11 +3043,11 @@ msgstr "Norint sukurti naują paskyrą, pirma reikia įdiegti kiekvieno pageidau
 msgid "No protocol backends installed"
 msgstr "Neįdiegta jokių protokolų realizacijų"
 
-#: ../src/empathy-auth-client.c:288
+#: ../src/empathy-auth-client.c:296
 msgid " - Empathy authentication client"
 msgstr " – Empathy tapatybės nustatymo klientas"
 
-#: ../src/empathy-auth-client.c:304
+#: ../src/empathy-auth-client.c:312
 msgid "Empathy authentication client"
 msgstr "Empathy tapatybės nustatymo klientas"
 
@@ -3666,7 +3666,7 @@ msgid "Incoming file transfer from %s"
 msgstr "Failo atsiuntimas iš %s"
 
 #: ../src/empathy-event-manager.c:983
-#: ../src/empathy-roster-window.c:224
+#: ../src/empathy-roster-window.c:226
 msgid "Password required"
 msgstr "Reikalingas slaptažodis"
 
@@ -4008,7 +4008,7 @@ msgid "Show account balances"
 msgstr "Rodyti paskyrų sąskaitas"
 
 #: ../src/empathy-preferences.ui.h:4
-#: ../src/empathy-roster-window.c:2141
+#: ../src/empathy-roster-window.c:2181
 msgid "Contact List"
 msgstr "Adresatų sąrašas"
 
@@ -4157,60 +4157,64 @@ msgstr "Variantas:"
 msgid "Themes"
 msgstr "Temos"
 
-#: ../src/empathy-roster-window.c:241
+#: ../src/empathy-roster-window.c:243
 msgid "Provide Password"
 msgstr "Nurodykite slaptažodį"
 
-#: ../src/empathy-roster-window.c:247
+#: ../src/empathy-roster-window.c:249
 msgid "Disconnect"
 msgstr "Atsijungti"
 
-#: ../src/empathy-roster-window.c:418
+#: ../src/empathy-roster-window.c:443
 msgid "You need to setup an account to see contacts here."
 msgstr "Jums reikia nustatyti paskyrą, kad ten matytumėte kontaktus."
 
-#: ../src/empathy-roster-window.c:505
+#: ../src/empathy-roster-window.c:531
 #, c-format
 msgid "Sorry, %s accounts can’t be used until your %s software is updated."
 msgstr "Deja, paskyra %s negali būti naudojama, kol nebus atnaujinta programinė įranga %s."
 
-#: ../src/empathy-roster-window.c:571
+#: ../src/empathy-roster-window.c:597
 msgid "Update software..."
 msgstr "Atnaujinti programinę įrangą..."
 
-#: ../src/empathy-roster-window.c:577
-#: ../src/empathy-roster-window.c:694
+#: ../src/empathy-roster-window.c:603
+#: ../src/empathy-roster-window.c:720
 msgid "Close"
 msgstr "Užverti"
 
-#: ../src/empathy-roster-window.c:682
+#: ../src/empathy-roster-window.c:708
 msgid "Reconnect"
 msgstr "Prisijungti iš naujo"
 
-#: ../src/empathy-roster-window.c:688
+#: ../src/empathy-roster-window.c:714
 msgid "Edit Account"
 msgstr "Taisyti paskyrą"
 
-#: ../src/empathy-roster-window.c:868
+#: ../src/empathy-roster-window.c:894
 msgid "Top up account"
 msgstr "Papildyti paskyros kreditą"
 
-#: ../src/empathy-roster-window.c:1530
+#: ../src/empathy-roster-window.c:1556
 msgid "You need to enable one of your accounts to see contacts here."
 msgstr "Jums reikia įjungti vieną iš jūsų paskyrų, kad ten matytumėte kontaktus."
 
 #. translators: argument is an account name
-#: ../src/empathy-roster-window.c:1538
+#: ../src/empathy-roster-window.c:1564
 #, c-format
 msgid "You need to enable %s to see contacts here."
 msgstr "Jums reikia įjungti %s, kad ten matytumėte kontaktus."
 
-#: ../src/empathy-roster-window.c:1595
+#: ../src/empathy-roster-window.c:1624
+#| msgid "You need to enable %s to see contacts here."
+msgid "Change your presence to see contacts here"
+msgstr "Keisti jūsų būvimo būseną, kad ten matytumėte kontaktus"
+
+#: ../src/empathy-roster-window.c:1633
 msgid "No match found"
 msgstr "Nerasta atitikmenų"
 
-#: ../src/empathy-roster-window.c:1599
-#| msgid "Show offline contacts"
+#: ../src/empathy-roster-window.c:1638
 msgid "No online contacts"
 msgstr "Nėra adresatų internete"
 
@@ -4283,6 +4287,10 @@ msgstr "Iš_eiti"
 msgid "Account settings"
 msgstr "Paskyros nustatymai"
 
+#: ../src/empathy-roster-window.ui.h:2
+msgid "Go _Online"
+msgstr "_Prisijungti prie tinklo"
+
 #: ../src/empathy-status-icon.ui.h:2
 msgid "_New Conversation…"
 msgstr "_Naujas pokalbis…"
@@ -4301,13 +4309,11 @@ msgid "Done"
 msgstr "Atlikta"
 
 #: ../ubuntu-online-accounts/cc-plugins/empathy-accounts-plugin-widget.c:210
-#| msgid "Please install gnome-contacts to access contacts details."
 msgid "Please enter your account details"
 msgstr "Įveskite savo paskyros duomenis"
 
 #: ../ubuntu-online-accounts/cc-plugins/app-plugin/empathy-app-plugin-widget.c:160
 #, c-format
-#| msgid "Loading account information"
 msgid "Edit %s account options"
 msgstr "Keisti %s paskyros nustatymus"
 
