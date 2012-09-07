@@ -930,9 +930,10 @@ accounts_dialog_update_settings (EmpathyAccountsDialog *dialog,
           return;
         }
 
-      /* No account and no profile, warn the user */
+      /* No account selected */
       gtk_widget_hide (priv->vbox_details);
-      gtk_widget_set_sensitive (priv->button_add, FALSE);
+      gtk_widget_set_sensitive (priv->button_add, TRUE);
+      gtk_widget_set_sensitive (priv->button_remove, FALSE);
 
       gtk_notebook_set_current_page (GTK_NOTEBOOK (priv->notebook_account),
           NOTEBOOK_PAGE_NO_PROTOCOL);
