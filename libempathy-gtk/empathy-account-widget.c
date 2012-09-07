@@ -1866,6 +1866,9 @@ remember_password_toggled_cb (GtkToggleButton *button,
 {
   empathy_account_settings_set_remember_password (self->priv->settings,
       gtk_toggle_button_get_active (button));
+
+  if (!self->priv->automatic_change)
+    empathy_account_widget_changed (self);
 }
 
 static void
@@ -1878,20 +1881,22 @@ account_settings_password_retrieved_cb (GObject *object,
   password = empathy_account_settings_dup_string (
       self->priv->settings, "password");
 
+  /* We have to do this so that when we call gtk_entry_set_text,
+   * the ::changed callback doesn't think the user made the
+   * change. This is also used in remember_password_toggled_cb. */
+  self->priv->automatic_change = TRUE;
+
   if (password != NULL)
     {
-      /* We have to do this so that when we call gtk_entry_set_text,
-       * the ::changed callback doesn't think the user made the
-       * change. */
-      self->priv->automatic_change = TRUE;
       gtk_entry_set_text (GTK_ENTRY (self->priv->param_password_widget),
           password);
-      self->priv->automatic_change = FALSE;
     }
 
   gtk_toggle_button_set_active (
       GTK_TOGGLE_BUTTON (self->priv->remember_password_widget),
       !EMP_STR_EMPTY (password));
+
+  self->priv->automatic_change = FALSE;
 
   g_free (password);
 }
@@ -2000,8 +2005,10 @@ do_constructed (GObject *obj)
       g_signal_connect (self->priv->remember_password_widget, "toggled",
           G_CALLBACK (remember_password_toggled_cb), self);
 
+      self->priv->automatic_change = TRUE;
       remember_password_toggled_cb (
           GTK_TOGGLE_BUTTON (self->priv->remember_password_widget), self);
+      self->priv->automatic_change = FALSE;
     }
   else if (self->priv->remember_password_widget != NULL
       && !empathy_account_settings_supports_sasl (self->priv->settings))
