@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: empathy\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-26 10:20+0300\n"
-"PO-Revision-Date: 2012-08-26 10:20+0200\n"
+"POT-Creation-Date: 2012-09-07 16:03+0300\n"
+"PO-Revision-Date: 2012-09-07 16:03+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -472,16 +472,17 @@ msgstr "הקובץ הנבחר אינו קובץ רגיל"
 msgid "The selected file is empty"
 msgstr "הקובץ הנבחר ריק"
 
-#: ../libempathy/empathy-keyring.c:75
+#: ../libempathy/empathy-keyring.c:85
+#: ../libempathy/empathy-keyring.c:194
 msgid "Password not found"
 msgstr "הססמה לא נמצאה"
 
-#: ../libempathy/empathy-keyring.c:202
+#: ../libempathy/empathy-keyring.c:594
 #, c-format
 msgid "IM account password for %s (%s)"
 msgstr "ססמת חשבון המסרים המידיים עבור %s‏ (%s)"
 
-#: ../libempathy/empathy-keyring.c:237
+#: ../libempathy/empathy-keyring.c:631
 #, c-format
 msgid "Password for chatroom '%s' on account %s (%s)"
 msgstr "הססמה עבור החדר '%s' דרך החשבון %s ‏(%s)"
@@ -853,19 +854,19 @@ msgstr "יצירת חשבון חדש על השרת"
 #. * like: "MyUserName on freenode".
 #. * You should reverse the order of these arguments if the
 #. * server should come before the login id in your locale.
-#: ../libempathy-gtk/empathy-account-widget.c:2269
+#: ../libempathy-gtk/empathy-account-widget.c:2273
 #, c-format
 msgid "%1$s on %2$s"
 msgstr "‏%1$s על גבי %2$s"
 
 #. To translators: The parameter is the protocol name. The resulting
 #. * string will be something like: "Jabber Account"
-#: ../libempathy-gtk/empathy-account-widget.c:2295
+#: ../libempathy-gtk/empathy-account-widget.c:2299
 #, c-format
 msgid "%s Account"
 msgstr "חשבון %s"
 
-#: ../libempathy-gtk/empathy-account-widget.c:2299
+#: ../libempathy-gtk/empathy-account-widget.c:2303
 msgid "New account"
 msgstr "חשבון חדש"
 
@@ -2171,11 +2172,11 @@ msgstr "SSL"
 msgid "Empathy can automatically discover and chat with the people connected on the same network as you. If you want to use this feature, please check that the details below are correct."
 msgstr "באפשרות Empathy לגלות ולנהל שיחות עם אנשים המחוברים לאותה הרשת כמוך. אם ברצונך להשתמש בתכונה זו, נא לבדוק שהפרטים שלהלן נכונים."
 
-#: ../libempathy-gtk/empathy-local-xmpp-assistant-widget.c:98
+#: ../libempathy-gtk/empathy-local-xmpp-assistant-widget.c:101
 msgid "People nearby"
 msgstr "אנשים בקרבתי"
 
-#: ../libempathy-gtk/empathy-local-xmpp-assistant-widget.c:113
+#: ../libempathy-gtk/empathy-local-xmpp-assistant-widget.c:116
 msgid "You can change these details later or disable this feature by choosing <span style=\"italic\">Edit → Accounts</span> in the Contact List."
 msgstr "באפשרותך לשנות פרטים אלה מאוחר יותר או לנטרל תכונה זו על ידי בחירה ב<span style=\"italic\">עריכה ← חשבונות</span> ברשימת אנשי הקשר."
 
@@ -2963,16 +2964,16 @@ msgstr "עריכת הגדרות החיבור"
 msgid "_Edit Connection Parameters..."
 msgstr "ע_ריכת הגדרות החיבור..."
 
-#: ../src/empathy-accounts-dialog.c:1235
+#: ../src/empathy-accounts-dialog.c:1236
 #, c-format
 msgid "Do you want to remove %s from your computer?"
 msgstr "האם ברצונך להסיר את החשבון '%s' ממחשבך?"
 
-#: ../src/empathy-accounts-dialog.c:1239
+#: ../src/empathy-accounts-dialog.c:1240
 msgid "This will not remove your account on the server."
 msgstr "פעולה זו לא תסיר את חשבונך מהשרת."
 
-#: ../src/empathy-accounts-dialog.c:1444
+#: ../src/empathy-accounts-dialog.c:1445
 msgid ""
 "You are about to select another account, which will discard\n"
 "your changes. Are you sure you want to proceed?"
@@ -2981,24 +2982,24 @@ msgstr ""
 "את השינויים שלך. האת אתה בטוח שברצונך להמשיך?"
 
 #. Menu item: to enabled/disable the account
-#: ../src/empathy-accounts-dialog.c:1635
+#: ../src/empathy-accounts-dialog.c:1636
 msgid "_Enabled"
 msgstr "מו_פעל"
 
 #. Menu item: Rename
-#: ../src/empathy-accounts-dialog.c:1658
+#: ../src/empathy-accounts-dialog.c:1659
 msgid "Rename"
 msgstr "שנה שם"
 
-#: ../src/empathy-accounts-dialog.c:2074
+#: ../src/empathy-accounts-dialog.c:2075
 msgid "_Skip"
 msgstr "_דילוג"
 
-#: ../src/empathy-accounts-dialog.c:2078
+#: ../src/empathy-accounts-dialog.c:2079
 msgid "_Connect"
 msgstr "הת_חברות"
 
-#: ../src/empathy-accounts-dialog.c:2257
+#: ../src/empathy-accounts-dialog.c:2258
 msgid ""
 "You are about to close the window, which will discard\n"
 "your changes. Are you sure you want to proceed?"
@@ -3007,7 +3008,7 @@ msgstr ""
 "את השינויים שלך. האת אתה בטוח שברצונך להמשיך?"
 
 #. Tweak the dialog
-#: ../src/empathy-accounts-dialog.c:2400
+#: ../src/empathy-accounts-dialog.c:2401
 msgid "Messaging and VoIP Accounts"
 msgstr "חשבונות התכתבות ו־VoIP"
 
@@ -3027,11 +3028,11 @@ msgstr "על מנת להוסיף חשבון חדש עליך להתקין מנו�
 msgid "No protocol backends installed"
 msgstr "אין מנגנוני פרוטוקולים מותקנים"
 
-#: ../src/empathy-auth-client.c:288
+#: ../src/empathy-auth-client.c:296
 msgid " - Empathy authentication client"
 msgstr "- לקוח האימות של Empathy"
 
-#: ../src/empathy-auth-client.c:304
+#: ../src/empathy-auth-client.c:312
 msgid "Empathy authentication client"
 msgstr "לקוח האימות של Empathy"
 
@@ -3644,7 +3645,7 @@ msgid "Incoming file transfer from %s"
 msgstr "העברת קבצים נכנסת מ־%s"
 
 #: ../src/empathy-event-manager.c:983
-#: ../src/empathy-roster-window.c:224
+#: ../src/empathy-roster-window.c:226
 msgid "Password required"
 msgstr "נדרשת ססמה"
 
@@ -3986,7 +3987,7 @@ msgid "Show account balances"
 msgstr "הצגת מאזני החשבונות"
 
 #: ../src/empathy-preferences.ui.h:4
-#: ../src/empathy-roster-window.c:2141
+#: ../src/empathy-roster-window.c:2091
 msgid "Contact List"
 msgstr "רשימת אנשי קשר"
 
@@ -4135,59 +4136,62 @@ msgstr "הגוון:"
 msgid "Themes"
 msgstr "ערכות נושא"
 
-#: ../src/empathy-roster-window.c:241
+#: ../src/empathy-roster-window.c:243
 msgid "Provide Password"
 msgstr "הזנת ססמה"
 
-#: ../src/empathy-roster-window.c:247
+#: ../src/empathy-roster-window.c:249
 msgid "Disconnect"
 msgstr "ניתוק"
 
-#: ../src/empathy-roster-window.c:418
+#: ../src/empathy-roster-window.c:443
 msgid "You need to setup an account to see contacts here."
 msgstr "עליך להגדיר חשבון כדי שיופיעו כאן אנשי קשר."
 
-#: ../src/empathy-roster-window.c:505
+#: ../src/empathy-roster-window.c:519
 #, c-format
 msgid "Sorry, %s accounts can’t be used until your %s software is updated."
 msgstr "לא ניתן להשתמש בחשבונות %s עד שהתכנה %s תעודכן, עמך הסליחה."
 
-#: ../src/empathy-roster-window.c:571
+#: ../src/empathy-roster-window.c:637
 msgid "Update software..."
 msgstr "עדכון התכנה..."
 
-#: ../src/empathy-roster-window.c:577
-#: ../src/empathy-roster-window.c:694
-msgid "Close"
-msgstr "סגירה"
-
-#: ../src/empathy-roster-window.c:682
+#: ../src/empathy-roster-window.c:643
 msgid "Reconnect"
 msgstr "התחברות מחדש"
 
-#: ../src/empathy-roster-window.c:688
+#: ../src/empathy-roster-window.c:647
 msgid "Edit Account"
 msgstr "עריכת חשבון"
 
-#: ../src/empathy-roster-window.c:868
+#: ../src/empathy-roster-window.c:652
+msgid "Close"
+msgstr "סגירה"
+
+#: ../src/empathy-roster-window.c:789
 msgid "Top up account"
 msgstr "חשבון Top up"
 
-#: ../src/empathy-roster-window.c:1530
+#: ../src/empathy-roster-window.c:1454
 msgid "You need to enable one of your accounts to see contacts here."
 msgstr "עליך להפעיל את אחד החשבונות שלך כדי שיופיעו כאן אנשי קשר."
 
 #. translators: argument is an account name
-#: ../src/empathy-roster-window.c:1538
+#: ../src/empathy-roster-window.c:1462
 #, c-format
 msgid "You need to enable %s to see contacts here."
 msgstr "עליך להפעיל את %s כדי שיופיעו כאן אנשי קשר."
 
-#: ../src/empathy-roster-window.c:1595
+#: ../src/empathy-roster-window.c:1540
+msgid "Change your presence to see contacts here"
+msgstr "שינוי הנוכחות שלך כדי לצפות באנשי קשר להלן"
+
+#: ../src/empathy-roster-window.c:1549
 msgid "No match found"
 msgstr "לא נמצאה התאמה"
 
-#: ../src/empathy-roster-window.c:1599
+#: ../src/empathy-roster-window.c:1554
 msgid "No online contacts"
 msgstr "אין אנשי קשר מחוברים"
 
@@ -4260,6 +4264,10 @@ msgstr "יצי_אה"
 msgid "Account settings"
 msgstr "הגדרות החשבון"
 
+#: ../src/empathy-roster-window.ui.h:2
+msgid "Go _Online"
+msgstr "הת_חברות"
+
 #: ../src/empathy-status-icon.ui.h:2
 msgid "_New Conversation…"
 msgstr "_שיחה חדשה…"
@@ -4272,12 +4280,12 @@ msgstr "_שיחה חדשה…"
 msgid "Status"
 msgstr "מצב"
 
-#: ../ubuntu-online-accounts/cc-plugins/empathy-accounts-plugin-widget.c:179
+#: ../ubuntu-online-accounts/cc-plugins/account-plugins/empathy-accounts-plugin-widget.c:179
 #: ../ubuntu-online-accounts/cc-plugins/app-plugin/empathy-app-plugin-widget.c:126
 msgid "Done"
 msgstr "בוצע"
 
-#: ../ubuntu-online-accounts/cc-plugins/empathy-accounts-plugin-widget.c:210
+#: ../ubuntu-online-accounts/cc-plugins/account-plugins/empathy-accounts-plugin-widget.c:210
 msgid "Please enter your account details"
 msgstr "נא להזין את פרטי החשבון שלך"
 
