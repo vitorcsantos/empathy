@@ -604,6 +604,54 @@ roster_window_error_add_stock_button (GtkInfoBar *info_bar,
   gtk_info_bar_add_action_widget (info_bar, button, response_id);
 }
 
+#ifdef HAVE_UOA
+static const gchar *
+uoa_account_display_string (TpAccount *account)
+{
+  const gchar *service;
+
+  service = tp_account_get_service (account);
+
+  /* Use well known service name, if available */
+  if (!tp_strdiff (service, "windows-live"))
+    return _("Windows Live");
+  else if (!tp_strdiff (service, "google-talk"))
+    return _("Google Talk");
+  else if (!tp_strdiff (service, "facebook"))
+    return _("Facebook");
+
+  return tp_account_get_display_name (account);
+}
+
+static void
+roster_window_uoa_auth_error (EmpathyRosterWindow *self,
+    TpAccount *account)
+{
+  GtkWidget *info_bar;
+  GtkWidget *image;
+  GtkWidget *button;
+  gchar *str;
+
+  /* translators: %s is an account name like 'Facebook' or 'Google Talk' */
+  str = g_strdup_printf (_("%s account requires authorisation"),
+      uoa_account_display_string (account));
+
+  info_bar = roster_window_error_create_info_bar (self, account,
+      GTK_MESSAGE_OTHER, str);
+  g_free (str);
+
+  image = gtk_image_new_from_icon_name ("credentials-preferences",
+      GTK_ICON_SIZE_BUTTON);
+  button = gtk_button_new ();
+  gtk_button_set_image (GTK_BUTTON (button), image);
+  gtk_widget_set_tooltip_text (button, _("Online Accounts"));
+  gtk_widget_show (button);
+
+  gtk_info_bar_add_action_widget (GTK_INFO_BAR (info_bar), button,
+      ERROR_RESPONSE_EDIT);
+}
+#endif
+
 static void
 roster_window_error_display (EmpathyRosterWindow *self,
     TpAccount *account)
@@ -618,6 +666,17 @@ roster_window_error_display (EmpathyRosterWindow *self,
 
   if (user_requested)
     return;
+
+#ifdef HAVE_UOA
+  if (!tp_strdiff (TP_ERROR_STR_AUTHENTICATION_FAILED,
+       tp_account_get_detailed_error (account, NULL)) &&
+      !tp_strdiff (tp_account_get_storage_provider (account),
+       EMPATHY_UOA_PROVIDER))
+    {
+      roster_window_uoa_auth_error (self, account);
+      return;
+    }
+#endif
 
   str = g_markup_printf_escaped ("<b>%s</b>\n%s",
       tp_account_get_display_name (account), error_message);
