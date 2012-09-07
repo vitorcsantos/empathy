@@ -81,7 +81,6 @@ struct _EmpathyAccountSettingsPriv
   gboolean ready;
 
   gboolean supports_sasl;
-  gboolean password_changed;
   gboolean remember_password;
 
   gchar *password;
@@ -833,7 +832,6 @@ empathy_account_settings_unset (EmpathyAccountSettings *settings,
     {
       g_free (priv->password);
       priv->password = NULL;
-      priv->password_changed = TRUE;
       return;
     }
 
@@ -851,7 +849,6 @@ empathy_account_settings_discard_changes (EmpathyAccountSettings *settings)
   g_hash_table_remove_all (priv->parameters);
   empathy_account_settings_free_unset_parameters (settings);
 
-  priv->password_changed = FALSE;
   g_free (priv->password);
   priv->password = g_strdup (priv->password_original);
 
@@ -1073,7 +1070,6 @@ empathy_account_settings_set (EmpathyAccountSettings *settings,
     {
       g_free (priv->password);
       priv->password = g_variant_dup_string (v, NULL);
-      priv->password_changed = TRUE;
     }
   else
     {
@@ -1336,9 +1332,8 @@ empathy_account_settings_account_updated (GObject *source,
       goto out;
     }
 
-  /* Only set the password in the keyring if the CM supports SASL and
-   * it's changed. */
-  if (priv->supports_sasl && priv->password_changed)
+  /* Only set the password in the keyring if the CM supports SASL. */
+  if (priv->supports_sasl)
     {
       if (priv->password != NULL)
         {
