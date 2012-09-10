@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: empathy 3.3.92\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-27 18:19+0800\n"
-"PO-Revision-Date: 2012-08-25 18:57+0800\n"
+"POT-Creation-Date: 2012-09-10 19:06+0800\n"
+"PO-Revision-Date: 2012-09-10 15:10+0800\n"
 "Last-Translator: Cheng-Chia Tseng <pswo10680@gmail.com>\n"
 "Language-Team: Chinese (traditional) <chinese-l10n@googlegroups.com>\n"
 "Language: zh_TW\n"
@@ -501,16 +501,16 @@ msgstr "選取的檔案不是正規的檔案"
 msgid "The selected file is empty"
 msgstr "選取的檔案是空白的"
 
-#: ../libempathy/empathy-keyring.c:75
+#: ../libempathy/empathy-keyring.c:85 ../libempathy/empathy-keyring.c:194
 msgid "Password not found"
 msgstr "找不到密碼"
 
-#: ../libempathy/empathy-keyring.c:202
+#: ../libempathy/empathy-keyring.c:594
 #, c-format
 msgid "IM account password for %s (%s)"
 msgstr "%s 的即時通帳號密碼 (%s)"
 
-#: ../libempathy/empathy-keyring.c:237
+#: ../libempathy/empathy-keyring.c:631
 #, c-format
 msgid "Password for chatroom '%s' on account %s (%s)"
 msgstr "%2$s 帳號下「%1$s」聊天室的密碼 (%3$s)"
@@ -868,19 +868,19 @@ msgstr "在這個伺服器上建立新的帳號"
 #. * like: "MyUserName on freenode".
 #. * You should reverse the order of these arguments if the
 #. * server should come before the login id in your locale.
-#: ../libempathy-gtk/empathy-account-widget.c:2269
+#: ../libempathy-gtk/empathy-account-widget.c:2273
 #, c-format
 msgid "%1$s on %2$s"
 msgstr "%2$s 上的 %1$s"
 
 #. To translators: The parameter is the protocol name. The resulting
 #. * string will be something like: "Jabber Account"
-#: ../libempathy-gtk/empathy-account-widget.c:2295
+#: ../libempathy-gtk/empathy-account-widget.c:2299
 #, c-format
 msgid "%s Account"
 msgstr "%s 帳號"
 
-#: ../libempathy-gtk/empathy-account-widget.c:2299
+#: ../libempathy-gtk/empathy-account-widget.c:2303
 msgid "New account"
 msgstr "新增帳號"
 
@@ -2203,11 +2203,11 @@ msgstr ""
 "Empathy 可以自動探索與您一同連線到相同網路上的人們，並且和他們聊天。如果您想"
 "使用此功能，請檢查下列詳細資料是否正確。"
 
-#: ../libempathy-gtk/empathy-local-xmpp-assistant-widget.c:98
+#: ../libempathy-gtk/empathy-local-xmpp-assistant-widget.c:101
 msgid "People nearby"
 msgstr "附近的人"
 
-#: ../libempathy-gtk/empathy-local-xmpp-assistant-widget.c:113
+#: ../libempathy-gtk/empathy-local-xmpp-assistant-widget.c:116
 msgid ""
 "You can change these details later or disable this feature by choosing <span "
 "style=\"italic\">Edit → Accounts</span> in the Contact List."
@@ -3025,16 +3025,16 @@ msgstr "編輯連線參數"
 msgid "_Edit Connection Parameters..."
 msgstr "編輯連線參數(_E)..."
 
-#: ../src/empathy-accounts-dialog.c:1235
+#: ../src/empathy-accounts-dialog.c:1236
 #, c-format
 msgid "Do you want to remove %s from your computer?"
 msgstr "是否想要從您的電腦上移除群組 %s？"
 
-#: ../src/empathy-accounts-dialog.c:1239
+#: ../src/empathy-accounts-dialog.c:1240
 msgid "This will not remove your account on the server."
 msgstr "這不會移除伺服器上的您的帳號。"
 
-#: ../src/empathy-accounts-dialog.c:1444
+#: ../src/empathy-accounts-dialog.c:1445
 msgid ""
 "You are about to select another account, which will discard\n"
 "your changes. Are you sure you want to proceed?"
@@ -3043,24 +3043,24 @@ msgstr ""
 "您所做的變更。確定要繼續？"
 
 #. Menu item: to enabled/disable the account
-#: ../src/empathy-accounts-dialog.c:1635
+#: ../src/empathy-accounts-dialog.c:1636
 msgid "_Enabled"
 msgstr "已啟用(_E)"
 
 #. Menu item: Rename
-#: ../src/empathy-accounts-dialog.c:1658
+#: ../src/empathy-accounts-dialog.c:1659
 msgid "Rename"
 msgstr "重新命名"
 
-#: ../src/empathy-accounts-dialog.c:2074
+#: ../src/empathy-accounts-dialog.c:2075
 msgid "_Skip"
 msgstr "略過(_S)"
 
-#: ../src/empathy-accounts-dialog.c:2078
+#: ../src/empathy-accounts-dialog.c:2079
 msgid "_Connect"
 msgstr "連接(_C)"
 
-#: ../src/empathy-accounts-dialog.c:2257
+#: ../src/empathy-accounts-dialog.c:2258
 msgid ""
 "You are about to close the window, which will discard\n"
 "your changes. Are you sure you want to proceed?"
@@ -3069,7 +3069,7 @@ msgstr ""
 "您所做的變更。確定要繼續？"
 
 #. Tweak the dialog
-#: ../src/empathy-accounts-dialog.c:2400
+#: ../src/empathy-accounts-dialog.c:2401
 msgid "Messaging and VoIP Accounts"
 msgstr "訊息與 VoIP 帳號"
 
@@ -3091,11 +3091,11 @@ msgstr "要加入新的帳號，您必須先安裝每個會用到的通訊協定
 msgid "No protocol backends installed"
 msgstr "尚未安裝通訊協定後端程式"
 
-#: ../src/empathy-auth-client.c:288
+#: ../src/empathy-auth-client.c:296
 msgid " - Empathy authentication client"
 msgstr "- Empathy 認證用戶端"
 
-#: ../src/empathy-auth-client.c:304
+#: ../src/empathy-auth-client.c:312
 msgid "Empathy authentication client"
 msgstr "Empathy 認證用戶端"
 
@@ -3713,7 +3713,7 @@ msgstr "您被邀請參加 %s"
 msgid "Incoming file transfer from %s"
 msgstr "收到來自 %s 的檔案傳輸"
 
-#: ../src/empathy-event-manager.c:983 ../src/empathy-roster-window.c:224
+#: ../src/empathy-event-manager.c:983 ../src/empathy-roster-window.c:226
 msgid "Password required"
 msgstr "需要密碼"
 
@@ -4060,7 +4060,7 @@ msgstr "顯示群組"
 msgid "Show account balances"
 msgstr "顯示帳號餘額"
 
-#: ../src/empathy-preferences.ui.h:4 ../src/empathy-roster-window.c:2141
+#: ../src/empathy-preferences.ui.h:4 ../src/empathy-roster-window.c:2091
 msgid "Contact List"
 msgstr "連絡人清單"
 
@@ -4223,58 +4223,62 @@ msgstr "樣式："
 msgid "Themes"
 msgstr "佈景主題"
 
-#: ../src/empathy-roster-window.c:241
+#: ../src/empathy-roster-window.c:243
 msgid "Provide Password"
 msgstr "提供密碼"
 
-#: ../src/empathy-roster-window.c:247
+#: ../src/empathy-roster-window.c:249
 msgid "Disconnect"
 msgstr "斷線"
 
-#: ../src/empathy-roster-window.c:418
+#: ../src/empathy-roster-window.c:443
 msgid "You need to setup an account to see contacts here."
 msgstr "您需要設置一個帳號才能在這裡查看聯絡人。"
 
-#: ../src/empathy-roster-window.c:505
+#: ../src/empathy-roster-window.c:519
 #, c-format
 msgid "Sorry, %s accounts can’t be used until your %s software is updated."
 msgstr "很抱歉，%s 帳號無法使用，除非您的 %s 軟體已更新。"
 
-#: ../src/empathy-roster-window.c:571
+#: ../src/empathy-roster-window.c:637
 msgid "Update software..."
 msgstr "更新軟體..."
 
-#: ../src/empathy-roster-window.c:577 ../src/empathy-roster-window.c:694
-msgid "Close"
-msgstr "關閉"
-
-#: ../src/empathy-roster-window.c:682
+#: ../src/empathy-roster-window.c:643
 msgid "Reconnect"
 msgstr "重新連接"
 
-#: ../src/empathy-roster-window.c:688
+#: ../src/empathy-roster-window.c:647
 msgid "Edit Account"
 msgstr "編輯帳號"
 
-#: ../src/empathy-roster-window.c:868
+#: ../src/empathy-roster-window.c:652
+msgid "Close"
+msgstr "關閉"
+
+#: ../src/empathy-roster-window.c:789
 msgid "Top up account"
 msgstr "加值帳號存額"
 
-#: ../src/empathy-roster-window.c:1530
+#: ../src/empathy-roster-window.c:1454
 msgid "You need to enable one of your accounts to see contacts here."
 msgstr "您需要啟用您其中之一的帳號之才能在這裡查看聯絡人。"
 
 #. translators: argument is an account name
-#: ../src/empathy-roster-window.c:1538
+#: ../src/empathy-roster-window.c:1462
 #, c-format
 msgid "You need to enable %s to see contacts here."
 msgstr "您需要啟用 %s 才能在這裡查看聯絡人。"
 
-#: ../src/empathy-roster-window.c:1595
+#: ../src/empathy-roster-window.c:1540
+msgid "Change your presence to see contacts here"
+msgstr "請變更您的上線狀態才能在這裡查看聯絡人"
+
+#: ../src/empathy-roster-window.c:1549
 msgid "No match found"
 msgstr "找不到符合項目"
 
-#: ../src/empathy-roster-window.c:1599
+#: ../src/empathy-roster-window.c:1554
 msgid "No online contacts"
 msgstr "無上線連絡人"
 
@@ -4347,6 +4351,10 @@ msgstr "結束(_Q)"
 msgid "Account settings"
 msgstr "帳號設定值"
 
+#: ../src/empathy-roster-window.ui.h:2
+msgid "Go _Online"
+msgstr "上線(_O)"
+
 #: ../src/empathy-status-icon.ui.h:2
 msgid "_New Conversation…"
 msgstr "新增談話(_N)…"
@@ -4359,12 +4367,12 @@ msgstr "新增通話(_C)…"
 msgid "Status"
 msgstr "狀態"
 
-#: ../ubuntu-online-accounts/cc-plugins/empathy-accounts-plugin-widget.c:179
+#: ../ubuntu-online-accounts/cc-plugins/account-plugins/empathy-accounts-plugin-widget.c:179
 #: ../ubuntu-online-accounts/cc-plugins/app-plugin/empathy-app-plugin-widget.c:126
 msgid "Done"
 msgstr "完成"
 
-#: ../ubuntu-online-accounts/cc-plugins/empathy-accounts-plugin-widget.c:210
+#: ../ubuntu-online-accounts/cc-plugins/account-plugins/empathy-accounts-plugin-widget.c:210
 msgid "Please enter your account details"
 msgstr "請輸入您的帳號詳細資料"
 
