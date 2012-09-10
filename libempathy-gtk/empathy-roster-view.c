@@ -1046,11 +1046,26 @@ empathy_roster_view_constructed (GObject *object)
 }
 
 static void
+clear_view (EmpathyRosterView *self)
+{
+  g_hash_table_remove_all (self->priv->roster_contacts);
+  g_hash_table_remove_all (self->priv->roster_groups);
+  g_hash_table_remove_all (self->priv->displayed_contacts);
+
+  gtk_container_foreach (GTK_CONTAINER (self),
+      (GtkCallback) gtk_widget_destroy, NULL);
+}
+
+static void
 empathy_roster_view_dispose (GObject *object)
 {
   EmpathyRosterView *self = EMPATHY_ROSTER_VIEW (object);
   void (*chain_up) (GObject *) =
       ((GObjectClass *) empathy_roster_view_parent_class)->dispose;
+
+  /* Start by clearing the view so our internal hash tables are cleared from
+   * objects being destroyed. */
+  clear_view (self);
 
   stop_flashing (self);
 
@@ -1375,17 +1390,6 @@ empathy_roster_view_show_offline (EmpathyRosterView *self,
   egg_list_box_refilter (EGG_LIST_BOX (self));
 
   g_object_notify (G_OBJECT (self), "show-offline");
-}
-
-static void
-clear_view (EmpathyRosterView *self)
-{
-  g_hash_table_remove_all (self->priv->roster_contacts);
-  g_hash_table_remove_all (self->priv->roster_groups);
-  g_hash_table_remove_all (self->priv->displayed_contacts);
-
-  gtk_container_foreach (GTK_CONTAINER (self),
-      (GtkCallback) gtk_widget_destroy, NULL);
 }
 
 void
