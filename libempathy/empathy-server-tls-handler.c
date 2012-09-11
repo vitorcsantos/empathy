@@ -95,10 +95,8 @@ tls_handler_init_async (GAsyncInitable *initable,
     GAsyncReadyCallback callback,
     gpointer user_data)
 {
-  GHashTable *properties;
+  GVariant *properties;
   const gchar *cert_object_path;
-  const gchar *hostname;
-  const gchar * const *identities;
   const gchar *bus_name;
   GError *error = NULL;
   GQuark features[] = { TP_TLS_CERTIFICATE_FEATURE_CORE, 0 };
@@ -114,41 +112,43 @@ tls_handler_init_async (GAsyncInitable *initable,
 
   priv->async_init_res = g_simple_async_result_new (G_OBJECT (self),
       callback, user_data, empathy_server_tls_handler_new_async);
-  properties = tp_channel_borrow_immutable_properties (priv->channel);
+  properties = tp_channel_dup_immutable_properties (priv->channel);
 
-  hostname = tp_asv_get_string (properties,
-     TP_PROP_CHANNEL_TYPE_SERVER_TLS_CONNECTION_HOSTNAME);
-  priv->hostname = g_strdup (hostname);
+  g_variant_lookup (properties,
+      TP_PROP_CHANNEL_TYPE_SERVER_TLS_CONNECTION_HOSTNAME,
+      "s", &priv->hostname);
 
-  DEBUG ("Received hostname: %s", hostname);
+  DEBUG ("Received hostname: %s", priv->hostname);
 
-  identities = tp_asv_get_strv (properties,
-      TP_PROP_CHANNEL_TYPE_SERVER_TLS_CONNECTION_REFERENCE_IDENTITIES);
+  g_variant_lookup (properties,
+      TP_PROP_CHANNEL_TYPE_SERVER_TLS_CONNECTION_REFERENCE_IDENTITIES,
+      "^as", &priv->reference_identities);
 
   /*
    * If the channel doesn't implement the ReferenceIdentities parameter
    * then fallback to the hostname.
    */
-  if (identities == NULL)
+  if (priv->reference_identities == NULL)
     {
-      default_identities[0] = (gchar *) hostname;
+      default_identities[0] = (gchar *) priv->hostname;
       default_identities[1] = NULL;
-      identities = (const gchar **) default_identities;
+      priv->reference_identities = g_strdupv (default_identities);
     }
   else
     {
 #ifdef ENABLE_DEBUG
-      gchar *output = g_strjoinv (", ", (gchar **) identities);
+      gchar *output = g_strjoinv (", ", (gchar **) priv->reference_identities);
       DEBUG ("Received reference identities: %s", output);
       g_free (output);
 #endif /* ENABLE_DEBUG */
   }
 
-  priv->reference_identities = g_strdupv ((gchar **) identities);
-
-  cert_object_path = tp_asv_get_object_path (properties,
-      EMP_IFACE_CHANNEL_TYPE_SERVER_TLS_CONNECTION ".ServerCertificate");
+  g_variant_lookup (properties,
+      EMP_IFACE_CHANNEL_TYPE_SERVER_TLS_CONNECTION ".ServerCertificate",
+      "&s", &cert_object_path);
   bus_name = tp_proxy_get_bus_name (TP_PROXY (priv->channel));
+
+  g_variant_unref (properties);
 
   DEBUG ("Creating an TpTLSCertificate for path %s, bus name %s",
       cert_object_path, bus_name);

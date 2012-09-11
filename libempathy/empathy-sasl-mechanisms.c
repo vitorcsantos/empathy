@@ -344,15 +344,22 @@ gboolean
 empathy_sasl_channel_supports_mechanism (TpChannel *channel,
     const gchar *mechanism)
 {
-  GHashTable *props;
-  const gchar * const *available_mechanisms;
+  GVariant *props;
+  GStrv available_mechanisms;
+  gboolean result;
 
-  props = tp_channel_borrow_immutable_properties (channel);
-  available_mechanisms = tp_asv_get_boxed (props,
+  props = tp_channel_dup_immutable_properties (channel);
+
+  g_variant_lookup (props,
       TP_PROP_CHANNEL_INTERFACE_SASL_AUTHENTICATION_AVAILABLE_MECHANISMS,
-      G_TYPE_STRV);
+      "^as", &available_mechanisms);
 
-  return tp_strv_contains (available_mechanisms, mechanism);
+  result = tp_strv_contains ((const gchar * const *) available_mechanisms,
+      mechanism);
+
+  g_variant_unref (props);
+  g_strfreev (available_mechanisms);
+  return result;
 }
 
 EmpathySaslMechanism

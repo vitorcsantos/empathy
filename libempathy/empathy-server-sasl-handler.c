@@ -373,19 +373,20 @@ static gboolean
 channel_has_may_save_response (TpChannel *channel)
 {
   /* determine if we are permitted to save the password locally */
-  gboolean may_save_response, may_save_response_valid;
+  GVariant *props;
+  gboolean may_save_response;
 
-  may_save_response = tp_asv_get_boolean (
-      tp_channel_borrow_immutable_properties (channel),
-      TP_PROP_CHANNEL_INTERFACE_SASL_AUTHENTICATION_MAY_SAVE_RESPONSE,
-      &may_save_response_valid);
+  props = tp_channel_dup_immutable_properties (channel);
 
-  if (!may_save_response_valid)
+  if (!g_variant_lookup (props,
+        TP_PROP_CHANNEL_INTERFACE_SASL_AUTHENTICATION_MAY_SAVE_RESPONSE,
+        "b", &may_save_response))
     {
       DEBUG ("MaySaveResponse unknown, assuming TRUE");
-      return TRUE;
+      may_save_response = TRUE;
     }
 
+  g_variant_unref (props);
   return may_save_response;
 }
 
