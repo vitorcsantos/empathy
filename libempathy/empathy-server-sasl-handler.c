@@ -369,6 +369,26 @@ auth_cb (GObject *source,
   g_object_unref (self);
 }
 
+static gboolean
+channel_has_may_save_response (TpChannel *channel)
+{
+  /* determine if we are permitted to save the password locally */
+  gboolean may_save_response, may_save_response_valid;
+
+  may_save_response = tp_asv_get_boolean (
+      tp_channel_borrow_immutable_properties (channel),
+      TP_PROP_CHANNEL_INTERFACE_SASL_AUTHENTICATION_MAY_SAVE_RESPONSE,
+      &may_save_response_valid);
+
+  if (!may_save_response_valid)
+    {
+      DEBUG ("MaySaveResponse unknown, assuming TRUE");
+      return TRUE;
+    }
+
+  return may_save_response;
+}
+
 void
 empathy_server_sasl_handler_provide_password (
     EmpathyServerSASLHandler *handler,
@@ -376,7 +396,7 @@ empathy_server_sasl_handler_provide_password (
     gboolean remember)
 {
   EmpathyServerSASLHandlerPriv *priv;
-  gboolean may_save_response, may_save_response_valid;
+  gboolean may_save_response;
 
   g_return_if_fail (EMPATHY_IS_SERVER_SASL_HANDLER (handler));
 
@@ -387,17 +407,7 @@ empathy_server_sasl_handler_provide_password (
 
   DEBUG ("%sremembering the password", remember ? "" : "not ");
 
-  /* determine if we are permitted to save the password locally */
-  may_save_response = tp_asv_get_boolean (
-      tp_channel_borrow_immutable_properties (priv->channel),
-      TP_PROP_CHANNEL_INTERFACE_SASL_AUTHENTICATION_MAY_SAVE_RESPONSE,
-      &may_save_response_valid);
-
-  if (!may_save_response_valid)
-    {
-      DEBUG ("MaySaveResponse unknown, assuming TRUE");
-      may_save_response = TRUE;
-    }
+  may_save_response = channel_has_may_save_response (priv->channel);
 
   if (remember)
     {
@@ -501,24 +511,14 @@ empathy_server_sasl_handler_can_save_response_somewhere (
     EmpathyServerSASLHandler *self)
 {
   EmpathyServerSASLHandlerPriv *priv;
-  gboolean may_save_response, may_save_response_valid;
+  gboolean may_save_response;
   gboolean has_storage_iface;
 
   g_return_val_if_fail (EMPATHY_IS_SERVER_SASL_HANDLER (self), FALSE);
 
   priv = self->priv;
 
-  /* determine if we are permitted to save the password locally */
-  may_save_response = tp_asv_get_boolean (
-      tp_channel_borrow_immutable_properties (priv->channel),
-      TP_PROP_CHANNEL_INTERFACE_SASL_AUTHENTICATION_MAY_SAVE_RESPONSE,
-      &may_save_response_valid);
-
-  if (!may_save_response_valid)
-    {
-      DEBUG ("MaySaveResponse unknown, assuming TRUE");
-      may_save_response = TRUE;
-    }
+  may_save_response = channel_has_may_save_response (priv->channel);
 
   has_storage_iface = tp_proxy_has_interface_by_id (priv->channel,
       EMP_IFACE_QUARK_CHANNEL_INTERFACE_CREDENTIALS_STORAGE);
