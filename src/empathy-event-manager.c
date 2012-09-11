@@ -34,6 +34,7 @@
 #include <libempathy/empathy-tp-chat.h>
 #include <libempathy/empathy-utils.h>
 #include <libempathy/empathy-gsettings.h>
+#include <libempathy/empathy-sasl-mechanisms.h>
 
 #include <extensions/extensions.h>
 
@@ -966,15 +967,7 @@ approve_sasl_channel (EmpathyEventManager *self,
     TpAddDispatchOperationContext *context,
     TpChannel *channel)
 {
-  GHashTable *props;
-  const gchar * const *available_mechanisms;
-
-  props = tp_channel_borrow_immutable_properties (channel);
-  available_mechanisms = tp_asv_get_boxed (props,
-      TP_PROP_CHANNEL_INTERFACE_SASL_AUTHENTICATION_AVAILABLE_MECHANISMS,
-      G_TYPE_STRV);
-
-  if (tp_strv_contains (available_mechanisms, "X-TELEPATHY-PASSWORD"))
+  if (empathy_sasl_channel_supports_mechanism (channel, "X-TELEPATHY-PASSWORD"))
     {
       event_manager_add (approval->manager, account, NULL,
           EMPATHY_EVENT_TYPE_AUTH,
