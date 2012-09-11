@@ -754,7 +754,7 @@ nick_command_supported (EmpathyChat *chat)
 	EmpathyChatPriv * priv = GET_PRIV (chat);
 	TpConnection    *connection;
 
-	connection = tp_channel_borrow_connection (TP_CHANNEL (priv->tp_chat));
+	connection = tp_channel_get_connection (TP_CHANNEL (priv->tp_chat));
 	return tp_proxy_has_interface_by_id (connection,
 		EMP_IFACE_QUARK_CONNECTION_INTERFACE_RENAMING);
 }
@@ -988,7 +988,7 @@ chat_command_whois (EmpathyChat *chat,
 	TpConnection *conn;
 	EmpathyClientFactory *factory;
 
-	conn = tp_channel_borrow_connection ((TpChannel *) priv->tp_chat);
+	conn = tp_channel_get_connection ((TpChannel *) priv->tp_chat);
 	factory = empathy_client_factory_dup ();
 
 	/* Element 0 of 'strv' is "whois"; element 1 is the contact ID
@@ -1534,7 +1534,7 @@ append_balance_error (EmpathyChat *chat,
 		      const gchar *message_body)
 {
 	EmpathyChatPriv *priv = GET_PRIV (chat);
-	TpConnection *conn = tp_channel_borrow_connection (TP_CHANNEL (priv->tp_chat));
+	TpConnection *conn = tp_channel_get_connection (TP_CHANNEL (priv->tp_chat));
 	const gchar *uri = tp_connection_get_balance_uri (conn);
 	const gchar *error = _("insufficient balance to send message");
 	gchar *str, *str_markup = NULL;
@@ -3339,7 +3339,7 @@ chat_constructed (GObject *object)
 
 	if (priv->tp_chat != NULL) {
 		TpChannel *channel = TP_CHANNEL (priv->tp_chat);
-		TpConnection *conn = tp_channel_borrow_connection (channel);
+		TpConnection *conn = tp_channel_get_connection (channel);
 		gboolean supports_avatars =
 			tp_proxy_has_interface_by_id (conn,
 						      TP_IFACE_QUARK_CONNECTION_INTERFACE_AVATARS);

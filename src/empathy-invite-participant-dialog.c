@@ -114,7 +114,7 @@ get_tp_contact_for_chat (EmpathyInviteParticipantDialog *self,
 {
   TpConnection *chat_conn;
 
-  chat_conn = tp_channel_borrow_connection (TP_CHANNEL (self->priv->tp_chat));
+  chat_conn = tp_channel_get_connection (TP_CHANNEL (self->priv->tp_chat));
   if (chat_conn == NULL)
     return NULL;
 
@@ -177,7 +177,7 @@ has_contact_list (EmpathyInviteParticipantDialog *self)
 {
   TpConnection *conn;
 
-  conn = tp_channel_borrow_connection (TP_CHANNEL (self->priv->tp_chat));
+  conn = tp_channel_get_connection (TP_CHANNEL (self->priv->tp_chat));
 
   return tp_proxy_has_interface_by_id (conn,
       TP_IFACE_QUARK_CONNECTION_INTERFACE_CONTACT_LIST);

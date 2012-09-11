@@ -1119,7 +1119,7 @@ empathy_tp_chat_get_account (EmpathyTpChat *self)
 
   g_return_val_if_fail (EMPATHY_IS_TP_CHAT (self), NULL);
 
-  connection = tp_channel_borrow_connection (TP_CHANNEL (self));
+  connection = tp_channel_get_connection (TP_CHANNEL (self));
 
   return tp_connection_get_account (connection);
 }
@@ -1287,7 +1287,7 @@ tp_chat_prepare_ready_async (TpProxy *proxy,
   self->priv->ready_result = g_simple_async_result_new (G_OBJECT (self),
     callback, user_data, tp_chat_prepare_ready_async);
 
-  connection = tp_channel_borrow_connection (channel);
+  connection = tp_channel_get_connection (channel);
 
   if (tp_proxy_has_interface_by_id (self,
         TP_IFACE_QUARK_CHANNEL_INTERFACE_PASSWORD))

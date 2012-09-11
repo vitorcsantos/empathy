@@ -3037,7 +3037,7 @@ media_stream_error_to_txt (EmpathyCallWindow *self,
 
       case TP_MEDIA_STREAM_ERROR_INVALID_CM_BEHAVIOR:
         tp_connection_parse_object_path (
-            tp_channel_borrow_connection (TP_CHANNEL (call)),
+            tp_channel_get_connection (TP_CHANNEL (call)),
             NULL, &cm);
 
         url = g_strdup_printf ("http://bugs.freedesktop.org/enter_bug.cgi?"
@@ -3124,7 +3124,7 @@ show_balance_error (EmpathyCallWindow *self)
       "call-channel", &call,
       NULL);
 
-  conn = tp_channel_borrow_connection (call);
+  conn = tp_channel_get_connection (call);
   g_object_unref (call);
 
   uri = tp_connection_get_balance_uri (conn);

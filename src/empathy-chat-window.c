@@ -584,7 +584,7 @@ chat_window_conversation_menu_update (EmpathyChatWindow *self)
 
   if (tp_chat != NULL)
     {
-      connection = tp_channel_borrow_connection (TP_CHANNEL (tp_chat));
+      connection = tp_channel_get_connection (TP_CHANNEL (tp_chat));
 
       sensitive = empathy_tp_chat_can_add_contact (tp_chat) &&
         (tp_connection_get_status (connection, NULL) ==
@@ -2037,7 +2037,7 @@ drag_data_received_individual_id (EmpathyChatWindow *self,
       goto out;
     }
 
-  conn = tp_channel_borrow_connection ((TpChannel *) chat);
+  conn = tp_channel_get_connection ((TpChannel *) chat);
   tp_contact = empathy_get_tp_contact_for_individual (individual, conn);
   if (tp_contact == NULL)
     {
