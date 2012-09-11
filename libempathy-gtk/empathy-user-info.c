@@ -185,7 +185,7 @@ fill_contact_info_grid (EmpathyUserInfo *self)
   connection = tp_account_get_connection (self->priv->account);
   contact = tp_connection_get_self_contact (connection);
   specs = tp_connection_get_contact_info_supported_fields (connection);
-  info = tp_contact_get_contact_info (contact);
+  info = tp_contact_dup_contact_info (contact);
 
   /* Look at the fields set in our vCard */
   for (l = info; l != NULL; l = l->next)
@@ -305,7 +305,7 @@ fill_contact_info_grid (EmpathyUserInfo *self)
     }
 
   g_list_free (specs);
-  g_list_free (info);
+  tp_contact_info_list_free (info);
 
   return n_rows;
 }

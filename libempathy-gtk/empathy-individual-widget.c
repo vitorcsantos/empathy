@@ -239,7 +239,7 @@ details_update_show (EmpathyIndividualWidget *self,
   TpConnection *conn;
   TpAccount *account;
 
-  info = tp_contact_get_contact_info (contact);
+  info = tp_contact_dup_contact_info (contact);
   info = g_list_sort (info, (GCompareFunc) empathy_contact_info_field_cmp);
   for (l = info; l != NULL; l = l->next)
     {
@@ -309,7 +309,7 @@ details_update_show (EmpathyIndividualWidget *self,
       n_rows++;
     }
 
-  g_list_free (info);
+  tp_contact_info_list_free (info);
 
   return n_rows;
 }
