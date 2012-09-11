@@ -500,7 +500,7 @@ list_pending_messages (EmpathyTpChat *self)
 {
   GList *messages, *l;
 
-  messages = tp_text_channel_get_pending_messages (TP_TEXT_CHANNEL (self));
+  messages = tp_text_channel_dup_pending_messages (TP_TEXT_CHANNEL (self));
 
   for (l = messages; l != NULL; l = g_list_next (l))
     {
@@ -509,7 +509,7 @@ list_pending_messages (EmpathyTpChat *self)
       handle_incoming_message (self, message, FALSE);
     }
 
-  g_list_free (messages);
+  g_list_free_full (messages, g_object_unref);
 }
 
 static void
