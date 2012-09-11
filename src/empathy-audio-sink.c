@@ -24,7 +24,11 @@
 #include <stdlib.h>
 
 #include <gst/audio/audio.h>
+#ifdef HAVE_GST1
+#include <gst/audio/streamvolume.h>
+#else
 #include <gst/interfaces/streamvolume.h>
+#endif
 
 #include <telepathy-glib/telepathy-glib.h>
 

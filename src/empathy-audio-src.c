@@ -23,7 +23,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#ifdef HAVE_GST1
+#include <gst/audio/streamvolume.h>
+#else
 #include <gst/interfaces/streamvolume.h>
+#endif
 
 #include <libempathy/empathy-utils.h>
 #include "empathy-audio-utils.h"
