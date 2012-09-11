@@ -2499,7 +2499,7 @@ log_window_who_populate (EmpathyLogWindow *self)
       GList *accounts, *l;
 
       manager = empathy_account_chooser_get_account_manager (account_chooser);
-      accounts = tp_account_manager_get_valid_accounts (manager);
+      accounts = tp_account_manager_dup_valid_accounts (manager);
 
       for (l = accounts; l != NULL; l = l->next)
         {
@@ -2510,7 +2510,7 @@ log_window_who_populate (EmpathyLogWindow *self)
               get_entities_for_account, ctx);
         }
 
-      g_list_free (accounts);
+      g_list_free_full (accounts, g_object_unref);
     }
   _tpl_action_chain_append (self->priv->chain, select_first_entity, self);
   _tpl_action_chain_start (self->priv->chain);

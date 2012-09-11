@@ -234,7 +234,7 @@ contact_blocking_dialog_am_prepared (GObject *am,
       return;
     }
 
-  accounts = tp_account_manager_get_valid_accounts (TP_ACCOUNT_MANAGER (am));
+  accounts = tp_account_manager_dup_valid_accounts (TP_ACCOUNT_MANAGER (am));
 
   for (ptr = accounts; ptr != NULL; ptr = ptr->next)
     {
@@ -247,7 +247,7 @@ contact_blocking_dialog_am_prepared (GObject *am,
       contact_blocking_dialog_refilter_account_chooser (self);
     }
 
-  g_list_free (accounts);
+  g_list_free_full (accounts, g_object_unref);
 }
 
 static void

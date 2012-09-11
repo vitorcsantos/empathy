@@ -709,7 +709,7 @@ account_manager_chatroom_ready_cb (GObject *source_object,
       return;
     }
 
-  accounts = tp_account_manager_get_valid_accounts (account_manager);
+  accounts = tp_account_manager_dup_valid_accounts (account_manager);
 
   for (l = accounts; l != NULL; l = g_list_next (l))
     {
@@ -722,7 +722,7 @@ account_manager_chatroom_ready_cb (GObject *source_object,
       tp_g_signal_connect_object (account, "notify::connection",
         G_CALLBACK (account_connection_changed_cb), chatroom_manager, 0);
     }
-  g_list_free (accounts);
+  g_list_free_full (accounts, g_object_unref);
 }
 
 static void

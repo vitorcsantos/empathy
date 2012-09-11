@@ -126,7 +126,7 @@ fix_xmpp_account_priority (TpAccountManager *am)
 {
   GList *accounts, *l;
 
-  accounts = tp_account_manager_get_valid_accounts (am);
+  accounts = tp_account_manager_dup_valid_accounts (am);
   for (l = accounts; l != NULL; l = g_list_next (l))
     {
       TpAccount *account = l->data;
@@ -157,7 +157,7 @@ fix_xmpp_account_priority (TpAccountManager *am)
       g_hash_table_unref (params);
     }
 
-  g_list_free (accounts);
+  g_list_free_full (accounts, g_object_unref);
 }
 
 static void
@@ -165,7 +165,7 @@ set_facebook_account_fallback_server (TpAccountManager *am)
 {
   GList *accounts, *l;
 
-  accounts = tp_account_manager_get_valid_accounts (am);
+  accounts = tp_account_manager_dup_valid_accounts (am);
   for (l = accounts; l != NULL; l = g_list_next (l))
     {
       TpAccount *account = l->data;
@@ -197,7 +197,7 @@ set_facebook_account_fallback_server (TpAccountManager *am)
       g_hash_table_unref (params);
     }
 
-  g_list_free (accounts);
+  g_list_free_full (accounts, g_object_unref);
 }
 
 static void
@@ -540,7 +540,7 @@ migrate_accounts_to_uoa (SanityCtx *ctx)
 
   manager = empathy_uoa_manager_dup ();
 
-  accounts = tp_account_manager_get_valid_accounts (ctx->am);
+  accounts = tp_account_manager_dup_valid_accounts (ctx->am);
   for (l = accounts; l != NULL; l = g_list_next (l))
     {
       TpAccount *account = l->data;
@@ -561,6 +561,8 @@ migrate_accounts_to_uoa (SanityCtx *ctx)
 
       migrate_account_to_uoa (ctx->am, account);
     }
+
+  g_list_free_full (accounts, g_object_unref);
 
   g_object_unref (manager);
 }

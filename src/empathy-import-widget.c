@@ -123,14 +123,14 @@ import_widget_add_accounts_to_model (EmpathyImportWidget *self)
 
       value = g_hash_table_lookup (data->settings, "account");
 
-      accounts = tp_account_manager_get_valid_accounts (manager);
+      accounts = tp_account_manager_dup_valid_accounts (manager);
 
       /* Only set the "Import" cell to be active if there isn't already an
        * account set up with the same account id. */
       import = !import_widget_account_id_in_list (accounts,
           g_value_get_string (value));
 
-      g_list_free (accounts);
+      g_list_free_full (accounts, g_object_unref);
 
       gtk_list_store_insert_with_values (GTK_LIST_STORE (model), NULL, -1,
           COL_IMPORT, import,

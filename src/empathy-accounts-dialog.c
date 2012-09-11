@@ -2199,12 +2199,12 @@ accounts_dialog_accounts_setup (EmpathyAccountsDialog *dialog)
       dialog);
 
   /* Add existing accounts */
-  accounts = tp_account_manager_get_valid_accounts (priv->account_manager);
+  accounts = tp_account_manager_dup_valid_accounts (priv->account_manager);
   for (l = accounts; l; l = l->next)
     {
       accounts_dialog_add_account (dialog, l->data);
     }
-  g_list_free (accounts);
+  g_list_free_full (accounts, g_object_unref);
 
   priv->cms = empathy_connection_managers_dup_singleton ();
 

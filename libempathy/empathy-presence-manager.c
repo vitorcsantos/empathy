@@ -433,13 +433,13 @@ account_manager_ready_cb (GObject *source_object,
   most_available_presence_changed (account_manager, state, status,
     status_message, self);
 
-  accounts = tp_account_manager_get_valid_accounts (self->priv->manager);
+  accounts = tp_account_manager_dup_valid_accounts (self->priv->manager);
   for (l = accounts; l != NULL; l = l->next)
     {
       tp_g_signal_connect_object (l->data, "status-changed",
           G_CALLBACK (account_status_changed_cb), self, 0);
     }
-  g_list_free (accounts);
+  g_list_free_full (accounts, g_object_unref);
 
   g_free (status);
   g_free (status_message);

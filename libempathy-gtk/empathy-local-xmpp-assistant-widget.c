@@ -223,7 +223,7 @@ empathy_local_xmpp_assistant_widget_should_create_account (
   gboolean salut_created = FALSE;
   GList *accounts, *l;
 
-  accounts = tp_account_manager_get_valid_accounts (manager);
+  accounts = tp_account_manager_dup_valid_accounts (manager);
 
   for (l = accounts; l != NULL;  l = g_list_next (l))
     {
@@ -236,7 +236,7 @@ empathy_local_xmpp_assistant_widget_should_create_account (
         }
     }
 
-  g_list_free (accounts);
+  g_list_free_full (accounts, g_object_unref);
 
   return !salut_created;
 }

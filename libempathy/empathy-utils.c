@@ -567,7 +567,7 @@ empathy_account_manager_get_accounts_connected (gboolean *connecting)
           TP_ACCOUNT_MANAGER_FEATURE_CORE)))
     g_critical (G_STRLOC ": %s called before AccountManager ready", G_STRFUNC);
 
-  accounts = tp_account_manager_get_valid_accounts (manager);
+  accounts = tp_account_manager_dup_valid_accounts (manager);
 
   for (l = accounts; l != NULL; l = l->next)
     {
@@ -583,7 +583,7 @@ empathy_account_manager_get_accounts_connected (gboolean *connecting)
         break;
     }
 
-  g_list_free (accounts);
+  g_list_free_full (accounts, g_object_unref);
   g_object_unref (manager);
 
   if (connecting != NULL)

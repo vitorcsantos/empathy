@@ -188,7 +188,7 @@ am_prepare_cb (GObject *source,
       goto out;
     }
 
-  accounts = tp_account_manager_get_valid_accounts (self->priv->mgr);
+  accounts = tp_account_manager_dup_valid_accounts (self->priv->mgr);
   for (l = accounts; l != NULL; l = g_list_next (l))
     {
       TpAccount *account = l->data;
@@ -199,7 +199,7 @@ am_prepare_cb (GObject *source,
   tp_g_signal_connect_object (self->priv->mgr, "account-validity-changed",
       G_CALLBACK (account_validity_changed_cb), self, 0);
 
-  g_list_free (accounts);
+  g_list_free_full (accounts, g_object_unref);
 
 out:
   g_object_unref (self);

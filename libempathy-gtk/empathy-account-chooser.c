@@ -280,7 +280,7 @@ account_manager_prepared_cb (GObject *source_object,
       return;
     }
 
-  accounts = tp_account_manager_get_valid_accounts (manager);
+  accounts = tp_account_manager_dup_valid_accounts (manager);
 
   for (l = accounts; l != NULL; l = l->next)
     {
@@ -301,7 +301,7 @@ account_manager_prepared_cb (GObject *source_object,
           self, 0);
     }
 
-  g_list_free (accounts);
+  g_list_free_full (accounts, g_object_unref);
 
   if (self->priv->select_when_ready != NULL)
     {

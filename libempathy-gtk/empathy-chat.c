@@ -3518,7 +3518,7 @@ account_manager_prepared_cb (GObject *source_object,
 		return;
 	}
 
-	accounts = tp_account_manager_get_valid_accounts (account_manager);
+	accounts = tp_account_manager_dup_valid_accounts (account_manager);
 
 	for (l = accounts; l != NULL; l = l->next) {
 		TpAccount *account = l->data;
@@ -3527,7 +3527,7 @@ account_manager_prepared_cb (GObject *source_object,
 					     chat, 0);
 	}
 
-	g_list_free (accounts);
+	g_list_free_full (accounts, g_object_unref);
 }
 
 static void

@@ -283,7 +283,7 @@ add_temporary_individuals (EmpathyContactChooser *self,
   self->priv->add_temp_ctx = add_temporary_individual_ctx_new (self);
 
   /* Try to add an individual for each connected account */
-  accounts = tp_account_manager_get_valid_accounts (self->priv->account_mgr);
+  accounts = tp_account_manager_dup_valid_accounts (self->priv->account_mgr);
   for (l = accounts; l != NULL; l = g_list_next (l))
     {
       TpAccount *account = l->data;
@@ -303,7 +303,7 @@ add_temporary_individuals (EmpathyContactChooser *self,
       g_object_unref (factory);
     }
 
-  g_list_free (accounts);
+  g_list_free_full (accounts, g_object_unref);
 }
 
 static void

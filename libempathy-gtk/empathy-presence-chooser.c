@@ -759,7 +759,7 @@ update_sensitivity_am_prepared_cb (GObject *source_object,
 		return;
 	}
 
-	accounts = tp_account_manager_get_valid_accounts (manager);
+	accounts = tp_account_manager_dup_valid_accounts (manager);
 
 	for (l = accounts ; l != NULL ; l = g_list_next (l)) {
 		TpAccount *a = TP_ACCOUNT (l->data);
@@ -770,7 +770,7 @@ update_sensitivity_am_prepared_cb (GObject *source_object,
 		}
 	}
 
-	g_list_free (accounts);
+	g_list_free_full (accounts, g_object_unref);
 
 	if (!g_network_monitor_get_network_available (priv->connectivity))
 		sensitive = FALSE;

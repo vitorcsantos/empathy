@@ -195,7 +195,7 @@ manager_prepared_cb (GObject *source,
       goto out;
     }
 
-  accounts = tp_account_manager_get_valid_accounts (manager);
+  accounts = tp_account_manager_dup_valid_accounts (manager);
   while (accounts != NULL)
     {
       TpAccount *account = accounts->data;
@@ -219,7 +219,7 @@ manager_prepared_cb (GObject *source,
 
       accounts = g_list_delete_link (accounts, accounts);
     }
-  g_list_free (accounts);
+  g_list_free_full (accounts, g_object_unref);
 
 out:
   tp_weak_ref_destroy (wr);

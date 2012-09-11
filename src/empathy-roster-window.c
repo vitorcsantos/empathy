@@ -1507,7 +1507,7 @@ set_notebook_page (EmpathyRosterWindow *self)
 
   gtk_spinner_stop (GTK_SPINNER (self->priv->spinner_loading));
 
-  accounts = tp_account_manager_get_valid_accounts (
+  accounts = tp_account_manager_dup_valid_accounts (
       self->priv->account_manager);
 
   len = g_list_length (accounts);
@@ -1560,7 +1560,7 @@ set_notebook_page (EmpathyRosterWindow *self)
   display_page_contact_list (self);
 
 out:
-  g_list_free (accounts);
+  g_list_free_full (accounts, g_object_unref);
 }
 
 static void
@@ -1636,7 +1636,8 @@ account_manager_prepared_cb (GObject *source_object,
       return;
     }
 
-  accounts = tp_account_manager_get_valid_accounts (self->priv->account_manager);
+  accounts = tp_account_manager_dup_valid_accounts (
+      self->priv->account_manager);
   for (j = accounts; j != NULL; j = j->next)
     {
       TpAccount *account = TP_ACCOUNT (j->data);
@@ -1655,7 +1656,7 @@ account_manager_prepared_cb (GObject *source_object,
 
   set_notebook_page (self);
 
-  g_list_free (accounts);
+  g_list_free_full (accounts, g_object_unref);
 }
 
 void

@@ -189,7 +189,7 @@ publish_to_all_am_prepared_cb (GObject *source_object,
       goto out;
     }
 
-  accounts = tp_account_manager_get_valid_accounts (manager);
+  accounts = tp_account_manager_dup_valid_accounts (manager);
   for (l = accounts; l; l = l->next)
     {
       TpConnection *conn = tp_account_get_connection (TP_ACCOUNT (l->data));
@@ -197,7 +197,7 @@ publish_to_all_am_prepared_cb (GObject *source_object,
       if (conn != NULL)
         publish_location (data->self, conn, data->force_publication);
     }
-  g_list_free (accounts);
+  g_list_free_full (accounts, g_object_unref);
 
 out:
   g_object_unref (data->self);
@@ -675,7 +675,7 @@ account_manager_prepared_cb (GObject *source_object,
       return;
     }
 
-  accounts = tp_account_manager_get_valid_accounts (account_manager);
+  accounts = tp_account_manager_dup_valid_accounts (account_manager);
   for (l = accounts; l != NULL; l = l->next)
     {
       TpAccount *account = TP_ACCOUNT (l->data);
@@ -683,7 +683,7 @@ account_manager_prepared_cb (GObject *source_object,
       tp_g_signal_connect_object (account, "status-changed",
           G_CALLBACK (new_connection_cb), self, 0);
     }
-  g_list_free (accounts);
+  g_list_free_full (accounts, g_object_unref);
 }
 
 static void

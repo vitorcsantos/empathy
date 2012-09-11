@@ -288,7 +288,7 @@ find_phone_accounts (void)
   am = tp_account_manager_dup ();
   g_return_val_if_fail (am != NULL, NULL);
 
-  accounts = tp_account_manager_get_valid_accounts (am);
+  accounts = tp_account_manager_dup_valid_accounts (am);
   for (l = accounts; l != NULL; l = g_list_next (l))
     {
       TpAccount *account = l->data;
@@ -303,7 +303,7 @@ find_phone_accounts (void)
       found = g_list_prepend (found, g_object_ref (account));
     }
 
-  g_list_free (accounts);
+  g_list_free_full (accounts, g_object_unref);
   g_object_unref (am);
 
   return found;
