@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: empathy gnome-2-28\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug."
 "cgi?product=empathy&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2012-08-20 16:02+0000\n"
-"PO-Revision-Date: 2012-08-26 22:10+0530\n"
+"POT-Creation-Date: 2012-09-05 07:14+0000\n"
+"PO-Revision-Date: 2012-09-11 20:07+0530\n"
 "Last-Translator: Nilamdyuti Goswami <ngoswami@redhat.com>\n"
 "Language-Team: as_IN <kde-i18n-doc@kde.org>\n"
 "Language: \n"
@@ -504,16 +504,16 @@ msgstr "নিৰ্বাচিত ফাইল এটা স্বাভাব
 msgid "The selected file is empty"
 msgstr "নিৰ্বাচিত ফাইল ৰিক্ত"
 
-#: ../libempathy/empathy-keyring.c:75
+#: ../libempathy/empathy-keyring.c:85 ../libempathy/empathy-keyring.c:194
 msgid "Password not found"
 msgstr "পাছৱাৰ্ড পোৱা নগল"
 
-#: ../libempathy/empathy-keyring.c:202
+#: ../libempathy/empathy-keyring.c:594
 #, c-format
 msgid "IM account password for %s (%s)"
 msgstr "%s (%s) ৰ বাবে IM একাওন্ট পাছৱাৰ্ড"
 
-#: ../libempathy/empathy-keyring.c:237
+#: ../libempathy/empathy-keyring.c:631
 #, c-format
 msgid "Password for chatroom '%s' on account %s (%s)"
 msgstr "একাওন্ট %s (%s) ত চেটৰুম '%s' ৰ বাবে পাছৱাৰ্ড"
@@ -878,19 +878,19 @@ msgstr "চাৰ্ভাৰত এটা নতুন একাওন্ট �
 #. * like: "MyUserName on freenode".
 #. * You should reverse the order of these arguments if the
 #. * server should come before the login id in your locale.
-#: ../libempathy-gtk/empathy-account-widget.c:2269
+#: ../libempathy-gtk/empathy-account-widget.c:2263
 #, c-format
 msgid "%1$s on %2$s"
 msgstr "%1$s %2$s ত"
 
 #. To translators: The parameter is the protocol name. The resulting
 #. * string will be something like: "Jabber Account"
-#: ../libempathy-gtk/empathy-account-widget.c:2295
+#: ../libempathy-gtk/empathy-account-widget.c:2289
 #, c-format
 msgid "%s Account"
 msgstr "%s একাওন্ট"
 
-#: ../libempathy-gtk/empathy-account-widget.c:2299
+#: ../libempathy-gtk/empathy-account-widget.c:2293
 msgid "New account"
 msgstr "নতুন একাওন্ট"
 
@@ -3115,11 +3115,11 @@ msgstr ""
 msgid "No protocol backends installed"
 msgstr "কোনো প্ৰটোকল বেকএণ্ড ইনস্টল নাই"
 
-#: ../src/empathy-auth-client.c:288
+#: ../src/empathy-auth-client.c:296
 msgid " - Empathy authentication client"
 msgstr " - Empathy প্ৰমাণীকৰণ ক্লাএন্ট"
 
-#: ../src/empathy-auth-client.c:304
+#: ../src/empathy-auth-client.c:312
 msgid "Empathy authentication client"
 msgstr "Empathy প্ৰমাণীকৰণ ক্লাএন্ট"
 
@@ -3748,7 +3748,7 @@ msgstr "আপোনাক %s ত যোগদান দিবলে আমন�
 msgid "Incoming file transfer from %s"
 msgstr "%s দ্বাৰা প্ৰৰিত ফাইল আগত"
 
-#: ../src/empathy-event-manager.c:983 ../src/empathy-roster-window.c:224
+#: ../src/empathy-event-manager.c:983 ../src/empathy-roster-window.c:226
 msgid "Password required"
 msgstr "পাছৱাৰ্ডৰ প্ৰয়োজন"
 
@@ -4100,7 +4100,7 @@ msgstr "দলসমূহ দেখুৱাওক"
 msgid "Show account balances"
 msgstr "একাওন্ট বেলেঞ্চসমূহ দেখুৱাওক"
 
-#: ../src/empathy-preferences.ui.h:4 ../src/empathy-roster-window.c:2141
+#: ../src/empathy-preferences.ui.h:4 ../src/empathy-roster-window.c:2181
 msgid "Contact List"
 msgstr "পৰিচিত ব্যক্তিৰ তালিকা"
 
@@ -4265,61 +4265,65 @@ msgstr "অপৰ:"
 msgid "Themes"
 msgstr "থীমসমূহ"
 
-#: ../src/empathy-roster-window.c:241
+#: ../src/empathy-roster-window.c:243
 msgid "Provide Password"
 msgstr "পাছৱাৰ্ড প্ৰদান কৰক"
 
-#: ../src/empathy-roster-window.c:247
+#: ../src/empathy-roster-window.c:249
 msgid "Disconnect"
 msgstr "বিচ্ছিন্ন কৰক"
 
-#: ../src/empathy-roster-window.c:418
+#: ../src/empathy-roster-window.c:443
 msgid "You need to setup an account to see contacts here."
 msgstr "আপুনি ইয়াত পৰিচয়সমূহ চাবলে এটা একাওন্ট সংস্থাপন কৰিব লাগিব।"
 
-#: ../src/empathy-roster-window.c:505
+#: ../src/empathy-roster-window.c:531
 #, c-format
 msgid "Sorry, %s accounts can’t be used until your %s software is updated."
 msgstr ""
 "ক্ষমা কৰিব, %s একাওন্টসমূহ ব্যৱহাৰ কৰিব নোৱাৰি যেতিয়ালৈকে %s চফ্টৱেৰ ব্যৱহাৰ কৰা "
 "নহয়।"
 
-#: ../src/empathy-roster-window.c:571
+#: ../src/empathy-roster-window.c:597
 msgid "Update software..."
 msgstr "চফ্টৱেৰ আপডেইট কৰক..."
 
-#: ../src/empathy-roster-window.c:577 ../src/empathy-roster-window.c:694
+#: ../src/empathy-roster-window.c:603 ../src/empathy-roster-window.c:720
 msgid "Close"
 msgstr "বন্ধ কৰক"
 
-#: ../src/empathy-roster-window.c:682
+#: ../src/empathy-roster-window.c:708
 msgid "Reconnect"
 msgstr "পুনৰ সংযোগ কৰক"
 
-#: ../src/empathy-roster-window.c:688
+#: ../src/empathy-roster-window.c:714
 msgid "Edit Account"
 msgstr "একাওন্ট সম্পাদন কৰক"
 
-#: ../src/empathy-roster-window.c:868
+#: ../src/empathy-roster-window.c:894
 msgid "Top up account"
 msgstr "টপ আপ একাওন্ট"
 
-#: ../src/empathy-roster-window.c:1530
+#: ../src/empathy-roster-window.c:1556
 msgid "You need to enable one of your accounts to see contacts here."
 msgstr "আপুনি পৰিচয়সমূহ ইয়াত চাবলে আপোনাৰ একাওন্টসমূহৰ এটা সামৰ্থবান কৰিব লাগিব।"
 
 #. translators: argument is an account name
-#: ../src/empathy-roster-window.c:1538
+#: ../src/empathy-roster-window.c:1564
 #, c-format
 msgid "You need to enable %s to see contacts here."
 msgstr "আপুনি পৰিচয়সমূহ ইয়াত চাবলে %s সামৰ্থবান কৰিব লাগিব।"
 
-#: ../src/empathy-roster-window.c:1595
+#: ../src/empathy-roster-window.c:1624
+#| msgid "You need to enable %s to see contacts here."
+msgid "Change your presence to see contacts here"
+msgstr "ইয়াত পৰিচয়সমূহ চাবলে আপোনাৰ উপস্থিতি সলনি কৰক"
+
+#: ../src/empathy-roster-window.c:1633
 msgid "No match found"
 msgstr "কোনো মিল পোৱা নগল"
 
-#: ../src/empathy-roster-window.c:1599
-#| msgid "Show offline contacts"
+#: ../src/empathy-roster-window.c:1638
 msgid "No online contacts"
 msgstr "কোনো অনলাইন পৰিচয় নাই"
 
@@ -4391,6 +4395,10 @@ msgstr "প্ৰস্থান (_Q)"
 #: ../src/empathy-roster-window.ui.h:1
 msgid "Account settings"
 msgstr "একাওন্ট সংহতিসমূহ"
+
+#: ../src/empathy-roster-window.ui.h:2
+msgid "Go _Online"
+msgstr "অনলাইন হওক (_O)"
 
 #: ../src/empathy-status-icon.ui.h:2
 msgid "_New Conversation…"
