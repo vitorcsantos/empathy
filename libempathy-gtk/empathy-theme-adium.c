@@ -1439,6 +1439,8 @@ theme_adium_finalize (GObject *object)
   g_object_unref (self->priv->gsettings_chat);
   g_object_unref (self->priv->gsettings_desktop);
 
+  g_free (self->priv->variant);
+
   G_OBJECT_CLASS (empathy_theme_adium_parent_class)->finalize (object);
 }
 
