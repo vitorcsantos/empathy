@@ -684,10 +684,13 @@ failure_removed_cb (EmpathyWebcredentialsMonitor *monitor,
       AgAccountService *service = ag_account_service_new (account, l->data);
       gchar *account_name = _service_dup_tp_account_name (service);
 
-      DEBUG ("Reconnect account %s", account_name);
+      if (account_name != NULL)
+        {
+          DEBUG ("Reconnect account %s", account_name);
 
-      mcp_account_storage_emit_reconnect (MCP_ACCOUNT_STORAGE (self),
-          account_name);
+          mcp_account_storage_emit_reconnect (MCP_ACCOUNT_STORAGE (self),
+              account_name);
+        }
 
       g_free (account_name);
       g_object_unref (service);
