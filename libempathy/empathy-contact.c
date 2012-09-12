@@ -430,6 +430,7 @@ contact_finalize (GObject *object)
 
   g_clear_object (&priv->groups);
   g_free (priv->alias);
+  g_free (priv->logged_alias);
   g_free (priv->id);
   g_strfreev (priv->client_types);
 
