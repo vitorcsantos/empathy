@@ -128,6 +128,7 @@ check_connection (EmpathyConnectionAggregator *self,
       contact_list_changed_cb (conn, contacts, empty, self);
       g_ptr_array_unref (empty);
     }
+  g_ptr_array_unref (contacts);
 
   tp_g_signal_connect_object (conn, "invalidated",
       G_CALLBACK (conn_invalidated_cb), self, 0);
