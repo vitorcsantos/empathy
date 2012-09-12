@@ -113,7 +113,7 @@ empathy_roster_model_get_individuals (EmpathyRosterModel *self)
 }
 
 /**
- * empathy_roster_model_get_groups_for_individual:
+ * empathy_roster_model_dup_groups_for_individual:
  * @self: a #EmpathyRosterModel
  * @individual: a #FolksIndidivual
  *
@@ -123,7 +123,7 @@ empathy_roster_model_get_individuals (EmpathyRosterModel *self)
  * groups of @individual
  */
 GList *
-empathy_roster_model_get_groups_for_individual (EmpathyRosterModel *self,
+empathy_roster_model_dup_groups_for_individual (EmpathyRosterModel *self,
     FolksIndividual *individual)
 {
   EmpathyRosterModelInterface *iface;
@@ -131,7 +131,7 @@ empathy_roster_model_get_groups_for_individual (EmpathyRosterModel *self,
   g_return_val_if_fail (EMPATHY_IS_ROSTER_MODEL (self), NULL);
 
   iface = EMPATHY_ROSTER_MODEL_GET_IFACE (self);
-  g_return_val_if_fail (iface->get_groups_for_individual != NULL, NULL);
+  g_return_val_if_fail (iface->dup_groups_for_individual != NULL, NULL);
 
-  return (* iface->get_groups_for_individual) (self, individual);
+  return (* iface->dup_groups_for_individual) (self, individual);
 }

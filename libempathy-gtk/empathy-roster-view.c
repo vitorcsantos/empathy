@@ -393,7 +393,7 @@ individual_added (EmpathyRosterView *self,
     {
       GList *groups, *l;
 
-      groups = empathy_roster_model_get_groups_for_individual (self->priv->model,
+      groups = empathy_roster_model_dup_groups_for_individual (self->priv->model,
           individual);
 
       if (g_list_length (groups) > 0)
@@ -588,7 +588,7 @@ contact_in_top (EmpathyRosterView *self,
 
       individual = empathy_roster_contact_get_individual (contact);
 
-      groups = empathy_roster_model_get_groups_for_individual (
+      groups = empathy_roster_model_dup_groups_for_individual (
           self->priv->model, individual);
 
       if (g_list_find_custom (groups, EMPATHY_ROSTER_MODEL_GROUP_TOP_GROUP,

@@ -40,7 +40,7 @@ struct _EmpathyRosterModelInterface
 
   /* Virtual table */
   GList * (* get_individuals) (EmpathyRosterModel *self);
-  GList * (*get_groups_for_individual) (EmpathyRosterModel *self,
+  GList * (*dup_groups_for_individual) (EmpathyRosterModel *self,
       FolksIndividual *individual);
 };
 
@@ -77,7 +77,7 @@ void empathy_roster_model_fire_groups_changed (EmpathyRosterModel *self,
 /* Public API */
 GList * empathy_roster_model_get_individuals (EmpathyRosterModel *self);
 
-GList * empathy_roster_model_get_groups_for_individual (
+GList * empathy_roster_model_dup_groups_for_individual (
     EmpathyRosterModel *self,
     FolksIndividual *individual);
 
