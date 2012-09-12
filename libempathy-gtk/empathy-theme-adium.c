@@ -1763,20 +1763,17 @@ empathy_adium_path_is_valid (const gchar *path)
   /* The directory has to be *.AdiumMessageStyle per the Adium spec */
   tmp = g_strsplit (path, "/", 0);
   if (tmp == NULL)
-    {
-      g_free (tmp);
-      return FALSE;
-    }
+    return FALSE;
 
   dir = tmp[g_strv_length (tmp) - 1];
 
   if (!g_str_has_suffix (dir, ".AdiumMessageStyle"))
     {
-      g_free (tmp);
+      g_strfreev (tmp);
       return FALSE;
     }
 
-  g_free (tmp);
+  g_strfreev (tmp);
 
   /* The theme is not valid if there is no Info.plist */
   file = g_build_filename (path, "Contents", "Info.plist",
