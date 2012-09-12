@@ -2273,8 +2273,6 @@ empathy_roster_window_init (EmpathyRosterWindow *self)
       G_CALLBACK (button_account_settings_clicked_cb), self);
   g_signal_connect (self->priv->button_online, "clicked",
       G_CALLBACK (button_online_clicked_cb), self);
-
-  set_notebook_page (self);
 }
 
 GtkWidget *
