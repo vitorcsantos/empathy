@@ -130,7 +130,7 @@ individual_menu_add_personas (GtkMenuShell *menu,
 
   /* return early if these entries would add nothing beyond the "quick" items */
   if (persona_count <= 1)
-    return;
+    goto out;
 
   /* add a separator before the list of personas */
   item = gtk_separator_menu_item_new ();
@@ -266,6 +266,7 @@ while_finish:
       g_clear_object (&persona);
     }
 
+out:
   g_clear_object (&iter);
 }
 
