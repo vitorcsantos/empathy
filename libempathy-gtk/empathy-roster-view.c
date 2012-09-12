@@ -907,6 +907,7 @@ filter_group (EmpathyRosterView *self,
     EmpathyRosterGroup *group)
 {
   GList *widgets, *l;
+  gboolean result = FALSE;
 
   /* Display the group if it contains at least one displayed contact */
   widgets = empathy_roster_group_get_widgets (group);
@@ -915,10 +916,15 @@ filter_group (EmpathyRosterView *self,
       EmpathyRosterContact *contact = l->data;
 
       if (contact_should_be_displayed (self, contact))
-        return TRUE;
+        {
+          result = TRUE;
+          break;
+        }
     }
 
-  return FALSE;
+  g_list_free (widgets);
+
+  return result;
 }
 
 static gboolean
