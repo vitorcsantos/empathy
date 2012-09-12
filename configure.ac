@@ -34,7 +34,7 @@ AC_COPYRIGHT([
 # Minimal version required
 
 # Hardp deps
-FOLKS_REQUIRED=0.7.1
+FOLKS_REQUIRED=0.7.3
 GNUTLS_REQUIRED=2.8.5
 
 GLIB_REQUIRED=2.33.3
