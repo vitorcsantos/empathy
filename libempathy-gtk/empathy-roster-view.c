@@ -409,7 +409,7 @@ individual_added (EmpathyRosterView *self,
           add_to_group (self, individual, EMPATHY_ROSTER_MODEL_GROUP_UNGROUPED);
         }
 
-      g_list_free (groups);
+      g_list_free_full (groups, g_free);
     }
 
   tp_g_signal_connect_object (individual, "notify::is-favourite",
@@ -595,7 +595,7 @@ contact_in_top (EmpathyRosterView *self,
             (GCompareFunc) g_strcmp0) != NULL)
         result = TRUE;
 
-      g_list_free (groups);
+      g_list_free_full (groups, g_free);
 
       return result;
     }

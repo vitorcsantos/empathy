@@ -119,7 +119,7 @@ empathy_roster_model_get_individuals (EmpathyRosterModel *self)
  *
  * Returns the groups of which @individual is a member of.
  *
- * Returns: (transfer container): a #GList of (const gchar *) representing the
+ * Returns: (transfer full): a #GList of (gchar *) representing the
  * groups of @individual
  */
 GList *

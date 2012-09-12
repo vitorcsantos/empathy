@@ -373,14 +373,14 @@ empathy_roster_model_manager_get_groups_for_individual (
   if (is_xmpp_local_contact (individual))
     {
       groups_list = g_list_prepend (groups_list,
-          EMPATHY_ROSTER_MODEL_GROUP_PEOPLE_NEARBY);
+          g_strdup (EMPATHY_ROSTER_MODEL_GROUP_PEOPLE_NEARBY));
       return groups_list;
     }
 
   if (individual_in_top_group_members (EMPATHY_ROSTER_MODEL_MANAGER (model),
           individual))
     groups_list = g_list_prepend (groups_list,
-        EMPATHY_ROSTER_MODEL_GROUP_TOP_GROUP);
+        g_strdup (EMPATHY_ROSTER_MODEL_GROUP_TOP_GROUP));
 
   groups_set = folks_group_details_get_groups (
       FOLKS_GROUP_DETAILS (individual));
