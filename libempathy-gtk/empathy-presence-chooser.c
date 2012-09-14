@@ -33,8 +33,7 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include <telepathy-glib/account-manager.h>
-#include <telepathy-glib/util.h>
+#include <telepathy-glib/telepathy-glib.h>
 
 #include <libempathy/empathy-presence-manager.h>
 #include <libempathy/empathy-utils.h>

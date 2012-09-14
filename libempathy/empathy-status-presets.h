@@ -23,7 +23,7 @@
 #ifndef __EMPATHY_STATUS_PRESETS_H__
 #define __EMPATHY_STATUS_PRESETS_H__
 
-#include <telepathy-glib/enums.h>
+#include <telepathy-glib/telepathy-glib.h>
 
 G_BEGIN_DECLS
 

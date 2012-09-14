@@ -22,8 +22,6 @@
 
 #include "empathy-auth-factory.h"
 
-#include <telepathy-glib/telepathy-glib.h>
-
 #define DEBUG_FLAG EMPATHY_DEBUG_TLS
 #include "empathy-debug.h"
 #include "empathy-keyring.h"

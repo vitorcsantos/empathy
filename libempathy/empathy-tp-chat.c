@@ -22,8 +22,6 @@
 
 #include <string.h>
 
-#include <telepathy-glib/telepathy-glib.h>
-
 #include <extensions/extensions.h>
 
 #include "empathy-tp-chat.h"

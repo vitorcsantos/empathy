@@ -6,7 +6,7 @@
 
 #include "test-helper.h"
 
-#include <telepathy-glib/util.h>
+#include <telepathy-glib/telepathy-glib.h>
 
 #define DEBUG_FLAG EMPATHY_DEBUG_TESTS
 #include <libempathy/empathy-debug.h>

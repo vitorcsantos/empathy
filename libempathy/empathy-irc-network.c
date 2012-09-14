@@ -25,7 +25,7 @@
 #include <glib.h>
 #include <glib/gi18n-lib.h>
 
-#include <telepathy-glib/util.h>
+#include <telepathy-glib/telepathy-glib.h>
 
 #include "empathy-irc-network.h"
 #include "empathy-utils.h"

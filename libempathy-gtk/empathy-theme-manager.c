@@ -25,10 +25,9 @@
 #include <string.h>
 
 #include <glib/gi18n-lib.h>
-#include <telepathy-glib/dbus.h>
 #include <gtk/gtk.h>
 
-#include <telepathy-glib/util.h>
+#include <telepathy-glib/telepathy-glib.h>
 
 #include <libempathy/empathy-gsettings.h>
 #include <libempathy/empathy-utils.h>

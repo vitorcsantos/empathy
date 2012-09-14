@@ -23,10 +23,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <telepathy-glib/account-channel-request.h>
-#include <telepathy-glib/simple-handler.h>
-#include <telepathy-glib/interfaces.h>
-#include <telepathy-glib/util.h>
+#include <telepathy-glib/telepathy-glib.h>
 
 #include <libempathy/empathy-client-factory.h>
 #include <libempathy/empathy-request-util.h>

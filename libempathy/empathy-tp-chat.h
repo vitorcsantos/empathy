@@ -23,8 +23,7 @@
 
 #include <glib.h>
 
-#include <telepathy-glib/channel.h>
-#include <telepathy-glib/enums.h>
+#include <telepathy-glib/telepathy-glib.h>
 
 #include "empathy-message.h"
 #include "empathy-contact.h"

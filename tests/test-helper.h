@@ -20,7 +20,7 @@
 #ifndef __TEST_HELPER_H__
 #define __TEST_HELPER_H__
 
-#include <telepathy-glib/account.h>
+#include <telepathy-glib/telepathy-glib.h>
 
 void test_init (int argc,
     char **argv);

@@ -23,11 +23,7 @@
 #include <gtk/gtk.h>
 
 #include <dbus/dbus-glib.h>
-#include <telepathy-glib/account-channel-request.h>
-#include <telepathy-glib/util.h>
-#include <telepathy-glib/contact.h>
-#include <telepathy-glib/channel.h>
-#include <telepathy-glib/interfaces.h>
+#include <telepathy-glib/telepathy-glib.h>
 
 #define DEBUG_FLAG EMPATHY_DEBUG_SHARE_DESKTOP
 #include <libempathy/empathy-debug.h>

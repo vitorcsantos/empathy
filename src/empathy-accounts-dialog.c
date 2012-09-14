@@ -34,9 +34,7 @@
 #include <dbus/dbus-glib.h>
 #include <gio/gdesktopappinfo.h>
 
-#include <telepathy-glib/account-manager.h>
-#include <telepathy-glib/defs.h>
-#include <telepathy-glib/util.h>
+#include <telepathy-glib/telepathy-glib.h>
 
 #include <libempathy/empathy-utils.h>
 #include <libempathy/empathy-connection-managers.h>

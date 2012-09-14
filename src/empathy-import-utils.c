@@ -19,8 +19,6 @@
  *          Cosimo Cecchi <cosimo.cecchi@collabora.co.uk>
  */
 
-#include <telepathy-glib/util.h>
-
 #include <libempathy/empathy-connection-managers.h>
 #include <libempathy/empathy-utils.h>
 

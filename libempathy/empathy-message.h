@@ -26,7 +26,7 @@
 #define __EMPATHY_MESSAGE_H__
 
 #include <glib-object.h>
-#include <telepathy-glib/message.h>
+#include <telepathy-glib/telepathy-glib.h>
 #include <telepathy-logger/telepathy-logger.h>
 
 #include "empathy-contact.h"

@@ -30,11 +30,6 @@
 #include <libxml/parser.h>
 #include <libxml/tree.h>
 
-#include <telepathy-glib/account-manager.h>
-#include <telepathy-glib/interfaces.h>
-#include <telepathy-glib/simple-observer.h>
-#include <telepathy-glib/util.h>
-
 #include "empathy-client-factory.h"
 #include "empathy-tp-chat.h"
 #include "empathy-chatroom-manager.h"

@@ -25,8 +25,6 @@
 
 #include <glib/gi18n-lib.h>
 
-#include <telepathy-glib/telepathy-glib.h>
-
 #include "empathy-request-util.h"
 #include "empathy-utils.h"
 #include "empathy-utils.h"

@@ -23,7 +23,7 @@
 
 #include <glib-object.h>
 
-#include <telepathy-glib/base-client.h>
+#include <telepathy-glib/telepathy-glib.h>
 
 G_BEGIN_DECLS
 

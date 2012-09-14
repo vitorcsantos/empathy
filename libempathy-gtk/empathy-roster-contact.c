@@ -2,7 +2,7 @@
 
 #include "empathy-roster-contact.h"
 
-#include <telepathy-glib/util.h>
+#include <telepathy-glib/telepathy-glib.h>
 
 #include <libempathy/empathy-utils.h>
 

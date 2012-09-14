@@ -25,10 +25,6 @@
 
 #include <glib/gi18n-lib.h>
 
-#include <telepathy-glib/account-manager.h>
-#include <telepathy-glib/interfaces.h>
-#include <telepathy-glib/util.h>
-
 #include <folks/folks.h>
 #include <folks/folks-telepathy.h>
 

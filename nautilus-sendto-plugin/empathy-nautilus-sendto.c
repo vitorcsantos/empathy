@@ -27,7 +27,7 @@
 #include <gtk/gtk.h>
 #include <gio/gio.h>
 
-#include <telepathy-glib/enums.h>
+#include <telepathy-glib/telepathy-glib.h>
 
 #include <libempathy/empathy-contact.h>
 #include <libempathy/empathy-debug.h>

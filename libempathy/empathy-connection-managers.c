@@ -23,9 +23,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <telepathy-glib/connection-manager.h>
-#include <telepathy-glib/util.h>
-
 #include "empathy-connection-managers.h"
 #include "empathy-utils.h"
 

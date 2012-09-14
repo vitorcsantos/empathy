@@ -24,7 +24,6 @@
 #include <string.h>
 
 #include <glib.h>
-#include <telepathy-glib/util.h>
 
 #include "empathy-chatroom.h"
 #include "empathy-utils.h"

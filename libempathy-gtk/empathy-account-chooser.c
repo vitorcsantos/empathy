@@ -28,9 +28,6 @@
 #include <glib/gi18n-lib.h>
 #include <gtk/gtk.h>
 
-#include <telepathy-glib/account-manager.h>
-#include <telepathy-glib/util.h>
-
 #include <libempathy/empathy-utils.h>
 
 #include "empathy-ui-utils.h"

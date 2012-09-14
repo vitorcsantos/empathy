@@ -35,8 +35,7 @@
 
 #include <libempathy-gtk/empathy-ui-utils.h>
 
-#include <telepathy-glib/account-manager.h>
-#include <telepathy-glib/util.h>
+#include <telepathy-glib/telepathy-glib.h>
 
 #include <glib/gi18n-lib.h>
 

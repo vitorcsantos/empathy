@@ -30,8 +30,7 @@
 
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
-#include <telepathy-glib/dbus.h>
-#include <telepathy-glib/util.h>
+#include <telepathy-glib/telepathy-glib.h>
 
 #include <libempathy/empathy-client-factory.h>
 #include <libempathy/empathy-gsettings.h>

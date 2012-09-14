@@ -35,10 +35,7 @@
 
 #include <libempathy/empathy-utils.h>
 
-#include <telepathy-glib/account.h>
-#include <telepathy-glib/account-manager.h>
-#include <telepathy-glib/connection-manager.h>
-#include <telepathy-glib/util.h>
+#include <telepathy-glib/telepathy-glib.h>
 #include <dbus/dbus-protocol.h>
 
 #include "empathy-account-widget.h"

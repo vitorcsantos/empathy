@@ -28,10 +28,6 @@
 
 #include <glib/gi18n-lib.h>
 
-#include <telepathy-glib/util.h>
-#include <telepathy-glib/account.h>
-#include <telepathy-glib/account-manager.h>
-
 #include "empathy-client-factory.h"
 #include "empathy-message.h"
 #include "empathy-utils.h"

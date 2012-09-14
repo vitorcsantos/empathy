@@ -37,11 +37,7 @@
 #include <libempathy-gtk/empathy-geometry.h>
 #include <libempathy-gtk/empathy-ui-utils.h>
 
-#include <telepathy-glib/dbus.h>
-#include <telepathy-glib/interfaces.h>
-#include <telepathy-glib/util.h>
-#include <telepathy-glib/proxy-subclass.h>
-#include <telepathy-glib/account-manager.h>
+#include <telepathy-glib/telepathy-glib.h>
 
 #include "extensions/extensions.h"
 

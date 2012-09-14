@@ -24,8 +24,7 @@
 #include <glib-object.h>
 #include <gio/gio.h>
 
-#include <telepathy-glib/account.h>
-#include <telepathy-glib/connection-manager.h>
+#include <telepathy-glib/telepathy-glib.h>
 
 G_BEGIN_DECLS
 

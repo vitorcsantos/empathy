@@ -37,12 +37,7 @@
 
 #include <libnotify/notify.h>
 
-#include <telepathy-glib/account-manager.h>
-#include <telepathy-glib/dbus.h>
-#include <telepathy-glib/debug-sender.h>
-#include <telepathy-glib/util.h>
-#include <telepathy-glib/connection-manager.h>
-#include <telepathy-glib/interfaces.h>
+#include <telepathy-glib/telepathy-glib.h>
 
 #include <telepathy-logger/telepathy-logger.h>
 

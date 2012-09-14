@@ -21,8 +21,6 @@
 
 #include "empathy-server-sasl-handler.h"
 
-#include <telepathy-glib/telepathy-glib.h>
-
 #include <extensions/extensions.h>
 
 #include <string.h>

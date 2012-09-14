@@ -27,10 +27,6 @@
 #include <glib/gi18n-lib.h>
 #include <dbus/dbus-glib.h>
 
-#include <telepathy-glib/account-manager.h>
-#include <telepathy-glib/dbus.h>
-#include <telepathy-glib/util.h>
-
 #include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER

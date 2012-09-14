@@ -34,8 +34,6 @@
 #include <X11/Xlib.h>
 #endif
 
-#include <telepathy-glib/debug-sender.h>
-
 #include <libempathy/empathy-client-factory.h>
 
 #include <libempathy-gtk/empathy-ui-utils.h>

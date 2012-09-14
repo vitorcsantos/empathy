@@ -39,7 +39,7 @@
 #include <gio/gio.h>
 #include <gio/gdesktopappinfo.h>
 
-#include <telepathy-glib/util.h>
+#include <telepathy-glib/telepathy-glib.h>
 #include <folks/folks.h>
 
 #include "empathy-ui-utils.h"

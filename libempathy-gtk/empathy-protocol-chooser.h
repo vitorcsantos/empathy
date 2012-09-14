@@ -26,7 +26,7 @@
 #include <glib-object.h>
 #include <gtk/gtk.h>
 
-#include <telepathy-glib/connection-manager.h>
+#include <telepathy-glib/telepathy-glib.h>
 
 #include <libempathy/empathy-account-settings.h>
 

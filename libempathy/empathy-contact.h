@@ -24,8 +24,7 @@
 
 #include <glib-object.h>
 
-#include <telepathy-glib/contact.h>
-#include <telepathy-glib/account.h>
+#include <telepathy-glib/telepathy-glib.h>
 #include <telepathy-logger/telepathy-logger.h>
 #include <folks/folks.h>
 

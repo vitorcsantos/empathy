@@ -42,12 +42,6 @@
 
 #include <dbus/dbus-protocol.h>
 
-#include <telepathy-glib/account-manager.h>
-#include <telepathy-glib/connection.h>
-#include <telepathy-glib/channel.h>
-#include <telepathy-glib/dbus.h>
-#include <telepathy-glib/util.h>
-
 #include "empathy-client-factory.h"
 #include "empathy-utils.h"
 #include "empathy-individual-manager.h"

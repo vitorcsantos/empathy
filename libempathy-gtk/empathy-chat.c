@@ -36,8 +36,7 @@
 #include <glib/gi18n-lib.h>
 #include <gtk/gtk.h>
 
-#include <telepathy-glib/account-manager.h>
-#include <telepathy-glib/util.h>
+#include <telepathy-glib/telepathy-glib.h>
 #include <telepathy-logger/telepathy-logger.h>
 #include <libempathy/empathy-gsettings.h>
 #include <libempathy/empathy-keyring.h>

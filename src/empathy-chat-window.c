@@ -35,8 +35,6 @@
 #include <glib/gi18n.h>
 #include <libnotify/notification.h>
 
-#include <telepathy-glib/telepathy-glib.h>
-
 #include <libempathy/empathy-client-factory.h>
 #include <libempathy/empathy-contact.h>
 #include <libempathy/empathy-message.h>

@@ -23,8 +23,7 @@
 #include <string.h>
 #include <libxml/parser.h>
 #include <libxml/tree.h>
-#include <telepathy-glib/util.h>
-#include <telepathy-glib/dbus.h>
+#include <telepathy-glib/telepathy-glib.h>
 
 #include "empathy-plist.h"
 

@@ -32,8 +32,6 @@
 #include <libxml/parser.h>
 #include <libxml/tree.h>
 
-#include <telepathy-glib/util.h>
-
 #include "empathy-utils.h"
 #include "empathy-status-presets.h"
 

@@ -32,8 +32,7 @@
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
 
-#include <telepathy-glib/account-manager.h>
-#include <telepathy-glib/util.h>
+#include <telepathy-glib/telepathy-glib.h>
 
 #include <folks/folks.h>
 #include <folks/folks-telepathy.h>

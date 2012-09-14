@@ -27,8 +27,6 @@
 
 #include <glib/gi18n-lib.h>
 
-#include <telepathy-glib/util.h>
-
 #include <libempathy/empathy-time.h>
 #include <libempathy/empathy-request-util.h>
 

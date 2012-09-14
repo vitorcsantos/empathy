@@ -29,8 +29,7 @@
 #include <gdk/gdkkeysyms.h>
 #include <glib/gi18n.h>
 
-#include <telepathy-glib/account-manager.h>
-#include <telepathy-glib/util.h>
+#include <telepathy-glib/telepathy-glib.h>
 
 #include <libempathy/empathy-gsettings.h>
 #include <libempathy/empathy-utils.h>

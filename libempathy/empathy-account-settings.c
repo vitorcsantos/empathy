@@ -23,11 +23,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <telepathy-glib/account-manager.h>
-#include <telepathy-glib/util.h>
-#include <telepathy-glib/interfaces.h>
-#include <telepathy-glib/gtypes.h>
-
 #include "empathy-account-settings.h"
 #include "empathy-connection-managers.h"
 #include "empathy-keyring.h"

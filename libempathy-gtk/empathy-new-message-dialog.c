@@ -26,7 +26,7 @@
 #include <gtk/gtk.h>
 #include <glib/gi18n-lib.h>
 
-#include <telepathy-glib/interfaces.h>
+#include <telepathy-glib/telepathy-glib.h>
 
 #include <libempathy/empathy-request-util.h>
 #include <libempathy/empathy-utils.h>

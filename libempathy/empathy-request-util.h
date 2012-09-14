@@ -24,7 +24,7 @@
 #include <glib.h>
 #include <gio/gio.h>
 
-#include <telepathy-glib/channel.h>
+#include <telepathy-glib/telepathy-glib.h>
 
 #include "empathy-contact.h"
 

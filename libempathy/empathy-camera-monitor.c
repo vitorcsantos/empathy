@@ -22,7 +22,7 @@
 
 #include <string.h>
 
-#include <telepathy-glib/util.h>
+#include <telepathy-glib/telepathy-glib.h>
 
 #include "empathy-camera-monitor.h"
 #include "cheese-camera-device-monitor.h"

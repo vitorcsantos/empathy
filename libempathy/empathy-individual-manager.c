@@ -25,10 +25,6 @@
 #include <string.h>
 
 #include <telepathy-glib/telepathy-glib.h>
-#include <telepathy-glib/account-manager.h>
-#include <telepathy-glib/enums.h>
-#include <telepathy-glib/proxy-subclass.h>
-#include <telepathy-glib/util.h>
 
 #include <folks/folks.h>
 #include <folks/folks-telepathy.h>

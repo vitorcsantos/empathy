@@ -28,8 +28,6 @@
 
 #include <libnotify/notify.h>
 
-#include <telepathy-glib/debug-sender.h>
-
 #include <libempathy/empathy-presence-manager.h>
 #include <libempathy/empathy-individual-manager.h>
 

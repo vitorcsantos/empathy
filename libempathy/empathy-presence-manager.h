@@ -23,8 +23,7 @@
 
 #include <glib.h>
 
-#include <telepathy-glib/account.h>
-#include <telepathy-glib/enums.h>
+#include <telepathy-glib/telepathy-glib.h>
 
 G_BEGIN_DECLS
 

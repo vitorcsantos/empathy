@@ -24,7 +24,7 @@
 
 #include <glib/gi18n-lib.h>
 #include <gcr/gcr.h>
-#include <telepathy-glib/util.h>
+#include <telepathy-glib/telepathy-glib.h>
 
 #include <gcr/gcr.h>
 

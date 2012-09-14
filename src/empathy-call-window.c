@@ -34,9 +34,8 @@
 #include <clutter-gtk/clutter-gtk.h>
 #include <clutter-gst/clutter-gst.h>
 
-#include <telepathy-glib/util.h>
 #include <telepathy-farstream/telepathy-farstream.h>
-#include <telepathy-glib/util.h>
+#include <telepathy-glib/telepathy-glib.h>
 
 #include <farstream/fs-element-added-notifier.h>
 #include <farstream/fs-utils.h>

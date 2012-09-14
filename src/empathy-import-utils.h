@@ -22,7 +22,7 @@
 #ifndef __EMPATHY_IMPORT_UTILS_H__
 #define __EMPATHY_IMPORT_UTILS_H__
 
-#include <telepathy-glib/connection-manager.h>
+#include <telepathy-glib/telepathy-glib.h>
 #include <glib.h>
 
 G_BEGIN_DECLS

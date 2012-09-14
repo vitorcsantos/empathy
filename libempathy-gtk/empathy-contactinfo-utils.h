@@ -24,7 +24,7 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
-#include <telepathy-glib/connection.h>
+#include <telepathy-glib/telepathy-glib.h>
 
 G_BEGIN_DECLS
 

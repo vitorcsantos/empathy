@@ -29,9 +29,6 @@
 #include <glib.h>
 #include <glib/gstdio.h>
 
-#include <telepathy-glib/debug.h>
-#include <telepathy-glib/debug-sender.h>
-
 #include "empathy-debug.h"
 
 #ifdef ENABLE_DEBUG

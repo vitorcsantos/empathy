@@ -22,8 +22,6 @@
 
 #include "empathy-connection-aggregator.h"
 
-#include <telepathy-glib/telepathy-glib.h>
-
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include "empathy-debug.h"
 #include "empathy-utils.h"
