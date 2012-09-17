@@ -127,8 +127,7 @@ _gen/svc-misc.c _gen/svc-misc.h: _gen/misc.xml \
 	$(AM_V_GEN)$(PYTHON) $(tools_dir)/glib-ginterface-gen.py \
 		--filename=_gen/svc-misc \
 		--signal-marshal-prefix=_emp_ext \
-		--include='<telepathy-glib/dbus.h>' \
-		--include='"_gen/signals-marshal.h"' \
+		--include='<telepathy-glib/telepathy-glib.h>' \
 		--not-implemented-func='tp_dbus_g_method_return_not_implemented' \
 		--allow-unstable \
 		$< Emp_Svc_
