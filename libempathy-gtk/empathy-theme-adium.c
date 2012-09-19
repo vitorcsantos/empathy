@@ -1353,31 +1353,37 @@ empathy_theme_adium_message_acknowledged (EmpathyThemeAdium *self,
 }
 
 static gboolean
-theme_adium_button_press_event (GtkWidget *widget,
-    GdkEventButton *event)
+theme_adium_context_menu_cb (EmpathyThemeAdium *self,
+    GtkWidget *default_menu,
+    WebKitHitTestResult *hit_test_result,
+    gboolean triggered_with_keyboard,
+    gpointer user_data)
 {
-  if (event->button == 3)
+  gboolean developer_tools_enabled;
+
+  g_object_get (
+      G_OBJECT (webkit_web_view_get_settings (WEBKIT_WEB_VIEW (self))),
+      "enable-developer-extras", &developer_tools_enabled, NULL);
+
+  /* We currently have no way to add an inspector menu
+   * item ourselves, so we disable our customized menu
+   * if the developer extras are enabled. */
+  if (!developer_tools_enabled)
     {
-      gboolean developer_tools_enabled;
+      GtkWidget *menu;
 
-      g_object_get (
-          G_OBJECT (webkit_web_view_get_settings (WEBKIT_WEB_VIEW (widget))),
-          "enable-developer-extras", &developer_tools_enabled, NULL);
+      menu = empathy_webkit_create_context_menu (
+        WEBKIT_WEB_VIEW (self), hit_test_result,
+        EMPATHY_WEBKIT_MENU_CLEAR);
 
-      /* We currently have no way to add an inspector menu
-       * item ourselves, so we disable our customized menu
-       * if the developer extras are enabled. */
-      if (!developer_tools_enabled)
-        {
-          empathy_webkit_context_menu_for_event (
-            WEBKIT_WEB_VIEW (widget), event,
-            EMPATHY_WEBKIT_MENU_CLEAR);
-          return TRUE;
-        }
+      gtk_widget_show_all (menu);
+      gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL, 3,
+          gtk_get_current_event_time ());
+
+      return TRUE;
     }
 
-  return GTK_WIDGET_CLASS (
-      empathy_theme_adium_parent_class)->button_press_event (widget, event);
+  return FALSE;
 }
 
 void
@@ -1631,15 +1637,12 @@ static void
 empathy_theme_adium_class_init (EmpathyThemeAdiumClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-  GtkWidgetClass* widget_class = GTK_WIDGET_CLASS (klass);
 
   object_class->finalize = theme_adium_finalize;
   object_class->dispose = theme_adium_dispose;
   object_class->constructed = theme_adium_constructed;
   object_class->get_property = theme_adium_get_property;
   object_class->set_property = theme_adium_set_property;
-
-  widget_class->button_press_event = theme_adium_button_press_event;
 
   g_object_class_install_property (object_class, PROP_ADIUM_DATA,
       g_param_spec_boxed ("adium-data",
@@ -1680,6 +1683,8 @@ empathy_theme_adium_init (EmpathyThemeAdium *self)
       G_CALLBACK (theme_adium_load_finished_cb), NULL);
   g_signal_connect (self, "navigation-policy-decision-requested",
         G_CALLBACK (theme_adium_navigation_policy_decision_requested_cb), NULL);
+  g_signal_connect (self, "context-menu",
+      G_CALLBACK (theme_adium_context_menu_cb), NULL);
 
   self->priv->gsettings_chat = g_settings_new (EMPATHY_PREFS_CHAT_SCHEMA);
   self->priv->gsettings_desktop = g_settings_new (
