@@ -29,6 +29,7 @@ G_BEGIN_DECLS
 
 typedef enum {
     EMPATHY_WEBKIT_MENU_CLEAR = 1 << 0,
+    EMPATHY_WEBKIT_MENU_INSPECT = 1 << 1,
 } EmpathyWebKitMenuFlags;
 
 EmpathyStringParser * empathy_webkit_get_string_parser (gboolean smileys);

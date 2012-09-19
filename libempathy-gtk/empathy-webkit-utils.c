@@ -208,6 +208,13 @@ empathy_webkit_open_address_cb (GtkMenuItem *menuitem,
 }
 
 static void
+empathy_webkit_inspect_cb (GtkMenuItem *menuitem,
+    WebKitWebView *view)
+{
+  empathy_webkit_show_inspector (view);
+}
+
+static void
 empathy_webkit_context_menu_selection_done_cb (GtkMenuShell *menu,
     gpointer user_data)
 {
@@ -286,6 +293,19 @@ empathy_webkit_create_context_menu (WebKitWebView *view,
           G_CALLBACK (empathy_webkit_open_address_cb),
           hit_test_result);
       gtk_menu_shell_prepend (GTK_MENU_SHELL (menu), item);
+    }
+
+  if ((flags & EMPATHY_WEBKIT_MENU_INSPECT) != 0)
+    {
+      /* Separator */
+      item = gtk_separator_menu_item_new ();
+      gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+
+      /* Inspector */
+      item = gtk_menu_item_new_with_mnemonic (_("Inspect HTML"));
+      g_signal_connect (item, "activate",
+          G_CALLBACK (empathy_webkit_inspect_cb), view);
+      gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
     }
 
   g_signal_connect (GTK_MENU_SHELL (menu), "selection-done",
