@@ -164,30 +164,6 @@ free_queued_item (QueuedItem *item)
   g_slice_free (QueuedItem, item);
 }
 
-static void
-theme_adium_update_enable_webkit_developer_tools (EmpathyThemeAdium *self)
-{
-  WebKitWebView *web_view = WEBKIT_WEB_VIEW (self);
-  gboolean enable_webkit_developer_tools;
-
-  enable_webkit_developer_tools = g_settings_get_boolean (
-      self->priv->gsettings_chat,
-      EMPATHY_PREFS_CHAT_WEBKIT_DEVELOPER_TOOLS);
-
-  g_object_set (G_OBJECT (webkit_web_view_get_settings (web_view)),
-      "enable-developer-extras", enable_webkit_developer_tools, NULL);
-}
-
-static void
-theme_adium_notify_enable_webkit_developer_tools_cb (GSettings *gsettings,
-    const gchar *key,
-    gpointer user_data)
-{
-  EmpathyThemeAdium *self = user_data;
-
-  theme_adium_update_enable_webkit_developer_tools (self);
-}
-
 static gboolean
 theme_adium_navigation_policy_decision_requested_cb (WebKitWebView *view,
     WebKitWebFrame *web_frame,
@@ -1359,31 +1335,22 @@ theme_adium_context_menu_cb (EmpathyThemeAdium *self,
     gboolean triggered_with_keyboard,
     gpointer user_data)
 {
-  gboolean developer_tools_enabled;
+  GtkWidget *menu;
+  EmpathyWebKitMenuFlags flags = EMPATHY_WEBKIT_MENU_CLEAR;
 
-  g_object_get (
-      G_OBJECT (webkit_web_view_get_settings (WEBKIT_WEB_VIEW (self))),
-      "enable-developer-extras", &developer_tools_enabled, NULL);
+  if (g_settings_get_boolean (self->priv->gsettings_chat,
+        EMPATHY_PREFS_CHAT_WEBKIT_DEVELOPER_TOOLS))
+    flags |= EMPATHY_WEBKIT_MENU_INSPECT;
 
-  /* We currently have no way to add an inspector menu
-   * item ourselves, so we disable our customized menu
-   * if the developer extras are enabled. */
-  if (!developer_tools_enabled)
-    {
-      GtkWidget *menu;
+  menu = empathy_webkit_create_context_menu (
+    WEBKIT_WEB_VIEW (self), hit_test_result, flags);
 
-      menu = empathy_webkit_create_context_menu (
-        WEBKIT_WEB_VIEW (self), hit_test_result,
-        EMPATHY_WEBKIT_MENU_CLEAR);
+  gtk_widget_show_all (menu);
 
-      gtk_widget_show_all (menu);
-      gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL, 3,
-          gtk_get_current_event_time ());
+  gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL, 3,
+      gtk_get_current_event_time ());
 
-      return TRUE;
-    }
-
-  return FALSE;
+  return TRUE;
 }
 
 void
@@ -1689,13 +1656,6 @@ empathy_theme_adium_init (EmpathyThemeAdium *self)
   self->priv->gsettings_chat = g_settings_new (EMPATHY_PREFS_CHAT_SCHEMA);
   self->priv->gsettings_desktop = g_settings_new (
     EMPATHY_PREFS_DESKTOP_INTERFACE_SCHEMA);
-
-  g_signal_connect (self->priv->gsettings_chat,
-    "changed::" EMPATHY_PREFS_CHAT_WEBKIT_DEVELOPER_TOOLS,
-    G_CALLBACK (theme_adium_notify_enable_webkit_developer_tools_cb),
-    self);
-
-  theme_adium_update_enable_webkit_developer_tools (self);
 }
 
 EmpathyThemeAdium *
