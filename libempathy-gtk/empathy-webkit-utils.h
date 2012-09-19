@@ -37,6 +37,10 @@ void empathy_webkit_bind_font_setting (WebKitWebView *webview,
     GSettings *gsettings,
     const char *key);
 
+GtkWidget * empathy_webkit_create_context_menu (WebKitWebView *view,
+    WebKitHitTestResult *hit_test_result,
+    EmpathyWebKitMenuFlags flags);
+
 void empathy_webkit_context_menu_for_event (WebKitWebView *view,
     GdkEventButton *event,
     EmpathyWebKitMenuFlags flags);

@@ -216,7 +216,7 @@ empathy_webkit_context_menu_selection_done_cb (GtkMenuShell *menu,
   g_object_unref (hit_test_result);
 }
 
-static GtkWidget *
+GtkWidget *
 empathy_webkit_create_context_menu (WebKitWebView *view,
     WebKitHitTestResult *hit_test_result,
     EmpathyWebKitMenuFlags flags)
