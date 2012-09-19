@@ -313,3 +313,15 @@ empathy_webkit_context_menu_for_event (WebKitWebView *view,
 
   g_object_unref (hit_test_result);
 }
+
+void
+empathy_webkit_show_inspector (WebKitWebView *view)
+{
+  WebKitWebInspector *inspector;
+
+  g_object_set (G_OBJECT (webkit_web_view_get_settings (view)),
+      "enable-developer-extras", TRUE, NULL);
+
+  inspector = webkit_web_view_get_inspector (view);
+  webkit_web_inspector_show (inspector);
+}

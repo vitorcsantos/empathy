@@ -1744,13 +1744,8 @@ void
 empathy_theme_adium_show_inspector (EmpathyThemeAdium *self)
 {
   WebKitWebView *web_view = WEBKIT_WEB_VIEW (self);
-  WebKitWebInspector *inspector;
 
-  g_object_set (G_OBJECT (webkit_web_view_get_settings (web_view)),
-      "enable-developer-extras", TRUE, NULL);
-
-  inspector = webkit_web_view_get_inspector (web_view);
-  webkit_web_inspector_show (inspector);
+  empathy_webkit_show_inspector (web_view);
 }
 
 gboolean

@@ -45,6 +45,8 @@ void empathy_webkit_context_menu_for_event (WebKitWebView *view,
     GdkEventButton *event,
     EmpathyWebKitMenuFlags flags);
 
+void empathy_webkit_show_inspector (WebKitWebView *view);
+
 G_END_DECLS
 
 #endif
