@@ -31,11 +31,15 @@ typedef enum {
     EMPATHY_WEBKIT_MENU_CLEAR = 1 << 0,
 } EmpathyWebKitMenuFlags;
 
-EmpathyStringParser *empathy_webkit_get_string_parser (gboolean smileys);
+EmpathyStringParser * empathy_webkit_get_string_parser (gboolean smileys);
+
 void empathy_webkit_bind_font_setting (WebKitWebView *webview,
-    GSettings *gsettings, const char *key);
+    GSettings *gsettings,
+    const char *key);
+
 void empathy_webkit_context_menu_for_event (WebKitWebView *view,
-    GdkEventButton *event, EmpathyWebKitMenuFlags flags);
+    GdkEventButton *event,
+    EmpathyWebKitMenuFlags flags);
 
 G_END_DECLS
 

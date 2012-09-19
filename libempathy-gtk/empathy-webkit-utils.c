@@ -161,6 +161,7 @@ empathy_webkit_bind_font_setting (WebKitWebView *webview,
       webkit_get_font_family,
       NULL,
       NULL, NULL);
+
   g_settings_bind_with_mapping (gsettings, key,
       settings, "default-font-size",
       G_SETTINGS_BIND_GET,
@@ -171,11 +172,11 @@ empathy_webkit_bind_font_setting (WebKitWebView *webview,
 
 static void
 empathy_webkit_copy_address_cb (GtkMenuItem *menuitem,
-    gpointer     user_data)
+    gpointer user_data)
 {
-  WebKitHitTestResult   *hit_test_result = WEBKIT_HIT_TEST_RESULT (user_data);
-  gchar                 *uri;
-  GtkClipboard          *clipboard;
+  WebKitHitTestResult *hit_test_result = WEBKIT_HIT_TEST_RESULT (user_data);
+  gchar *uri;
+  GtkClipboard *clipboard;
 
   g_object_get (G_OBJECT (hit_test_result),
       "link-uri", &uri,
@@ -194,8 +195,8 @@ static void
 empathy_webkit_open_address_cb (GtkMenuItem *menuitem,
     gpointer     user_data)
 {
-  WebKitHitTestResult   *hit_test_result = WEBKIT_HIT_TEST_RESULT (user_data);
-  gchar                 *uri;
+  WebKitHitTestResult *hit_test_result = WEBKIT_HIT_TEST_RESULT (user_data);
+  gchar *uri;
 
   g_object_get (G_OBJECT (hit_test_result),
       "link-uri", &uri,
@@ -220,10 +221,10 @@ empathy_webkit_context_menu_for_event (WebKitWebView *view,
     GdkEventButton *event,
     EmpathyWebKitMenuFlags flags)
 {
-  WebKitHitTestResult        *hit_test_result;
-  WebKitHitTestResultContext  context;
-  GtkWidget                  *menu;
-  GtkWidget                  *item;
+  WebKitHitTestResult *hit_test_result;
+  WebKitHitTestResultContext context;
+  GtkWidget *menu;
+  GtkWidget *item;
 
   hit_test_result = webkit_web_view_get_hit_test_result (view, event);
   g_object_get (G_OBJECT (hit_test_result),
@@ -298,4 +299,3 @@ empathy_webkit_context_menu_for_event (WebKitWebView *view,
   gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL,
       event->button, event->time);
 }
-
