@@ -216,17 +216,15 @@ empathy_webkit_context_menu_selection_done_cb (GtkMenuShell *menu,
   g_object_unref (hit_test_result);
 }
 
-void
-empathy_webkit_context_menu_for_event (WebKitWebView *view,
-    GdkEventButton *event,
+static GtkWidget *
+empathy_webkit_create_context_menu (WebKitWebView *view,
+    WebKitHitTestResult *hit_test_result,
     EmpathyWebKitMenuFlags flags)
 {
-  WebKitHitTestResult *hit_test_result;
   WebKitHitTestResultContext context;
   GtkWidget *menu;
   GtkWidget *item;
 
-  hit_test_result = webkit_web_view_get_hit_test_result (view, event);
   g_object_get (G_OBJECT (hit_test_result),
       "context", &context,
       NULL);
@@ -292,10 +290,26 @@ empathy_webkit_context_menu_for_event (WebKitWebView *view,
 
   g_signal_connect (GTK_MENU_SHELL (menu), "selection-done",
       G_CALLBACK (empathy_webkit_context_menu_selection_done_cb),
-      hit_test_result);
+      g_object_ref (hit_test_result));
 
-  /* Display the menu */
+  return menu;
+}
+
+void
+empathy_webkit_context_menu_for_event (WebKitWebView *view,
+    GdkEventButton *event,
+    EmpathyWebKitMenuFlags flags)
+{
+  GtkWidget *menu;
+  WebKitHitTestResult *hit_test_result;
+
+  hit_test_result = webkit_web_view_get_hit_test_result (view, event);
+
+  menu = empathy_webkit_create_context_menu (view, hit_test_result, flags);
+
   gtk_widget_show_all (menu);
   gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL,
       event->button, event->time);
+
+  g_object_unref (hit_test_result);
 }
