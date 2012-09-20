@@ -399,6 +399,7 @@ migrate_account_to_uoa (TpAccountManager *am,
   GVariant *param;
   GVariantIter iter;
   const gchar * const *supersedes;
+  guint i;
   UoaMigrationData *data;
 
   DEBUG ("Migrating account %s to UOA storage\n",
@@ -420,8 +421,10 @@ migrate_account_to_uoa (TpAccountManager *am,
   tp_account_request_set_enabled (ar, FALSE);
 
   supersedes = tp_account_get_supersedes (account);
-  while (*supersedes != NULL)
-    tp_account_request_add_supersedes (ar, *supersedes);
+
+  for (i = 0; supersedes[i] != NULL; i++)
+    tp_account_request_add_supersedes (ar, supersedes[i]);
+
   tp_account_request_add_supersedes (ar,
       tp_proxy_get_object_path (account));
 
