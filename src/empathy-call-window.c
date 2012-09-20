@@ -2734,12 +2734,15 @@ empathy_call_window_get_video_sink_pad (EmpathyCallWindow *self)
   if (priv->funnel == NULL)
     {
       output = priv->video_output_sink;
-
+#ifdef HAVE_GST1
+      priv->funnel = gst_element_factory_make ("funnel", NULL);
+#else
       priv->funnel = gst_element_factory_make ("fsfunnel", NULL);
+#endif
 
       if (!priv->funnel)
         {
-          g_warning ("Could not create fsfunnel");
+          g_warning ("Could not create video funnel");
           return NULL;
         }
 
@@ -2775,8 +2778,11 @@ empathy_call_window_get_video_sink_pad (EmpathyCallWindow *self)
           goto error_output_added;
         }
     }
-
+#ifdef HAVE_GST1
+  pad = gst_element_get_request_pad (priv->funnel, "sink_%u");
+#else
   pad = gst_element_get_request_pad (priv->funnel, "sink%d");
+#endif
 
   if (!pad)
     g_warning ("Could not get request pad from funnel");
