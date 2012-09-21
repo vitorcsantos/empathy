@@ -2872,6 +2872,8 @@ empathy_call_window_update_timer (gpointer user_data)
 
   if (priv->call_state == HELD)
     status = _("On hold");
+  else if (priv->call_state == DISCONNECTED)
+    status = _("Disconnected");
   else if (priv->muted)
     status = _("Mute");
   else
