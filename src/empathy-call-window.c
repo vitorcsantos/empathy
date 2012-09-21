@@ -2577,7 +2577,7 @@ empathy_call_window_disconnected (EmpathyCallWindow *self,
 
       /* Be sure that the mic button is enabled */
       empathy_audio_src_set_mute (
-          EMPATHY_GST_AUDIO_SRC (self->priv->audio_input), TRUE);
+          EMPATHY_GST_AUDIO_SRC (self->priv->audio_input), FALSE);
 
       if (priv->camera_state == CAMERA_STATE_ON)
         {
