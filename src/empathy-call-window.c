@@ -135,7 +135,7 @@ struct _EmpathyCallWindowPriv
 
   EmpathyCameraMonitor *camera_monitor;
 
-  guint call_state;
+  CallState call_state;
   gboolean outgoing;
 
   GtkUIManager *ui_manager;
