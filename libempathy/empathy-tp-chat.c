@@ -135,18 +135,45 @@ tp_chat_async_cb (TpChannel *proxy,
 }
 
 static void
+update_config_cb (TpChannel *proxy,
+    const GError *error,
+    gpointer user_data,
+    GObject *weak_object)
+{
+  if (error != NULL)
+    DEBUG ("Failed to change config of the room: %s", error->message);
+}
+
+static void
 create_conference_cb (GObject *source,
     GAsyncResult *result,
     gpointer user_data)
 {
+  TpChannel *channel;
   GError *error = NULL;
+  GHashTable *props;
 
-  if (!tp_account_channel_request_create_channel_finish (
-      TP_ACCOUNT_CHANNEL_REQUEST (source), result, &error))
+  channel = tp_account_channel_request_create_and_observe_channel_finish (
+      TP_ACCOUNT_CHANNEL_REQUEST (source), result, &error);
+  if (channel == NULL)
     {
       DEBUG ("Failed to create conference channel: %s", error->message);
       g_error_free (error);
+      return;
     }
+
+  /* Make the channel more confidential as only people invited are supposed to
+   * join it. */
+  props = tp_asv_new (
+      "Private", G_TYPE_BOOLEAN, TRUE,
+      "InviteOnly", G_TYPE_BOOLEAN, TRUE,
+      NULL);
+
+  tp_cli_channel_interface_room_config_call_update_configuration (channel, -1,
+      props, update_config_cb, NULL, NULL, NULL);
+
+  g_object_unref (channel);
+  g_hash_table_unref (props);
 }
 
 void
@@ -199,7 +226,7 @@ empathy_tp_chat_add (EmpathyTpChat *self,
 
       /* Although this is a MUC, it's anonymous, so CreateChannel is
        * valid. */
-      tp_account_channel_request_create_channel_async (req,
+      tp_account_channel_request_create_and_observe_channel_async (req,
           EMPATHY_CHAT_BUS_NAME, NULL, create_conference_cb, NULL);
 
       g_object_unref (req);
