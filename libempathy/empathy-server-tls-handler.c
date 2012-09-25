@@ -145,7 +145,7 @@ tls_handler_init_async (GAsyncInitable *initable,
 
   g_variant_lookup (properties,
       EMP_IFACE_CHANNEL_TYPE_SERVER_TLS_CONNECTION ".ServerCertificate",
-      "&s", &cert_object_path);
+      "&o", &cert_object_path);
   bus_name = tp_proxy_get_bus_name (TP_PROXY (priv->channel));
 
   g_variant_unref (properties);
