@@ -7,6 +7,6 @@ empathy.application: empathy.application.in
 
 app_DATA = empathy.application
 
-EXTRA_DIST = $(app_DATA)
+EXTRA_DIST = empathy.application.in
 
 DISTCLEANFILES = $(app_DATA)
