@@ -112,6 +112,8 @@ struct _EmpathyChatWindowPriv
   GSettings *gsettings_ui;
 
   EmpathySoundManager *sound_mgr;
+
+  gboolean updating_menu;
 };
 
 static GList *chat_windows = NULL;
@@ -598,6 +600,10 @@ chat_window_contact_menu_update (EmpathyChatWindow *self,
 {
   GtkWidget *menu, *submenu, *orig_submenu;
 
+  if (self->priv->updating_menu)
+    return;
+  self->priv->updating_menu = TRUE;
+
   menu = gtk_ui_manager_get_widget (self->priv->ui_manager,
     "/chats_menubar/menu_contact");
   orig_submenu = gtk_menu_item_get_submenu (GTK_MENU_ITEM (menu));
@@ -626,6 +632,8 @@ chat_window_contact_menu_update (EmpathyChatWindow *self,
           "notify::visible",
           (GCallback)_submenu_notify_visible_changed_cb, window, 0);
     }
+
+  self->priv->updating_menu = FALSE;
 }
 
 static guint
