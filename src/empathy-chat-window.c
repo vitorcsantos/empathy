@@ -1915,6 +1915,34 @@ chat_window_focus_in_event_cb (GtkWidget *widget,
 }
 
 static gboolean
+chat_window_focus_out_event_cb (GtkWidget *widget,
+    GdkEvent *event,
+    EmpathyChatWindow *self)
+{
+  if (self->priv->individual_mgr != NULL)
+    return FALSE;
+
+  /* Keep the individual manager alive so we won't fetch everything from Folks
+   * each time we need to use it. Loading FolksAggregator can takes quite a
+   * while (if user has a huge LDAP abook for example) and it blocks
+   * the mainloop during most of this loading. We workaround this by loading
+   * it when the chat window has been unfocused and so, hopefully, not impact
+   * the reactivity of the chat window too much.
+   *
+   * The individual manager (and so Folks) is needed to know to which
+   * FolksIndividual a TpContact belongs, including:
+   * - empathy_chat_get_contact_menu: to list all the personas of the contact
+   * - empathy_display_individual_info: to invoke gnome-contacts with the
+   *   FolksIndividual.id of the contact
+   * - drag_data_received_individual_id: to find the individual associated
+   *   with the ID we received from the DnD in order to invite him.
+   */
+  self->priv->individual_mgr = empathy_individual_manager_dup_singleton ();
+
+  return FALSE;
+}
+
+static gboolean
 chat_window_drag_drop (GtkWidget *widget,
     GdkDragContext *context,
     int x,
@@ -2032,6 +2060,11 @@ drag_data_received_individual_id (EmpathyChatWindow *self,
           tp_proxy_get_object_path (chat));
       goto out;
     }
+
+  if (self->priv->individual_mgr == NULL)
+    /* Not likely as we have to focus out the chat window in order to start
+     * the DnD but best to be safe. */
+    goto out;
 
   individual = empathy_individual_manager_lookup_member (
           self->priv->individual_mgr, id);
@@ -2330,17 +2363,6 @@ empathy_chat_window_init (EmpathyChatWindow *self)
   self->priv->gsettings_ui = g_settings_new (EMPATHY_PREFS_UI_SCHEMA);
   self->priv->chatroom_manager = empathy_chatroom_manager_dup_singleton (NULL);
 
-  /* Keep the individual manager alive so we won't fetch everything from Folks
-   * each time we need to use it. The individual manager (and so Folks) is
-   * needed to know to which FolksIndividual a TpContact belongs, including:
-   * - empathy_chat_get_contact_menu: to list all the personas of the contact
-   * - empathy_display_individual_info: to invoke gnome-contacts with the
-   *   FolksIndividual.id of the contact
-   * - drag_data_received_individual_id: to find the individual associated
-   *   with the ID we received from the DnD in order to invite him.
-   */
-  self->priv->individual_mgr = empathy_individual_manager_dup_singleton ();
-
   self->priv->sound_mgr = empathy_sound_manager_dup_singleton ();
 
   self->priv->notebook = gtk_notebook_new ();
@@ -2395,6 +2417,8 @@ empathy_chat_window_init (EmpathyChatWindow *self)
       G_CALLBACK (chat_window_delete_event_cb), self);
   g_signal_connect (self->priv->dialog, "focus_in_event",
       G_CALLBACK (chat_window_focus_in_event_cb), self);
+  g_signal_connect (self->priv->dialog, "focus_out_event",
+      G_CALLBACK (chat_window_focus_out_event_cb), self);
   g_signal_connect_after (self->priv->notebook, "switch_page",
       G_CALLBACK (chat_window_page_switched_cb), self);
   g_signal_connect (self->priv->notebook, "page_added",
