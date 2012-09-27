@@ -595,8 +595,7 @@ chat_window_conversation_menu_update (EmpathyChatWindow *self)
 }
 
 static void
-chat_window_contact_menu_update (EmpathyChatWindow *self,
-    EmpathyChatWindow *window)
+chat_window_contact_menu_update (EmpathyChatWindow *self)
 {
   GtkWidget *menu, *submenu, *orig_submenu;
 
@@ -630,7 +629,7 @@ chat_window_contact_menu_update (EmpathyChatWindow *self,
     {
       tp_g_signal_connect_object (orig_submenu,
           "notify::visible",
-          (GCallback)_submenu_notify_visible_changed_cb, window, 0);
+          (GCallback)_submenu_notify_visible_changed_cb, self, 0);
     }
 
   self->priv->updating_menu = FALSE;
@@ -817,7 +816,7 @@ chat_window_update (EmpathyChatWindow *self,
      menu watching. */
   if (update_contact_menu)
     {
-      chat_window_contact_menu_update (self, self);
+      chat_window_contact_menu_update (self);
     }
 
   chat_window_title_update (self);
