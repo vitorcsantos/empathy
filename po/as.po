@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: empathy gnome-2-28\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug."
 "cgi?product=empathy&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2012-09-18 11:40+0000\n"
-"PO-Revision-Date: 2012-09-18 21:11+0530\n"
+"POT-Creation-Date: 2012-09-27 08:31+0000\n"
+"PO-Revision-Date: 2012-09-27 14:50+0530\n"
 "Last-Translator: Nilamdyuti Goswami <ngoswami@redhat.com>\n"
 "Language-Team: as_IN <kde-i18n-doc@kde.org>\n"
 "Language: \n"
@@ -726,6 +726,7 @@ msgid "Internal error"
 msgstr "অভ্যন্তৰীক ত্ৰুটি"
 
 #: ../libempathy/empathy-utils.c:497
+#: ../libempathy-gtk/empathy-roster-model.h:30
 msgid "People Nearby"
 msgstr "ওচৰৰ ব্যক্তিৰ"
 
@@ -1596,7 +1597,7 @@ msgstr "%s এতিয়া %s হিচাপে জনাজাত"
 #. * we get the new handler.
 #: ../libempathy-gtk/empathy-chat.c:2989 ../src/empathy-call-window.c:1467
 #: ../src/empathy-call-window.c:1517 ../src/empathy-call-window.c:2570
-#: ../src/empathy-event-manager.c:1166
+#: ../src/empathy-call-window.c:2876 ../src/empathy-event-manager.c:1166
 msgid "Disconnected"
 msgstr "বিচ্ছিন্ন"
 
@@ -2912,6 +2913,15 @@ msgstr "পশ্চিমি"
 msgid "Vietnamese"
 msgstr "ভিয়েতনামিছ"
 
+#: ../libempathy-gtk/empathy-roster-model.h:29
+#| msgid "Contacts"
+msgid "Top Contacts"
+msgstr "উচ্চ পৰিচয়সমূহ"
+
+#: ../libempathy-gtk/empathy-roster-model.h:31
+msgid "Ungrouped"
+msgstr "দলীয় নহয়"
+
 #: ../nautilus-sendto-plugin/empathy-nautilus-sendto.c:231
 msgid "No error message"
 msgstr "কোনো ত্ৰুটি বাৰ্তা নাই"
@@ -3229,43 +3239,43 @@ msgstr "মাল্টিকাস্ট দলৰ IP ঠিকনা"
 msgid "Unknown"
 msgstr "অজ্ঞাত"
 
-#: ../src/empathy-call-window.c:2868
+#: ../src/empathy-call-window.c:2874
 msgid "On hold"
 msgstr "হল্ডত আছে"
 
-#: ../src/empathy-call-window.c:2870
+#: ../src/empathy-call-window.c:2878
 msgid "Mute"
 msgstr "মিউট"
 
-#: ../src/empathy-call-window.c:2872
+#: ../src/empathy-call-window.c:2880
 msgid "Duration"
 msgstr "অবধি"
 
 #. Translators: 'status - minutes:seconds' the caller has been connected
-#: ../src/empathy-call-window.c:2875
+#: ../src/empathy-call-window.c:2883
 #, c-format
 msgid "%s — %d:%02dm"
 msgstr "%s — %d:%02dm"
 
-#: ../src/empathy-call-window.c:2971
+#: ../src/empathy-call-window.c:2979
 msgid "Technical Details"
 msgstr "কাৰিকৰী বিৱৰণসমূহ"
 
-#: ../src/empathy-call-window.c:3010
+#: ../src/empathy-call-window.c:3018
 #, c-format
 msgid ""
 "%s's software does not understand any of the audio formats supported by your "
 "computer"
 msgstr "%s ৰ চফ্টৱেৰে আপোনাৰ কমপিউটাৰে সমৰ্থন কৰা কোনো অডিঅ' বিন্যাস বুজি নাপায়"
 
-#: ../src/empathy-call-window.c:3015
+#: ../src/empathy-call-window.c:3023
 #, c-format
 msgid ""
 "%s's software does not understand any of the video formats supported by your "
 "computer"
 msgstr "%s ৰ চফ্টৱেৰে আপোনাৰ কমপিউটাৰে সমৰ্থন কৰা কোনো ভিডিঅ' বিন্যাস বুজি নাপায়"
 
-#: ../src/empathy-call-window.c:3021
+#: ../src/empathy-call-window.c:3029
 #, c-format
 msgid ""
 "Can't establish a connection to %s. One of you might be on a network that "
@@ -3274,19 +3284,19 @@ msgstr ""
 "%s লে এটা সংযোগ স্থাপন কৰিব নোৱাৰে। আপোনা লোকৰ এজন হয়তো এনে নেটৱাৰ্কত আছে যি "
 "প্ৰত্যক্ষ সংযোগসমূহৰ অনুমতি নিদিয়ে।"
 
-#: ../src/empathy-call-window.c:3027
+#: ../src/empathy-call-window.c:3035
 msgid "There was a failure on the network"
 msgstr "নেটৱাৰ্কত এটা ব্যৰ্থতা হৈছিল"
 
-#: ../src/empathy-call-window.c:3031
+#: ../src/empathy-call-window.c:3039
 msgid "The audio formats necessary for this call are not installed on your computer"
 msgstr "এই কলৰ বাবে প্ৰয়োজনীয় অডিঅ' বিন্যাসসমূহ আপোনাৰ কমপিউটাৰত ইনস্টল নাই"
 
-#: ../src/empathy-call-window.c:3034
+#: ../src/empathy-call-window.c:3042
 msgid "The video formats necessary for this call are not installed on your computer"
 msgstr "এই কলৰ বাবে ভিডিঅ' বিন্যাসসমূহ আপোনাৰ কমপিউটাৰত ইনস্টল নাই"
 
-#: ../src/empathy-call-window.c:3046
+#: ../src/empathy-call-window.c:3054
 #, c-format
 msgid ""
 "Something unexpected happened in a Telepathy component. Please <a href=\"%s"
@@ -3296,32 +3306,32 @@ msgstr ""
 "কিবা অপ্ৰত্যাশিত এটা Telepathy উপাদানত ঘটিছে। অনুগ্ৰহ কৰি <a href=\"%s\">এই বাগ "
 "সংবাদন কৰক</a> আৰু সহায় মেনুৰ 'ডিবাগ' উইন্ডোৰ পৰা সংগ্ৰহ কৰা লগসমূহ এটাচ কৰক।"
 
-#: ../src/empathy-call-window.c:3055
+#: ../src/empathy-call-window.c:3063
 msgid "There was a failure in the call engine"
 msgstr "কল ইঞ্জীনত এটা ব্যৰ্থতা হৈছিল"
 
-#: ../src/empathy-call-window.c:3058
+#: ../src/empathy-call-window.c:3066
 msgid "The end of the stream was reached"
 msgstr "স্ট্ৰিমৰ অন্ত পোৱা গল"
 
-#: ../src/empathy-call-window.c:3098
+#: ../src/empathy-call-window.c:3106
 msgid "Can't establish audio stream"
 msgstr "অডিঅ' স্ট্ৰিম স্থাপনা কৰিব নোৱাৰি"
 
-#: ../src/empathy-call-window.c:3108
+#: ../src/empathy-call-window.c:3116
 msgid "Can't establish video stream"
 msgstr "ভিডিঅ' স্ট্ৰিম স্থাপনা কৰিব নোৱাৰি"
 
-#: ../src/empathy-call-window.c:3145
+#: ../src/empathy-call-window.c:3153
 #, c-format
 msgid "Your current balance is %s."
 msgstr "আপোনাৰ বৰ্তমান বেলেঞ্চ হল %s।"
 
-#: ../src/empathy-call-window.c:3149
+#: ../src/empathy-call-window.c:3157
 msgid "Sorry, you don’t have enough credit for that call."
 msgstr "ক্ষমা কৰিব, আপোনাৰ সেই কলৰ বাবে পৰ্যাপ্ত দেন নাই।"
 
-#: ../src/empathy-call-window.c:3151
+#: ../src/empathy-call-window.c:3159
 msgid "Top Up"
 msgstr "টপ আপ"
 
@@ -4426,7 +4436,6 @@ msgid "Edit %s account options"
 msgstr "%s একাওন্ট বিকল্পসমূহ সম্পাদনা কৰক"
 
 #: ../ubuntu-online-accounts/empathy.application.in.h:1
-#| msgid "Import your existing accounts"
 msgid "Integrate your IM accounts"
 msgstr "আপোনাৰ IM একাওন্টসমূহ অনুকলন কৰক"
 
@@ -4664,9 +4673,6 @@ msgstr "আপোনাৰ IM একাওন্টসমূহ অনুকল�
 
 #~ msgid "Personal Information"
 #~ msgstr "ব্যক্তিগত তথ্য"
-
-#~ msgid "Ungrouped"
-#~ msgstr "দলীয় নহয়"
 
 #~ msgid "Favorite People"
 #~ msgstr "পছন্দৰ মানুহ"
