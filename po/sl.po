@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: empathy master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=empathy&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2012-09-18 11:47+0000\n"
-"PO-Revision-Date: 2012-09-18 13:51+0100\n"
+"POT-Creation-Date: 2012-09-27 08:31+0000\n"
+"PO-Revision-Date: 2012-09-27 10:33+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenščina <gnome-si@googlegroups.com>\n"
 "Language: \n"
@@ -720,6 +720,7 @@ msgid "Internal error"
 msgstr "Notranja napaka"
 
 #: ../libempathy/empathy-utils.c:497
+#: ../libempathy-gtk/empathy-roster-model.h:30
 msgid "People Nearby"
 msgstr "Uporabniki v bližini"
 
@@ -1577,6 +1578,7 @@ msgstr "%s je preimenovan v %s"
 #: ../src/empathy-call-window.c:1467
 #: ../src/empathy-call-window.c:1517
 #: ../src/empathy-call-window.c:2570
+#: ../src/empathy-call-window.c:2876
 #: ../src/empathy-event-manager.c:1166
 msgid "Disconnected"
 msgstr "Prekinjena povezava"
@@ -2885,6 +2887,14 @@ msgstr "zahodnoevropska"
 msgid "Vietnamese"
 msgstr "vietnamska"
 
+#: ../libempathy-gtk/empathy-roster-model.h:29
+msgid "Top Contacts"
+msgstr "Najpogostejši stiki"
+
+#: ../libempathy-gtk/empathy-roster-model.h:31
+msgid "Ungrouped"
+msgstr "Brez skupine"
+
 #: ../nautilus-sendto-plugin/empathy-nautilus-sendto.c:231
 msgid "No error message"
 msgstr "Ni sporočil o napakah"
@@ -3171,86 +3181,86 @@ msgstr "Naslov IP skupine za večsmerno oddajanje"
 msgid "Unknown"
 msgstr "Neznano"
 
-#: ../src/empathy-call-window.c:2868
+#: ../src/empathy-call-window.c:2874
 msgid "On hold"
 msgstr "Zadržano"
 
-#: ../src/empathy-call-window.c:2870
+#: ../src/empathy-call-window.c:2878
 msgid "Mute"
 msgstr "Utišaj"
 
-#: ../src/empathy-call-window.c:2872
+#: ../src/empathy-call-window.c:2880
 msgid "Duration"
 msgstr "Trajanje"
 
 #. Translators: 'status - minutes:seconds' the caller has been connected
-#: ../src/empathy-call-window.c:2875
+#: ../src/empathy-call-window.c:2883
 #, c-format
 msgid "%s — %d:%02dm"
 msgstr "%s — %d:%02dm"
 
-#: ../src/empathy-call-window.c:2971
+#: ../src/empathy-call-window.c:2979
 msgid "Technical Details"
 msgstr "Tehnične podrobnosti"
 
-#: ../src/empathy-call-window.c:3010
+#: ../src/empathy-call-window.c:3018
 #, c-format
 msgid "%s's software does not understand any of the audio formats supported by your computer"
 msgstr "Program stika %s ne prepozna zvočnih zapisov podprtih na vašem sistemu"
 
-#: ../src/empathy-call-window.c:3015
+#: ../src/empathy-call-window.c:3023
 #, c-format
 msgid "%s's software does not understand any of the video formats supported by your computer"
 msgstr "Program stika %s ne prepozna video zapisov podprtih na vašem sistemu"
 
-#: ../src/empathy-call-window.c:3021
+#: ../src/empathy-call-window.c:3029
 #, c-format
 msgid "Can't establish a connection to %s. One of you might be on a network that does not allow direct connections."
 msgstr "Ni mogoče vzpostaviti povezave z %s. Morda je eden od odjemalcev je v omrežju, ki ne dovoli neposrednih povezav."
 
-#: ../src/empathy-call-window.c:3027
+#: ../src/empathy-call-window.c:3035
 msgid "There was a failure on the network"
 msgstr "Prišlo je do napake na omrežju"
 
-#: ../src/empathy-call-window.c:3031
+#: ../src/empathy-call-window.c:3039
 msgid "The audio formats necessary for this call are not installed on your computer"
 msgstr "Zvočni zapisi za ta klic niso nameščeni"
 
-#: ../src/empathy-call-window.c:3034
+#: ../src/empathy-call-window.c:3042
 msgid "The video formats necessary for this call are not installed on your computer"
 msgstr "Video zapisi za ta klic niso nameščeni"
 
-#: ../src/empathy-call-window.c:3046
+#: ../src/empathy-call-window.c:3054
 #, c-format
 msgid "Something unexpected happened in a Telepathy component. Please <a href=\"%s\">report this bug</a> and attach logs gathered from the 'Debug' window in the Help menu."
 msgstr "Prišlo je do nepričakovane napake v delu programa Telepathy. Pošljite <a href=\"%s\">poročilo o hrošču</a> in pripnite dnevnik razhroščevanja iz menija pomoči."
 
-#: ../src/empathy-call-window.c:3055
+#: ../src/empathy-call-window.c:3063
 msgid "There was a failure in the call engine"
 msgstr "Prišlo je do napake v klicnem programniku"
 
-#: ../src/empathy-call-window.c:3058
+#: ../src/empathy-call-window.c:3066
 msgid "The end of the stream was reached"
 msgstr "Dosežen je konec pretoka"
 
-#: ../src/empathy-call-window.c:3098
+#: ../src/empathy-call-window.c:3106
 msgid "Can't establish audio stream"
 msgstr "Ni mogoče vzpostaviti zvočnega pretoka"
 
-#: ../src/empathy-call-window.c:3108
+#: ../src/empathy-call-window.c:3116
 msgid "Can't establish video stream"
 msgstr "Ni mogoče vzpostaviti video pretoka"
 
-#: ../src/empathy-call-window.c:3145
+#: ../src/empathy-call-window.c:3153
 #, c-format
 msgid "Your current balance is %s."
 msgstr "Trenutno stanje je %s."
 
-#: ../src/empathy-call-window.c:3149
+#: ../src/empathy-call-window.c:3157
 msgid "Sorry, you don’t have enough credit for that call."
 msgstr "Na računu ni dovolj visokega zneska za vzpostavitev klica."
 
-#: ../src/empathy-call-window.c:3151
+#: ../src/empathy-call-window.c:3159
 msgid "Top Up"
 msgstr "Povišaj"
 
@@ -4739,9 +4749,6 @@ msgstr "Podpora različnim računom IM"
 
 #~ msgid "Whether Empathy has migrated butterfly logs."
 #~ msgstr "Ali je program Empathy preselil dnevniške zapise butterfly."
-
-#~ msgid "Ungrouped"
-#~ msgstr "Brez skupine"
 
 #~ msgid "Favorite People"
 #~ msgstr "Priljubljene osebe"
