@@ -1914,6 +1914,13 @@ chat_window_focus_in_event_cb (GtkWidget *widget,
   return FALSE;
 }
 
+static void
+contacts_loaded_cb (EmpathyIndividualManager *mgr,
+    EmpathyChatWindow *self)
+{
+  chat_window_contact_menu_update (self);
+}
+
 static gboolean
 chat_window_focus_out_event_cb (GtkWidget *widget,
     GdkEvent *event,
@@ -1938,6 +1945,15 @@ chat_window_focus_out_event_cb (GtkWidget *widget,
    *   with the ID we received from the DnD in order to invite him.
    */
   self->priv->individual_mgr = empathy_individual_manager_dup_singleton ();
+
+  if (!empathy_individual_manager_get_contacts_loaded (
+      self->priv->individual_mgr))
+    {
+      /* We want to update the contact menu when Folks is loaded so we can
+       * list all the personas of the contact. */
+      tp_g_signal_connect_object (self->priv->individual_mgr, "contacts-loaded",
+          G_CALLBACK (contacts_loaded_cb), self, 0);
+    }
 
   return FALSE;
 }
