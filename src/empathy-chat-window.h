@@ -79,7 +79,7 @@ EmpathyChat * empathy_chat_window_find_chat (TpAccount *account,
     const gchar *id,
     gboolean sms_channel);
 
-void empathy_chat_window_present_chat (EmpathyChat *chat,
+EmpathyChatWindow * empathy_chat_window_present_chat (EmpathyChat *chat,
     gint64 timestamp);
 
 G_END_DECLS

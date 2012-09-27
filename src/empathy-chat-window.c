@@ -2664,14 +2664,14 @@ empathy_chat_window_find_chat (TpAccount *account,
   return NULL;
 }
 
-void
+EmpathyChatWindow *
 empathy_chat_window_present_chat (EmpathyChat *chat,
     gint64 timestamp)
 {
   EmpathyChatWindow *self;
   guint32 x_timestamp;
 
-  g_return_if_fail (EMPATHY_IS_CHAT (chat));
+  g_return_val_if_fail (EMPATHY_IS_CHAT (chat), NULL);
 
   self = chat_window_find_chat (chat);
 
@@ -2695,7 +2695,7 @@ empathy_chat_window_present_chat (EmpathyChat *chat,
    * an action by the user
    */
   if (!tp_user_action_time_should_present (timestamp, &x_timestamp))
-    return;
+    return self;
 
   if (x_timestamp != GDK_CURRENT_TIME)
     {
@@ -2705,7 +2705,7 @@ empathy_chat_window_present_chat (EmpathyChat *chat,
 
       if (self->priv->x_user_action_time != 0
         && X_EARLIER_OR_EQL (x_timestamp, self->priv->x_user_action_time))
-        return;
+        return self;
 
       self->priv->x_user_action_time = x_timestamp;
     }
@@ -2719,6 +2719,7 @@ empathy_chat_window_present_chat (EmpathyChat *chat,
   empathy_move_to_window_desktop (GTK_WINDOW (self->priv->dialog), x_timestamp);
 
   gtk_widget_grab_focus (chat->input_text_view);
+  return self;
 }
 
 static void
