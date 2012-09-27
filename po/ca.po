@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: empathy\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=empathy&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2012-09-20 08:28+0000\n"
-"PO-Revision-Date: 2012-09-18 01:29+0200\n"
+"POT-Creation-Date: 2012-09-27 08:31+0000\n"
+"PO-Revision-Date: 2012-09-27 23:59+0200\n"
 "Last-Translator: Gil Forcada <gilforcada@guifi.net>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "Language: ca\n"
@@ -783,6 +783,7 @@ msgid "Internal error"
 msgstr "Error intern"
 
 #: ../libempathy/empathy-utils.c:497
+#: ../libempathy-gtk/empathy-roster-model.h:30
 msgid "People Nearby"
 msgstr "Gent propera"
 
@@ -1657,7 +1658,7 @@ msgstr "En/na %s ara es diu %s"
 #. * we get the new handler.
 #: ../libempathy-gtk/empathy-chat.c:2989 ../src/empathy-call-window.c:1467
 #: ../src/empathy-call-window.c:1517 ../src/empathy-call-window.c:2570
-#: ../src/empathy-event-manager.c:1166
+#: ../src/empathy-call-window.c:2876 ../src/empathy-event-manager.c:1166
 msgid "Disconnected"
 msgstr "Fora de línia"
 
@@ -2980,6 +2981,14 @@ msgstr "Occidental"
 msgid "Vietnamese"
 msgstr "Vietnamita"
 
+#: ../libempathy-gtk/empathy-roster-model.h:29
+msgid "Top Contacts"
+msgstr "Contactes més freqüents"
+
+#: ../libempathy-gtk/empathy-roster-model.h:31
+msgid "Ungrouped"
+msgstr "Sense grup"
+
 #: ../nautilus-sendto-plugin/empathy-nautilus-sendto.c:231
 msgid "No error message"
 msgstr "No hi ha missatge d'error"
@@ -3304,25 +3313,25 @@ msgstr "Desconegut"
 msgid "On hold"
 msgstr "En espera"
 
-#: ../src/empathy-call-window.c:2876
+#: ../src/empathy-call-window.c:2878
 msgid "Mute"
 msgstr "Silenci"
 
-#: ../src/empathy-call-window.c:2878
+#: ../src/empathy-call-window.c:2880
 msgid "Duration"
 msgstr "Durada"
 
 #. Translators: 'status - minutes:seconds' the caller has been connected
-#: ../src/empathy-call-window.c:2881
+#: ../src/empathy-call-window.c:2883
 #, c-format
 msgid "%s — %d:%02dm"
 msgstr "%s — %d:%02dm"
 
-#: ../src/empathy-call-window.c:2977
+#: ../src/empathy-call-window.c:2979
 msgid "Technical Details"
 msgstr "Detalls tècnics"
 
-#: ../src/empathy-call-window.c:3016
+#: ../src/empathy-call-window.c:3018
 #, c-format
 msgid ""
 "%s's software does not understand any of the audio formats supported by your "
@@ -3331,7 +3340,7 @@ msgstr ""
 "El programari d'en/na %s no té cap format d'àudio dels que teniu en el "
 "vostre ordinador"
 
-#: ../src/empathy-call-window.c:3021
+#: ../src/empathy-call-window.c:3023
 #, c-format
 msgid ""
 "%s's software does not understand any of the video formats supported by your "
@@ -3340,7 +3349,7 @@ msgstr ""
 "El programari d'en/na %s no té cap format de vídeo dels que teniu en el "
 "vostre ordinador"
 
-#: ../src/empathy-call-window.c:3027
+#: ../src/empathy-call-window.c:3029
 #, c-format
 msgid ""
 "Can't establish a connection to %s. One of you might be on a network that "
@@ -3349,25 +3358,25 @@ msgstr ""
 "No s'ha pogut connectar amb en/na %s. Algú dels dos deu estar en una xarxa "
 "que no permet connexions directes."
 
-#: ../src/empathy-call-window.c:3033
+#: ../src/empathy-call-window.c:3035
 msgid "There was a failure on the network"
 msgstr "Hi ha hagut una fallada en la xarxa"
 
-#: ../src/empathy-call-window.c:3037
+#: ../src/empathy-call-window.c:3039
 msgid ""
 "The audio formats necessary for this call are not installed on your computer"
 msgstr ""
 "Els formats d'àudio necessaris per a aquesta trucada no estan instaŀlats en "
 "aquest ordinador"
 
-#: ../src/empathy-call-window.c:3040
+#: ../src/empathy-call-window.c:3042
 msgid ""
 "The video formats necessary for this call are not installed on your computer"
 msgstr ""
 "Els formats de vídeo necessaris per a aquesta trucada no estan instaŀlats en "
 "aquest ordinador"
 
-#: ../src/empathy-call-window.c:3052
+#: ../src/empathy-call-window.c:3054
 #, c-format
 msgid ""
 "Something unexpected happened in a Telepathy component. Please <a href=\"%s"
@@ -3378,32 +3387,32 @@ msgstr ""
 "\">Informeu d'aquesta errada</a> i adjunteu-hi els registres recollits a la "
 "finestra «Depuració» del menú Ajuda."
 
-#: ../src/empathy-call-window.c:3061
+#: ../src/empathy-call-window.c:3063
 msgid "There was a failure in the call engine"
 msgstr "Hi ha hagut una fallada en el motor de trucada"
 
-#: ../src/empathy-call-window.c:3064
+#: ../src/empathy-call-window.c:3066
 msgid "The end of the stream was reached"
 msgstr "S'ha arribat al final del flux"
 
-#: ../src/empathy-call-window.c:3104
+#: ../src/empathy-call-window.c:3106
 msgid "Can't establish audio stream"
 msgstr "No s'ha pogut establir el flux d'àudio"
 
-#: ../src/empathy-call-window.c:3114
+#: ../src/empathy-call-window.c:3116
 msgid "Can't establish video stream"
 msgstr "No s'ha pogut establir el flux de vídeo"
 
-#: ../src/empathy-call-window.c:3151
+#: ../src/empathy-call-window.c:3153
 #, c-format
 msgid "Your current balance is %s."
 msgstr "El saldo actual és de %s."
 
-#: ../src/empathy-call-window.c:3155
+#: ../src/empathy-call-window.c:3157
 msgid "Sorry, you don’t have enough credit for that call."
 msgstr "No teniu prou saldo per fer aquesta trucada."
 
-#: ../src/empathy-call-window.c:3157
+#: ../src/empathy-call-window.c:3159
 msgid "Top Up"
 msgstr "Recarrega"
 
@@ -4763,9 +4772,6 @@ msgstr "Integreu els vostres comptes de missatgeria instantània"
 
 #~ msgid "Personal Information"
 #~ msgstr "Informació personal"
-
-#~ msgid "Ungrouped"
-#~ msgstr "Sense grup"
 
 #~ msgid "Favorite People"
 #~ msgstr "Persones preferides"
