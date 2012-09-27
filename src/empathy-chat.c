@@ -142,7 +142,14 @@ main (int argc,
   theme_mgr = empathy_theme_manager_dup_singleton ();
 
   /* Keep the individual manager alive so we won't fetch everything from Folks
-   * each time we need to use it. */
+   * each time we need to use it. The individual manager (and so Folks) is
+   * needed to know to which FolksIndividual a TpContact belongs, including:
+   * - empathy_chat_get_contact_menu: to list all the personas of the contact
+   * - empathy_display_individual_info: to invoke gnome-contacts with the
+   *   FolksIndividual.id of the contact
+   * - chat-window:drag_data_received_individual_id: to find the individual
+   *   associated with the ID we received from the DnD in order to invite him.
+   */
   individual_mgr = empathy_individual_manager_dup_singleton ();
 
   if (g_getenv ("EMPATHY_PERSIST") != NULL)
