@@ -29,7 +29,6 @@
 #include <libnotify/notify.h>
 
 #include <libempathy/empathy-presence-manager.h>
-#include <libempathy/empathy-individual-manager.h>
 
 #include <libempathy-gtk/empathy-theme-manager.h>
 #include <libempathy-gtk/empathy-ui-utils.h>
@@ -99,7 +98,6 @@ main (int argc,
   EmpathyPresenceManager *presence_mgr;
   EmpathyThemeManager *theme_mgr;
   gint retval;
-  EmpathyIndividualManager *individual_mgr;
 
   optcontext = g_option_context_new (N_("- Empathy Chat Client"));
   g_option_context_add_group (optcontext, gtk_get_option_group (TRUE));
@@ -141,17 +139,6 @@ main (int argc,
   /* Keep the theme manager alive as it does some caching */
   theme_mgr = empathy_theme_manager_dup_singleton ();
 
-  /* Keep the individual manager alive so we won't fetch everything from Folks
-   * each time we need to use it. The individual manager (and so Folks) is
-   * needed to know to which FolksIndividual a TpContact belongs, including:
-   * - empathy_chat_get_contact_menu: to list all the personas of the contact
-   * - empathy_display_individual_info: to invoke gnome-contacts with the
-   *   FolksIndividual.id of the contact
-   * - chat-window:drag_data_received_individual_id: to find the individual
-   *   associated with the ID we received from the DnD in order to invite him.
-   */
-  individual_mgr = empathy_individual_manager_dup_singleton ();
-
   if (g_getenv ("EMPATHY_PERSIST") != NULL)
     {
       DEBUG ("Disable timer");
@@ -172,7 +159,6 @@ main (int argc,
   g_object_unref (presence_mgr);
   g_object_unref (theme_mgr);
   tp_clear_object (&chat_mgr);
-  g_object_unref (individual_mgr);
 
 #ifdef ENABLE_DEBUG
   g_object_unref (debug_sender);

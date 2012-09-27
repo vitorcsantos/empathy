@@ -75,6 +75,7 @@ struct _EmpathyChatWindowPriv
   gboolean dnd_same_window;
   EmpathyChatroomManager *chatroom_manager;
   EmpathyNotifyManager *notify_mgr;
+  EmpathyIndividualManager *individual_mgr;
   GtkWidget *dialog;
   GtkWidget *notebook;
   NotifyNotification *notification;
@@ -2008,7 +2009,6 @@ drag_data_received_individual_id (EmpathyChatWindow *self,
     guint time_)
 {
   const gchar *id;
-  EmpathyIndividualManager *manager = NULL;
   FolksIndividual *individual;
   EmpathyTpChat *chat;
   TpContact *tp_contact;
@@ -2033,9 +2033,8 @@ drag_data_received_individual_id (EmpathyChatWindow *self,
       goto out;
     }
 
-  manager = empathy_individual_manager_dup_singleton ();
-
-  individual = empathy_individual_manager_lookup_member (manager, id);
+  individual = empathy_individual_manager_lookup_member (
+          self->priv->individual_mgr, id);
   if (individual == NULL)
     {
       DEBUG ("Failed to find individual %s", id);
@@ -2060,7 +2059,6 @@ drag_data_received_individual_id (EmpathyChatWindow *self,
 
 out:
   gtk_drag_finish (context, TRUE, FALSE, time_);
-  tp_clear_object (&manager);
 }
 
 static void
@@ -2223,6 +2221,7 @@ chat_window_finalize (GObject *object)
   g_object_unref (self->priv->gsettings_notif);
   g_object_unref (self->priv->gsettings_ui);
   g_object_unref (self->priv->sound_mgr);
+  g_clear_object (&self->priv->individual_mgr);
 
   if (self->priv->notification != NULL)
     {
@@ -2330,6 +2329,17 @@ empathy_chat_window_init (EmpathyChatWindow *self)
   self->priv->gsettings_notif = g_settings_new (EMPATHY_PREFS_NOTIFICATIONS_SCHEMA);
   self->priv->gsettings_ui = g_settings_new (EMPATHY_PREFS_UI_SCHEMA);
   self->priv->chatroom_manager = empathy_chatroom_manager_dup_singleton (NULL);
+
+  /* Keep the individual manager alive so we won't fetch everything from Folks
+   * each time we need to use it. The individual manager (and so Folks) is
+   * needed to know to which FolksIndividual a TpContact belongs, including:
+   * - empathy_chat_get_contact_menu: to list all the personas of the contact
+   * - empathy_display_individual_info: to invoke gnome-contacts with the
+   *   FolksIndividual.id of the contact
+   * - drag_data_received_individual_id: to find the individual associated
+   *   with the ID we received from the DnD in order to invite him.
+   */
+  self->priv->individual_mgr = empathy_individual_manager_dup_singleton ();
 
   self->priv->sound_mgr = empathy_sound_manager_dup_singleton ();
 
