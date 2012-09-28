@@ -82,6 +82,9 @@ EmpathyChat * empathy_chat_window_find_chat (TpAccount *account,
 EmpathyChatWindow * empathy_chat_window_present_chat (EmpathyChat *chat,
     gint64 timestamp);
 
+EmpathyIndividualManager * empathy_chat_window_get_individual_manager (
+    EmpathyChatWindow *self);
+
 G_END_DECLS
 
 #endif

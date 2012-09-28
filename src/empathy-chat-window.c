@@ -67,6 +67,11 @@
     || (t1 >= t2 && (t1 - t2) > (G_MAXUINT32/2)) \
   )
 
+enum
+{
+  PROP_INDIVIDUAL_MGR = 1
+};
+
 struct _EmpathyChatWindowPriv
 {
   EmpathyChat *current_chat;
@@ -1955,6 +1960,8 @@ chat_window_focus_out_event_cb (GtkWidget *widget,
           G_CALLBACK (contacts_loaded_cb), self, 0);
     }
 
+  g_object_notify (G_OBJECT (self), "individual-manager");
+
   return FALSE;
 }
 
@@ -2299,11 +2306,37 @@ chat_window_finalize (GObject *object)
 }
 
 static void
+chat_window_get_property (GObject *object,
+    guint property_id,
+    GValue *value,
+    GParamSpec *pspec)
+{
+  EmpathyChatWindow *self = EMPATHY_CHAT_WINDOW (object);
+
+  switch (property_id)
+    {
+      case PROP_INDIVIDUAL_MGR:
+        g_value_set_object (value, self->priv->individual_mgr);
+      default:
+        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+        break;
+    }
+}
+
+static void
 empathy_chat_window_class_init (EmpathyChatWindowClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GParamSpec *spec;
 
+  object_class->get_property = chat_window_get_property;
   object_class->finalize = chat_window_finalize;
+
+  spec = g_param_spec_object ("individual-manager", "individual-manager",
+      "EmpathyIndividualManager",
+      EMPATHY_TYPE_INDIVIDUAL_MANAGER,
+      G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
+  g_object_class_install_property (object_class, PROP_INDIVIDUAL_MGR, spec);
 
   g_type_class_add_private (object_class, sizeof (EmpathyChatWindowPriv));
 }
@@ -2792,4 +2825,10 @@ empathy_chat_window_get_nb_chats (EmpathyChatWindow *self,
     *nb_rooms = _nb_rooms;
   if (nb_private != NULL)
     *nb_private = _nb_private;
+}
+
+EmpathyIndividualManager *
+empathy_chat_window_get_individual_manager (EmpathyChatWindow *self)
+{
+  return self->priv->individual_mgr;
 }
