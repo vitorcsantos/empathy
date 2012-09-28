@@ -54,6 +54,7 @@
 static GtkApplication *app = NULL;
 static gboolean activated = FALSE;
 static gboolean use_timer = TRUE;
+static guint inhibit_id = 0;
 
 static EmpathyCallFactory *call_factory = NULL;
 
@@ -107,6 +108,32 @@ incoming_call_cb (EmpathyCallFactory *factory,
 }
 
 static void
+call_window_inhibit_cb (EmpathyCallWindow *window,
+    gboolean inhibit,
+    gpointer user_data)
+{
+  if (inhibit)
+    {
+      if (inhibit_id != 0)
+        return;
+
+      inhibit_id = gtk_application_inhibit (GTK_APPLICATION (app),
+          GTK_WINDOW (window),
+          GTK_APPLICATION_INHIBIT_LOGOUT & GTK_APPLICATION_INHIBIT_SWITCH &
+          GTK_APPLICATION_INHIBIT_SUSPEND & GTK_APPLICATION_INHIBIT_IDLE,
+          _("In a call"));
+    }
+  else
+    {
+      if (inhibit_id == 0)
+        return;
+
+      gtk_application_uninhibit (GTK_APPLICATION (app), inhibit_id);
+      inhibit_id = 0;
+    }
+}
+
+static void
 new_call_handler_cb (EmpathyCallFactory *factory,
     EmpathyCallHandler *handler,
     gboolean outgoing,
@@ -133,6 +160,8 @@ new_call_handler_cb (EmpathyCallFactory *factory,
       g_application_hold (G_APPLICATION (app));
       g_signal_connect (window, "destroy",
           G_CALLBACK (call_window_destroyed_cb), contact);
+      g_signal_connect (window, "inhibit",
+          G_CALLBACK (call_window_inhibit_cb), NULL);
 
       gtk_widget_show (GTK_WIDGET (window));
     }
