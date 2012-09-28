@@ -163,6 +163,11 @@ individual_menu_add_personas (GtkMenuShell *menu,
       single_individual = empathy_create_individual_from_tp_contact (
           tp_contact);
 
+      /* Pretty hacky. Creating single_individual had a side effect to change
+       * persona.individual from individual to single_individual which is not
+       * what we want so we set it back. See bgo#684971 for details. */
+      g_object_set (persona, "individual", individual, NULL);
+
       store = folks_persona_get_store (FOLKS_PERSONA (persona));
       account = folks_persona_store_get_display_name (store);
 
