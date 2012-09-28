@@ -25,6 +25,7 @@
 #include <libempathy/empathy-chatroom-manager.h>
 #include <libempathy/empathy-request-util.h>
 #include <libempathy/empathy-utils.h>
+#include <libempathy/empathy-individual-manager.h>
 
 #include <libempathy-gtk/empathy-ui-utils.h>
 
@@ -70,6 +71,11 @@ struct _EmpathyChatManagerPriv
   GHashTable *messages;
 
   TpBaseClient *handler;
+
+  /* Cached to keep Folks in memory while empathy-chat is running; we don't
+   * want to reload it each time the last chat window is closed
+   * and re-opened. */
+  EmpathyIndividualManager *individual_mgr;
 };
 
 #define GET_PRIV(o) \
@@ -152,6 +158,20 @@ join_cb (GObject *source,
 }
 
 static void
+individual_mgr_cb (EmpathyChatWindow *window,
+    GParamSpec *spec,
+    EmpathyChatManager *self)
+{
+  EmpathyChatManagerPriv *priv = GET_PRIV (self);
+
+  if (priv->individual_mgr != NULL)
+    return;
+
+  priv->individual_mgr = empathy_chat_window_get_individual_manager (window);
+  g_object_ref (priv->individual_mgr);
+}
+
+static void
 process_tp_chat (EmpathyChatManager *self,
     EmpathyTpChat *tp_chat,
     TpAccount *account,
@@ -160,6 +180,7 @@ process_tp_chat (EmpathyChatManager *self,
   EmpathyChatManagerPriv *priv = GET_PRIV (self);
   EmpathyChat *chat = NULL;
   const gchar *id;
+  EmpathyChatWindow *window;
 
   id = empathy_tp_chat_get_id (tp_chat);
   if (!tp_str_empty (id))
@@ -203,7 +224,15 @@ process_tp_chat (EmpathyChatManager *self,
 
       g_object_weak_ref ((GObject *) chat, chat_destroyed_cb, self);
     }
-  empathy_chat_window_present_chat (chat, user_action_time);
+
+  window = empathy_chat_window_present_chat (chat, user_action_time);
+
+  if (priv->individual_mgr == NULL)
+    {
+      /* We want to cache it as soon it's created */
+      tp_g_signal_connect_object (window, "notify::individual-manager",
+        G_CALLBACK (individual_mgr_cb), self, 0);
+    }
 
   if (empathy_tp_chat_is_invited (tp_chat, NULL))
     {
@@ -308,6 +337,7 @@ empathy_chat_manager_finalize (GObject *object)
 
   tp_clear_object (&priv->handler);
   tp_clear_object (&priv->chatroom_mgr);
+  tp_clear_object (&priv->individual_mgr);
 
   G_OBJECT_CLASS (empathy_chat_manager_parent_class)->finalize (object);
 }
