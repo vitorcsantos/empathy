@@ -104,6 +104,13 @@ enum {
   PROP_CALL_HANDLER = 1,
 };
 
+enum {
+  SIG_INHIBIT,
+  LAST_SIGNAL
+};
+
+static guint signals[LAST_SIGNAL];
+
 typedef enum {
   RINGING,       /* Incoming call */
   CONNECTING,    /* Outgoing call */
@@ -2355,6 +2362,13 @@ empathy_call_window_class_init (
     G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY | G_PARAM_STATIC_STRINGS);
   g_object_class_install_property (object_class,
     PROP_CALL_HANDLER, param_spec);
+
+  signals[SIG_INHIBIT] = g_signal_new ("inhibit",
+      G_OBJECT_CLASS_TYPE (empathy_call_window_class),
+      G_SIGNAL_RUN_LAST,
+      0, NULL, NULL, NULL,
+      G_TYPE_NONE,
+      1, G_TYPE_BOOLEAN);
 }
 
 void
@@ -2597,6 +2611,8 @@ empathy_call_window_disconnected (EmpathyCallWindow *self,
 
   /* Leave full screen mode if needed */
   gtk_window_unfullscreen (GTK_WINDOW (self));
+
+  g_signal_emit (self, signals[SIG_INHIBIT], 0, FALSE);
 
   gtk_action_set_sensitive (priv->menu_fullscreen, FALSE);
   gtk_widget_set_sensitive (priv->dtmf_panel, FALSE);
@@ -3634,6 +3650,8 @@ static void
 start_call (EmpathyCallWindow *self)
 {
   EmpathyCallWindowPriv *priv = GET_PRIV (self);
+
+  g_signal_emit (self, signals[SIG_INHIBIT], 0, TRUE);
 
   priv->call_started = TRUE;
   empathy_call_handler_start_call (priv->handler,
