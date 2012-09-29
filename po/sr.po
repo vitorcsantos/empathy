@@ -17,8 +17,8 @@ msgstr ""
 "Project-Id-Version: empathy\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=empath"
 "y&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2012-09-18 11:40+0000\n"
-"PO-Revision-Date: 2012-09-20 20:45+0200\n"
+"POT-Creation-Date: 2012-09-27 08:31+0000\n"
+"PO-Revision-Date: 2012-09-29 19:49+0200\n"
 "Last-Translator: Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
 "Language-Team: Serbian <gnom@prevod.org>\n"
 "Language: sr\n"
@@ -776,6 +776,7 @@ msgid "Internal error"
 msgstr "Унутрашња грешка"
 
 #: ../libempathy/empathy-utils.c:497
+#: ../libempathy-gtk/empathy-roster-model.h:30
 msgid "People Nearby"
 msgstr "Људи у околини"
 
@@ -1647,7 +1648,7 @@ msgstr "%s је сада познат као %s"
 #. * we get the new handler.
 #: ../libempathy-gtk/empathy-chat.c:2989 ../src/empathy-call-window.c:1467
 #: ../src/empathy-call-window.c:1517 ../src/empathy-call-window.c:2570
-#: ../src/empathy-event-manager.c:1166
+#: ../src/empathy-call-window.c:2876 ../src/empathy-event-manager.c:1166
 msgid "Disconnected"
 msgstr "Веза је прекинута"
 
@@ -2980,6 +2981,15 @@ msgstr "западни"
 msgid "Vietnamese"
 msgstr "вијетнамски"
 
+#: ../libempathy-gtk/empathy-roster-model.h:29
+#| msgid "Contacts"
+msgid "Top Contacts"
+msgstr "Најбољи пријатељи"
+
+#: ../libempathy-gtk/empathy-roster-model.h:31
+msgid "Ungrouped"
+msgstr "Негруписано"
+
 #: ../nautilus-sendto-plugin/empathy-nautilus-sendto.c:231
 msgid "No error message"
 msgstr "Нема порука о грешкама"
@@ -3308,43 +3318,43 @@ msgstr "ИП адреса групе за вишеструко емитовањ�
 msgid "Unknown"
 msgstr "Непознато"
 
-#: ../src/empathy-call-window.c:2868
+#: ../src/empathy-call-window.c:2874
 msgid "On hold"
 msgstr "На чекању"
 
-#: ../src/empathy-call-window.c:2870
+#: ../src/empathy-call-window.c:2878
 msgid "Mute"
 msgstr "Утишај"
 
-#: ../src/empathy-call-window.c:2872
+#: ../src/empathy-call-window.c:2880
 msgid "Duration"
 msgstr "Трајање"
 
 #. Translators: 'status - minutes:seconds' the caller has been connected
-#: ../src/empathy-call-window.c:2875
+#: ../src/empathy-call-window.c:2883
 #, c-format
 msgid "%s — %d:%02dm"
 msgstr "%s — %d:%02dm"
 
-#: ../src/empathy-call-window.c:2971
+#: ../src/empathy-call-window.c:2979
 msgid "Technical Details"
 msgstr "Технички детаљи"
 
-#: ../src/empathy-call-window.c:3010
+#: ../src/empathy-call-window.c:3018
 #, c-format
 msgid ""
 "%s's software does not understand any of the audio formats supported by your "
 "computer"
 msgstr "Програм %s не разуме ниједан звучни формат који подржава ваш рачунар"
 
-#: ../src/empathy-call-window.c:3015
+#: ../src/empathy-call-window.c:3023
 #, c-format
 msgid ""
 "%s's software does not understand any of the video formats supported by your "
 "computer"
 msgstr "Програм %s не разуме ниједан видео формат који подржава ваш рачунар"
 
-#: ../src/empathy-call-window.c:3021
+#: ../src/empathy-call-window.c:3029
 #, c-format
 msgid ""
 "Can't establish a connection to %s. One of you might be on a network that "
@@ -3353,23 +3363,23 @@ msgstr ""
 "Не могу да успоставим везу са %s. Можда је неко од вас двоје на мрежи која "
 "не дозвољава директне везе."
 
-#: ../src/empathy-call-window.c:3027
+#: ../src/empathy-call-window.c:3035
 msgid "There was a failure on the network"
 msgstr "Дошло је до грешке у мрежи"
 
-#: ../src/empathy-call-window.c:3031
+#: ../src/empathy-call-window.c:3039
 msgid ""
 "The audio formats necessary for this call are not installed on your computer"
 msgstr ""
 "Звучни формати потребни за овај позив нису инсталирани на вашем рачунару"
 
-#: ../src/empathy-call-window.c:3034
+#: ../src/empathy-call-window.c:3042
 msgid ""
 "The video formats necessary for this call are not installed on your computer"
 msgstr ""
 "Видео формати потребни за овај позив нису инсталирани на вашем рачунару"
 
-#: ../src/empathy-call-window.c:3046
+#: ../src/empathy-call-window.c:3054
 #, c-format
 msgid ""
 "Something unexpected happened in a Telepathy component. Please <a href=\"%s"
@@ -3380,32 +3390,32 @@ msgstr ""
 "„%s“>ову грешку</a> и прикачите дневнике покупљене из прозора „Отклањање "
 "грешака“ у изборнику „Помоћ“."
 
-#: ../src/empathy-call-window.c:3055
+#: ../src/empathy-call-window.c:3063
 msgid "There was a failure in the call engine"
 msgstr "Дошло је до грешке у мотору за позиве"
 
-#: ../src/empathy-call-window.c:3058
+#: ../src/empathy-call-window.c:3066
 msgid "The end of the stream was reached"
 msgstr "Достигнут је крај тока"
 
-#: ../src/empathy-call-window.c:3098
+#: ../src/empathy-call-window.c:3106
 msgid "Can't establish audio stream"
 msgstr "Не могу да успоставим звучни ток"
 
-#: ../src/empathy-call-window.c:3108
+#: ../src/empathy-call-window.c:3116
 msgid "Can't establish video stream"
 msgstr "Не могу да успоставим видео ток"
 
-#: ../src/empathy-call-window.c:3145
+#: ../src/empathy-call-window.c:3153
 #, c-format
 msgid "Your current balance is %s."
 msgstr "Ваше тренутно стање је %s."
 
-#: ../src/empathy-call-window.c:3149
+#: ../src/empathy-call-window.c:3157
 msgid "Sorry, you don’t have enough credit for that call."
 msgstr "Извините, али немате довољно кредита за овај позив."
 
-#: ../src/empathy-call-window.c:3151
+#: ../src/empathy-call-window.c:3159
 msgid "Top Up"
 msgstr "Допуни"
 
@@ -4531,6 +4541,5 @@ msgid "Edit %s account options"
 msgstr "Уредите могућности налога %s"
 
 #: ../ubuntu-online-accounts/empathy.application.in.h:1
-#| msgid "Please enter your account details"
 msgid "Integrate your IM accounts"
 msgstr "Обједините ваше налоге брзих порука"
