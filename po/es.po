@@ -9,16 +9,16 @@ msgstr ""
 "Project-Id-Version: empathy.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=empathy&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2012-09-18 11:40+0000\n"
-"PO-Revision-Date: 2012-09-18 16:13+0200\n"
+"POT-Creation-Date: 2012-09-27 08:31+0000\n"
+"PO-Revision-Date: 2012-09-30 12:27+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
-"Language-Team: Español <gnome-es-list@gnome.org>\n"
+"Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Gtranslator 2.91.5\n"
-"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../data/empathy.desktop.in.in.h:1
 msgid "Empathy"
@@ -369,8 +369,8 @@ msgid ""
 "Whether to send the 'composing' or 'paused' chat states. Does not currently "
 "affect the 'gone' state."
 msgstr ""
-"Indica si enviar los estados de chat «escribiendo» o «en pausa». No afecta al "
-"estado «ausente»."
+"Indica si enviar los estados de chat «escribiendo» o «en pausa». No afecta "
+"al estado «ausente»."
 
 #: ../data/org.gnome.Empathy.gschema.xml.h:70
 msgid "Use theme for chat rooms"
@@ -793,6 +793,7 @@ msgid "Internal error"
 msgstr "Error interno"
 
 #: ../libempathy/empathy-utils.c:497
+#: ../libempathy-gtk/empathy-roster-model.h:30
 msgid "People Nearby"
 msgstr "Gente cerca"
 
@@ -1470,8 +1471,8 @@ msgid ""
 "join a new chat room\""
 msgstr ""
 "/say <mensaje>: enviar un <mensaje> a la conversación actual. Esto se usa "
-"para enviar un mensaje comenzando por una «/». Por ejemplo: «/say /join se usa "
-"para unirse a una sala de chat nueva»"
+"para enviar un mensaje comenzando por una «/». Por ejemplo: «/say /join se "
+"usa para unirse a una sala de chat nueva»"
 
 #: ../libempathy-gtk/empathy-chat.c:1088
 msgid "/whois <contact ID>: display information about a contact"
@@ -1667,7 +1668,7 @@ msgstr "Ahora %s se llama %s"
 #. * we get the new handler.
 #: ../libempathy-gtk/empathy-chat.c:2989 ../src/empathy-call-window.c:1467
 #: ../src/empathy-call-window.c:1517 ../src/empathy-call-window.c:2570
-#: ../src/empathy-event-manager.c:1166
+#: ../src/empathy-call-window.c:2876 ../src/empathy-event-manager.c:1166
 msgid "Disconnected"
 msgstr "Desconectado"
 
@@ -2991,6 +2992,15 @@ msgstr "Occidental"
 msgid "Vietnamese"
 msgstr "Vietnamita"
 
+#: ../libempathy-gtk/empathy-roster-model.h:29
+#| msgid "Contacts"
+msgid "Top Contacts"
+msgstr "Contactos favoritos"
+
+#: ../libempathy-gtk/empathy-roster-model.h:31
+msgid "Ungrouped"
+msgstr "Sin grupo"
+
 #: ../nautilus-sendto-plugin/empathy-nautilus-sendto.c:231
 msgid "No error message"
 msgstr "Sin mensaje de eeror"
@@ -3311,29 +3321,29 @@ msgstr "La dirección IP del grupo multicast"
 msgid "Unknown"
 msgstr "Desconocido"
 
-#: ../src/empathy-call-window.c:2868
+#: ../src/empathy-call-window.c:2874
 msgid "On hold"
 msgstr "En espera"
 
-#: ../src/empathy-call-window.c:2870
+#: ../src/empathy-call-window.c:2878
 msgid "Mute"
 msgstr "Silenciar"
 
-#: ../src/empathy-call-window.c:2872
+#: ../src/empathy-call-window.c:2880
 msgid "Duration"
 msgstr "Duración"
 
 #. Translators: 'status - minutes:seconds' the caller has been connected
-#: ../src/empathy-call-window.c:2875
+#: ../src/empathy-call-window.c:2883
 #, c-format
 msgid "%s — %d:%02dm"
 msgstr "%s: %d:%02dm"
 
-#: ../src/empathy-call-window.c:2971
+#: ../src/empathy-call-window.c:2979
 msgid "Technical Details"
 msgstr "Detalles técnicos"
 
-#: ../src/empathy-call-window.c:3010
+#: ../src/empathy-call-window.c:3018
 #, c-format
 msgid ""
 "%s's software does not understand any of the audio formats supported by your "
@@ -3342,7 +3352,7 @@ msgstr ""
 "El software de «%s» no entiende ninguno de los formatos de vídeo soportados "
 "por su equipo"
 
-#: ../src/empathy-call-window.c:3015
+#: ../src/empathy-call-window.c:3023
 #, c-format
 msgid ""
 "%s's software does not understand any of the video formats supported by your "
@@ -3351,7 +3361,7 @@ msgstr ""
 "El software de «%s» no entiende ninguno de los formatos de vídeo soportados "
 "por su equipo"
 
-#: ../src/empathy-call-window.c:3021
+#: ../src/empathy-call-window.c:3029
 #, c-format
 msgid ""
 "Can't establish a connection to %s. One of you might be on a network that "
@@ -3360,25 +3370,25 @@ msgstr ""
 "No se puede establecer una conexión con %s. Uno de los dos puede estar en "
 "una red que no acepta conexiones directas."
 
-#: ../src/empathy-call-window.c:3027
+#: ../src/empathy-call-window.c:3035
 msgid "There was a failure on the network"
 msgstr "Hubo un fallo en la red"
 
-#: ../src/empathy-call-window.c:3031
+#: ../src/empathy-call-window.c:3039
 msgid ""
 "The audio formats necessary for this call are not installed on your computer"
 msgstr ""
 "No están instalados en su equipo los formatos de sonido necesarios para esta "
 "llamada"
 
-#: ../src/empathy-call-window.c:3034
+#: ../src/empathy-call-window.c:3042
 msgid ""
 "The video formats necessary for this call are not installed on your computer"
 msgstr ""
 "No están instalados en su equipo los formatos de vídeo necesarios para esta "
 "llamada"
 
-#: ../src/empathy-call-window.c:3046
+#: ../src/empathy-call-window.c:3054
 #, c-format
 msgid ""
 "Something unexpected happened in a Telepathy component. Please <a href=\"%s"
@@ -3389,32 +3399,32 @@ msgstr ""
 "\">Informe de este error</a> y añada los registros obtenidos de la ventana "
 "de «Depuración» en el menú de Ayuda."
 
-#: ../src/empathy-call-window.c:3055
+#: ../src/empathy-call-window.c:3063
 msgid "There was a failure in the call engine"
 msgstr "Hubo un fallo en el motor de llamadas"
 
-#: ../src/empathy-call-window.c:3058
+#: ../src/empathy-call-window.c:3066
 msgid "The end of the stream was reached"
 msgstr "Se llegó al final del flujo"
 
-#: ../src/empathy-call-window.c:3098
+#: ../src/empathy-call-window.c:3106
 msgid "Can't establish audio stream"
 msgstr "No se puede establecer el flujo de voz"
 
-#: ../src/empathy-call-window.c:3108
+#: ../src/empathy-call-window.c:3116
 msgid "Can't establish video stream"
 msgstr "No se puede establecer el flujo de vídeo"
 
-#: ../src/empathy-call-window.c:3145
+#: ../src/empathy-call-window.c:3153
 #, c-format
 msgid "Your current balance is %s."
 msgstr "su balance actual es %s."
 
-#: ../src/empathy-call-window.c:3149
+#: ../src/empathy-call-window.c:3157
 msgid "Sorry, you don’t have enough credit for that call."
 msgstr "No tiene crédito suficiente para hacer esta llamada."
 
-#: ../src/empathy-call-window.c:3151
+#: ../src/empathy-call-window.c:3159
 msgid "Top Up"
 msgstr "Recargar"
 
@@ -4528,7 +4538,6 @@ msgid "Edit %s account options"
 msgstr "Editar las opciones de la cuenta %s"
 
 #: ../ubuntu-online-accounts/empathy.application.in.h:1
-#| msgid "Import your existing accounts"
 msgid "Integrate your IM accounts"
 msgstr "Importar sus cuentas de mensajería instantánea"
 
@@ -4591,8 +4600,8 @@ msgstr "Importar sus cuentas de mensajería instantánea"
 #~ "sort the contact list by name."
 #~ msgstr ""
 #~ "Qué criterio usar al ordenar la lista de contactos. El predeterminado es "
-#~ "ordenar por el estado del contacto con el valor «state» (estado). Un valor "
-#~ "«nombre» (nombre) ordenará la lista por el nombre."
+#~ "ordenar por el estado del contacto con el valor «state» (estado). Un "
+#~ "valor «nombre» (nombre) ordenará la lista por el nombre."
 
 #~ msgid "Send Video"
 #~ msgstr "Enviar vídeo"
@@ -4955,9 +4964,6 @@ msgstr "Importar sus cuentas de mensajería instantánea"
 
 #~ msgid "Contact ID:"
 #~ msgstr "ID del contacto:"
-
-#~ msgid "Ungrouped"
-#~ msgstr "Sin grupo"
 
 #~ msgid "Favorite People"
 #~ msgstr "Gente favorita"
