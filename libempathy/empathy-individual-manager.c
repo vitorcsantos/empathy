@@ -289,8 +289,14 @@ remove_individual (EmpathyIndividualManager *self, FolksIndividual *individual)
       compare_individual_by_pop, NULL);
   if (iter != NULL)
     {
+      /* priv->top_individuals borrows its reference from
+       * priv->individuals_pop so we take a reference on the individual while
+       * removing it to make sure it stays alive while calling
+       * check_top_individuals(). */
+      g_object_ref (individual);
       g_sequence_remove (iter);
       check_top_individuals (self);
+      g_object_unref (individual);
     }
 
   g_signal_handlers_disconnect_by_func (individual,
