@@ -195,15 +195,22 @@ top_individuals_changed_cb (EmpathyIndividualManager *manager,
               EMPATHY_ROSTER_MODEL_GROUP_TOP_GROUP, TRUE);
         }
     }
-  for (l = self->priv->top_group_members; l != NULL; l = g_list_next (l))
-    {
-      if (!individual_should_be_in_top_group_members (self, l->data))
-        {
-          remove_from_top_group_members (self, l->data);
 
-          empathy_roster_model_fire_groups_changed (
-              EMPATHY_ROSTER_MODEL (self), l->data,
-              EMPATHY_ROSTER_MODEL_GROUP_TOP_GROUP, FALSE);
+  l = self->priv->top_group_members;
+  while (l != NULL)
+    {
+      FolksIndividual *individual = l->data;
+
+      /* remove_from_top_group_members will modify the list so we already take
+       * the next pointer. */
+      l = g_list_next (l);
+
+      if (!individual_should_be_in_top_group_members (self, individual))
+        {
+          remove_from_top_group_members (self, individual);
+
+          empathy_roster_model_fire_groups_changed (EMPATHY_ROSTER_MODEL (self),
+              individual, EMPATHY_ROSTER_MODEL_GROUP_TOP_GROUP, FALSE);
         }
     }
 }
