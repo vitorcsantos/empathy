@@ -17,6 +17,10 @@ G_DEFINE_TYPE (EmpathyRosterView, empathy_roster_view, EGG_TYPE_LIST_BOX)
 /* Flashing delay for icons (milliseconds). */
 #define FLASH_TIMEOUT 500
 
+/* Delay in milliseconds between the last stroke on the keyboard and the start
+ * of the live search. */
+#define SEARCH_TIMEOUT 500
+
 enum
 {
   PROP_MODEL = 1,
@@ -60,6 +64,8 @@ struct _EmpathyRosterViewPriv
   GQueue *events;
   guint flash_id;
   gboolean display_flash_event;
+
+  guint search_id;
 
   gboolean show_offline;
   gboolean show_groups;
@@ -1078,6 +1084,12 @@ empathy_roster_view_dispose (GObject *object)
   empathy_roster_view_set_live_search (self, NULL);
   g_clear_object (&self->priv->model);
 
+  if (self->priv->search_id != 0)
+    {
+      g_source_remove (self->priv->search_id);
+      self->priv->search_id = 0;
+    }
+
   if (chain_up != NULL)
     chain_up (object);
 }
@@ -1437,14 +1449,27 @@ select_first_contact (EmpathyRosterView *self)
   g_list_free (children);
 }
 
+static gboolean
+search_timeout_cb (EmpathyRosterView *self)
+{
+  egg_list_box_refilter (EGG_LIST_BOX (self));
+
+  select_first_contact (self);
+
+  self->priv->search_id = 0;
+  return G_SOURCE_REMOVE;
+}
+
 static void
 search_text_notify_cb (EmpathyLiveSearch *search,
     GParamSpec *pspec,
     EmpathyRosterView *self)
 {
-  egg_list_box_refilter (EGG_LIST_BOX (self));
+  if (self->priv->search_id != 0)
+    g_source_remove (self->priv->search_id);
 
-  select_first_contact (self);
+  self->priv->search_id = g_timeout_add (SEARCH_TIMEOUT,
+      (GSourceFunc) search_timeout_cb, self);
 }
 
 static void
