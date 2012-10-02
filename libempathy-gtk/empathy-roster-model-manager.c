@@ -102,6 +102,22 @@ individual_should_be_in_top_group_members (EmpathyRosterModelManager *self,
 }
 
 static void
+add_to_top_group_members (EmpathyRosterModelManager *self,
+    FolksIndividual *individual)
+{
+  self->priv->top_group_members = g_list_prepend (self->priv->top_group_members,
+      individual);
+}
+
+static void
+remove_from_top_group_members (EmpathyRosterModelManager *self,
+    FolksIndividual *individual)
+{
+  self->priv->top_group_members = g_list_remove (self->priv->top_group_members,
+      individual);
+}
+
+static void
 populate_model (EmpathyRosterModelManager *self)
 {
   GList *individuals, *l;
@@ -111,8 +127,7 @@ populate_model (EmpathyRosterModelManager *self)
   for (l = individuals; l != NULL; l = g_list_next (l))
     {
       if (individual_should_be_in_top_group_members (self, l->data))
-        self->priv->top_group_members = g_list_prepend (
-            self->priv->top_group_members, l->data);
+        add_to_top_group_members (self, l->data);
 
       empathy_roster_model_fire_individual_added (EMPATHY_ROSTER_MODEL (self),
           l->data);
@@ -133,8 +148,7 @@ members_changed_cb (EmpathyIndividualManager *manager,
     {
       if (individual_should_be_in_top_group_members (self, l->data) &&
           !individual_in_top_group_members (self, l->data))
-        self->priv->top_group_members = g_list_prepend (
-            self->priv->top_group_members, l->data);
+        add_to_top_group_members (self, l->data);
 
       empathy_roster_model_fire_individual_added (EMPATHY_ROSTER_MODEL (self),
           l->data);
@@ -143,8 +157,7 @@ members_changed_cb (EmpathyIndividualManager *manager,
   for (l = removed; l != NULL; l = g_list_next (l))
     {
       if (individual_in_top_group_members (self, l->data))
-        self->priv->top_group_members = g_list_remove (
-            self->priv->top_group_members, l->data);
+        remove_from_top_group_members (self, l->data);
 
       empathy_roster_model_fire_individual_removed (EMPATHY_ROSTER_MODEL (self),
           l->data);
@@ -175,8 +188,7 @@ top_individuals_changed_cb (EmpathyIndividualManager *manager,
     {
       if (!individual_in_top_group_members (self, l->data))
         {
-          self->priv->top_group_members = g_list_prepend (
-              self->priv->top_group_members, l->data);
+          add_to_top_group_members (self, l->data);
 
           empathy_roster_model_fire_groups_changed (
               EMPATHY_ROSTER_MODEL (self), l->data,
@@ -187,8 +199,7 @@ top_individuals_changed_cb (EmpathyIndividualManager *manager,
     {
       if (!individual_should_be_in_top_group_members (self, l->data))
         {
-          self->priv->top_group_members = g_list_remove (
-              self->priv->top_group_members, l->data);
+          remove_from_top_group_members (self, l->data);
 
           empathy_roster_model_fire_groups_changed (
               EMPATHY_ROSTER_MODEL (self), l->data,
@@ -205,8 +216,7 @@ favourites_changed_cb (EmpathyIndividualManager *manager,
 {
   if (favourite && !individual_in_top_group_members (self, individual))
     {
-      self->priv->top_group_members = g_list_prepend (
-          self->priv->top_group_members, individual);
+      add_to_top_group_members (self, individual);
 
       empathy_roster_model_fire_groups_changed (
           EMPATHY_ROSTER_MODEL (self), individual,
@@ -215,8 +225,7 @@ favourites_changed_cb (EmpathyIndividualManager *manager,
   else if (!favourite &&
       !individual_should_be_in_top_group_members (self, individual))
     {
-      self->priv->top_group_members = g_list_remove (
-          self->priv->top_group_members, individual);
+      remove_from_top_group_members (self, individual);
 
       empathy_roster_model_fire_groups_changed (
           EMPATHY_ROSTER_MODEL (self), individual,
