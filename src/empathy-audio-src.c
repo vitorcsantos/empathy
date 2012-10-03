@@ -252,7 +252,10 @@ create_src (void)
   /* Use pulsesrc as default */
   src = gst_element_factory_make ("pulsesrc", NULL);
   if (src == NULL)
-    return NULL;
+    {
+      g_warning ("Missing 'pulsesrc' element");
+      return NULL;
+    }
 
   empathy_audio_set_stream_properties (src, TRUE);
 
