@@ -365,10 +365,9 @@ individual_activated_cb (EmpathyRosterView *self,
 static void
 event_activated_cb (EmpathyRosterView *self,
     FolksIndividual *individual,
+    EmpathyEvent *event,
     gpointer user_data)
 {
-  EmpathyEvent *event = user_data;
-
   empathy_event_activate (event);
 }
 
