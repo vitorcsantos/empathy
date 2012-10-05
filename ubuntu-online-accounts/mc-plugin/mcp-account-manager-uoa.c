@@ -354,6 +354,7 @@ mcp_account_manager_uoa_init (McpAccountManagerUoa *self)
   self->priv->pending_signals = g_queue_new ();
 
   self->priv->manager = ag_manager_new_for_service_type (SERVICE_TYPE);
+  g_return_if_fail (self->priv->manager != NULL);
 
   g_signal_connect (self->priv->manager, "account-created",
       G_CALLBACK (_account_created_cb), self);
@@ -428,6 +429,8 @@ account_manager_uoa_list (const McpAccountStorage *storage,
 
   DEBUG (G_STRFUNC);
 
+  g_return_val_if_fail (self->priv->manager != NULL, NULL);
+
   _ensure_loaded (self);
 
   g_hash_table_iter_init (&iter, self->priv->accounts);
@@ -459,6 +462,8 @@ account_manager_uoa_get (const McpAccountStorage *storage,
   AgAccount *account;
   AgService *s;
   gboolean handled = FALSE;
+
+  g_return_if_fail (self->priv->manager != NULL);
 
   service = g_hash_table_lookup (self->priv->accounts, account_name);
   if (service == NULL)
@@ -539,6 +544,8 @@ account_manager_uoa_set (const McpAccountStorage *storage,
   AgAccountService *service;
   AgAccount *account;
 
+  g_return_if_fail (self->priv->manager != NULL);
+
   service = g_hash_table_lookup (self->priv->accounts, account_name);
   if (service == NULL)
     return FALSE;
@@ -579,6 +586,8 @@ account_manager_uoa_create (const McpAccountStorage *storage,
   AgAccount *account;
   AgAccountService *service;
   GList *l;
+
+  g_return_if_fail (self->priv->manager != NULL);
 
   if (!self->priv->ready)
     {
@@ -626,6 +635,8 @@ account_manager_uoa_delete (const McpAccountStorage *storage,
   AgAccountService *service;
   AgAccount *account;
 
+  g_return_if_fail (self->priv->manager != NULL);
+
   service = g_hash_table_lookup (self->priv->accounts, account_name);
   if (service == NULL)
     return FALSE;
@@ -656,6 +667,8 @@ account_manager_uoa_commit (const McpAccountStorage *storage,
   gpointer value;
 
   DEBUG (G_STRFUNC);
+
+  g_return_if_fail (self->priv->manager != NULL);
 
   g_hash_table_iter_init (&iter, self->priv->accounts);
   while (g_hash_table_iter_next (&iter, NULL, &value))
@@ -706,6 +719,8 @@ account_manager_uoa_ready (const McpAccountStorage *storage,
   McpAccountManagerUoa *self = (McpAccountManagerUoa *) storage;
   DelayedSignalData *data;
 
+  g_return_if_fail (self->priv->manager != NULL);
+
   if (self->priv->ready)
     return;
 
@@ -747,6 +762,8 @@ account_manager_uoa_get_identifier (const McpAccountStorage *storage,
   AgAccountService *service;
   AgAccount *account;
 
+  g_return_if_fail (self->priv->manager != NULL);
+
   service = g_hash_table_lookup (self->priv->accounts, account_name);
   if (service == NULL)
     return;
@@ -765,6 +782,8 @@ account_manager_uoa_get_restrictions (const McpAccountStorage *storage,
   AgAccountService *service;
   guint restrictions = TP_STORAGE_RESTRICTION_FLAG_CANNOT_SET_SERVICE;
   GValue value = G_VALUE_INIT;
+
+  g_return_val_if_fail (self->priv->manager != NULL, 0);
 
   /* If we don't know this account, we cannot do anything */
   service = g_hash_table_lookup (self->priv->accounts, account_name);
