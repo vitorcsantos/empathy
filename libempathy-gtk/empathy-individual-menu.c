@@ -481,6 +481,8 @@ add_phone_numbers (EmpathyIndividualMenu *self)
       gtk_menu_shell_append (GTK_MENU_SHELL (self), item);
       gtk_widget_show (item);
     }
+
+  g_object_unref (iter);
 }
 
 /* return a list of TpContact supporting the blocking iface */
