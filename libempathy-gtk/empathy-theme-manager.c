@@ -440,19 +440,21 @@ empathy_theme_manager_find_theme (const gchar *name)
 gchar *
 empathy_theme_manager_dup_theme_name_from_path (const gchar *path)
 {
-  gchar *fullname, *result;
-  gchar **tmp;
+  gchar *fullname = NULL, *result = NULL;
+  gchar **tmp = NULL;
 
   if (path == NULL)
     return NULL;
 
   fullname = g_path_get_basename (path);
   if (!g_str_has_suffix (fullname, ".AdiumMessageStyle"))
-    return NULL;
+    goto out;
 
   tmp = g_strsplit (fullname, ".AdiumMessageStyle", 0);
   result = g_strdup (tmp[0]);
 
+out:
   g_strfreev (tmp);
+  g_free (fullname);
   return result;
 }
