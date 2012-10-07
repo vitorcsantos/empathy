@@ -284,7 +284,7 @@ enumerate_dicts (const gchar * const lang_tag,
 		return;
 	}
 
-	*list = g_list_append (*list, g_strdup (lang));
+	*list = g_list_append (*list, lang);
 }
 
 GList *
