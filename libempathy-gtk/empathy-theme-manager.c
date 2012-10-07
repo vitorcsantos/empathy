@@ -368,9 +368,9 @@ empathy_theme_manager_get_adium_themes (void)
       g_free (path);
     }
 
+  result = g_hash_table_get_values (hash);
   /* Pass ownership of the info hash table to the list */
-  result = g_list_copy_deep (g_hash_table_get_values (hash),
-      (GCopyFunc) g_hash_table_ref, NULL);
+  g_list_foreach (result, (GFunc) g_hash_table_ref, NULL);
 
   g_hash_table_unref (hash);
 
