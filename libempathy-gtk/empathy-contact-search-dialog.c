@@ -669,6 +669,7 @@ empathy_contact_search_dialog_init (EmpathyContactSearchDialog *self)
   gtk_window_set_default_size (GTK_WINDOW (self), 200, 400);
   gtk_widget_show_all (vbox);
   gtk_widget_hide (priv->spinner);
+  g_object_unref (size_group);
 }
 
 GtkWidget *
