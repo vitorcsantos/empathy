@@ -23,10 +23,10 @@ div.person-info {
   z-index: 1;
   float: left;
   margin-top: 25px !important;
-  margin-left: -1em;
-  padding: 0 2em 0 0.5em;
+  margin-left: -12px;
+  padding: 0 24px 0 6px;
   left: 3px;
-  width: 6em;
+  width: 72px;
   background: url(Images/nipple.png) top right no-repeat;
   text-align: center;
   color: #777;
@@ -42,8 +42,8 @@ div.person-info img {
 
 div.post {
   position: relative;
-  margin-left: 6em;
-  padding: 1em;
+  margin-left: 89px;
+  padding: 12px;
 }
 
 b.cr {
@@ -80,7 +80,11 @@ b.bo { bottom: 0px; left: 0px; background-position: bottom left; }
   z-index: 1;
   line-height: 120%;
   padding: 0;
-  margin: 0;
+  margin: 0 0 2em 0;
+}
+
+.post-body {
+  min-height: 40px;
 }
 
 .post-contents p {
@@ -95,7 +99,9 @@ b.bo { bottom: 0px; left: 0px; background-position: bottom left; }
 }
 
 .post-footer {
-  margin-top: 0.5em;
+  position: absolute;
+  bottom: 1em;
+  right: 1em;
 }
 
 .post-footer p {
