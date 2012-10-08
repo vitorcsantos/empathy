@@ -463,7 +463,7 @@ account_manager_uoa_get (const McpAccountStorage *storage,
   AgService *s;
   gboolean handled = FALSE;
 
-  g_return_if_fail (self->priv->manager != NULL);
+  g_return_val_if_fail (self->priv->manager != NULL, FALSE);
 
   service = g_hash_table_lookup (self->priv->accounts, account_name);
   if (service == NULL)
@@ -544,7 +544,7 @@ account_manager_uoa_set (const McpAccountStorage *storage,
   AgAccountService *service;
   AgAccount *account;
 
-  g_return_if_fail (self->priv->manager != NULL);
+  g_return_val_if_fail (self->priv->manager != NULL, FALSE);
 
   service = g_hash_table_lookup (self->priv->accounts, account_name);
   if (service == NULL)
@@ -587,7 +587,7 @@ account_manager_uoa_create (const McpAccountStorage *storage,
   AgAccountService *service;
   GList *l;
 
-  g_return_if_fail (self->priv->manager != NULL);
+  g_return_val_if_fail (self->priv->manager != NULL, NULL);
 
   if (!self->priv->ready)
     {
@@ -635,7 +635,7 @@ account_manager_uoa_delete (const McpAccountStorage *storage,
   AgAccountService *service;
   AgAccount *account;
 
-  g_return_if_fail (self->priv->manager != NULL);
+  g_return_val_if_fail (self->priv->manager != NULL, FALSE);
 
   service = g_hash_table_lookup (self->priv->accounts, account_name);
   if (service == NULL)
@@ -668,7 +668,7 @@ account_manager_uoa_commit (const McpAccountStorage *storage,
 
   DEBUG (G_STRFUNC);
 
-  g_return_if_fail (self->priv->manager != NULL);
+  g_return_val_if_fail (self->priv->manager != NULL, FALSE);
 
   g_hash_table_iter_init (&iter, self->priv->accounts);
   while (g_hash_table_iter_next (&iter, NULL, &value))
