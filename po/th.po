@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: empathy\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=empathy&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2012-09-18 11:40+0000\n"
-"PO-Revision-Date: 2012-09-19 18:35+0700\n"
+"POT-Creation-Date: 2012-09-27 08:31+0000\n"
+"PO-Revision-Date: 2012-10-09 19:53+0700\n"
 "Last-Translator: Theppitak Karoonboonyanan <thep@linux.thai.net>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
 "Language: th\n"
@@ -723,6 +723,7 @@ msgid "Internal error"
 msgstr "ข้อผิดพลาดภายใน"
 
 #: ../libempathy/empathy-utils.c:497
+#: ../libempathy-gtk/empathy-roster-model.h:30
 msgid "People Nearby"
 msgstr "ผู้คนแถวนี้"
 
@@ -1588,7 +1589,7 @@ msgstr "%s เปลี่ยนชื่อเป็น %s"
 #. * we get the new handler.
 #: ../libempathy-gtk/empathy-chat.c:2989 ../src/empathy-call-window.c:1467
 #: ../src/empathy-call-window.c:1517 ../src/empathy-call-window.c:2570
-#: ../src/empathy-event-manager.c:1166
+#: ../src/empathy-call-window.c:2876 ../src/empathy-event-manager.c:1166
 msgid "Disconnected"
 msgstr "ตัดการเชื่อมต่อแล้ว"
 
@@ -2217,8 +2218,8 @@ msgid ""
 "You can change these details later or disable this feature by choosing <span "
 "style=\"italic\">Edit → Accounts</span> in the Contact List."
 msgstr ""
-"คุณสามารถเปลี่ยนข้อมูลนี้ในภายหลัง หรือปิดความสามารถนี้ได้ โดยเลือก <span "
-"style=\"italic\">แก้ไข → บัญชี</span> ในรายชื่อผู้ติดต่อ"
+"คุณสามารถเปลี่ยนข้อมูลนี้ในภายหลัง หรือปิดความสามารถนี้ได้ โดยเลือก <span style=\"italic"
+"\">แก้ไข → บัญชี</span> ในรายชื่อผู้ติดต่อ"
 
 #: ../libempathy-gtk/empathy-log-window.c:622
 msgid "History"
@@ -2894,6 +2895,14 @@ msgstr "ตะวันตก"
 msgid "Vietnamese"
 msgstr "เวียดนาม"
 
+#: ../libempathy-gtk/empathy-roster-model.h:29
+msgid "Top Contacts"
+msgstr "ผู้ติดต่ออันดับต้นๆ"
+
+#: ../libempathy-gtk/empathy-roster-model.h:31
+msgid "Ungrouped"
+msgstr "ไม่จำแนกกลุ่ม"
+
 #: ../nautilus-sendto-plugin/empathy-nautilus-sendto.c:231
 msgid "No error message"
 msgstr "ไม่มีรายละเอียดข้อผิดพลาด"
@@ -3209,43 +3218,43 @@ msgstr "ที่อยู่ไอพีของกลุ่มมัลติ
 msgid "Unknown"
 msgstr "ไม่ทราบ"
 
-#: ../src/empathy-call-window.c:2868
+#: ../src/empathy-call-window.c:2874
 msgid "On hold"
 msgstr "ถือสายรอ"
 
-#: ../src/empathy-call-window.c:2870
+#: ../src/empathy-call-window.c:2878
 msgid "Mute"
 msgstr "ปิดเสียง"
 
-#: ../src/empathy-call-window.c:2872
+#: ../src/empathy-call-window.c:2880
 msgid "Duration"
 msgstr "ความยาว"
 
 #. Translators: 'status - minutes:seconds' the caller has been connected
-#: ../src/empathy-call-window.c:2875
+#: ../src/empathy-call-window.c:2883
 #, c-format
 msgid "%s — %d:%02dm"
 msgstr "%s — %d:%02dm"
 
-#: ../src/empathy-call-window.c:2971
+#: ../src/empathy-call-window.c:2979
 msgid "Technical Details"
 msgstr "รายละเอียดทางเทคนิค"
 
-#: ../src/empathy-call-window.c:3010
+#: ../src/empathy-call-window.c:3018
 #, c-format
 msgid ""
 "%s's software does not understand any of the audio formats supported by your "
 "computer"
 msgstr "ซอฟต์แวร์ของ %s ไม่รู้จักฟอร์แมตเสียงใดๆ เลยที่คอมพิวเตอร์ของคุณรองรับ"
 
-#: ../src/empathy-call-window.c:3015
+#: ../src/empathy-call-window.c:3023
 #, c-format
 msgid ""
 "%s's software does not understand any of the video formats supported by your "
 "computer"
 msgstr "ซอฟต์แวร์ของ %s ไม่รู้จักฟอร์แมตวีดิทัศน์ใดๆ เลยที่คอมพิวเตอร์ของคุณรองรับ"
 
-#: ../src/empathy-call-window.c:3021
+#: ../src/empathy-call-window.c:3029
 #, c-format
 msgid ""
 "Can't establish a connection to %s. One of you might be on a network that "
@@ -3253,23 +3262,23 @@ msgid ""
 msgstr ""
 "ไม่สามารถเชื่อมต่อไปยัง %s ได้ ฝ่ายใดฝ่ายหนึ่งอาจอยู่ในเครือข่ายที่ไม่อนุญาตให้เชื่อมต่อโดยตรง"
 
-#: ../src/empathy-call-window.c:3027
+#: ../src/empathy-call-window.c:3035
 msgid "There was a failure on the network"
 msgstr "เกิดความล้มเหลวในเครือข่าย"
 
-#: ../src/empathy-call-window.c:3031
+#: ../src/empathy-call-window.c:3039
 msgid ""
 "The audio formats necessary for this call are not installed on your computer"
 msgstr ""
 "การรองรับฟอร์แมตเสียงที่จำเป็นต้องใช้ในการเรียกสายนี้ ยังไม่ได้ติดตั้งลงในคอมพิวเตอร์ของคุณ"
 
-#: ../src/empathy-call-window.c:3034
+#: ../src/empathy-call-window.c:3042
 msgid ""
 "The video formats necessary for this call are not installed on your computer"
 msgstr ""
 "การรองรับฟอร์แมตวีดิทัศน์ที่จำเป็นต้องใช้ในการเรียกสายนี้ ยังไม่ได้ติดตั้งลงในคอมพิวเตอร์ของคุณ"
 
-#: ../src/empathy-call-window.c:3046
+#: ../src/empathy-call-window.c:3054
 #, c-format
 msgid ""
 "Something unexpected happened in a Telepathy component. Please <a href=\"%s"
@@ -3279,32 +3288,32 @@ msgstr ""
 "เกิดสิ่งไม่คาดคิดในองค์ประกอบ Telepathy  กรุณา <a href=\"%s\">รายงานบั๊กนี้</a> "
 "พร้อมแนบปูมที่ได้จากหน้าต่าง 'ดีบั๊ก' ในเมนูวิธีใช้ไปด้วย"
 
-#: ../src/empathy-call-window.c:3055
+#: ../src/empathy-call-window.c:3063
 msgid "There was a failure in the call engine"
 msgstr "เกิดความล้มเหลวในกลไกการเรียกสาย"
 
-#: ../src/empathy-call-window.c:3058
+#: ../src/empathy-call-window.c:3066
 msgid "The end of the stream was reached"
 msgstr "พบจุดจบของสตรีม"
 
-#: ../src/empathy-call-window.c:3098
+#: ../src/empathy-call-window.c:3106
 msgid "Can't establish audio stream"
 msgstr "ไม่สามารถเชื่อมต่อสตรีมเสียงได้"
 
-#: ../src/empathy-call-window.c:3108
+#: ../src/empathy-call-window.c:3116
 msgid "Can't establish video stream"
 msgstr "ไม่สามารถเชื่อมต่อสตรีมวีดิทัศน์ได้"
 
-#: ../src/empathy-call-window.c:3145
+#: ../src/empathy-call-window.c:3153
 #, c-format
 msgid "Your current balance is %s."
 msgstr "ยอดเงินคงเหลือของคุณคือ %s"
 
-#: ../src/empathy-call-window.c:3149
+#: ../src/empathy-call-window.c:3157
 msgid "Sorry, you don’t have enough credit for that call."
 msgstr "ขออภัย คุณมียอดเงินคงเหลือไม่พอที่จะเรียกสายนี้"
 
-#: ../src/empathy-call-window.c:3151
+#: ../src/empathy-call-window.c:3159
 msgid "Top Up"
 msgstr "เติมเงิน"
 
@@ -3402,11 +3411,11 @@ msgstr "ตัวอ่านรหัส:"
 
 #: ../src/empathy-call-window.ui.h:28
 msgid "Remote Candidate:"
-msgstr ""
+msgstr "Candidate ฝั่งโน้น:"
 
 #: ../src/empathy-call-window.ui.h:29
 msgid "Local Candidate:"
-msgstr ""
+msgstr "Candidate ฝั่งนี้:"
 
 #: ../src/empathy-call-window.ui.h:30 ../src/empathy-preferences.ui.h:28
 msgid "Audio"
@@ -4477,9 +4486,6 @@ msgstr "เชื่อมรวมกับบัญชี IM ของคุ�
 
 #~ msgid "_Block User"
 #~ msgstr "_ปิดกั้นผู้ใช้นี้"
-
-#~ msgid "Ungrouped"
-#~ msgstr "ไม่จำแนกกลุ่ม"
 
 #~ msgid "Favorite People"
 #~ msgstr "คนโปรด"
