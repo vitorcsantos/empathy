@@ -64,13 +64,13 @@ typedef struct _EmpathyChatWindowPriv EmpathyChatWindowPriv;
 
 struct _EmpathyChatWindow
 {
-  GObject parent;
+  GtkWindow parent;
   EmpathyChatWindowPriv *priv;
 };
 
 struct _EmpathyChatWindowClass
 {
-  GObjectClass parent_class;
+  GtkWindowClass parent_class;
 };
 
 GType empathy_chat_window_get_type (void);

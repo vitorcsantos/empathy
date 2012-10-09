@@ -203,27 +203,19 @@
       </menubar>
     </ui>
   </object>
-  <object class="GtkWindow" id="chat_window">
-    <property name="title" translatable="yes">Chat</property>
-    <property name="role">chat</property>
-    <property name="default_width">580</property>
-    <property name="default_height">480</property>
+  <object class="GtkVBox" id="chat_vbox">
+    <property name="visible">True</property>
     <child>
-      <object class="GtkVBox" id="chat_vbox">
+      <object class="GtkMenuBar" constructor="ui_manager" id="chats_menubar">
         <property name="visible">True</property>
-        <child>
-          <object class="GtkMenuBar" constructor="ui_manager" id="chats_menubar">
-            <property name="visible">True</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">False</property>
-          </packing>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
       </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">False</property>
+      </packing>
+    </child>
+    <child>
+      <placeholder/>
     </child>
   </object>
 </interface>
