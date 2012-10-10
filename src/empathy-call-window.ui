@@ -71,6 +71,18 @@
           </object>
         </child>
         <child>
+          <object class="GtkAction" id="menudebuggst">
+            <property name="name">menudebuggst</property>
+            <property name="label" translatable="yes">_GStreamer</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="menudebugtp">
+            <property name="name">menudebugtp</property>
+            <property name="label" translatable="yes">_Telepathy</property>
+          </object>
+        </child>
+        <child>
           <object class="GtkAction" id="menuabout">
             <property name="stock_id">gtk-about</property>
             <property name="name">menuabout</property>
@@ -114,7 +126,10 @@
         </menu>
         <menu action="help">
           <menuitem name="menucontents" action="menucontents"/>
-          <menuitem name="menudebug" action="menudebug"/>
+          <menu name="menudebug" action="menudebug">
+            <menuitem action="menudebuggst"/>
+            <menuitem action="menudebugtp"/>
+          </menu>
           <menuitem name="menuabout" action="menuabout"/>
         </menu>
       </menubar>

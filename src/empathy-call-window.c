@@ -1364,7 +1364,65 @@ empathy_call_window_contents_cb (GtkAction *action,
 }
 
 static void
-empathy_call_window_debug_cb (GtkAction *action,
+show_png (GPid pid, gint status, gpointer user_data)
+{
+  gtk_show_uri (NULL, (gchar *) user_data, GDK_CURRENT_TIME, NULL);
+  g_spawn_close_pid (pid);
+  g_free (user_data);
+}
+
+static void
+empathy_call_window_debug_gst_cb (GtkAction *action,
+    EmpathyCallWindow *self)
+{
+  EmpathyCallWindowPriv *priv = GET_PRIV (self);
+  GDateTime *date_time;
+  GPid dot_pid;
+  const gchar *dot_dir;
+  const gchar *prgname;
+  gchar *dot_cmd;
+  gchar *filename;
+  gchar **argv;
+  gint argc;
+
+  if (priv->pipeline == NULL)
+    DEBUG ("No pipeline");
+
+  date_time = g_date_time_new_now_utc ();
+  prgname = g_get_prgname ();
+  filename = g_strdup_printf ("%s-%" G_GINT64_FORMAT, prgname,
+      g_date_time_to_unix (date_time));
+
+  gst_debug_bin_to_dot_file (GST_BIN (priv->pipeline),
+      GST_DEBUG_GRAPH_SHOW_ALL, filename);
+
+  dot_dir = g_getenv ("GST_DEBUG_DUMP_DOT_DIR");
+  dot_cmd = g_strdup_printf ("dot -Tpng -o %s.png %s.dot",
+      filename,
+      filename);
+  g_shell_parse_argv (dot_cmd, &argc, &argv, NULL);
+
+  if (g_spawn_async (dot_dir,
+          argv,
+          NULL,
+          G_SPAWN_DO_NOT_REAP_CHILD | G_SPAWN_SEARCH_PATH,
+          NULL,
+          NULL,
+          &dot_pid,
+          NULL))
+    {
+      gchar *uri = g_strdup_printf ("file://%s/%s.png", dot_dir, filename);
+      g_child_watch_add (dot_pid, show_png, uri);
+    }
+
+  g_strfreev (argv);
+  g_free (dot_cmd);
+  g_free (filename);
+  g_date_time_unref (date_time);
+}
+
+static void
+empathy_call_window_debug_tp_cb (GtkAction *action,
     EmpathyCallWindow *self)
 {
   empathy_launch_program (BIN_DIR, "empathy-debugger", "-s Empathy.Call");
@@ -1619,7 +1677,8 @@ empathy_call_window_init (EmpathyCallWindow *self)
     "menufullscreen", "activate", empathy_call_window_fullscreen_cb,
     "menusettings", "activate", empathy_call_window_settings_cb,
     "menucontents", "activate", empathy_call_window_contents_cb,
-    "menudebug", "activate", empathy_call_window_debug_cb,
+    "menudebuggst", "activate", empathy_call_window_debug_gst_cb,
+    "menudebugtp", "activate", empathy_call_window_debug_tp_cb,
     "menuabout", "activate", empathy_call_window_about_cb,
     "menupreviewdisable", "activate", empathy_call_window_disable_camera_cb,
     "menupreviewminimise", "activate", empathy_call_window_minimise_camera_cb,
