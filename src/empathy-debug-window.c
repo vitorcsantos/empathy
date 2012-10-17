@@ -2032,7 +2032,7 @@ am_prepared_cb (GObject *am,
           "recently sent or received.\nIf you don't want to see such "
           "information available in a public bug report, you "
           "can choose to limit the visibility of your bug to "
-          "Empathy developpers when reporting it by displaying "
+          "Empathy developers when reporting it by displaying "
           "the advanced fields in the "
           "<a href=\"https://bugzilla.gnome.org/enter_bug.cgi?product=empathy\">"
           "bug report</a>."));
