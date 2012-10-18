@@ -177,6 +177,20 @@ on_call_state_changed_cb (TpCallChannel *call,
 {
   EmpathyCallHandlerPriv *priv = handler->priv;
 
+  /* Clean up the TfChannel before bubbling the state-change signal
+   * further up. This ensures that the conference-removed signal is
+   * emitted before state-changed so that the client gets a chance
+   * to remove the conference from the pipeline before resetting the
+   * pipeline itself.
+   */
+  if (state == TP_CALL_STATE_ENDED)
+    {
+      tp_channel_close_async (TP_CHANNEL (call), NULL, NULL);
+      priv->accept_when_initialised = FALSE;
+      tp_clear_object (&priv->call);
+      tp_clear_object (&priv->tfchannel);
+    }
+
   g_signal_emit (handler, signals[STATE_CHANGED], 0, state,
       reason->dbus_reason);
 
@@ -185,14 +199,6 @@ on_call_state_changed_cb (TpCallChannel *call,
     {
       tp_call_channel_accept_async (priv->call, on_call_accepted_cb, NULL);
       priv->accept_when_initialised = FALSE;
-    }
-
-  if (state == TP_CALL_STATE_ENDED)
-    {
-      tp_channel_close_async (TP_CHANNEL (call), NULL, NULL);
-      priv->accept_when_initialised = FALSE;
-      tp_clear_object (&priv->call);
-      tp_clear_object (&priv->tfchannel);
     }
 }
 
