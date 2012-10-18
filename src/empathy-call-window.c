@@ -2446,6 +2446,9 @@ empathy_call_window_conference_removed_cb (EmpathyCallHandler *handler,
   EmpathyCallWindow *self = EMPATHY_CALL_WINDOW (user_data);
   EmpathyCallWindowPriv *priv = GET_PRIV (self);
 
+  g_list_free_full (priv->notifiers, g_object_unref);
+  priv->notifiers = NULL;
+
   gst_bin_remove (GST_BIN (priv->pipeline), conference);
   gst_element_set_state (conference, GST_STATE_NULL);
 }
