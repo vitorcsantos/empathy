@@ -182,6 +182,12 @@ got_oauth2_access_token_cb (GObject *source,
             auth_cb, data);
         break;
 
+      case EMPATHY_SASL_MECHANISM_GOOGLE:
+        empathy_sasl_auth_google_async (data->channel,
+            goa_account_get_identity (goa_object_peek_account (data->goa_object)),
+            access_token, auth_cb, data);
+        break;
+
       default:
         g_assert_not_reached ();
     }
@@ -351,5 +357,6 @@ empathy_goa_auth_handler_supports (EmpathyGoaAuthHandler *self,
 
   mech = empathy_sasl_channel_select_mechanism (channel);
   return mech == EMPATHY_SASL_MECHANISM_FACEBOOK ||
-      mech == EMPATHY_SASL_MECHANISM_WLM;
+      mech == EMPATHY_SASL_MECHANISM_WLM ||
+      mech == EMPATHY_SASL_MECHANISM_GOOGLE;
 }
