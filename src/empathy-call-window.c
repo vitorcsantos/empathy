@@ -1393,7 +1393,7 @@ empathy_call_window_debug_gst_cb (GtkAction *action,
   filename = g_strdup_printf ("%s-%" G_GINT64_FORMAT, prgname,
       g_date_time_to_unix (date_time));
 
-  gst_debug_bin_to_dot_file (GST_BIN (priv->pipeline),
+  GST_DEBUG_BIN_TO_DOT_FILE (GST_BIN (priv->pipeline),
       GST_DEBUG_GRAPH_SHOW_ALL, filename);
 
   dot_dir = g_getenv ("GST_DEBUG_DUMP_DOT_DIR");
