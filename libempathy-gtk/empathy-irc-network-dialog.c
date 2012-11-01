@@ -595,5 +595,7 @@ empathy_irc_network_dialog_show (EmpathyIrcNetwork *network,
   irc_network_dialog_network_update_buttons (dialog);
   gtk_widget_show_all (dialog->dialog);
 
+  gtk_window_set_resizable (GTK_WINDOW (dialog->dialog), FALSE);
+
   return dialog->dialog;
 }
