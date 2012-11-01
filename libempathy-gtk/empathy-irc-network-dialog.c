@@ -512,6 +512,8 @@ empathy_irc_network_dialog_show (EmpathyIrcNetwork *network,
       NULL);
   column = gtk_tree_view_get_column (GTK_TREE_VIEW (dialog->treeview_servers),
       0);
+
+  gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
   gtk_tree_view_column_set_expand (column, TRUE);
 
   /* port */
@@ -524,10 +526,16 @@ empathy_irc_network_dialog_show (EmpathyIrcNetwork *network,
       NULL);
   g_signal_connect (renderer, "edited",
       G_CALLBACK (irc_network_dialog_port_edited_cb), dialog);
+
   gtk_tree_view_insert_column_with_attributes (
       GTK_TREE_VIEW (dialog->treeview_servers),
       -1, _("Port"), renderer, "text", COL_PORT,
       NULL);
+
+  column = gtk_tree_view_get_column (GTK_TREE_VIEW (dialog->treeview_servers),
+      1);
+  gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
+  gtk_tree_view_column_set_expand (column, TRUE);
 
   /* SSL */
   renderer = gtk_cell_renderer_toggle_new ();
@@ -543,6 +551,11 @@ empathy_irc_network_dialog_show (EmpathyIrcNetwork *network,
       GTK_TREE_VIEW (dialog->treeview_servers));
   gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
 
+  column = gtk_tree_view_get_column (GTK_TREE_VIEW (dialog->treeview_servers),
+      2);
+  gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
+
+  gtk_tree_view_column_set_expand (column, TRUE);
   /* charset */
   totem_subtitle_encoding_init (GTK_COMBO_BOX (dialog->combobox_charset));
 
