@@ -303,7 +303,7 @@ display_irc_network_dialog (EmpathyIrcNetworkChooserDialog *self,
 {
   GtkWidget *dialog;
 
-  dialog = empathy_irc_network_dialog_show (network, NULL);
+  dialog = empathy_irc_network_dialog_show (network, GTK_WIDGET (self));
 
   g_signal_connect (dialog, "destroy",
       G_CALLBACK (irc_network_dialog_destroy_cb), self);
