@@ -610,6 +610,8 @@ account_dialog_create_edit_params_dialog (EmpathyAccountsDialog *dialog)
       GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
       NULL, NULL);
 
+  gtk_window_set_resizable (GTK_WINDOW (subdialog), FALSE);
+
   priv->setting_widget = (EmpathyAccountWidget *)
     empathy_account_widget_new_for_protocol (settings, FALSE);
 
