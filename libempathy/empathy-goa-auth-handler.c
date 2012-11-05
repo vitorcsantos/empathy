@@ -196,6 +196,31 @@ got_oauth2_access_token_cb (GObject *source,
 }
 
 static void
+got_password_passwd_cb (GObject *source,
+    GAsyncResult *result,
+    gpointer user_data)
+{
+  GoaPasswordBased *password = (GoaPasswordBased *) source;
+  AuthData *data = user_data;
+  gchar *passwd;
+  GError *error = NULL;
+
+  if (!goa_password_based_call_get_password_finish (password,
+          &passwd, result, &error))
+    {
+      DEBUG ("Failed to get password: %s", error->message);
+      fail_auth (data);
+      g_clear_error (&error);
+      return;
+    }
+
+  DEBUG ("Got password for %s", tp_proxy_get_object_path (data->account));
+
+  empathy_sasl_auth_password_async (data->channel, passwd, auth_cb, data);
+  g_free (passwd);
+}
+
+static void
 ensure_credentials_cb (GObject *source,
     GAsyncResult *result,
     gpointer user_data)
@@ -203,6 +228,9 @@ ensure_credentials_cb (GObject *source,
   AuthData *data = user_data;
   GoaAccount *goa_account = (GoaAccount *) source;
   GoaOAuth2Based *oauth2;
+  GoaPasswordBased *password;
+  EmpathySaslMechanism mech;
+  gboolean supports_password;
   gint expires_in;
   GError *error = NULL;
 
@@ -215,22 +243,40 @@ ensure_credentials_cb (GObject *source,
       return;
     }
 
-  /* We support only oaut2 */
+  /* We prefer oauth2, if available */
   oauth2 = goa_object_get_oauth2_based (data->goa_object);
-  if (oauth2 == NULL)
+  mech = empathy_sasl_channel_select_mechanism (data->channel);
+  if (oauth2 != NULL && mech != EMPATHY_SASL_MECHANISM_PASSWORD)
     {
-      DEBUG ("GoaObject does not implement oauth2");
-      fail_auth (data);
+      DEBUG ("Goa daemon has credentials for %s, get the access token",
+          tp_proxy_get_object_path (data->account));
+
+      goa_oauth2_based_call_get_access_token (oauth2, NULL,
+          got_oauth2_access_token_cb, data);
+
+      g_object_unref (oauth2);
       return;
     }
 
-  DEBUG ("Goa daemon has credentials for %s, get the access token",
-      tp_proxy_get_object_path (data->account));
+  /* Else we use the password */
+  password = goa_object_get_password_based (data->goa_object);
+  supports_password = empathy_sasl_channel_supports_mechanism (data->channel,
+      "X-TELEPATHY-PASSWORD");
+  if (password != NULL && supports_password)
+    {
+      DEBUG ("Goa daemon has credentials for %s, get the password",
+          tp_proxy_get_object_path (data->account));
 
-  goa_oauth2_based_call_get_access_token (oauth2, NULL,
-      got_oauth2_access_token_cb, data);
+      /* arg_id is currently unused */
+      goa_password_based_call_get_password (password, "", NULL,
+          got_password_passwd_cb, data);
 
-  g_object_unref (oauth2);
+      g_object_unref (password);
+      return;
+    }
+
+  DEBUG ("GoaObject does not implement oauth2 or password");
+  fail_auth (data);
 }
 
 static void
@@ -358,5 +404,6 @@ empathy_goa_auth_handler_supports (EmpathyGoaAuthHandler *self,
   mech = empathy_sasl_channel_select_mechanism (channel);
   return mech == EMPATHY_SASL_MECHANISM_FACEBOOK ||
       mech == EMPATHY_SASL_MECHANISM_WLM ||
-      mech == EMPATHY_SASL_MECHANISM_GOOGLE;
+      mech == EMPATHY_SASL_MECHANISM_GOOGLE ||
+      mech == EMPATHY_SASL_MECHANISM_PASSWORD;
 }
