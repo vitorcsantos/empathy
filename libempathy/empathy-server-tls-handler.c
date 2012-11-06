@@ -148,13 +148,13 @@ tls_handler_init_async (GAsyncInitable *initable,
       "&o", &cert_object_path);
   bus_name = tp_proxy_get_bus_name (TP_PROXY (priv->channel));
 
-  g_variant_unref (properties);
-
   DEBUG ("Creating an TpTLSCertificate for path %s, bus name %s",
       cert_object_path, bus_name);
 
   priv->certificate = tp_tls_certificate_new (TP_PROXY (priv->channel),
       cert_object_path, &error);
+
+  g_variant_unref (properties);
 
   if (error != NULL)
     {
