@@ -51,6 +51,9 @@ GType empathy_camera_menu_get_type (void) G_GNUC_CONST;
 
 EmpathyCameraMenu * empathy_camera_menu_new (EmpathyCallWindow *window);
 
+void empathy_camera_menu_set_sensitive (EmpathyCameraMenu *self,
+    gboolean sensitive);
+
 G_END_DECLS
 
 #endif /* __EMPATHY_CAMERA_MENU_H__ */
