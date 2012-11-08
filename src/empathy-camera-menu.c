@@ -132,15 +132,16 @@ empathy_camera_menu_activate_cb (GtkAction *action,
 {
   EmpathyGstVideoSrc *video;
   const gchar *device;
-  gchar *current_device;
+  gchar *current_device = NULL;
 
   if (self->priv->in_update)
     return;
 
   video = empathy_call_window_get_video_src (self->priv->window);
+  if (video != NULL)
+    current_device = empathy_video_src_dup_device (video);
 
   device = gtk_action_get_name (action);
-  current_device = empathy_video_src_dup_device (video);
 
   /* Don't change the device if it's the currently used one */
   if (!tp_strdiff (device, current_device))
@@ -158,12 +159,13 @@ empathy_camera_menu_update (EmpathyCameraMenu *self)
   GList *l;
   GtkUIManager *ui_manager;
   EmpathyGstVideoSrc *video;
-  gchar *current_camera;
+  gchar *current_camera = NULL;
 
   ui_manager = empathy_call_window_get_ui_manager (self->priv->window);
 
   video = empathy_call_window_get_video_src (self->priv->window);
-  current_camera = empathy_video_src_dup_device (video);
+  if (video != NULL)
+    current_camera = empathy_video_src_dup_device (video);
 
   empathy_camera_menu_clean (self);
   self->priv->ui_id = gtk_ui_manager_new_merge_id (ui_manager);
@@ -393,4 +395,18 @@ empathy_camera_menu_new (EmpathyCallWindow *window)
   return g_object_new (EMPATHY_TYPE_CAMERA_MENU,
       "window", window,
       NULL);
+}
+
+void
+empathy_camera_menu_set_sensitive (EmpathyCameraMenu *self,
+    gboolean sensitive)
+{
+  GtkUIManager *ui_manager;
+
+  gtk_action_group_set_sensitive (self->priv->action_group, sensitive);
+  if (sensitive) /* Mark the active camera as such. */
+    empathy_camera_menu_update (self);
+
+  ui_manager = empathy_call_window_get_ui_manager (self->priv->window);
+  gtk_ui_manager_ensure_update (ui_manager);
 }

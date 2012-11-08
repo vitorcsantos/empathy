@@ -2617,6 +2617,13 @@ empathy_call_window_disconnected (EmpathyCallWindow *self,
   gtk_action_set_sensitive (priv->menu_fullscreen, FALSE);
   gtk_widget_set_sensitive (priv->dtmf_panel, FALSE);
 
+  /* Create the video input and then turn on the camera
+   * menu, so that the active camera gets marked as such.
+   */
+  if (priv->video_input == NULL)
+    create_video_input (self);
+  empathy_camera_menu_set_sensitive (priv->camera_menu, TRUE);
+
   could_reset_pipeline = empathy_call_window_reset_pipeline (self);
 
   if (priv->call_state == CONNECTING)
@@ -3644,6 +3651,7 @@ empathy_call_window_remove_video_input (EmpathyCallWindow *self)
   priv->video_preview = NULL;
 
   gtk_widget_set_sensitive (priv->camera_button, FALSE);
+  empathy_camera_menu_set_sensitive (priv->camera_menu, FALSE);
 }
 
 static void
