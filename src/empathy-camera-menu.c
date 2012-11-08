@@ -157,11 +157,19 @@ static void
 empathy_camera_menu_update (EmpathyCameraMenu *self)
 {
   GList *l;
+  GtkAction *menu;
   GtkUIManager *ui_manager;
   EmpathyGstVideoSrc *video;
+  gboolean show_menu;
   gchar *current_camera = NULL;
+  guint n_cameras;
 
   ui_manager = empathy_call_window_get_ui_manager (self->priv->window);
+
+  menu = gtk_ui_manager_get_action (ui_manager, "/menubar1/edit/menucamera");
+  n_cameras = g_queue_get_length (self->priv->cameras);
+  show_menu = (n_cameras > 1);
+  gtk_action_set_visible (menu, show_menu);
 
   video = empathy_call_window_get_video_src (self->priv->window);
   if (video != NULL)
