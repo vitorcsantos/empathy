@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: empathy.master.kn\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=empathy&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2012-10-16 18:54+0000\n"
-"PO-Revision-Date: 2012-11-01 14:56+0530\n"
+"POT-Creation-Date: 2012-11-15 12:18+0000\n"
+"PO-Revision-Date: 2012-11-21 16:01+0530\n"
 "Last-Translator: Shankar Prasad <svenkate@redhat.com>\n"
 "Language-Team: Kannada <en@li.org>\n"
 "Language: kn\n"
@@ -34,6 +34,10 @@ msgstr "Empathy ಇಂಟರ್ನೆಟ್ ಮೆಸೇಜಿಂಗ್"
 #: ../data/empathy.desktop.in.in.h:4
 msgid "Chat on Google Talk, Facebook, MSN and many other chat services"
 msgstr "Google Talk, Facebook, MSN ಹಾಗು ಇತರೆ ಚಾಟ್‌ ಸೇವೆಗಳಲ್ಲಿ ಚಾಟ್ ಮಾಡಿ"
+
+#: ../data/empathy.desktop.in.in.h:5
+msgid "chat;talk;im;message;irc;voip;gtalk;facebook;jabber;"
+msgstr "chat;talk;im;message;irc;voip;gtalk;facebook;jabber;"
 
 #: ../data/org.gnome.Empathy.gschema.xml.h:1
 msgid "Connection managers should be used"
@@ -775,7 +779,7 @@ msgstr "ಹತ್ತಿರದ ಜನರು"
 msgid "Yahoo! Japan"
 msgstr "Yahoo! Japan ಅನ್ನು ಬಳಸು"
 
-#: ../libempathy/empathy-utils.c:531
+#: ../libempathy/empathy-utils.c:531 ../src/empathy-roster-window.c:619
 msgid "Google Talk"
 msgstr "Google Talk"
 
@@ -881,7 +885,7 @@ msgstr "ಪರಿಚಾರಕ"
 
 #: ../libempathy-gtk/empathy-account-widget.c:678
 #: ../libempathy-gtk/empathy-account-widget-sip.ui.h:20
-#: ../libempathy-gtk/empathy-irc-network-dialog.c:529
+#: ../libempathy-gtk/empathy-irc-network-dialog.c:532
 msgid "Port"
 msgstr "ಸಂಪರ್ಕಸ್ಥಾನ"
 
@@ -1528,7 +1532,7 @@ msgstr "ಅನ್ವಯಿಸಲಾಗಿಲ್ಲ"
 msgid "unknown"
 msgstr "ಅಜ್ಞಾತ"
 
-#: ../libempathy-gtk/empathy-chat.c:1680 ../src/empathy-chat-window.c:980
+#: ../libempathy-gtk/empathy-chat.c:1680 ../src/empathy-chat-window.c:979
 msgid "Topic:"
 msgstr "ವಿಷಯ:"
 
@@ -1642,9 +1646,9 @@ msgstr "%s ಈಗ %s ಆಗಿದ್ದಾರೆ"
 #. We don't know if the incoming call has been accepted or not, so we
 #. * assume it hasn't and if it has, we'll set the proper status when
 #. * we get the new handler.
-#: ../libempathy-gtk/empathy-chat.c:2989 ../src/empathy-call-window.c:1467
-#: ../src/empathy-call-window.c:1517 ../src/empathy-call-window.c:2570
-#: ../src/empathy-call-window.c:2876 ../src/empathy-event-manager.c:1166
+#: ../libempathy-gtk/empathy-chat.c:2989 ../src/empathy-call-window.c:1532
+#: ../src/empathy-call-window.c:1582 ../src/empathy-call-window.c:2655
+#: ../src/empathy-call-window.c:2961 ../src/empathy-event-manager.c:1166
 msgid "Disconnected"
 msgstr "ಸಂಪರ್ಕ ಕಡಿದು ಹೋಗಿದೆ"
 
@@ -1973,7 +1977,7 @@ msgstr "ಕರೆಯನ್ನು ಮಾಡಲು ಖಾತೆಯನ್ನು ಆ
 
 #: ../libempathy-gtk/empathy-individual-menu.c:357
 #: ../libempathy-gtk/empathy-log-window.ui.h:6
-#: ../src/empathy-call-window.ui.h:18
+#: ../src/empathy-call-window.ui.h:20
 msgid "Call"
 msgstr "ಕರೆ"
 
@@ -2073,7 +2077,7 @@ msgstr "ಸಂಪಾದನೆ (_E)"
 
 #. send invitation
 #: ../libempathy-gtk/empathy-individual-menu.c:1655
-#: ../src/empathy-chat-window.c:1246
+#: ../src/empathy-chat-window.c:1245
 msgid "Inviting you to this room"
 msgstr "ನಿಮ್ಮನ್ನು ಈ ರೂಮಿಗೆ ಆಹ್ವಾನಿಸಲಾಗುತ್ತಿದೆ"
 
@@ -2260,7 +2264,7 @@ msgstr "ಆರಿಸು"
 msgid "new server"
 msgstr "ಹೊಸ ಪರಿಚಾರಕ"
 
-#: ../libempathy-gtk/empathy-irc-network-dialog.c:539
+#: ../libempathy-gtk/empathy-irc-network-dialog.c:547
 msgid "SSL"
 msgstr "SSL"
 
@@ -2439,12 +2443,12 @@ msgid "Profile"
 msgstr "ಪ್ರೊಫೈಲ್"
 
 #: ../libempathy-gtk/empathy-log-window.ui.h:5
-#: ../src/empathy-chat-window.ui.h:19 ../src/empathy-preferences.ui.h:11
+#: ../src/empathy-chat-window.c:1438 ../src/empathy-preferences.ui.h:11
 msgid "Chat"
 msgstr "ಚಾಟ್"
 
 #: ../libempathy-gtk/empathy-log-window.ui.h:7
-#: ../src/empathy-call-window.ui.h:24
+#: ../src/empathy-call-window.ui.h:26
 msgid "Video"
 msgstr "ವೀಡಿಯೋ"
 
@@ -2976,7 +2980,7 @@ msgstr "ವಿಯಟ್ನಾಮೀಸ್"
 #: ../libempathy-gtk/empathy-roster-model.h:29
 #| msgid "Contacts"
 msgid "Top Contacts"
-msgstr "ಪ್ರಮುಖ ಸಂಪರ್ಕ ವಿಳಾಸಗಳು"
+msgstr "ಪ್ರಮುಖ ಸಂಪರ್ಕವಿಳಾಸಗಳು"
 
 #: ../libempathy-gtk/empathy-roster-model.h:31
 msgid "Ungrouped"
@@ -3073,7 +3077,7 @@ msgstr "ನಿಮ್ಮ %s ಖಾತೆಗೆ ಮಾಡಲಾದ ಮಾರ್ಪ
 msgid "Your new account has not been saved yet."
 msgstr "ನಿಮ್ಮ ಖಾತೆಯನ್ನು ಇನ್ನೂ ಸಹ ಉಳಿಸಲಾಗಿಲ್ಲ."
 
-#: ../src/empathy-accounts-dialog.c:404 ../src/empathy-call-window.c:1267
+#: ../src/empathy-accounts-dialog.c:404 ../src/empathy-call-window.c:1274
 msgid "Connecting…"
 msgstr "ಸಂಪರ್ಕ ಹೊಂದಲಾಗುತ್ತಿದೆ..."
 
@@ -3113,20 +3117,20 @@ msgstr "ಆಪ್‌ಲೈನ್ — ಖಾತೆಯನ್ನು ಅಶಕ್ತ
 msgid "Edit Connection Parameters"
 msgstr "ಸಂಪರ್ಕದ ನಿಯತಾಂಕಗಳನ್ನು ಸಂಪಾದಿಸಿ"
 
-#: ../src/empathy-accounts-dialog.c:733
+#: ../src/empathy-accounts-dialog.c:735
 msgid "_Edit Connection Parameters..."
 msgstr "ಸಂಪರ್ಕದ ನಿಯತಾಂಕಗಳನ್ನು ಸಂಪಾದಿಸು (_E)..."
 
-#: ../src/empathy-accounts-dialog.c:1266
+#: ../src/empathy-accounts-dialog.c:1268
 #, c-format
 msgid "Do you want to remove %s from your computer?"
 msgstr "ನೀವು '%s' ಅನ್ನು ಗಣಕದಿಂದ ನಿಜವಾಗಲೂ ತೆಗೆದು ಹಾಕಲು ಬಯಸುತ್ತೀರಿ?"
 
-#: ../src/empathy-accounts-dialog.c:1270
+#: ../src/empathy-accounts-dialog.c:1272
 msgid "This will not remove your account on the server."
 msgstr "ಇದು ಪರಿಚಾರಕದಿಂದ ನಿಮ್ಮ ಖಾತೆಯನ್ನು ತೆಗೆದು ಹಾಕುವುದಿಲ್ಲ"
 
-#: ../src/empathy-accounts-dialog.c:1475
+#: ../src/empathy-accounts-dialog.c:1477
 msgid ""
 "You are about to select another account, which will discard\n"
 "your changes. Are you sure you want to proceed?"
@@ -3136,24 +3140,24 @@ msgstr ""
 "ನೀವು ಖಚಿತವಾಗಿಯೂ ಮುಂದುವರೆಲು ಬಯಸುತ್ತೀರೆ?"
 
 #. Menu item: to enabled/disable the account
-#: ../src/empathy-accounts-dialog.c:1666
+#: ../src/empathy-accounts-dialog.c:1668
 msgid "_Enabled"
 msgstr "ಶಕ್ತಗೊಳಿಸಲಾದ (_E)"
 
 #. Menu item: Rename
-#: ../src/empathy-accounts-dialog.c:1689
+#: ../src/empathy-accounts-dialog.c:1691
 msgid "Rename"
 msgstr "ಮರುಹೆಸರಿಸು"
 
-#: ../src/empathy-accounts-dialog.c:2105
+#: ../src/empathy-accounts-dialog.c:2107
 msgid "_Skip"
 msgstr "ಕಡೆಗಣಿಸು (_S)"
 
-#: ../src/empathy-accounts-dialog.c:2109
+#: ../src/empathy-accounts-dialog.c:2111
 msgid "_Connect"
 msgstr "ಸಂಪರ್ಕಸಾಧಿಸು (_C)"
 
-#: ../src/empathy-accounts-dialog.c:2288
+#: ../src/empathy-accounts-dialog.c:2290
 msgid ""
 "You are about to close the window, which will discard\n"
 "your changes. Are you sure you want to proceed?"
@@ -3162,7 +3166,7 @@ msgstr ""
 "ನೀವು ಖಚಿತವಾಗಿಯೂ ಮುಂದುವರೆಲು ಬಯಸುತ್ತೀರೆ?"
 
 #. Tweak the dialog
-#: ../src/empathy-accounts-dialog.c:2431
+#: ../src/empathy-accounts-dialog.c:2433
 msgid "Messaging and VoIP Accounts"
 msgstr "ಮೆಸೇಜಿಂಗ್ ಹಾಗು VoIP ಖಾತೆಗಳು"
 
@@ -3223,11 +3227,16 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../src/empathy-call.c:193
+#: ../src/empathy-call.c:124
+#| msgid "Incoming call"
+msgid "In a call"
+msgstr "ಒಂದು ಕರೆಯಲ್ಲಿ"
+
+#: ../src/empathy-call.c:224
 msgid "- Empathy Audio/Video Client"
 msgstr "- Empathy ಆಡಿಯೊ/ವೀಡಿಯೊ ಕ್ಲೈಂಟ್"
 
-#: ../src/empathy-call.c:217
+#: ../src/empathy-call.c:248
 msgid "Empathy Audio/Video Client"
 msgstr "Empathy ಆಡಿಯೊ/ವೀಡಿಯೊ ಕ್ಲೈಂಟ್"
 
@@ -3240,31 +3249,31 @@ msgstr ""
 
 #. Translators: this is an "Info" label. It should be as short
 #. * as possible.
-#: ../src/empathy-call-window.c:1124 ../src/empathy-call-window.c:1140
+#: ../src/empathy-call-window.c:1131 ../src/empathy-call-window.c:1147
 msgid "i"
 msgstr "i"
 
-#: ../src/empathy-call-window.c:1484 ../src/empathy-event-manager.c:508
+#: ../src/empathy-call-window.c:1549 ../src/empathy-event-manager.c:508
 msgid "Incoming call"
 msgstr "ಬರುತ್ತಿರುವ ಕರೆ"
 
-#: ../src/empathy-call-window.c:1490 ../src/empathy-event-manager.c:913
+#: ../src/empathy-call-window.c:1555 ../src/empathy-event-manager.c:913
 #, c-format
 msgid "Incoming video call from %s"
 msgstr "%s ಇಂದ ಬರುತ್ತಿರುವ ವೀಡಿಯೊ ಕರೆ"
 
-#: ../src/empathy-call-window.c:1490 ../src/empathy-event-manager.c:516
+#: ../src/empathy-call-window.c:1555 ../src/empathy-event-manager.c:516
 #: ../src/empathy-event-manager.c:913
 #, c-format
 msgid "Incoming call from %s"
 msgstr "%s ಇಂದ ಕರೆ ಬರುತ್ತಿದೆ"
 
-#: ../src/empathy-call-window.c:1494
+#: ../src/empathy-call-window.c:1559
 #: ../src/empathy-notifications-approver.c:197
 msgid "Reject"
 msgstr "ತಿರಸ್ಕರಿಸು"
 
-#: ../src/empathy-call-window.c:1495
+#: ../src/empathy-call-window.c:1560
 #: ../src/empathy-notifications-approver.c:202
 #: ../src/empathy-notifications-approver.c:207
 msgid "Answer"
@@ -3272,60 +3281,60 @@ msgstr "ನಿಮ್ಮ ಹೆಸರು"
 
 #. translators: Call is a noun and %s is the contact name. This string
 #. * is used in the window title
-#: ../src/empathy-call-window.c:1861
+#: ../src/empathy-call-window.c:1927
 #, c-format
 msgid "Call with %s"
 msgstr "%s ರವರೊಂದಿಗೆ ಕರೆ ಮಾಡು"
 
-#: ../src/empathy-call-window.c:2113
+#: ../src/empathy-call-window.c:2179
 msgid "The IP address as seen by the machine"
 msgstr "ಗಣಕಕ್ಕೆ ಕಾಣಿಸುವ IP ವಿಳಾಸ"
 
-#: ../src/empathy-call-window.c:2115
+#: ../src/empathy-call-window.c:2181
 msgid "The IP address as seen by a server on the Internet"
 msgstr "ಅಂತರಜಾಲದಲ್ಲಿನ ಒಂದು ಪರಿಚಾರಕದಿಂದ ನೋಡಿದಾಗ ಕಾಣಿಸುವ IP ವಿಳಾಸ"
 
-#: ../src/empathy-call-window.c:2117
+#: ../src/empathy-call-window.c:2183
 msgid "The IP address of the peer as seen by the other side"
 msgstr "ಇನ್ನೊಂದು ಬದಿಯಿಂದ ನೋಡಿದಾಗ ಕಾಣಿಸುವ ಪೀರ್ IP ವಿಳಾಸ"
 
-#: ../src/empathy-call-window.c:2119
+#: ../src/empathy-call-window.c:2185
 msgid "The IP address of a relay server"
 msgstr "ರಿಲೆ ಪರಿಚಾರಕದ IP ವಿಳಾಸ"
 
-#: ../src/empathy-call-window.c:2121
+#: ../src/empathy-call-window.c:2187
 msgid "The IP address of the multicast group"
 msgstr "ಮಲ್ಟಿಕ್ಯಾಸ್ಟ್‍ ಗುಂಪಿನ IP ವಿಳಾಸ"
 
-#: ../src/empathy-call-window.c:2522 ../src/empathy-call-window.c:2523
-#: ../src/empathy-call-window.c:2524 ../src/empathy-call-window.c:2525
-#: ../src/empathy-call-window.ui.h:26
+#: ../src/empathy-call-window.c:2598 ../src/empathy-call-window.c:2599
+#: ../src/empathy-call-window.c:2600 ../src/empathy-call-window.c:2601
+#: ../src/empathy-call-window.ui.h:28
 msgid "Unknown"
 msgstr "ಗೊತ್ತಿಲ್ಲದ"
 
-#: ../src/empathy-call-window.c:2874
+#: ../src/empathy-call-window.c:2959
 msgid "On hold"
 msgstr "ತಡೆಹಿಡಿಯಲಾಗಿದೆ"
 
-#: ../src/empathy-call-window.c:2878
+#: ../src/empathy-call-window.c:2963
 msgid "Mute"
 msgstr "ಮೂಕ"
 
-#: ../src/empathy-call-window.c:2880
+#: ../src/empathy-call-window.c:2965
 msgid "Duration"
 msgstr "ಕಾಲಾವಧಿ"
 
 #. Translators: 'status - minutes:seconds' the caller has been connected
-#: ../src/empathy-call-window.c:2883
+#: ../src/empathy-call-window.c:2968
 #, c-format
 msgid "%s — %d:%02dm"
 msgstr "%s — %d:%02dm"
 
-#: ../src/empathy-call-window.c:2979
+#: ../src/empathy-call-window.c:3064
 msgid "Technical Details"
 msgstr "ತಾಂತ್ರಿಕ ವಿವರಗಳು"
 
-#: ../src/empathy-call-window.c:3018
+#: ../src/empathy-call-window.c:3103
 #, c-format
 msgid ""
 "%s's software does not understand any of the audio formats supported by your "
@@ -3334,7 +3343,7 @@ msgstr ""
 "%s ತಂತ್ರಾಂಶವು ನಿಮ್ಮ ಗಣಕದಿಂದ ಬೆಂಬಲಿಸಲಾಗುವ ಯಾವುದೆ ಆಡಿಯೊ ತಂತ್ರಾಂಶವನ್ನು ಅರ್ಥ "
 "ಮಾಡಿಕೊಳ್ಳುವುದಿಲ್ಲ"
 
-#: ../src/empathy-call-window.c:3023
+#: ../src/empathy-call-window.c:3108
 #, c-format
 msgid ""
 "%s's software does not understand any of the video formats supported by your "
@@ -3343,7 +3352,7 @@ msgstr ""
 "%s ತಂತ್ರಾಂಶವು ನಿಮ್ಮ ಗಣಕದಿಂದ ಬೆಂಬಲಿಸಲಾಗುವ ಯಾವುದೆ ವೀಡಿಯೊ ತಂತ್ರಾಂಶವನ್ನು ಅರ್ಥ "
 "ಮಾಡಿಕೊಳ್ಳುವುದಿಲ್ಲ"
 
-#: ../src/empathy-call-window.c:3029
+#: ../src/empathy-call-window.c:3114
 #, c-format
 msgid ""
 "Can't establish a connection to %s. One of you might be on a network that "
@@ -3352,23 +3361,23 @@ msgstr ""
 "%s ದೊಂದಿಗೆ ಸಂಪರ್ಕವನ್ನು ಸಾಧಿಸಲು ಸಾಧ್ಯವಾಗಿಲ್ಲ. ಬಹುಷಃ ನಿಮ್ಮಲ್ಲಿ ಒಬ್ಬರು, ನೇರವಾದ "
 "ಸಂಪರ್ಕಗಳಿಗೆ ಅನುಮತಿ ನೀಡದೆ ಇರುವ ಜಾಲಬಂಧದಲ್ಲಿ ಇದ್ದೀರ ಎಂದು ತೋರುತ್ತಿದೆ."
 
-#: ../src/empathy-call-window.c:3035
+#: ../src/empathy-call-window.c:3120
 msgid "There was a failure on the network"
 msgstr "ಜಾಲಬಂಧದಲ್ಲಿ ಒಂದು ವಿಫಲತೆ ಎದುರಾಗಿದೆ"
 
-#: ../src/empathy-call-window.c:3039
+#: ../src/empathy-call-window.c:3124
 msgid ""
 "The audio formats necessary for this call are not installed on your computer"
 msgstr ""
 "ಈ ಕರೆಗಾಗಿ ಅಗತ್ಯವಿರುವ ಆಡಿಯೊ ಫಾರ್ಮ್ಯಾಟ್‌ಗಳನ್ನು ನಿಮ್ಮ ಗಣಕದಲ್ಲಿ ಅನುಸ್ಥಾಪಿಸಲಾಗಿಲ್ಲ"
 
-#: ../src/empathy-call-window.c:3042
+#: ../src/empathy-call-window.c:3127
 msgid ""
 "The video formats necessary for this call are not installed on your computer"
 msgstr ""
 "ಈ ಕರೆಗಾಗಿ ಅಗತ್ಯವಿರುವ ವೀಡಿಯೊ ಫಾರ್ಮ್ಯಾಟ್‌ಗಳನ್ನು ನಿಮ್ಮ ಗಣಕದಲ್ಲಿ ಅನುಸ್ಥಾಪಿಸಲಾಗಿಲ್ಲ"
 
-#: ../src/empathy-call-window.c:3054
+#: ../src/empathy-call-window.c:3139
 #, c-format
 msgid ""
 "Something unexpected happened in a Telepathy component. Please <a href=\"%s"
@@ -3381,32 +3390,32 @@ msgstr ""
 "ವಿಂಡೋದಲ್ಲಿ "
 "ಸಂಗ್ರಹಿಸಲಾದ ದಾಖಲೆಗಳನ್ನು ಲಗತ್ತಿಸಿ."
 
-#: ../src/empathy-call-window.c:3063
+#: ../src/empathy-call-window.c:3148
 msgid "There was a failure in the call engine"
 msgstr "ಕರೆಯ ಎಂಜಿನ್‌ನಲ್ಲಿ ಒಂದು ವಿಫಲತೆ ಇದೆ"
 
-#: ../src/empathy-call-window.c:3066
+#: ../src/empathy-call-window.c:3151
 msgid "The end of the stream was reached"
 msgstr "ಸ್ಟ್ರೀಮ್‌ನ ಕೊನೆಗೆ ತಲುಪಿದೆ"
 
-#: ../src/empathy-call-window.c:3106
+#: ../src/empathy-call-window.c:3191
 msgid "Can't establish audio stream"
 msgstr "ಆಡಿಯೊ ಸ್ಟ್ರೀಮ್ ಅನ್ನು ಆರಂಭಿಸಲು ಸಾಧ್ಯವಾಗಿಲ್ಲ"
 
-#: ../src/empathy-call-window.c:3116
+#: ../src/empathy-call-window.c:3201
 msgid "Can't establish video stream"
 msgstr "ವೀಡಿಯೊ ಸ್ಟ್ರೀಮ್ ಅನ್ನು ಆರಂಭಿಸಲು ಸಾಧ್ಯವಾಗಿಲ್ಲ"
 
-#: ../src/empathy-call-window.c:3153
+#: ../src/empathy-call-window.c:3238
 #, c-format
 msgid "Your current balance is %s."
 msgstr "ನಿಮ್ಮ ಪ್ರಸಕ್ತ ಬ್ಯಾಲೆನ್ಸ್‍ %s."
 
-#: ../src/empathy-call-window.c:3157
+#: ../src/empathy-call-window.c:3242
 msgid "Sorry, you don’t have enough credit for that call."
 msgstr "ಈ ಕರೆಗಾಗಿ ನೀವು ಸಾಕಷ್ಟು ಕ್ರೆಡಿಟ್ ಅನ್ನು ಹೊಂದಿಲ್ಲ."
 
-#: ../src/empathy-call-window.c:3159
+#: ../src/empathy-call-window.c:3244
 msgid "Top Up"
 msgstr "ಟಾಪ್ ಅಪ್"
 
@@ -3443,74 +3452,82 @@ msgid "_Debug"
 msgstr "ದೋಷ ನಿವಾರಣೆ(_Debug)"
 
 #: ../src/empathy-call-window.ui.h:10
+msgid "_GStreamer"
+msgstr "_GStreamer"
+
+#: ../src/empathy-call-window.ui.h:11
+msgid "_Telepathy"
+msgstr "ಟೆಲಿಪತಿ (_T)"
+
+#: ../src/empathy-call-window.ui.h:12
 msgid "Swap camera"
 msgstr "ಕ್ಯಾಮೆರವನ್ನು ಅದಲುಬದಲು ಮಾಡಿ"
 
-#: ../src/empathy-call-window.ui.h:11
+#: ../src/empathy-call-window.ui.h:13
 msgid "Minimise me"
 msgstr "ನನ್ನನ್ನು ಚಿಕ್ಕದಾಗಿಸು"
 
-#: ../src/empathy-call-window.ui.h:12
+#: ../src/empathy-call-window.ui.h:14
 msgid "Maximise me"
 msgstr "ನನ್ನನ್ನು ದೊಡ್ಡದಾಗಿಸು"
 
-#: ../src/empathy-call-window.ui.h:13
+#: ../src/empathy-call-window.ui.h:15
 msgid "Disable camera"
 msgstr "ಕ್ಯಾಮರಾವನ್ನು ಅಶಕ್ತಗೊಳಿಸು"
 
-#: ../src/empathy-call-window.ui.h:14
+#: ../src/empathy-call-window.ui.h:16
 msgid "Hang up"
 msgstr "ಹ್ಯಾಂಗ್ ಮಾಡು"
 
-#: ../src/empathy-call-window.ui.h:15
+#: ../src/empathy-call-window.ui.h:17
 msgid "Hang up current call"
 msgstr "ಪ್ರಸಕ್ತ ಕರೆಯನ್ನು ಕೊಂಚ ಸಮಯ ತಡೆಹಿಡಿ"
 
-#: ../src/empathy-call-window.ui.h:16
+#: ../src/empathy-call-window.ui.h:18
 msgid "Video call"
 msgstr "ವೀಡಿಯೊ ಕರೆ"
 
-#: ../src/empathy-call-window.ui.h:17
+#: ../src/empathy-call-window.ui.h:19
 msgid "Start a video call"
 msgstr "ವೀಡಿಯೊ ಕರೆಯನ್ನು ಆರಂಭಿಸು"
 
-#: ../src/empathy-call-window.ui.h:19
+#: ../src/empathy-call-window.ui.h:21
 msgid "Start an audio call"
 msgstr "ಆಡಿಯೊ ಕರೆಯನ್ನು ಆರಂಭಿಸು"
 
-#: ../src/empathy-call-window.ui.h:20
+#: ../src/empathy-call-window.ui.h:22
 msgid "Show dialpad"
 msgstr "ಡಯಲ್‍ಪ್ಯಾಡನ್ನು ತೋರಿಸು"
 
-#: ../src/empathy-call-window.ui.h:21
+#: ../src/empathy-call-window.ui.h:23
 msgid "Display the dialpad"
 msgstr "ಡಯಲ್ಪ್ಯಾಡ್ ಅನ್ನು ತೋರಿಸು"
 
-#: ../src/empathy-call-window.ui.h:22
+#: ../src/empathy-call-window.ui.h:24
 msgid "Toggle video transmission"
 msgstr "ವಿಡಿಯೊ ವರ್ಗಾವಣೆಯನ್ನು ಟಾಗಲ್ ಮಾಡು"
 
-#: ../src/empathy-call-window.ui.h:23
+#: ../src/empathy-call-window.ui.h:25
 msgid "Toggle audio transmission"
 msgstr "ಆಡಿಯೊ ವರ್ಗಾವಣೆಯನ್ನು ಟಾಗಲ್ ಮಾಡು"
 
-#: ../src/empathy-call-window.ui.h:25
+#: ../src/empathy-call-window.ui.h:27
 msgid "Encoding Codec:"
 msgstr "ಎನ್ಕೋಡಿಂಗ್ ಕೋಡೆಕ್:"
 
-#: ../src/empathy-call-window.ui.h:27
+#: ../src/empathy-call-window.ui.h:29
 msgid "Decoding Codec:"
 msgstr "ಡೀಕೋಡಿಂಗ್ ಕೋಡೆಕ್:"
 
-#: ../src/empathy-call-window.ui.h:28
+#: ../src/empathy-call-window.ui.h:30
 msgid "Remote Candidate:"
 msgstr "ದೂರಸ್ಥ ಅಬ್ಯರ್ಥಿ:"
 
-#: ../src/empathy-call-window.ui.h:29
+#: ../src/empathy-call-window.ui.h:31
 msgid "Local Candidate:"
 msgstr "ಸ್ಥಳೀಯ ಅಬ್ಯರ್ಥಿ:"
 
-#: ../src/empathy-call-window.ui.h:30 ../src/empathy-preferences.ui.h:28
+#: ../src/empathy-call-window.ui.h:32 ../src/empathy-preferences.ui.h:28
 msgid "Audio"
 msgstr "ಆಡಿಯೋ"
 
@@ -3534,11 +3551,11 @@ msgstr "ತಾನಾಗಿಯೆ ಸಂಪರ್ಕಹೊಂದು"
 msgid "Manage Favorite Rooms"
 msgstr "ನಿಮ್ಮ ಅಚ್ಚುಮೆಚ್ಚಿನ ರೂಮ್‌ಗಳನ್ನಿ ವ್ಯವಸ್ಥಾಪಿಸಿ"
 
-#: ../src/empathy-chat-window.c:288
+#: ../src/empathy-chat-window.c:287
 msgid "Close this window?"
 msgstr "ಈ ವಿಂಡೋವನ್ನು ಮುಚ್ಚಬೇಕೆ?"
 
-#: ../src/empathy-chat-window.c:294
+#: ../src/empathy-chat-window.c:293
 #, c-format
 msgid ""
 "Closing this window will leave %s. You will not receive any further messages "
@@ -3547,7 +3564,7 @@ msgstr ""
 "ಈ ಕಿಟಕಿಯನ್ನು ಮುಚ್ಚುವುದರಿಂದ ನೀವು %s ಇಂದ ನಿರ್ಗಮಿಸಿದಂತಾಗುತ್ತದೆ. ಅದನ್ನು ಮರಳಿ "
 "ಸೇರುವವರೆಗೆ ನಿಮಗೆ ಯಾವುದೆ ಸಂದೇಶಗಳು ದೊರೆಯುವುದಿಲ್ಲ."
 
-#: ../src/empathy-chat-window.c:307
+#: ../src/empathy-chat-window.c:306
 #, c-format
 msgid ""
 "Closing this window will leave a chat room. You will not receive any further "
@@ -3564,12 +3581,12 @@ msgstr[1] ""
 "ಅದನ್ನು "
 "ಮರಳಿ ಸೇರುವವರೆಗೆ ನಿಮಗೆ ಯಾವುದೆ ಸಂದೇಶಗಳು ದೊರೆಯುವುದಿಲ್ಲ."
 
-#: ../src/empathy-chat-window.c:318
+#: ../src/empathy-chat-window.c:317
 #, c-format
 msgid "Leave %s?"
 msgstr "%s ಇಂದ ನಿರ್ಗಮಿಸಬೇಕೆ?"
 
-#: ../src/empathy-chat-window.c:320
+#: ../src/empathy-chat-window.c:319
 msgid ""
 "You will not receive any further messages from this chat room until you "
 "rejoin it."
@@ -3577,54 +3594,54 @@ msgstr ""
 "ಈ ಚಾಟ್‌ ಕೋಣೆಗೆ ನೀವು ಮರಳಿ ಸೇರುವವರೆಗೆ ನಿಮಗೆ ಇದರಿಂದ ಯಾವುದೆ ಸಂದೇಶಗಳು "
 "ದೊರೆಯುವುದಿಲ್ಲ."
 
-#: ../src/empathy-chat-window.c:339
+#: ../src/empathy-chat-window.c:338
 msgid "Close window"
 msgstr "ಕಿಟಕಿಯನ್ನು ಮುಚ್ಚು"
 
-#: ../src/empathy-chat-window.c:339
+#: ../src/empathy-chat-window.c:338
 msgid "Leave room"
 msgstr "ಕೋಣೆಯಿಂದ ನಿರ್ಗಮಿಸು"
 
-#: ../src/empathy-chat-window.c:678 ../src/empathy-chat-window.c:701
+#: ../src/empathy-chat-window.c:677 ../src/empathy-chat-window.c:700
 #, c-format
 msgid "%s (%d unread)"
 msgid_plural "%s (%d unread)"
 msgstr[0] "%s (ಓದದೆ ಇರುವ %d)"
 msgstr[1] "%s (ಓದದೆ ಇರುವ %d)"
 
-#: ../src/empathy-chat-window.c:693
+#: ../src/empathy-chat-window.c:692
 #, c-format
 msgid "%s (and %u other)"
 msgid_plural "%s (and %u others)"
 msgstr[0] "%s (ಹಾಗು %u ಇತರರು)"
 msgstr[1] "%s (ಹಾಗು %u ಇತರರು)"
 
-#: ../src/empathy-chat-window.c:709
+#: ../src/empathy-chat-window.c:708
 #, c-format
 msgid "%s (%d unread from others)"
 msgid_plural "%s (%d unread from others)"
 msgstr[0] "%s (ಬೇರೆಯವರಿಂದ ಓದಲಾದ %d )"
 msgstr[1] "%s (ಬೇರೆಯವರಿಂದ ಓದಲಾದ %d )"
 
-#: ../src/empathy-chat-window.c:718
+#: ../src/empathy-chat-window.c:717
 #, c-format
 msgid "%s (%d unread from all)"
 msgid_plural "%s (%d unread from all)"
 msgstr[0] "%s (ಎಲ್ಲರಿಂದಲೂ ಓದದೆ ಇರುವ %d)"
 msgstr[1] "%s (ಎಲ್ಲರಿಂದಲೂ ಓದದೆ ಇರುವ %d)"
 
-#: ../src/empathy-chat-window.c:955
+#: ../src/empathy-chat-window.c:954
 msgid "SMS:"
 msgstr "SMS:"
 
-#: ../src/empathy-chat-window.c:963
+#: ../src/empathy-chat-window.c:962
 #, c-format
 msgid "Sending %d message"
 msgid_plural "Sending %d messages"
 msgstr[0] "%d ಸಂದೇಶವನ್ನು ಕಳುಹಿಸಲಾಗುತ್ತಿದೆ"
 msgstr[1] "%d ಸಂದೇಶಗಳನ್ನು ಕಳುಹಿಸಲಾಗುತ್ತಿದೆ"
 
-#: ../src/empathy-chat-window.c:983
+#: ../src/empathy-chat-window.c:982
 msgid "Typing a message."
 msgstr "ಒಂದು ಸಂದೇಶವನ್ನು ನಮೂದಿಸಲಾಗುತ್ತಿದೆ."
 
@@ -3718,63 +3735,82 @@ msgstr ""
 "ಒಂದೇ ಬಾರಿ ಅಂಟಿಸಲು ದತ್ತಾಂಶವು ಬಹಳ ದೊಡ್ಡದಾಗಿದೆ. ದಯವಿಟ್ಟು ದಿನಚರಿಗಳನ್ನು ಕಡತಕ್ಕೆ "
 "ಉಳಿಸಿ."
 
-#: ../src/empathy-debug-window.c:1856
+#: ../src/empathy-debug-window.c:1857
 msgid "Debug Window"
 msgstr "ದೋಷ ನಿವಾರಣಾ ವಿಂಡೊ"
 
-#: ../src/empathy-debug-window.c:1916
+#: ../src/empathy-debug-window.c:1917
 msgid "Send to pastebin"
 msgstr "ಪೇಸ್ಟ್‍ಬಿನ್‌ಗೆ ಕಳುಹಿಸು"
 
-#: ../src/empathy-debug-window.c:1960
+#: ../src/empathy-debug-window.c:1961
 msgid "Pause"
 msgstr "ವಿರಮಿಸು"
 
-#: ../src/empathy-debug-window.c:1972
+#: ../src/empathy-debug-window.c:1973
 msgid "Level "
 msgstr "ಸ್ತರ"
 
-#: ../src/empathy-debug-window.c:1991
+#: ../src/empathy-debug-window.c:1992
 msgid "Debug"
 msgstr "ದೋಷನಿವಾರಣೆ"
 
-#: ../src/empathy-debug-window.c:1996
+#: ../src/empathy-debug-window.c:1997
 msgid "Info"
 msgstr "ಮಾಹಿತಿ"
 
-#: ../src/empathy-debug-window.c:2001 ../src/empathy-debug-window.c:2050
+#: ../src/empathy-debug-window.c:2002 ../src/empathy-debug-window.c:2077
 msgid "Message"
 msgstr "ಸಂದೇಶ"
 
-#: ../src/empathy-debug-window.c:2006
+#: ../src/empathy-debug-window.c:2007
 msgid "Warning"
 msgstr "ಎಚ್ಚರಿಕೆ"
 
-#: ../src/empathy-debug-window.c:2011
+#: ../src/empathy-debug-window.c:2012
 msgid "Critical"
 msgstr "ಸಂದಿಗ್ಧ"
 
-#: ../src/empathy-debug-window.c:2016
+#: ../src/empathy-debug-window.c:2017
 msgid "Error"
 msgstr "ದೋಷ"
 
-#: ../src/empathy-debug-window.c:2035
+#: ../src/empathy-debug-window.c:2030
+msgid ""
+"Even if they don't display passwords, logs can contain sensitive information "
+"such as your list of contacts or the messages you recently sent or "
+"received.\n"
+"If you don't want to see such information available in a public bug report, "
+"you can choose to limit the visibility of your bug to Empathy developers "
+"when reporting it by displaying the advanced fields in the <a href=\"https://"
+"bugzilla.gnome.org/enter_bug.cgi?product=empathy\">bug report</a>."
+msgstr ""
+"ಅವುಗಳು ಗುಪ್ತಪದಗಳನ್ನು ತೋರಿಸದೇ ಇದ್ದರೂ ಸಹ, ದಾಖಲೆಗಳು (ಲಾಗ್) ನಿಮ್ಮ ಸಂಪರ್ಕವಿಳಾಸಗಳ "
+"ಪಟ್ಟಿ ಅಥವ ನೀವು ಇತ್ತೀಚೆಗೆ ಕಳುಹಿಸಿದ ಅಥವ ಸ್ವೀಕರಿಸಿದ ಸಂದೇಶಗಳಂತಹ ಸೂಕ್ಷ್ಮವಾದ "
+"ಮಾಹಿತಿಯನ್ನು ಹೊಂದಿರಬಹುದು .\n"
+"ಒಂದು ಸಾರ್ವಜನಿಕ ದೋಷ ವರದಿಯಲ್ಲಿ ಅಂತಹ ಮಾಹಿತಿಯು ಕಾಣಿಸಿಕೊಳ್ಳುವುದು ನಿಮ್ಮ ಇಷ್ಟವಿಲ್ಲದೇ "
+"ಇದ್ದಲ್ಲಿ, "
+"<a href=\"https://bugzilla.gnome.org/enter_bug.cgi?product=empathy\">bug "
+"report</a>ನಲ್ಲಿ ಅಡ್ವಾನ್ಸಡ್ ಫೀಲ್ಡ್ಸ್‍ನಲ್ಲಿ ದೋಷ ವರದಿಯು ಕೇವಲ Empathy "
+"ವಿಕಸನೆಗಾರರಿಗೆ ಮಾತ್ರ ಕಾಣಿಸುವಂತೆ ಮಾಡಬಹುದು."
+
+#: ../src/empathy-debug-window.c:2062
 msgid "Time"
 msgstr "ಸಮಯ"
 
-#: ../src/empathy-debug-window.c:2038
+#: ../src/empathy-debug-window.c:2065
 msgid "Domain"
 msgstr "ಡೊಮೈನ್"
 
-#: ../src/empathy-debug-window.c:2041
+#: ../src/empathy-debug-window.c:2068
 msgid "Category"
 msgstr "ವರ್ಗ"
 
-#: ../src/empathy-debug-window.c:2044
+#: ../src/empathy-debug-window.c:2071
 msgid "Level"
 msgstr "ಸ್ತರ"
 
-#: ../src/empathy-debug-window.c:2073
+#: ../src/empathy-debug-window.c:2100
 msgid ""
 "The selected connection manager does not support the remote debugging "
 "extension."
@@ -4193,7 +4229,7 @@ msgstr "ಗುಂಪುಗಳನ್ನು ತೋರಿಸು"
 msgid "Show account balances"
 msgstr "ಖಾತೆಯಲ್ಲಿನ ಬ್ಯಾಲೆನ್ಸುಗಳನ್ನು ತೋರಿಸು"
 
-#: ../src/empathy-preferences.ui.h:4 ../src/empathy-roster-window.c:2107
+#: ../src/empathy-preferences.ui.h:4 ../src/empathy-roster-window.c:2166
 msgid "Contact List"
 msgstr "ವಿಳಾಸ ಪಟ್ಟಿ"
 
@@ -4383,46 +4419,66 @@ msgid "Sorry, %s accounts can’t be used until your %s software is updated."
 msgstr ""
 "ಕ್ಷಮಿಸಿ,%s ಖಾತೆಯನ್ನು %s ತಂತ್ರಾಂಶವು ಅಪ್‌ಡೇಟ್ ಆಗುವವರೆಗೆ ಬಳಸಲು ಸಾಧ್ಯವಿರುವುದಿಲ್ಲ."
 
-#: ../src/empathy-roster-window.c:635
+#: ../src/empathy-roster-window.c:617
+msgid "Windows Live"
+msgstr "ವಿಂಡೋಸ್ ಲೈವ್"
+
+#: ../src/empathy-roster-window.c:621
+#| msgid "Facebook Chat"
+msgid "Facebook"
+msgstr "ಫೇಸ್‌ಬುಕ್"
+
+#. translators: %s is an account name like 'Facebook' or 'Google Talk'
+#: ../src/empathy-roster-window.c:636
+#, c-format
+msgid "%s account requires authorisation"
+msgstr "%s ಖಾತೆಗಾಗಿ ದೃಢೀಕರಿಸುವ ಅಗತ್ಯವಿದೆ"
+
+#: ../src/empathy-roster-window.c:647
+#| msgid "Edit Account"
+msgid "Online Accounts"
+msgstr "ಆನ್‌ಲೈನ್‌ ಖಾತೆಗಳು"
+
+#: ../src/empathy-roster-window.c:694
 msgid "Update software..."
 msgstr "ತಂತ್ರಾಂಶವನ್ನು ಅಪ್‌ಡೇಟ್ ಮಾಡು..."
 
-#: ../src/empathy-roster-window.c:641
+#: ../src/empathy-roster-window.c:700
 msgid "Reconnect"
 msgstr "ಮರಳಿ ಸಂಪರ್ಕ ಜೋಡಿಸು"
 
-#: ../src/empathy-roster-window.c:645
+#: ../src/empathy-roster-window.c:704
 msgid "Edit Account"
 msgstr "ಖಾತೆಯನ್ನು ಸಂಪಾದಿಸು"
 
-#: ../src/empathy-roster-window.c:650
+#: ../src/empathy-roster-window.c:709
 msgid "Close"
 msgstr "ಸ್ವಚ್ಛಗೊಳಿಸು"
 
-#: ../src/empathy-roster-window.c:787
+#: ../src/empathy-roster-window.c:846
 msgid "Top up account"
 msgstr "ಖಾತೆಯನ್ನು ಟಾಪ್ ಅಪ್ ಮಾಡಿ"
 
-#: ../src/empathy-roster-window.c:1469
+#: ../src/empathy-roster-window.c:1528
 msgid "You need to enable one of your accounts to see contacts here."
 msgstr ""
 "ಸಂಪರ್ಕ ವಿಳಾಸಗಳು ಇಲ್ಲಿ ಕಾಣಿಸಬೇಕೆಂದರೆ ನಿಮ್ಮ ಒಂದು ಖಾತೆಯನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಬೇಕು."
 
 #. translators: argument is an account name
-#: ../src/empathy-roster-window.c:1477
+#: ../src/empathy-roster-window.c:1536
 #, c-format
 msgid "You need to enable %s to see contacts here."
 msgstr "ಸಂಪರ್ಕ ವಿಳಾಸಗಳು ಇಲ್ಲಿ ಕಾಣಿಸಬೇಕೆಂದರೆ %s ಅನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಬೇಕು."
 
-#: ../src/empathy-roster-window.c:1555
+#: ../src/empathy-roster-window.c:1614
 msgid "Change your presence to see contacts here"
 msgstr "ಸಂಪರ್ಕ ವಿಳಾಸಗಳು ಇಲ್ಲಿ ಕಾಣಿಸಬೇಕೆಂದರೆ ನಿಮ್ಮ ಇರುವಿಕೆಯನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ"
 
-#: ../src/empathy-roster-window.c:1564
+#: ../src/empathy-roster-window.c:1623
 msgid "No match found"
 msgstr "ಯಾವುದೂ ತಾಳೆಯಾಗುತ್ತಿಲ್ಲ"
 
-#: ../src/empathy-roster-window.c:1569
+#: ../src/empathy-roster-window.c:1628
 msgid "No online contacts"
 msgstr "ಯಾವುದೆ ಆನ್‌ಲೈನ್ ಸಂಪರ್ಕ ವಿಳಾಸಗಳಿಲ್ಲ"
 
