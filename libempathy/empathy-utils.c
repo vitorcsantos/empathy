@@ -502,6 +502,13 @@ empathy_protocol_name_to_display_name (const gchar *proto_name)
     { "yahoojp", N_("Yahoo! Japan"), TRUE },
     { "groupwise", "GroupWise", FALSE },
     { "sip", "SIP", FALSE },
+    { "gadugadu", "Gadu-Gadu", FALSE },
+    { "mxit", "Mxit", FALSE },
+    { "myspace", "Myspace", FALSE },
+    { "sametime", "Sametime", FALSE },
+    { "skype-dbus", "Skype (D-BUS)", FALSE },
+    { "skype-x11", "Skype (X11)", FALSE },
+    { "zephyr", "Zephyr", FALSE },
     { NULL, NULL }
   };
 
