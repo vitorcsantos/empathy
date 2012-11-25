@@ -1623,6 +1623,8 @@ geocode_cb (GObject *source,
   EmpathyContact *contact = user_data;
   EmpathyContactPriv *priv = GET_PRIV (contact);
   GError *error = NULL;
+  GList *res;
+  GeocodeLocation *loc;
   GHashTable *new_location;
   GHashTable *resolved = NULL;
   gdouble latitude, longitude;
@@ -1630,26 +1632,27 @@ geocode_cb (GObject *source,
   if (priv->location == NULL)
     goto out;
 
-  resolved = geocode_object_resolve_finish (GEOCODE_OBJECT (source), result,
+  res = geocode_forward_search_finish (GEOCODE_OBJECT (source), result,
       &error);
 
-  if (resolved == NULL)
+  if (res == NULL)
     {
       DEBUG ("Failed to resolve geocode: %s", error->message);
       g_error_free (error);
       goto out;
     }
 
-  if (!geocode_object_get_coords (resolved, &longitude, &latitude))
-    goto out;
+  loc = res->data;
 
   new_location = tp_asv_new (
-      EMPATHY_LOCATION_LAT, G_TYPE_DOUBLE, latitude,
-      EMPATHY_LOCATION_LON, G_TYPE_DOUBLE, longitude,
+      EMPATHY_LOCATION_LAT, G_TYPE_DOUBLE, loc->latitude,
+      EMPATHY_LOCATION_LON, G_TYPE_DOUBLE, loc->longitude,
       NULL);
 
-  DEBUG ("\t - Latitude: %f", latitude);
-  DEBUG ("\t - Longitude: %f", longitude);
+  DEBUG ("\t - Latitude: %f", loc->latitude);
+  DEBUG ("\t - Longitude: %f", loc->longitude);
+
+  g_list_free_full (res, geocode_location_free);
 
   /* Copy remaning fields. LAT and LON were not defined so we won't overwrite
    * the values we just set. */
@@ -1669,7 +1672,7 @@ out:
 static void
 update_geocode (EmpathyContact *contact)
 {
-  GeocodeObject *geocode;
+  GeocodeForward *geocode;
   GHashTable *location;
 
   location = empathy_contact_get_location (contact);
@@ -1682,11 +1685,11 @@ update_geocode (EmpathyContact *contact)
       g_hash_table_lookup (location, EMPATHY_LOCATION_LON) != NULL)
     return;
 
-  geocode = geocode_object_new_for_params (location);
+  geocode = geocode_forward_new_for_params (location);
   if (geocode == NULL)
     return;
 
-  geocode_object_resolve_async (geocode, NULL, geocode_cb,
+  geocode_forward_search_async (geocode, NULL, geocode_cb,
       g_object_ref (contact));
 
   g_object_unref (geocode);

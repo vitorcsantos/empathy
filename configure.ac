@@ -68,6 +68,7 @@ GOA_REQUIRED=3.5.1
 # Optional deps
 ENCHANT_REQUIRED=1.2.0
 GEOCLUE_REQUIRED=0.12
+GEOCODE_GLIB_REQUIRED=0.99.1
 ISO_CODES_REQUIRED=0.35
 NAUTILUS_SENDTO_REQUIRED=2.90.0
 NETWORK_MANAGER_REQUIRED=0.7.0
@@ -434,7 +435,7 @@ AC_ARG_ENABLE(geocode,
 if test "x$enable_geocode" != "xno"; then
    PKG_CHECK_MODULES(GEOCODE,
    [
-      geocode-glib
+      geocode-glib >= $GEOCODE_GLIB_REQUIRED
    ], have_geocode="yes", have_geocode="no")
 
    if test "x$have_geocode" = "xyes"; then
