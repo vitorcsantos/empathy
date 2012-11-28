@@ -1632,7 +1632,7 @@ geocode_cb (GObject *source,
   if (priv->location == NULL)
     goto out;
 
-  res = geocode_forward_search_finish (GEOCODE_OBJECT (source), result,
+  res = geocode_forward_search_finish (GEOCODE_FORWARD (source), result,
       &error);
 
   if (res == NULL)
@@ -1652,7 +1652,7 @@ geocode_cb (GObject *source,
   DEBUG ("\t - Latitude: %f", loc->latitude);
   DEBUG ("\t - Longitude: %f", loc->longitude);
 
-  g_list_free_full (res, geocode_location_free);
+  g_list_free_full (res, (GDestroyNotify) geocode_location_free);
 
   /* Copy remaning fields. LAT and LON were not defined so we won't overwrite
    * the values we just set. */
