@@ -12,7 +12,10 @@ HELP_MEDIA = \
 	figures/gtk-add.png \
 	figures/gtk-edit.png \
 	figures/gtk-remove.png \
-	figures/offline.png
+	figures/offline.png \
+	figures/croom_overview.png \
+	figures/conf_overview.png \
+	figures/video_overview.png
 
 HELP_FILES = \
 	account-irc.page \
@@ -46,6 +49,7 @@ HELP_FILES = \
 	irc-start-conversation.page \
 	license.page \
 	link-contacts.page \
+	overview.page \
 	prev-conv.page \
 	prob-conn-acctdisabled.page \
 	prob-conn-auth.page \
