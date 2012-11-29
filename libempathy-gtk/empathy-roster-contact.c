@@ -1,5 +1,7 @@
 #include "config.h"
 
+#include <glib/gi18n-lib.h>
+
 #include "empathy-roster-contact.h"
 
 #include <telepathy-glib/telepathy-glib.h>
@@ -204,7 +206,25 @@ update_presence_msg (EmpathyRosterContact *self)
     }
   else
     {
-      gtk_label_set_text (GTK_LABEL (self->priv->presence_msg), msg);
+      FolksPresenceType type;
+
+      type = folks_presence_details_get_presence_type (
+          FOLKS_PRESENCE_DETAILS (self->priv->individual));
+      if (type == FOLKS_PRESENCE_TYPE_ERROR)
+        {
+          gchar *tmp;
+
+          /* Add a prefix explaining that something goes wrong when trying to
+           * fetch contact's presence. */
+          tmp = g_strdup_printf (_("Server cannot find contact: %s"), msg);
+          gtk_label_set_text (GTK_LABEL (self->priv->presence_msg), tmp);
+
+          g_free (tmp);
+        }
+      else
+        {
+          gtk_label_set_text (GTK_LABEL (self->priv->presence_msg), msg);
+        }
 
       gtk_alignment_set (GTK_ALIGNMENT (self->priv->first_line_alig),
           0, 0.75, 1, 1);
