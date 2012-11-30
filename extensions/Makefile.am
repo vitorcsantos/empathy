@@ -108,7 +108,17 @@ _gen/cli-misc-body.h _gen/cli-misc.h: _gen/misc.xml \
 		--tp-proxy-api=0.10.0 \
 		$< Emp_Cli _gen/cli-misc
 
-_gen/svc-misc.c _gen/svc-misc.h: _gen/misc.xml \
+# There is no need to execute glib-ginterface-gen.py twice because it
+# generates both the .c and .h files in one shot. Therefore, merely
+# having one of them (say the .c) depend on the other (say the .h) is
+# enough.
+#
+# Moreover, running it twice breaks parallel builds because one
+# glib-ginterface-gen.py process steps on the other.
+
+_gen/svc-misc.c: _gen/svc-misc.h
+
+_gen/svc-misc.h: _gen/misc.xml \
 	$(tools_dir)/glib-ginterface-gen.py
 	$(AM_V_GEN)$(PYTHON) $(tools_dir)/glib-ginterface-gen.py \
 		--filename=_gen/svc-misc \
