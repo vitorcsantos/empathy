@@ -420,6 +420,31 @@ typedef enum
   PAGE_MESSAGE_FLAG_ADD_CONTACT = 1 << 5,
 } PageMessageFlags;
 
+static gboolean
+can_add_contact (EmpathyRosterWindow *self)
+{
+  GList *accounts, *l;
+  gboolean result = FALSE;
+
+  accounts = tp_account_manager_dup_valid_accounts (
+      self->priv->account_manager);
+  for (l = accounts; l != NULL && !result; l = g_list_next (l))
+    {
+      TpAccount *account = TP_ACCOUNT (l->data);
+      TpConnection *conn;
+
+      conn = tp_account_get_connection (account);
+      if (conn == NULL)
+        continue;
+
+      if (tp_connection_get_can_change_contact_list (conn))
+        result = TRUE;
+    }
+
+  g_list_free_full (accounts, g_object_unref);
+  return result;
+}
+
 static void
 display_page_message (EmpathyRosterWindow *self,
     const gchar *msg,
@@ -452,6 +477,10 @@ display_page_message (EmpathyRosterWindow *self,
       (flags & PAGE_MESSAGE_FLAG_SHOW_OFFLINE) != 0);
   gtk_widget_set_visible (self->priv->button_add_contact,
       (flags & PAGE_MESSAGE_FLAG_ADD_CONTACT) != 0);
+
+  if ((flags & PAGE_MESSAGE_FLAG_ADD_CONTACT) != 0)
+    gtk_widget_set_sensitive (self->priv->button_add_contact,
+        can_add_contact (self));
 
   gtk_notebook_set_current_page (GTK_NOTEBOOK (self->priv->notebook),
       PAGE_MESSAGE);
@@ -738,6 +767,7 @@ roster_window_update_status (EmpathyRosterWindow *self)
 {
   gboolean connected, connecting;
   GList *l;
+  GAction *action;
 
   connected = empathy_account_manager_get_accounts_connected (&connecting);
 
@@ -756,6 +786,10 @@ roster_window_update_status (EmpathyRosterWindow *self)
   /* Update widgets sensibility */
   for (l = self->priv->actions_connected; l; l = l->next)
     g_simple_action_set_enabled (l->data, connected);
+
+  action = g_action_map_lookup_action (G_ACTION_MAP (self), "chat_add_contact");
+  if (!can_add_contact (self))
+    g_simple_action_set_enabled (G_SIMPLE_ACTION (action), FALSE);
 }
 
 static void
