@@ -98,6 +98,8 @@
 /* The roundedness of preview box and placeholders */
 #define PREVIEW_ROUND_FACTOR 16
 
+#define PREVIEW_BUTTON_OPACITY 180
+
 G_DEFINE_TYPE(EmpathyCallWindow, empathy_call_window, GTK_TYPE_WINDOW)
 
 enum {
@@ -633,7 +635,8 @@ empathy_call_window_camera_removed_cb (EmpathyCameraMonitor *monitor,
 }
 
 static void
-empathy_call_window_preview_button_clicked_cb (GtkButton *button,
+empathy_call_window_preview_button_clicked_cb (ClutterClickAction *action,
+    ClutterActor *actor,
     EmpathyCallWindow *self)
 {
   GtkWidget *menu;
@@ -646,7 +649,9 @@ empathy_call_window_preview_button_clicked_cb (GtkButton *button,
 }
 
 static void
-empathy_call_window_preview_hidden_button_clicked_cb (GtkButton *button,
+empathy_call_window_preview_hidden_button_clicked_cb (
+    ClutterClickAction *action,
+    ClutterActor *actor,
     EmpathyCallWindow *self)
 {
   GtkWidget *menu;
@@ -1074,7 +1079,6 @@ create_video_preview (EmpathyCallWindow *self)
   ClutterActor *preview;
   ClutterActor *b;
   ClutterAction *action;
-  GtkWidget *button;
   PreviewPosition pos;
 
   g_assert (priv->video_preview == NULL);
@@ -1126,27 +1130,27 @@ create_video_preview (EmpathyCallWindow *self)
       "async", FALSE,
       NULL);
 
-  /* Translators: this is an "Info" label. It should be as short
-   * as possible. */
-  button = gtk_button_new_with_label (_("i"));
-  priv->preview_shown_button = b = gtk_clutter_actor_new_with_contents (button);
-  clutter_actor_set_size (b, 24, 24);
+  /* Preview show */
+  priv->preview_shown_button = b = gtk_clutter_actor_new_with_contents (
+      gtk_image_new_from_icon_name ("emblem-system-symbolic",
+        GTK_ICON_SIZE_MENU));
   clutter_actor_set_margin_right (b, 4);
   clutter_actor_set_margin_bottom (b, 2);
+  clutter_actor_set_opacity (b, PREVIEW_BUTTON_OPACITY);
   make_background_transparent (GTK_CLUTTER_ACTOR (b));
 
   clutter_bin_layout_add (CLUTTER_BIN_LAYOUT (layout), b,
       CLUTTER_BIN_ALIGNMENT_END, CLUTTER_BIN_ALIGNMENT_END);
 
-  g_signal_connect (button, "clicked",
-      G_CALLBACK (empathy_call_window_preview_button_clicked_cb),
-      self);
+  action = clutter_click_action_new ();
+  clutter_actor_add_action (b, action);
+  g_signal_connect (action, "clicked",
+      G_CALLBACK (empathy_call_window_preview_button_clicked_cb), self);
 
-  /* Translators: this is an "Info" label. It should be as short
-   * as possible. */
-  button = gtk_button_new_with_label (_("i"));
-  priv->preview_hidden_button = b = gtk_clutter_actor_new_with_contents (button);
-  clutter_actor_set_size (b, 24, 24);
+  /* Preview hidden */
+  priv->preview_hidden_button = b = gtk_clutter_actor_new_with_contents (
+      gtk_image_new_from_icon_name ("emblem-system-symbolic",
+        GTK_ICON_SIZE_MENU));
   make_background_transparent (GTK_CLUTTER_ACTOR (b));
 
   clutter_bin_layout_add (CLUTTER_BIN_LAYOUT (priv->preview_layout),
@@ -1158,9 +1162,10 @@ create_video_preview (EmpathyCallWindow *self)
 
   clutter_actor_hide (priv->preview_hidden_button);
 
-  g_signal_connect (button, "clicked",
-      G_CALLBACK (empathy_call_window_preview_hidden_button_clicked_cb),
-      self);
+  action = clutter_click_action_new ();
+  clutter_actor_add_action (b, action);
+  g_signal_connect (action, "clicked",
+      G_CALLBACK (empathy_call_window_preview_hidden_button_clicked_cb), self);
 
   clutter_bin_layout_add (CLUTTER_BIN_LAYOUT (priv->preview_layout),
       priv->video_preview,
