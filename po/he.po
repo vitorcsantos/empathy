@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: empathy\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-09 12:00+0200\n"
-"PO-Revision-Date: 2012-11-09 12:04+0200\n"
+"POT-Creation-Date: 2012-12-26 19:56+0200\n"
+"PO-Revision-Date: 2012-12-26 19:58+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -714,12 +714,12 @@ msgstr "אנשים בקרבתי"
 msgid "Yahoo! Japan"
 msgstr "‏Yahoo! יפן"
 
-#: ../libempathy/empathy-utils.c:531
-#: ../src/empathy-roster-window.c:619
+#: ../libempathy/empathy-utils.c:538
+#: ../src/empathy-roster-window.c:671
 msgid "Google Talk"
 msgstr "Google Talk"
 
-#: ../libempathy/empathy-utils.c:532
+#: ../libempathy/empathy-utils.c:539
 msgid "Facebook Chat"
 msgstr "צ׳אט Facebook"
 
@@ -1564,8 +1564,8 @@ msgstr "‏%s נודע כעת בכינוי %s"
 #: ../libempathy-gtk/empathy-chat.c:2989
 #: ../src/empathy-call-window.c:1532
 #: ../src/empathy-call-window.c:1582
-#: ../src/empathy-call-window.c:2648
-#: ../src/empathy-call-window.c:2954
+#: ../src/empathy-call-window.c:2655
+#: ../src/empathy-call-window.c:2961
 #: ../src/empathy-event-manager.c:1166
 msgid "Disconnected"
 msgstr "מנותק"
@@ -2572,12 +2572,12 @@ msgstr "_סירוב"
 msgid "_Accept"
 msgstr "_קבלה"
 
-#: ../libempathy-gtk/empathy-theme-adium.c:1125
+#: ../libempathy-gtk/empathy-theme-adium.c:1101
 #, c-format
 msgid "Message edited at %s"
 msgstr "ההודעה נערכה ב־%s"
 
-#: ../libempathy-gtk/empathy-theme-adium.c:1841
+#: ../libempathy-gtk/empathy-theme-adium.c:1801
 msgid "Normal"
 msgstr "רגיל"
 
@@ -2686,14 +2686,19 @@ msgid "<b>Personal Details</b>"
 msgstr "<b>פרטים אישיים</b>"
 
 #. Copy Link Address menu item
-#: ../libempathy-gtk/empathy-webkit-utils.c:278
+#: ../libempathy-gtk/empathy-webkit-utils.c:284
 msgid "_Copy Link Address"
 msgstr "העתקת _מיקום הקישור"
 
 #. Open Link menu item
-#: ../libempathy-gtk/empathy-webkit-utils.c:285
+#: ../libempathy-gtk/empathy-webkit-utils.c:291
 msgid "_Open Link"
 msgstr "_פתיחת קישור"
+
+#. Inspector
+#: ../libempathy-gtk/empathy-webkit-utils.c:305
+msgid "Inspect HTML"
+msgstr "ניתוח ה־HTML"
 
 #: ../libempathy-gtk/totem-subtitle-encoding.c:158
 msgid "Current Locale"
@@ -2869,6 +2874,13 @@ msgstr "אנשי קשר מובילים"
 #: ../libempathy-gtk/empathy-roster-model.h:31
 msgid "Ungrouped"
 msgstr "ללא קבוצה"
+
+#. Add a prefix explaining that something goes wrong when trying to
+#. * fetch contact's presence.
+#: ../libempathy-gtk/empathy-roster-contact.c:219
+#, c-format
+msgid "Server cannot find contact: %s"
+msgstr "השרת לא יכול למצוא את איש הקשר: %s"
 
 #: ../nautilus-sendto-plugin/empathy-nautilus-sendto.c:231
 msgid "No error message"
@@ -3166,86 +3178,86 @@ msgstr "כתובת ה־IP של קבוצת התשדורת"
 msgid "Unknown"
 msgstr "לא ידוע"
 
-#: ../src/empathy-call-window.c:2952
+#: ../src/empathy-call-window.c:2959
 msgid "On hold"
 msgstr "בהמתנה"
 
-#: ../src/empathy-call-window.c:2956
+#: ../src/empathy-call-window.c:2963
 msgid "Mute"
 msgstr "השתק"
 
-#: ../src/empathy-call-window.c:2958
+#: ../src/empathy-call-window.c:2965
 msgid "Duration"
 msgstr "משך"
 
 #. Translators: 'status - minutes:seconds' the caller has been connected
-#: ../src/empathy-call-window.c:2961
+#: ../src/empathy-call-window.c:2968
 #, c-format
 msgid "%s — %d:%02dm"
 msgstr "%s — %d:%02d דק׳"
 
-#: ../src/empathy-call-window.c:3057
+#: ../src/empathy-call-window.c:3064
 msgid "Technical Details"
 msgstr "פרטים טכניים"
 
-#: ../src/empathy-call-window.c:3096
+#: ../src/empathy-call-window.c:3103
 #, c-format
 msgid "%s's software does not understand any of the audio formats supported by your computer"
 msgstr "התכנה של %s אינה מבינה את מבני השמע הנתמכים על ידי המחשב שלך"
 
-#: ../src/empathy-call-window.c:3101
+#: ../src/empathy-call-window.c:3108
 #, c-format
 msgid "%s's software does not understand any of the video formats supported by your computer"
 msgstr "התכנה של %s אינה מבינה את מבני הווידאו הנתמכים על ידי המחשב שלך"
 
-#: ../src/empathy-call-window.c:3107
+#: ../src/empathy-call-window.c:3114
 #, c-format
 msgid "Can't establish a connection to %s. One of you might be on a network that does not allow direct connections."
 msgstr "לא ניתן להפעיל את החיבור אל %s. כנראה אחד ממשתתפי השיחה מחובר לרשת שאינה מאפשרת חיבורים ישירים."
 
-#: ../src/empathy-call-window.c:3113
+#: ../src/empathy-call-window.c:3120
 msgid "There was a failure on the network"
 msgstr "אירעה שגיאה ברשת"
 
-#: ../src/empathy-call-window.c:3117
+#: ../src/empathy-call-window.c:3124
 msgid "The audio formats necessary for this call are not installed on your computer"
 msgstr "מבני השמע הדרושים לקיום שיחה זו אינם מותקנים במחשבך"
 
-#: ../src/empathy-call-window.c:3120
+#: ../src/empathy-call-window.c:3127
 msgid "The video formats necessary for this call are not installed on your computer"
 msgstr "מבני הווידאו הדרושים לקיום שיחה זו אינם מותקנים במחשבך"
 
-#: ../src/empathy-call-window.c:3132
+#: ../src/empathy-call-window.c:3139
 #, c-format
 msgid "Something unexpected happened in a Telepathy component. Please <a href=\"%s\">report this bug</a> and attach logs gathered from the 'Debug' window in the Help menu."
 msgstr "משהו בלתי צפוי ארע ברכיב של Telepathy. נא <a href=\"%s\">לדווח על באג זה</a> ולהוסיף דוחות שנאספו מחלון 'ניפוי השגיאות' שבתפריט העזרה."
 
-#: ../src/empathy-call-window.c:3141
+#: ../src/empathy-call-window.c:3148
 msgid "There was a failure in the call engine"
 msgstr "אירעה שגיאה במנוע הקריאה"
 
-#: ../src/empathy-call-window.c:3144
+#: ../src/empathy-call-window.c:3151
 msgid "The end of the stream was reached"
 msgstr "התזרים הגיע לסיומו"
 
-#: ../src/empathy-call-window.c:3184
+#: ../src/empathy-call-window.c:3191
 msgid "Can't establish audio stream"
 msgstr "לא ניתן לקיים תזרים שמע"
 
-#: ../src/empathy-call-window.c:3194
+#: ../src/empathy-call-window.c:3201
 msgid "Can't establish video stream"
 msgstr "לא ניתן לקיים תזרים וידאו"
 
-#: ../src/empathy-call-window.c:3231
+#: ../src/empathy-call-window.c:3238
 #, c-format
 msgid "Your current balance is %s."
 msgstr "המאזן הנוכחי שלך הוא %s."
 
-#: ../src/empathy-call-window.c:3235
+#: ../src/empathy-call-window.c:3242
 msgid "Sorry, you don’t have enough credit for that call."
 msgstr "אין לך מספיק אשראי כדי לבצע שיחה זו."
 
-#: ../src/empathy-call-window.c:3237
+#: ../src/empathy-call-window.c:3244
 msgid "Top Up"
 msgstr "Top Up"
 
@@ -3680,7 +3692,7 @@ msgid "Incoming file transfer from %s"
 msgstr "העברת קבצים נכנסת מ־%s"
 
 #: ../src/empathy-event-manager.c:973
-#: ../src/empathy-roster-window.c:225
+#: ../src/empathy-roster-window.c:227
 msgid "Password required"
 msgstr "נדרשת ססמה"
 
@@ -4022,7 +4034,7 @@ msgid "Show account balances"
 msgstr "הצגת מאזני החשבונות"
 
 #: ../src/empathy-preferences.ui.h:4
-#: ../src/empathy-roster-window.c:2166
+#: ../src/empathy-roster-window.c:2236
 msgid "Contact List"
 msgstr "רשימת אנשי קשר"
 
@@ -4171,80 +4183,84 @@ msgstr "הגוון:"
 msgid "Themes"
 msgstr "ערכות נושא"
 
-#: ../src/empathy-roster-window.c:242
+#: ../src/empathy-roster-window.c:244
 msgid "Provide Password"
 msgstr "הזנת ססמה"
 
-#: ../src/empathy-roster-window.c:248
+#: ../src/empathy-roster-window.c:250
 msgid "Disconnect"
 msgstr "ניתוק"
 
-#: ../src/empathy-roster-window.c:441
+#: ../src/empathy-roster-window.c:493
 msgid "You need to setup an account to see contacts here."
 msgstr "עליך להגדיר חשבון כדי שיופיעו כאן אנשי קשר."
 
-#: ../src/empathy-roster-window.c:517
+#: ../src/empathy-roster-window.c:569
 #, c-format
 msgid "Sorry, %s accounts can’t be used until your %s software is updated."
 msgstr "לא ניתן להשתמש בחשבונות %s עד שהתכנה %s תעודכן, עמך הסליחה."
 
-#: ../src/empathy-roster-window.c:617
+#: ../src/empathy-roster-window.c:669
 msgid "Windows Live"
 msgstr "Windows Live"
 
-#: ../src/empathy-roster-window.c:621
+#: ../src/empathy-roster-window.c:673
 msgid "Facebook"
 msgstr "Facebook"
 
 #. translators: %s is an account name like 'Facebook' or 'Google Talk'
-#: ../src/empathy-roster-window.c:636
+#: ../src/empathy-roster-window.c:688
 #, c-format
 msgid "%s account requires authorisation"
 msgstr "חשבון ה־%s דורש אימות"
 
-#: ../src/empathy-roster-window.c:647
+#: ../src/empathy-roster-window.c:699
 msgid "Online Accounts"
 msgstr "חשבונות מקוונים"
 
-#: ../src/empathy-roster-window.c:694
+#: ../src/empathy-roster-window.c:746
 msgid "Update software..."
 msgstr "עדכון התכנה..."
 
-#: ../src/empathy-roster-window.c:700
+#: ../src/empathy-roster-window.c:752
 msgid "Reconnect"
 msgstr "התחברות מחדש"
 
-#: ../src/empathy-roster-window.c:704
+#: ../src/empathy-roster-window.c:756
 msgid "Edit Account"
 msgstr "עריכת חשבון"
 
-#: ../src/empathy-roster-window.c:709
+#: ../src/empathy-roster-window.c:761
 msgid "Close"
 msgstr "סגירה"
 
-#: ../src/empathy-roster-window.c:846
+#: ../src/empathy-roster-window.c:903
 msgid "Top up account"
 msgstr "חשבון Top up"
 
-#: ../src/empathy-roster-window.c:1528
+#: ../src/empathy-roster-window.c:1585
 msgid "You need to enable one of your accounts to see contacts here."
 msgstr "עליך להפעיל את אחד החשבונות שלך כדי שיופיעו כאן אנשי קשר."
 
 #. translators: argument is an account name
-#: ../src/empathy-roster-window.c:1536
+#: ../src/empathy-roster-window.c:1593
 #, c-format
 msgid "You need to enable %s to see contacts here."
 msgstr "עליך להפעיל את %s כדי שיופיעו כאן אנשי קשר."
 
-#: ../src/empathy-roster-window.c:1614
+#: ../src/empathy-roster-window.c:1671
 msgid "Change your presence to see contacts here"
 msgstr "שינוי הנוכחות שלך כדי לצפות באנשי קשר להלן"
 
-#: ../src/empathy-roster-window.c:1623
+#: ../src/empathy-roster-window.c:1680
 msgid "No match found"
 msgstr "לא נמצאה התאמה"
 
-#: ../src/empathy-roster-window.c:1628
+#: ../src/empathy-roster-window.c:1687
+msgid "You haven't added any contact yet"
+msgstr "לא הוספת אנשי קשר עדיין"
+
+#: ../src/empathy-roster-window.c:1690
 msgid "No online contacts"
 msgstr "אין אנשי קשר מחוברים"
 
@@ -4320,6 +4336,14 @@ msgstr "הגדרות החשבון"
 #: ../src/empathy-roster-window.ui.h:2
 msgid "Go _Online"
 msgstr "הת_חברות"
+
+#: ../src/empathy-roster-window.ui.h:3
+msgid "Show _Offline Contacts"
+msgstr "הצגת אנשי קשר שאינם מחוברים"
+
+#: ../src/empathy-roster-window.ui.h:4
+msgid "_Add Contact..."
+msgstr "הוספת _איש קשר..."
 
 #: ../src/empathy-status-icon.ui.h:2
 msgid "_New Conversation…"
@@ -4768,9 +4792,6 @@ msgstr "שילוב חשבונות המסרים המידיים שלך"
 
 #~ msgid "Favorite People"
 #~ msgstr "אנשים מועדפים"
-
-#~ msgid "Select a contact"
-#~ msgstr "בחירת איש קשר"
 
 #~ msgid "Contact ID:"
 #~ msgstr "מזהה איש הקשר:"
