@@ -126,6 +126,7 @@ struct _EmpathyRosterWindowPriv {
   GtkWidget *button_account_settings;
   GtkWidget *button_online;
   GtkWidget *button_show_offline;
+  GtkWidget *button_add_contact;
   GtkWidget *spinner_loading;
   GtkWidget *tooltip_widget;
 
@@ -402,6 +403,13 @@ button_show_offline_clicked_cb (GtkButton *button,
       EMPATHY_PREFS_UI_SHOW_OFFLINE, TRUE);
 }
 
+static void
+button_add_contact_clicked_cb (GtkButton *button,
+    EmpathyRosterWindow *self)
+{
+  empathy_new_individual_dialog_show (GTK_WINDOW (self));
+}
+
 typedef enum
 {
   PAGE_MESSAGE_FLAG_NONE = 0,
@@ -409,6 +417,7 @@ typedef enum
   PAGE_MESSAGE_FLAG_SPINNER = 1 << 2,
   PAGE_MESSAGE_FLAG_ONLINE = 1 << 3,
   PAGE_MESSAGE_FLAG_SHOW_OFFLINE = 1 << 4,
+  PAGE_MESSAGE_FLAG_ADD_CONTACT = 1 << 5,
 } PageMessageFlags;
 
 static void
@@ -441,6 +450,8 @@ display_page_message (EmpathyRosterWindow *self,
       (flags & PAGE_MESSAGE_FLAG_ONLINE) != 0);
   gtk_widget_set_visible (self->priv->button_show_offline,
       (flags & PAGE_MESSAGE_FLAG_SHOW_OFFLINE) != 0);
+  gtk_widget_set_visible (self->priv->button_add_contact,
+      (flags & PAGE_MESSAGE_FLAG_ADD_CONTACT) != 0);
 
   gtk_notebook_set_current_page (GTK_NOTEBOOK (self->priv->notebook),
       PAGE_MESSAGE);
@@ -1640,7 +1651,7 @@ set_notebook_page (EmpathyRosterWindow *self)
           if (g_settings_get_boolean (self->priv->gsettings_ui,
                 EMPATHY_PREFS_UI_SHOW_OFFLINE))
             display_page_message (self, _("You haven't added any contact yet"),
-                PAGE_MESSAGE_FLAG_NONE);
+                PAGE_MESSAGE_FLAG_ADD_CONTACT);
           else
             display_page_message (self, _("No online contacts"),
                 PAGE_MESSAGE_FLAG_SHOW_OFFLINE);
@@ -2211,6 +2222,7 @@ empathy_roster_window_init (EmpathyRosterWindow *self)
       "button_account_settings", &self->priv->button_account_settings,
       "button_online", &self->priv->button_online,
       "button_show_offline", &self->priv->button_show_offline,
+      "button_add_contact", &self->priv->button_add_contact,
       "spinner_loading", &self->priv->spinner_loading,
       NULL);
   g_free (filename);
@@ -2378,6 +2390,8 @@ empathy_roster_window_init (EmpathyRosterWindow *self)
       G_CALLBACK (button_online_clicked_cb), self);
   g_signal_connect (self->priv->button_show_offline, "clicked",
       G_CALLBACK (button_show_offline_clicked_cb), self);
+  g_signal_connect (self->priv->button_add_contact, "clicked",
+      G_CALLBACK (button_add_contact_clicked_cb), self);
 }
 
 GtkWidget *
