@@ -57,11 +57,12 @@ AC_DEFINE(TP_VERSION_MAX_ALLOWED, TP_VERSION_0_20, [Prevent post 0.20 APIs])
 AC_DEFINE(TP_SEAL_ENABLE, 1, [Prevent to use sealed variables])
 
 GSTREAMER_REQUIRED=0.10.32
+TP_FS_REQUIRED=0.6.0
 LIBSECRET_REQUIRED=0.5
 GCR_REQUIRED=2.91.4
 LIBCANBERRA_GTK_REQUIRED=0.25
 LIBNOTIFY_REQUIRED=0.7.0
-TELEPATHY_LOGGER=0.2.13
+TELEPATHY_LOGGER=0.6.0
 WEBKIT_REQUIRED=1.9.1
 GOA_REQUIRED=3.5.1
 
@@ -232,7 +233,7 @@ if test "x$enable_gst1" != "xno"; then
   PKG_CHECK_MODULES(EMPATHY_CALL,
   [
      farstream-0.2
-     telepathy-farstream >= 0.4.999
+     telepathy-farstream >= $TP_FS_REQUIRED
      clutter-1.0 >= $CLUTTER_REQUIRED
      clutter-gtk-1.0 >= $CLUTTER_GTK_REQUIRED
      clutter-gst-2.0
