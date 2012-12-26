@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: empathy\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-16 04:24+0100\n"
-"PO-Revision-Date: 2012-12-16 04:25+0100\n"
+"POT-Creation-Date: 2012-12-26 19:57+0100\n"
+"PO-Revision-Date: 2012-12-26 19:58+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -794,7 +794,7 @@ msgstr "Osoby w pobliżu"
 msgid "Yahoo! Japan"
 msgstr "Yahoo! Japonia"
 
-#: ../libempathy/empathy-utils.c:538 ../src/empathy-roster-window.c:619
+#: ../libempathy/empathy-utils.c:538 ../src/empathy-roster-window.c:671
 msgid "Google Talk"
 msgstr "Google Talk"
 
@@ -2695,12 +2695,12 @@ msgstr "_Odmów"
 msgid "_Accept"
 msgstr "Z_aakceptuj"
 
-#: ../libempathy-gtk/empathy-theme-adium.c:1125
+#: ../libempathy-gtk/empathy-theme-adium.c:1101
 #, c-format
 msgid "Message edited at %s"
 msgstr "Zmodyfikowano wiadomość o %s"
 
-#: ../libempathy-gtk/empathy-theme-adium.c:1841
+#: ../libempathy-gtk/empathy-theme-adium.c:1801
 msgid "Normal"
 msgstr "Zwykły"
 
@@ -2816,14 +2816,19 @@ msgid "<b>Personal Details</b>"
 msgstr "<b>Szczegóły osobiste</b>"
 
 #. Copy Link Address menu item
-#: ../libempathy-gtk/empathy-webkit-utils.c:278
+#: ../libempathy-gtk/empathy-webkit-utils.c:284
 msgid "_Copy Link Address"
 msgstr "S_kopiuj adres odnośnika"
 
 #. Open Link menu item
-#: ../libempathy-gtk/empathy-webkit-utils.c:285
+#: ../libempathy-gtk/empathy-webkit-utils.c:291
 msgid "_Open Link"
 msgstr "_Otwórz odnośnik"
+
+#. Inspector
+#: ../libempathy-gtk/empathy-webkit-utils.c:305
+msgid "Inspect HTML"
+msgstr "Zbadaj kod HTML"
 
 #: ../libempathy-gtk/totem-subtitle-encoding.c:158
 msgid "Current Locale"
@@ -2999,6 +3004,13 @@ msgstr "Najczęściej używane kontakty"
 #: ../libempathy-gtk/empathy-roster-model.h:31
 msgid "Ungrouped"
 msgstr "Kontakty bez grup"
+
+#. Add a prefix explaining that something goes wrong when trying to
+#. * fetch contact's presence.
+#: ../libempathy-gtk/empathy-roster-contact.c:219
+#, c-format
+msgid "Server cannot find contact: %s"
+msgstr "Serwer nie może odnaleźć kontaktu: %s"
 
 #: ../nautilus-sendto-plugin/empathy-nautilus-sendto.c:231
 msgid "No error message"
@@ -3896,7 +3908,7 @@ msgstr "Zaproszono użytkownika do dołączenia do %s"
 msgid "Incoming file transfer from %s"
 msgstr "Plik przychodzący od użytkownika %s"
 
-#: ../src/empathy-event-manager.c:973 ../src/empathy-roster-window.c:225
+#: ../src/empathy-event-manager.c:973 ../src/empathy-roster-window.c:227
 msgid "Password required"
 msgstr "Hasło wymagane"
 
@@ -4249,7 +4261,7 @@ msgstr "Wyświetlanie grup"
 msgid "Show account balances"
 msgstr "Wyświetlanie salda konta"
 
-#: ../src/empathy-preferences.ui.h:4 ../src/empathy-roster-window.c:2166
+#: ../src/empathy-preferences.ui.h:4 ../src/empathy-roster-window.c:2236
 msgid "Contact List"
 msgstr "Lista kontaktów"
 
@@ -4414,82 +4426,86 @@ msgstr "Wariant:"
 msgid "Themes"
 msgstr "Motywy"
 
-#: ../src/empathy-roster-window.c:242
+#: ../src/empathy-roster-window.c:244
 msgid "Provide Password"
 msgstr "Wprowadź hasło"
 
-#: ../src/empathy-roster-window.c:248
+#: ../src/empathy-roster-window.c:250
 msgid "Disconnect"
 msgstr "Rozłącz"
 
-#: ../src/empathy-roster-window.c:441
+#: ../src/empathy-roster-window.c:493
 msgid "You need to setup an account to see contacts here."
 msgstr "Należy ustawić konto, aby wyświetlić kontakty."
 
-#: ../src/empathy-roster-window.c:517
+#: ../src/empathy-roster-window.c:569
 #, c-format
 msgid "Sorry, %s accounts can’t be used until your %s software is updated."
 msgstr ""
 "Konta %s nie mogą być używane, dopóki oprogramowanie %s nie zostanie "
 "zaktualizowane."
 
-#: ../src/empathy-roster-window.c:617
+#: ../src/empathy-roster-window.c:669
 msgid "Windows Live"
 msgstr "Windows Live"
 
-#: ../src/empathy-roster-window.c:621
+#: ../src/empathy-roster-window.c:673
 msgid "Facebook"
 msgstr "Facebook"
 
 #. translators: %s is an account name like 'Facebook' or 'Google Talk'
-#: ../src/empathy-roster-window.c:636
+#: ../src/empathy-roster-window.c:688
 #, c-format
 msgid "%s account requires authorisation"
 msgstr "Konto serwisu %s wymaga upoważnienia"
 
-#: ../src/empathy-roster-window.c:647
+#: ../src/empathy-roster-window.c:699
 msgid "Online Accounts"
 msgstr "Konta online"
 
-#: ../src/empathy-roster-window.c:694
+#: ../src/empathy-roster-window.c:746
 msgid "Update software..."
 msgstr "Zaktualizuj oprogramowanie..."
 
-#: ../src/empathy-roster-window.c:700
+#: ../src/empathy-roster-window.c:752
 msgid "Reconnect"
 msgstr "Połącz ponownie"
 
-#: ../src/empathy-roster-window.c:704
+#: ../src/empathy-roster-window.c:756
 msgid "Edit Account"
 msgstr "Modyfikuj konto"
 
-#: ../src/empathy-roster-window.c:709
+#: ../src/empathy-roster-window.c:761
 msgid "Close"
 msgstr "Zamknij"
 
-#: ../src/empathy-roster-window.c:846
+#: ../src/empathy-roster-window.c:903
 msgid "Top up account"
 msgstr "Doładuj konto"
 
-#: ../src/empathy-roster-window.c:1528
+#: ../src/empathy-roster-window.c:1585
 msgid "You need to enable one of your accounts to see contacts here."
 msgstr "Należy włączyć jedno z kont, aby wyświetlić kontakty."
 
 #. translators: argument is an account name
-#: ../src/empathy-roster-window.c:1536
+#: ../src/empathy-roster-window.c:1593
 #, c-format
 msgid "You need to enable %s to see contacts here."
 msgstr "Należy włączyć konto %s, aby wyświetlić kontakty."
 
-#: ../src/empathy-roster-window.c:1614
+#: ../src/empathy-roster-window.c:1671
 msgid "Change your presence to see contacts here"
 msgstr "Należy zmienić stan, aby wyświetlić kontakty"
 
-#: ../src/empathy-roster-window.c:1623
+#: ../src/empathy-roster-window.c:1680
 msgid "No match found"
 msgstr "Nie odnaleziono wyników"
 
-#: ../src/empathy-roster-window.c:1628
+#: ../src/empathy-roster-window.c:1687
+msgid "You haven't added any contact yet"
+msgstr "Nie dodano jeszcze żadnych kontaktów"
+
+#: ../src/empathy-roster-window.c:1690
 msgid "No online contacts"
 msgstr "Brak kontaktów w trybie online"
 
@@ -4565,6 +4581,14 @@ msgstr "Ustawienia konta"
 #: ../src/empathy-roster-window.ui.h:2
 msgid "Go _Online"
 msgstr "Przejdź do trybu _online"
+
+#: ../src/empathy-roster-window.ui.h:3
+msgid "Show _Offline Contacts"
+msgstr "Wyświetl kontakty w trybie _offline"
+
+#: ../src/empathy-roster-window.ui.h:4
+msgid "_Add Contact..."
+msgstr "_Dodaj kontakt..."
 
 #: ../src/empathy-status-icon.ui.h:2
 msgid "_New Conversation…"
