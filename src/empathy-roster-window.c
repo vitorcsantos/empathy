@@ -1625,8 +1625,13 @@ set_notebook_page (EmpathyRosterWindow *self)
         }
       else
         {
-          display_page_message (self, _("No online contacts"),
-              PAGE_MESSAGE_FLAG_NONE);
+          if (g_settings_get_boolean (self->priv->gsettings_ui,
+                EMPATHY_PREFS_UI_SHOW_OFFLINE))
+            display_page_message (self, _("You haven't added any contact yet"),
+                PAGE_MESSAGE_FLAG_NONE);
+          else
+            display_page_message (self, _("No online contacts"),
+                PAGE_MESSAGE_FLAG_NONE);
         }
       goto out;
     }
