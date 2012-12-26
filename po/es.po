@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: empathy.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=empathy&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2012-12-26 09:08+0000\n"
-"PO-Revision-Date: 2012-12-26 11:47+0100\n"
+"POT-Creation-Date: 2012-12-26 11:21+0000\n"
+"PO-Revision-Date: 2012-12-26 12:21+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -806,7 +806,7 @@ msgstr "Gente cerca"
 msgid "Yahoo! Japan"
 msgstr "Yahoo Japón"
 
-#: ../libempathy/empathy-utils.c:538 ../src/empathy-roster-window.c:619
+#: ../libempathy/empathy-utils.c:538 ../src/empathy-roster-window.c:642
 msgid "Google Talk"
 msgstr "Google Talk"
 
@@ -3014,7 +3014,6 @@ msgstr "Sin grupo"
 #. * fetch contact's presence.
 #: ../libempathy-gtk/empathy-roster-contact.c:219
 #, c-format
-#| msgid "Select a contact"
 msgid "Server cannot find contact: %s"
 msgstr "El servidor no puede encontrar el contacto: %s"
 
@@ -3903,7 +3902,7 @@ msgstr "Le han invitado a unirse a %s"
 msgid "Incoming file transfer from %s"
 msgstr "Transferencia de archivo entrante de %s"
 
-#: ../src/empathy-event-manager.c:973 ../src/empathy-roster-window.c:225
+#: ../src/empathy-event-manager.c:973 ../src/empathy-roster-window.c:227
 msgid "Password required"
 msgstr "Se requiere una contraseña"
 
@@ -4258,7 +4257,7 @@ msgstr "Mostrar grupos"
 msgid "Show account balances"
 msgstr "Mostrar los balances de las cuentas"
 
-#: ../src/empathy-preferences.ui.h:4 ../src/empathy-roster-window.c:2166
+#: ../src/empathy-preferences.ui.h:4 ../src/empathy-roster-window.c:2202
 msgid "Contact List"
 msgstr "Lista de contactos"
 
@@ -4425,82 +4424,86 @@ msgstr "Variante:"
 msgid "Themes"
 msgstr "Temas"
 
-#: ../src/empathy-roster-window.c:242
+#: ../src/empathy-roster-window.c:244
 msgid "Provide Password"
 msgstr "Escriba su contraseña"
 
-#: ../src/empathy-roster-window.c:248
+#: ../src/empathy-roster-window.c:250
 msgid "Disconnect"
 msgstr "Desconectar"
 
-#: ../src/empathy-roster-window.c:441
+#: ../src/empathy-roster-window.c:464
 msgid "You need to setup an account to see contacts here."
 msgstr "Debe configurar una cuenta para ver contactos aquí."
 
-#: ../src/empathy-roster-window.c:517
+#: ../src/empathy-roster-window.c:540
 #, c-format
 msgid "Sorry, %s accounts can’t be used until your %s software is updated."
 msgstr ""
 "Las cuentas de %s no se pueden usar hasta que no se haya actualizado su "
 "software de %s."
 
-#: ../src/empathy-roster-window.c:617
+#: ../src/empathy-roster-window.c:640
 msgid "Windows Live"
 msgstr "Windows Live"
 
-#: ../src/empathy-roster-window.c:621
+#: ../src/empathy-roster-window.c:644
 msgid "Facebook"
 msgstr "Facebook"
 
 #. translators: %s is an account name like 'Facebook' or 'Google Talk'
-#: ../src/empathy-roster-window.c:636
+#: ../src/empathy-roster-window.c:659
 #, c-format
 msgid "%s account requires authorisation"
 msgstr "La cuenta de %s requiere autorización"
 
-#: ../src/empathy-roster-window.c:647
+#: ../src/empathy-roster-window.c:670
 msgid "Online Accounts"
 msgstr "Cuentas en línea"
 
-#: ../src/empathy-roster-window.c:694
+#: ../src/empathy-roster-window.c:717
 msgid "Update software..."
 msgstr "Actualizar software…"
 
-#: ../src/empathy-roster-window.c:700
+#: ../src/empathy-roster-window.c:723
 msgid "Reconnect"
 msgstr "Reconectar"
 
-#: ../src/empathy-roster-window.c:704
+#: ../src/empathy-roster-window.c:727
 msgid "Edit Account"
 msgstr "Editar cuenta"
 
-#: ../src/empathy-roster-window.c:709
+#: ../src/empathy-roster-window.c:732
 msgid "Close"
 msgstr "Cerrar"
 
-#: ../src/empathy-roster-window.c:846
+#: ../src/empathy-roster-window.c:869
 msgid "Top up account"
 msgstr "Recargar cuenta"
 
-#: ../src/empathy-roster-window.c:1528
+#: ../src/empathy-roster-window.c:1551
 msgid "You need to enable one of your accounts to see contacts here."
 msgstr "Debe activar una de sus cuentas para ver contactos aquí."
 
 #. translators: argument is an account name
-#: ../src/empathy-roster-window.c:1536
+#: ../src/empathy-roster-window.c:1559
 #, c-format
 msgid "You need to enable %s to see contacts here."
 msgstr "Debe activar %s para ver contactos aquí."
 
-#: ../src/empathy-roster-window.c:1614
+#: ../src/empathy-roster-window.c:1637
 msgid "Change your presence to see contacts here"
 msgstr "Cambie su presencia para ver contactos aquí"
 
-#: ../src/empathy-roster-window.c:1623
+#: ../src/empathy-roster-window.c:1646
 msgid "No match found"
 msgstr "No se encontró ninguna coincidencia"
 
-#: ../src/empathy-roster-window.c:1628
+#: ../src/empathy-roster-window.c:1653
+msgid "You haven't added any contact yet"
+msgstr "Todavía no ha añadido ningún contacto"
+
+#: ../src/empathy-roster-window.c:1656
 msgid "No online contacts"
 msgstr "No hay contactos no conectados"
 
@@ -4577,6 +4580,16 @@ msgstr "Configuración de la cuenta"
 msgid "Go _Online"
 msgstr "Mostrarse _conectado"
 
+#: ../src/empathy-roster-window.ui.h:3
+#| msgid "Show offline contacts"
+msgid "Show _Offline Contacts"
+msgstr "Mostrar contactos _desconectados"
+
+#: ../src/empathy-roster-window.ui.h:4
+#| msgid "_Add Contacts..."
+msgid "_Add Contact..."
+msgstr "_Añadir contacto…"
+
 #: ../src/empathy-status-icon.ui.h:2
 msgid "_New Conversation…"
 msgstr "Conversación _nueva…"
@@ -4606,4 +4619,3 @@ msgstr "Editar las opciones de la cuenta %s"
 #: ../ubuntu-online-accounts/empathy.application.in.h:1
 msgid "Integrate your IM accounts"
 msgstr "Importar sus cuentas de mensajería instantánea"
-
