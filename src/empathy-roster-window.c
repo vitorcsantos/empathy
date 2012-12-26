@@ -125,6 +125,7 @@ struct _EmpathyRosterWindowPriv {
   GtkWidget *no_entry_label;
   GtkWidget *button_account_settings;
   GtkWidget *button_online;
+  GtkWidget *button_show_offline;
   GtkWidget *spinner_loading;
   GtkWidget *tooltip_widget;
 
@@ -393,12 +394,21 @@ button_online_clicked_cb (GtkButton *button,
   g_object_unref (mgr);
 }
 
+static void
+button_show_offline_clicked_cb (GtkButton *button,
+    EmpathyRosterWindow *self)
+{
+  g_settings_set_boolean (self->priv->gsettings_ui,
+      EMPATHY_PREFS_UI_SHOW_OFFLINE, TRUE);
+}
+
 typedef enum
 {
   PAGE_MESSAGE_FLAG_NONE = 0,
   PAGE_MESSAGE_FLAG_ACCOUNTS = 1 << 0,
   PAGE_MESSAGE_FLAG_SPINNER = 1 << 2,
   PAGE_MESSAGE_FLAG_ONLINE = 1 << 3,
+  PAGE_MESSAGE_FLAG_SHOW_OFFLINE = 1 << 4,
 } PageMessageFlags;
 
 static void
@@ -429,6 +439,8 @@ display_page_message (EmpathyRosterWindow *self,
       (flags & PAGE_MESSAGE_FLAG_SPINNER) != 0);
   gtk_widget_set_visible (self->priv->button_online,
       (flags & PAGE_MESSAGE_FLAG_ONLINE) != 0);
+  gtk_widget_set_visible (self->priv->button_show_offline,
+      (flags & PAGE_MESSAGE_FLAG_SHOW_OFFLINE) != 0);
 
   gtk_notebook_set_current_page (GTK_NOTEBOOK (self->priv->notebook),
       PAGE_MESSAGE);
@@ -1631,7 +1643,7 @@ set_notebook_page (EmpathyRosterWindow *self)
                 PAGE_MESSAGE_FLAG_NONE);
           else
             display_page_message (self, _("No online contacts"),
-                PAGE_MESSAGE_FLAG_NONE);
+                PAGE_MESSAGE_FLAG_SHOW_OFFLINE);
         }
       goto out;
     }
@@ -2150,6 +2162,14 @@ roster_window_most_available_presence_changed_cb (TpAccountManager *manager,
 }
 
 static void
+show_offline_changed_cb (GSettings *settings,
+    const gchar *key,
+    EmpathyRosterWindow *self)
+{
+  set_notebook_page (self);
+}
+
+static void
 empathy_roster_window_init (EmpathyRosterWindow *self)
 {
   GtkBuilder *gui;
@@ -2190,6 +2210,7 @@ empathy_roster_window_init (EmpathyRosterWindow *self)
       "roster_scrolledwindow", &sw,
       "button_account_settings", &self->priv->button_account_settings,
       "button_online", &self->priv->button_online,
+      "button_show_offline", &self->priv->button_show_offline,
       "spinner_loading", &self->priv->spinner_loading,
       NULL);
   g_free (filename);
@@ -2341,6 +2362,9 @@ empathy_roster_window_init (EmpathyRosterWindow *self)
   g_settings_bind (self->priv->gsettings_ui, EMPATHY_PREFS_UI_SHOW_OFFLINE,
       self->priv->view, "show-offline",
       G_SETTINGS_BIND_GET);
+  tp_g_signal_connect_object (self->priv->gsettings_ui,
+      "changed::" EMPATHY_PREFS_UI_SHOW_OFFLINE,
+      G_CALLBACK (show_offline_changed_cb), self, 0);
   g_settings_bind (self->priv->gsettings_ui, EMPATHY_PREFS_UI_SHOW_GROUPS,
       self->priv->view, "show-groups",
       G_SETTINGS_BIND_GET);
@@ -2352,6 +2376,8 @@ empathy_roster_window_init (EmpathyRosterWindow *self)
       G_CALLBACK (button_account_settings_clicked_cb), self);
   g_signal_connect (self->priv->button_online, "clicked",
       G_CALLBACK (button_online_clicked_cb), self);
+  g_signal_connect (self->priv->button_show_offline, "clicked",
+      G_CALLBACK (button_show_offline_clicked_cb), self);
 }
 
 GtkWidget *
