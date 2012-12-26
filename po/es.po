@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: empathy.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=empathy&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2012-11-15 12:18+0000\n"
-"PO-Revision-Date: 2012-11-20 14:20+0100\n"
+"POT-Creation-Date: 2012-12-26 09:08+0000\n"
+"PO-Revision-Date: 2012-12-26 11:47+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -806,11 +806,11 @@ msgstr "Gente cerca"
 msgid "Yahoo! Japan"
 msgstr "Yahoo Japón"
 
-#: ../libempathy/empathy-utils.c:531 ../src/empathy-roster-window.c:619
+#: ../libempathy/empathy-utils.c:538 ../src/empathy-roster-window.c:619
 msgid "Google Talk"
 msgstr "Google Talk"
 
-#: ../libempathy/empathy-utils.c:532
+#: ../libempathy/empathy-utils.c:539
 msgid "Facebook Chat"
 msgstr "Chat de Facebook"
 
@@ -2699,12 +2699,12 @@ msgstr "_Rechazar"
 msgid "_Accept"
 msgstr "_Aceptar"
 
-#: ../libempathy-gtk/empathy-theme-adium.c:1125
+#: ../libempathy-gtk/empathy-theme-adium.c:1101
 #, c-format
 msgid "Message edited at %s"
 msgstr "Mensaje editado a las %s"
 
-#: ../libempathy-gtk/empathy-theme-adium.c:1841
+#: ../libempathy-gtk/empathy-theme-adium.c:1801
 msgid "Normal"
 msgstr "Normal"
 
@@ -2821,14 +2821,19 @@ msgid "<b>Personal Details</b>"
 msgstr "<b>Detalles personales</b>"
 
 #. Copy Link Address menu item
-#: ../libempathy-gtk/empathy-webkit-utils.c:278
+#: ../libempathy-gtk/empathy-webkit-utils.c:284
 msgid "_Copy Link Address"
 msgstr "_Copiar la dirección del enlace"
 
 #. Open Link menu item
-#: ../libempathy-gtk/empathy-webkit-utils.c:285
+#: ../libempathy-gtk/empathy-webkit-utils.c:291
 msgid "_Open Link"
 msgstr "_Abrir enlace"
+
+#. Inspector
+#: ../libempathy-gtk/empathy-webkit-utils.c:305
+msgid "Inspect HTML"
+msgstr "Inspeccionar HTML"
 
 #: ../libempathy-gtk/totem-subtitle-encoding.c:158
 msgid "Current Locale"
@@ -3004,6 +3009,14 @@ msgstr "Contactos favoritos"
 #: ../libempathy-gtk/empathy-roster-model.h:31
 msgid "Ungrouped"
 msgstr "Sin grupo"
+
+#. Add a prefix explaining that something goes wrong when trying to
+#. * fetch contact's presence.
+#: ../libempathy-gtk/empathy-roster-contact.c:219
+#, c-format
+#| msgid "Select a contact"
+msgid "Server cannot find contact: %s"
+msgstr "El servidor no puede encontrar el contacto: %s"
 
 #: ../nautilus-sendto-plugin/empathy-nautilus-sendto.c:231
 msgid "No error message"
@@ -3248,7 +3261,6 @@ msgstr ""
 "%s"
 
 #: ../src/empathy-call.c:124
-#| msgid "Incoming call"
 msgid "In a call"
 msgstr "En una llamada"
 
@@ -3790,15 +3802,6 @@ msgid "Error"
 msgstr "Error"
 
 #: ../src/empathy-debug-window.c:2030
-#| msgid ""
-#| "Even if they don't display passwords, logs can contain sensible "
-#| "information such as your list of contacts or the messages you recently "
-#| "sent or received.\n"
-#| "If you don't want to see such information available in a public bug "
-#| "report, you can choose to limit the visibility of your bug to Empathy "
-#| "developers when reporting it by displaying the advanced fields in the <a "
-#| "href=\"https://bugzilla.gnome.org/enter_bug.cgi?product=empathy\">bug "
-#| "report</a>."
 msgid ""
 "Even if they don't display passwords, logs can contain sensitive information "
 "such as your list of contacts or the messages you recently sent or "
@@ -5039,9 +5042,6 @@ msgstr "Importar sus cuentas de mensajería instantánea"
 
 #~ msgid "C_all"
 #~ msgstr "_Llamar"
-
-#~ msgid "Select a contact"
-#~ msgstr "Seleccionar un contacto"
 
 #~ msgid "The selected contact cannot receive files."
 #~ msgstr "El contacto seleccionado no puede recibir archivos."
