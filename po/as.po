@@ -8,10 +8,10 @@ msgstr ""
 "Project-Id-Version: empathy gnome-2-28\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=empathy&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2012-11-05 20:00+0000\n"
-"PO-Revision-Date: 2012-11-22 17:26+0530\n"
+"POT-Creation-Date: 2012-12-26 10:30+0000\n"
+"PO-Revision-Date: 2012-12-27 20:55+0530\n"
 "Last-Translator: Nilamdyuti Goswami <ngoswami@redhat.com>\n"
-"Language-Team: as_IN <kde-i18n-doc@kde.org>\n"
+"Language-Team: Assamese <kde-i18n-doc@kde.org>\n"
 "Language: as_IN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -766,11 +766,11 @@ msgstr "ওচৰৰ ব্যক্তিৰ"
 msgid "Yahoo! Japan"
 msgstr "Yahoo! Japan"
 
-#: ../libempathy/empathy-utils.c:531 ../src/empathy-roster-window.c:619
+#: ../libempathy/empathy-utils.c:538 ../src/empathy-roster-window.c:642
 msgid "Google Talk"
 msgstr "Google Talk"
 
-#: ../libempathy/empathy-utils.c:532
+#: ../libempathy/empathy-utils.c:539
 msgid "Facebook Chat"
 msgstr "Facebook Chat"
 
@@ -1631,8 +1631,8 @@ msgstr "%s এতিয়া %s হিচাপে জনাজাত"
 #. * assume it hasn't and if it has, we'll set the proper status when
 #. * we get the new handler.
 #: ../libempathy-gtk/empathy-chat.c:2989 ../src/empathy-call-window.c:1532
-#: ../src/empathy-call-window.c:1582 ../src/empathy-call-window.c:2648
-#: ../src/empathy-call-window.c:2954 ../src/empathy-event-manager.c:1166
+#: ../src/empathy-call-window.c:1582 ../src/empathy-call-window.c:2655
+#: ../src/empathy-call-window.c:2961 ../src/empathy-event-manager.c:1166
 msgid "Disconnected"
 msgstr "বিচ্ছিন্ন"
 
@@ -2661,12 +2661,12 @@ msgstr "প্ৰত্যাখ্যান কৰক (_D)"
 msgid "_Accept"
 msgstr "গ্ৰহন কৰক (_A)"
 
-#: ../libempathy-gtk/empathy-theme-adium.c:1125
+#: ../libempathy-gtk/empathy-theme-adium.c:1101
 #, c-format
 msgid "Message edited at %s"
 msgstr "বাৰ্তা %s ত সম্পাদনা কৰা হৈছে"
 
-#: ../libempathy-gtk/empathy-theme-adium.c:1841
+#: ../libempathy-gtk/empathy-theme-adium.c:1801
 msgid "Normal"
 msgstr "স্বাভাৱিক"
 
@@ -2782,14 +2782,19 @@ msgid "<b>Personal Details</b>"
 msgstr "<b>ব্যক্তিগত বিৱৰণসমূহ</b>"
 
 #. Copy Link Address menu item
-#: ../libempathy-gtk/empathy-webkit-utils.c:278
+#: ../libempathy-gtk/empathy-webkit-utils.c:284
 msgid "_Copy Link Address"
 msgstr "লিঙ্ক দ্বাৰা চিহ্নিত ঠিকনা নকল কৰক (_C)"
 
 #. Open Link menu item
-#: ../libempathy-gtk/empathy-webkit-utils.c:285
+#: ../libempathy-gtk/empathy-webkit-utils.c:291
 msgid "_Open Link"
 msgstr "সংযোগ খোলক (_O)"
+
+#. Inspector
+#: ../libempathy-gtk/empathy-webkit-utils.c:305
+msgid "Inspect HTML"
+msgstr "HTML পৰিক্ষা কৰক"
 
 #: ../libempathy-gtk/totem-subtitle-encoding.c:158
 msgid "Current Locale"
@@ -2965,6 +2970,14 @@ msgstr "উচ্চ পৰিচয়সমূহ"
 #: ../libempathy-gtk/empathy-roster-model.h:31
 msgid "Ungrouped"
 msgstr "দলীয় নহয়"
+
+#. Add a prefix explaining that something goes wrong when trying to
+#. * fetch contact's presence.
+#: ../libempathy-gtk/empathy-roster-contact.c:219
+#, c-format
+#| msgid "Select a contact"
+msgid "Server cannot find contact: %s"
+msgstr "চাৰ্ভাৰে পৰিচয় বিচাৰি নাপায়: %s"
 
 #: ../nautilus-sendto-plugin/empathy-nautilus-sendto.c:231
 msgid "No error message"
@@ -3219,7 +3232,6 @@ msgstr ""
 "%s"
 
 #: ../src/empathy-call.c:124
-#| msgid "Incoming call"
 msgid "In a call"
 msgstr "এটা কলত"
 
@@ -3302,29 +3314,29 @@ msgstr "মাল্টিকাস্ট দলৰ IP ঠিকনা"
 msgid "Unknown"
 msgstr "অজ্ঞাত"
 
-#: ../src/empathy-call-window.c:2952
+#: ../src/empathy-call-window.c:2959
 msgid "On hold"
 msgstr "হল্ডত আছে"
 
-#: ../src/empathy-call-window.c:2956
+#: ../src/empathy-call-window.c:2963
 msgid "Mute"
 msgstr "মিউট"
 
-#: ../src/empathy-call-window.c:2958
+#: ../src/empathy-call-window.c:2965
 msgid "Duration"
 msgstr "অবধি"
 
 #. Translators: 'status - minutes:seconds' the caller has been connected
-#: ../src/empathy-call-window.c:2961
+#: ../src/empathy-call-window.c:2968
 #, c-format
 msgid "%s — %d:%02dm"
 msgstr "%s — %d:%02dm"
 
-#: ../src/empathy-call-window.c:3057
+#: ../src/empathy-call-window.c:3064
 msgid "Technical Details"
 msgstr "কাৰিকৰী বিৱৰণসমূহ"
 
-#: ../src/empathy-call-window.c:3096
+#: ../src/empathy-call-window.c:3103
 #, c-format
 msgid ""
 "%s's software does not understand any of the audio formats supported by your "
@@ -3332,7 +3344,7 @@ msgid ""
 msgstr ""
 "%s ৰ চফ্টৱেৰে আপোনাৰ কমপিউটাৰে সমৰ্থন কৰা কোনো অডিঅ' বিন্যাস বুজি নাপায়"
 
-#: ../src/empathy-call-window.c:3101
+#: ../src/empathy-call-window.c:3108
 #, c-format
 msgid ""
 "%s's software does not understand any of the video formats supported by your "
@@ -3340,7 +3352,7 @@ msgid ""
 msgstr ""
 "%s ৰ চফ্টৱেৰে আপোনাৰ কমপিউটাৰে সমৰ্থন কৰা কোনো ভিডিঅ' বিন্যাস বুজি নাপায়"
 
-#: ../src/empathy-call-window.c:3107
+#: ../src/empathy-call-window.c:3114
 #, c-format
 msgid ""
 "Can't establish a connection to %s. One of you might be on a network that "
@@ -3349,21 +3361,21 @@ msgstr ""
 "%s লে এটা সংযোগ স্থাপন কৰিব নোৱাৰে। আপোনা লোকৰ এজন হয়তো এনে নেটৱাৰ্কত আছে যি "
 "প্ৰত্যক্ষ সংযোগসমূহৰ অনুমতি নিদিয়ে।"
 
-#: ../src/empathy-call-window.c:3113
+#: ../src/empathy-call-window.c:3120
 msgid "There was a failure on the network"
 msgstr "নেটৱাৰ্কত এটা ব্যৰ্থতা হৈছিল"
 
-#: ../src/empathy-call-window.c:3117
+#: ../src/empathy-call-window.c:3124
 msgid ""
 "The audio formats necessary for this call are not installed on your computer"
 msgstr "এই কলৰ বাবে প্ৰয়োজনীয় অডিঅ' বিন্যাসসমূহ আপোনাৰ কমপিউটাৰত ইনস্টল নাই"
 
-#: ../src/empathy-call-window.c:3120
+#: ../src/empathy-call-window.c:3127
 msgid ""
 "The video formats necessary for this call are not installed on your computer"
 msgstr "এই কলৰ বাবে ভিডিঅ' বিন্যাসসমূহ আপোনাৰ কমপিউটাৰত ইনস্টল নাই"
 
-#: ../src/empathy-call-window.c:3132
+#: ../src/empathy-call-window.c:3139
 #, c-format
 msgid ""
 "Something unexpected happened in a Telepathy component. Please <a href=\"%s"
@@ -3374,32 +3386,32 @@ msgstr ""
 "বাগ "
 "সংবাদন কৰক</a> আৰু সহায় মেনুৰ 'ডিবাগ' উইন্ডোৰ পৰা সংগ্ৰহ কৰা লগসমূহ এটাচ কৰক।"
 
-#: ../src/empathy-call-window.c:3141
+#: ../src/empathy-call-window.c:3148
 msgid "There was a failure in the call engine"
 msgstr "কল ইঞ্জীনত এটা ব্যৰ্থতা হৈছিল"
 
-#: ../src/empathy-call-window.c:3144
+#: ../src/empathy-call-window.c:3151
 msgid "The end of the stream was reached"
 msgstr "স্ট্ৰিমৰ অন্ত পোৱা গল"
 
-#: ../src/empathy-call-window.c:3184
+#: ../src/empathy-call-window.c:3191
 msgid "Can't establish audio stream"
 msgstr "অডিঅ' স্ট্ৰিম স্থাপনা কৰিব নোৱাৰি"
 
-#: ../src/empathy-call-window.c:3194
+#: ../src/empathy-call-window.c:3201
 msgid "Can't establish video stream"
 msgstr "ভিডিঅ' স্ট্ৰিম স্থাপনা কৰিব নোৱাৰি"
 
-#: ../src/empathy-call-window.c:3231
+#: ../src/empathy-call-window.c:3238
 #, c-format
 msgid "Your current balance is %s."
 msgstr "আপোনাৰ বৰ্তমান বেলেঞ্চ হল %s।"
 
-#: ../src/empathy-call-window.c:3235
+#: ../src/empathy-call-window.c:3242
 msgid "Sorry, you don’t have enough credit for that call."
 msgstr "ক্ষমা কৰিব, আপোনাৰ সেই কলৰ বাবে পৰ্যাপ্ত দেন নাই।"
 
-#: ../src/empathy-call-window.c:3237
+#: ../src/empathy-call-window.c:3244
 msgid "Top Up"
 msgstr "টপ আপ"
 
@@ -3766,13 +3778,14 @@ msgid ""
 "bugzilla.gnome.org/enter_bug.cgi?product=empathy\">bug report</a>."
 msgstr ""
 "যদিও আপুনি পাছৱাৰ্ড প্ৰদৰ্শন নকৰে, লগসমূহে সংবেদ্য তথ্য অন্তৰ্ভুক্ত কৰিব পাৰে "
-"যেনে আপোনাৰ "
-"পৰিচয়সমূহৰ তালিকা অথবা আপুনি শেহতীয়াভাৱে পঠোৱা অথবা গ্ৰহণ কৰা বাৰ্তাসমূহ।\n"
-"যদি আপুনি এনেধৰণৰ তথ্য এটা ৰাজহুৱা বাগ সংবাদত উপলব্ধ থকাটো নিবিচাৰে, "
-"আপুনি বাগ সংবাদন কৰোতে <a href=\"https://bugzilla.gnome.org/enter_bug.cgi? "
+"যেনে "
+"আপোনাৰ পৰিচয়সমূহৰ তালিকা অথবা আপুনি শেহতীয়াভাৱে পঠোৱা অথবা গ্ৰহণ কৰা "
+"বাৰ্তাসমূহ।\n"
+"যদি আপুনি এনেধৰণৰ তথ্য এটা ৰাজহুৱা বাগ সংবাদত উপলব্ধ থকাটো নিবিচাৰে, আপুনি "
+"বাগ "
+"সংবাদন কৰোতে <a href=\"https://bugzilla.gnome.org/enter_bug.cgi? "
 "product=empathy\">বাগ সংবাদ</a> ত উন্নত ফিল্ডসমূহ প্ৰদৰ্শন কৰি আপোনাৰ বাগৰ "
-"দৃশ্যমানতা "
-"Empathy উন্নয়নকাৰীসকললে সীমিত ৰাখিব পাৰে।"
+"দৃশ্যমানতা Empathy উন্নয়নকাৰীসকললে সীমিত ৰাখিব পাৰে।"
 
 #: ../src/empathy-debug-window.c:2062
 msgid "Time"
@@ -3855,7 +3868,7 @@ msgstr "আপোনাক %s ত যোগদান দিবলে আমন�
 msgid "Incoming file transfer from %s"
 msgstr "%s দ্বাৰা প্ৰৰিত ফাইল আগত"
 
-#: ../src/empathy-event-manager.c:973 ../src/empathy-roster-window.c:225
+#: ../src/empathy-event-manager.c:973 ../src/empathy-roster-window.c:227
 msgid "Password required"
 msgstr "পাছৱাৰ্ডৰ প্ৰয়োজন"
 
@@ -4212,7 +4225,7 @@ msgstr "দলসমূহ দেখুৱাওক"
 msgid "Show account balances"
 msgstr "একাওন্ট বেলেঞ্চসমূহ দেখুৱাওক"
 
-#: ../src/empathy-preferences.ui.h:4 ../src/empathy-roster-window.c:2166
+#: ../src/empathy-preferences.ui.h:4 ../src/empathy-roster-window.c:2202
 msgid "Contact List"
 msgstr "পৰিচিত ব্যক্তিৰ তালিকা"
 
@@ -4382,19 +4395,19 @@ msgstr "অপৰ:"
 msgid "Themes"
 msgstr "থীমসমূহ"
 
-#: ../src/empathy-roster-window.c:242
+#: ../src/empathy-roster-window.c:244
 msgid "Provide Password"
 msgstr "পাছৱাৰ্ড প্ৰদান কৰক"
 
-#: ../src/empathy-roster-window.c:248
+#: ../src/empathy-roster-window.c:250
 msgid "Disconnect"
 msgstr "বিচ্ছিন্ন কৰক"
 
-#: ../src/empathy-roster-window.c:441
+#: ../src/empathy-roster-window.c:464
 msgid "You need to setup an account to see contacts here."
 msgstr "আপুনি ইয়াত পৰিচয়সমূহ চাবলে এটা একাওন্ট সংস্থাপন কৰিব লাগিব।"
 
-#: ../src/empathy-roster-window.c:517
+#: ../src/empathy-roster-window.c:540
 #, c-format
 msgid "Sorry, %s accounts can’t be used until your %s software is updated."
 msgstr ""
@@ -4402,66 +4415,68 @@ msgstr ""
 "কৰা "
 "নহয়।"
 
-#: ../src/empathy-roster-window.c:617
+#: ../src/empathy-roster-window.c:640
 msgid "Windows Live"
 msgstr "Windows Live"
 
-#: ../src/empathy-roster-window.c:621
-#| msgid "Facebook Chat"
+#: ../src/empathy-roster-window.c:644
 msgid "Facebook"
 msgstr "Facebook"
 
 #. translators: %s is an account name like 'Facebook' or 'Google Talk'
-#: ../src/empathy-roster-window.c:636
+#: ../src/empathy-roster-window.c:659
 #, c-format
 msgid "%s account requires authorisation"
 msgstr "%s একাওন্টৰ অনুমতিৰ প্ৰয়োজন"
 
-#: ../src/empathy-roster-window.c:647
-#| msgid "My Web Accounts"
+#: ../src/empathy-roster-window.c:670
 msgid "Online Accounts"
 msgstr "অনলাইন একাওন্টসমূহ"
 
-#: ../src/empathy-roster-window.c:694
+#: ../src/empathy-roster-window.c:717
 msgid "Update software..."
 msgstr "চফ্টৱেৰ আপডেইট কৰক..."
 
-#: ../src/empathy-roster-window.c:700
+#: ../src/empathy-roster-window.c:723
 msgid "Reconnect"
 msgstr "পুনৰ সংযোগ কৰক"
 
-#: ../src/empathy-roster-window.c:704
+#: ../src/empathy-roster-window.c:727
 msgid "Edit Account"
 msgstr "একাওন্ট সম্পাদন কৰক"
 
-#: ../src/empathy-roster-window.c:709
+#: ../src/empathy-roster-window.c:732
 msgid "Close"
 msgstr "বন্ধ কৰক"
 
-#: ../src/empathy-roster-window.c:846
+#: ../src/empathy-roster-window.c:869
 msgid "Top up account"
 msgstr "টপ আপ একাওন্ট"
 
-#: ../src/empathy-roster-window.c:1528
+#: ../src/empathy-roster-window.c:1551
 msgid "You need to enable one of your accounts to see contacts here."
 msgstr ""
 "আপুনি পৰিচয়সমূহ ইয়াত চাবলে আপোনাৰ একাওন্টসমূহৰ এটা সামৰ্থবান কৰিব লাগিব।"
 
 #. translators: argument is an account name
-#: ../src/empathy-roster-window.c:1536
+#: ../src/empathy-roster-window.c:1559
 #, c-format
 msgid "You need to enable %s to see contacts here."
 msgstr "আপুনি পৰিচয়সমূহ ইয়াত চাবলে %s সামৰ্থবান কৰিব লাগিব।"
 
-#: ../src/empathy-roster-window.c:1614
+#: ../src/empathy-roster-window.c:1637
 msgid "Change your presence to see contacts here"
 msgstr "ইয়াত পৰিচয়সমূহ চাবলে আপোনাৰ উপস্থিতি সলনি কৰক"
 
-#: ../src/empathy-roster-window.c:1623
+#: ../src/empathy-roster-window.c:1646
 msgid "No match found"
 msgstr "কোনো মিল পোৱা নগল"
 
-#: ../src/empathy-roster-window.c:1628
+#: ../src/empathy-roster-window.c:1653
+msgid "You haven't added any contact yet"
+msgstr "আপুনি কোনো পৰিচয় যোগ কৰা নাই"
+
+#: ../src/empathy-roster-window.c:1656
 msgid "No online contacts"
 msgstr "কোনো অনলাইন পৰিচয় নাই"
 
@@ -4537,6 +4552,16 @@ msgstr "একাওন্ট সংহতিসমূহ"
 #: ../src/empathy-roster-window.ui.h:2
 msgid "Go _Online"
 msgstr "অনলাইন হওক (_O)"
+
+#: ../src/empathy-roster-window.ui.h:3
+#| msgid "Show offline contacts"
+msgid "Show _Offline Contacts"
+msgstr "অফলাইন পৰিচয়সমূহ দেখুৱাওক (_O)"
+
+#: ../src/empathy-roster-window.ui.h:4
+#| msgid "_Add Contacts..."
+msgid "_Add Contact..."
+msgstr "পৰিচয় যোগ কৰক (_A)..."
 
 #: ../src/empathy-status-icon.ui.h:2
 msgid "_New Conversation…"
@@ -4806,9 +4831,6 @@ msgstr "আপোনাৰ IM একাওন্টসমূহ অনুকল�
 #~ msgctxt "Edit contact (contextual menu)"
 #~ msgid "_Edit"
 #~ msgstr "সম্পাদনা কৰক (_E)"
-
-#~ msgid "Select a contact"
-#~ msgstr "এটা পৰিচয় নিৰ্বাচন কৰক"
 
 #~ msgid "Select contacts to link"
 #~ msgstr "সংযোগ কৰিবলে পৰিচয়সমূহ বাছক"
