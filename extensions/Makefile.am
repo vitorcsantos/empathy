@@ -98,7 +98,9 @@ _gen/misc.xml: misc.xml $(wildcard *.xml) $(tools_dir)/xincludator.py
 	@$(mkdir_p) _gen
 	$(AM_V_GEN)$(PYTHON) $(tools_dir)/xincludator.py $< > $@
 
-_gen/cli-misc-body.h _gen/cli-misc.h: _gen/misc.xml \
+_gen/cli-misc-body.h: _gen/cli-misc.h
+
+_gen/cli-misc.h: _gen/misc.xml \
 	$(tools_dir)/glib-client-gen.py
 	$(AM_V_GEN)$(PYTHON) $(tools_dir)/glib-client-gen.py \
 		--group=misc \
