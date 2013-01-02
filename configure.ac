@@ -258,7 +258,7 @@ if test "x$have_gst1" != "xyes"; then
   PKG_CHECK_MODULES(EMPATHY_CALL,
   [
      farstream-0.1
-     telepathy-farstream >= 0.2.1
+     telepathy-farstream >= $TP_FS_REQUIRED
      clutter-1.0 >= $CLUTTER_REQUIRED
      clutter-gtk-1.0 >= $CLUTTER_GTK_REQUIRED
      clutter-gst-1.0 >= 1.5.2
