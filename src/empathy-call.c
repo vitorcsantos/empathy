@@ -119,8 +119,8 @@ call_window_inhibit_cb (EmpathyCallWindow *window,
 
       inhibit_id = gtk_application_inhibit (GTK_APPLICATION (app),
           GTK_WINDOW (window),
-          GTK_APPLICATION_INHIBIT_LOGOUT & GTK_APPLICATION_INHIBIT_SWITCH &
-          GTK_APPLICATION_INHIBIT_SUSPEND & GTK_APPLICATION_INHIBIT_IDLE,
+          GTK_APPLICATION_INHIBIT_LOGOUT | GTK_APPLICATION_INHIBIT_SWITCH |
+          GTK_APPLICATION_INHIBIT_SUSPEND | GTK_APPLICATION_INHIBIT_IDLE,
           _("In a call"));
     }
   else
