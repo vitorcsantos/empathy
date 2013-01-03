@@ -1579,8 +1579,6 @@ chat_window_show_or_update_notification (EmpathyChatWindow *self,
       if (self->priv->notification == NULL)
         self->priv->notification = notification;
 
-      notify_notification_set_timeout (notification, NOTIFY_EXPIRES_DEFAULT);
-
       tp_g_signal_connect_object (notification, "closed",
             G_CALLBACK (chat_window_notification_closed_cb), self, 0);
 

@@ -350,9 +350,6 @@ update_notification (EmpathyNotificationsApprover *self)
               G_CALLBACK (notification_closed_cb), self);
         }
 
-      notify_notification_set_timeout (notification,
-          NOTIFY_EXPIRES_DEFAULT);
-
       if (has_x_canonical_append)
         {
           notify_notification_set_hint (notification,
