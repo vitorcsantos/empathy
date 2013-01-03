@@ -226,5 +226,9 @@ empathy_notify_manager_create_notification (const gchar *summary,
 
   notification = notify_notification_new (summary, body, icon);
 
+  notify_notification_set_hint (notification,
+      EMPATHY_NOTIFY_MANAGER_CAP_DESKTOP_ENTRY,
+      g_variant_new_string ("empathy"));
+
   return notification;
 }
