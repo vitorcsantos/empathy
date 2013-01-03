@@ -25,6 +25,8 @@
 
 #include <libempathy/empathy-contact.h>
 
+#include <libnotify/notification.h>
+
 G_BEGIN_DECLS
 
 #define EMPATHY_NOTIFY_MANAGER_CAP_ACTIONS             "actions"
@@ -103,6 +105,11 @@ GdkPixbuf * empathy_notify_manager_get_pixbuf_for_notification (
     EmpathyNotifyManager *self,
     EmpathyContact *contact,
     const char *icon_name);
+
+NotifyNotification * empathy_notify_manager_create_notification (
+    const gchar *summary,
+    const char *body,
+    const gchar *icon);
 
 G_END_DECLS
 

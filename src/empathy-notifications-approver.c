@@ -339,8 +339,8 @@ update_notification (EmpathyNotificationsApprover *self)
        * to an existing notification with the same title.
        * In this way the previous message will not be lost: the new
        * message will appear below it, in the same notification */
-      notification = notify_notification_new (self->priv->event->header,
-           message_esc, NULL);
+      notification = empathy_notify_manager_create_notification (
+          self->priv->event->header, message_esc, NULL);
 
       if (self->priv->notification == NULL)
         {

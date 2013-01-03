@@ -1574,7 +1574,9 @@ chat_window_show_or_update_notification (EmpathyChatWindow *self,
       const gchar *category = empathy_chat_is_room (chat)
         ? EMPATHY_NOTIFICATION_CATEGORY_MENTIONED
         : EMPATHY_NOTIFICATION_CATEGORY_CHAT;
-      notification = notify_notification_new (header, escaped, NULL);
+
+      notification = empathy_notify_manager_create_notification (header,
+          escaped, NULL);
 
       if (self->priv->notification == NULL)
         self->priv->notification = notification;

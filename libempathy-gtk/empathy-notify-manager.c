@@ -216,3 +216,15 @@ empathy_notify_manager_notification_is_enabled  (EmpathyNotifyManager *self)
 
   return TRUE;
 }
+
+NotifyNotification *
+empathy_notify_manager_create_notification (const gchar *summary,
+    const char *body,
+    const gchar *icon)
+{
+  NotifyNotification *notification;
+
+  notification = notify_notification_new (summary, body, icon);
+
+  return notification;
+}

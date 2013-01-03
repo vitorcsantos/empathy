@@ -119,7 +119,8 @@ display_reject_notification (EmpathyCallObserver *self,
       _("%s just tried to call you, but you were in another call."),
       tp_contact_get_alias (contact));
 
-  notification = notify_notification_new (summary, body, NULL);
+  notification = empathy_notify_manager_create_notification (summary, body,
+      NULL);
 
   emp_contact = empathy_contact_dup_from_tp_contact (contact);
   pixbuf = empathy_notify_manager_get_pixbuf_for_notification (
