@@ -364,8 +364,8 @@ cell_renderer_text_update_text (EmpathyCellRendererText *cell,
 			status = empathy_presence_get_default_message (priv->presence_type);
 		}
 
-		if (!priv->is_group && priv->types != NULL && g_strv_length (priv->types) > 0
-		    && !tp_strdiff (priv->types[0], "phone")) {
+		if (!priv->is_group &&
+				empathy_client_types_contains_mobile_device (priv->types)) {
 			on_a_phone = TRUE;
 			/* We want the phone black. */
 			if (attr_color)

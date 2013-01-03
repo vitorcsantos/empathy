@@ -986,9 +986,9 @@ chat_window_update_chat_tab_full (EmpathyChat *chat,
       const gchar * const *types;
 
       types = empathy_contact_get_client_types (remote_contact);
-      if (types != NULL && !tp_strdiff (types[0], "phone"))
+      if (empathy_client_types_contains_mobile_device ((GStrv) types))
         {
-          /* I'm on a phone ! */
+          /* I'm on a mobile device ! */
           gchar *tmp = name;
 
           name = g_strdup_printf ("☎ %s", name);

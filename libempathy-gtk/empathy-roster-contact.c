@@ -173,25 +173,11 @@ alias_changed_cb (FolksIndividual *individual,
   update_alias (self);
 }
 
-static gboolean
-is_phone (FolksIndividual *individual)
-{
-  const gchar * const *types;
-
-  types = empathy_individual_get_client_types (individual);
-  if (types == NULL)
-    return FALSE;
-
-  if (g_strv_length ((GStrv) types) <= 0)
-    return FALSE;
-
-  return !tp_strdiff (types[0], "phone");
-}
-
 static void
 update_presence_msg (EmpathyRosterContact *self)
 {
   const gchar *msg;
+  GStrv types;
 
   msg = folks_presence_details_get_presence_message (
       FOLKS_PRESENCE_DETAILS (self->priv->individual));
@@ -233,8 +219,10 @@ update_presence_msg (EmpathyRosterContact *self)
       gtk_widget_show (self->priv->presence_msg);
     }
 
+  types = (GStrv) empathy_individual_get_client_types (self->priv->individual);
+
   gtk_widget_set_visible (self->priv->phone_icon,
-      is_phone (self->priv->individual));
+      empathy_client_types_contains_mobile_device (types));
 }
 
 static void

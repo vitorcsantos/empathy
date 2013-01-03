@@ -1122,6 +1122,20 @@ while_finish:
     *can_video_call = can_video;
 }
 
+gboolean
+empathy_client_types_contains_mobile_device (const GStrv types) {
+  int i;
+
+  if (types == NULL)
+    return FALSE;
+
+  for (i = 0; types[i] != NULL; i++)
+    if (!tp_strdiff (types[i], "phone") || !tp_strdiff (types[i], "handheld"))
+        return TRUE;
+
+  return FALSE;
+}
+
 static FolksIndividual *
 create_individual_from_persona (FolksPersona *persona)
 {

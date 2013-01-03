@@ -808,9 +808,7 @@ client_types_update (EmpathyIndividualWidget *self)
 
   types = tp_contact_get_client_types (priv->contact);
 
-  if (types != NULL
-      && g_strv_length ((gchar **) types) > 0
-      && !tp_strdiff (types[0], "phone"))
+  if (empathy_client_types_contains_mobile_device ((GStrv) types))
     {
       gtk_widget_show (priv->hbox_client_types);
     }
