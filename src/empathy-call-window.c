@@ -1872,6 +1872,8 @@ empathy_call_window_init (EmpathyCallWindow *self)
 
   empathy_call_window_show_hangup_button (self, TRUE);
 
+  gtk_window_set_default_size (GTK_WINDOW (self), 580, 480);
+
   empathy_geometry_bind (GTK_WINDOW (self), "call-window");
   /* These signals are used to track the window position and save it
    * when the window is destroyed. We need to do this as we don't want
