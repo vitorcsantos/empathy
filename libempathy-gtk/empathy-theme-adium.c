@@ -531,7 +531,8 @@ theme_adium_append_html (EmpathyThemeAdium *self,
     const gchar *message_classes,
     gint64 timestamp,
     gboolean is_backlog,
-    gboolean outgoing)
+    gboolean outgoing,
+    PangoDirection direction)
 {
   GString *string;
   const gchar *cur = NULL;
@@ -590,9 +591,22 @@ theme_adium_append_html (EmpathyThemeAdium *self,
         }
       else if (theme_adium_match (&cur, "%messageDirection%"))
         {
-          /* FIXME: The text direction of the message
-           * (either rtl or ltr)
-           */
+          switch (direction)
+            {
+              case PANGO_DIRECTION_LTR:
+              case PANGO_DIRECTION_TTB_LTR:
+              case PANGO_DIRECTION_WEAK_LTR:
+                replace = "ltr";
+                break;
+              case PANGO_DIRECTION_RTL:
+              case PANGO_DIRECTION_TTB_RTL:
+              case PANGO_DIRECTION_WEAK_RTL:
+                replace = "rtl";
+                break;
+              case PANGO_DIRECTION_NEUTRAL:
+              default:
+                break;
+            }
         }
       else if (theme_adium_match (&cur, "%senderDisplayName%"))
         {
@@ -718,11 +732,12 @@ theme_adium_append_html (EmpathyThemeAdium *self,
 
 static void
 theme_adium_append_event_escaped (EmpathyThemeAdium *self,
-    const gchar *escaped)
+    const gchar *escaped,
+    PangoDirection direction)
 {
   theme_adium_append_html (self, "appendMessage",
       self->priv->data->status_html, escaped, NULL, NULL, NULL,
-      NULL, "event", empathy_time_get_current (), FALSE, FALSE);
+      NULL, "event", empathy_time_get_current (), FALSE, FALSE, direction);
 
   /* There is no last contact */
   if (self->priv->last_contact)
@@ -827,6 +842,7 @@ empathy_theme_adium_append_message (EmpathyThemeAdium *self,
   gboolean is_backlog;
   gboolean consecutive;
   gboolean action;
+  PangoDirection direction;
 
   if (self->priv->pages_loading != 0)
     {
@@ -1000,10 +1016,12 @@ empathy_theme_adium_append_message (EmpathyThemeAdium *self,
           self->priv->data->in_content_html;
     }
 
+  direction = pango_find_base_dir (empathy_message_get_body (msg), -1);
+
   theme_adium_append_html (self, func, html, body_escaped,
       avatar_filename, name_escaped, contact_id,
       service_name, message_classes->str,
-      timestamp, is_backlog, empathy_contact_is_user (sender));
+      timestamp, is_backlog, empathy_contact_is_user (sender), direction);
 
   /* Keep the sender of the last displayed message */
   if (self->priv->last_contact)
@@ -1023,6 +1041,7 @@ empathy_theme_adium_append_event (EmpathyThemeAdium *self,
     const gchar *str)
 {
   gchar *str_escaped;
+  PangoDirection direction;
 
   if (self->priv->pages_loading != 0)
     {
@@ -1030,8 +1049,9 @@ empathy_theme_adium_append_event (EmpathyThemeAdium *self,
       return;
     }
 
+  direction = pango_find_base_dir (str, -1);
   str_escaped = g_markup_escape_text (str, -1);
-  theme_adium_append_event_escaped (self, str_escaped);
+  theme_adium_append_event_escaped (self, str_escaped, direction);
   g_free (str_escaped);
 }
 
@@ -1040,7 +1060,10 @@ empathy_theme_adium_append_event_markup (EmpathyThemeAdium *self,
     const gchar *markup_text,
     const gchar *fallback_text)
 {
-  theme_adium_append_event_escaped (self, markup_text);
+  PangoDirection direction;
+
+  direction = pango_find_base_dir (fallback_text, -1);
+  theme_adium_append_event_escaped (self, markup_text, direction);
 }
 
 void
