@@ -1047,12 +1047,16 @@ empathy_roster_window_finalize (GObject *window)
 static gboolean
 roster_window_key_press_event_cb  (GtkWidget *window,
     GdkEventKey *event,
-    gpointer user_data)
+    EmpathyRosterWindow *self)
 {
   if (event->keyval == GDK_KEY_T
       && event->state & GDK_SHIFT_MASK
       && event->state & GDK_CONTROL_MASK)
     empathy_chat_manager_call_undo_closed_chat ();
+
+  if (event->keyval == GDK_KEY_f
+      && event->state & GDK_CONTROL_MASK)
+    gtk_widget_show (self->priv->search_bar);
 
   return FALSE;
 }
@@ -2265,7 +2269,7 @@ empathy_roster_window_init (EmpathyRosterWindow *self)
   gtk_widget_show (self->priv->main_vbox);
 
   g_signal_connect (self, "key-press-event",
-      G_CALLBACK (roster_window_key_press_event_cb), NULL);
+      G_CALLBACK (roster_window_key_press_event_cb), self);
 
   g_object_unref (gui);
 
