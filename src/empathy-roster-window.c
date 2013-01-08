@@ -611,6 +611,7 @@ roster_window_error_create_info_bar (EmpathyRosterWindow *self,
   label = gtk_label_new (message_markup);
   gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+  gtk_label_set_ellipsize (GTK_LABEL (label), PANGO_ELLIPSIZE_END);
   gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
   gtk_widget_show (label);
 
