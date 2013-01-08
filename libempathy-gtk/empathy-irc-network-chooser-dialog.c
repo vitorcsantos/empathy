@@ -427,13 +427,7 @@ dialog_response_cb (GtkDialog *dialog,
     gint response,
     EmpathyIrcNetworkChooserDialog *self)
 {
-  if (response == GTK_RESPONSE_OK)
-    add_network (self);
-  else if (response == GTK_RESPONSE_APPLY)
-    edit_network (self);
-  else if (response == GTK_RESPONSE_REJECT)
-    remove_network (self);
-  else if (response == RESPONSE_RESET)
+  if (response == RESPONSE_RESET)
     reset_networks (self);
 }
 
@@ -515,6 +509,27 @@ dialog_destroy_cb (GtkWidget *widget,
 }
 
 static void
+add_clicked_cb (GtkToolButton *button,
+    EmpathyIrcNetworkChooserDialog *self)
+{
+  add_network (self);
+}
+
+static void
+remove_clicked_cb (GtkToolButton *button,
+    EmpathyIrcNetworkChooserDialog *self)
+{
+  remove_network (self);
+}
+
+static void
+edit_clicked_cb (GtkToolButton *button,
+    EmpathyIrcNetworkChooserDialog *self)
+{
+  edit_network (self);
+}
+
+static void
 empathy_irc_network_chooser_dialog_constructed (GObject *object)
 {
   EmpathyIrcNetworkChooserDialog *self = (EmpathyIrcNetworkChooserDialog *) object;
@@ -524,6 +539,9 @@ empathy_irc_network_chooser_dialog_constructed (GObject *object)
   GtkWidget *vbox;
   GtkTreeViewColumn *column;
   GtkWidget *scroll;
+  GtkWidget *toolbar;
+  GtkToolItem *item;
+  GtkStyleContext *context;
 
   g_assert (priv->settings != NULL);
 
@@ -560,6 +578,35 @@ empathy_irc_network_chooser_dialog_constructed (GObject *object)
   gtk_container_add (GTK_CONTAINER (scroll), priv->treeview);
   gtk_box_pack_start (GTK_BOX (vbox), scroll, TRUE, TRUE, 6);
 
+  /* Treeview toolbar */
+  toolbar = gtk_toolbar_new ();
+  gtk_toolbar_set_icon_size (GTK_TOOLBAR (toolbar), GTK_ICON_SIZE_MENU);
+  gtk_box_pack_start (GTK_BOX (vbox), toolbar, FALSE, TRUE, 0);
+
+  item = gtk_tool_button_new (NULL, "");
+  gtk_tool_button_set_icon_name (GTK_TOOL_BUTTON (item), "list-add-symbolic");
+  g_signal_connect (item, "clicked", G_CALLBACK (add_clicked_cb), self);
+  gtk_toolbar_insert (GTK_TOOLBAR (toolbar), item, -1);
+
+  item = gtk_tool_button_new (NULL, "");
+  gtk_tool_button_set_icon_name (GTK_TOOL_BUTTON (item),
+      "list-remove-symbolic");
+  g_signal_connect (item, "clicked", G_CALLBACK (remove_clicked_cb), self);
+  gtk_toolbar_insert (GTK_TOOLBAR (toolbar), item, -1);
+
+  item = gtk_tool_button_new (NULL, "");
+  gtk_tool_button_set_icon_name (GTK_TOOL_BUTTON (item),
+      "preferences-system-symbolic");
+  g_signal_connect (item, "clicked", G_CALLBACK (edit_clicked_cb), self);
+  gtk_toolbar_insert (GTK_TOOLBAR (toolbar), item, -1);
+
+  context = gtk_widget_get_style_context (scroll);
+  gtk_style_context_set_junction_sides (context, GTK_JUNCTION_BOTTOM);
+
+  context = gtk_widget_get_style_context (toolbar);
+  gtk_style_context_add_class (context, GTK_STYLE_CLASS_INLINE_TOOLBAR);
+  gtk_style_context_set_junction_sides (context, GTK_JUNCTION_TOP);
+
   /* Live search */
   priv->search = empathy_live_search_new (priv->treeview);
 
@@ -581,9 +628,6 @@ empathy_irc_network_chooser_dialog_constructed (GObject *object)
 
   /* Add buttons */
   gtk_dialog_add_buttons (dialog,
-      GTK_STOCK_ADD, GTK_RESPONSE_OK,
-      GTK_STOCK_EDIT, GTK_RESPONSE_APPLY,
-      GTK_STOCK_REMOVE, GTK_RESPONSE_REJECT,
       _("Reset _Networks List"), RESPONSE_RESET,
       NULL);
 
