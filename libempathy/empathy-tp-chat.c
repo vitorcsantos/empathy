@@ -1298,19 +1298,11 @@ password_feature_prepare_cb (GObject *source,
 }
 
 static void
-tp_chat_prepare_ready_async (TpProxy *proxy,
-  const TpProxyFeature *feature,
-  GAsyncReadyCallback callback,
-  gpointer user_data)
+continue_preparing (EmpathyTpChat *self)
 {
-  EmpathyTpChat *self = (EmpathyTpChat *) proxy;
-  TpChannel *channel = (TpChannel *) proxy;
+  TpChannel *channel = (TpChannel *) self;
   TpConnection *connection;
   gboolean listen_for_dbus_properties_changed = FALSE;
-
-  g_assert (self->priv->ready_result == NULL);
-  self->priv->ready_result = g_simple_async_result_new (G_OBJECT (self),
-    callback, user_data, tp_chat_prepare_ready_async);
 
   connection = tp_channel_get_connection (channel);
 
@@ -1435,4 +1427,50 @@ tp_chat_prepare_ready_async (TpProxy *proxy,
                         NULL, NULL,
                         G_OBJECT (self), NULL);
     }
+}
+
+static void
+conn_connected_cb (GObject *source,
+    GAsyncResult *result,
+    gpointer user_data)
+{
+  EmpathyTpChat *self = user_data;
+  GError *error = NULL;
+
+  if (!tp_proxy_prepare_finish (source, result, &error))
+    {
+      DEBUG ("Failed to prepare Connected: %s", error->message);
+      g_simple_async_result_take_error (self->priv->ready_result, error);
+      g_simple_async_result_complete (self->priv->ready_result);
+      tp_clear_object (&self->priv->ready_result);
+      return;
+    }
+
+  continue_preparing (self);
+}
+
+static void
+tp_chat_prepare_ready_async (TpProxy *proxy,
+  const TpProxyFeature *feature,
+  GAsyncReadyCallback callback,
+  gpointer user_data)
+{
+  EmpathyTpChat *self = (EmpathyTpChat *) proxy;
+  TpChannel *channel = (TpChannel *) proxy;
+  TpConnection *connection;
+  GQuark features[] = { TP_CONNECTION_FEATURE_CONNECTED, 0 };
+
+  g_assert (self->priv->ready_result == NULL);
+
+  self->priv->ready_result = g_simple_async_result_new (G_OBJECT (self),
+    callback, user_data, tp_chat_prepare_ready_async);
+
+  connection = tp_channel_get_connection (channel);
+
+  /* First we have to make sure that TP_CONNECTION_FEATURE_CONNECTED is
+   * prepared as we rely on TpConnection::self-contact
+   * in continue_preparing().
+   *
+   * It would be nice if tp-glib could do this for us: fdo#59126 */
+  tp_proxy_prepare_async (connection, features, conn_connected_cb, proxy);
 }
