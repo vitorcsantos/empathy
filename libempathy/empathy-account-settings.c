@@ -1327,6 +1327,12 @@ empathy_account_settings_account_updated (GObject *source,
       goto out;
     }
 
+  update_account_uri_schemes (settings);
+  update_account_service (settings);
+
+  g_simple_async_result_set_op_res_gboolean (priv->apply_result,
+      g_strv_length (reconnect_required) > 0);
+
   /* Only set the password in the keyring if the CM supports SASL. */
   if (priv->supports_sasl)
     {
@@ -1347,12 +1353,6 @@ empathy_account_settings_account_updated (GObject *source,
 
       return;
     }
-
-  update_account_uri_schemes (settings);
-  update_account_service (settings);
-
-  g_simple_async_result_set_op_res_gboolean (priv->apply_result,
-      g_strv_length (reconnect_required) > 0);
 
 out:
   empathy_account_settings_discard_changes (settings);
