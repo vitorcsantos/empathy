@@ -102,7 +102,7 @@ create_account_settings (AgAccount *account)
   AgService *service;
   GList *services;
   AgAccountService *account_service;
-  GValue v = G_VALUE_INIT;
+  GVariant *v;
   gchar *manager = NULL, *protocol = NULL;
   EmpathyAccountSettings *settings;
 
@@ -114,17 +114,15 @@ create_account_settings (AgAccount *account)
 
   account_service = ag_account_service_new (account, service);
 
-  g_value_init (&v, G_TYPE_STRING);
-  if (ag_account_service_get_value (account_service,
-        "telepathy/manager", &v) != AG_SETTING_SOURCE_NONE)
-    manager = g_value_dup_string (&v);
-  g_value_unset (&v);
+  v = ag_account_service_get_variant (account_service,
+        "telepathy/manager", NULL);
+  if (v != NULL)
+    manager = g_variant_dup_string (v, NULL);
 
-  g_value_init (&v, G_TYPE_STRING);
-  if (ag_account_service_get_value (account_service,
-        "telepathy/protocol", &v) != AG_SETTING_SOURCE_NONE)
-    protocol = g_value_dup_string (&v);
-  g_value_unset (&v);
+  v = ag_account_service_get_variant (account_service,
+        "telepathy/protocol", NULL);
+  if (v != NULL)
+    protocol = g_variant_dup_string (v, NULL);
 
   g_return_val_if_fail (manager != NULL, NULL);
   g_return_val_if_fail (protocol != NULL, NULL);

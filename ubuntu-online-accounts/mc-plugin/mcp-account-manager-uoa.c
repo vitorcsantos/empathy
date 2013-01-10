@@ -86,15 +86,14 @@ _service_dup_tp_value (AgAccountService *service,
     const gchar *key)
 {
   gchar *real_key = g_strdup_printf (KEY_PREFIX "%s", key);
-  GValue value = { 0, };
-  gchar *ret;
+  GVariant *value;
 
-  g_value_init (&value, G_TYPE_STRING);
-  ag_account_service_get_value (service, real_key, &value);
-  ret = g_value_dup_string (&value);
-  g_value_unset (&value);
+  value = ag_account_service_get_variant (service, real_key, NULL);
+  g_free (real_key);
+  if (value == NULL)
+    return NULL;
 
-  return ret;
+  return g_variant_dup_string (value, NULL);
 }
 
 static void
@@ -106,18 +105,14 @@ _service_set_tp_value (AgAccountService *service,
 
   if (value != NULL)
     {
-      GValue gvalue = { 0, };
-
-      g_value_init (&gvalue, G_TYPE_STRING);
-      g_value_set_string (&gvalue, value);
-      ag_account_service_set_value (service, real_key, &gvalue);
-      g_value_unset (&gvalue);
-      g_free (real_key);
+      GVariant *gvariant = g_variant_new_string (value);
+      ag_account_service_set_variant (service, real_key, gvariant);
     }
   else
     {
-      ag_account_service_set_value (service, real_key, NULL);
+      ag_account_service_set_variant (service, real_key, NULL);
     }
+  g_free (real_key);
 }
 
 /* Returns NULL if the account never has been imported into MC before */
@@ -171,15 +166,20 @@ _service_changed_cb (AgAccountService *service,
 }
 
 static void
-_account_stored_cb (AgAccount *account,
-    const GError *error,
+_account_stored_cb (GObject *source_object,
+    GAsyncResult *res,
     gpointer user_data)
 {
-  if (error != NULL)
+  AgAccount *account = AG_ACCOUNT(source_object);
+  GError *error = NULL;
+
+  if (!ag_account_store_finish (account, res, &error))
     {
+      g_assert (error != NULL);
       DEBUG ("Error storing UOA account '%s': %s",
           ag_account_get_display_name (account),
           error->message);
+      g_error_free (error);
     }
 }
 
@@ -261,7 +261,7 @@ _account_created_cb (AgManager *manager,
                   cm_name, protocol_name, params);
               _service_set_tp_account_name (service, account_name);
 
-              ag_account_store (account, _account_stored_cb, self);
+              ag_account_store_async (account, NULL, _account_stored_cb, self);
 
               g_hash_table_unref (params);
             }
@@ -479,16 +479,16 @@ account_manager_uoa_get (const McpAccountStorage *storage,
     {
       AgAccountSettingIter iter;
       const gchar *k;
-      const GValue *v;
+      GVariant *v;
 
       ag_account_service_settings_iter_init (service, &iter, KEY_PREFIX);
-      while (ag_account_service_settings_iter_next (&iter, &k, &v))
+      while (ag_account_settings_iter_get_next (&iter, &k, &v))
         {
-          if (!G_VALUE_HOLDS_STRING (v))
+          if (!g_variant_is_of_type (v, G_VARIANT_TYPE_STRING))
             continue;
 
           mcp_account_manager_set_value (am, account_name,
-              k, g_value_get_string (v));
+              k, g_variant_get_string (v, NULL));
         }
     }
 
@@ -676,7 +676,7 @@ account_manager_uoa_commit (const McpAccountStorage *storage,
       AgAccountService *service = value;
       AgAccount *account = ag_account_service_get_account (service);
 
-      ag_account_store (account, _account_stored_cb, self);
+      ag_account_store_async (account, NULL, _account_stored_cb, self);
     }
 
   return TRUE;
@@ -781,7 +781,7 @@ account_manager_uoa_get_restrictions (const McpAccountStorage *storage,
   McpAccountManagerUoa *self = (McpAccountManagerUoa *) storage;
   AgAccountService *service;
   guint restrictions = TP_STORAGE_RESTRICTION_FLAG_CANNOT_SET_SERVICE;
-  GValue value = G_VALUE_INIT;
+  GVariant *value;
 
   g_return_val_if_fail (self->priv->manager != NULL, 0);
 
@@ -790,14 +790,11 @@ account_manager_uoa_get_restrictions (const McpAccountStorage *storage,
   if (service == NULL)
     return G_MAXUINT;
 
-  g_value_init (&value, G_TYPE_BOOLEAN);
-  ag_account_service_get_value (service,
-      KEY_PREFIX KEY_READONLY_PARAMS, &value);
+  value = ag_account_service_get_variant (service,
+      KEY_PREFIX KEY_READONLY_PARAMS, NULL);
 
-  if (g_value_get_boolean (&value))
+  if (value != NULL && g_variant_get_boolean (value))
     restrictions |= TP_STORAGE_RESTRICTION_FLAG_CANNOT_SET_PARAMETERS;
-
-  g_value_unset (&value);
 
   /* FIXME: We can't set Icon either, but there is no flag for that */
   return restrictions;
