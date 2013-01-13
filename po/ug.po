@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: empathy\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=empathy&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2012-10-09 14:38+0000\n"
+"POT-Creation-Date: 2013-01-09 14:05+0000\n"
 "PO-Revision-Date: 2012-02-18 16:10+0900\n"
 "Last-Translator: Gheyret Kenji<gheyret@gmail.com>\n"
 "Language-Team: Uyghur Computer Science Association <UKIJ@yahoogroups.com>\n"
@@ -34,6 +34,10 @@ msgstr "Empathy ئىنتېرنېت مۇڭداشقۇسى"
 #: ../data/empathy.desktop.in.in.h:4
 msgid "Chat on Google Talk, Facebook, MSN and many other chat services"
 msgstr "Google Talk، Facebook، MSN ۋە باشقا سۆھبەت مۇلازىمەتلىرىنى ئىشلىتىپ پاراڭلىشىش"
+
+#: ../data/empathy.desktop.in.in.h:5
+msgid "chat;talk;im;message;irc;voip;gtalk;facebook;jabber;"
+msgstr "chat;talk;im;message;irc;voip;gtalk;facebook;jabber;؛سۆھبەت؛پاراڭ؛مۇڭداشقۇ؛ئۇچۇر؛irc؛voip؛gtalk؛facebook؛jabber؛"
 
 #: ../data/org.gnome.Empathy.gschema.xml.h:1
 msgid "Connection managers should be used"
@@ -92,11 +96,11 @@ msgstr "ئالاقەداشلار تىزىمىدا  توردا يوق ئالاق�
 
 #: ../data/org.gnome.Empathy.gschema.xml.h:14
 msgid "Show Balance in contact list"
-msgstr "ئالاقەداش تىزىمىدا Balance نى كۆرسەت"
+msgstr "ئالاقەداش تىزىمىدا ھېساباتتىكى پۇلنى كۆرسەت"
 
 #: ../data/org.gnome.Empathy.gschema.xml.h:15
 msgid "Whether to show account balances in the contact list."
-msgstr "ئالاقەداشلار تىزىمىدا ھېسابات  balance لىرىنى كۆرسىتەمدۇ يوق."
+msgstr "ئالاقەداشلار تىزىمىدا ھېساباتتىكى پۇللارنى كۆرسىتەمدۇ يوق."
 
 #: ../data/org.gnome.Empathy.gschema.xml.h:16
 msgid "Hide main window"
@@ -301,7 +305,6 @@ msgid "Path of the Adium theme to use"
 msgstr "ئىشلىتىدىغان Adium ئۆرنەك(theme)نىڭ يولى"
 
 #: ../data/org.gnome.Empathy.gschema.xml.h:65
-#| msgid "Path of the Adium theme to use if the theme used for chat is Adium."
 msgid ""
 "Path of the Adium theme to use if the theme used for chat is Adium. "
 "Deprecated."
@@ -499,7 +502,6 @@ msgid "The selected file is empty"
 msgstr "تاللانغان ھۆججەت قۇرۇق"
 
 #: ../libempathy/empathy-keyring.c:85 ../libempathy/empathy-keyring.c:194
-#| msgid "Phrase not found"
 msgid "Password not found"
 msgstr "ئىم تېپىلمىدى"
 
@@ -722,11 +724,11 @@ msgstr "قوشنىلار"
 msgid "Yahoo! Japan"
 msgstr "Yahoo! Japan"
 
-#: ../libempathy/empathy-utils.c:531
+#: ../libempathy/empathy-utils.c:538 ../src/empathy-roster-window.c:672
 msgid "Google Talk"
 msgstr "گۇگىل سۆھبەت(Google Talk)"
 
-#: ../libempathy/empathy-utils.c:532
+#: ../libempathy/empathy-utils.c:539
 msgid "Facebook Chat"
 msgstr "Facebook سۆھبەت"
 
@@ -740,12 +742,10 @@ msgstr "بارلىق ھېساباتلار"
 #: ../libempathy-gtk/empathy-account-widget-jabber.ui.h:14
 #: ../libempathy-gtk/empathy-account-widget-msn.ui.h:1
 #: ../libempathy-gtk/empathy-account-widget-sip.ui.h:1
-#| msgid "Pass_word:"
 msgid "Pass_word"
 msgstr "ئىم(_W)"
 
 #: ../libempathy-gtk/empathy-account-widget-aim.ui.h:2
-#| msgid "Screen _Name:"
 msgid "Screen _Name"
 msgstr "ئېكران ئاتى(_N)"
 
@@ -770,7 +770,6 @@ msgstr "ئىم ئەستە تۇت"
 #: ../libempathy-gtk/empathy-account-widget-icq.ui.h:6
 #: ../libempathy-gtk/empathy-account-widget-jabber.ui.h:21
 #: ../libempathy-gtk/empathy-account-widget-msn.ui.h:5
-#| msgid "_Port:"
 msgid "_Port"
 msgstr "ئېغىز(_P)"
 
@@ -779,7 +778,6 @@ msgstr "ئېغىز(_P)"
 #: ../libempathy-gtk/empathy-account-widget-icq.ui.h:7
 #: ../libempathy-gtk/empathy-account-widget-jabber.ui.h:20
 #: ../libempathy-gtk/empathy-account-widget-msn.ui.h:6
-#| msgid "_Server:"
 msgid "_Server"
 msgstr "مۇلازىمېتىر(_S)"
 
@@ -832,7 +830,7 @@ msgstr "مۇلازىمېتىر"
 
 #: ../libempathy-gtk/empathy-account-widget.c:678
 #: ../libempathy-gtk/empathy-account-widget-sip.ui.h:20
-#: ../libempathy-gtk/empathy-irc-network-dialog.c:529
+#: ../libempathy-gtk/empathy-irc-network-dialog.c:532
 msgid "Port"
 msgstr "ئېغىز"
 
@@ -890,7 +888,6 @@ msgstr "يېڭى ھېسابات"
 #: ../libempathy-gtk/empathy-account-widget-groupwise.ui.h:2
 #: ../libempathy-gtk/empathy-account-widget-jabber.ui.h:13
 #: ../libempathy-gtk/empathy-account-widget-msn.ui.h:2
-#| msgid "Login I_D:"
 msgid "Login I_D"
 msgstr "كىرىش كىملىكى(_D)"
 
@@ -908,7 +905,6 @@ msgid "What is your GroupWise password?"
 msgstr "GroupWise دىكى ئىمىڭىز؟"
 
 #: ../libempathy-gtk/empathy-account-widget-icq.ui.h:2
-#| msgid "ICQ _UIN:"
 msgid "ICQ _UIN"
 msgstr "ICQ _UIN"
 
@@ -917,7 +913,6 @@ msgid "<b>Example:</b> 123456789"
 msgstr "<b>مىسال:</b> 123456789"
 
 #: ../libempathy-gtk/empathy-account-widget-icq.ui.h:5
-#| msgid "Ch_aracter set:"
 msgid "Ch_aracter set"
 msgstr "ھەرپ توپى(_A)"
 
@@ -934,7 +929,6 @@ msgid "Network"
 msgstr "تور"
 
 #: ../libempathy-gtk/empathy-account-widget-irc.ui.h:2
-#| msgid "Character set:"
 msgid "Character set"
 msgstr "ھەرپ توپى"
 
@@ -972,22 +966,18 @@ msgid ""
 msgstr "نۇرغۇن IRC مۇلازىمەتلىرى ئىم تەلەپ قىلمايدۇ، بىلمىسىڭىز ئىمنى كىرگۈزمەڭ."
 
 #: ../libempathy-gtk/empathy-account-widget-irc.ui.h:11
-#| msgid "Nickname:"
 msgid "Nickname"
 msgstr "تەخەللۇس"
 
 #: ../libempathy-gtk/empathy-account-widget-irc.ui.h:13
-#| msgid "Quit message:"
 msgid "Quit message"
 msgstr "ئۇچۇرنى ئاخىرلاشتۇر"
 
 #: ../libempathy-gtk/empathy-account-widget-irc.ui.h:14
-#| msgid "Real name:"
 msgid "Real name"
 msgstr "ھەقىقىي ئاتى:"
 
 #: ../libempathy-gtk/empathy-account-widget-irc.ui.h:15
-#| msgid "Username:"
 msgid "Username"
 msgstr "ئىشلەتكۈچى ئاتى"
 
@@ -1039,12 +1029,10 @@ msgid "I_gnore SSL certificate errors"
 msgstr "SSL ئىسپاتنامىسىدىكى خاتالىققا پەرۋا قىلما(_G)"
 
 #: ../libempathy-gtk/empathy-account-widget-jabber.ui.h:16
-#| msgid "Priori_ty:"
 msgid "Priori_ty"
 msgstr "مەرتىۋىسى(_T)"
 
 #: ../libempathy-gtk/empathy-account-widget-jabber.ui.h:17
-#| msgid "Reso_urce:"
 msgid "Reso_urce"
 msgstr "مەنبە(_U)"
 
@@ -1077,32 +1065,26 @@ msgid "What is your desired Jabber password?"
 msgstr "Jabber دىكى ئارزۇ قىلغان ئىمىڭىز نېمە؟"
 
 #: ../libempathy-gtk/empathy-account-widget-local-xmpp.ui.h:1
-#| msgid "Nic_kname:"
 msgid "Nic_kname"
 msgstr "لەقەم(_K)"
 
 #: ../libempathy-gtk/empathy-account-widget-local-xmpp.ui.h:2
-#| msgid "_Last Name:"
 msgid "_Last Name"
 msgstr "تەگ ئاتى(_L)"
 
 #: ../libempathy-gtk/empathy-account-widget-local-xmpp.ui.h:3
-#| msgid "_First Name:"
 msgid "_First Name"
 msgstr "ئاتى(_L)"
 
 #: ../libempathy-gtk/empathy-account-widget-local-xmpp.ui.h:4
-#| msgid "_Published Name:"
 msgid "_Published Name"
 msgstr "ئېلان قىلغان ئاتى(_P):"
 
 #: ../libempathy-gtk/empathy-account-widget-local-xmpp.ui.h:5
-#| msgid "_Jabber ID:"
 msgid "_Jabber ID"
 msgstr "جاببېر كىملىكى(_J)"
 
 #: ../libempathy-gtk/empathy-account-widget-local-xmpp.ui.h:6
-#| msgid "E-_mail address:"
 msgid "E-_mail address"
 msgstr "ئېلخەت ئادرېسى(_M)"
 
@@ -1148,7 +1130,6 @@ msgid "None"
 msgstr "يوق"
 
 #: ../libempathy-gtk/empathy-account-widget-sip.ui.h:2
-#| msgid "_Username:"
 msgid "_Username"
 msgstr "ئىشلەتكۈچى ئاتى(_U)"
 
@@ -1173,7 +1154,6 @@ msgid "Miscellaneous Options"
 msgstr "باشقا تاللانمىلار"
 
 #: ../libempathy-gtk/empathy-account-widget-sip.ui.h:9
-#| msgid "STUN Server:"
 msgid "STUN Server"
 msgstr "STUN مۇلازىمېتىرى"
 
@@ -1190,7 +1170,6 @@ msgid "Keep-Alive Options"
 msgstr "Keep-Alive تاللانمىسى"
 
 #: ../libempathy-gtk/empathy-account-widget-sip.ui.h:14
-#| msgid "Mechanism:"
 msgid "Mechanism"
 msgstr "مېخانىزمى:"
 
@@ -1199,12 +1178,10 @@ msgid "Interval (seconds)"
 msgstr "ئىنتېرۋال(سېكۇنت)"
 
 #: ../libempathy-gtk/empathy-account-widget-sip.ui.h:16
-#| msgid "Authentication username:"
 msgid "Authentication username"
 msgstr "كىملىك دەلىللىگۈچى ئاتى"
 
 #: ../libempathy-gtk/empathy-account-widget-sip.ui.h:17
-#| msgid "Transport:"
 msgid "Transport"
 msgstr "يوللاش"
 
@@ -1217,7 +1194,6 @@ msgid "Ignore TLS Errors"
 msgstr "TLS خاتالىقلىرىغا پەرۋا قىلما"
 
 #: ../libempathy-gtk/empathy-account-widget-sip.ui.h:21
-#| msgid "E-mail address"
 msgid "Local IP Address"
 msgstr "يەرلىك IP ئادرېسى"
 
@@ -1300,7 +1276,6 @@ msgstr "چېكىپ چوڭايتىڭ"
 
 #: ../libempathy-gtk/empathy-bad-password-dialog.c:130
 #, c-format
-#| msgid "Authentication failed"
 msgid "Authentication failed for account <b>%s</b>"
 msgstr "ھېسابات <b>%s</b> نىڭ كىملىكىنى دەلىللەش مەغلۇپ بولدى"
 
@@ -1319,14 +1294,10 @@ msgstr "تۆۋەندىكى ھېساباتىڭىزنىڭ ئىمىنى كىرگۈ�
 "<b>%s</b>"
 
 #: ../libempathy-gtk/empathy-calendar-button.c:66
-#| msgctxt "verb in a column header displaying group names"
-#| msgid "Select"
 msgid "Select..."
 msgstr "تاللا…"
 
 #: ../libempathy-gtk/empathy-calendar-button.c:154
-#| msgctxt "verb in a column header displaying group names"
-#| msgid "Select"
 msgid "_Select"
 msgstr "تاللا(_S)"
 
@@ -1368,7 +1339,6 @@ msgid "You are not allowed to change the topic"
 msgstr "سۆھبەت تېمىسىنى ئۆزگەرتەلمەيسىز"
 
 #: ../libempathy-gtk/empathy-chat.c:967
-#| msgid "invalid contact"
 msgid "Invalid contact ID"
 msgstr "ئالاقەداشنىڭ كىملىكى(ID) ئىناۋەتسىز"
 
@@ -1491,7 +1461,7 @@ msgstr "تېخى ئىشلەتكىلى بولمايدۇ"
 msgid "unknown"
 msgstr "نامەلۇم"
 
-#: ../libempathy-gtk/empathy-chat.c:1680 ../src/empathy-chat-window.c:980
+#: ../libempathy-gtk/empathy-chat.c:1680 ../src/empathy-chat-window.c:979
 msgid "Topic:"
 msgstr "سۆھبەت تېمىسى:"
 
@@ -1605,9 +1575,9 @@ msgstr "%s نى ھازىر %s دەپ قارايدۇ"
 #. We don't know if the incoming call has been accepted or not, so we
 #. * assume it hasn't and if it has, we'll set the proper status when
 #. * we get the new handler.
-#: ../libempathy-gtk/empathy-chat.c:2989 ../src/empathy-call-window.c:1467
-#: ../src/empathy-call-window.c:1517 ../src/empathy-call-window.c:2570
-#: ../src/empathy-call-window.c:2876 ../src/empathy-event-manager.c:1166
+#: ../libempathy-gtk/empathy-chat.c:2989 ../src/empathy-call-window.c:1537
+#: ../src/empathy-call-window.c:1587 ../src/empathy-call-window.c:2662
+#: ../src/empathy-call-window.c:2968 ../src/empathy-event-manager.c:1166
 msgid "Disconnected"
 msgstr "ئۈزۈلدى"
 
@@ -1680,7 +1650,7 @@ msgstr "چەكلەنگەن ئالاقەداشنى تەھرىرلەش"
 #. Account and Identifier
 #: ../libempathy-gtk/empathy-contact-blocking-dialog.ui.h:1
 #: ../libempathy-gtk/empathy-contact-search-dialog.c:529
-#: ../libempathy-gtk/empathy-individual-widget.c:1485
+#: ../libempathy-gtk/empathy-individual-widget.c:1483
 #: ../src/empathy-chatrooms-window.ui.h:2
 #: ../src/empathy-new-chatroom-dialog.ui.h:6
 msgid "Account:"
@@ -1785,12 +1755,12 @@ msgid "Please let me see when you're online. Thanks!"
 msgstr "توردا بار ۋاقتىڭىزدا مەن سىزنى كۆرەلەيدىغان بولاي. تەشەككۈرلەر!"
 
 #: ../libempathy-gtk/empathy-contact-widget.c:168
-#: ../libempathy-gtk/empathy-individual-widget.c:900
+#: ../libempathy-gtk/empathy-individual-widget.c:898
 msgid "Save Avatar"
 msgstr "باش سۈرىتىنى ساقلاش"
 
 #: ../libempathy-gtk/empathy-contact-widget.c:224
-#: ../libempathy-gtk/empathy-individual-widget.c:958
+#: ../libempathy-gtk/empathy-individual-widget.c:956
 msgid "Unable to save avatar"
 msgstr "باش سۈرىتىنى ساقلىغىلى بولمىدى"
 
@@ -1798,14 +1768,12 @@ msgstr "باش سۈرىتىنى ساقلىغىلى بولمىدى"
 #. Setup id label
 #: ../libempathy-gtk/empathy-contact-widget.ui.h:3
 #: ../libempathy-gtk/empathy-user-info.c:444
-#| msgid "Identifier:"
 msgid "Identifier"
 msgstr "بەلگە"
 
 #. Setup nickname entry
 #: ../libempathy-gtk/empathy-contact-widget.ui.h:4
 #: ../libempathy-gtk/empathy-user-info.c:449
-#| msgid "Alias:"
 msgid "Alias"
 msgstr "تەخەللۇس"
 
@@ -1828,17 +1796,14 @@ msgid "Client Information"
 msgstr "خېرىدار ئۇچۇرى"
 
 #: ../libempathy-gtk/empathy-contact-widget.ui.h:9
-#| msgid "OS:"
 msgid "OS"
 msgstr "OS"
 
 #: ../libempathy-gtk/empathy-contact-widget.ui.h:10
-#| msgid "Version:"
 msgid "Version"
 msgstr "نەشرى"
 
 #: ../libempathy-gtk/empathy-contact-widget.ui.h:11
-#| msgid "Client:"
 msgid "Client"
 msgstr "خېرىدار"
 
@@ -1934,7 +1899,7 @@ msgstr "تېلېفون قىلىشتا ئىشلىتىدىغان ھېساباتن�
 
 #: ../libempathy-gtk/empathy-individual-menu.c:357
 #: ../libempathy-gtk/empathy-log-window.ui.h:6
-#: ../src/empathy-call-window.ui.h:18
+#: ../src/empathy-call-window.ui.h:20
 msgid "Call"
 msgstr "چاقىر"
 
@@ -2015,7 +1980,7 @@ msgid "Share My Desktop"
 msgstr "ئۈستەلئۈستىنى ھەمبەھىر قىلىش"
 
 #: ../libempathy-gtk/empathy-individual-menu.c:1461
-#: ../libempathy-gtk/empathy-individual-widget.c:1368
+#: ../libempathy-gtk/empathy-individual-widget.c:1366
 msgid "Favorite"
 msgstr "يىغقۇچ"
 
@@ -2030,7 +1995,7 @@ msgstr "تەھرىر(_E)"
 
 #. send invitation
 #: ../libempathy-gtk/empathy-individual-menu.c:1655
-#: ../src/empathy-chat-window.c:1246
+#: ../src/empathy-chat-window.c:1245
 msgid "Inviting you to this room"
 msgstr "سىزنى بۇ ئۆيگە تەكلىپ قىلىۋاتىدۇ"
 
@@ -2052,7 +2017,6 @@ msgid "Removing group"
 msgstr "گۇرۇپپا ئۆچۈرۈۋاتىدۇ"
 
 #: ../libempathy-gtk/empathy-individual-view.c:2444
-#| msgid "Real name:"
 msgid "Re_name"
 msgstr "ئاتىنى ئۆزگەرت(_N)"
 
@@ -2173,16 +2137,16 @@ msgid "%B %e, %Y at %R UTC"
 msgstr "%B %e، %Y at %R UTC"
 
 #. Alias
-#: ../libempathy-gtk/empathy-individual-widget.c:1304
+#: ../libempathy-gtk/empathy-individual-widget.c:1302
 msgid "Alias:"
 msgstr "تەخەللۇس:"
 
 #. Translators: Identifier to connect to Instant Messaging network
-#: ../libempathy-gtk/empathy-individual-widget.c:1513
+#: ../libempathy-gtk/empathy-individual-widget.c:1511
 msgid "Identifier:"
 msgstr "بەلگە:"
 
-#: ../libempathy-gtk/empathy-individual-widget.c:1652
+#: ../libempathy-gtk/empathy-individual-widget.c:1650
 #, c-format
 msgid "Linked contact containing %u contact"
 msgid_plural "Linked contacts containing %u contacts"
@@ -2200,15 +2164,15 @@ msgstr "يانفون ياكى يۆتكەلمە ئۈسكۈنىدىن تورغا �
 msgid "New Network"
 msgstr "يەڭ تور"
 
-#: ../libempathy-gtk/empathy-irc-network-chooser-dialog.c:530
+#: ../libempathy-gtk/empathy-irc-network-chooser-dialog.c:548
 msgid "Choose an IRC network"
 msgstr "IRC تورىنى تاللاش"
 
-#: ../libempathy-gtk/empathy-irc-network-chooser-dialog.c:587
+#: ../libempathy-gtk/empathy-irc-network-chooser-dialog.c:631
 msgid "Reset _Networks List"
 msgstr "تور تىزىمىنى ئەسلىگە قايتۇرۇش(_N)"
 
-#: ../libempathy-gtk/empathy-irc-network-chooser-dialog.c:591
+#: ../libempathy-gtk/empathy-irc-network-chooser-dialog.c:635
 msgctxt "verb displayed on a button to select an IRC network"
 msgid "Select"
 msgstr "تاللا"
@@ -2217,7 +2181,7 @@ msgstr "تاللا"
 msgid "new server"
 msgstr "يېڭى مۇلازىمېتىر"
 
-#: ../libempathy-gtk/empathy-irc-network-dialog.c:539
+#: ../libempathy-gtk/empathy-irc-network-dialog.c:547
 msgid "SSL"
 msgstr "SSL"
 
@@ -2261,110 +2225,110 @@ msgid "Chat with %s"
 msgstr "%s بىلەن سۆزلىشىش"
 
 #: ../libempathy-gtk/empathy-log-window.c:1202
-#: ../libempathy-gtk/empathy-log-window.c:1346
+#: ../libempathy-gtk/empathy-log-window.c:1351
 msgctxt "A date with the time"
 msgid "%A, %e %B %Y %X"
 msgstr "%A، %e %B %Y %X"
 
 #. Translators: this is an emote: '* Danielle waves'
-#: ../libempathy-gtk/empathy-log-window.c:1289
+#: ../libempathy-gtk/empathy-log-window.c:1292
 #, c-format
 msgid "<i>* %s %s</i>"
 msgstr "<i>* %s %s</i>"
 
 #. Translators: this is a message: 'Danielle: hello'
 #. * The string in bold is the sender's name
-#: ../libempathy-gtk/empathy-log-window.c:1295
+#: ../libempathy-gtk/empathy-log-window.c:1298
 #, c-format
 msgid "<b>%s:</b> %s"
 msgstr "<b>%s:</b> %s"
 
-#: ../libempathy-gtk/empathy-log-window.c:1370
+#: ../libempathy-gtk/empathy-log-window.c:1375
 #, c-format
 msgid "%s second"
 msgid_plural "%s seconds"
 msgstr[0] "%s سېكۇنت"
 
-#: ../libempathy-gtk/empathy-log-window.c:1377
+#: ../libempathy-gtk/empathy-log-window.c:1382
 #, c-format
 msgid "%s minute"
 msgid_plural "%s minutes"
 msgstr[0] "%s مىنۇت"
 
-#: ../libempathy-gtk/empathy-log-window.c:1385
+#: ../libempathy-gtk/empathy-log-window.c:1390
 #, c-format
 msgid "Call took %s, ended at %s"
 msgstr "سۆزلەشكەن ۋاقىت %s، ئاخىرلاشقان ۋاقىت %s"
 
-#: ../libempathy-gtk/empathy-log-window.c:1716
+#: ../libempathy-gtk/empathy-log-window.c:1721
 msgid "Today"
 msgstr "بۈگۈن"
 
-#: ../libempathy-gtk/empathy-log-window.c:1720
+#: ../libempathy-gtk/empathy-log-window.c:1725
 msgid "Yesterday"
 msgstr "تۈنۈگۈن"
 
 #. Translators: A date such as '23 May 2010' (strftime format)
-#: ../libempathy-gtk/empathy-log-window.c:1735
+#: ../libempathy-gtk/empathy-log-window.c:1740
 msgid "%e %B %Y"
 msgstr "%e %B %Y"
 
-#: ../libempathy-gtk/empathy-log-window.c:1839
-#: ../libempathy-gtk/empathy-log-window.c:3462
+#: ../libempathy-gtk/empathy-log-window.c:1844
+#: ../libempathy-gtk/empathy-log-window.c:3467
 msgid "Anytime"
 msgstr "ھەر ۋاقىت"
 
-#: ../libempathy-gtk/empathy-log-window.c:1938
-#: ../libempathy-gtk/empathy-log-window.c:2397
+#: ../libempathy-gtk/empathy-log-window.c:1943
+#: ../libempathy-gtk/empathy-log-window.c:2402
 msgid "Anyone"
 msgstr "ھەركىم"
 
-#: ../libempathy-gtk/empathy-log-window.c:2710
+#: ../libempathy-gtk/empathy-log-window.c:2715
 msgid "Who"
 msgstr "كىم"
 
-#: ../libempathy-gtk/empathy-log-window.c:2919
+#: ../libempathy-gtk/empathy-log-window.c:2924
 msgid "When"
 msgstr "قاچان"
 
-#: ../libempathy-gtk/empathy-log-window.c:3037
+#: ../libempathy-gtk/empathy-log-window.c:3042
 msgid "Anything"
 msgstr "ھېچنېمە"
 
-#: ../libempathy-gtk/empathy-log-window.c:3039
+#: ../libempathy-gtk/empathy-log-window.c:3044
 msgid "Text chats"
 msgstr "تېكىستلىك سۆزلىشىش"
 
-#: ../libempathy-gtk/empathy-log-window.c:3040
+#: ../libempathy-gtk/empathy-log-window.c:3045
 #: ../src/empathy-preferences.ui.h:29
 msgid "Calls"
 msgstr "چاقىرىشلار"
 
-#: ../libempathy-gtk/empathy-log-window.c:3044
+#: ../libempathy-gtk/empathy-log-window.c:3049
 msgid "Incoming calls"
 msgstr "كىرگەن چاقىرىشلار"
 
-#: ../libempathy-gtk/empathy-log-window.c:3045
+#: ../libempathy-gtk/empathy-log-window.c:3050
 msgid "Outgoing calls"
 msgstr "چىققان چاقىرىشلار"
 
-#: ../libempathy-gtk/empathy-log-window.c:3046
+#: ../libempathy-gtk/empathy-log-window.c:3051
 msgid "Missed calls"
 msgstr "سۆزلەشمىگەن چاقىرىشلار"
 
-#: ../libempathy-gtk/empathy-log-window.c:3066
+#: ../libempathy-gtk/empathy-log-window.c:3071
 msgid "What"
 msgstr "مەزمۇن"
 
-#: ../libempathy-gtk/empathy-log-window.c:3755
+#: ../libempathy-gtk/empathy-log-window.c:3760
 msgid "Are you sure you want to delete all logs of previous conversations?"
 msgstr "راستلا بۇرۇنقى سۆھبەت خاتىرىلىرىنى ئۆچۈرەمسىز؟"
 
-#: ../libempathy-gtk/empathy-log-window.c:3759
+#: ../libempathy-gtk/empathy-log-window.c:3764
 msgid "Clear All"
 msgstr "ھەممىنى تازىلا"
 
-#: ../libempathy-gtk/empathy-log-window.c:3766
+#: ../libempathy-gtk/empathy-log-window.c:3771
 msgid "Delete from:"
 msgstr "تۆۋەندىكىدىن ئۆچۈرۈش:"
 
@@ -2386,12 +2350,12 @@ msgid "Profile"
 msgstr "سەپلىمە ھۆججەت"
 
 #: ../libempathy-gtk/empathy-log-window.ui.h:5
-#: ../src/empathy-chat-window.ui.h:19 ../src/empathy-preferences.ui.h:11
+#: ../src/empathy-chat-window.c:1438 ../src/empathy-preferences.ui.h:11
 msgid "Chat"
 msgstr "سۆھبەت"
 
 #: ../libempathy-gtk/empathy-log-window.ui.h:7
-#: ../src/empathy-call-window.ui.h:24
+#: ../src/empathy-call-window.ui.h:26
 msgid "Video"
 msgstr "سىن"
 
@@ -2615,16 +2579,15 @@ msgid "_Decline"
 msgstr "رەت قىل(_D)"
 
 #: ../libempathy-gtk/empathy-subscription-dialog.c:282
-#| msgid "Accept"
 msgid "_Accept"
 msgstr "قوشۇل(_A)"
 
-#: ../libempathy-gtk/empathy-theme-adium.c:1125
+#: ../libempathy-gtk/empathy-theme-adium.c:1124
 #, c-format
 msgid "Message edited at %s"
 msgstr "ئۇچۇر %s دە تەھرىرلەندى"
 
-#: ../libempathy-gtk/empathy-theme-adium.c:1841
+#: ../libempathy-gtk/empathy-theme-adium.c:1824
 msgid "Normal"
 msgstr "نورمال"
 
@@ -2732,19 +2695,23 @@ msgid "Go online to edit your personal information."
 msgstr "شەخسىي ئۇچۇرلارنى تەھرىرلەش ئۈچۈن تورغا باغلىنىڭ."
 
 #: ../libempathy-gtk/empathy-user-info.c:464
-#| msgid "Personal Details"
 msgid "<b>Personal Details</b>"
 msgstr "<b>شەخسىي ئۇچۇرلار</b>"
 
 #. Copy Link Address menu item
-#: ../libempathy-gtk/empathy-webkit-utils.c:278
+#: ../libempathy-gtk/empathy-webkit-utils.c:284
 msgid "_Copy Link Address"
 msgstr "ئۇلانما ئاتىنى كۆچۈر(_C)"
 
 #. Open Link menu item
-#: ../libempathy-gtk/empathy-webkit-utils.c:285
+#: ../libempathy-gtk/empathy-webkit-utils.c:291
 msgid "_Open Link"
 msgstr "ئۇلانما ئاچ(_O)"
+
+#. Inspector
+#: ../libempathy-gtk/empathy-webkit-utils.c:305
+msgid "Inspect HTML"
+msgstr "HTML نى تەكشۈر"
 
 #: ../libempathy-gtk/totem-subtitle-encoding.c:158
 msgid "Current Locale"
@@ -2914,13 +2881,20 @@ msgid "Vietnamese"
 msgstr "ۋىيېتنامچە"
 
 #: ../libempathy-gtk/empathy-roster-model.h:29
-#| msgid "Contact"
 msgid "Top Contacts"
 msgstr "ھەمىشە ئالاقە قىلىدىغانلار"
 
 #: ../libempathy-gtk/empathy-roster-model.h:31
 msgid "Ungrouped"
 msgstr "گۇرۇپپىلانمىغان"
+
+#. Add a prefix explaining that something goes wrong when trying to
+#. * fetch contact's presence.
+#: ../libempathy-gtk/empathy-roster-contact.c:205
+#, c-format
+#| msgid "Select a contact"
+msgid "Server cannot find contact: %s"
+msgstr "مۇلازىمېتىر ئالاقەداشنى تاپالمىدى: %s"
 
 #: ../nautilus-sendto-plugin/empathy-nautilus-sendto.c:231
 msgid "No error message"
@@ -2955,7 +2929,7 @@ msgstr "سىز Empathy بىلەن بىللە GNU ئادەتتىكى ئاممىۋ
 
 #: ../src/empathy-about-dialog.c:109
 msgid "An Instant Messaging client for GNOME"
-msgstr "GNOME دىكى مۇڭداشقۇ خېرىدارى"
+msgstr "گىنوم دىكى مۇڭداشقۇ خېرىدارى"
 
 #: ../src/empathy-about-dialog.c:115
 msgid "translator-credits"
@@ -3007,7 +2981,7 @@ msgstr "سىزنىڭ %s ھېساباتىڭىزدا تېخى ساقلانمىغا
 msgid "Your new account has not been saved yet."
 msgstr "يېڭى ھېساباتىڭىز تېخى ساقلانمىدى."
 
-#: ../src/empathy-accounts-dialog.c:404 ../src/empathy-call-window.c:1267
+#: ../src/empathy-accounts-dialog.c:404 ../src/empathy-call-window.c:1279
 msgid "Connecting…"
 msgstr "باغلىنىۋاتىدۇ…"
 
@@ -3044,20 +3018,20 @@ msgstr "توردا يوق — ھېسابات چەكلەنگەن"
 msgid "Edit Connection Parameters"
 msgstr "باغلىنىش پارامېتىرلىرىنى تەھرىرلەش"
 
-#: ../src/empathy-accounts-dialog.c:733
+#: ../src/empathy-accounts-dialog.c:735
 msgid "_Edit Connection Parameters..."
 msgstr "باغلىنىش پارامېتىرلىرىنى تەھرىرلەش(_E)…"
 
-#: ../src/empathy-accounts-dialog.c:1266
+#: ../src/empathy-accounts-dialog.c:1268
 #, c-format
 msgid "Do you want to remove %s from your computer?"
 msgstr "كومپيۇتېرىڭىزدىن %s نى چىقىرىۋېتەمسىز؟"
 
-#: ../src/empathy-accounts-dialog.c:1270
+#: ../src/empathy-accounts-dialog.c:1272
 msgid "This will not remove your account on the server."
 msgstr "بۇ مۇلازىمېتىردىكى ھېساباتىڭىزنى چىقىرىۋەتمەيدۇ."
 
-#: ../src/empathy-accounts-dialog.c:1475
+#: ../src/empathy-accounts-dialog.c:1477
 msgid ""
 "You are about to select another account, which will discard\n"
 "your changes. Are you sure you want to proceed?"
@@ -3065,25 +3039,24 @@ msgstr "باشقا ھېساباتنى تاللىماقچى بولۇۋاتىسى�
 "ئۆزگىرىشلەر يوق بولۇپ كېتىدۇ. داۋاملاشتۇرۇۋەرسۇنمۇ؟"
 
 #. Menu item: to enabled/disable the account
-#: ../src/empathy-accounts-dialog.c:1666
+#: ../src/empathy-accounts-dialog.c:1668
 msgid "_Enabled"
 msgstr "قوزغىتىلغان(_E)"
 
 #. Menu item: Rename
-#: ../src/empathy-accounts-dialog.c:1689
-#| msgid "Real name:"
+#: ../src/empathy-accounts-dialog.c:1691
 msgid "Rename"
 msgstr "ئات ئۆزگەرت"
 
-#: ../src/empathy-accounts-dialog.c:2105
+#: ../src/empathy-accounts-dialog.c:2107
 msgid "_Skip"
 msgstr "ئۆتكۈزۈۋەت(_S)"
 
-#: ../src/empathy-accounts-dialog.c:2109
+#: ../src/empathy-accounts-dialog.c:2111
 msgid "_Connect"
 msgstr "باغلا(_C)"
 
-#: ../src/empathy-accounts-dialog.c:2288
+#: ../src/empathy-accounts-dialog.c:2290
 msgid ""
 "You are about to close the window, which will discard\n"
 "your changes. Are you sure you want to proceed?"
@@ -3091,7 +3064,7 @@ msgstr "كۆزنەكنى ياپماقچى بولۇۋاتىسىز، بۇنىڭد�
 "ئۆزگىرىشلەر يوق بولۇپ كېتىدۇ. داۋاملاشتۇرۇۋەرسۇنمۇ؟"
 
 #. Tweak the dialog
-#: ../src/empathy-accounts-dialog.c:2431
+#: ../src/empathy-accounts-dialog.c:2433
 msgid "Messaging and VoIP Accounts"
 msgstr "مۇڭداشقۇ ۋە VoIP ھېساباتلىرى"
 
@@ -3148,11 +3121,16 @@ msgstr "Telepathy ھېسابات باشقۇرغۇ بىلەن باغلىنىشت�
 "\n"
 "%s"
 
-#: ../src/empathy-call.c:193
+#: ../src/empathy-call.c:124
+#| msgid "Incoming call"
+msgid "In a call"
+msgstr "سۆزلىشىۋاتىدۇ"
+
+#: ../src/empathy-call.c:224
 msgid "- Empathy Audio/Video Client"
 msgstr "- Empathy ئۈن/سىن خېرىدار پروگراممىسى"
 
-#: ../src/empathy-call.c:217
+#: ../src/empathy-call.c:248
 msgid "Empathy Audio/Video Client"
 msgstr "Empathy ئۈن/سىن خېرىدار پروگراممىسى"
 
@@ -3161,33 +3139,27 @@ msgstr "Empathy ئۈن/سىن خېرىدار پروگراممىسى"
 msgid "%s just tried to call you, but you were in another call."
 msgstr "%s سىزنى چاقىرغان ئىدى، بىراق سىز باشقىلار بىلەن سۆزلىشىۋاتقان."
 
-#. Translators: this is an "Info" label. It should be as short
-#. * as possible.
-#: ../src/empathy-call-window.c:1124 ../src/empathy-call-window.c:1140
-msgid "i"
-msgstr "i"
-
-#: ../src/empathy-call-window.c:1484 ../src/empathy-event-manager.c:508
+#: ../src/empathy-call-window.c:1554 ../src/empathy-event-manager.c:508
 msgid "Incoming call"
 msgstr "بىرى چاقىرىۋاتىدۇ"
 
-#: ../src/empathy-call-window.c:1490 ../src/empathy-event-manager.c:913
+#: ../src/empathy-call-window.c:1560 ../src/empathy-event-manager.c:913
 #, c-format
 msgid "Incoming video call from %s"
 msgstr "%s دىن كەلگەن سىنلىق چاقىرىش"
 
-#: ../src/empathy-call-window.c:1490 ../src/empathy-event-manager.c:516
+#: ../src/empathy-call-window.c:1560 ../src/empathy-event-manager.c:516
 #: ../src/empathy-event-manager.c:913
 #, c-format
 msgid "Incoming call from %s"
 msgstr "%s دىن كەلگەن تېلېفون"
 
-#: ../src/empathy-call-window.c:1494
+#: ../src/empathy-call-window.c:1564
 #: ../src/empathy-notifications-approver.c:197
 msgid "Reject"
 msgstr "رەت قىل"
 
-#: ../src/empathy-call-window.c:1495
+#: ../src/empathy-call-window.c:1565
 #: ../src/empathy-notifications-approver.c:202
 #: ../src/empathy-notifications-approver.c:207
 msgid "Answer"
@@ -3195,95 +3167,95 @@ msgstr "جاۋاب"
 
 #. translators: Call is a noun and %s is the contact name. This string
 #. * is used in the window title
-#: ../src/empathy-call-window.c:1861
+#: ../src/empathy-call-window.c:1934
 #, c-format
 msgid "Call with %s"
 msgstr "%s بىلەن سۆزلىشىش"
 
-#: ../src/empathy-call-window.c:2113
+#: ../src/empathy-call-window.c:2186
 msgid "The IP address as seen by the machine"
 msgstr "كومپيۇتېردا ئۇچرىغان IP ئادرېسى"
 
-#: ../src/empathy-call-window.c:2115
+#: ../src/empathy-call-window.c:2188
 msgid "The IP address as seen by a server on the Internet"
 msgstr "ئىنتېرنېتتىكى مۇلازىمېتىردا ئۇچرىغان IP ئادرېسى"
 
-#: ../src/empathy-call-window.c:2117
+#: ../src/empathy-call-window.c:2190
 msgid "The IP address of the peer as seen by the other side"
 msgstr "قارشى تەرەپتە ئۇچرىغان تەڭتۇش(peer)  IP ئادرېسى"
 
-#: ../src/empathy-call-window.c:2119
+#: ../src/empathy-call-window.c:2192
 msgid "The IP address of a relay server"
 msgstr "ئۇلاپ تارقىتىش مۇلازىمېتىرىنىڭ IP ئادرېسى"
 
-#: ../src/empathy-call-window.c:2121
+#: ../src/empathy-call-window.c:2194
 msgid "The IP address of the multicast group"
 msgstr "كۆپ ئادرېسلىق خەۋەرلىشىش گۇرۇپپىسىنىڭ IP ئادرېسى"
 
-#: ../src/empathy-call-window.c:2522 ../src/empathy-call-window.c:2523
-#: ../src/empathy-call-window.c:2524 ../src/empathy-call-window.c:2525
-#: ../src/empathy-call-window.ui.h:26
+#: ../src/empathy-call-window.c:2605 ../src/empathy-call-window.c:2606
+#: ../src/empathy-call-window.c:2607 ../src/empathy-call-window.c:2608
+#: ../src/empathy-call-window.ui.h:28
 msgid "Unknown"
 msgstr "نامەلۇم"
 
-#: ../src/empathy-call-window.c:2874
+#: ../src/empathy-call-window.c:2966
 msgid "On hold"
 msgstr "كۈتۈپ تۇر"
 
-#: ../src/empathy-call-window.c:2878
+#: ../src/empathy-call-window.c:2970
 msgid "Mute"
 msgstr "ئۈنسىز"
 
-#: ../src/empathy-call-window.c:2880
+#: ../src/empathy-call-window.c:2972
 msgid "Duration"
 msgstr "ۋاقتى"
 
 #. Translators: 'status - minutes:seconds' the caller has been connected
-#: ../src/empathy-call-window.c:2883
+#: ../src/empathy-call-window.c:2975
 #, c-format
 msgid "%s — %d:%02dm"
 msgstr "%s — %d:%02dm"
 
-#: ../src/empathy-call-window.c:2979
+#: ../src/empathy-call-window.c:3071
 msgid "Technical Details"
 msgstr "تېخنىكىلىق تەپسىلات"
 
-#: ../src/empathy-call-window.c:3018
+#: ../src/empathy-call-window.c:3110
 #, c-format
 msgid ""
 "%s's software does not understand any of the audio formats supported by your "
 "computer"
 msgstr "%s's يۇمشاق دېتالى كومپيۇتېرىڭىزدا بار بولغان ھېچقانداق ئۈن فورماتىنى تونۇمىدى."
 
-#: ../src/empathy-call-window.c:3023
+#: ../src/empathy-call-window.c:3115
 #, c-format
 msgid ""
 "%s's software does not understand any of the video formats supported by your "
 "computer"
 msgstr "%s's يۇمشاق دېتالى كومپيۇتېرىڭىزدا بار بولغان ھېچقانداق سىن فورماتىنى تونۇمىدى."
 
-#: ../src/empathy-call-window.c:3029
+#: ../src/empathy-call-window.c:3121
 #, c-format
 msgid ""
 "Can't establish a connection to %s. One of you might be on a network that "
 "does not allow direct connections."
 msgstr "%s نىڭ بىلەن باغلىنىش قۇرالمىدى. سىزنىڭ ياكى قارىشى تەرەپنىڭ بىۋاسىتە باغلىنىشقا رۇخسەت قىلىنمىغان بولۇشى مۇمكىن."
 
-#: ../src/empathy-call-window.c:3035
+#: ../src/empathy-call-window.c:3127
 msgid "There was a failure on the network"
 msgstr "توردا خاتالىق يۈز بەردى"
 
-#: ../src/empathy-call-window.c:3039
+#: ../src/empathy-call-window.c:3131
 msgid ""
 "The audio formats necessary for this call are not installed on your computer"
 msgstr "بۇ سۆزلىشىشكە زۆرۈر بولغان ئۈن فورماتلىرى كومپيۇتېرغا ئورنىتىلماپتۇ"
 
-#: ../src/empathy-call-window.c:3042
+#: ../src/empathy-call-window.c:3134
 msgid ""
 "The video formats necessary for this call are not installed on your computer"
 msgstr "بۇ سۆزلىشىشكە زۆرۈر بولغان سىن فورماتلىرى كومپيۇتېرغا ئورنىتىلماپتۇ"
 
-#: ../src/empathy-call-window.c:3054
+#: ../src/empathy-call-window.c:3146
 #, c-format
 msgid ""
 "Something unexpected happened in a Telepathy component. Please <a href=\"%s"
@@ -3291,32 +3263,32 @@ msgid ""
 "the Help menu."
 msgstr "Telepathy بۆلىكىدە غەلىتىلىك يۈز بەردى. «ياردەم» تىزىملىكىدىكى «سازلاش» كۆزنىكىدە خاتىرىلىگەن ئۇچۇرلار بىلەن قوشۇپ <a href=\"%s\">بۇ كەمتۈكنى مەلۇم قىلىڭ</a>."
 
-#: ../src/empathy-call-window.c:3063
+#: ../src/empathy-call-window.c:3155
 msgid "There was a failure in the call engine"
 msgstr "چاقىرىش ماتورىدا خاتالىق يۈز بەردى"
 
-#: ../src/empathy-call-window.c:3066
+#: ../src/empathy-call-window.c:3158
 msgid "The end of the stream was reached"
 msgstr "ئېقىم ئاخىرلاشتى"
 
-#: ../src/empathy-call-window.c:3106
+#: ../src/empathy-call-window.c:3198
 msgid "Can't establish audio stream"
 msgstr "ئۈن ئېقىمىنى قۇرغىلى بولمىدى"
 
-#: ../src/empathy-call-window.c:3116
+#: ../src/empathy-call-window.c:3208
 msgid "Can't establish video stream"
 msgstr "سىن ئېقىمىنى قۇرغىلى بولمىدى"
 
-#: ../src/empathy-call-window.c:3153
+#: ../src/empathy-call-window.c:3245
 #, c-format
 msgid "Your current balance is %s."
 msgstr "ھازىر بار پۇل %s."
 
-#: ../src/empathy-call-window.c:3157
+#: ../src/empathy-call-window.c:3249
 msgid "Sorry, you don’t have enough credit for that call."
 msgstr "كەچۈرۈڭ، تېلېفون قىلىش ئۈچۈن يېتەرلىك پۇلىڭىز يوق."
 
-#: ../src/empathy-call-window.c:3159
+#: ../src/empathy-call-window.c:3251
 msgid "Top Up"
 msgstr "قىممەت تولۇقلاڭ"
 
@@ -3353,74 +3325,82 @@ msgid "_Debug"
 msgstr "سازلا(_D)"
 
 #: ../src/empathy-call-window.ui.h:10
+msgid "_GStreamer"
+msgstr "_GStreamer"
+
+#: ../src/empathy-call-window.ui.h:11
+msgid "_Telepathy"
+msgstr "_Telepathy"
+
+#: ../src/empathy-call-window.ui.h:12
 msgid "Swap camera"
 msgstr "كامېرا ئالماشتۇر"
 
-#: ../src/empathy-call-window.ui.h:11
+#: ../src/empathy-call-window.ui.h:13
 msgid "Minimise me"
 msgstr "مېنى ئەڭ كىچىك قىل"
 
-#: ../src/empathy-call-window.ui.h:12
+#: ../src/empathy-call-window.ui.h:14
 msgid "Maximise me"
 msgstr "مېنى ئەڭ چوڭ قىل"
 
-#: ../src/empathy-call-window.ui.h:13
+#: ../src/empathy-call-window.ui.h:15
 msgid "Disable camera"
 msgstr "كامېرانى ئىناۋەتسىز قىلىش"
 
-#: ../src/empathy-call-window.ui.h:14
+#: ../src/empathy-call-window.ui.h:16
 msgid "Hang up"
 msgstr "توختىتىپ قويۇش"
 
-#: ../src/empathy-call-window.ui.h:15
+#: ../src/empathy-call-window.ui.h:17
 msgid "Hang up current call"
 msgstr "ھازىرقى سۆزلىشىشنى توختىتىپ قويۇش"
 
-#: ../src/empathy-call-window.ui.h:16
+#: ../src/empathy-call-window.ui.h:18
 msgid "Video call"
 msgstr "سىنلىق سۆزلىشىش"
 
-#: ../src/empathy-call-window.ui.h:17
+#: ../src/empathy-call-window.ui.h:19
 msgid "Start a video call"
 msgstr "سىنلىق سۆزلىشىشنى باشلايدۇ"
 
-#: ../src/empathy-call-window.ui.h:19
+#: ../src/empathy-call-window.ui.h:21
 msgid "Start an audio call"
 msgstr "ئاۋازلىق سۆزلىشىشنى باشلايدۇ"
 
-#: ../src/empathy-call-window.ui.h:20
+#: ../src/empathy-call-window.ui.h:22
 msgid "Show dialpad"
 msgstr "نومۇر تاختا كۆرسەت"
 
-#: ../src/empathy-call-window.ui.h:21
+#: ../src/empathy-call-window.ui.h:23
 msgid "Display the dialpad"
 msgstr "نومۇر تاختىسىنى كۆرسىتىش"
 
-#: ../src/empathy-call-window.ui.h:22
+#: ../src/empathy-call-window.ui.h:24
 msgid "Toggle video transmission"
 msgstr "سىن تارقىتىشىنى ئالماشتۇرۇش(ئېچىش ياكى ئېتىش)"
 
-#: ../src/empathy-call-window.ui.h:23
+#: ../src/empathy-call-window.ui.h:25
 msgid "Toggle audio transmission"
 msgstr "ئۈن تارقىتىشىنى ئالماشتۇرۇش(ئېچىش ياكى ئېتىش)"
 
-#: ../src/empathy-call-window.ui.h:25
+#: ../src/empathy-call-window.ui.h:27
 msgid "Encoding Codec:"
 msgstr "كودلىغۇچلار:"
 
-#: ../src/empathy-call-window.ui.h:27
+#: ../src/empathy-call-window.ui.h:29
 msgid "Decoding Codec:"
 msgstr "كودسىزلىغۇچ:"
 
-#: ../src/empathy-call-window.ui.h:28
+#: ../src/empathy-call-window.ui.h:30
 msgid "Remote Candidate:"
 msgstr "يىراقتىكى كاندىدات:"
 
-#: ../src/empathy-call-window.ui.h:29
+#: ../src/empathy-call-window.ui.h:31
 msgid "Local Candidate:"
 msgstr "يەرلىك نامزات:"
 
-#: ../src/empathy-call-window.ui.h:30 ../src/empathy-preferences.ui.h:28
+#: ../src/empathy-call-window.ui.h:32 ../src/empathy-preferences.ui.h:28
 msgid "Audio"
 msgstr "ئۈن"
 
@@ -3444,18 +3424,18 @@ msgstr "ئاپتوماتىك باغلىنىش"
 msgid "Manage Favorite Rooms"
 msgstr "ئامراق ئۆيلەرنى باشقۇرۇش"
 
-#: ../src/empathy-chat-window.c:288
+#: ../src/empathy-chat-window.c:287
 msgid "Close this window?"
 msgstr "بۇ كۆزنەكنى ياپ؟"
 
-#: ../src/empathy-chat-window.c:294
+#: ../src/empathy-chat-window.c:293
 #, c-format
 msgid ""
 "Closing this window will leave %s. You will not receive any further messages "
 "until you rejoin it."
 msgstr "كۆزنەك يېپىلسا %s دىن ئايرىلىسىز. قايتا قوشۇلمىغۇچە ھېچقانداق ئۇچۇر تاپشۇرۇپ ئالالمايسىز."
 
-#: ../src/empathy-chat-window.c:307
+#: ../src/empathy-chat-window.c:306
 #, c-format
 msgid ""
 "Closing this window will leave a chat room. You will not receive any further "
@@ -3465,60 +3445,60 @@ msgid_plural ""
 "further messages until you rejoin them."
 msgstr[0] "كۆزنەك يېپىلسا %u پاراڭخانىدىن ئايرىلىسىز. قايتا قوشۇلمىغۇچە، ھېچقانداق ئۇچۇر تاپشۇرۇپ ئالالمايسىز."
 
-#: ../src/empathy-chat-window.c:318
+#: ../src/empathy-chat-window.c:317
 #, c-format
 msgid "Leave %s?"
 msgstr "%s دىن ئايرىلامسىز؟"
 
-#: ../src/empathy-chat-window.c:320
+#: ../src/empathy-chat-window.c:319
 msgid ""
 "You will not receive any further messages from this chat room until you "
 "rejoin it."
 msgstr "قايتا قوشۇلمىغۇچە، ھېچقانداق ئۇچۇر تاپشۇرۇپ ئالالمايسىز."
 
-#: ../src/empathy-chat-window.c:339
+#: ../src/empathy-chat-window.c:338
 msgid "Close window"
 msgstr "كۆزنەك ياپ"
 
-#: ../src/empathy-chat-window.c:339
+#: ../src/empathy-chat-window.c:338
 msgid "Leave room"
 msgstr "ھۇجرىدىن ئايرىلىش"
 
-#: ../src/empathy-chat-window.c:678 ../src/empathy-chat-window.c:701
+#: ../src/empathy-chat-window.c:677 ../src/empathy-chat-window.c:700
 #, c-format
 msgid "%s (%d unread)"
 msgid_plural "%s (%d unread)"
 msgstr[0] "%s (%d  ئوقۇلمىدى)"
 
-#: ../src/empathy-chat-window.c:693
+#: ../src/empathy-chat-window.c:692
 #, c-format
 msgid "%s (and %u other)"
 msgid_plural "%s (and %u others)"
 msgstr[0] "%s (ۋە %u باشقىلار)"
 
-#: ../src/empathy-chat-window.c:709
+#: ../src/empathy-chat-window.c:708
 #, c-format
 msgid "%s (%d unread from others)"
 msgid_plural "%s (%d unread from others)"
 msgstr[0] "%s (باشقىلاردىن %d  ئوقۇلمىدى)"
 
-#: ../src/empathy-chat-window.c:718
+#: ../src/empathy-chat-window.c:717
 #, c-format
 msgid "%s (%d unread from all)"
 msgid_plural "%s (%d unread from all)"
 msgstr[0] "%s (ھەممىسىدىن %d  ئوقۇلمىدى)"
 
-#: ../src/empathy-chat-window.c:955
+#: ../src/empathy-chat-window.c:954
 msgid "SMS:"
 msgstr "SMS:"
 
-#: ../src/empathy-chat-window.c:963
+#: ../src/empathy-chat-window.c:962
 #, c-format
 msgid "Sending %d message"
 msgid_plural "Sending %d messages"
 msgstr[0] "%d ئۇچۇرنى ئەۋەتىۋاتىدۇ"
 
-#: ../src/empathy-chat-window.c:983
+#: ../src/empathy-chat-window.c:982
 msgid "Typing a message."
 msgstr "ئۇچۇر كىرگۈزۈۋاتىدۇ."
 
@@ -3610,63 +3590,74 @@ msgstr "Pastebin ئىنكاسى"
 msgid "Data too large for a single paste. Please save logs to file."
 msgstr "چاپلاشقا بۇ سانلىق-مەلۇمات بەك چوڭ كېلىدۇ. خاتىرىنى ھۆججەتكە ساقلاڭ."
 
-#: ../src/empathy-debug-window.c:1856
+#: ../src/empathy-debug-window.c:1857
 msgid "Debug Window"
 msgstr "سازلاش كۆزنىكى"
 
-#: ../src/empathy-debug-window.c:1916
+#: ../src/empathy-debug-window.c:1917
 msgid "Send to pastebin"
 msgstr "pastebin غا ئەۋەت"
 
-#: ../src/empathy-debug-window.c:1960
+#: ../src/empathy-debug-window.c:1961
 msgid "Pause"
 msgstr "ۋاقىتلىق توختا"
 
-#: ../src/empathy-debug-window.c:1972
+#: ../src/empathy-debug-window.c:1973
 msgid "Level "
 msgstr "دەرىجە "
 
-#: ../src/empathy-debug-window.c:1991
+#: ../src/empathy-debug-window.c:1992
 msgid "Debug"
 msgstr "سازلا"
 
-#: ../src/empathy-debug-window.c:1996
+#: ../src/empathy-debug-window.c:1997
 msgid "Info"
 msgstr "ئۇچۇر"
 
-#: ../src/empathy-debug-window.c:2001 ../src/empathy-debug-window.c:2050
+#: ../src/empathy-debug-window.c:2002 ../src/empathy-debug-window.c:2077
 msgid "Message"
 msgstr "ئۇچۇر"
 
-#: ../src/empathy-debug-window.c:2006
+#: ../src/empathy-debug-window.c:2007
 msgid "Warning"
 msgstr "ئاگاھلاندۇرۇش"
 
-#: ../src/empathy-debug-window.c:2011
+#: ../src/empathy-debug-window.c:2012
 msgid "Critical"
 msgstr "ئاچقۇچلۇق"
 
-#: ../src/empathy-debug-window.c:2016
+#: ../src/empathy-debug-window.c:2017
 msgid "Error"
 msgstr "خاتالىق"
 
-#: ../src/empathy-debug-window.c:2035
+#: ../src/empathy-debug-window.c:2030
+msgid ""
+"Even if they don't display passwords, logs can contain sensitive information "
+"such as your list of contacts or the messages you recently sent or "
+"received.\n"
+"If you don't want to see such information available in a public bug report, "
+"you can choose to limit the visibility of your bug to Empathy developers "
+"when reporting it by displaying the advanced fields in the <a href=\"https://"
+"bugzilla.gnome.org/enter_bug.cgi?product=empathy\">bug report</a>."
+msgstr ""
+
+#: ../src/empathy-debug-window.c:2062
 msgid "Time"
 msgstr "ۋاقىت"
 
-#: ../src/empathy-debug-window.c:2038
+#: ../src/empathy-debug-window.c:2065
 msgid "Domain"
 msgstr "دائىرە"
 
-#: ../src/empathy-debug-window.c:2041
+#: ../src/empathy-debug-window.c:2068
 msgid "Category"
 msgstr "كاتېگورىيە"
 
-#: ../src/empathy-debug-window.c:2044
+#: ../src/empathy-debug-window.c:2071
 msgid "Level"
 msgstr "دەرىجە"
 
-#: ../src/empathy-debug-window.c:2073
+#: ../src/empathy-debug-window.c:2100
 msgid ""
 "The selected connection manager does not support the remote debugging "
 "extension."
@@ -3731,7 +3722,7 @@ msgstr "سىز %s نىڭغا تەكلىپ قىلىندىڭىز"
 msgid "Incoming file transfer from %s"
 msgstr "%s نىڭدىن كەلگەن ھۆججەت"
 
-#: ../src/empathy-event-manager.c:973 ../src/empathy-roster-window.c:225
+#: ../src/empathy-event-manager.c:973 ../src/empathy-roster-window.c:227
 msgid "Password required"
 msgstr "ئىم كىرگۈزۈڭ"
 
@@ -3903,7 +3894,6 @@ msgid "Members"
 msgstr "ئەزالار"
 
 #: ../src/empathy-new-chatroom-dialog.c:410
-#| msgid "Failed to retrieve recent logs"
 msgid "Failed to list rooms"
 msgstr "ھۇجرىلارنى تىزىپ كۆرسىتىش مەغلۇپ بولدى"
 
@@ -3943,9 +3933,6 @@ msgid "_Room:"
 msgstr "ئۆي(_R):"
 
 #: ../src/empathy-new-chatroom-dialog.ui.h:3
-#| msgid ""
-#| "Enter the server which hosts the room, or leave it empty if the room is "
-#| "on the current account's server"
 msgid ""
 "Enter the server which hosts the room, or leave it empty if the room is on "
 "the current account&apos;s server"
@@ -4071,16 +4058,14 @@ msgid "Preferences"
 msgstr "مايىللىق"
 
 #: ../src/empathy-preferences.ui.h:2
-#| msgid "Show contact groups"
 msgid "Show groups"
 msgstr "گۇرۇپپىلارنى كۆرسەت"
 
 #: ../src/empathy-preferences.ui.h:3
-#| msgid "Show and edit accounts"
 msgid "Show account balances"
 msgstr "ھېساباتتىكى پۇلنى كۆرسەت"
 
-#: ../src/empathy-preferences.ui.h:4 ../src/empathy-roster-window.c:2107
+#: ../src/empathy-preferences.ui.h:4 ../src/empathy-roster-window.c:2241
 msgid "Contact List"
 msgstr "ئالاقەداش تىزىمى"
 
@@ -4238,89 +4223,106 @@ msgstr "ۋارىيانتى:"
 msgid "Themes"
 msgstr "ئۆرنەكلەر"
 
-#: ../src/empathy-roster-window.c:242
+#: ../src/empathy-roster-window.c:244
 msgid "Provide Password"
 msgstr "ئىم تەمىنلەش"
 
-#: ../src/empathy-roster-window.c:248
+#: ../src/empathy-roster-window.c:250
 msgid "Disconnect"
 msgstr "ئۈز"
 
-#: ../src/empathy-roster-window.c:441
+#: ../src/empathy-roster-window.c:493
 msgid "You need to setup an account to see contacts here."
 msgstr "بۇ يەردىكى ئالاقەداشلارنى كۆرۈش ئۈچۈن، بىر ھېسابات قۇرۇشىڭىز كېرەك."
 
-#: ../src/empathy-roster-window.c:517
+#: ../src/empathy-roster-window.c:569
 #, c-format
 msgid "Sorry, %s accounts can’t be used until your %s software is updated."
 msgstr "كەچۈرۈڭ، %s ھېساباتلىرىنى %s يۇمشاق دېتالىنى يېڭىلىمىغۇچە ئىشلەتكىلى بولمايدۇ."
 
-#: ../src/empathy-roster-window.c:635
+#: ../src/empathy-roster-window.c:670
+msgid "Windows Live"
+msgstr "Windows Live"
+
+#: ../src/empathy-roster-window.c:674
+#| msgid "Facebook Chat"
+msgid "Facebook"
+msgstr "فېيىسبۇك(Facebook)"
+
+#. translators: %s is an account name like 'Facebook' or 'Google Talk'
+#: ../src/empathy-roster-window.c:689
+#, c-format
+msgid "%s account requires authorisation"
+msgstr "ھېسابات %s نىڭ كىملىك دەلىللىشى زۆرۈردۇر"
+
+#: ../src/empathy-roster-window.c:700
+#| msgid "Edit Account"
+msgid "Online Accounts"
+msgstr "توردىكى ھېساباتلار"
+
+#: ../src/empathy-roster-window.c:747
 msgid "Update software..."
 msgstr "يۇمشاق دېتالنى يېڭىلاش…"
 
-#: ../src/empathy-roster-window.c:641
+#: ../src/empathy-roster-window.c:753
 msgid "Reconnect"
 msgstr "قايتا باغلىنىش"
 
-#: ../src/empathy-roster-window.c:645
+#: ../src/empathy-roster-window.c:757
 msgid "Edit Account"
 msgstr "ھېساباتنى تەھرىرلەش"
 
-#: ../src/empathy-roster-window.c:650
+#: ../src/empathy-roster-window.c:762
 msgid "Close"
 msgstr "ياپ"
 
-#: ../src/empathy-roster-window.c:787
-#| msgid "Top up account credit"
+#: ../src/empathy-roster-window.c:904
 msgid "Top up account"
 msgstr "ھېساباتنى تولۇقلايمەن"
 
-#: ../src/empathy-roster-window.c:1469
+#: ../src/empathy-roster-window.c:1590
 msgid "You need to enable one of your accounts to see contacts here."
 msgstr "بۇ يەردىكى ئالاقەداشلارنى كۆرۈش ئۈچۈن، بىرەر بىر ھېساباتىڭىزنى ئىناۋەتلىك قىلىشىڭىز كېرەك."
 
 #. translators: argument is an account name
-#: ../src/empathy-roster-window.c:1477
+#: ../src/empathy-roster-window.c:1598
 #, c-format
 msgid "You need to enable %s to see contacts here."
 msgstr "بۇ يەردىكى ئالاقەداشلارنى كۆرۈش ئۈچۈن، %s نى ئىناۋەتلىك قىلىشىڭىز كېرەك."
 
-#: ../src/empathy-roster-window.c:1555
+#: ../src/empathy-roster-window.c:1676
 msgid "Change your presence to see contacts here"
 msgstr "قارىشى تەرەپنى كۆرسىتىش ئۈچۈن، ئۆزىڭىزنىڭ ھالىتىنى ئۆزگەرتىڭ."
 
-#: ../src/empathy-roster-window.c:1564
+#: ../src/empathy-roster-window.c:1685
 msgid "No match found"
 msgstr "تېپىلمىدى"
 
-#: ../src/empathy-roster-window.c:1569
-#| msgid "Show offline contacts"
+#: ../src/empathy-roster-window.c:1692
+msgid "You haven't added any contact yet"
+msgstr "تېخى ھېچقانداق ئالاقەداش قوشمىدىڭىز"
+
+#: ../src/empathy-roster-window.c:1695
 msgid "No online contacts"
 msgstr "توردا يوق ئالاقەداشلار"
 
 #: ../src/empathy-roster-window-menubar.ui.h:1
-#| msgid "New Conversation"
 msgid "_New Conversation..."
 msgstr "يېڭى سۆھبەت(_N)…"
 
 #: ../src/empathy-roster-window-menubar.ui.h:2
-#| msgid "New Call"
 msgid "New _Call..."
 msgstr "يېڭىدىن چاقىر(_C)…"
 
 #: ../src/empathy-roster-window-menubar.ui.h:3
-#| msgid "Contact"
 msgid "Contacts"
 msgstr "ئالاقەداشلار"
 
 #: ../src/empathy-roster-window-menubar.ui.h:4
-#| msgid "_Add Contact"
 msgid "_Add Contacts..."
 msgstr "ئالاقەداش قوش(_A)…"
 
 #: ../src/empathy-roster-window-menubar.ui.h:5
-#| msgid "_Search for Contacts…"
 msgid "_Search for Contacts..."
 msgstr "ئالاقەداش ئىزدە(_S)…"
 
@@ -4329,12 +4331,10 @@ msgid "_Blocked Contacts"
 msgstr "چەكلەنگەن ئالاقەداشلار(_B)"
 
 #: ../src/empathy-roster-window-menubar.ui.h:7
-#| msgid "_Room"
 msgid "_Rooms"
 msgstr "ھۇجرىلار(_R)"
 
 #: ../src/empathy-roster-window-menubar.ui.h:8
-#| msgid "_Join"
 msgid "_Join..."
 msgstr "قوشۇل(_J)…"
 
@@ -4343,7 +4343,6 @@ msgid "Join _Favorites"
 msgstr "يىغقۇچقا قوش(_F)"
 
 #: ../src/empathy-roster-window-menubar.ui.h:10
-#| msgid "Manage Favorites"
 msgid "_Manage Favorites"
 msgstr "يىغقۇچ باشقۇر(_M)"
 
@@ -4360,12 +4359,10 @@ msgid "P_references"
 msgstr "مايىللىق(_R)"
 
 #: ../src/empathy-roster-window-menubar.ui.h:15
-#| msgid "_Help"
 msgid "Help"
 msgstr "ياردەم"
 
 #: ../src/empathy-roster-window-menubar.ui.h:16
-#| msgid "Empathy"
 msgid "About Empathy"
 msgstr "Empathy ھەققىدە"
 
@@ -4381,6 +4378,16 @@ msgstr "ھېسابات تەڭشىكى"
 #: ../src/empathy-roster-window.ui.h:2
 msgid "Go _Online"
 msgstr "تورغا چىق(_O)"
+
+#: ../src/empathy-roster-window.ui.h:3
+#| msgid "Show offline contacts"
+msgid "Show _Offline Contacts"
+msgstr "توردا يوق ئالاقەداشلارنى كۆرسەت(_O)"
+
+#: ../src/empathy-roster-window.ui.h:4
+#| msgid "_Add Contacts..."
+msgid "_Add Contact..."
+msgstr "ئالاقەداش قوش…(_A)"
 
 #: ../src/empathy-status-icon.ui.h:2
 msgid "_New Conversation…"
@@ -4400,20 +4407,20 @@ msgid "Done"
 msgstr "تامام"
 
 #: ../ubuntu-online-accounts/cc-plugins/account-plugins/empathy-accounts-plugin-widget.c:210
-#| msgid "Enter your account details"
 msgid "Please enter your account details"
 msgstr "ھېساباتىڭىزغا ئائىت تەپسىلاتلارنى كىرگۈزۈڭ"
 
 #: ../ubuntu-online-accounts/cc-plugins/app-plugin/empathy-app-plugin-widget.c:160
 #, c-format
-#| msgid "Loading account information"
 msgid "Edit %s account options"
 msgstr "ھېسابات %s نىڭ تاللانمىلىرىنى تەھرىرلە"
 
 #: ../ubuntu-online-accounts/empathy.application.in.h:1
-#| msgid "Enter your account details"
 msgid "Integrate your IM accounts"
 msgstr "بارلىق مۇڭداشقۇ ھېساباتلىرىڭىزنى بىر يەرگە يىغىڭ"
+
+#~ msgid "i"
+#~ msgstr "i"
 
 #~ msgid "Manage Messaging and VoIP accounts"
 #~ msgstr "مۇڭداشقۇ ۋە VoIP ھېساباتلىرىنى باشقۇرۇش"
@@ -4569,9 +4576,6 @@ msgstr "بارلىق مۇڭداشقۇ ھېساباتلىرىڭىزنى بىر ي
 #~ msgctxt "Edit contact (contextual menu)"
 #~ msgid "_Edit"
 #~ msgstr "تەھرىر(_E)"
-
-#~ msgid "Select a contact"
-#~ msgstr "ئالاقەداش تاللايدۇ"
 
 #~ msgid "Select contacts to link"
 #~ msgstr "ئۇلايدىغان ئالاقەداشنى تاللاش"
