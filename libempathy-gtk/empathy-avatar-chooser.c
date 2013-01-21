@@ -853,7 +853,7 @@ avatar_chooser_update_preview_cb (GtkFileChooser *file_chooser,
       else
         {
           gtk_image_set_from_stock (GTK_IMAGE (image),
-                  "gtk-dialog-question",
+                  "dialog-question",
                   GTK_ICON_SIZE_DIALOG);
         }
 

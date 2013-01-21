@@ -4015,7 +4015,7 @@ empathy_call_window_state_event_cb (GtkWidget *widget,
       show_controls (window, set_fullscreen);
       show_borders (window, set_fullscreen);
       gtk_action_set_stock_id (priv->menu_fullscreen,
-          (set_fullscreen ? "gtk-leave-fullscreen" : "gtk-fullscreen"));
+          (set_fullscreen ? "view-restore" : "view-fullscreen"));
       priv->is_fullscreen = set_fullscreen;
   }
 

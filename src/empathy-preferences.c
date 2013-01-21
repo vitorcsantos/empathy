@@ -1024,7 +1024,7 @@ empathy_preferences_init (EmpathyPreferences *preferences)
 	gtk_window_set_role (GTK_WINDOW (preferences), "preferences");
 	gtk_window_set_position (GTK_WINDOW (preferences),
 				 GTK_WIN_POS_CENTER_ON_PARENT);
-	gtk_window_set_icon_name (GTK_WINDOW (preferences), "gtk-preferences");
+	gtk_window_set_icon_name (GTK_WINDOW (preferences), "preferences-desktop");
 
 	filename = empathy_file_lookup ("empathy-preferences.ui", "src");
 	gui = empathy_builder_get_file (filename,
