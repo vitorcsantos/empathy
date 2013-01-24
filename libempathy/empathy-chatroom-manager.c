@@ -199,6 +199,8 @@ add_chatroom (EmpathyChatroomManager *self,
       G_CALLBACK (chatroom_changed_cb), self);
   g_signal_connect (chatroom, "notify::always_urgent",
       G_CALLBACK (chatroom_changed_cb), self);
+  g_signal_connect (chatroom, "notify::favorite",
+      G_CALLBACK (chatroom_changed_cb), self);
 }
 
 static void
