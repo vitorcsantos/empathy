@@ -269,10 +269,11 @@ empathy_smiley_manager_load (EmpathySmileyManager *manager)
 	/* From fd.o icon-naming spec */
 	empathy_smiley_manager_add (manager, "face-angel",      "O:-)",  "O:)",  NULL);
 	empathy_smiley_manager_add (manager, "face-angry",      "X-(",   ":@",   NULL);
-	empathy_smiley_manager_add (manager, "face-cool",       "B-)",   NULL);
+	empathy_smiley_manager_add (manager, "face-cool",       "B-)",   "B-|",  NULL);
 	empathy_smiley_manager_add (manager, "face-crying",     ":'(",           NULL);
 	empathy_smiley_manager_add (manager, "face-devilish",   ">:-)",  ">:)",  NULL);
 	empathy_smiley_manager_add (manager, "face-embarrassed",":-[",   ":[",   ":-$", ":$", NULL);
+	empathy_smiley_manager_add (manager, "face-glasses",    "8-)",   NULL);
 	empathy_smiley_manager_add (manager, "face-kiss",       ":-*",   ":*",   NULL);
 	empathy_smiley_manager_add (manager, "face-laugh",      ":-))",  ":))",  NULL);
 	empathy_smiley_manager_add (manager, "face-monkey",     ":-(|)", ":(|)", NULL);
@@ -280,14 +281,16 @@ empathy_smiley_manager_load (EmpathySmileyManager *manager)
 	empathy_smiley_manager_add (manager, "face-raspberry",  ":-P",   ":P",	 ":-p", ":p", NULL);
 	empathy_smiley_manager_add (manager, "face-sad",        ":-(",   ":(",   NULL);
 	empathy_smiley_manager_add (manager, "face-sick",       ":-&",   ":&",   NULL);
-	empathy_smiley_manager_add (manager, "face-smile",      ":-)",   ":)",   NULL);
+	empathy_smiley_manager_add (manager, "face-smile",      ":-)",   ":)",   ":]",  "=)", NULL);
 	empathy_smiley_manager_add (manager, "face-smile-big",  ":-D",   ":D",   ":-d", ":d", NULL);
 	empathy_smiley_manager_add (manager, "face-smirk",      ":-!",   ":!",   NULL);
 	empathy_smiley_manager_add (manager, "face-surprise",   ":-O",   ":O",   ":-o", ":o", NULL);
 	empathy_smiley_manager_add (manager, "face-tired",      "|-)",   "|)",   NULL);
-	empathy_smiley_manager_add (manager, "face-uncertain",  ":-/",   ":/",   NULL);
+	empathy_smiley_manager_add (manager, "face-uncertain",  ":-/",   ":/",   ":-\\", ":\\", NULL);
 	empathy_smiley_manager_add (manager, "face-wink",       ";-)",   ";)",   NULL);
 	empathy_smiley_manager_add (manager, "face-worried",    ":-S",   ":S",   ":-s", ":s", NULL);
+
+	empathy_smiley_manager_add (manager, "emblem-favorite", "<3", NULL);
 }
 
 static EmpathySmileyHit *
