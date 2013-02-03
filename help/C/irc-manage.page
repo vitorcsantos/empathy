@@ -19,6 +19,11 @@
       <name>Milo Casagrande</name>
       <email>milo@ubuntu.com</email>
     </credit>
+    <credit type="editor">
+      <name>Sindhu S</name>
+      <email>sindhus@live.in</email>
+    </credit>
+
     <license>
       <p>Creative Commons Share Alike 3.0</p>
     </license>    
@@ -36,9 +41,11 @@
   <note style="info package">
     <p>You must have the <sys>telepathy-idle</sys> package installed to use IRC 
     in <app>Empathy</app>.</p>
-    <if:choose>
-      <if:when test="if:supports('action:install')">
-        <p><link action="install:telepathy-idle" xref="index" style="button">Install telepathy-idle</link></p>
+
+    <if:choose xmlns:if="http://projectmallard.org/if/1.0/">
+      <if:when test="action:install">
+        <p><link action="install:telepathy-idle" xref="index">
+          Install telepathy-idle</link></p>
       </if:when>
     </if:choose>
   </note>
