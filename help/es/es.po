@@ -1,21 +1,21 @@
 # translation of empathy-help.master.po to Español
 # Jorge González <jorgegonz@svn.gnome.org>, 2009, 2010, 2011.
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2012.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2012, 2013.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: empathy-help.master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-01 19:17+0000\n"
-"PO-Revision-Date: 2012-12-02 19:21+0100\n"
+"POT-Creation-Date: 2013-02-03 12:24+0000\n"
+"PO-Revision-Date: 2013-02-04 17:39+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
-"Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
+"Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Gtranslator 2.91.5\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
@@ -95,7 +95,7 @@ msgstr "Milo Casagrande"
 #: C/group-conversations.page:23(license/p) C/hide-contacts.page:15(license/p)
 #: C/import-account.page:31(license/p) C/introduction.page:17(license/p)
 #: C/irc-commands.page:14(license/p) C/irc-join-pwd.page:21(license/p)
-#: C/irc-join-room.page:20(license/p) C/irc-manage.page:23(license/p)
+#: C/irc-join-room.page:20(license/p) C/irc-manage.page:28(license/p)
 #: C/irc-nick-password.page:22(license/p) C/irc-send-file.page:20(license/p)
 #: C/irc-start-conversation.page:19(license/p)
 #: C/link-contacts.page:19(license/p) C/overview.page:20(license/p)
@@ -138,7 +138,7 @@ msgstr "Conversaciones de sonido y vídeo"
 msgid "Advanced Actions"
 msgstr "Acciones avanzadas"
 
-#: C/index.page:55(section/title) C/irc-manage.page:57(section/title)
+#: C/index.page:55(section/title) C/irc-manage.page:64(section/title)
 msgid "Common Problems"
 msgstr "Problemas comunes"
 
@@ -219,7 +219,7 @@ msgstr ""
 "apodo. Esta página detalla la información que puede proporcionar para una "
 "cuenta de IRC."
 
-#: C/account-irc.page:39(note/p) C/irc-manage.page:37(note/p)
+#: C/account-irc.page:39(note/p) C/irc-manage.page:42(note/p)
 msgid ""
 "You must have the <sys>telepathy-idle</sys> package installed to use IRC in "
 "<app>Empathy</app>."
@@ -363,8 +363,8 @@ msgid ""
 "height=\"16\">Remove</media>."
 msgstr ""
 "Para quitar una red de la lista seleccione y pulse <media type=\"image\" "
-"mime=\"image/png\" src=\"figures/gtk-remove.png\" width=\"16\" height="
-"\"16\">Quitar</media>."
+"mime=\"image/png\" src=\"figures/gtk-remove.png\" width=\"16\" height=\"16"
+"\">Quitar</media>."
 
 #: C/account-irc.page:115(section/p)
 msgid ""
@@ -2148,28 +2148,35 @@ msgstr ""
 msgid "How to use IRC with <app>Empathy</app>."
 msgstr "Cómo usar el IRC con <app>Empathy</app>."
 
-#: C/irc-manage.page:34(page/title)
+#: C/irc-manage.page:23(credit/name)
+msgid "Sindhu S"
+msgstr "Sindhu S"
+
+#: C/irc-manage.page:39(page/title)
 msgid "Internet Relay Chat (IRC)"
 msgstr "Internet Relay Chat (IRC)"
 
-#: C/irc-manage.page:41(when/p)
+#: C/irc-manage.page:47(when/p)
+#| msgid ""
+#| "<link action=\"install:telepathy-idle\" xref=\"index\" style=\"button"
+#| "\">Install telepathy-idle</link>"
 msgid ""
-"<link action=\"install:telepathy-idle\" xref=\"index\" style=\"button"
-"\">Install telepathy-idle</link>"
+"<link action=\"install:telepathy-idle\" xref=\"index\"> Install telepathy-"
+"idle</link>"
 msgstr ""
-"<link action=\"install:telepathy-idle\" xref=\"index\" style=\"button"
-"\">Instalar telepathy-idle</link>"
+"<link action=\"install:telepathy-idle\" xref=\"index\"> Instalar telepathy-"
+"idle</link>"
 
-#: C/irc-manage.page:48(info/title)
+#: C/irc-manage.page:55(info/title)
 msgctxt "link"
 msgid "IRC Chat Rooms and Conversations"
 msgstr "Salas de chat y conversaciones en el IRC"
 
-#: C/irc-manage.page:50(section/title)
+#: C/irc-manage.page:57(section/title)
 msgid "Chat Rooms and Conversations"
 msgstr "Salas de chat y conversaciones"
 
-#: C/irc-manage.page:55(info/title)
+#: C/irc-manage.page:62(info/title)
 msgctxt "link"
 msgid "Common IRC Problems"
 msgstr "Problemas comunes en el IRC"
@@ -2482,9 +2489,6 @@ msgstr "Pulse <gui style=\"button\">Desenlazar</gui>."
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/overview.page:37(media)
-#| msgctxt "_"
-#| msgid ""
-#| "external ref='figures/offline.png' md5='c5b0c21181cbd6e13f8909243c0fa964'"
 msgctxt "_"
 msgid ""
 "external ref='figures/video_overview.png' "
@@ -2498,9 +2502,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/overview.page:38(media)
-#| msgctxt "_"
-#| msgid ""
-#| "external ref='figures/offline.png' md5='c5b0c21181cbd6e13f8909243c0fa964'"
 msgctxt "_"
 msgid ""
 "external ref='figures/conf_overview.png' "
@@ -2514,10 +2515,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/overview.page:39(media)
-#| msgctxt "_"
-#| msgid ""
-#| "external ref='figures/gtk-remove.png' "
-#| "md5='215e3a325a3dd619874e35c30a018bb6'"
 msgctxt "_"
 msgid ""
 "external ref='figures/croom_overview.png' "
@@ -2564,12 +2561,10 @@ msgid "Video Conference"
 msgstr "Videoconferencia"
 
 #: C/overview.page:43(td/p)
-#| msgid "Group conversations"
 msgid "Group chats"
 msgstr "Conversaciones en grupo"
 
 #: C/overview.page:44(td/p)
-#| msgid "Favorite rooms"
 msgid "Chat rooms"
 msgstr "Salas de chat"
 
@@ -2845,8 +2840,8 @@ msgid ""
 "An error message which says “<gui>Name in use</gui>” appears in the main "
 "window."
 msgstr ""
-"Aparecen en la ventana principal un mensaje de error que dice «<gui>Nombre "
-"en uso</gui>»."
+"Aparecen en la ventana principal un mensaje de error que dice «<gui>Nombre en "
+"uso</gui>»."
 
 #: C/prob-conn-name.page:33(page/title)
 msgid "I get a message that says “Name in use”"
