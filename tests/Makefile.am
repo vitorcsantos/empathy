@@ -32,8 +32,8 @@ tests_list =  \
      empathy-chatroom-test                       \
      empathy-chatroom-manager-test               \
      empathy-parser-test                         \
-     empathy-live-search-test
-     #empathy-tls-test
+     empathy-live-search-test                    \
+     empathy-tls-test
 
 noinst_PROGRAMS = $(tests_list)
 TESTS = $(tests_list)
