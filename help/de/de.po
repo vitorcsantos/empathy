@@ -4,31 +4,33 @@
 # documentation package.
 #
 # Philipp Kerling <k.philipp@gmail.com>, 2008.
-# Mario Blättermann <mario.blaettermann@gmail.com>, 2008-2012.
-# Christian Kirbach  <Christian.Kirbach@googlemail.com>, 2009, 2010.
+# Mario Blättermann <mario.blaettermann@gmail.com>, 2008-2013.
+# Christian Kirbach <christian.kirbach@gmail.com>, 2009-2013, 2013.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: empathy help master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-19 10:32+0000\n"
-"PO-Revision-Date: 2012-02-19 12:54+0100\n"
-"Last-Translator: Christian Kirbach <Christian.Kirbach@googlemail.com>\n"
+"POT-Creation-Date: 2013-02-27 02:56+0000\n"
+"PO-Revision-Date: 2013-02-28 20:54+0100\n"
+"Last-Translator: Mario Blättermann <mario.blaettermann@gmail.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: German\n"
 "X-Poedit-Country: GERMANY\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Gtranslator 2.91.5\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
 msgid "translator-credits"
 msgstr ""
-"Mario Blättermann <mario.blaettermann@gmail.com>, 2008-2012\n"
+"Mario Blättermann <mario.blaettermann@gmail.com>, 2008-2013\n"
 "Philipp Kerling <k.philipp@gmail.com>, 2008\n"
-"Christian Kirbach <Christian.Kirbach@googlemail.com>, 2010-2012"
+"Christian Kirbach <Christian.Kirbach@gmail.com>, 2010-2013"
 
 #. This is a reference to an external file such as an image or video. When
 #. the file changes, the md5 hash will change to let you know you need to
@@ -99,11 +101,11 @@ msgstr "Milo Casagrande"
 #: C/group-conversations.page:23(license/p) C/hide-contacts.page:15(license/p)
 #: C/import-account.page:31(license/p) C/introduction.page:17(license/p)
 #: C/irc-commands.page:14(license/p) C/irc-join-pwd.page:21(license/p)
-#: C/irc-join-room.page:20(license/p) C/irc-manage.page:23(license/p)
+#: C/irc-join-room.page:20(license/p) C/irc-manage.page:28(license/p)
 #: C/irc-nick-password.page:22(license/p) C/irc-send-file.page:20(license/p)
 #: C/irc-start-conversation.page:19(license/p)
-#: C/link-contacts.page:19(license/p) C/prev-conv.page:25(license/p)
-#: C/prob-conn-acctdisabled.page:23(license/p)
+#: C/link-contacts.page:19(license/p) C/overview.page:20(license/p)
+#: C/prev-conv.page:25(license/p) C/prob-conn-acctdisabled.page:23(license/p)
 #: C/prob-conn-auth.page:25(license/p) C/prob-conn-name.page:22(license/p)
 #: C/prob-conn-neterror.page:23(license/p) C/prob-conn.page:18(license/p)
 #: C/remove-account.page:23(license/p) C/salut-protocol.page:22(license/p)
@@ -142,7 +144,7 @@ msgstr "Audio- und Video-Unterhaltungen"
 msgid "Advanced Actions"
 msgstr "Fortgeschrittene Aktionen"
 
-#: C/index.page:55(section/title) C/irc-manage.page:57(section/title)
+#: C/index.page:55(section/title) C/irc-manage.page:64(section/title)
 msgid "Common Problems"
 msgstr "Häufig auftretende Probleme"
 
@@ -221,7 +223,7 @@ msgstr ""
 "Netzwerk und einen Spitznamen angeben. Diese Seite erläutert die "
 "Informationen, die Sie für ein IRC-Konto angeben können."
 
-#: C/account-irc.page:39(note/p) C/irc-manage.page:37(note/p)
+#: C/account-irc.page:39(note/p) C/irc-manage.page:42(note/p)
 msgid ""
 "You must have the <sys>telepathy-idle</sys> package installed to use IRC in "
 "<app>Empathy</app>."
@@ -351,8 +353,8 @@ msgid ""
 "src=\"figures/gtk-add.png\" width=\"16\" height=\"16\">Add</media>."
 msgstr ""
 "Um ein Netzwerk zur Liste hinzuzufügen, klicken Sie auf <media type=\"image"
-"\" mime=\"image/png\" src=\"figures/gtk-add.png\" width=\"16\" height=\"16"
-"\">Hinzufügen</media>."
+"\" mime=\"image/png\" src=\"figures/gtk-add.png\" width=\"16\" height="
+"\"16\">Hinzufügen</media>."
 
 #: C/account-irc.page:107(item/p)
 msgid ""
@@ -2177,28 +2179,32 @@ msgstr ""
 msgid "How to use IRC with <app>Empathy</app>."
 msgstr "Benutzung des IRC mit <app>Empathy</app>."
 
-#: C/irc-manage.page:34(page/title)
+#: C/irc-manage.page:23(credit/name)
+msgid "Sindhu S"
+msgstr "Sindhu S"
+
+#: C/irc-manage.page:39(page/title)
 msgid "Internet Relay Chat (IRC)"
 msgstr "Internet Relay Chat (IRC)"
 
-#: C/irc-manage.page:41(when/p)
+#: C/irc-manage.page:47(when/p)
 msgid ""
-"<link action=\"install:telepathy-idle\" xref=\"index\" style=\"button"
-"\">Install telepathy-idle</link>"
+"<link action=\"install:telepathy-idle\" xref=\"index\"> Install telepathy-"
+"idle</link>"
 msgstr ""
-"<link action=\"install:telepathy-idle\" xref=\"index\" style=\"button"
-"\">telepathy-idle installieren</link>"
+"<link action=\"install:telepathy-idle\" xref=\"index\">telepathy-idle "
+"installieren</link>"
 
-#: C/irc-manage.page:48(info/title)
+#: C/irc-manage.page:55(info/title)
 msgctxt "link"
 msgid "IRC Chat Rooms and Conversations"
 msgstr "IRC-Räume und Unterhaltungen"
 
-#: C/irc-manage.page:50(section/title)
+#: C/irc-manage.page:57(section/title)
 msgid "Chat Rooms and Conversations"
 msgstr "Unterhaltungsräume und Unterhaltungen"
 
-#: C/irc-manage.page:55(info/title)
+#: C/irc-manage.page:62(info/title)
 msgctxt "link"
 msgid "Common IRC Problems"
 msgstr "Häufige Probleme im IRC"
@@ -2516,6 +2522,104 @@ msgstr ""
 #: C/link-contacts.page:100(item/p)
 msgid "Click <gui style=\"button\">Unlink</gui>."
 msgstr "Klicken Sie auf <gui style=\"button\">Verknüpfung aufheben</gui>."
+
+#. This is a reference to an external file such as an image or video. When
+#. the file changes, the md5 hash will change to let you know you need to
+#. update your localized copy. The msgstr is not used at all. Set it to
+#. whatever you like once you have updated your copy of the file.
+#: C/overview.page:37(media)
+msgctxt "_"
+msgid ""
+"external ref='figures/video_overview.png' "
+"md5='6cfcfbd833bf2234537d402185c40596'"
+msgstr "original"
+
+#. This is a reference to an external file such as an image or video. When
+#. the file changes, the md5 hash will change to let you know you need to
+#. update your localized copy. The msgstr is not used at all. Set it to
+#. whatever you like once you have updated your copy of the file.
+#: C/overview.page:38(media)
+msgctxt "_"
+msgid ""
+"external ref='figures/conf_overview.png' "
+"md5='74c58668fe89c84060f12f6b70a6b903'"
+msgstr "original"
+
+#. This is a reference to an external file such as an image or video. When
+#. the file changes, the md5 hash will change to let you know you need to
+#. update your localized copy. The msgstr is not used at all. Set it to
+#. whatever you like once you have updated your copy of the file.
+#: C/overview.page:39(media)
+msgctxt "_"
+msgid ""
+"external ref='figures/croom_overview.png' "
+"md5='e9619d2c8420bc48a880c03dbc1ae084'"
+msgstr "original"
+
+#: C/overview.page:8(info/desc)
+msgid "What instant messaging is and how you can use it."
+msgstr "Was sind Sofortnachrichten und wie können Sie diese nutzen."
+
+#: C/overview.page:12(credit/name)
+msgid "Aruna S"
+msgstr "Aruna S"
+
+#: C/overview.page:16(credit/name) C/share-desktop.page:18(credit/name)
+msgid "Ekaterina Gerasimova"
+msgstr "Ekaterina Gerasimova"
+
+#: C/overview.page:24(page/title)
+msgid "Overview of instant messaging"
+msgstr "Überblick über Sofortnachrichten"
+
+#: C/overview.page:26(page/p)
+msgid ""
+"Instant messaging, sometimes abbreviated to IM, is a text-based means to "
+"communicate instantly over the internet and the local network. While some IM "
+"applications work with only one type of account, others, including <link "
+"xref=\"introduction\">Empathy</link>, provide IM facilities by using <link "
+"xref=\"add-account\">accounts</link> from different service providers. Some "
+"of these even support audio and video calling."
+msgstr ""
+"Sofortnachrichten, manchmal abgekürzt »IM« von Instant Messaging, ist eine "
+"textbasierte Kommunikationsmöglichkeit, um Nachrichten ohne Verzögerung über "
+"das Internet oder ein lokales Netzwerk zu senden. Während einige Anwendungen "
+"für Sofortnachrichten nur mit einer bestimmten Art von Konten funktionieren, "
+"können andere, wie <link xref=\"introduction\">Empathy</link>, auch <link "
+"xref=\"add-account\">Konten</link> von verschiedenen Anbietern nutzen. "
+"Einige unterstützen auch Audio- und Videoanrufe."
+
+#: C/overview.page:42(td/p)
+msgid "Video Conference"
+msgstr "Videokonferenz"
+
+#: C/overview.page:43(td/p)
+msgid "Group chats"
+msgstr "Gruppenunterhaltungen"
+
+#: C/overview.page:44(td/p)
+msgid "Chat rooms"
+msgstr "Unterhaltungsräume"
+
+#: C/overview.page:48(page/p)
+msgid ""
+"Some instant messaging applications can be used to connect to chat rooms, "
+"online places where like-minded people meet to talk. One popular means to "
+"connect to several chat rooms is the Internet Relay Chat, also known as "
+"<link xref=\"irc-manage\">IRC</link>. IRC provides <link xref=\"irc-join-room"
+"\">public</link> chat rooms, which are open to anyone who creates an account "
+"on the IRC Server, and private chat rooms, which are <link xref=\"irc-join-"
+"pwd\">password protected</link> and open only to a select few."
+msgstr ""
+"Einige Anwendungen für Sofortnachrichten können genutzt werden, um sich mit "
+"Unterhaltungsräumen zu verbinden, also virtuellen Plätzen, wo sich Personen "
+"treffen, um sich zu unterhalten. Eine beliebte Technik für "
+"Unterhaltungsräume ist der »Internet Relay Chat«, auch als <link xref=\"irc-"
+"manage\">IRC</link> bekannt. IRC stellt <link xref=\"irc-join-room"
+"\">öffentliche</link> Unterhaltungsräume bereit, bei der sich jeder, der ein "
+"Konto auf dem IRC-Server erstellt, anmelden kann, und private "
+"Unterhaltungsräume, welche <link xref=\"irc-join-pwd\">passwortgeschützt</"
+"link> und nur für ausgewählte Personen offen sind."
 
 #: C/prev-conv.page:8(info/desc)
 msgid "Browse or search your previous conversations."
@@ -3203,10 +3307,6 @@ msgstr ""
 #: C/share-desktop.page:7(info/desc)
 msgid "Show your desktop to your contacts."
 msgstr "Freigeben der Arbeitsumgebung für Ihre Kontakte."
-
-#: C/share-desktop.page:18(credit/name)
-msgid "Ekaterina Gerasimova"
-msgstr "Ekaterina Gerasimova"
 
 #: C/share-desktop.page:33(page/title)
 msgid "Share your desktop"
