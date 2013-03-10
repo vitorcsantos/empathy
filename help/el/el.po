@@ -1,25 +1,27 @@
 # translation of empathy-master-help-el-4325__.merged.po to Greek
 # Marios Zindilis <m.zindilis@dmajor.org>, 2009, 2010.
 # Jennie Petoumenou <epetoumenou@gmail.com>, 2009.
+# Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: empathy-master-help-el-4325__.merged\n"
-"POT-Creation-Date: 2012-09-13 10:28+0000\n"
-"PO-Revision-Date: 2012-09-21 09:57+0200\n"
-"Last-Translator: Tom Tryfonidis <tomtryf@gmail.com>\n"
-"Language-Team: Greek <team@gnome.gr>\n"
+"POT-Creation-Date: 2013-02-03 12:24+0000\n"
+"PO-Revision-Date: 2013-03-10 06:15+0300\n"
+"Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
+"Language-Team: team@gnome.gr\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 1.0\n"
+"X-Generator: Virtaal 0.7.1\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
 msgid "translator-credits"
 msgstr ""
-"Ελληνική μεταφραστική ομάδα GNOME <team@gnome.gr>, 2009\n"
+"Ελληνική μεταφραστική ομάδα GNOME <team@gnome.gr>\n"
+" Δημήτρης Σπίγγος, <dmtrs32@gmail.com>, 2013\n"
 " Τζένη Πετούμενου <epetoumenou@gmail.gr>, 2009\n"
 " Μάριος Ζηντίλης <m.zindilis@dmajor.org, 2009\n"
 " Μιχάλης Κοτσαρίνης <mk73628@gmail.com>, 2010\n"
@@ -98,11 +100,11 @@ msgstr "Milo Casagrande"
 #: C/group-conversations.page:23(license/p) C/hide-contacts.page:15(license/p)
 #: C/import-account.page:31(license/p) C/introduction.page:17(license/p)
 #: C/irc-commands.page:14(license/p) C/irc-join-pwd.page:21(license/p)
-#: C/irc-join-room.page:20(license/p) C/irc-manage.page:23(license/p)
+#: C/irc-join-room.page:20(license/p) C/irc-manage.page:28(license/p)
 #: C/irc-nick-password.page:22(license/p) C/irc-send-file.page:20(license/p)
 #: C/irc-start-conversation.page:19(license/p)
-#: C/link-contacts.page:19(license/p) C/prev-conv.page:25(license/p)
-#: C/prob-conn-acctdisabled.page:23(license/p)
+#: C/link-contacts.page:19(license/p) C/overview.page:20(license/p)
+#: C/prev-conv.page:25(license/p) C/prob-conn-acctdisabled.page:23(license/p)
 #: C/prob-conn-auth.page:25(license/p) C/prob-conn-name.page:22(license/p)
 #: C/prob-conn-neterror.page:23(license/p) C/prob-conn.page:18(license/p)
 #: C/remove-account.page:23(license/p) C/salut-protocol.page:22(license/p)
@@ -141,7 +143,7 @@ msgstr "Φωνητικές κλήσεις και βιντεοκλήσεις"
 msgid "Advanced Actions"
 msgstr "Για προχωρημένους"
 
-#: C/index.page:55(section/title) C/irc-manage.page:57(section/title)
+#: C/index.page:55(section/title) C/irc-manage.page:64(section/title)
 msgid "Common Problems"
 msgstr "Κοινά προβλήματα"
 
@@ -223,7 +225,7 @@ msgstr ""
 "τη σελίδα αναφέρονται λεπτομερώς τα στοιχεία που μπορείτε να εισάγετε για "
 "ένα λογαριασμό IRC."
 
-#: C/account-irc.page:39(note/p) C/irc-manage.page:37(note/p)
+#: C/account-irc.page:39(note/p) C/irc-manage.page:42(note/p)
 msgid ""
 "You must have the <sys>telepathy-idle</sys> package installed to use IRC in "
 "<app>Empathy</app>."
@@ -2194,28 +2196,35 @@ msgstr ""
 msgid "How to use IRC with <app>Empathy</app>."
 msgstr "Χρήση IRC μέσω <app>Empathy</app>."
 
-#: C/irc-manage.page:34(page/title)
+#: C/irc-manage.page:23(credit/name)
+msgid "Sindhu S"
+msgstr "Sindhu S"
+
+#: C/irc-manage.page:39(page/title)
 msgid "Internet Relay Chat (IRC)"
 msgstr "Internet Relay Chat (IRC)"
 
-#: C/irc-manage.page:41(when/p)
+#: C/irc-manage.page:47(when/p)
+#| msgid ""
+#| "<link action=\"install:telepathy-idle\" xref=\"index\" style=\"button"
+#| "\">Install telepathy-idle</link>"
 msgid ""
-"<link action=\"install:telepathy-idle\" xref=\"index\" style=\"button"
-"\">Install telepathy-idle</link>"
+"<link action=\"install:telepathy-idle\" xref=\"index\"> Install telepathy-"
+"idle</link>"
 msgstr ""
-"<link action=\"install:telepathy-idle\" xref=\"index\" style=\"button"
-"\">Εγκαταστήστε το telepathy-idle</link>"
+"<link action=\"install:telepathy-idle\" xref=\"index\"> Εγκατάσταση του "
+"telepathy-idle</link>"
 
-#: C/irc-manage.page:48(info/title)
+#: C/irc-manage.page:55(info/title)
 msgctxt "link"
 msgid "IRC Chat Rooms and Conversations"
 msgstr "Δωμάτια και συζητήσεις IRC"
 
-#: C/irc-manage.page:50(section/title)
+#: C/irc-manage.page:57(section/title)
 msgid "Chat Rooms and Conversations"
 msgstr "Δωμάτια και συζητήσεις"
 
-#: C/irc-manage.page:55(info/title)
+#: C/irc-manage.page:62(info/title)
 msgctxt "link"
 msgid "Common IRC Problems"
 msgstr "Συχνά προβλήματα IRC"
@@ -2526,6 +2535,122 @@ msgstr ""
 #: C/link-contacts.page:100(item/p)
 msgid "Click <gui style=\"button\">Unlink</gui>."
 msgstr "Πατήστε <gui style=\"button\">Διαχωρισμός</gui>."
+
+#. This is a reference to an external file such as an image or video. When
+#. the file changes, the md5 hash will change to let you know you need to
+#. update your localized copy. The msgstr is not used at all. Set it to
+#. whatever you like once you have updated your copy of the file.
+#: C/overview.page:37(media)
+#| msgctxt "_"
+#| msgid ""
+#| "external ref='figures/offline.png' md5='c5b0c21181cbd6e13f8909243c0fa964'"
+msgctxt "_"
+msgid ""
+"external ref='figures/video_overview.png' "
+"md5='6cfcfbd833bf2234537d402185c40596'"
+msgstr ""
+"external ref='figures/video_overview.png' "
+"md5='6cfcfbd833bf2234537d402185c40596'"
+
+#. This is a reference to an external file such as an image or video. When
+#. the file changes, the md5 hash will change to let you know you need to
+#. update your localized copy. The msgstr is not used at all. Set it to
+#. whatever you like once you have updated your copy of the file.
+#: C/overview.page:38(media)
+#| msgctxt "_"
+#| msgid ""
+#| "external ref='figures/offline.png' md5='c5b0c21181cbd6e13f8909243c0fa964'"
+msgctxt "_"
+msgid ""
+"external ref='figures/conf_overview.png' "
+"md5='74c58668fe89c84060f12f6b70a6b903'"
+msgstr ""
+"external ref='figures/conf_overview.png' "
+"md5='74c58668fe89c84060f12f6b70a6b903'"
+
+#. This is a reference to an external file such as an image or video. When
+#. the file changes, the md5 hash will change to let you know you need to
+#. update your localized copy. The msgstr is not used at all. Set it to
+#. whatever you like once you have updated your copy of the file.
+#: C/overview.page:39(media)
+#| msgctxt "_"
+#| msgid ""
+#| "external ref='figures/gtk-remove.png' "
+#| "md5='215e3a325a3dd619874e35c30a018bb6'"
+msgctxt "_"
+msgid ""
+"external ref='figures/croom_overview.png' "
+"md5='e9619d2c8420bc48a880c03dbc1ae084'"
+msgstr ""
+"external ref='figures/croom_overview.png' "
+"md5='e9619d2c8420bc48a880c03dbc1ae084'"
+
+#: C/overview.page:8(info/desc)
+msgid "What instant messaging is and how you can use it."
+msgstr "Τι άμεσο μήνυμα είναι και πώς μπορείτε να το χρησιμοποιήσετε."
+
+#: C/overview.page:12(credit/name)
+msgid "Aruna S"
+msgstr "Aruna S"
+
+#: C/overview.page:16(credit/name) C/share-desktop.page:18(credit/name)
+msgid "Ekaterina Gerasimova"
+msgstr "Ekaterina Gerasimova"
+
+#: C/overview.page:24(page/title)
+msgid "Overview of instant messaging"
+msgstr "Επισκόπηση άμεσων μηνυμάτων"
+
+#: C/overview.page:26(page/p)
+msgid ""
+"Instant messaging, sometimes abbreviated to IM, is a text-based means to "
+"communicate instantly over the internet and the local network. While some IM "
+"applications work with only one type of account, others, including <link "
+"xref=\"introduction\">Empathy</link>, provide IM facilities by using <link "
+"xref=\"add-account\">accounts</link> from different service providers. Some "
+"of these even support audio and video calling."
+msgstr ""
+"Τα άμεσα μηνύματα, μερικές φορές συντομευμένα ως IM, είναι μέσα με βάση "
+"κείμενο για στιγμιαία επικοινωνία μέσω διαδικτύου και του τοπικού δικτύου. "
+"Ενώ μερικές εφαρμογές IM δουλεύουν με μόνο έναν τύπο λογαριασμού, άλλες, "
+"συμπεριλαμβάνουν το <link xref=\"introduction\">Empathy</link>, που παρέχει "
+"διευκολύνσεις IM χρησιμοποιώντας <link xref=\"add-"
+"account\">λογαριασμούς</link> από διαφορετικούς παρόχους υπηρεσίας. Κάποιοι "
+"από αυτούς υποστηρίζουν ακόμα κλήση ήχου και βίντεο."
+
+#: C/overview.page:42(td/p)
+msgid "Video Conference"
+msgstr "Βιντεοδιάσκεψη"
+
+#: C/overview.page:43(td/p)
+#| msgid "Group conversations"
+msgid "Group chats"
+msgstr "Ομαδικές συνομιλίες"
+
+#: C/overview.page:44(td/p)
+#| msgid "Favorite rooms"
+msgid "Chat rooms"
+msgstr "Δωμάτια συνομιλίας"
+
+#: C/overview.page:48(page/p)
+msgid ""
+"Some instant messaging applications can be used to connect to chat rooms, "
+"online places where like-minded people meet to talk. One popular means to "
+"connect to several chat rooms is the Internet Relay Chat, also known as "
+"<link xref=\"irc-manage\">IRC</link>. IRC provides <link xref=\"irc-join-room"
+"\">public</link> chat rooms, which are open to anyone who creates an account "
+"on the IRC Server, and private chat rooms, which are <link xref=\"irc-join-"
+"pwd\">password protected</link> and open only to a select few."
+msgstr ""
+"Μερικές εφαρμογές άμεσων μηνυμάτων μπορούν να χρησιμοποιηθούν για σύνδεση με "
+"δωμάτια συνομιλιών, με δικτυακές θέσεις όπου άτομα με τα ίδια ενδιαφέροντα "
+"συναντιούνται για να συζητήσουν. Ένα δημοφιλές μέσο σύνδεσης σε πολλά "
+"δωμάτια συνομιλιών είναι οι διαδικτυακές μεταγωγές, γνωστές επίσης ως <link "
+"xref=\"irc-manage\">IRC</link>. Το IRC παρέχει <link xref=\"irc-join-"
+"room\">δημόσια</link> δωμάτια συνομιλίας, που είναι ανοικτά σε οποιονδήποτε "
+"δημιουργήσει έναν λογαριασμό στον εξυπηρετητή IRC και ιδιωτικά δωμάτια "
+"συνομιλίας, που <link xref=\"irc-join-pwd\">προστατεύονται με κωδικό</link> "
+"και ανοίγουν μόνο σε λίγους επιλεγμένους."
 
 #: C/prev-conv.page:8(info/desc)
 msgid "Browse or search your previous conversations."
@@ -3202,10 +3327,6 @@ msgstr ""
 #: C/share-desktop.page:7(info/desc)
 msgid "Show your desktop to your contacts."
 msgstr "Εμφάνιση της επιφάνειας εργασίας στις επαφές σας."
-
-#: C/share-desktop.page:18(credit/name)
-msgid "Ekaterina Gerasimova"
-msgstr "Ekaterina Gerasimova"
 
 #: C/share-desktop.page:33(page/title)
 msgid "Share your desktop"
