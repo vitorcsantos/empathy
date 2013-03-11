@@ -499,7 +499,9 @@ live_search_unmap (GtkWidget *widget)
   gtk_widget_hide (widget);
 
   gtk_entry_set_text (GTK_ENTRY (priv->search_entry), "");
-  gtk_widget_grab_focus (priv->hook_widget);
+
+  if (priv->hook_widget != NULL)
+    gtk_widget_grab_focus (priv->hook_widget);
 }
 
 static void
