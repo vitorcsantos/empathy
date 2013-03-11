@@ -613,6 +613,14 @@ empathy_irc_network_chooser_dialog_dispose (GObject *object)
       priv->activate_sig = 0;
     }
 
+  if (priv->search != NULL)
+    {
+      empathy_live_search_set_hook_widget (EMPATHY_LIVE_SEARCH (priv->search),
+          NULL);
+
+      priv->search = NULL;
+    }
+
   tp_clear_object (&priv->settings);
   tp_clear_object (&priv->network);
   tp_clear_object (&priv->network_manager);
