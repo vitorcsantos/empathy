@@ -244,6 +244,7 @@ if test "x$enable_gst1" != "xno"; then
      gstreamer-1.0
      gstreamer-audio-1.0
      gstreamer-video-1.0
+     cogl-1.0
   ], have_gst1="yes", have_gst1="no")
 
   if test "x$have_gst1" = "xyes"; then
