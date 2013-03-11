@@ -499,16 +499,6 @@ search_text_notify_cb (EmpathyLiveSearch *search,
 }
 
 static void
-dialog_destroy_cb (GtkWidget *widget,
-    EmpathyIrcNetworkChooserDialog *self)
-{
-  EmpathyIrcNetworkChooserDialogPriv *priv = GET_PRIV (self);
-
-  g_signal_handler_disconnect (priv->search, priv->search_sig);
-  g_signal_handler_disconnect (priv->search, priv->activate_sig);
-}
-
-static void
 add_clicked_cb (GtkToolButton *button,
     EmpathyIrcNetworkChooserDialog *self)
 {
@@ -642,8 +632,6 @@ empathy_irc_network_chooser_dialog_constructed (GObject *object)
 
   g_signal_connect (self, "response",
       G_CALLBACK (dialog_response_cb), self);
-  g_signal_connect (self, "destroy",
-      G_CALLBACK (dialog_destroy_cb), self);
 
   /* Request a side ensuring to display at least some networks */
   gtk_widget_set_size_request (GTK_WIDGET (self), -1, 300);
@@ -656,6 +644,18 @@ empathy_irc_network_chooser_dialog_dispose (GObject *object)
 {
   EmpathyIrcNetworkManager *self = (EmpathyIrcNetworkManager *) object;
   EmpathyIrcNetworkChooserDialogPriv *priv = GET_PRIV (self);
+
+  if (priv->search_sig != 0)
+    {
+      g_signal_handler_disconnect (priv->search, priv->search_sig);
+      priv->search_sig = 0;
+    }
+
+  if (priv->activate_sig != 0)
+    {
+      g_signal_handler_disconnect (priv->search, priv->activate_sig);
+      priv->activate_sig = 0;
+    }
 
   tp_clear_object (&priv->settings);
   tp_clear_object (&priv->network);
