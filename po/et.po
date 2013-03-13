@@ -4,15 +4,15 @@
 # Copyright (C) 2005–2011 Free Software Foundation, Inc.
 #
 # Ivar Smolin <okul linux ee>, 2005–2011.
-# Mattias Põldaru <mahfiaz@gmail.com>, 2009, 2010, 2011, 2012.
+# Mattias Põldaru <mahfiaz@gmail.com>, 2009, 2010, 2011, 2012, 2013.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: empathy MASTER\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=empathy&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2012-12-18 08:51+0000\n"
-"PO-Revision-Date: 2012-12-18 18:30+0300\n"
+"POT-Creation-Date: 2013-03-12 17:47+0000\n"
+"PO-Revision-Date: 2013-03-12 21:57+0300\n"
 "Last-Translator: Mattias Põldaru <mahfiaz@gmail.com>\n"
 "Language-Team: Estonian <>\n"
 "Language: et\n"
@@ -2084,6 +2084,10 @@ msgstr "_Kopeeri lingi aadress"
 msgid "_Open Link"
 msgstr "_Ava link"
 
+#. Inspector
+msgid "Inspect HTML"
+msgstr "Inspekteeri HTMLi"
+
 msgid "Current Locale"
 msgstr "Praegune lokaat"
 
@@ -2182,6 +2186,12 @@ msgstr "Olulised kontaktid"
 
 msgid "Ungrouped"
 msgstr "Grupeerimata"
+
+#. Add a prefix explaining that something goes wrong when trying to
+#. * fetch contact's presence.
+#, c-format
+msgid "Server cannot find contact: %s"
+msgstr "Server ei leia kontakti: %s"
 
 msgid "No error message"
 msgstr "Veateade puudub"
@@ -2393,11 +2403,6 @@ msgstr "Empathy audio/video klient"
 #, c-format
 msgid "%s just tried to call you, but you were in another call."
 msgstr "%s proovis sulle helistada ajal, mil Sul oli teine kõne pooleli."
-
-#. Translators: this is an "Info" label. It should be as short
-#. * as possible.
-msgid "i"
-msgstr "i"
 
 msgid "Incoming call"
 msgstr "Sissetulev kõne"
@@ -3341,6 +3346,9 @@ msgstr "Muuda oma nähtavust, et näha siin kontakte"
 msgid "No match found"
 msgstr "Vastavust ei leitud"
 
+msgid "You haven't added any contact yet"
+msgstr "Sa pole ühtegi kontakti veel lisanud"
+
 msgid "No online contacts"
 msgstr "Ükski kontakt pole ühendatud"
 
@@ -3398,6 +3406,12 @@ msgstr "Konto sätted"
 msgid "Go _Online"
 msgstr "_Loo ühendus"
 
+msgid "Show _Offline Contacts"
+msgstr "_Näidatakse ühendamata sõpru"
+
+msgid "_Add Contact..."
+msgstr "_Lisa kontakt..."
+
 msgid "_New Conversation…"
 msgstr "_Uus vestlus…"
 
@@ -3419,3 +3433,6 @@ msgstr "Muuda %s konto valikuid"
 
 msgid "Integrate your IM accounts"
 msgstr "Integreeri oma IM kontod"
+
+#~ msgid "i"
+#~ msgstr "i"
