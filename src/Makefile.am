@@ -14,6 +14,7 @@ AM_LDFLAGS = $(LIBM)
 AM_CPPFLAGS =						\
 	$(CPPFLAGS_COMMON)				\
 	$(LIBCHAMPLAIN_CFLAGS)				\
+	$(UOA_CFLAGS)					\
 	$(NULL)
 
 LDADD =								\
@@ -23,6 +24,7 @@ LDADD =								\
 	$(GCR_LIBS) 						\
 	$(EMPATHY_LIBS)						\
 	$(LIBCHAMPLAIN_LIBS)					\
+	$(UOA_LIBS)						\
 	$(NULL)
 
 noinst_LTLIBRARIES = libempathy-accounts-common.la
