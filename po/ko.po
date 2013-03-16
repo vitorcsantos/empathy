@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the empathy package.
 #
 # Seong-ho Cho <darkcircle.0426@gmail.com>, 2012.
-# Changwoo Ryu <cwryu@debian.org>, 2008-2012.
+# Changwoo Ryu <cwryu@debian.org>, 2008-2013.
 #
 # 새로 번역하시는 분은 아래 "translator-credits"에 추가하세요.
 #
@@ -36,8 +36,8 @@ msgstr ""
 "Project-Id-Version: empathy\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=empathy&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2012-10-09 14:38+0000\n"
-"PO-Revision-Date: 2012-10-13 18:34+0900\n"
+"POT-Creation-Date: 2013-01-09 14:05+0000\n"
+"PO-Revision-Date: 2013-03-17 00:56+0900\n"
 "Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: GNOME Korea <gnome-kr@googlegroups.com>\n"
 "Language: Korean\n"
@@ -62,6 +62,10 @@ msgstr "엠퍼시 인터넷 메신저"
 #: ../data/empathy.desktop.in.in.h:4
 msgid "Chat on Google Talk, Facebook, MSN and many other chat services"
 msgstr "구글 토크, 페이스북, MSN 및 기타 대화 서비스에서 대화"
+
+#: ../data/empathy.desktop.in.in.h:5
+msgid "chat;talk;im;message;irc;voip;gtalk;facebook;jabber;"
+msgstr "chat;채팅;talk;대화;im;메신저;message;메시지;irc;voip;gtalk;지톡;지토크;facebook;페이스북;jabber;재버;"
 
 #: ../data/org.gnome.Empathy.gschema.xml.h:1
 msgid "Connection managers should be used"
@@ -459,7 +463,7 @@ msgstr "사용자의 위치를 공개할 수 있습니다"
 
 #: ../data/org.gnome.Empathy.gschema.xml.h:91
 msgid "Whether Empathy can publish the user's location to their contacts."
-msgstr "사용자의 위치를 연락처에 있는 사람들에게 공개할지 여부."
+msgstr "사용자의 위치를 연락처에 있는 사람에게 공개할지 여부."
 
 #: ../data/org.gnome.Empathy.gschema.xml.h:92
 msgid "Empathy can use the network to guess the location"
@@ -764,11 +768,11 @@ msgstr "주변 사람"
 msgid "Yahoo! Japan"
 msgstr "야후! 일본"
 
-#: ../libempathy/empathy-utils.c:531
+#: ../libempathy/empathy-utils.c:538 ../src/empathy-roster-window.c:672
 msgid "Google Talk"
 msgstr "구글 토크"
 
-#: ../libempathy/empathy-utils.c:532
+#: ../libempathy/empathy-utils.c:539
 msgid "Facebook Chat"
 msgstr "페이스북 대화"
 
@@ -870,7 +874,7 @@ msgstr "서버"
 
 #: ../libempathy-gtk/empathy-account-widget.c:678
 #: ../libempathy-gtk/empathy-account-widget-sip.ui.h:20
-#: ../libempathy-gtk/empathy-irc-network-dialog.c:529
+#: ../libempathy-gtk/empathy-irc-network-dialog.c:532
 msgid "Port"
 msgstr "포트"
 
@@ -1519,7 +1523,7 @@ msgstr "구현하지 않았습니다"
 msgid "unknown"
 msgstr "알 수 없음"
 
-#: ../libempathy-gtk/empathy-chat.c:1680 ../src/empathy-chat-window.c:980
+#: ../libempathy-gtk/empathy-chat.c:1680 ../src/empathy-chat-window.c:979
 msgid "Topic:"
 msgstr "주제:"
 
@@ -1587,7 +1591,7 @@ msgstr "'%s'님의 연결이 끊겼습니다"
 #: ../libempathy-gtk/empathy-chat.c:2725
 #, c-format
 msgid "%1$s was kicked by %2$s"
-msgstr "'%1$s'님이 '%2$s'님에 의해 퇴장당했습니다."
+msgstr "'%2$s'님이 '%1$s'님을 퇴장시켰습니다."
 
 # 호칭과 조사를 붙여 쓰기 위해 번역문에 따옴표 추가
 #: ../libempathy-gtk/empathy-chat.c:2728
@@ -1602,7 +1606,7 @@ msgstr "'%1$s'님이 퇴장당했습니다."
 #: ../libempathy-gtk/empathy-chat.c:2736
 #, c-format
 msgid "%1$s was banned by %2$s"
-msgstr "'%1$s'님이 '%2$s'님에 의해 입장 금지됐습니다"
+msgstr "'%2$s'님이 '%1$s'님을 입장 금지했습니다"
 
 # 호칭과 조사를 붙여 쓰기 위해 번역문에 따옴표 추가
 #: ../libempathy-gtk/empathy-chat.c:2739
@@ -1641,9 +1645,9 @@ msgstr "'%s'님의 대화명은 이제부터 '%s'입니다"
 #. We don't know if the incoming call has been accepted or not, so we
 #. * assume it hasn't and if it has, we'll set the proper status when
 #. * we get the new handler.
-#: ../libempathy-gtk/empathy-chat.c:2989 ../src/empathy-call-window.c:1467
-#: ../src/empathy-call-window.c:1517 ../src/empathy-call-window.c:2570
-#: ../src/empathy-call-window.c:2876 ../src/empathy-event-manager.c:1166
+#: ../libempathy-gtk/empathy-chat.c:2989 ../src/empathy-call-window.c:1537
+#: ../src/empathy-call-window.c:1587 ../src/empathy-call-window.c:2662
+#: ../src/empathy-call-window.c:2968 ../src/empathy-event-manager.c:1166
 msgid "Disconnected"
 msgstr "연결 끊김"
 
@@ -1716,7 +1720,7 @@ msgstr "차단 연락처 편집"
 #. Account and Identifier
 #: ../libempathy-gtk/empathy-contact-blocking-dialog.ui.h:1
 #: ../libempathy-gtk/empathy-contact-search-dialog.c:529
-#: ../libempathy-gtk/empathy-individual-widget.c:1485
+#: ../libempathy-gtk/empathy-individual-widget.c:1483
 #: ../src/empathy-chatrooms-window.ui.h:2
 #: ../src/empathy-new-chatroom-dialog.ui.h:6
 msgid "Account:"
@@ -1821,12 +1825,12 @@ msgid "Please let me see when you're online. Thanks!"
 msgstr "연결하면 제게 연락해 주세요. 감사합니다!"
 
 #: ../libempathy-gtk/empathy-contact-widget.c:168
-#: ../libempathy-gtk/empathy-individual-widget.c:900
+#: ../libempathy-gtk/empathy-individual-widget.c:898
 msgid "Save Avatar"
 msgstr "아바타 저장"
 
 #: ../libempathy-gtk/empathy-contact-widget.c:224
-#: ../libempathy-gtk/empathy-individual-widget.c:958
+#: ../libempathy-gtk/empathy-individual-widget.c:956
 msgid "Unable to save avatar"
 msgstr "아바타를 저장할 수 없습니다"
 
@@ -1967,7 +1971,7 @@ msgstr "통화를 할 때 사용할 계정 선택"
 
 #: ../libempathy-gtk/empathy-individual-menu.c:357
 #: ../libempathy-gtk/empathy-log-window.ui.h:6
-#: ../src/empathy-call-window.ui.h:18
+#: ../src/empathy-call-window.ui.h:20
 msgid "Call"
 msgstr "호출"
 
@@ -2050,7 +2054,7 @@ msgid "Share My Desktop"
 msgstr "내 데스크톱 공유"
 
 #: ../libempathy-gtk/empathy-individual-menu.c:1461
-#: ../libempathy-gtk/empathy-individual-widget.c:1368
+#: ../libempathy-gtk/empathy-individual-widget.c:1366
 msgid "Favorite"
 msgstr "즐겨 찾기"
 
@@ -2065,7 +2069,7 @@ msgstr "편집(_E)"
 
 #. send invitation
 #: ../libempathy-gtk/empathy-individual-menu.c:1655
-#: ../src/empathy-chat-window.c:1246
+#: ../src/empathy-chat-window.c:1245
 msgid "Inviting you to this room"
 msgstr "이 방에 초대"
 
@@ -2207,16 +2211,16 @@ msgid "%B %e, %Y at %R UTC"
 msgstr "%Y년 %B %e일 %R UTC"
 
 #. Alias
-#: ../libempathy-gtk/empathy-individual-widget.c:1304
+#: ../libempathy-gtk/empathy-individual-widget.c:1302
 msgid "Alias:"
 msgstr "별명:"
 
 #. Translators: Identifier to connect to Instant Messaging network
-#: ../libempathy-gtk/empathy-individual-widget.c:1513
+#: ../libempathy-gtk/empathy-individual-widget.c:1511
 msgid "Identifier:"
 msgstr "아이디:"
 
-#: ../libempathy-gtk/empathy-individual-widget.c:1652
+#: ../libempathy-gtk/empathy-individual-widget.c:1650
 #, c-format
 msgid "Linked contact containing %u contact"
 msgid_plural "Linked contacts containing %u contacts"
@@ -2234,15 +2238,15 @@ msgstr "전화 및 휴대전화 장치에서 연결"
 msgid "New Network"
 msgstr "새 네트워크"
 
-#: ../libempathy-gtk/empathy-irc-network-chooser-dialog.c:530
+#: ../libempathy-gtk/empathy-irc-network-chooser-dialog.c:548
 msgid "Choose an IRC network"
 msgstr "IRC 네트워크 선택"
 
-#: ../libempathy-gtk/empathy-irc-network-chooser-dialog.c:587
+#: ../libempathy-gtk/empathy-irc-network-chooser-dialog.c:631
 msgid "Reset _Networks List"
 msgstr "네트워크 목록 초기화(_N)"
 
-#: ../libempathy-gtk/empathy-irc-network-chooser-dialog.c:591
+#: ../libempathy-gtk/empathy-irc-network-chooser-dialog.c:635
 msgctxt "verb displayed on a button to select an IRC network"
 msgid "Select"
 msgstr "선택"
@@ -2251,7 +2255,7 @@ msgstr "선택"
 msgid "new server"
 msgstr "새 서버"
 
-#: ../libempathy-gtk/empathy-irc-network-dialog.c:539
+#: ../libempathy-gtk/empathy-irc-network-dialog.c:547
 msgid "SSL"
 msgstr "SSL"
 
@@ -2299,110 +2303,110 @@ msgid "Chat with %s"
 msgstr "대화, 상대: %s"
 
 #: ../libempathy-gtk/empathy-log-window.c:1202
-#: ../libempathy-gtk/empathy-log-window.c:1346
+#: ../libempathy-gtk/empathy-log-window.c:1351
 msgctxt "A date with the time"
 msgid "%A, %e %B %Y %X"
 msgstr "%Y년 %B %e일 %A, %X"
 
 #. Translators: this is an emote: '* Danielle waves'
-#: ../libempathy-gtk/empathy-log-window.c:1289
+#: ../libempathy-gtk/empathy-log-window.c:1292
 #, c-format
 msgid "<i>* %s %s</i>"
 msgstr "<i>* %s %s</i>"
 
 #. Translators: this is a message: 'Danielle: hello'
 #. * The string in bold is the sender's name
-#: ../libempathy-gtk/empathy-log-window.c:1295
+#: ../libempathy-gtk/empathy-log-window.c:1298
 #, c-format
 msgid "<b>%s:</b> %s"
 msgstr "<b>%s:</b> %s"
 
-#: ../libempathy-gtk/empathy-log-window.c:1370
+#: ../libempathy-gtk/empathy-log-window.c:1375
 #, c-format
 msgid "%s second"
 msgid_plural "%s seconds"
 msgstr[0] "%s초"
 
-#: ../libempathy-gtk/empathy-log-window.c:1377
+#: ../libempathy-gtk/empathy-log-window.c:1382
 #, c-format
 msgid "%s minute"
 msgid_plural "%s minutes"
 msgstr[0] "%s분"
 
-#: ../libempathy-gtk/empathy-log-window.c:1385
+#: ../libempathy-gtk/empathy-log-window.c:1390
 #, c-format
 msgid "Call took %s, ended at %s"
 msgstr "통화 시간 %s, 종료 %s"
 
-#: ../libempathy-gtk/empathy-log-window.c:1716
+#: ../libempathy-gtk/empathy-log-window.c:1721
 msgid "Today"
 msgstr "오늘"
 
-#: ../libempathy-gtk/empathy-log-window.c:1720
+#: ../libempathy-gtk/empathy-log-window.c:1725
 msgid "Yesterday"
 msgstr "어제"
 
 #. Translators: A date such as '23 May 2010' (strftime format)
-#: ../libempathy-gtk/empathy-log-window.c:1735
+#: ../libempathy-gtk/empathy-log-window.c:1740
 msgid "%e %B %Y"
 msgstr "%Y년 %B %e일"
 
-#: ../libempathy-gtk/empathy-log-window.c:1839
-#: ../libempathy-gtk/empathy-log-window.c:3462
+#: ../libempathy-gtk/empathy-log-window.c:1844
+#: ../libempathy-gtk/empathy-log-window.c:3467
 msgid "Anytime"
 msgstr "모든 시간"
 
-#: ../libempathy-gtk/empathy-log-window.c:1938
-#: ../libempathy-gtk/empathy-log-window.c:2397
+#: ../libempathy-gtk/empathy-log-window.c:1943
+#: ../libempathy-gtk/empathy-log-window.c:2402
 msgid "Anyone"
 msgstr "모든 상대"
 
-#: ../libempathy-gtk/empathy-log-window.c:2710
+#: ../libempathy-gtk/empathy-log-window.c:2715
 msgid "Who"
 msgstr "상대"
 
-#: ../libempathy-gtk/empathy-log-window.c:2919
+#: ../libempathy-gtk/empathy-log-window.c:2924
 msgid "When"
 msgstr "시간"
 
-#: ../libempathy-gtk/empathy-log-window.c:3037
+#: ../libempathy-gtk/empathy-log-window.c:3042
 msgid "Anything"
 msgstr "모두"
 
-#: ../libempathy-gtk/empathy-log-window.c:3039
+#: ../libempathy-gtk/empathy-log-window.c:3044
 msgid "Text chats"
 msgstr "텍스트 채팅"
 
-#: ../libempathy-gtk/empathy-log-window.c:3040
+#: ../libempathy-gtk/empathy-log-window.c:3045
 #: ../src/empathy-preferences.ui.h:29
 msgid "Calls"
 msgstr "통화"
 
-#: ../libempathy-gtk/empathy-log-window.c:3044
+#: ../libempathy-gtk/empathy-log-window.c:3049
 msgid "Incoming calls"
 msgstr "받은 통화"
 
-#: ../libempathy-gtk/empathy-log-window.c:3045
+#: ../libempathy-gtk/empathy-log-window.c:3050
 msgid "Outgoing calls"
 msgstr "보낸 통화"
 
-#: ../libempathy-gtk/empathy-log-window.c:3046
+#: ../libempathy-gtk/empathy-log-window.c:3051
 msgid "Missed calls"
 msgstr "놓친 통화"
 
-#: ../libempathy-gtk/empathy-log-window.c:3066
+#: ../libempathy-gtk/empathy-log-window.c:3071
 msgid "What"
 msgstr "내용"
 
-#: ../libempathy-gtk/empathy-log-window.c:3755
+#: ../libempathy-gtk/empathy-log-window.c:3760
 msgid "Are you sure you want to delete all logs of previous conversations?"
 msgstr "정말로 이전 대화 기록을 삭제하시겠습니까?"
 
-#: ../libempathy-gtk/empathy-log-window.c:3759
+#: ../libempathy-gtk/empathy-log-window.c:3764
 msgid "Clear All"
 msgstr "모두 지우기"
 
-#: ../libempathy-gtk/empathy-log-window.c:3766
+#: ../libempathy-gtk/empathy-log-window.c:3771
 msgid "Delete from:"
 msgstr "삭제할 곳:"
 
@@ -2424,12 +2428,12 @@ msgid "Profile"
 msgstr "프로파일"
 
 #: ../libempathy-gtk/empathy-log-window.ui.h:5
-#: ../src/empathy-chat-window.ui.h:19 ../src/empathy-preferences.ui.h:11
+#: ../src/empathy-chat-window.c:1438 ../src/empathy-preferences.ui.h:11
 msgid "Chat"
 msgstr "대화"
 
 #: ../libempathy-gtk/empathy-log-window.ui.h:7
-#: ../src/empathy-call-window.ui.h:24
+#: ../src/empathy-call-window.ui.h:26
 msgid "Video"
 msgstr "영상"
 
@@ -2660,12 +2664,12 @@ msgid "_Accept"
 msgstr "허용(_A)"
 
 # 상태 메시지
-#: ../libempathy-gtk/empathy-theme-adium.c:1125
+#: ../libempathy-gtk/empathy-theme-adium.c:1124
 #, c-format
 msgid "Message edited at %s"
 msgstr "메시지 편집, %s"
 
-#: ../libempathy-gtk/empathy-theme-adium.c:1841
+#: ../libempathy-gtk/empathy-theme-adium.c:1824
 msgid "Normal"
 msgstr "보통"
 
@@ -2700,7 +2704,7 @@ msgstr "자기만 서명한 인증서입니다."
 #: ../libempathy-gtk/empathy-tls-dialog.c:177
 msgid ""
 "The certificate has been revoked by the issuing Certification Authority."
-msgstr "인증서가 인증 기관에 의해 철회되었습니다."
+msgstr "인증 기관이 인증서를 철회했습니다."
 
 #: ../libempathy-gtk/empathy-tls-dialog.c:181
 msgid "The certificate is cryptographically weak."
@@ -2779,14 +2783,19 @@ msgid "<b>Personal Details</b>"
 msgstr "<b>개인 상세정보</b>"
 
 #. Copy Link Address menu item
-#: ../libempathy-gtk/empathy-webkit-utils.c:278
+#: ../libempathy-gtk/empathy-webkit-utils.c:284
 msgid "_Copy Link Address"
 msgstr "링크 주소 복사(_C)"
 
 #. Open Link menu item
-#: ../libempathy-gtk/empathy-webkit-utils.c:285
+#: ../libempathy-gtk/empathy-webkit-utils.c:291
 msgid "_Open Link"
 msgstr "링크 열기(_O)"
+
+#. Inspector
+#: ../libempathy-gtk/empathy-webkit-utils.c:305
+msgid "Inspect HTML"
+msgstr "HTML 검사"
 
 #: ../libempathy-gtk/totem-subtitle-encoding.c:158
 msgid "Current Locale"
@@ -2963,6 +2972,13 @@ msgstr "상위 연락처"
 msgid "Ungrouped"
 msgstr "그룹 없음"
 
+#. Add a prefix explaining that something goes wrong when trying to
+#. * fetch contact's presence.
+#: ../libempathy-gtk/empathy-roster-contact.c:205
+#, c-format
+msgid "Server cannot find contact: %s"
+msgstr "서버에서 연락처를 찾을 수 없습니다: %s"
+
 #: ../nautilus-sendto-plugin/empathy-nautilus-sendto.c:231
 msgid "No error message"
 msgstr "오류 메시지 없음"
@@ -3055,7 +3071,7 @@ msgstr "%s 계정에 저장하지 않은 수정 사항이 있습니다."
 msgid "Your new account has not been saved yet."
 msgstr "새로 만든 계정을 아직 저장하지 않았습니다."
 
-#: ../src/empathy-accounts-dialog.c:404 ../src/empathy-call-window.c:1267
+#: ../src/empathy-accounts-dialog.c:404 ../src/empathy-call-window.c:1279
 msgid "Connecting…"
 msgstr "연결하는 중…"
 
@@ -3082,10 +3098,7 @@ msgid ""
 "This account has been disabled because it relies on an old, unsupported "
 "backend. Please install telepathy-haze and restart your session to migrate "
 "the account."
-msgstr ""
-"이 계정은 너무 오래되었고 백엔드를 지원하지 않기 때문에 비활성화 되었습니다. "
-"이 계정을 가져오려면 telepathy-haze를 설치하고 세션을 다시 시작하여 주시기 바"
-"랍니다."
+msgstr "이 계정은 너무 오래되었고 백엔드를 지원하지 않기 때문에 비활성화 되었습니다. 이 계정을 가져오려면 telepathy-haze를 설치하고 세션을 다시 시작하십시오."
 
 #: ../src/empathy-accounts-dialog.c:502
 msgid "Offline — Account Disabled"
@@ -3096,20 +3109,20 @@ msgstr "연결 중지 상태 — 계정 사용하지 않음"
 msgid "Edit Connection Parameters"
 msgstr "연결 설정 편집"
 
-#: ../src/empathy-accounts-dialog.c:733
+#: ../src/empathy-accounts-dialog.c:735
 msgid "_Edit Connection Parameters..."
 msgstr "연결 설정 편집(_E)..."
 
-#: ../src/empathy-accounts-dialog.c:1266
+#: ../src/empathy-accounts-dialog.c:1268
 #, c-format
 msgid "Do you want to remove %s from your computer?"
 msgstr "정말로 컴퓨터에서 %s 계정을 제거하시겠습니까?"
 
-#: ../src/empathy-accounts-dialog.c:1270
+#: ../src/empathy-accounts-dialog.c:1272
 msgid "This will not remove your account on the server."
 msgstr "서버의 계정은 제거하지 않습니다."
 
-#: ../src/empathy-accounts-dialog.c:1475
+#: ../src/empathy-accounts-dialog.c:1477
 msgid ""
 "You are about to select another account, which will discard\n"
 "your changes. Are you sure you want to proceed?"
@@ -3118,24 +3131,24 @@ msgstr ""
 "하시겠습니까?"
 
 #. Menu item: to enabled/disable the account
-#: ../src/empathy-accounts-dialog.c:1666
+#: ../src/empathy-accounts-dialog.c:1668
 msgid "_Enabled"
 msgstr "사용(_E)"
 
 #. Menu item: Rename
-#: ../src/empathy-accounts-dialog.c:1689
+#: ../src/empathy-accounts-dialog.c:1691
 msgid "Rename"
 msgstr "이름 바꾸기"
 
-#: ../src/empathy-accounts-dialog.c:2105
+#: ../src/empathy-accounts-dialog.c:2107
 msgid "_Skip"
 msgstr "건너 뛰기(_S)"
 
-#: ../src/empathy-accounts-dialog.c:2109
+#: ../src/empathy-accounts-dialog.c:2111
 msgid "_Connect"
 msgstr "연결(_C)"
 
-#: ../src/empathy-accounts-dialog.c:2288
+#: ../src/empathy-accounts-dialog.c:2290
 msgid ""
 "You are about to close the window, which will discard\n"
 "your changes. Are you sure you want to proceed?"
@@ -3144,7 +3157,7 @@ msgstr ""
 "니까?"
 
 #. Tweak the dialog
-#: ../src/empathy-accounts-dialog.c:2431
+#: ../src/empathy-accounts-dialog.c:2433
 msgid "Messaging and VoIP Accounts"
 msgstr "메신저 및 VoIP 계정"
 
@@ -3203,46 +3216,44 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../src/empathy-call.c:193
+#: ../src/empathy-call.c:124
+msgid "In a call"
+msgstr "통화 중"
+
+#: ../src/empathy-call.c:224
 msgid "- Empathy Audio/Video Client"
 msgstr "- 엠퍼시 음성/영상 클라이언트"
 
-#: ../src/empathy-call.c:217
+#: ../src/empathy-call.c:248
 msgid "Empathy Audio/Video Client"
 msgstr "엠퍼시 음성/영상 클라이언트"
 
 #: ../src/empathy-call-observer.c:119
 #, c-format
 msgid "%s just tried to call you, but you were in another call."
-msgstr "%s에서 호출을 시도했지만, 다른 호출 중이었습니다."
+msgstr "%s에서 통화를 시도했지만, 다른 통화 중이었습니다."
 
-#. Translators: this is an "Info" label. It should be as short
-#. * as possible.
-#: ../src/empathy-call-window.c:1124 ../src/empathy-call-window.c:1140
-msgid "i"
-msgstr "i"
-
-#: ../src/empathy-call-window.c:1484 ../src/empathy-event-manager.c:508
+#: ../src/empathy-call-window.c:1554 ../src/empathy-event-manager.c:508
 msgid "Incoming call"
-msgstr "호출 받음"
+msgstr "통화 받음"
 
-#: ../src/empathy-call-window.c:1490 ../src/empathy-event-manager.c:913
+#: ../src/empathy-call-window.c:1560 ../src/empathy-event-manager.c:913
 #, c-format
 msgid "Incoming video call from %s"
-msgstr "%s에서 온 영상 호출"
+msgstr "%s에서 온 영상 통화"
 
-#: ../src/empathy-call-window.c:1490 ../src/empathy-event-manager.c:516
+#: ../src/empathy-call-window.c:1560 ../src/empathy-event-manager.c:516
 #: ../src/empathy-event-manager.c:913
 #, c-format
 msgid "Incoming call from %s"
-msgstr "%s에서 온 호출"
+msgstr "%s에서 온 통화"
 
-#: ../src/empathy-call-window.c:1494
+#: ../src/empathy-call-window.c:1564
 #: ../src/empathy-notifications-approver.c:197
 msgid "Reject"
 msgstr "거부"
 
-#: ../src/empathy-call-window.c:1495
+#: ../src/empathy-call-window.c:1565
 #: ../src/empathy-notifications-approver.c:202
 #: ../src/empathy-notifications-approver.c:207
 msgid "Answer"
@@ -3250,60 +3261,60 @@ msgstr "응답"
 
 #. translators: Call is a noun and %s is the contact name. This string
 #. * is used in the window title
-#: ../src/empathy-call-window.c:1861
+#: ../src/empathy-call-window.c:1934
 #, c-format
 msgid "Call with %s"
-msgstr "호출: %s"
+msgstr "통화: %s"
 
-#: ../src/empathy-call-window.c:2113
+#: ../src/empathy-call-window.c:2186
 msgid "The IP address as seen by the machine"
 msgstr "컴퓨터에서 확인한 IP 주소"
 
-#: ../src/empathy-call-window.c:2115
+#: ../src/empathy-call-window.c:2188
 msgid "The IP address as seen by a server on the Internet"
 msgstr "인터넷 서버에서 확인한 IP 주소"
 
-#: ../src/empathy-call-window.c:2117
+#: ../src/empathy-call-window.c:2190
 msgid "The IP address of the peer as seen by the other side"
 msgstr "다른 상대편 컴퓨터에서 확인한 IP 주소"
 
-#: ../src/empathy-call-window.c:2119
+#: ../src/empathy-call-window.c:2192
 msgid "The IP address of a relay server"
 msgstr "중계 서버가 확인한 IP 주소"
 
-#: ../src/empathy-call-window.c:2121
+#: ../src/empathy-call-window.c:2194
 msgid "The IP address of the multicast group"
 msgstr "멀티캐스트 그룹의 IP 주소"
 
-#: ../src/empathy-call-window.c:2522 ../src/empathy-call-window.c:2523
-#: ../src/empathy-call-window.c:2524 ../src/empathy-call-window.c:2525
-#: ../src/empathy-call-window.ui.h:26
+#: ../src/empathy-call-window.c:2605 ../src/empathy-call-window.c:2606
+#: ../src/empathy-call-window.c:2607 ../src/empathy-call-window.c:2608
+#: ../src/empathy-call-window.ui.h:28
 msgid "Unknown"
 msgstr "알 수 없음"
 
-#: ../src/empathy-call-window.c:2874
+#: ../src/empathy-call-window.c:2966
 msgid "On hold"
 msgstr "일시 중지"
 
-#: ../src/empathy-call-window.c:2878
+#: ../src/empathy-call-window.c:2970
 msgid "Mute"
 msgstr "묵음"
 
-#: ../src/empathy-call-window.c:2880
+#: ../src/empathy-call-window.c:2972
 msgid "Duration"
 msgstr "시간"
 
 #. Translators: 'status - minutes:seconds' the caller has been connected
-#: ../src/empathy-call-window.c:2883
+#: ../src/empathy-call-window.c:2975
 #, c-format
 msgid "%s — %d:%02dm"
 msgstr "%s — %d:%02d"
 
-#: ../src/empathy-call-window.c:2979
+#: ../src/empathy-call-window.c:3071
 msgid "Technical Details"
 msgstr "기술 정보"
 
-#: ../src/empathy-call-window.c:3018
+#: ../src/empathy-call-window.c:3110
 #, c-format
 msgid ""
 "%s's software does not understand any of the audio formats supported by your "
@@ -3312,7 +3323,7 @@ msgstr ""
 "이 컴퓨터에서 지원하는 음성 형식 중에서 %s 측의 소프트웨어에서 지원하지 않는 "
 "음성 형식이 있습니다."
 
-#: ../src/empathy-call-window.c:3023
+#: ../src/empathy-call-window.c:3115
 #, c-format
 msgid ""
 "%s's software does not understand any of the video formats supported by your "
@@ -3321,7 +3332,7 @@ msgstr ""
 "이 컴퓨터에서 지원하는 영상 형식 중에서 %s 측의 소프트웨어에서 지원하지 않는 "
 "영상 형식이 있습니다."
 
-#: ../src/empathy-call-window.c:3029
+#: ../src/empathy-call-window.c:3121
 #, c-format
 msgid ""
 "Can't establish a connection to %s. One of you might be on a network that "
@@ -3330,23 +3341,23 @@ msgstr ""
 "%s에 연결할 수 없습니다. 현재 직접 연결을 허용하지 않는 네트워크에 연결되어 "
 "있을 수도 있습니다."
 
-#: ../src/empathy-call-window.c:3035
+#: ../src/empathy-call-window.c:3127
 msgid "There was a failure on the network"
 msgstr "네트워크 관련해 실패했습니다."
 
-#: ../src/empathy-call-window.c:3039
+#: ../src/empathy-call-window.c:3131
 msgid ""
 "The audio formats necessary for this call are not installed on your computer"
 msgstr ""
 "이 호출에 필요한 음성 형식을 지원하는 기능을 컴퓨터에 설치하지 않았습니다."
 
-#: ../src/empathy-call-window.c:3042
+#: ../src/empathy-call-window.c:3134
 msgid ""
 "The video formats necessary for this call are not installed on your computer"
 msgstr ""
 "이 호출에 필요한 영상 형식을 지원하는 기능을 컴퓨터에 설치하지 않았습니다."
 
-#: ../src/empathy-call-window.c:3054
+#: ../src/empathy-call-window.c:3146
 #, c-format
 msgid ""
 "Something unexpected happened in a Telepathy component. Please <a href=\"%s"
@@ -3356,33 +3367,33 @@ msgstr ""
 "텔레파시 컴포넌트에 예상치 못한 일이 발생했습니다. <a href=\"%s\">이 버그를 "
 "보고해 주시고</a> 도움말 메뉴의 '디버깅' 창에 있는 기록을 첨부하십시오."
 
-#: ../src/empathy-call-window.c:3063
+#: ../src/empathy-call-window.c:3155
 msgid "There was a failure in the call engine"
 msgstr "호출 엔진에 실패가 발생했습니다"
 
-#: ../src/empathy-call-window.c:3066
+#: ../src/empathy-call-window.c:3158
 msgid "The end of the stream was reached"
 msgstr "스트림이 끝났습니다"
 
-#: ../src/empathy-call-window.c:3106
+#: ../src/empathy-call-window.c:3198
 msgid "Can't establish audio stream"
 msgstr "음성 스트림에 연결할 수 없습니다"
 
-#: ../src/empathy-call-window.c:3116
+#: ../src/empathy-call-window.c:3208
 msgid "Can't establish video stream"
 msgstr "영상 스트림에 연결할 수 없습니다"
 
-#: ../src/empathy-call-window.c:3153
+#: ../src/empathy-call-window.c:3245
 #, c-format
 msgid "Your current balance is %s."
 msgstr "현재 잔액은 %s 입니다."
 
-#: ../src/empathy-call-window.c:3157
+#: ../src/empathy-call-window.c:3249
 msgid "Sorry, you don’t have enough credit for that call."
 msgstr "죄송하지만, 전화를 걸 잔고가 부족합니다."
 
 # 주의: 돈이 모자라서 충전해야 할 때 누르는 단추
-#: ../src/empathy-call-window.c:3159
+#: ../src/empathy-call-window.c:3251
 msgid "Top Up"
 msgstr "잔액 충전"
 
@@ -3419,74 +3430,82 @@ msgid "_Debug"
 msgstr "디버깅(_D)"
 
 #: ../src/empathy-call-window.ui.h:10
+msgid "_GStreamer"
+msgstr "지스트리머(_G)"
+
+#: ../src/empathy-call-window.ui.h:11
+msgid "_Telepathy"
+msgstr "텔레파시(_T)"
+
+#: ../src/empathy-call-window.ui.h:12
 msgid "Swap camera"
 msgstr "카메라 바꾸기"
 
-#: ../src/empathy-call-window.ui.h:11
+#: ../src/empathy-call-window.ui.h:13
 msgid "Minimise me"
 msgstr "최소화"
 
-#: ../src/empathy-call-window.ui.h:12
+#: ../src/empathy-call-window.ui.h:14
 msgid "Maximise me"
 msgstr "최대화"
 
-#: ../src/empathy-call-window.ui.h:13
+#: ../src/empathy-call-window.ui.h:15
 msgid "Disable camera"
 msgstr "카메라 사용 않기"
 
-#: ../src/empathy-call-window.ui.h:14
+#: ../src/empathy-call-window.ui.h:16
 msgid "Hang up"
 msgstr "끊기"
 
-#: ../src/empathy-call-window.ui.h:15
+#: ../src/empathy-call-window.ui.h:17
 msgid "Hang up current call"
 msgstr "현재 호출을 끊습니다"
 
-#: ../src/empathy-call-window.ui.h:16
+#: ../src/empathy-call-window.ui.h:18
 msgid "Video call"
 msgstr "영상 통화"
 
-#: ../src/empathy-call-window.ui.h:17
+#: ../src/empathy-call-window.ui.h:19
 msgid "Start a video call"
 msgstr "영상 통화 시작"
 
-#: ../src/empathy-call-window.ui.h:19
+#: ../src/empathy-call-window.ui.h:21
 msgid "Start an audio call"
 msgstr "음성 통화 시작"
 
-#: ../src/empathy-call-window.ui.h:20
+#: ../src/empathy-call-window.ui.h:22
 msgid "Show dialpad"
 msgstr "숫자판 표시"
 
-#: ../src/empathy-call-window.ui.h:21
+#: ../src/empathy-call-window.ui.h:23
 msgid "Display the dialpad"
 msgstr "숫자판 표시"
 
-#: ../src/empathy-call-window.ui.h:22
+#: ../src/empathy-call-window.ui.h:24
 msgid "Toggle video transmission"
 msgstr "비디오 전송을 켜고 끕니다"
 
-#: ../src/empathy-call-window.ui.h:23
+#: ../src/empathy-call-window.ui.h:25
 msgid "Toggle audio transmission"
 msgstr "오디오 전송을 켜고 끕니다"
 
-#: ../src/empathy-call-window.ui.h:25
+#: ../src/empathy-call-window.ui.h:27
 msgid "Encoding Codec:"
 msgstr "인코딩 코덱:"
 
-#: ../src/empathy-call-window.ui.h:27
+#: ../src/empathy-call-window.ui.h:29
 msgid "Decoding Codec:"
 msgstr "디코딩 코덱:"
 
-#: ../src/empathy-call-window.ui.h:28
+#: ../src/empathy-call-window.ui.h:30
 msgid "Remote Candidate:"
 msgstr "원격 후보:"
 
-#: ../src/empathy-call-window.ui.h:29
+#: ../src/empathy-call-window.ui.h:31
 msgid "Local Candidate:"
 msgstr "로컬 후보:"
 
-#: ../src/empathy-call-window.ui.h:30 ../src/empathy-preferences.ui.h:28
+#: ../src/empathy-call-window.ui.h:32 ../src/empathy-preferences.ui.h:28
 msgid "Audio"
 msgstr "음성"
 
@@ -3510,11 +3529,11 @@ msgstr "자동 연결"
 msgid "Manage Favorite Rooms"
 msgstr "즐겨 찾기 대화방 관리"
 
-#: ../src/empathy-chat-window.c:288
+#: ../src/empathy-chat-window.c:287
 msgid "Close this window?"
 msgstr "창을 닫으시겠습니까?"
 
-#: ../src/empathy-chat-window.c:294
+#: ../src/empathy-chat-window.c:293
 #, c-format
 msgid ""
 "Closing this window will leave %s. You will not receive any further messages "
@@ -3523,7 +3542,7 @@ msgstr ""
 "창을 닫으면 %s에서 떠납니다. 다시 참여하지 않는 한 더 이상의 메시지를 받을 "
 "수 없게 됩니다."
 
-#: ../src/empathy-chat-window.c:307
+#: ../src/empathy-chat-window.c:306
 #, c-format
 msgid ""
 "Closing this window will leave a chat room. You will not receive any further "
@@ -3535,61 +3554,61 @@ msgstr[0] ""
 "이 창을 닫으면 %u개의 대화방을 닫습니다. 다시 참여하기 전에는 더 이상의 메시"
 "지를 받을 수 없습니다."
 
-#: ../src/empathy-chat-window.c:318
+#: ../src/empathy-chat-window.c:317
 #, c-format
 msgid "Leave %s?"
 msgstr "%s에서 나가시겠습니까?"
 
-#: ../src/empathy-chat-window.c:320
+#: ../src/empathy-chat-window.c:319
 msgid ""
 "You will not receive any further messages from this chat room until you "
 "rejoin it."
 msgstr ""
 "다시 참여하기 전에는 이 대화방으로부터 더 이상의 메시지를 받을 수 없습니다."
 
-#: ../src/empathy-chat-window.c:339
+#: ../src/empathy-chat-window.c:338
 msgid "Close window"
 msgstr "창 닫기"
 
-#: ../src/empathy-chat-window.c:339
+#: ../src/empathy-chat-window.c:338
 msgid "Leave room"
 msgstr "방 나가기"
 
-#: ../src/empathy-chat-window.c:678 ../src/empathy-chat-window.c:701
+#: ../src/empathy-chat-window.c:677 ../src/empathy-chat-window.c:700
 #, c-format
 msgid "%s (%d unread)"
 msgid_plural "%s (%d unread)"
 msgstr[0] "%s (%d개 읽지 않음)"
 
-#: ../src/empathy-chat-window.c:693
+#: ../src/empathy-chat-window.c:692
 #, c-format
 msgid "%s (and %u other)"
 msgid_plural "%s (and %u others)"
 msgstr[0] "%s (기타 %u개)"
 
-#: ../src/empathy-chat-window.c:709
+#: ../src/empathy-chat-window.c:708
 #, c-format
 msgid "%s (%d unread from others)"
 msgid_plural "%s (%d unread from others)"
 msgstr[0] "%s (다른 탭 %d개 읽지 않음)"
 
-#: ../src/empathy-chat-window.c:718
+#: ../src/empathy-chat-window.c:717
 #, c-format
 msgid "%s (%d unread from all)"
 msgid_plural "%s (%d unread from all)"
 msgstr[0] "%s (모두 %d개 읽지 않음)"
 
-#: ../src/empathy-chat-window.c:955
+#: ../src/empathy-chat-window.c:954
 msgid "SMS:"
 msgstr "단문 문자:"
 
-#: ../src/empathy-chat-window.c:963
+#: ../src/empathy-chat-window.c:962
 #, c-format
 msgid "Sending %d message"
 msgid_plural "Sending %d messages"
 msgstr[0] "메시지 %d개 보내는 중"
 
-#: ../src/empathy-chat-window.c:983
+#: ../src/empathy-chat-window.c:982
 msgid "Typing a message."
 msgstr "메시지를 입력하는 중입니다."
 
@@ -3682,63 +3701,76 @@ msgid "Data too large for a single paste. Please save logs to file."
 msgstr ""
 "한 번에 붙여넣을 데이터가 너무 큽니다. 로그를 파일로 저장하여 주십시오."
 
-#: ../src/empathy-debug-window.c:1856
+#: ../src/empathy-debug-window.c:1857
 msgid "Debug Window"
 msgstr "디버깅 창"
 
-#: ../src/empathy-debug-window.c:1916
+#: ../src/empathy-debug-window.c:1917
 msgid "Send to pastebin"
 msgstr "Pastebin으로 보내기"
 
-#: ../src/empathy-debug-window.c:1960
+#: ../src/empathy-debug-window.c:1961
 msgid "Pause"
 msgstr "일시 중지"
 
-#: ../src/empathy-debug-window.c:1972
+#: ../src/empathy-debug-window.c:1973
 msgid "Level "
 msgstr "단계 "
 
-#: ../src/empathy-debug-window.c:1991
+#: ../src/empathy-debug-window.c:1992
 msgid "Debug"
 msgstr "디버깅"
 
-#: ../src/empathy-debug-window.c:1996
+#: ../src/empathy-debug-window.c:1997
 msgid "Info"
 msgstr "정보"
 
-#: ../src/empathy-debug-window.c:2001 ../src/empathy-debug-window.c:2050
+#: ../src/empathy-debug-window.c:2002 ../src/empathy-debug-window.c:2077
 msgid "Message"
 msgstr "메시지"
 
-#: ../src/empathy-debug-window.c:2006
+#: ../src/empathy-debug-window.c:2007
 msgid "Warning"
 msgstr "경고"
 
-#: ../src/empathy-debug-window.c:2011
+#: ../src/empathy-debug-window.c:2012
 msgid "Critical"
 msgstr "치명적"
 
-#: ../src/empathy-debug-window.c:2016
+#: ../src/empathy-debug-window.c:2017
 msgid "Error"
 msgstr "오류"
 
-#: ../src/empathy-debug-window.c:2035
+#: ../src/empathy-debug-window.c:2030
+msgid ""
+"Even if they don't display passwords, logs can contain sensitive information "
+"such as your list of contacts or the messages you recently sent or "
+"received.\n"
+"If you don't want to see such information available in a public bug report, "
+"you can choose to limit the visibility of your bug to Empathy developers "
+"when reporting it by displaying the advanced fields in the <a href=\"https://"
+"bugzilla.gnome.org/enter_bug.cgi?product=empathy\">bug report</a>."
+msgstr ""
+"암호를 표시하지 않더라도, 최근에 주고받은 연락처나 메시지 같은 민감한 정보가 로그에 들어 있을 수 있습니다.\n"
+"<a href=\"https://bugzilla.gnome.org/enter_bug.cgi?product=empathy\">버그 보고</a>에 이러한 정보가 공개되지 않으고 앰퍼시 개발자에게 표시할 수준을 정하려면, 보고할 때 고급 필드를 이용할 수 있습니다."
+
+#: ../src/empathy-debug-window.c:2062
 msgid "Time"
 msgstr "시각"
 
-#: ../src/empathy-debug-window.c:2038
+#: ../src/empathy-debug-window.c:2065
 msgid "Domain"
 msgstr "범위"
 
-#: ../src/empathy-debug-window.c:2041
+#: ../src/empathy-debug-window.c:2068
 msgid "Category"
 msgstr "분류"
 
-#: ../src/empathy-debug-window.c:2044
+#: ../src/empathy-debug-window.c:2071
 msgid "Level"
 msgstr "단계"
 
-#: ../src/empathy-debug-window.c:2073
+#: ../src/empathy-debug-window.c:2100
 msgid ""
 "The selected connection manager does not support the remote debugging "
 "extension."
@@ -3746,7 +3778,7 @@ msgstr "선택한 연결 관리는 원격 디버깅 확장 기능을 지원하�
 
 #: ../src/empathy-event-manager.c:508
 msgid "Incoming video call"
-msgstr "영상 호출 받음"
+msgstr "영상 통화 받음"
 
 # 호칭과 조사를 붙여 쓰기 위해 번역문에 따옴표 추가
 #: ../src/empathy-event-manager.c:512
@@ -3807,7 +3839,7 @@ msgstr "%s 방에 초대 받았습니다"
 msgid "Incoming file transfer from %s"
 msgstr "파일 전송을 받았습니다 (%s에서)"
 
-#: ../src/empathy-event-manager.c:973 ../src/empathy-roster-window.c:225
+#: ../src/empathy-event-manager.c:973 ../src/empathy-roster-window.c:227
 msgid "Password required"
 msgstr "암호 필요"
 
@@ -4164,7 +4196,7 @@ msgstr "그룹 표시"
 msgid "Show account balances"
 msgstr "계정 잔액 표시"
 
-#: ../src/empathy-preferences.ui.h:4 ../src/empathy-roster-window.c:2107
+#: ../src/empathy-preferences.ui.h:4 ../src/empathy-roster-window.c:2241
 msgid "Contact List"
 msgstr "연락처 목록"
 
@@ -4265,7 +4297,7 @@ msgstr ""
 
 #: ../src/empathy-preferences.ui.h:30
 msgid "_Publish location to my contacts"
-msgstr "위치를 연락처에 있는 사람들에게 공개(_P)"
+msgstr "위치를 연락처에 있는 사람에게 공개(_P)"
 
 #: ../src/empathy-preferences.ui.h:31
 msgid ""
@@ -4328,64 +4360,86 @@ msgstr "변종:"
 msgid "Themes"
 msgstr "테마"
 
-#: ../src/empathy-roster-window.c:242
+#: ../src/empathy-roster-window.c:244
 msgid "Provide Password"
 msgstr "암호 입력"
 
-#: ../src/empathy-roster-window.c:248
+#: ../src/empathy-roster-window.c:250
 msgid "Disconnect"
 msgstr "연결 끊기"
 
-#: ../src/empathy-roster-window.c:441
+#: ../src/empathy-roster-window.c:493
 msgid "You need to setup an account to see contacts here."
 msgstr "이 연락처를 보려면 계정을 설정해야 합니다."
 
-#: ../src/empathy-roster-window.c:517
+#: ../src/empathy-roster-window.c:569
 #, c-format
 msgid "Sorry, %s accounts can’t be used until your %s software is updated."
 msgstr ""
 "죄송하지만, %s 계정은 %s 소프트웨어를 업데이트 하기 전에는 사용하실 수 없습니"
 "다."
 
-#: ../src/empathy-roster-window.c:635
+#: ../src/empathy-roster-window.c:670
+msgid "Windows Live"
+msgstr "윈도우 라이브"
+
+#: ../src/empathy-roster-window.c:674
+msgid "Facebook"
+msgstr "페이스북"
+
+#. translators: %s is an account name like 'Facebook' or 'Google Talk'
+#: ../src/empathy-roster-window.c:689
+#, c-format
+msgid "%s account requires authorisation"
+msgstr "%s 계정에 인증이 필요합니다"
+
+#: ../src/empathy-roster-window.c:700
+msgid "Online Accounts"
+msgstr "온라인 계정"
+
+#: ../src/empathy-roster-window.c:747
 msgid "Update software..."
 msgstr "소프트웨어 업데이트..."
 
-#: ../src/empathy-roster-window.c:641
+#: ../src/empathy-roster-window.c:753
 msgid "Reconnect"
 msgstr "다시 연결"
 
-#: ../src/empathy-roster-window.c:645
+#: ../src/empathy-roster-window.c:757
 msgid "Edit Account"
 msgstr "계정 편집"
 
-#: ../src/empathy-roster-window.c:650
+#: ../src/empathy-roster-window.c:762
 msgid "Close"
 msgstr "닫기"
 
-#: ../src/empathy-roster-window.c:787
+#: ../src/empathy-roster-window.c:904
 msgid "Top up account"
 msgstr "계정 충전"
 
-#: ../src/empathy-roster-window.c:1469
+#: ../src/empathy-roster-window.c:1590
 msgid "You need to enable one of your accounts to see contacts here."
 msgstr "이 연락처를 보려면 계정 중 하나를 활성화 해야 합니다."
 
 #. translators: argument is an account name
-#: ../src/empathy-roster-window.c:1477
+#: ../src/empathy-roster-window.c:1598
 #, c-format
 msgid "You need to enable %s to see contacts here."
 msgstr "이 연락처를 보려면 %s을(를) 활성화 해야 합니다."
 
-#: ../src/empathy-roster-window.c:1555
+#: ../src/empathy-roster-window.c:1676
 msgid "Change your presence to see contacts here"
 msgstr "연락처를 보려면 내 상태를 바꾸십시오"
 
-#: ../src/empathy-roster-window.c:1564
+#: ../src/empathy-roster-window.c:1685
 msgid "No match found"
 msgstr "해당 사항이 없습니다"
 
-#: ../src/empathy-roster-window.c:1569
+#: ../src/empathy-roster-window.c:1692
+msgid "You haven't added any contact yet"
+msgstr "아직 연락처를 추가하지 않았습니다"
+
+#: ../src/empathy-roster-window.c:1695
 msgid "No online contacts"
 msgstr "온라인 연락처 없음"
 
@@ -4462,6 +4516,14 @@ msgstr "계정 설정"
 msgid "Go _Online"
 msgstr "온라인 연결(_O)"
 
+#: ../src/empathy-roster-window.ui.h:3
+msgid "Show _Offline Contacts"
+msgstr "연결 중지 상태 연락처 표시(_O)"
+
+#: ../src/empathy-roster-window.ui.h:4
+msgid "_Add Contact..."
+msgstr "연락처 추가(_A)..."
+
 #: ../src/empathy-status-icon.ui.h:2
 msgid "_New Conversation…"
 msgstr "새 대화(_N)…"
@@ -4491,3 +4553,6 @@ msgstr "%s 계정 옵션 편집"
 #: ../ubuntu-online-accounts/empathy.application.in.h:1
 msgid "Integrate your IM accounts"
 msgstr "메신저 계정을 통합합니다"
+
+#~ msgid "i"
+#~ msgstr "i"
