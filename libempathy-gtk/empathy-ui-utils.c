@@ -75,8 +75,15 @@ empathy_gtk_init (void)
   initialized = TRUE;
 }
 
+enum _BuilderSource
+{
+  BUILDER_SOURCE_FILE,
+  BUILDER_SOURCE_RESOURCE
+};
+
 static GtkBuilder *
-builder_get_file_valist (const gchar *filename,
+builder_get_valist (const gchar *sourcename,
+    enum _BuilderSource source,
     const gchar *first_object,
     va_list args)
 {
@@ -84,16 +91,29 @@ builder_get_file_valist (const gchar *filename,
   const gchar *name;
   GObject **object_ptr;
   GError *error = NULL;
+  gboolean success;
 
-  DEBUG ("Loading file %s", filename);
+  DEBUG ("Loading %s '%s'", source == BUILDER_SOURCE_FILE ? "file" : "resource", sourcename);
 
   gui = gtk_builder_new ();
   gtk_builder_set_translation_domain (gui, GETTEXT_PACKAGE);
 
-  if (!gtk_builder_add_from_file (gui, filename, &error))
+  switch (source)
+    {
+    case BUILDER_SOURCE_FILE:
+      success = gtk_builder_add_from_file (gui, sourcename, &error);
+      break;
+    case BUILDER_SOURCE_RESOURCE:
+      success = gtk_builder_add_from_resource (gui, sourcename, &error);
+      break;
+    default:
+      g_assert_not_reached ();
+    }
+
+  if (!success)
     {
       g_critical ("GtkBuilder Error (%s): %s",
-          filename, error->message);
+          sourcename, error->message);
 
       g_clear_error (&error);
       g_object_unref (gui);
@@ -134,7 +154,22 @@ empathy_builder_get_file (const gchar *filename,
   va_list args;
 
   va_start (args, first_object);
-  gui = builder_get_file_valist (filename, first_object, args);
+  gui = builder_get_valist (filename, BUILDER_SOURCE_FILE, first_object, args);
+  va_end (args);
+
+  return gui;
+}
+
+GtkBuilder *
+empathy_builder_get_resource (const gchar *resourcename,
+    const gchar *first_object,
+    ...)
+{
+  GtkBuilder *gui;
+  va_list args;
+
+  va_start (args, first_object);
+  gui = builder_get_valist (resourcename, BUILDER_SOURCE_RESOURCE, first_object, args);
   va_end (args);
 
   return gui;

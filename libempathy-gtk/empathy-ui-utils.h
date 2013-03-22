@@ -57,6 +57,9 @@ void empathy_gtk_init (void);
 GtkBuilder * empathy_builder_get_file (const gchar *filename,
     const gchar *first_object,
     ...);
+GtkBuilder * empathy_builder_get_resource (const gchar *resourcename,
+    const gchar *first_object,
+    ...);
 void empathy_builder_connect (GtkBuilder *gui,
     gpointer user_data,
     const gchar *first_object,
