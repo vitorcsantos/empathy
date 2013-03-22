@@ -113,7 +113,7 @@ empathy_account_widget_sip_build (EmpathyAccountWidget *self,
 
   if (is_simple)
     {
-      self->ui_details->gui = empathy_builder_get_file (filename,
+      self->ui_details->gui = empathy_builder_get_resource (filename,
           "vbox_sip_simple", &vbox_settings,
           NULL);
 
@@ -133,7 +133,7 @@ empathy_account_widget_sip_build (EmpathyAccountWidget *self,
       settings = g_slice_new0 (EmpathyAccountWidgetSip);
       settings->self = self;
 
-      self->ui_details->gui = empathy_builder_get_file (filename,
+      self->ui_details->gui = empathy_builder_get_resource (filename,
           "grid_common_settings", grid_common_settings,
           "grid_advanced_sip_settings", &grid_advanced,
           "vbox_sip_settings", &vbox_settings,

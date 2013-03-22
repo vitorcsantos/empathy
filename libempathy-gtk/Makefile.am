@@ -22,6 +22,8 @@ AM_CPPFLAGS =                                           \
 	$(DISABLE_DEPRECATED)
 
 BUILT_SOURCES = 					\
+	empathy-account-widgets-resources.c		\
+	empathy-account-widgets-resources.h		\
 	empathy-gtk-enum-types.h			\
 	empathy-gtk-enum-types.c
 
@@ -209,10 +211,7 @@ check_c_sources = \
 include $(top_srcdir)/tools/check-coding-style.mk
 check-local: check-coding-style
 
-uidir = $(datadir)/empathy
-ui_DATA = 					\
-	empathy-contact-widget.ui		\
-	empathy-contact-blocking-dialog.ui	\
+account_widgets_ui_files =			\
 	empathy-account-widget-generic.ui	\
 	empathy-account-widget-jabber.ui	\
 	empathy-account-widget-msn.ui		\
@@ -223,6 +222,12 @@ ui_DATA = 					\
 	empathy-account-widget-yahoo.ui		\
 	empathy-account-widget-groupwise.ui	\
 	empathy-account-widget-aim.ui		\
+	$(NULL)
+
+uidir = $(datadir)/empathy
+ui_DATA = 					\
+	empathy-contact-widget.ui		\
+	empathy-contact-blocking-dialog.ui	\
 	empathy-status-preset-dialog.ui		\
 	empathy-log-window.ui			\
 	empathy-chat.ui				\
@@ -267,7 +272,17 @@ empathy-gtk-enum-types.c: Makefile $(libempathy_gtk_headers)
 	&& cp xgen-gtc $(@F) \
 	&& rm -f xgen-gtc
 
-EXTRA_DIST =			\
+account_widgets_resource_files = $(shell $(GLIB_COMPILE_RESOURCES) --generate-dependencies --sourcedir=$(srcdir) $(srcdir)/empathy-account-widgets.gresource.xml)
+
+empathy-account-widgets-resources.c: empathy-account-widgets.gresource.xml $(account_widgets_resource_files)
+	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate-source $<
+
+empathy-account-widgets-resources.h: empathy-account-widgets.gresource.xml $(account_widgets_resource_files)
+	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate-header $<
+
+EXTRA_DIST =					\
+	empathy-account-widgets.gresource.xml	\
+	$(account_widgets_ui_files)		\
 	$(ui_DATA)
 
 if HAVE_GEOCLUE

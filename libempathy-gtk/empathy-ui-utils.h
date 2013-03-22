@@ -41,6 +41,8 @@
 
 G_BEGIN_DECLS
 
+#define ACCOUNT_WIDGETS_RESOURCES_PREFIX "/org/gnome/AccountWidgets"
+
 #define EMPATHY_RECT_IS_ON_SCREEN(x,y,w,h) ((x) + (w) > 0 && \
               (y) + (h) > 0 && \
               (x) < gdk_screen_width () && \

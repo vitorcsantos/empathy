@@ -453,7 +453,6 @@ empathy_irc_network_dialog_show (EmpathyIrcNetwork *network,
   GtkAdjustment *adjustment;
   GtkTreeSelection *selection;
   GtkTreeViewColumn *column;
-  gchar *filename;
   GtkWidget *sw, *toolbar;
   GtkStyleContext *context;
 
@@ -472,9 +471,7 @@ empathy_irc_network_dialog_show (EmpathyIrcNetwork *network,
   dialog->network = network;
   g_object_ref (dialog->network);
 
-  filename = empathy_file_lookup ("empathy-account-widget-irc.ui",
-      "libempathy-gtk");
-  gui = empathy_builder_get_file (filename,
+  gui = empathy_builder_get_resource (ACCOUNT_WIDGETS_RESOURCES_PREFIX "/empathy-account-widget-irc.ui",
       "irc_network_dialog", &dialog->dialog,
       "button_close", &dialog->button_close,
       "entry_network", &dialog->entry_network,
@@ -487,7 +484,6 @@ empathy_irc_network_dialog_show (EmpathyIrcNetwork *network,
       "scrolledwindow_network_server", &sw,
       "toolbar_network_server", &toolbar,
       NULL);
-  g_free (filename);
 
   store = gtk_list_store_new (4, G_TYPE_OBJECT, G_TYPE_STRING,
       G_TYPE_UINT, G_TYPE_BOOLEAN);

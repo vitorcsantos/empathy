@@ -142,7 +142,7 @@ empathy_account_widget_irc_build (EmpathyAccountWidget *self,
   settings = g_slice_new0 (EmpathyAccountWidgetIrc);
   settings->self = self;
 
-  self->ui_details->gui = empathy_builder_get_file (filename,
+  self->ui_details->gui = empathy_builder_get_resource (filename,
       "table_irc_settings", table_common_settings,
       "vbox_irc", box,
       "table_irc_settings", &settings->vbox_settings,
@@ -209,7 +209,7 @@ empathy_account_widget_irc_build_simple (EmpathyAccountWidget *self,
   settings = g_slice_new0 (EmpathyAccountWidgetIrc);
   settings->self = self;
 
-  self->ui_details->gui = empathy_builder_get_file (filename,
+  self->ui_details->gui = empathy_builder_get_resource (filename,
       "vbox_irc_simple", box,
       "alignment_network_simple", &alignment,
       NULL);

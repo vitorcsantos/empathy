@@ -1060,7 +1060,7 @@ account_widget_build_generic (EmpathyAccountWidget *self,
 {
   GtkWidget *expander_advanced, *box;
 
-  self->ui_details->gui = empathy_builder_get_file (filename,
+  self->ui_details->gui = empathy_builder_get_resource (filename,
       "grid_common_settings", &self->priv->grid_common_settings,
       "vbox_generic_settings", &box,
       "expander_advanced_settings", &expander_advanced,
@@ -1086,7 +1086,7 @@ account_widget_build_salut (EmpathyAccountWidget *self,
 {
   GtkWidget *expander_advanced, *box;
 
-  self->ui_details->gui = empathy_builder_get_file (filename,
+  self->ui_details->gui = empathy_builder_get_resource (filename,
       "grid_common_settings", &self->priv->grid_common_settings,
       "vbox_salut_settings", &box,
       "expander_advanced_settings", &expander_advanced,
@@ -1167,7 +1167,7 @@ account_widget_build_msn (EmpathyAccountWidget *self,
 
   if (self->priv->simple)
     {
-      self->ui_details->gui = empathy_builder_get_file (filename,
+      self->ui_details->gui = empathy_builder_get_resource (filename,
           "vbox_msn_simple", &box,
           NULL);
 
@@ -1184,7 +1184,7 @@ account_widget_build_msn (EmpathyAccountWidget *self,
     }
   else
     {
-      self->ui_details->gui = empathy_builder_get_file (filename,
+      self->ui_details->gui = empathy_builder_get_resource (filename,
           "grid_common_msn_settings", &self->priv->grid_common_settings,
           "vbox_msn_settings", &box,
           NULL);
@@ -1323,7 +1323,7 @@ account_widget_build_jabber (EmpathyAccountWidget *self,
   if (self->priv->simple && service == NO_SERVICE)
     {
       /* Simple widget for XMPP */
-      self->ui_details->gui = empathy_builder_get_file (filename,
+      self->ui_details->gui = empathy_builder_get_resource (filename,
           "vbox_jabber_simple", &box,
           "label_id_simple", &label_id,
           "label_id_create", &label_id_create,
@@ -1354,7 +1354,7 @@ account_widget_build_jabber (EmpathyAccountWidget *self,
   else if (self->priv->simple && service == GTALK_SERVICE)
     {
       /* Simple widget for Google Talk */
-      self->ui_details->gui = empathy_builder_get_file (filename,
+      self->ui_details->gui = empathy_builder_get_resource (filename,
           "vbox_gtalk_simple", &box,
           NULL);
 
@@ -1372,7 +1372,7 @@ account_widget_build_jabber (EmpathyAccountWidget *self,
   else if (self->priv->simple && service == FACEBOOK_SERVICE)
     {
       /* Simple widget for Facebook */
-      self->ui_details->gui = empathy_builder_get_file (filename,
+      self->ui_details->gui = empathy_builder_get_resource (filename,
           "vbox_fb_simple", &box,
           "entry_id_fb_simple", &entry_id,
           NULL);
@@ -1394,7 +1394,7 @@ account_widget_build_jabber (EmpathyAccountWidget *self,
       ServiceInfo info = services_infos[service];
 
       /* Full widget for XMPP, Google Talk and Facebook*/
-      self->ui_details->gui = empathy_builder_get_file (filename,
+      self->ui_details->gui = empathy_builder_get_resource (filename,
           "grid_common_settings", &self->priv->grid_common_settings,
           "vbox_jabber_settings", &box,
           "spinbutton_port", &spinbutton_port,
@@ -1474,7 +1474,7 @@ account_widget_build_icq (EmpathyAccountWidget *self,
 
   if (self->priv->simple)
     {
-      self->ui_details->gui = empathy_builder_get_file (filename,
+      self->ui_details->gui = empathy_builder_get_resource (filename,
           "vbox_icq_simple", &box,
           NULL);
 
@@ -1491,7 +1491,7 @@ account_widget_build_icq (EmpathyAccountWidget *self,
     }
   else
     {
-      self->ui_details->gui = empathy_builder_get_file (filename,
+      self->ui_details->gui = empathy_builder_get_resource (filename,
           "grid_common_settings", &self->priv->grid_common_settings,
           "vbox_icq_settings", &box,
           "spinbutton_port", &spinbutton_port,
@@ -1522,7 +1522,7 @@ account_widget_build_aim (EmpathyAccountWidget *self,
 
   if (self->priv->simple)
     {
-      self->ui_details->gui = empathy_builder_get_file (filename,
+      self->ui_details->gui = empathy_builder_get_resource (filename,
           "vbox_aim_simple", &box,
           NULL);
 
@@ -1539,7 +1539,7 @@ account_widget_build_aim (EmpathyAccountWidget *self,
     }
   else
     {
-      self->ui_details->gui = empathy_builder_get_file (filename,
+      self->ui_details->gui = empathy_builder_get_resource (filename,
           "grid_common_settings", &self->priv->grid_common_settings,
           "vbox_aim_settings", &box,
           "spinbutton_port", &spinbutton_port,
@@ -1572,7 +1572,7 @@ account_widget_build_yahoo (EmpathyAccountWidget *self,
 
   if (self->priv->simple)
     {
-      self->ui_details->gui = empathy_builder_get_file (filename,
+      self->ui_details->gui = empathy_builder_get_resource (filename,
           "vbox_yahoo_simple", &box,
           NULL);
 
@@ -1589,7 +1589,7 @@ account_widget_build_yahoo (EmpathyAccountWidget *self,
     }
   else
     {
-      self->ui_details->gui = empathy_builder_get_file (filename,
+      self->ui_details->gui = empathy_builder_get_resource (filename,
           "grid_common_settings", &self->priv->grid_common_settings,
           "vbox_yahoo_settings", &box,
           NULL);
@@ -1620,7 +1620,7 @@ account_widget_build_groupwise (EmpathyAccountWidget *self,
 
   if (self->priv->simple)
     {
-      self->ui_details->gui = empathy_builder_get_file (filename,
+      self->ui_details->gui = empathy_builder_get_resource (filename,
           "vbox_groupwise_simple", &box,
           NULL);
 
@@ -1637,7 +1637,7 @@ account_widget_build_groupwise (EmpathyAccountWidget *self,
     }
   else
     {
-      self->ui_details->gui = empathy_builder_get_file (filename,
+      self->ui_details->gui = empathy_builder_get_resource (filename,
           "grid_common_groupwise_settings", &self->priv->grid_common_settings,
           "vbox_groupwise_settings", &box,
           NULL);
@@ -1808,7 +1808,7 @@ out:
 }
 
 #define WIDGET(cm, proto) \
-  { #cm, #proto, "empathy-account-widget-"#proto".ui", \
+  { #cm, #proto, ACCOUNT_WIDGETS_RESOURCES_PREFIX "/empathy-account-widget-"#proto".ui", \
     account_widget_build_##proto }
 
 static void
@@ -1904,7 +1904,7 @@ do_constructed (GObject *obj)
     const char *file;
     GtkWidget * (*func)(EmpathyAccountWidget *self, const gchar *filename);
   } widgets [] = {
-    { "salut", "local-xmpp", "empathy-account-widget-local-xmpp.ui",
+    { "salut", "local-xmpp", ACCOUNT_WIDGETS_RESOURCES_PREFIX "/empathy-account-widget-local-xmpp.ui",
         account_widget_build_salut },
     WIDGET (gabble, jabber),
     WIDGET (haze, msn),
@@ -1928,23 +1928,15 @@ do_constructed (GObject *obj)
       if (!tp_strdiff (widgets[i].cm_name, cm_name) &&
           !tp_strdiff (widgets[i].protocol, protocol))
         {
-          gchar *filename;
-
-          filename = empathy_file_lookup (widgets[i].file,
-              "libempathy-gtk");
-          box = widgets[i].func (self, filename);
-          g_free (filename);
-
+          box = widgets[i].func (self, widgets[i].file);
           break;
         }
     }
 
   if (i == G_N_ELEMENTS (widgets))
     {
-      gchar *filename = empathy_file_lookup (
-          "empathy-account-widget-generic.ui", "libempathy-gtk");
+      gchar *filename = ACCOUNT_WIDGETS_RESOURCES_PREFIX "/empathy-account-widget-generic.ui";
       box = account_widget_build_generic (self, filename);
-      g_free (filename);
     }
 
   gtk_container_add (GTK_CONTAINER (self), box);
