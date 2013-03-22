@@ -604,13 +604,12 @@ mcp_account_manager_goa_get_identifier (const McpAccountStorage *self,
 static void
 account_storage_iface_init (McpAccountStorageIface *iface)
 {
-  mcp_account_storage_iface_set_name (iface, PLUGIN_NAME);
-  mcp_account_storage_iface_set_desc (iface, PLUGIN_DESCRIPTION);
-  mcp_account_storage_iface_set_priority (iface, PLUGIN_PRIORITY);
-  mcp_account_storage_iface_set_provider (iface, PLUGIN_PROVIDER);
+  iface->name = PLUGIN_NAME;
+  iface->desc = PLUGIN_DESCRIPTION;
+  iface->priority = PLUGIN_PRIORITY;
+  iface->provider = PLUGIN_PROVIDER;
 
-#define IMPLEMENT(x) mcp_account_storage_iface_implement_##x(iface, \
-    mcp_account_manager_goa_##x)
+#define IMPLEMENT(x) iface->x = mcp_account_manager_goa_##x
   IMPLEMENT (get);
   IMPLEMENT (list);
   IMPLEMENT (set);
