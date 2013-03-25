@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: empathy.master.kn\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=empathy&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2013-03-03 16:35+0000\n"
-"PO-Revision-Date: 2013-03-11 16:34+0530\n"
+"POT-Creation-Date: 2013-03-14 15:40+0000\n"
+"PO-Revision-Date: 2013-03-25 22:48+0530\n"
 "Last-Translator: Shankar Prasad <svenkate@redhat.com>\n"
 "Language-Team: Kannada <en@li.org>\n"
 "Language: kn\n"
@@ -156,14 +156,12 @@ msgstr ""
 "ಒದಗಿಸುತ್ತದೆ."
 
 #: ../data/org.gnome.Empathy.gschema.xml.h:24
-#, fuzzy
 msgid "The position for the chat window side pane"
 msgstr "ಹರಟೆ ಕಿಟಕಿಯ ಬದಿಯ ಫಲಕಕ್ಕಾಗಿನ ಸ್ಥಳ"
 
 #: ../data/org.gnome.Empathy.gschema.xml.h:25
-#, fuzzy
 msgid "The stored position (in pixels) of the chat window side pane."
-msgstr "ಹರಟೆ ಕಿಟಕಿಯ ಬದಿ ಫಲಕದ ಶೇಖರಿಸಿಡಲಾದ ಸ್ಥಳ (ಪಿಕ್ಸೆಲ್‌ಗಳಲ್ಲಿ)."
+msgstr "ಹರಟೆ ಕಿಟಕಿದ ಬದಿ ಫಲಕದ ಶೇಖರಿಸಿಡಲಾದ ಸ್ಥಳ (ಪಿಕ್ಸೆಲ್‌ಗಳಲ್ಲಿ)."
 
 #: ../data/org.gnome.Empathy.gschema.xml.h:26
 msgid "Show contact groups"
@@ -272,7 +270,7 @@ msgid ""
 "Whether to show a popup notification when receiving a new message even if "
 "the chat is already opened, but not focused."
 msgstr ""
-"ಚಾಟನ್ನು ಈಗಾಗಲೆ ತೆರೆಯಲಾಗಿದ್ದು ಆದರೆ ಅದರತ್ತ ಗಮನವಿರದೆ ಇದ್ದಾಗ, ಒಂದು ಸಂದೇಶವು "
+"ಹರಟೆಯನ್ನು ಈಗಾಗಲೆ ತೆರೆಯಲಾಗಿದ್ದು ಆದರೆ ಅದರತ್ತ ಗಮನವಿರದೆ ಇದ್ದಾಗ, ಒಂದು ಸಂದೇಶವು "
 "ಬಂದಲ್ಲಿ "
 "ಪುಟಿಕೆಯನ್ನು ತೋರಿಸಬೇಕೆ ಅಥವ ಬೇಡವೆ."
 
@@ -761,8 +759,7 @@ msgid ""
 "chain, exceed the limits imposed by the cryptography library"
 msgstr ""
 "ಪೂರೈಕೆಗಣಕ ಪ್ರಮಾಣಪತ್ರದ ಉದ್ದ ಅಥವ ಪೂರೈಕೆಗಣಕ ಪ್ರಮಾಣಪತ್ರ ಸರಣಿಯ ಆಳವು ಕ್ರಿಪ್ಟೋಗ್ರಫಿ "
-"ಲೈಬ್ರರಿಯಿಂದ "
-"ನಿಗದಿ ಪಡಿಸಲಾದ ಮಿತಿಗಳನ್ನು ಮೀರಿದೆ."
+"ಲೈಬ್ರರಿಯಿಂದ ನಿಗದಿ ಪಡಿಸಲಾದ ಮಿತಿಗಳನ್ನು ಮೀರಿದೆ."
 
 #: ../libempathy/empathy-utils.c:366
 msgid "Your software is too old"
@@ -2249,15 +2246,15 @@ msgstr "ದೂರವಾಣಿ ಅಥವ ಮೊಬೈಲ್ ಸಾಧನದಿಂ
 msgid "New Network"
 msgstr "ಹೊಸ ಜಾಲಬಂಧ"
 
-#: ../libempathy-gtk/empathy-irc-network-chooser-dialog.c:548
+#: ../libempathy-gtk/empathy-irc-network-chooser-dialog.c:538
 msgid "Choose an IRC network"
 msgstr "ಒಂದು IRC ಜಾಲವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ"
 
-#: ../libempathy-gtk/empathy-irc-network-chooser-dialog.c:631
+#: ../libempathy-gtk/empathy-irc-network-chooser-dialog.c:621
 msgid "Reset _Networks List"
 msgstr "ಜಾಲಬಂಧಗಳ ಪಟ್ಟಿಯನ್ನು ಮರಳಿ ಹೊಂದಿಸು (_N)"
 
-#: ../libempathy-gtk/empathy-irc-network-chooser-dialog.c:635
+#: ../libempathy-gtk/empathy-irc-network-chooser-dialog.c:625
 msgctxt "verb displayed on a button to select an IRC network"
 msgid "Select"
 msgstr "ಆರಿಸು"
@@ -2997,7 +2994,6 @@ msgstr "ಚದುರಿಸಲಾದ"
 #. * fetch contact's presence.
 #: ../libempathy-gtk/empathy-roster-contact.c:205
 #, c-format
-#| msgid "Select a contact"
 msgid "Server cannot find contact: %s"
 msgstr "ಪೂರೈಕೆಗಣಕಕ್ಕೆ ಒಂದು ಸಂಪರ್ಕವು ಕಂಡುಬಂದಿಲ್ಲ: %s"
 
@@ -4568,12 +4564,10 @@ msgid "Go _Online"
 msgstr "ಆನ್‌ಲೈನಿಗೆ ತೆರಳು (_O)"
 
 #: ../src/empathy-roster-window.ui.h:3
-#| msgid "Show offline contacts"
 msgid "Show _Offline Contacts"
 msgstr "ಆಫ್‌ಲೈನ್ ಸಂಪರ್ಕ ವಿಳಾಸಗಳನ್ನು ತೋರಿಸು (_O)"
 
 #: ../src/empathy-roster-window.ui.h:4
-#| msgid "_Add Contacts..."
 msgid "_Add Contact..."
 msgstr "ಸಂಪರ್ಕ ವಿಳಾಸವನ್ನು ಸೇರಿಸು (_A)..."
 
