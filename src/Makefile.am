@@ -3,6 +3,7 @@ include $(top_srcdir)/tools/flymake.mk
 CPPFLAGS_COMMON =					\
 	$(EMPATHY_CFLAGS)				\
 	$(ERROR_CFLAGS)					\
+	-I$(top_srcdir)/tp-account-widgets		\
 	-I$(top_srcdir)/libempathy-gtk			\
 	-I$(top_srcdir)/libempathy			\
 	-I$(top_srcdir)/extensions			\
@@ -22,6 +23,7 @@ AM_CPPFLAGS =						\
 	$(NULL)
 
 LDADD =								\
+	$(top_builddir)/tp-account-widgets/libtp-account-widgets.la \
 	$(top_builddir)/libempathy-gtk/libempathy-gtk.la	\
 	$(top_builddir)/libempathy/libempathy.la		\
 	$(top_builddir)/extensions/libemp-extensions.la		\

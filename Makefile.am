@@ -1,11 +1,12 @@
 MY_SUBDIRS = tools extensions po data libempathy libempathy-gtk src help tests
+TPAW_SUBDIRS = tp-account-widgets
 NST_SUBDIRS = nautilus-sendto-plugin
 GOA_SUBDIRS = goa-mc-plugin
 UOA_SUBDIRS = ubuntu-online-accounts
 
-DIST_SUBDIRS = $(MY_SUBDIRS) $(NST_SUBDIRS) $(GOA_SUBDIRS) $(UOA_SUBDIRS)
+DIST_SUBDIRS = $(TPAW_SUBDIRS) $(MY_SUBDIRS) $(NST_SUBDIRS) $(GOA_SUBDIRS) $(UOA_SUBDIRS)
 
-SUBDIRS = $(MY_SUBDIRS)
+SUBDIRS = $(TPAW_SUBDIRS) $(MY_SUBDIRS)
 
 if HAVE_NST
 SUBDIRS += $(NST_SUBDIRS)

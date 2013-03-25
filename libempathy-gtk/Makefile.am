@@ -4,6 +4,7 @@ include $(top_srcdir)/tools/flymake.mk
 
 AM_CPPFLAGS =                                           \
 	$(ERROR_CFLAGS)					\
+	-I$(top_srcdir)/tp-account-widgets		\
 	-I$(top_srcdir)/libempathy			\
 	-I$(top_srcdir)/extensions			\
 	-DDATADIR=\""$(datadir)"\"              	\
@@ -22,18 +23,12 @@ AM_CPPFLAGS =                                           \
 	$(DISABLE_DEPRECATED)
 
 BUILT_SOURCES = 					\
-	empathy-account-widgets-resources.c		\
-	empathy-account-widgets-resources.h		\
 	empathy-gtk-enum-types.h			\
 	empathy-gtk-enum-types.c
 
 libempathy_gtk_handwritten_source =            	\
 	empathy-account-chooser.c		\
 	empathy-account-selector-dialog.c		\
-	empathy-account-widget-irc.c		\
-	empathy-account-widget-private.h	\
-	empathy-account-widget-sip.c		\
-	empathy-account-widget.c		\
 	empathy-avatar-chooser.c		\
 	empathy-avatar-image.c			\
 	empathy-bad-password-dialog.c 		\
@@ -64,9 +59,6 @@ libempathy_gtk_handwritten_source =            	\
 	empathy-individual-view.c		\
 	empathy-individual-widget.c		\
 	empathy-input-text-view.c		\
-	empathy-irc-network-chooser.c \
-	empathy-irc-network-chooser-dialog.c \
-	empathy-irc-network-dialog.c		\
 	empathy-local-xmpp-assistant-widget.c \
 	empathy-log-window.c			\
 	empathy-new-account-dialog.c		\
@@ -102,9 +94,6 @@ libempathy_gtk_handwritten_source =            	\
 libempathy_gtk_headers =			\
 	empathy-account-chooser.h		\
 	empathy-account-selector-dialog.h		\
-	empathy-account-widget-irc.h		\
-	empathy-account-widget-sip.h		\
-	empathy-account-widget.h		\
 	empathy-avatar-chooser.h		\
 	empathy-avatar-image.h			\
 	empathy-bad-password-dialog.h 		\
@@ -136,9 +125,6 @@ libempathy_gtk_headers =			\
 	empathy-individual-view.h		\
 	empathy-individual-widget.h		\
 	empathy-input-text-view.h		\
-	empathy-irc-network-chooser.h \
-	empathy-irc-network-chooser-dialog.h \
-	empathy-irc-network-dialog.h		\
 	empathy-local-xmpp-assistant-widget.h \
 	empathy-log-window.h			\
 	empathy-new-account-dialog.h		\
@@ -183,7 +169,7 @@ libempathy_gtk_la_LDFLAGS = \
 libempathy_gtk_la_SOURCES =			\
 	$(libempathy_gtk_handwritten_source)	\
 	$(libempathy_gtk_headers)		\
-	totem-subtitle-encoding.c totem-subtitle-encoding.h
+	$(NULL)
 
 # do not distribute generated files
 nodist_libempathy_gtk_la_SOURCES =\
@@ -202,6 +188,7 @@ libempathy_gtk_la_LIBADD =			\
 	$(GCR_LIBS)				\
 	$(MEEGO_LIBS)				\
 	$(CHEESE_LIBS)				\
+	$(top_builddir)/tp-account-widgets/libtp-account-widgets.la \
 	$(top_builddir)/libempathy-gtk/egg-list-box/libegglistbox.la \
 	$(top_builddir)/libempathy/libempathy.la
 
@@ -272,17 +259,7 @@ empathy-gtk-enum-types.c: Makefile $(libempathy_gtk_headers)
 	&& cp xgen-gtc $(@F) \
 	&& rm -f xgen-gtc
 
-account_widgets_resource_files = $(shell $(GLIB_COMPILE_RESOURCES) --generate-dependencies --sourcedir=$(srcdir) $(srcdir)/empathy-account-widgets.gresource.xml)
-
-empathy-account-widgets-resources.c: empathy-account-widgets.gresource.xml $(account_widgets_resource_files)
-	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate-source $<
-
-empathy-account-widgets-resources.h: empathy-account-widgets.gresource.xml $(account_widgets_resource_files)
-	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate-header $<
-
 EXTRA_DIST =					\
-	empathy-account-widgets.gresource.xml	\
-	$(account_widgets_ui_files)		\
 	$(ui_DATA)
 
 if HAVE_GEOCLUE

@@ -637,6 +637,7 @@ AC_CONFIG_FILES([
    data/themes/Makefile
    extensions/Makefile
    po/Makefile.in
+   tp-account-widgets/Makefile
    libempathy/Makefile
    libempathy-gtk/Makefile
    src/Makefile
