@@ -143,41 +143,6 @@ empathy_xml_validate_from_resource (xmlDoc *doc,
   return ret;
 }
 
-gboolean
-empathy_xml_validate (xmlDoc      *doc,
-    const gchar *dtd_filename)
-{
-  gchar *path;
-  xmlChar *escaped;
-  xmlValidCtxt  cvp;
-  xmlDtd *dtd;
-  gboolean ret;
-
-  path = g_build_filename (g_getenv ("EMPATHY_SRCDIR"), "libempathy",
-         dtd_filename, NULL);
-  if (!g_file_test (path, G_FILE_TEST_EXISTS))
-    {
-      g_free (path);
-      path = g_build_filename (DATADIR, "empathy", dtd_filename, NULL);
-    }
-
-  DEBUG ("Loading dtd file %s", path);
-
-  /* The list of valid chars is taken from libxml. */
-  escaped = xmlURIEscapeStr ((const xmlChar *) path,
-    (const xmlChar *)":@&=+$,/?;");
-  g_free (path);
-
-  memset (&cvp, 0, sizeof (cvp));
-  dtd = xmlParseDTD (NULL, escaped);
-  ret = xmlValidateDtd (&cvp, doc, dtd);
-
-  xmlFree (escaped);
-  xmlFreeDtd (dtd);
-
-  return ret;
-}
-
 xmlNodePtr
 empathy_xml_node_get_child (xmlNodePtr   node,
     const gchar *child_name)
