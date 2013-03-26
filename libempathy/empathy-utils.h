@@ -44,6 +44,8 @@ G_BEGIN_DECLS
 void empathy_init (void);
 
 /* XML */
+gboolean empathy_xml_validate_from_resource (xmlDoc *doc,
+    const gchar *dtd_resourcename);
 gboolean empathy_xml_validate (xmlDoc *doc,
     const gchar *dtd_filename);
 xmlNodePtr empathy_xml_node_get_child (xmlNodePtr node,
