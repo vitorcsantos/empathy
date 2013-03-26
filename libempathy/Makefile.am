@@ -21,6 +21,8 @@ AM_CPPFLAGS =                                           \
 	$(DISABLE_DEPRECATED)
 
 BUILT_SOURCES = 					\
+	empathy-dtd-resources.c				\
+	empathy-dtd-resources.h				\
 	empathy-enum-types.h				\
 	empathy-enum-types.c
 
@@ -134,8 +136,7 @@ libempathy_la_LIBADD =		\
 	$(UOA_LIBS) \
 	$(LIBM)
 
-dtddir = $(datadir)/empathy
-dtd_DATA = 					\
+dtd_resources_files =				\
 	empathy-status-presets.dtd		\
 	empathy-contact-groups.dtd		\
 	empathy-chatroom-manager.dtd		\
@@ -145,8 +146,17 @@ ircnetworksdir = $(datadir)/empathy
 ircnetworks_DATA =		\
 	irc-networks.xml
 
-EXTRA_DIST = 			\
-	$(dtd_DATA)		\
+dtd_resource_files: $(shell $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir) --generate-dependencies $(srcdir)/empathy-dtd.gresource.xml)
+
+empathy-dtd-resources.c: empathy-dtd.gresource.xml $(dtd_resource_files)
+	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate-source $<
+
+empathy-dtd-resources.h: empathy-dtd.gresource.xml $(dtd_resource_files)
+	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate-header $<
+
+EXTRA_DIST = 				\
+	empathy-dtd.gresource.xml	\
+	$(dtd_resources_files)		\
 	$(ircnetworks_DATA)
 
 CLEANFILES = 				\

@@ -31,7 +31,7 @@
 #include "empathy-debug.h"
 
 #define CONTACT_GROUPS_XML_FILENAME "contact-groups.xml"
-#define CONTACT_GROUPS_DTD_FILENAME "empathy-contact-groups.dtd"
+#define CONTACT_GROUPS_DTD_RESOURCENAME "/org/gnome/Empathy/empathy-contact-groups.dtd"
 
 typedef struct {
 	gchar    *name;
@@ -91,7 +91,7 @@ contact_groups_file_parse (const gchar *filename)
 		return;
 	}
 
-	if (!empathy_xml_validate (doc, CONTACT_GROUPS_DTD_FILENAME)) {
+	if (!empathy_xml_validate_from_resource (doc, CONTACT_GROUPS_DTD_RESOURCENAME)) {
 		g_warning ("Failed to validate file:'%s'", filename);
 		xmlFreeDoc (doc);
 		xmlFreeParserCtxt (ctxt);

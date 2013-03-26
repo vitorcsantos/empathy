@@ -28,7 +28,7 @@
 #define DEBUG_FLAG EMPATHY_DEBUG_IRC
 #include "empathy-debug.h"
 
-#define IRC_NETWORKS_DTD_FILENAME "empathy-irc-networks.dtd"
+#define IRC_NETWORKS_DTD_RESOURCENAME "/org/gnome/Empathy/empathy-irc-networks.dtd"
 #define IRC_NETWORKS_FILENAME "irc-networks.xml"
 #define SAVE_TIMER 4
 
@@ -632,7 +632,7 @@ irc_network_manager_file_parse (EmpathyIrcNetworkManager *self,
       return FALSE;
     }
 
-  if (!empathy_xml_validate (doc, IRC_NETWORKS_DTD_FILENAME)) {
+  if (!empathy_xml_validate_from_resource (doc, IRC_NETWORKS_DTD_RESOURCENAME)) {
     g_warning ("Failed to validate file:'%s'", filename);
     xmlFreeDoc (doc);
     xmlFreeParserCtxt (ctxt);

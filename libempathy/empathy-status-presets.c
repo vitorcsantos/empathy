@@ -31,7 +31,7 @@
 #include "empathy-debug.h"
 
 #define STATUS_PRESETS_XML_FILENAME "status-presets.xml"
-#define STATUS_PRESETS_DTD_FILENAME "empathy-status-presets.dtd"
+#define STATUS_PRESETS_DTD_RESOURCENAME "/org/gnome/Empathy/empathy-status-presets.dtd"
 #define STATUS_PRESETS_MAX_EACH     15
 
 typedef struct {
@@ -92,7 +92,7 @@ status_presets_file_parse (const gchar *filename)
 		return;
 	}
 
-	if (!empathy_xml_validate (doc, STATUS_PRESETS_DTD_FILENAME)) {
+	if (!empathy_xml_validate_from_resource (doc, STATUS_PRESETS_DTD_RESOURCENAME)) {
 		g_warning ("Failed to validate file:'%s'", filename);
 		xmlFreeDoc (doc);
 		xmlFreeParserCtxt (ctxt);

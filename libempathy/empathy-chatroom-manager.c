@@ -33,7 +33,7 @@
 #include "empathy-debug.h"
 
 #define CHATROOMS_XML_FILENAME "chatrooms.xml"
-#define CHATROOMS_DTD_FILENAME "empathy-chatroom-manager.dtd"
+#define CHATROOMS_DTD_RESOURCENAME "/org/gnome/Empathy/empathy-chatroom-manager.dtd"
 #define SAVE_TIMER 4
 
 static EmpathyChatroomManager *chatroom_manager_singleton = NULL;
@@ -320,7 +320,7 @@ chatroom_manager_file_parse (EmpathyChatroomManager *manager,
       return FALSE;
     }
 
-  if (!empathy_xml_validate (doc, CHATROOMS_DTD_FILENAME))
+  if (!empathy_xml_validate_from_resource (doc, CHATROOMS_DTD_RESOURCENAME))
     {
       g_warning ("Failed to validate file:'%s'", filename);
       xmlFreeDoc (doc);
