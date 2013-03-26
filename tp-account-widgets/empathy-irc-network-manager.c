@@ -28,7 +28,7 @@
 #define DEBUG_FLAG EMPATHY_DEBUG_IRC
 #include "empathy-debug.h"
 
-#define IRC_NETWORKS_DTD_RESOURCENAME "/org/gnome/Empathy/empathy-irc-networks.dtd"
+#define IRC_NETWORKS_DTD_RESOURCENAME "/org/gnome/AccountWidgets/empathy-irc-networks.dtd"
 #define IRC_NETWORKS_FILENAME "irc-networks.xml"
 #define SAVE_TIMER 4
 
@@ -833,7 +833,7 @@ empathy_irc_network_manager_dup_default (void)
   g_free (dir);
 
   global_file_with_path = g_build_filename (g_getenv ("EMPATHY_SRCDIR"),
-      "libempathy", IRC_NETWORKS_FILENAME, NULL);
+      "tp-account-widgets", IRC_NETWORKS_FILENAME, NULL);
   if (!g_file_test (global_file_with_path, G_FILE_TEST_EXISTS))
     {
       g_free (global_file_with_path);

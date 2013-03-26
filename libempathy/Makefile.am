@@ -133,11 +133,7 @@ dtd_resources_files =				\
 	empathy-status-presets.dtd		\
 	empathy-contact-groups.dtd		\
 	empathy-chatroom-manager.dtd		\
-	empathy-irc-networks.dtd
-
-ircnetworksdir = $(datadir)/empathy
-ircnetworks_DATA =		\
-	irc-networks.xml
+	$(NULL)
 
 dtd_resource_files: $(shell $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir) --generate-dependencies $(srcdir)/empathy-dtd.gresource.xml)
 
@@ -150,7 +146,7 @@ empathy-dtd-resources.h: empathy-dtd.gresource.xml $(dtd_resource_files)
 EXTRA_DIST = 				\
 	empathy-dtd.gresource.xml	\
 	$(dtd_resources_files)		\
-	$(ircnetworks_DATA)
+	$(NULL)
 
 CLEANFILES = 				\
 	$(BUILT_SOURCES)		\

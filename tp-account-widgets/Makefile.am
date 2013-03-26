@@ -68,6 +68,14 @@ check_c_sources = \
 include $(top_srcdir)/tools/check-coding-style.mk
 check-local: check-coding-style
 
+account_widgets_dtd_files =			\
+	empathy-irc-networks.dtd		\
+	$(NULL)
+
+ircnetworksdir = $(datadir)/empathy
+ircnetworks_DATA =		\
+	irc-networks.xml
+
 account_widgets_ui_files =			\
 	empathy-account-widget-generic.ui	\
 	empathy-account-widget-jabber.ui	\
@@ -91,7 +99,9 @@ empathy-account-widgets-resources.h: empathy-account-widgets.gresource.xml $(acc
 
 EXTRA_DIST =					\
 	empathy-account-widgets.gresource.xml	\
+	$(account_widgets_dtd_files)		\
 	$(account_widgets_ui_files)		\
+	$(ircnetworks_DATA)			\
 	$(NULL)
 
 CLEANFILES =				\
