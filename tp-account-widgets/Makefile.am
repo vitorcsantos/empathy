@@ -1,5 +1,3 @@
-include $(top_srcdir)/tools/flymake.mk
-
 AM_CPPFLAGS =                                           \
 	$(ERROR_CFLAGS)					\
 	-I$(top_srcdir)/libempathy			\
@@ -25,6 +23,9 @@ libtp_account_widgets_sources =            	\
 	empathy-irc-network-chooser.c		\
 	empathy-irc-network-chooser-dialog.c	\
 	empathy-irc-network-dialog.c		\
+	empathy-irc-network-manager.c		\
+	empathy-irc-network.c			\
+	empathy-irc-server.c			\
 	totem-subtitle-encoding.c		\
 	$(NULL)
 
@@ -35,6 +36,10 @@ libtp_account_widgets_headers =			\
 	empathy-irc-network-chooser-dialog.h	\
 	empathy-irc-network-chooser.h		\
 	empathy-irc-network-dialog.h		\
+	empathy-irc-network-manager.h		\
+	empathy-irc-network.h			\
+	empathy-irc-server.h			\
+	empathy-utils.h				\
 	totem-subtitle-encoding.h		\
 	$(NULL)
 

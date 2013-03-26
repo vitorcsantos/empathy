@@ -43,9 +43,6 @@ libempathy_headers =				\
 	empathy-gsettings.h			\
 	empathy-presence-manager.h				\
 	empathy-individual-manager.h		\
-	empathy-irc-network-manager.h		\
-	empathy-irc-network.h			\
-	empathy-irc-server.h			\
 	empathy-keyring.h 			\
 	empathy-location.h			\
 	empathy-message.h			\
@@ -79,9 +76,6 @@ libempathy_handwritten_source =				\
 	empathy-ft-handler.c				\
 	empathy-presence-manager.c					\
 	empathy-individual-manager.c			\
-	empathy-irc-network-manager.c			\
-	empathy-irc-network.c				\
-	empathy-irc-server.c				\
 	empathy-keyring.c				\
 	empathy-message.c				\
 	empathy-pkg-kit.c		\

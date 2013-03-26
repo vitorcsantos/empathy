@@ -10,6 +10,7 @@ EXTRA_DIST = 		\
 
 AM_CPPFLAGS =						\
 	$(ERROR_CFLAGS)					\
+	-I$(top_srcdir)/tp-account-widgets		\
 	-I$(top_srcdir)/libempathy                     	\
 	-I$(top_srcdir)/libempathy-gtk                 	\
 	-DPKGDATADIR=\""$(pkgdatadir)"\"		\
@@ -21,6 +22,7 @@ AM_CPPFLAGS =						\
 	$(NULL)
 
 LDADD =								\
+	$(top_builddir)/tp-account-widgets/libtp-account-widgets.la	\
 	$(top_builddir)/libempathy-gtk/libempathy-gtk.la	\
 	$(top_builddir)/libempathy/libempathy.la		\
 	$(EMPATHY_LIBS)						\
