@@ -22,19 +22,14 @@
 
 #include "config.h"
 
-#include <glib.h>
 #include <glib/gi18n.h>
-#include <gtk/gtk.h>
 
-#include <clutter/clutter.h>
 #include <clutter-gtk/clutter-gtk.h>
 #include <clutter-gst/clutter-gst.h>
 
 #ifdef CLUTTER_WINDOWING_X11
 #include <X11/Xlib.h>
 #endif
-
-#include <libempathy/empathy-client-factory.h>
 
 #include <libempathy-gtk/empathy-ui-utils.h>
 
@@ -43,8 +38,6 @@
 
 #define DEBUG_FLAG EMPATHY_DEBUG_VOIP
 #include <libempathy/empathy-debug.h>
-
-#include <gst/gst.h>
 
 /* Exit after $TIMEOUT seconds if not displaying any call window */
 #define TIMEOUT 60

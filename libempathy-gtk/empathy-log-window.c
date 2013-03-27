@@ -24,29 +24,18 @@
 
 #include "config.h"
 
-#include <string.h>
-#include <stdlib.h>
-
 #include <glib/gi18n-lib.h>
-#include <gtk/gtk.h>
 #include <webkit/webkit.h>
 
-#include <telepathy-glib/telepathy-glib.h>
 #include <telepathy-glib/proxy-subclass.h>
-
-#include <telepathy-logger/telepathy-logger.h>
 
 #include <extensions/extensions.h>
 
 #include <libempathy/action-chain-internal.h>
 #include <libempathy/empathy-camera-monitor.h>
-#include <libempathy/empathy-chatroom-manager.h>
-#include <libempathy/empathy-chatroom.h>
 #include <libempathy/empathy-gsettings.h>
-#include <libempathy/empathy-message.h>
 #include <libempathy/empathy-request-util.h>
 #include <libempathy/empathy-utils.h>
-#include <libempathy/empathy-time.h>
 
 #include "empathy-log-window.h"
 #include "empathy-account-chooser.h"

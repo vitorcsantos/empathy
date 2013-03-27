@@ -12,15 +12,12 @@
 #include "config.h"
 
 #include <glib/gi18n.h>
-#include <folks/folks-telepathy.h>
 
 #include "empathy-invite-participant-dialog.h"
 
 #include <libempathy/empathy-utils.h>
 
 #include <libempathy-gtk/empathy-contact-chooser.h>
-#include <libempathy-gtk/empathy-individual-view.h>
-#include <libempathy-gtk/empathy-ui-utils.h>
 
 G_DEFINE_TYPE (EmpathyInviteParticipantDialog,
     empathy_invite_participant_dialog, GTK_TYPE_DIALOG);

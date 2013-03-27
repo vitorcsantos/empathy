@@ -10,8 +10,6 @@
 #include <libempathy-gtk/empathy-roster-group.h>
 #include <libempathy-gtk/empathy-ui-utils.h>
 
-#include <libempathy/empathy-utils.h>
-
 G_DEFINE_TYPE (EmpathyRosterView, empathy_roster_view, EGG_TYPE_LIST_BOX)
 
 /* Flashing delay for icons (milliseconds). */

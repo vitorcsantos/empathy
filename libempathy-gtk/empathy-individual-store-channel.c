@@ -25,23 +25,9 @@
 
 #include "config.h"
 
-#include <string.h>
-
-#include <glib.h>
-#include <glib/gi18n-lib.h>
-#include <gtk/gtk.h>
-
-#include <folks/folks.h>
-#include <folks/folks-telepathy.h>
-#include <telepathy-glib/telepathy-glib.h>
-
 #include <libempathy/empathy-utils.h>
-#include <libempathy/empathy-enum-types.h>
 
 #include "empathy-individual-store-channel.h"
-
-#include "empathy-ui-utils.h"
-#include "empathy-gtk-enum-types.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_CONTACT
 #include <libempathy/empathy-debug.h>

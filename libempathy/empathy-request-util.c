@@ -21,13 +21,7 @@
 
 #include "config.h"
 
-#include <string.h>
-
-#include <glib/gi18n-lib.h>
-
 #include "empathy-request-util.h"
-#include "empathy-utils.h"
-#include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_DISPATCHER
 #include <libempathy/empathy-debug.h>

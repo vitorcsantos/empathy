@@ -22,16 +22,8 @@
 
 #include <glib/gi18n-lib.h>
 
-#include <telepathy-glib/telepathy-glib.h>
-
-#include <libnotify/notification.h>
-
-#include <libempathy/empathy-utils.h>
-
 #include <libempathy-gtk/empathy-images.h>
 #include <libempathy-gtk/empathy-notify-manager.h>
-
-#include <extensions/extensions.h>
 
 #include "empathy-call-observer.h"
 

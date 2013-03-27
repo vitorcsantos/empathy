@@ -20,12 +20,9 @@
 #include "config.h"
 
 #include <gtk/gtk.h>
-
-#include <pulse/pulseaudio.h>
 #include <pulse/glib-mainloop.h>
 
 #include "empathy-mic-monitor.h"
-
 
 #include <libempathy/empathy-utils.h>
 

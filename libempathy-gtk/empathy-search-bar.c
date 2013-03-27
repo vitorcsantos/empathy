@@ -19,15 +19,10 @@
 
 #include "config.h"
 
-#include <glib.h>
-#include <glib-object.h>
 #include <glib/gi18n-lib.h>
-#include <gtk/gtk.h>
-#include <gdk/gdkkeysyms.h>
 
 #include <libempathy/empathy-utils.h>
 
-#include "empathy-theme-adium.h"
 #include "empathy-search-bar.h"
 #include "empathy-ui-utils.h"
 

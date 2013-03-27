@@ -21,17 +21,8 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-#include <string.h>
-#include <sys/stat.h>
-
 #include <glib/gi18n-lib.h>
-#include <gtk/gtk.h>
 
-#include <telepathy-glib/telepathy-glib.h>
-#include <libempathy/empathy-utils.h>
-
-#include "empathy-account-widget.h"
 #include "empathy-account-widget-private.h"
 #include "empathy-account-widget-sip.h"
 #include "empathy-ui-utils.h"

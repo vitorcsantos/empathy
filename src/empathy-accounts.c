@@ -26,25 +26,16 @@
 
 #include "config.h"
 
-#include <string.h>
-#include <stdlib.h>
-
-#include <gtk/gtk.h>
 #include <glib/gi18n.h>
 
 #ifdef HAVE_CHEESE
 #include <cheese-gtk.h>
 #endif
 
-#include <telepathy-glib/telepathy-glib.h>
-
 #include <libempathy/empathy-utils.h>
-#include <libempathy/empathy-connection-managers.h>
 #include <libempathy-gtk/empathy-ui-utils.h>
 
-#include "empathy-accounts.h"
 #include "empathy-accounts-common.h"
-#include "empathy-accounts-dialog.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_ACCOUNT
 #include <libempathy/empathy-debug.h>

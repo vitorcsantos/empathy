@@ -26,8 +26,6 @@
 
 #include <gtk/gtk.h>
 
-#include <libempathy/empathy-contact.h>
-
 G_BEGIN_DECLS
 
 #define EMPATHY_TYPE_AVATAR_IMAGE         (empathy_avatar_image_get_type ())

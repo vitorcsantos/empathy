@@ -20,18 +20,6 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-#include <string.h>
-#include <sys/stat.h>
-
-#include <glib/gi18n-lib.h>
-#include <gtk/gtk.h>
-
-#include <libempathy/empathy-utils.h>
-
-#include "empathy-irc-network-dialog.h"
-#include "empathy-irc-network-chooser.h"
-#include "empathy-account-widget.h"
 #include "empathy-account-widget-private.h"
 #include "empathy-account-widget-irc.h"
 #include "empathy-ui-utils.h"

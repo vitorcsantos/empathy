@@ -25,8 +25,6 @@
 
 #include <folks/folks.h>
 
-#include "empathy-contact-widget.h"
-
 G_BEGIN_DECLS
 
 /**

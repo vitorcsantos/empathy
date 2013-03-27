@@ -24,8 +24,6 @@
 
 #include "empathy-call-window-fullscreen.h"
 
-#include <gtk/gtk.h>
-
 #include <libempathy/empathy-utils.h>
 #include <libempathy-gtk/empathy-ui-utils.h>
 

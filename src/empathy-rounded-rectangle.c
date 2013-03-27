@@ -22,8 +22,6 @@
 
 #include <math.h>
 
-#include <clutter/clutter.h>
-
 #include "empathy-rounded-rectangle.h"
 
 G_DEFINE_TYPE (EmpathyRoundedRectangle,

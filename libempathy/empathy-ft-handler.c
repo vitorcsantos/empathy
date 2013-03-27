@@ -23,7 +23,6 @@
 
 #include "config.h"
 
-#include <glib.h>
 #include <glib/gi18n-lib.h>
 
 #include "empathy-ft-handler.h"

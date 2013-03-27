@@ -22,13 +22,8 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <glib/gi18n-lib.h>
-#include <gtk/gtk.h>
-#include <gio/gio.h>
 
-#include <libempathy/empathy-camera-monitor.h>
 #include <libempathy/empathy-gsettings.h>
 #include <libempathy/empathy-utils.h>
 
@@ -39,7 +34,6 @@
 #ifdef HAVE_CHEESE
 #include <cheese-avatar-chooser.h>
 #endif /* HAVE_CHEESE */
-
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include <libempathy/empathy-debug.h>

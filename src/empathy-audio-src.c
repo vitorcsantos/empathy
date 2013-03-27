@@ -20,9 +20,6 @@
 
 #include "config.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-
 #ifdef HAVE_GST1
 #include <gst/audio/streamvolume.h>
 #else
@@ -33,7 +30,6 @@
 #include "empathy-audio-utils.h"
 
 #include "empathy-audio-src.h"
-
 #include "empathy-mic-monitor.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_VOIP

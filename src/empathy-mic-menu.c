@@ -21,8 +21,6 @@
 
 #include "config.h"
 
-#include <gtk/gtk.h>
-
 #include "empathy-mic-menu.h"
 #include "empathy-mic-monitor.h"
 

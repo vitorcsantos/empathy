@@ -23,8 +23,6 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <libempathy/empathy-utils.h>
 #include "empathy-cell-renderer-text.h"
 

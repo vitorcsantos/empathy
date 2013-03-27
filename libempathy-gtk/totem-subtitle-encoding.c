@@ -30,7 +30,6 @@
 #include "config.h"
 #include <glib/gi18n-lib.h>
 #include "totem-subtitle-encoding.h"
-#include <string.h>
 
 typedef enum
 {

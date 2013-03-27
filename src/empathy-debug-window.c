@@ -21,25 +21,15 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <glib/gi18n.h>
-#include <gtk/gtk.h>
-#include <gio/gio.h>
-#include <gdk/gdkkeysyms.h>
 #include <libsoup/soup.h>
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include <libempathy/empathy-debug.h>
 #include <libempathy/empathy-utils.h>
 
-#include <libempathy-gtk/empathy-account-chooser.h>
 #include <libempathy-gtk/empathy-geometry.h>
 #include <libempathy-gtk/empathy-ui-utils.h>
-
-#include <telepathy-glib/telepathy-glib.h>
-
-#include "extensions/extensions.h"
 
 #include "empathy-debug-window.h"
 

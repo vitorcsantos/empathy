@@ -21,8 +21,6 @@
 
 #include "config.h"
 
-#include <gtk/gtk.h>
-
 #include <libempathy/empathy-camera-monitor.h>
 #include <libempathy/empathy-gsettings.h>
 

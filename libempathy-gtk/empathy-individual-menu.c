@@ -22,15 +22,7 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <glib/gi18n-lib.h>
-#include <gtk/gtk.h>
-
-#include <telepathy-glib/telepathy-glib.h>
-
-#include <folks/folks.h>
-#include <folks/folks-telepathy.h>
 
 #include <libempathy/empathy-camera-monitor.h>
 #include <libempathy/empathy-request-util.h>
@@ -39,7 +31,6 @@
 #include <libempathy/empathy-utils.h>
 
 #include "empathy-account-selector-dialog.h"
-#include "empathy-individual-menu.h"
 #include "empathy-images.h"
 #include "empathy-log-window.h"
 #include "empathy-individual-dialogs.h"

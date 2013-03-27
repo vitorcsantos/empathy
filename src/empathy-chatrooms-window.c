@@ -25,11 +25,6 @@
 
 #include "config.h"
 
-#include <string.h>
-#include <stdio.h>
-
-#include <gtk/gtk.h>
-#include <glib.h>
 #include <glib/gi18n.h>
 
 #include <libempathy/empathy-chatroom-manager.h>
@@ -39,7 +34,6 @@
 #include <libempathy-gtk/empathy-ui-utils.h>
 
 #include "empathy-chatrooms-window.h"
-#include "empathy-new-chatroom-dialog.h"
 
 typedef struct {
 	EmpathyChatroomManager *manager;

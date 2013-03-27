@@ -19,10 +19,8 @@
 
 #include "config.h"
 
-#include <gtk/gtk.h>
 #include <glib/gi18n.h>
 
-#include <libempathy/empathy-utils.h>
 #include <libempathy-gtk/empathy-ui-utils.h>
 
 #include "empathy-debug-window.h"

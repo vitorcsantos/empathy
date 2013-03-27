@@ -21,21 +21,12 @@
 
 #include "config.h"
 
-#include <string.h>
-#include <stdlib.h>
-
-#include <gtk/gtk.h>
 #include <glib/gi18n-lib.h>
-
-#include <telepathy-glib/telepathy-glib.h>
-
-#include <folks/folks.h>
 
 #include <libempathy/empathy-utils.h>
 #include <libempathy/empathy-connection-aggregator.h>
 
 #include "empathy-groups-widget.h"
-#include "empathy-ui-utils.h"
 
 /**
  * SECTION:empathy-groups-widget

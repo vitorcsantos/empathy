@@ -19,11 +19,8 @@
  */
 
 #include "config.h"
-#include <string.h>
-#include <sys/types.h>
+
 #include <sys/stat.h>
-#include <libxml/parser.h>
-#include <libxml/tree.h>
 
 #include "empathy-utils.h"
 #include "empathy-irc-network-manager.h"

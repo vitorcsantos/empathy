@@ -20,22 +20,9 @@
 
 #include "config.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-
-#include <math.h>
-
-#include <gdk/gdkkeysyms.h>
-#include <gst/gst.h>
-#include <gtk/gtk.h>
 #include <glib/gi18n.h>
 
-#include <clutter/clutter.h>
-#include <clutter-gtk/clutter-gtk.h>
-#include <clutter-gst/clutter-gst.h>
-
 #include <telepathy-farstream/telepathy-farstream.h>
-#include <telepathy-glib/telepathy-glib.h>
 
 #include <farstream/fs-element-added-notifier.h>
 #include <farstream/fs-utils.h>
@@ -45,7 +32,6 @@
 #include <libempathy/empathy-request-util.h>
 #include <libempathy/empathy-utils.h>
 
-#include <libempathy-gtk/empathy-avatar-image.h>
 #include <libempathy-gtk/empathy-dialpad-widget.h>
 #include <libempathy-gtk/empathy-ui-utils.h>
 #include <libempathy-gtk/empathy-sound-manager.h>
@@ -56,13 +42,9 @@
 #define DEBUG_FLAG EMPATHY_DEBUG_VOIP
 #include <libempathy/empathy-debug.h>
 
-#include "empathy-call-window.h"
 #include "empathy-call-window-fullscreen.h"
-#include "empathy-call-factory.h"
 #include "empathy-about-dialog.h"
-#include "empathy-audio-src.h"
 #include "empathy-audio-sink.h"
-#include "empathy-video-src.h"
 #include "empathy-mic-menu.h"
 #include "empathy-preferences.h"
 #include "empathy-rounded-actor.h"

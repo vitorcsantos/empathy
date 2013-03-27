@@ -21,8 +21,6 @@
  * Authors: Kristian Rietveld <kris@imendio.com>
  */
 
-#include <gtk/gtk.h>
-
 #include <libempathy/empathy-utils.h>
 #include "empathy-cell-renderer-expander.h"
 

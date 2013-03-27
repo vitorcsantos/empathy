@@ -26,28 +26,14 @@
 
 #include "config.h"
 
-#include <string.h>
-#include <stdlib.h>
-
-#include <gtk/gtk.h>
 #include <glib/gi18n-lib.h>
-#include <dbus/dbus-glib.h>
-#include <gio/gdesktopappinfo.h>
-
-#include <telepathy-glib/telepathy-glib.h>
 
 #include <libempathy/empathy-utils.h>
-#include <libempathy/empathy-connection-managers.h>
 #include <libempathy/empathy-pkg-kit.h>
 
 #include <libempathy-gtk/empathy-ui-utils.h>
-#include <libempathy-gtk/empathy-protocol-chooser.h>
-#include <libempathy-gtk/empathy-account-widget.h>
-#include <libempathy-gtk/empathy-account-widget-irc.h>
 #include <libempathy-gtk/empathy-account-widget-sip.h>
-#include <libempathy-gtk/empathy-cell-renderer-activatable.h>
 #include <libempathy-gtk/empathy-user-info.h>
-#include <libempathy-gtk/empathy-images.h>
 #include <libempathy-gtk/empathy-local-xmpp-assistant-widget.h>
 #include <libempathy-gtk/empathy-new-account-dialog.h>
 

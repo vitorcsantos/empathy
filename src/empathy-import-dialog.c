@@ -22,20 +22,14 @@
 
 #include "config.h"
 
-#include <glib.h>
-#include <gtk/gtk.h>
 #include <glib/gi18n-lib.h>
 
-#include <telepathy-glib/telepathy-glib.h>
-
 #include "empathy-import-dialog.h"
-#include "empathy-import-pidgin.h"
 #include "empathy-import-widget.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include <libempathy/empathy-debug.h>
 #include <libempathy/empathy-utils.h>
-#include <libempathy-gtk/empathy-ui-utils.h>
 
 enum {
   PROP_PARENT = 1,

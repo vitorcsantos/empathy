@@ -31,8 +31,6 @@
 
 #include <folks/folks.h>
 
-#include <libempathy/empathy-enum-types.h>
-
 #include "empathy-live-search.h"
 #include "empathy-individual-menu.h"
 #include "empathy-individual-store.h"

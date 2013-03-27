@@ -20,16 +20,9 @@
 
 #include "config.h"
 
-#include <string.h>
-#include <stdlib.h>
-
-#include <gtk/gtk.h>
 #include <glib/gi18n-lib.h>
 
-#include <telepathy-glib/telepathy-glib.h>
-
 #include <libempathy/empathy-request-util.h>
-#include <libempathy/empathy-utils.h>
 
 #define DEBUG_FLAG EMPATHY_DEBUG_CONTACT
 #include <libempathy/empathy-debug.h>
@@ -39,7 +32,6 @@
 #include <libempathy-gtk/empathy-images.h>
 
 #include "empathy-new-message-dialog.h"
-#include "empathy-account-chooser.h"
 
 static EmpathyNewMessageDialog *dialog_singleton = NULL;
 

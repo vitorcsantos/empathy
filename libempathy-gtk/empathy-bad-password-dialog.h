@@ -25,8 +25,6 @@
 
 #include <libempathy-gtk/empathy-base-password-dialog.h>
 
-#include <extensions/extensions.h>
-
 G_BEGIN_DECLS
 
 typedef struct _EmpathyBadPasswordDialog EmpathyBadPasswordDialog;

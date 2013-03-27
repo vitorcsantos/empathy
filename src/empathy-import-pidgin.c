@@ -21,16 +21,8 @@
 
 #include "config.h"
 
-#include <string.h>
-#include <unistd.h>
-
-#include <glib.h>
 #include <glib/gstdio.h>
 #include <dbus/dbus-protocol.h>
-#include <libxml/parser.h>
-#include <libxml/tree.h>
-
-#include <telepathy-glib/telepathy-glib.h>
 
 #include "empathy-import-utils.h"
 #include "empathy-import-pidgin.h"
@@ -38,8 +30,6 @@
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include <libempathy/empathy-debug.h>
 #include <libempathy/empathy-utils.h>
-
-#include <libempathy-gtk/empathy-ui-utils.h>
 
 /* Pidgin to CM map */
 typedef struct

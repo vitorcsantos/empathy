@@ -11,9 +11,6 @@
 
 #include "config.h"
 
-#include <glib/gi18n-lib.h>
-#include <folks/folks-telepathy.h>
-
 #include "empathy-contact-chooser.h"
 
 #include <libempathy/empathy-utils.h>

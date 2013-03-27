@@ -25,9 +25,6 @@
 
 #include <sys/stat.h>
 
-#include <glib.h>
-#include <gdk/gdk.h>
-
 #include "libempathy/empathy-utils.h"
 #include "empathy-geometry.h"
 #include "empathy-ui-utils.h"

@@ -20,8 +20,6 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include "empathy-string-parser.h"
 #include "empathy-smiley-manager.h"
 #include "empathy-ui-utils.h"

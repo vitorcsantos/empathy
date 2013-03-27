@@ -25,7 +25,6 @@
 
 #define DEBUG_FLAG EMPATHY_DEBUG_SASL
 #include <libempathy/empathy-debug.h>
-#include <libempathy/empathy-utils.h>
 
 G_DEFINE_TYPE (EmpathyPasswordDialog, empathy_password_dialog,
     EMPATHY_TYPE_BASE_PASSWORD_DIALOG)

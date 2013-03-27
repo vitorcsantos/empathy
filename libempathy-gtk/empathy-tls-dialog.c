@@ -24,9 +24,6 @@
 
 #include <glib/gi18n-lib.h>
 #include <gcr/gcr.h>
-#include <telepathy-glib/telepathy-glib.h>
-
-#include <gcr/gcr.h>
 
 #define DEBUG_FLAG EMPATHY_DEBUG_TLS
 #include <libempathy/empathy-debug.h>

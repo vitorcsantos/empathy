@@ -18,12 +18,8 @@
  */
 
 #include "config.h"
-#include <string.h>
 
 #include <glib/gi18n.h>
-#include <libnotify/notification.h>
-#include <libnotify/notify.h>
-#include <telepathy-glib/telepathy-glib.h>
 
 #include <libempathy-gtk/empathy-notify-manager.h>
 #include <libempathy-gtk/empathy-call-utils.h>

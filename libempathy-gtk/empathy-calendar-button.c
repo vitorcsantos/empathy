@@ -23,8 +23,6 @@
 
 #include "empathy-calendar-button.h"
 
-#include <libempathy/empathy-utils.h>
-
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER_THING
 #include <libempathy/empathy-debug.h>
 

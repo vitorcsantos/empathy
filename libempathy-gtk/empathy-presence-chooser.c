@@ -26,14 +26,7 @@
 
 #include "config.h"
 
-#include <string.h>
-#include <stdlib.h>
-
 #include <glib/gi18n-lib.h>
-#include <gtk/gtk.h>
-#include <gdk/gdkkeysyms.h>
-
-#include <telepathy-glib/telepathy-glib.h>
 
 #include <libempathy/empathy-presence-manager.h>
 #include <libempathy/empathy-utils.h>
@@ -43,7 +36,6 @@
 #include <libempathy/empathy-debug.h>
 
 #include "empathy-ui-utils.h"
-#include "empathy-images.h"
 #include "empathy-presence-chooser.h"
 #include "empathy-status-preset-dialog.h"
 

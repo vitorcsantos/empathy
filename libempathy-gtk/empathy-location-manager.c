@@ -21,23 +21,12 @@
 
 #include "config.h"
 
-#include <string.h>
-#include <time.h>
-
-#include <glib/gi18n-lib.h>
-
-#include <telepathy-glib/telepathy-glib.h>
-
 #include <geoclue/geoclue-master.h>
-
-#include <extensions/extensions.h>
 
 #include "empathy-location-manager.h"
 
-#include "libempathy/empathy-enum-types.h"
 #include "libempathy/empathy-gsettings.h"
 #include "libempathy/empathy-location.h"
-#include "libempathy/empathy-utils.h"
 #include "libempathy/empathy-time.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_LOCATION

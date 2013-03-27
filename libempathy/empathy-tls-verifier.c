@@ -21,9 +21,6 @@
 
 #include "config.h"
 
-#include <gnutls/gnutls.h>
-#include <gnutls/x509.h>
-
 #include "empathy-tls-verifier.h"
 
 #include <gcr/gcr.h>

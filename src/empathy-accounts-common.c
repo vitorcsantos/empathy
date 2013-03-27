@@ -26,16 +26,6 @@
 
 #include "config.h"
 
-#include <string.h>
-#include <stdlib.h>
-
-#include <gtk/gtk.h>
-#include <glib/gi18n-lib.h>
-
-#include <telepathy-glib/telepathy-glib.h>
-
-#include <libempathy/empathy-utils.h>
-#include <libempathy/empathy-connection-managers.h>
 #include <libempathy-gtk/empathy-ui-utils.h>
 
 #include "empathy-accounts-common.h"

@@ -22,9 +22,6 @@
 
 #include "config.h"
 
-#include <string.h>
-#include <stdlib.h>
-
 #include <glib/gi18n-lib.h>
 
 #include <libempathy/empathy-time.h>

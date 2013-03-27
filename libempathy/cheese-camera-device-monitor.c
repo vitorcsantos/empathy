@@ -25,7 +25,6 @@
   #include "config.h"
 #endif
 
-#include <glib-object.h>
 #include <string.h>
 
 #ifdef HAVE_UDEV

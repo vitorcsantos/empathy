@@ -20,14 +20,8 @@
 
 #include "config.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-
-#include <telepathy-glib/telepathy-glib.h>
-
 #include <libempathy/empathy-client-factory.h>
 #include <libempathy/empathy-request-util.h>
-#include <libempathy/empathy-utils.h>
 
 #include "empathy-call-factory.h"
 #include "empathy-call-handler.h"

@@ -21,23 +21,12 @@
 
 #include "config.h"
 
-#include <string.h>
-#include <stdlib.h>
-
-#include <gtk/gtk.h>
 #include <glib/gi18n-lib.h>
 
-#include <telepathy-glib/telepathy-glib.h>
-
-#include <libempathy/empathy-time.h>
 #include <libempathy/empathy-utils.h>
 #include <libempathy/empathy-client-factory.h>
 
-#include "empathy-calendar-button.h"
 #include "empathy-contact-widget.h"
-#include "empathy-contactinfo-utils.h"
-#include "empathy-account-chooser.h"
-#include "empathy-avatar-chooser.h"
 #include "empathy-avatar-image.h"
 #include "empathy-groups-widget.h"
 #include "empathy-ui-utils.h"

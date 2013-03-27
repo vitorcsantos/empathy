@@ -20,16 +20,10 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-#include <string.h>
-#include <sys/stat.h>
-
 #include <glib/gi18n-lib.h>
-#include <gtk/gtk.h>
 
 #include <libempathy/empathy-utils.h>
 
-#include <libempathy/empathy-irc-network-manager.h>
 #include "empathy-ui-utils.h"
 #include "totem-subtitle-encoding.h"
 

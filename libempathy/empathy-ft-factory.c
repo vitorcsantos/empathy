@@ -21,12 +21,7 @@
 
 /* empathy-ft-factory.c */
 
-#include <glib.h>
-
-#include <telepathy-glib/telepathy-glib.h>
-
 #include "empathy-ft-factory.h"
-#include "empathy-ft-handler.h"
 #include "empathy-request-util.h"
 #include "empathy-utils.h"
 

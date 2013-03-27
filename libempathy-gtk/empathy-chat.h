@@ -31,7 +31,6 @@
 #include <gtk/gtk.h>
 
 #include <libempathy/empathy-contact.h>
-#include <libempathy/empathy-message.h>
 #include <libempathy/empathy-tp-chat.h>
 
 #include <libempathy-gtk/empathy-theme-adium.h>

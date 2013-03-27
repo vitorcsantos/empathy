@@ -23,8 +23,6 @@
 
 #include <extensions/extensions.h>
 
-#include <string.h>
-
 #define DEBUG_FLAG EMPATHY_DEBUG_SASL
 #include "empathy-debug.h"
 #include "empathy-keyring.h"

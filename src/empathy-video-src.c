@@ -20,9 +20,6 @@
 
 #include "config.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-
 #ifdef HAVE_GST1
 #include <gst/video/colorbalance.h>
 #else

@@ -25,7 +25,6 @@
 
 #define DEBUG_FLAG EMPATHY_DEBUG_SASL
 #include "empathy-debug.h"
-#include "empathy-utils.h"
 #include "empathy-goa-auth-handler.h"
 #include "empathy-sasl-mechanisms.h"
 

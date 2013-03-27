@@ -24,10 +24,6 @@
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include "empathy-debug.h"
-#include "empathy-utils.h"
-
-
-#include "extensions/extensions.h"
 
 G_DEFINE_TYPE (EmpathyConnectionAggregator, empathy_connection_aggregator,
     G_TYPE_OBJECT);

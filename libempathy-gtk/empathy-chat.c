@@ -30,20 +30,12 @@
 /* for GCompletion */
 #define GLIB_DISABLE_DEPRECATION_WARNINGS 1
 
-#include <string.h>
-#include <stdlib.h>
-
-#include <gdk/gdkkeysyms.h>
 #include <glib/gi18n-lib.h>
-#include <gtk/gtk.h>
 
-#include <telepathy-glib/telepathy-glib.h>
-#include <telepathy-logger/telepathy-logger.h>
 #include <libempathy/empathy-gsettings.h>
 #include <libempathy/empathy-keyring.h>
 #include <libempathy/empathy-utils.h>
 #include <libempathy/empathy-request-util.h>
-#include <libempathy/empathy-chatroom-manager.h>
 #include <libempathy/empathy-client-factory.h>
 
 #include "empathy-chat.h"
@@ -54,7 +46,6 @@
 #include "empathy-input-text-view.h"
 #include "empathy-search-bar.h"
 #include "empathy-theme-manager.h"
-#include "empathy-theme-adium.h"
 #include "empathy-smiley-manager.h"
 #include "empathy-ui-utils.h"
 #include "empathy-string-parser.h"

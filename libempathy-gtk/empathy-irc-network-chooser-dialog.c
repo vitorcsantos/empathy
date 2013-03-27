@@ -21,18 +21,12 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-#include <string.h>
-#include <sys/stat.h>
-
 #include <glib/gi18n-lib.h>
-#include <gtk/gtk.h>
 
 #include <libempathy/empathy-utils.h>
 #include <libempathy/empathy-irc-network-manager.h>
 
 #include "empathy-irc-network-dialog.h"
-#include "empathy-ui-utils.h"
 #include "empathy-live-search.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_ACCOUNT | EMPATHY_DEBUG_IRC

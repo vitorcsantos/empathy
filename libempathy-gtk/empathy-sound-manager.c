@@ -21,9 +21,7 @@
 
 #include "empathy-sound-manager.h"
 
-#include <canberra-gtk.h>
 #include <glib/gi18n-lib.h>
-#include <gtk/gtk.h>
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include <libempathy/empathy-debug.h>

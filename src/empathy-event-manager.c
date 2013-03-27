@@ -21,10 +21,7 @@
 
 #include "config.h"
 
-#include <string.h>
 #include <glib/gi18n.h>
-
-#include <telepathy-glib/telepathy-glib.h>
 
 #include <libempathy/empathy-presence-manager.h>
 #include <libempathy/empathy-connection-aggregator.h>
@@ -33,8 +30,6 @@
 #include <libempathy/empathy-gsettings.h>
 #include <libempathy/empathy-sasl-mechanisms.h>
 
-#include <extensions/extensions.h>
-
 #include <libempathy-gtk/empathy-images.h>
 #include <libempathy-gtk/empathy-sound-manager.h>
 #include <libempathy-gtk/empathy-ui-utils.h>
@@ -42,7 +37,6 @@
 #include <libempathy-gtk/empathy-subscription-dialog.h>
 
 #include "empathy-event-manager.h"
-#include "empathy-roster-window.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_DISPATCHER
 #include <libempathy/empathy-debug.h>

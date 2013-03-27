@@ -21,28 +21,15 @@
 
 #include "config.h"
 
-#include <string.h>
-
-#include <glib.h>
-
-#include <gtk/gtk.h>
-#include <gdk/gdkkeysyms.h>
-#include <glib/gi18n.h>
-
-#include <telepathy-glib/telepathy-glib.h>
-
 #include <libempathy/empathy-gsettings.h>
 #include <libempathy/empathy-utils.h>
 
 #include <libempathy-gtk/empathy-presence-chooser.h>
 #include <libempathy-gtk/empathy-ui-utils.h>
-#include <libempathy-gtk/empathy-images.h>
 #include <libempathy-gtk/empathy-new-message-dialog.h>
 #include <libempathy-gtk/empathy-new-call-dialog.h>
 
-#include "empathy-accounts-dialog.h"
 #include "empathy-status-icon.h"
-#include "empathy-preferences.h"
 #include "empathy-event-manager.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_DISPATCHER

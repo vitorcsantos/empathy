@@ -26,16 +26,7 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <glib/gi18n-lib.h>
-#include <gdk/gdkkeysyms.h>
-#include <gtk/gtk.h>
-
-#include <telepathy-glib/telepathy-glib.h>
-
-#include <folks/folks.h>
-#include <folks/folks-telepathy.h>
 
 #include <libempathy/empathy-connection-aggregator.h>
 #include <libempathy/empathy-individual-manager.h>
@@ -43,11 +34,7 @@
 #include <libempathy/empathy-request-util.h>
 #include <libempathy/empathy-utils.h>
 
-#include "empathy-individual-view.h"
-#include "empathy-individual-menu.h"
-#include "empathy-individual-store.h"
 #include "empathy-individual-edit-dialog.h"
-#include "empathy-individual-dialogs.h"
 #include "empathy-images.h"
 #include "empathy-cell-renderer-expander.h"
 #include "empathy-cell-renderer-text.h"

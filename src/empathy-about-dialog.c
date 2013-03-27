@@ -25,9 +25,6 @@
 #include "config.h"
 
 #include <glib/gi18n.h>
-#include <gtk/gtk.h>
-
-#include <libempathy-gtk/empathy-ui-utils.h>
 
 #include "empathy-about-dialog.h"
 

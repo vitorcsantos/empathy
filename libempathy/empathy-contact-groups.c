@@ -22,15 +22,7 @@
 
 #include "config.h"
 
-#include <string.h>
-#include <sys/types.h>
 #include <sys/stat.h>
-
-#include <glib.h>
-#include <glib/gi18n-lib.h>
-
-#include <libxml/parser.h>
-#include <libxml/tree.h>
 
 #include "empathy-utils.h"
 #include "empathy-contact-groups.h"

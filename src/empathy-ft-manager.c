@@ -29,11 +29,7 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <glib/gi18n.h>
-#include <gtk/gtk.h>
-#include <gdk/gdkkeysyms.h>
 
 #define DEBUG_FLAG EMPATHY_DEBUG_FT
 #include <libempathy/empathy-debug.h>
@@ -41,7 +37,6 @@
 
 #include <libempathy-gtk/empathy-ui-utils.h>
 #include <libempathy-gtk/empathy-geometry.h>
-#include <libempathy-gtk/empathy-images.h>
 
 #include "empathy-ft-manager.h"
 

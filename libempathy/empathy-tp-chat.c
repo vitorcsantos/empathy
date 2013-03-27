@@ -20,13 +20,8 @@
 
 #include "config.h"
 
-#include <string.h>
-
-#include <extensions/extensions.h>
-
 #include "empathy-tp-chat.h"
 #include "empathy-request-util.h"
-#include "empathy-time.h"
 #include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_TP | EMPATHY_DEBUG_CHAT

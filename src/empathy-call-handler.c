@@ -20,11 +20,6 @@
 
 #include "config.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-
-#include <telepathy-glib/telepathy-glib.h>
-
 #include <telepathy-farstream/telepathy-farstream.h>
 
 #include <libempathy/empathy-utils.h>

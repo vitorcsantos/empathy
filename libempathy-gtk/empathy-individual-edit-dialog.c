@@ -22,21 +22,12 @@
 
 #include "config.h"
 
-#include <string.h>
-#include <stdlib.h>
-
-#include <gtk/gtk.h>
 #include <glib/gi18n-lib.h>
 
-#include <telepathy-glib/telepathy-glib.h>
-#include <folks/folks.h>
-
-#include <libempathy/empathy-individual-manager.h>
 #include <libempathy/empathy-utils.h>
 
 #include "empathy-individual-edit-dialog.h"
 #include "empathy-individual-widget.h"
-#include "empathy-ui-utils.h"
 
 #define GET_PRIV(obj) EMPATHY_GET_PRIV (obj, EmpathyIndividualEditDialog)
 

@@ -25,9 +25,6 @@
 
 #include "empathy-sanity-cleaning.h"
 
-#include <telepathy-glib/telepathy-glib.h>
-
-#include <libempathy/empathy-account-settings.h>
 #include <libempathy/empathy-gsettings.h>
 
 #include <libempathy-gtk/empathy-theme-manager.h>
@@ -43,7 +40,6 @@
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include <libempathy/empathy-debug.h>
-#include <libempathy/empathy-keyring.h>
 
 /*
  * This number has to be increased each time a new task is added or modified.

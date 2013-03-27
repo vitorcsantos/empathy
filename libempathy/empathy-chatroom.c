@@ -21,10 +21,6 @@
 
 #include "config.h"
 
-#include <string.h>
-
-#include <glib.h>
-
 #include "empathy-chatroom.h"
 #include "empathy-utils.h"
 

@@ -21,7 +21,6 @@
 #include "config.h"
 
 #include <string.h>
-#include <libxml/parser.h>
 #include <libxml/tree.h>
 #include <telepathy-glib/telepathy-glib.h>
 

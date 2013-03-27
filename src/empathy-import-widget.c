@@ -26,16 +26,12 @@
 
 #include "empathy-import-dialog.h"
 #include "empathy-import-widget.h"
-#include "empathy-import-pidgin.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include <libempathy/empathy-debug.h>
-#include <libempathy/empathy-connection-managers.h>
 #include <libempathy/empathy-utils.h>
 
 #include <libempathy-gtk/empathy-ui-utils.h>
-
-#include <telepathy-glib/telepathy-glib.h>
 
 #include <glib/gi18n-lib.h>
 

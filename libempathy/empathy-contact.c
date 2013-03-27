@@ -21,23 +21,12 @@
 
 #include "config.h"
 
-#include <string.h>
-
-#include <glib/gi18n-lib.h>
-
-#include <folks/folks.h>
-#include <folks/folks-telepathy.h>
-
 #ifdef HAVE_GEOCODE
 #include <geocode-glib/geocode-glib.h>
 #endif
 
-#include "empathy-contact.h"
-#include "empathy-camera-monitor.h"
-#include "empathy-individual-manager.h"
 #include "empathy-utils.h"
 #include "empathy-enum-types.h"
-#include "empathy-location.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_CONTACT
 #include "empathy-debug.h"

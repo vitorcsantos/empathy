@@ -20,9 +20,6 @@
 
 #include "config.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-
 #include "empathy-account-settings.h"
 #include "empathy-connection-managers.h"
 #include "empathy-keyring.h"

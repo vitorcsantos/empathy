@@ -22,15 +22,6 @@
 
 #include "config.h"
 
-#include <string.h>
-
-#include <telepathy-glib/telepathy-glib.h>
-
-#include <folks/folks.h>
-#include <folks/folks-telepathy.h>
-
-#include <extensions/extensions.h>
-
 #include "empathy-individual-manager.h"
 #include "empathy-utils.h"
 

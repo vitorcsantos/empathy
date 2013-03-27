@@ -19,12 +19,6 @@
  */
 
 #include "config.h"
-#include <string.h>
-#include <stdlib.h>
-#include <glib.h>
-#include <glib/gi18n-lib.h>
-
-#include <telepathy-glib/telepathy-glib.h>
 
 #include "empathy-irc-server.h"
 #include "empathy-utils.h"

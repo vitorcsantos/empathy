@@ -23,13 +23,11 @@
 #include <glib/gi18n-lib.h>
 
 #include <gtk/gtk.h>
-#include <pulse/pulseaudio.h>
 
 #include <telepathy-glib/telepathy-glib.h>
 
 #include "empathy-call-utils.h"
 
-#include <libempathy/empathy-gsettings.h>
 #include <libempathy/empathy-request-util.h>
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER

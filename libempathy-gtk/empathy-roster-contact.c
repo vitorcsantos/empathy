@@ -4,8 +4,6 @@
 
 #include "empathy-roster-contact.h"
 
-#include <telepathy-glib/telepathy-glib.h>
-
 #include <libempathy/empathy-utils.h>
 
 #include <libempathy-gtk/empathy-images.h>

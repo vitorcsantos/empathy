@@ -21,15 +21,8 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-#include <errno.h>
-#include <string.h>
-
-#include <glib.h>
 #include <glib/gstdio.h>
 #include <glib/gi18n.h>
-#include <gtk/gtk.h>
-#include <gdk/gdkx.h>
 
 #ifdef HAVE_LIBCHAMPLAIN
 #include <clutter-gtk/clutter-gtk.h>
@@ -37,25 +30,17 @@
 
 #include <libnotify/notify.h>
 
-#include <telepathy-glib/telepathy-glib.h>
-
-#include <telepathy-logger/telepathy-logger.h>
-
 #include <libempathy/empathy-client-factory.h>
 #include <libempathy/empathy-connection-aggregator.h>
 #include <libempathy/empathy-presence-manager.h>
 #include <libempathy/empathy-utils.h>
 #include <libempathy/empathy-chatroom-manager.h>
-#include <libempathy/empathy-account-settings.h>
-#include <libempathy/empathy-connection-managers.h>
 #include <libempathy/empathy-request-util.h>
 #include <libempathy/empathy-ft-factory.h>
 #include <libempathy/empathy-gsettings.h>
-#include <libempathy/empathy-tp-chat.h>
 
 #include <libempathy-gtk/empathy-ui-utils.h>
 #include <libempathy-gtk/empathy-location-manager.h>
-#include <libempathy-gtk/empathy-notify-manager.h>
 
 #include "empathy-roster-window.h"
 #include "empathy-accounts-common.h"
@@ -63,8 +48,6 @@
 #include "empathy-status-icon.h"
 #include "empathy-ft-manager.h"
 #include "empathy-notifications-approver.h"
-
-#include "extensions/extensions.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include <libempathy/empathy-debug.h>

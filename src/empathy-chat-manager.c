@@ -19,12 +19,10 @@
 
 #include "config.h"
 
-#include <telepathy-glib/telepathy-glib.h>
 #include <telepathy-glib/proxy-subclass.h>
 
 #include <libempathy/empathy-chatroom-manager.h>
 #include <libempathy/empathy-request-util.h>
-#include <libempathy/empathy-utils.h>
 #include <libempathy/empathy-individual-manager.h>
 
 #include <libempathy-gtk/empathy-ui-utils.h>

@@ -20,15 +20,6 @@
 
 #include "config.h"
 
-#include <errno.h>
-#include <fcntl.h>
-#include <stdarg.h>
-#include <sys/stat.h>
-#include <unistd.h>
-
-#include <glib.h>
-#include <glib/gstdio.h>
-
 #include "empathy-debug.h"
 
 #ifdef ENABLE_DEBUG

@@ -27,17 +27,10 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <gtk/gtk.h>
-#include <gdk/gdkkeysyms.h>
-#include <gdk/gdkx.h>
 #include <glib/gi18n.h>
-#include <libnotify/notification.h>
 
 #include <libempathy/empathy-client-factory.h>
-#include <libempathy/empathy-contact.h>
-#include <libempathy/empathy-message.h>
 #include <libempathy/empathy-chatroom-manager.h>
 #include <libempathy/empathy-gsettings.h>
 #include <libempathy/empathy-utils.h>
@@ -45,7 +38,6 @@
 #include <libempathy/empathy-individual-manager.h>
 
 #include <libempathy-gtk/empathy-images.h>
-#include <libempathy-gtk/empathy-log-window.h>
 #include <libempathy-gtk/empathy-geometry.h>
 #include <libempathy-gtk/empathy-smiley-manager.h>
 #include <libempathy-gtk/empathy-sound-manager.h>

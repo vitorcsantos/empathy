@@ -21,14 +21,7 @@
 
 #include "config.h"
 
-#include <string.h>
 #include <glib/gi18n-lib.h>
-
-#include <webkit/webkit.h>
-#include <telepathy-glib/telepathy-glib.h>
-
-#include <pango/pango.h>
-#include <gdk/gdk.h>
 
 #include <libempathy/empathy-gsettings.h>
 #include <libempathy/empathy-time.h>

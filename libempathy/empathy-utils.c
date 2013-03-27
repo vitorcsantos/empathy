@@ -28,25 +28,14 @@
 
 #include "config.h"
 
-#include <string.h>
-#include <math.h>
-#include <time.h>
-#include <sys/types.h>
-
 #include <glib/gi18n-lib.h>
 
 #include <libxml/uri.h>
-
-#include <folks/folks.h>
-#include <folks/folks-telepathy.h>
-
 #include <dbus/dbus-protocol.h>
 
 #include "empathy-client-factory.h"
 #include "empathy-utils.h"
-#include "empathy-individual-manager.h"
 #include "empathy-presence-manager.h"
-#include "empathy-request-util.h"
 
 #include <extensions/extensions.h>
 

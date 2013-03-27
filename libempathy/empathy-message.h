@@ -30,7 +30,6 @@
 #include <telepathy-logger/telepathy-logger.h>
 
 #include "empathy-contact.h"
-#include "empathy-time.h"
 
 G_BEGIN_DECLS
 

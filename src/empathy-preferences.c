@@ -25,12 +25,7 @@
 
 #include "config.h"
 
-#include <string.h>
-#include <stdio.h>
-
-#include <gtk/gtk.h>
 #include <glib/gi18n.h>
-#include <telepathy-glib/telepathy-glib.h>
 
 #include <libempathy/empathy-client-factory.h>
 #include <libempathy/empathy-gsettings.h>
@@ -39,8 +34,6 @@
 #include <libempathy-gtk/empathy-ui-utils.h>
 #include <libempathy-gtk/empathy-theme-manager.h>
 #include <libempathy-gtk/empathy-spell.h>
-#include <libempathy-gtk/empathy-gtk-enum-types.h>
-#include <libempathy-gtk/empathy-theme-adium.h>
 
 #include "empathy-preferences.h"
 

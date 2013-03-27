@@ -13,10 +13,7 @@
 #define __EMPATHY_CONTACT_CHOOSER_H__
 
 #include <gtk/gtk.h>
-
-#include <telepathy-glib/telepathy-glib.h>
-
-#include "libempathy/empathy-tp-chat.h"
+#include <folks/folks.h>
 
 G_BEGIN_DECLS
 

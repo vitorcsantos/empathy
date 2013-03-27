@@ -26,19 +26,12 @@
 
 #include "config.h"
 
-#include <string.h>
-
-#include <gtk/gtk.h>
 #include <glib/gi18n-lib.h>
-
-#include <gio/gdesktopappinfo.h>
 
 #include <libempathy/empathy-utils.h>
 
-#include <telepathy-glib/telepathy-glib.h>
 #include <dbus/dbus-protocol.h>
 
-#include "empathy-account-widget.h"
 #include "empathy-account-widget-private.h"
 #include "empathy-account-widget-sip.h"
 #include "empathy-account-widget-irc.h"

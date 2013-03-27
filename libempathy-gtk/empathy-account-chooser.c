@@ -23,12 +23,7 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <glib/gi18n-lib.h>
-#include <gtk/gtk.h>
-
-#include <libempathy/empathy-utils.h>
 
 #include "empathy-ui-utils.h"
 #include "empathy-account-chooser.h"

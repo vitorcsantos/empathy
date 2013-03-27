@@ -23,9 +23,6 @@
 
 #include "config.h"
 
-#include <string.h>
-#include <stdlib.h>
-
 #include <glib/gi18n-lib.h>
 
 #ifdef HAVE_ENCHANT

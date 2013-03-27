@@ -24,9 +24,8 @@
 #ifndef __EMPATHY_AVATAR_CHOOSER_H__
 #define __EMPATHY_AVATAR_CHOOSER_H__
 
+#include <gio/gio.h>
 #include <gtk/gtk.h>
-
-#include <libempathy/empathy-contact.h>
 
 G_BEGIN_DECLS
 

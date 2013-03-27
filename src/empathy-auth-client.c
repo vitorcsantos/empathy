@@ -21,20 +21,13 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-#include <glib.h>
 #include <glib/gi18n.h>
-#include <gtk/gtk.h>
-
-#include <telepathy-glib/telepathy-glib.h>
 
 #define DEBUG_FLAG EMPATHY_DEBUG_TLS
 #include <libempathy/empathy-debug.h>
 #include <libempathy/empathy-auth-factory.h>
-#include <libempathy/empathy-server-sasl-handler.h>
 #include <libempathy/empathy-server-tls-handler.h>
 #include <libempathy/empathy-tls-verifier.h>
-#include <libempathy/empathy-utils.h>
 
 #include <libempathy-gtk/empathy-bad-password-dialog.h>
 #include <libempathy-gtk/empathy-password-dialog.h>
@@ -44,8 +37,6 @@
 #include "empathy-sanity-cleaning.h"
 
 #include <gnutls/gnutls.h>
-
-#include <extensions/extensions.h>
 
 #define TIMEOUT 60
 

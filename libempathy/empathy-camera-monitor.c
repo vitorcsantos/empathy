@@ -20,13 +20,8 @@
 
 #include "config.h"
 
-#include <string.h>
-
-#include <telepathy-glib/telepathy-glib.h>
-
 #include "empathy-camera-monitor.h"
 #include "cheese-camera-device-monitor.h"
-#include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include "empathy-debug.h"

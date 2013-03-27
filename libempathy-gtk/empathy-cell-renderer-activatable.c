@@ -22,8 +22,6 @@
 
 #include "config.h"
 
-#include <gtk/gtk.h>
-
 #include <libempathy/empathy-utils.h>
 
 #include "empathy-cell-renderer-activatable.h"

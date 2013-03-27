@@ -23,16 +23,8 @@
 
 #include "config.h"
 
-#include <string.h>
-
-#include <gtk/gtk.h>
-#include <glib.h>
 #include <glib/gi18n.h>
-#include <glib/gprintf.h>
 
-#include <telepathy-glib/telepathy-glib.h>
-
-#include <libempathy/empathy-chatroom.h>
 #include <libempathy/empathy-utils.h>
 #include <libempathy/empathy-request-util.h>
 #include <libempathy/empathy-gsettings.h>

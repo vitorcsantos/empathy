@@ -20,11 +20,6 @@
 
 #include "config.h"
 
-#include <gtk/gtk.h>
-
-#include <dbus/dbus-glib.h>
-#include <telepathy-glib/telepathy-glib.h>
-
 #define DEBUG_FLAG EMPATHY_DEBUG_SHARE_DESKTOP
 #include <libempathy/empathy-debug.h>
 

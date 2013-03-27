@@ -20,20 +20,13 @@
 
 #include "config.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-
-#include <gst/audio/audio.h>
 #ifdef HAVE_GST1
 #include <gst/audio/streamvolume.h>
 #else
 #include <gst/interfaces/streamvolume.h>
 #endif
 
-#include <telepathy-glib/telepathy-glib.h>
-
 #include "empathy-audio-utils.h"
-
 #include "empathy-audio-sink.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_VOIP

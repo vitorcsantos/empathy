@@ -24,16 +24,11 @@
 
 #include <string.h>
 
-#include <glib/gi18n-lib.h>
 #include <gtk/gtk.h>
 
-#include <telepathy-glib/telepathy-glib.h>
-
 #include <libempathy/empathy-gsettings.h>
-#include <libempathy/empathy-utils.h>
 
 #include "empathy-theme-manager.h"
-#include "empathy-theme-adium.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include <libempathy/empathy-debug.h>

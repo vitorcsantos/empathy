@@ -31,21 +31,14 @@
 
 #include "config.h"
 
-#include <string.h>
 #include <X11/Xatom.h>
 #include <gdk/gdkx.h>
 #include <glib/gi18n-lib.h>
-#include <gtk/gtk.h>
-#include <gio/gio.h>
 #include <gio/gdesktopappinfo.h>
-
-#include <telepathy-glib/telepathy-glib.h>
-#include <folks/folks.h>
 
 #include "empathy-ui-utils.h"
 #include "empathy-images.h"
 #include "empathy-live-search.h"
-#include "empathy-smiley-manager.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include <libempathy/empathy-debug.h>

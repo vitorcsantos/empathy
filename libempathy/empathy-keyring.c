@@ -22,8 +22,6 @@
 
 #include "empathy-keyring.h"
 
-#include <string.h>
-
 #include <libsecret/secret.h>
 
 #ifdef HAVE_UOA

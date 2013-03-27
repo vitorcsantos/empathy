@@ -21,7 +21,6 @@
 #include "config.h"
 
 #include <libsoup/soup.h>
-#include <string.h>
 
 #define DEBUG_FLAG EMPATHY_DEBUG_SASL
 #include "empathy-debug.h"

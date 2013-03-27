@@ -28,9 +28,7 @@
 #include <glib.h>
 #include <glib-object.h>
 
-#include <gnutls/gnutls.h>
 #include <gnutls/x509.h>
-#include <libxml/parser.h>
 #include <libxml/tree.h>
 #include <folks/folks.h>
 #include <folks/folks-telepathy.h>

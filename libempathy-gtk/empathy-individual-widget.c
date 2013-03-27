@@ -21,16 +21,7 @@
 
 #include "config.h"
 
-#include <string.h>
-#include <stdlib.h>
-
-#include <gtk/gtk.h>
 #include <glib/gi18n-lib.h>
-
-#include <telepathy-glib/telepathy-glib.h>
-
-#include <folks/folks.h>
-#include <folks/folks-telepathy.h>
 
 #ifdef HAVE_LIBCHAMPLAIN
 #include <champlain/champlain.h>
@@ -45,7 +36,6 @@
 #include "empathy-contactinfo-utils.h"
 #include "empathy-groups-widget.h"
 #include "empathy-gtk-enum-types.h"
-#include "empathy-individual-widget.h"
 #include "empathy-ui-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_CONTACT
