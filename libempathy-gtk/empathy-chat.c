@@ -26,7 +26,7 @@
  *          Xavier Claessens <xclaesse@gmail.com>
  */
 
-#include <config.h>
+#include "config.h"
 /* for GCompletion */
 #define GLIB_DISABLE_DEPRECATION_WARNINGS 1
 

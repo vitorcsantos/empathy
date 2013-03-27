@@ -18,7 +18,7 @@
  * Authors: Emilio Pozuelo Monfort <emilio.pozuelo@collabora.co.uk>
  */
 
-#include <config.h>
+#include "config.h"
 
 #include <string.h>
 

@@ -17,7 +17,7 @@
  * Authors: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
  */
 
-#include <config.h>
+#include "config.h"
 #include <string.h>
 
 #include <glib/gi18n.h>

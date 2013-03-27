@@ -20,7 +20,7 @@
  *          Jonny Lamb <jonny.lamb@collabora.co.uk>
  */
 
-#include <config.h>
+#include "config.h"
 
 #include <string.h>
 

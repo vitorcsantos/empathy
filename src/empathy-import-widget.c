@@ -22,7 +22,7 @@
 
 /* empathy-import-widget.c */
 
-#include <config.h>
+#include "config.h"
 
 #include "empathy-import-dialog.h"
 #include "empathy-import-widget.h"

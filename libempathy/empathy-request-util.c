@@ -19,7 +19,7 @@
  *          Cosimo Cecchi <cosimo.cecchi@collabora.co.uk>
  */
 
-#include <config.h>
+#include "config.h"
 
 #include <string.h>
 

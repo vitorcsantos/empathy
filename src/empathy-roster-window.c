@@ -21,7 +21,7 @@
  *          Danielle Madeley <danielle.madeley@collabora.co.uk>
  */
 
-#include <config.h>
+#include "config.h"
 
 #include <sys/stat.h>
 #include <gtk/gtk.h>

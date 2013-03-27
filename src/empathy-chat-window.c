@@ -25,7 +25,7 @@
  *          Rômulo Fernandes Machado <romulo@castorgroup.net>
  */
 
-#include <config.h>
+#include "config.h"
 
 #include <string.h>
 

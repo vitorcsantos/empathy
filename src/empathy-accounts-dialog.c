@@ -24,7 +24,7 @@
  *          Danielle Madeley <danielle.madeley@collabora.co.uk>
  */
 
-#include <config.h>
+#include "config.h"
 
 #include <string.h>
 #include <stdlib.h>

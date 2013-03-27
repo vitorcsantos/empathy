@@ -18,7 +18,7 @@
  * Authors: Xavier Claessens <xclaesse@gmail.com>
  */
 
-#include <config.h>
+#include "config.h"
 
 #include <string.h>
 #include <stdlib.h>

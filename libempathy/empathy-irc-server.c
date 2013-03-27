@@ -18,7 +18,7 @@
  * Authors: Guillaume Desmottes <gdesmott@gnome.org>
  */
 
-#include <config.h>
+#include "config.h"
 #include <string.h>
 #include <stdlib.h>
 #include <glib.h>

@@ -29,7 +29,7 @@
  *          Jeroen Zwartepoorte
  */
 
-#include <config.h>
+#include "config.h"
 
 #include <string.h>
 #include <X11/Xatom.h>

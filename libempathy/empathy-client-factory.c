@@ -19,7 +19,7 @@
  * Authors: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
  */
 
-#include <config.h>
+#include "config.h"
 
 #include "empathy-client-factory.h"
 
