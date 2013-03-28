@@ -25,7 +25,7 @@
 #include "empathy-ui-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_ACCOUNT | EMPATHY_DEBUG_IRC
-#include <libempathy/empathy-debug.h>
+#include "libempathy/empathy-debug.h"
 
 typedef struct {
   EmpathyAccountWidget *self;

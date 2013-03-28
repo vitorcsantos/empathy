@@ -26,26 +26,26 @@
 #include <sys/stat.h>
 #include <glib/gi18n.h>
 
-#include <libempathy/empathy-utils.h>
-#include <libempathy/empathy-request-util.h>
-#include <libempathy/empathy-chatroom-manager.h>
-#include <libempathy/empathy-gsettings.h>
-#include <libempathy/empathy-gsettings.h>
-#include <libempathy/empathy-status-presets.h>
-#include <libempathy/empathy-presence-manager.h>
+#include "libempathy/empathy-utils.h"
+#include "libempathy/empathy-request-util.h"
+#include "libempathy/empathy-chatroom-manager.h"
+#include "libempathy/empathy-gsettings.h"
+#include "libempathy/empathy-gsettings.h"
+#include "libempathy/empathy-status-presets.h"
+#include "libempathy/empathy-presence-manager.h"
 
-#include <libempathy-gtk/empathy-contact-blocking-dialog.h>
-#include <libempathy-gtk/empathy-contact-search-dialog.h>
-#include <libempathy-gtk/empathy-geometry.h>
-#include <libempathy-gtk/empathy-gtk-enum-types.h>
-#include <libempathy-gtk/empathy-individual-dialogs.h>
-#include <libempathy-gtk/empathy-roster-model-manager.h>
-#include <libempathy-gtk/empathy-roster-view.h>
-#include <libempathy-gtk/empathy-new-message-dialog.h>
-#include <libempathy-gtk/empathy-new-call-dialog.h>
-#include <libempathy-gtk/empathy-log-window.h>
-#include <libempathy-gtk/empathy-presence-chooser.h>
-#include <libempathy-gtk/empathy-ui-utils.h>
+#include "libempathy-gtk/empathy-contact-blocking-dialog.h"
+#include "libempathy-gtk/empathy-contact-search-dialog.h"
+#include "libempathy-gtk/empathy-geometry.h"
+#include "libempathy-gtk/empathy-gtk-enum-types.h"
+#include "libempathy-gtk/empathy-individual-dialogs.h"
+#include "libempathy-gtk/empathy-roster-model-manager.h"
+#include "libempathy-gtk/empathy-roster-view.h"
+#include "libempathy-gtk/empathy-new-message-dialog.h"
+#include "libempathy-gtk/empathy-new-call-dialog.h"
+#include "libempathy-gtk/empathy-log-window.h"
+#include "libempathy-gtk/empathy-presence-chooser.h"
+#include "libempathy-gtk/empathy-ui-utils.h"
 
 #include "empathy-accounts-dialog.h"
 #include "empathy-call-observer.h"
@@ -59,7 +59,7 @@
 #include "empathy-ft-manager.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
-#include <libempathy/empathy-debug.h>
+#include "libempathy/empathy-debug.h"
 
 /* Flashing delay for icons (milliseconds). */
 #define FLASH_TIMEOUT 500

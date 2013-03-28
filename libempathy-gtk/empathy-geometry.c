@@ -30,7 +30,7 @@
 #include "empathy-ui-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
-#include <libempathy/empathy-debug.h>
+#include "libempathy/empathy-debug.h"
 
 #define GEOMETRY_DIR_CREATE_MODE  (S_IRUSR | S_IWUSR | S_IXUSR)
 #define GEOMETRY_FILE_CREATE_MODE (S_IRUSR | S_IWUSR)

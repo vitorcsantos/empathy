@@ -199,7 +199,7 @@ stamp-empathy-enum-types.h: $(libempathy_headers) Makefile
 			--fhead "G_BEGIN_DECLS\n\n" \
 			--ftail "G_END_DECLS\n\n" \
 			--ftail "#endif /* __LIBEMPATHY_ENUM_TYPES_H__ */\n" \
-			--fprod "#include <libempathy/@filename@>\n" \
+			--fprod '#include "libempathy/@filename@"\n' \
 			--eprod "#define EMPATHY_TYPE_@ENUMSHORT@ @enum_name@_get_type()\n" \
 			--eprod "GType @enum_name@_get_type (void);\n" \
 		$(libempathy_headers) ) > xgen-gth \

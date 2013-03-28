@@ -24,15 +24,15 @@
 #include <glib/gi18n.h>
 
 #define DEBUG_FLAG EMPATHY_DEBUG_TLS
-#include <libempathy/empathy-debug.h>
-#include <libempathy/empathy-auth-factory.h>
-#include <libempathy/empathy-server-tls-handler.h>
-#include <libempathy/empathy-tls-verifier.h>
+#include "libempathy/empathy-debug.h"
+#include "libempathy/empathy-auth-factory.h"
+#include "libempathy/empathy-server-tls-handler.h"
+#include "libempathy/empathy-tls-verifier.h"
 
-#include <libempathy-gtk/empathy-bad-password-dialog.h>
-#include <libempathy-gtk/empathy-password-dialog.h>
-#include <libempathy-gtk/empathy-tls-dialog.h>
-#include <libempathy-gtk/empathy-ui-utils.h>
+#include "libempathy-gtk/empathy-bad-password-dialog.h"
+#include "libempathy-gtk/empathy-password-dialog.h"
+#include "libempathy-gtk/empathy-tls-dialog.h"
+#include "libempathy-gtk/empathy-ui-utils.h"
 
 #include "empathy-sanity-cleaning.h"
 

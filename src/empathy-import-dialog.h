@@ -25,7 +25,7 @@
 #ifndef __EMPATHY_IMPORT_DIALOG_H__
 #define __EMPATHY_IMPORT_DIALOG_H__
 
-#include <libempathy/empathy-connection-managers.h>
+#include "libempathy/empathy-connection-managers.h"
 
 G_BEGIN_DECLS
 

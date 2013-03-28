@@ -23,7 +23,7 @@
 
 #include <webkit/webkitwebview.h>
 
-#include <libempathy/empathy-message.h>
+#include "libempathy/empathy-message.h"
 
 G_BEGIN_DECLS
 

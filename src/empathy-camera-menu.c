@@ -21,13 +21,13 @@
 
 #include "config.h"
 
-#include <libempathy/empathy-camera-monitor.h>
-#include <libempathy/empathy-gsettings.h>
+#include "libempathy/empathy-camera-monitor.h"
+#include "libempathy/empathy-gsettings.h"
 
 #include "empathy-camera-menu.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_VOIP
-#include <libempathy/empathy-debug.h>
+#include "libempathy/empathy-debug.h"
 
 struct _EmpathyCameraMenuPrivate
 {

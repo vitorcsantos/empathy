@@ -21,7 +21,7 @@
  * Authors: Kristian Rietveld <kris@imendio.com>
  */
 
-#include <libempathy/empathy-utils.h>
+#include "libempathy/empathy-utils.h"
 #include "empathy-cell-renderer-expander.h"
 
 #define GET_PRIV(obj) EMPATHY_GET_PRIV (obj, EmpathyCellRendererExpander)

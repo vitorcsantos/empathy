@@ -22,8 +22,8 @@
 
 #include "empathy-subscription-dialog.h"
 
-#include <libempathy/empathy-utils.h>
-#include <libempathy-gtk/empathy-individual-widget.h>
+#include "libempathy/empathy-utils.h"
+#include "libempathy-gtk/empathy-individual-widget.h"
 
 #include <glib/gi18n-lib.h>
 

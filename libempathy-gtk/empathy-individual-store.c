@@ -28,13 +28,13 @@
 
 #include <glib/gi18n-lib.h>
 
-#include <libempathy/empathy-utils.h>
+#include "libempathy/empathy-utils.h"
 
 #include "empathy-ui-utils.h"
 #include "empathy-gtk-enum-types.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_CONTACT
-#include <libempathy/empathy-debug.h>
+#include "libempathy/empathy-debug.h"
 
 /* Active users are those which have recently changed state
  * (e.g. online, offline or from normal to a busy state).

@@ -23,7 +23,7 @@
 
 #include <glib-object.h>
 
-#include <libempathy/empathy-individual-manager.h>
+#include "libempathy/empathy-individual-manager.h"
 
 G_BEGIN_DECLS
 

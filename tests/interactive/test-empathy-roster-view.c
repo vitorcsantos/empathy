@@ -1,10 +1,10 @@
 #include <config.h>
 
-#include <libempathy-gtk/empathy-roster-model.h>
-#include <libempathy-gtk/empathy-roster-model-manager.h>
+#include "libempathy-gtk/empathy-roster-model.h"
+#include "libempathy-gtk/empathy-roster-model-manager.h"
 
-#include <libempathy-gtk/empathy-roster-view.h>
-#include <libempathy-gtk/empathy-ui-utils.h>
+#include "libempathy-gtk/empathy-roster-view.h"
+#include "libempathy-gtk/empathy-ui-utils.h"
 
 static gboolean show_offline = FALSE;
 static gboolean show_groups = FALSE;

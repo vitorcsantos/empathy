@@ -23,7 +23,7 @@
 #include <glib-object.h>
 #include <gtk/gtk.h>
 
-#include <libempathy-gtk/empathy-base-password-dialog.h>
+#include "libempathy-gtk/empathy-base-password-dialog.h"
 
 G_BEGIN_DECLS
 

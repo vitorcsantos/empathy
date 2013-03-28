@@ -32,11 +32,11 @@
 
 #include <glib/gi18n-lib.h>
 
-#include <libempathy/empathy-gsettings.h>
-#include <libempathy/empathy-keyring.h>
-#include <libempathy/empathy-utils.h>
-#include <libempathy/empathy-request-util.h>
-#include <libempathy/empathy-client-factory.h>
+#include "libempathy/empathy-gsettings.h"
+#include "libempathy/empathy-keyring.h"
+#include "libempathy/empathy-utils.h"
+#include "libempathy/empathy-request-util.h"
+#include "libempathy/empathy-client-factory.h"
 
 #include "empathy-chat.h"
 #include "empathy-spell.h"
@@ -52,7 +52,7 @@
 #include "extensions/extensions.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_CHAT
-#include <libempathy/empathy-debug.h>
+#include "libempathy/empathy-debug.h"
 
 #define IS_ENTER(v) (v == GDK_KEY_Return || v == GDK_KEY_ISO_Enter || v == GDK_KEY_KP_Enter)
 #define COMPOSING_STOP_TIMEOUT 5

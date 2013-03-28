@@ -2,8 +2,8 @@
 
 #include <gtk/gtk.h>
 
-#include <libempathy-gtk/empathy-ui-utils.h>
-#include <libempathy-gtk/empathy-protocol-chooser.h>
+#include "libempathy-gtk/empathy-ui-utils.h"
+#include "libempathy-gtk/empathy-protocol-chooser.h"
 
 int
 main (int argc,

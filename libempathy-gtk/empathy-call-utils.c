@@ -28,10 +28,10 @@
 
 #include "empathy-call-utils.h"
 
-#include <libempathy/empathy-request-util.h>
+#include "libempathy/empathy-request-util.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
-#include <libempathy/empathy-debug.h>
+#include "libempathy/empathy-debug.h"
 
 static const gchar *
 get_error_display_message (GError *error)

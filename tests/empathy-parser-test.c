@@ -9,9 +9,9 @@
 #include <telepathy-glib/telepathy-glib.h>
 
 #define DEBUG_FLAG EMPATHY_DEBUG_TESTS
-#include <libempathy/empathy-debug.h>
+#include "libempathy/empathy-debug.h"
 
-#include <libempathy-gtk/empathy-string-parser.h>
+#include "libempathy-gtk/empathy-string-parser.h"
 
 static void
 test_replace_match (const gchar *text,

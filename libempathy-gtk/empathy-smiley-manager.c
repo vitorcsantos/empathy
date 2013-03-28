@@ -22,7 +22,7 @@
 
 #include "config.h"
 
-#include <libempathy/empathy-utils.h>
+#include "libempathy/empathy-utils.h"
 #include "empathy-smiley-manager.h"
 #include "empathy-ui-utils.h"
 

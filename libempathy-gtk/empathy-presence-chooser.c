@@ -28,12 +28,12 @@
 
 #include <glib/gi18n-lib.h>
 
-#include <libempathy/empathy-presence-manager.h>
-#include <libempathy/empathy-utils.h>
-#include <libempathy/empathy-status-presets.h>
+#include "libempathy/empathy-presence-manager.h"
+#include "libempathy/empathy-utils.h"
+#include "libempathy/empathy-status-presets.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
-#include <libempathy/empathy-debug.h>
+#include "libempathy/empathy-debug.h"
 
 #include "empathy-ui-utils.h"
 #include "empathy-presence-chooser.h"

@@ -22,7 +22,7 @@
 
 #include <glib/gi18n-lib.h>
 
-#include <libempathy/empathy-utils.h>
+#include "libempathy/empathy-utils.h"
 
 #include "empathy-ui-utils.h"
 #include "totem-subtitle-encoding.h"

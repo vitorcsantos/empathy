@@ -25,17 +25,17 @@
 
 #include <glib/gi18n.h>
 
-#include <libempathy/empathy-utils.h>
-#include <libempathy/empathy-request-util.h>
-#include <libempathy/empathy-gsettings.h>
+#include "libempathy/empathy-utils.h"
+#include "libempathy/empathy-request-util.h"
+#include "libempathy/empathy-gsettings.h"
 
-#include <libempathy-gtk/empathy-account-chooser.h>
-#include <libempathy-gtk/empathy-ui-utils.h>
+#include "libempathy-gtk/empathy-account-chooser.h"
+#include "libempathy-gtk/empathy-ui-utils.h"
 
 #include "empathy-new-chatroom-dialog.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
-#include <libempathy/empathy-debug.h>
+#include "libempathy/empathy-debug.h"
 
 G_DEFINE_TYPE (EmpathyNewChatroomDialog, empathy_new_chatroom_dialog,
     GTK_TYPE_DIALOG)

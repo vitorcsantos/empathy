@@ -29,7 +29,7 @@
 #include <glib-object.h>
 #include <glib.h>
 
-#include <libempathy/empathy-ft-handler.h>
+#include "libempathy/empathy-ft-handler.h"
 
 G_BEGIN_DECLS
 

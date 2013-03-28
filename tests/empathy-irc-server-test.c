@@ -5,7 +5,7 @@
 #include "test-irc-helper.h"
 #include "test-helper.h"
 
-#include <libempathy/empathy-irc-server.h>
+#include "libempathy/empathy-irc-server.h"
 
 static void
 test_empathy_irc_server_new (void)

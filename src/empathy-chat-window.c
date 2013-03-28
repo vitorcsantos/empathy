@@ -30,19 +30,19 @@
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
 
-#include <libempathy/empathy-client-factory.h>
-#include <libempathy/empathy-chatroom-manager.h>
-#include <libempathy/empathy-gsettings.h>
-#include <libempathy/empathy-utils.h>
-#include <libempathy/empathy-request-util.h>
-#include <libempathy/empathy-individual-manager.h>
+#include "libempathy/empathy-client-factory.h"
+#include "libempathy/empathy-chatroom-manager.h"
+#include "libempathy/empathy-gsettings.h"
+#include "libempathy/empathy-utils.h"
+#include "libempathy/empathy-request-util.h"
+#include "libempathy/empathy-individual-manager.h"
 
-#include <libempathy-gtk/empathy-images.h>
-#include <libempathy-gtk/empathy-geometry.h>
-#include <libempathy-gtk/empathy-smiley-manager.h>
-#include <libempathy-gtk/empathy-sound-manager.h>
-#include <libempathy-gtk/empathy-ui-utils.h>
-#include <libempathy-gtk/empathy-notify-manager.h>
+#include "libempathy-gtk/empathy-images.h"
+#include "libempathy-gtk/empathy-geometry.h"
+#include "libempathy-gtk/empathy-smiley-manager.h"
+#include "libempathy-gtk/empathy-sound-manager.h"
+#include "libempathy-gtk/empathy-ui-utils.h"
+#include "libempathy-gtk/empathy-notify-manager.h"
 
 #include "empathy-chat-manager.h"
 #include "empathy-chat-window.h"
@@ -50,7 +50,7 @@
 #include "empathy-invite-participant-dialog.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_CHAT
-#include <libempathy/empathy-debug.h>
+#include "libempathy/empathy-debug.h"
 
 /* Macro to compare guint32 X timestamps, while accounting for wrapping around
  */

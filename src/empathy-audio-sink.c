@@ -30,7 +30,7 @@
 #include "empathy-audio-sink.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_VOIP
-#include <libempathy/empathy-debug.h>
+#include "libempathy/empathy-debug.h"
 
 G_DEFINE_TYPE(EmpathyGstAudioSink, empathy_audio_sink, GST_TYPE_BIN)
 

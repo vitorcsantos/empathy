@@ -24,10 +24,10 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
-#include <libempathy/empathy-debug.h>
-#include <libempathy/empathy-utils.h>
-#include <libempathy-gtk/empathy-log-window.h>
-#include <libempathy-gtk/empathy-ui-utils.h>
+#include "libempathy/empathy-debug.h"
+#include "libempathy/empathy-utils.h"
+#include "libempathy-gtk/empathy-log-window.h"
+#include "libempathy-gtk/empathy-ui-utils.h"
 
 static void
 destroy_cb (GtkWidget *dialog,

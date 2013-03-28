@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <libempathy/empathy-tls-verifier.h>
+#include "libempathy/empathy-tls-verifier.h"
 #include "test-helper.h"
 #include "mock-pkcs11.h"
 

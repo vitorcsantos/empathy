@@ -27,7 +27,7 @@
 #include "empathy-presence-manager.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_ACCOUNT
-#include <libempathy/empathy-debug.h>
+#include "libempathy/empathy-debug.h"
 
 #define GET_PRIV(obj) EMPATHY_GET_PRIV (obj, EmpathyAccountSettings)
 

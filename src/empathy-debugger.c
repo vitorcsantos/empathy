@@ -21,7 +21,7 @@
 
 #include <glib/gi18n.h>
 
-#include <libempathy-gtk/empathy-ui-utils.h>
+#include "libempathy-gtk/empathy-ui-utils.h"
 
 #include "empathy-debug-window.h"
 

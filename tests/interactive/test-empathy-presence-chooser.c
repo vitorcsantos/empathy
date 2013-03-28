@@ -24,10 +24,10 @@
 
 #include <gtk/gtk.h>
 
-#include <libempathy/empathy-status-presets.h>
+#include "libempathy/empathy-status-presets.h"
 
-#include <libempathy-gtk/empathy-ui-utils.h>
-#include <libempathy-gtk/empathy-presence-chooser.h>
+#include "libempathy-gtk/empathy-ui-utils.h"
+#include "libempathy-gtk/empathy-presence-chooser.h"
 
 int
 main (int argc, char **argv)

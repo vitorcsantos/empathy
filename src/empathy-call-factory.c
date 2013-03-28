@@ -20,14 +20,14 @@
 
 #include "config.h"
 
-#include <libempathy/empathy-client-factory.h>
-#include <libempathy/empathy-request-util.h>
+#include "libempathy/empathy-client-factory.h"
+#include "libempathy/empathy-request-util.h"
 
 #include "empathy-call-factory.h"
 #include "empathy-call-handler.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_VOIP
-#include <libempathy/empathy-debug.h>
+#include "libempathy/empathy-debug.h"
 
 G_DEFINE_TYPE(EmpathyCallFactory, empathy_call_factory, TP_TYPE_BASE_CLIENT)
 

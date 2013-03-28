@@ -19,8 +19,8 @@
  *          Cosimo Cecchi <cosimo.cecchi@collabora.co.uk>
  */
 
-#include <libempathy/empathy-connection-managers.h>
-#include <libempathy/empathy-utils.h>
+#include "libempathy/empathy-connection-managers.h"
+#include "libempathy/empathy-utils.h"
 
 #include "empathy-import-utils.h"
 #include "empathy-import-pidgin.h"

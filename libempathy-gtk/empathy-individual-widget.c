@@ -28,9 +28,9 @@
 #include <champlain-gtk/champlain-gtk.h>
 #endif
 
-#include <libempathy/empathy-utils.h>
-#include <libempathy/empathy-location.h>
-#include <libempathy/empathy-time.h>
+#include "libempathy/empathy-utils.h"
+#include "libempathy/empathy-location.h"
+#include "libempathy/empathy-time.h"
 
 #include "empathy-avatar-image.h"
 #include "empathy-contactinfo-utils.h"
@@ -39,7 +39,7 @@
 #include "empathy-ui-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_CONTACT
-#include <libempathy/empathy-debug.h>
+#include "libempathy/empathy-debug.h"
 
 /**
  * SECTION:empathy-individual-widget

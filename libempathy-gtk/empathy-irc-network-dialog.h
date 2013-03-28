@@ -23,7 +23,7 @@
 
 #include <gtk/gtk.h>
 
-#include <libempathy/empathy-irc-network.h>
+#include "libempathy/empathy-irc-network.h"
 
 G_BEGIN_DECLS
 

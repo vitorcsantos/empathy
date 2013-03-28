@@ -23,7 +23,7 @@
 
 #include "config.h"
 
-#include <libempathy/empathy-utils.h>
+#include "libempathy/empathy-utils.h"
 #include "empathy-cell-renderer-text.h"
 
 #define GET_PRIV(obj) EMPATHY_GET_PRIV (obj, EmpathyCellRendererText)

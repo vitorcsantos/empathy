@@ -5,7 +5,7 @@
 
 #include <telepathy-glib/telepathy-glib.h>
 
-#include <libempathy/empathy-chatroom-manager.h>
+#include "libempathy/empathy-chatroom-manager.h"
 
 #include "test-helper.h"
 

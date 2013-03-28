@@ -22,15 +22,15 @@
 
 #include <glib/gi18n-lib.h>
 
-#include <libempathy/empathy-camera-monitor.h>
-#include <libempathy/empathy-utils.h>
+#include "libempathy/empathy-camera-monitor.h"
+#include "libempathy/empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_CONTACT
-#include <libempathy/empathy-debug.h>
+#include "libempathy/empathy-debug.h"
 
-#include <libempathy-gtk/empathy-contact-chooser.h>
-#include <libempathy-gtk/empathy-ui-utils.h>
-#include <libempathy-gtk/empathy-images.h>
+#include "libempathy-gtk/empathy-contact-chooser.h"
+#include "libempathy-gtk/empathy-ui-utils.h"
+#include "libempathy-gtk/empathy-images.h"
 
 #include "empathy-new-call-dialog.h"
 #include "empathy-call-utils.h"

@@ -2,8 +2,8 @@
 
 #include <gtk/gtk.h>
 
-#include <libempathy-gtk/empathy-ui-utils.h>
-#include <libempathy-gtk/empathy-account-chooser.h>
+#include "libempathy-gtk/empathy-ui-utils.h"
+#include "libempathy-gtk/empathy-account-chooser.h"
 
 static void
 filter_func (TpAccount *account,

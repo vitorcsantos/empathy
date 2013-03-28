@@ -30,17 +30,17 @@
 
 #include <libnotify/notify.h>
 
-#include <libempathy/empathy-client-factory.h>
-#include <libempathy/empathy-connection-aggregator.h>
-#include <libempathy/empathy-presence-manager.h>
-#include <libempathy/empathy-utils.h>
-#include <libempathy/empathy-chatroom-manager.h>
-#include <libempathy/empathy-request-util.h>
-#include <libempathy/empathy-ft-factory.h>
-#include <libempathy/empathy-gsettings.h>
+#include "libempathy/empathy-client-factory.h"
+#include "libempathy/empathy-connection-aggregator.h"
+#include "libempathy/empathy-presence-manager.h"
+#include "libempathy/empathy-utils.h"
+#include "libempathy/empathy-chatroom-manager.h"
+#include "libempathy/empathy-request-util.h"
+#include "libempathy/empathy-ft-factory.h"
+#include "libempathy/empathy-gsettings.h"
 
-#include <libempathy-gtk/empathy-ui-utils.h>
-#include <libempathy-gtk/empathy-location-manager.h>
+#include "libempathy-gtk/empathy-ui-utils.h"
+#include "libempathy-gtk/empathy-location-manager.h"
 
 #include "empathy-roster-window.h"
 #include "empathy-accounts-common.h"
@@ -50,7 +50,7 @@
 #include "empathy-notifications-approver.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
-#include <libempathy/empathy-debug.h>
+#include "libempathy/empathy-debug.h"
 
 #define EMPATHY_DBUS_NAME "org.gnome.Empathy"
 

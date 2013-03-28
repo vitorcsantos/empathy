@@ -23,8 +23,8 @@
 
 #include <glib/gi18n-lib.h>
 
-#include <libempathy/empathy-utils.h>
-#include <libempathy/empathy-client-factory.h>
+#include "libempathy/empathy-utils.h"
+#include "libempathy/empathy-client-factory.h"
 
 #include "empathy-contact-widget.h"
 #include "empathy-avatar-image.h"
@@ -33,7 +33,7 @@
 #include "empathy-string-parser.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_CONTACT
-#include <libempathy/empathy-debug.h>
+#include "libempathy/empathy-debug.h"
 
 /**
  * SECTION:empathy-contact-widget

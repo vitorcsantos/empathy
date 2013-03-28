@@ -21,19 +21,19 @@
 
 #include "config.h"
 
-#include <libempathy/empathy-gsettings.h>
-#include <libempathy/empathy-utils.h>
+#include "libempathy/empathy-gsettings.h"
+#include "libempathy/empathy-utils.h"
 
-#include <libempathy-gtk/empathy-presence-chooser.h>
-#include <libempathy-gtk/empathy-ui-utils.h>
-#include <libempathy-gtk/empathy-new-message-dialog.h>
-#include <libempathy-gtk/empathy-new-call-dialog.h>
+#include "libempathy-gtk/empathy-presence-chooser.h"
+#include "libempathy-gtk/empathy-ui-utils.h"
+#include "libempathy-gtk/empathy-new-message-dialog.h"
+#include "libempathy-gtk/empathy-new-call-dialog.h"
 
 #include "empathy-status-icon.h"
 #include "empathy-event-manager.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_DISPATCHER
-#include <libempathy/empathy-debug.h>
+#include "libempathy/empathy-debug.h"
 
 /* Number of ms to wait when blinking */
 #define BLINK_TIMEOUT 500

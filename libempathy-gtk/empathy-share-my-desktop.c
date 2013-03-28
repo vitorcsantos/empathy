@@ -21,7 +21,7 @@
 #include "config.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_SHARE_DESKTOP
-#include <libempathy/empathy-debug.h>
+#include "libempathy/empathy-debug.h"
 
 #include "empathy-share-my-desktop.h"
 

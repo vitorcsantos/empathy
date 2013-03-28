@@ -26,8 +26,8 @@
 #include <gcr/gcr.h>
 
 #define DEBUG_FLAG EMPATHY_DEBUG_TLS
-#include <libempathy/empathy-debug.h>
-#include <libempathy/empathy-utils.h>
+#include "libempathy/empathy-debug.h"
+#include "libempathy/empathy-utils.h"
 
 G_DEFINE_TYPE (EmpathyTLSDialog, empathy_tls_dialog,
     GTK_TYPE_MESSAGE_DIALOG)

@@ -21,7 +21,7 @@
 
 #include "config.h"
 
-#include <libempathy-gtk/empathy-calendar-button.h>
+#include "libempathy-gtk/empathy-calendar-button.h"
 
 static void
 date_changed_cb (EmpathyCalendarButton *button,

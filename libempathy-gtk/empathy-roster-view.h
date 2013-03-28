@@ -2,10 +2,10 @@
 #ifndef __EMPATHY_ROSTER_VIEW_H__
 #define __EMPATHY_ROSTER_VIEW_H__
 
-#include <libempathy-gtk/egg-list-box/egg-list-box.h>
-#include <libempathy-gtk/empathy-live-search.h>
+#include "libempathy-gtk/egg-list-box/egg-list-box.h"
+#include "libempathy-gtk/empathy-live-search.h"
 
-#include <libempathy-gtk/empathy-roster-model.h>
+#include "libempathy-gtk/empathy-roster-model.h"
 
 G_BEGIN_DECLS
 

@@ -27,7 +27,7 @@
 
 #include <glib-object.h>
 
-#include <libempathy/empathy-connection-managers.h>
+#include "libempathy/empathy-connection-managers.h"
 
 #include "empathy-import-utils.h"
 

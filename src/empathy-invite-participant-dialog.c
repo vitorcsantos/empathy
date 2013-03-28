@@ -15,9 +15,9 @@
 
 #include "empathy-invite-participant-dialog.h"
 
-#include <libempathy/empathy-utils.h>
+#include "libempathy/empathy-utils.h"
 
-#include <libempathy-gtk/empathy-contact-chooser.h>
+#include "libempathy-gtk/empathy-contact-chooser.h"
 
 G_DEFINE_TYPE (EmpathyInviteParticipantDialog,
     empathy_invite_participant_dialog, GTK_TYPE_DIALOG);

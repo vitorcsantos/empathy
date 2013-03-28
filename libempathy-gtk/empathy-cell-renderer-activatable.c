@@ -22,7 +22,7 @@
 
 #include "config.h"
 
-#include <libempathy/empathy-utils.h>
+#include "libempathy/empathy-utils.h"
 
 #include "empathy-cell-renderer-activatable.h"
 

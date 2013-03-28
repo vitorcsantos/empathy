@@ -24,11 +24,11 @@
 
 #include <glib/gi18n-lib.h>
 
-#include <libempathy/empathy-camera-monitor.h>
-#include <libempathy/empathy-request-util.h>
-#include <libempathy/empathy-individual-manager.h>
-#include <libempathy/empathy-chatroom-manager.h>
-#include <libempathy/empathy-utils.h>
+#include "libempathy/empathy-camera-monitor.h"
+#include "libempathy/empathy-request-util.h"
+#include "libempathy/empathy-individual-manager.h"
+#include "libempathy/empathy-chatroom-manager.h"
+#include "libempathy/empathy-utils.h"
 
 #include "empathy-account-selector-dialog.h"
 #include "empathy-images.h"
@@ -44,7 +44,7 @@
 #include "empathy-individual-information-dialog.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_CONTACT
-#include <libempathy/empathy-debug.h>
+#include "libempathy/empathy-debug.h"
 
 #define GET_PRIV(obj) EMPATHY_GET_PRIV (obj, EmpathyIndividualMenu)
 

@@ -28,7 +28,7 @@
 #include "empathy-individual-store-manager.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_CONTACT
-#include <libempathy/empathy-debug.h>
+#include "libempathy/empathy-debug.h"
 
 struct _EmpathyIndividualStoreManagerPriv
 {

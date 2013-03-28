@@ -28,7 +28,7 @@
 
 #include <telepathy-glib/telepathy-glib.h>
 
-#include <libempathy/empathy-contact.h>
+#include "libempathy/empathy-contact.h"
 
 G_BEGIN_DECLS
 

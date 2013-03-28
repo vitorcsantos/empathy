@@ -26,10 +26,10 @@
 
 #include <gtk/gtk.h>
 
-#include <libempathy/empathy-status-presets.h>
+#include "libempathy/empathy-status-presets.h"
 
-#include <libempathy-gtk/empathy-ui-utils.h>
-#include <libempathy-gtk/empathy-status-preset-dialog.h>
+#include "libempathy-gtk/empathy-ui-utils.h"
+#include "libempathy-gtk/empathy-status-preset-dialog.h"
 
 int
 main (int argc, char **argv)

@@ -26,14 +26,14 @@
 #include <gst/interfaces/streamvolume.h>
 #endif
 
-#include <libempathy/empathy-utils.h>
+#include "libempathy/empathy-utils.h"
 #include "empathy-audio-utils.h"
 
 #include "empathy-audio-src.h"
 #include "empathy-mic-monitor.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_VOIP
-#include <libempathy/empathy-debug.h>
+#include "libempathy/empathy-debug.h"
 
 G_DEFINE_TYPE(EmpathyGstAudioSrc, empathy_audio_src, GST_TYPE_BIN)
 

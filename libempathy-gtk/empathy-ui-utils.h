@@ -36,8 +36,8 @@
 
 #include <folks/folks.h>
 
-#include <libempathy/empathy-contact.h>
-#include <libempathy/empathy-ft-handler.h>
+#include "libempathy/empathy-contact.h"
+#include "libempathy/empathy-ft-handler.h"
 
 G_BEGIN_DECLS
 

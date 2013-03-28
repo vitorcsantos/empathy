@@ -23,9 +23,9 @@
 
 #include <glib/gi18n-lib.h>
 
-#include <libempathy/empathy-gsettings.h>
-#include <libempathy/empathy-time.h>
-#include <libempathy/empathy-utils.h>
+#include "libempathy/empathy-gsettings.h"
+#include "libempathy/empathy-time.h"
+#include "libempathy/empathy-utils.h"
 
 #include "empathy-theme-adium.h"
 #include "empathy-smiley-manager.h"
@@ -35,7 +35,7 @@
 #include "empathy-webkit-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_CHAT
-#include <libempathy/empathy-debug.h>
+#include "libempathy/empathy-debug.h"
 
 #define BORING_DPI_DEFAULT 96
 

@@ -28,8 +28,8 @@
 #include "empathy-import-pidgin.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
-#include <libempathy/empathy-debug.h>
-#include <libempathy/empathy-utils.h>
+#include "libempathy/empathy-debug.h"
+#include "libempathy/empathy-utils.h"
 
 /* Pidgin to CM map */
 typedef struct

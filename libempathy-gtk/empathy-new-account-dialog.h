@@ -22,7 +22,7 @@
 
 #include <gtk/gtk.h>
 
-#include <libempathy/empathy-account-settings.h>
+#include "libempathy/empathy-account-settings.h"
 
 G_BEGIN_DECLS
 

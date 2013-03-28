@@ -4,10 +4,10 @@
 
 #include "empathy-roster-contact.h"
 
-#include <libempathy/empathy-utils.h>
+#include "libempathy/empathy-utils.h"
 
-#include <libempathy-gtk/empathy-images.h>
-#include <libempathy-gtk/empathy-ui-utils.h>
+#include "libempathy-gtk/empathy-images.h"
+#include "libempathy-gtk/empathy-ui-utils.h"
 
 G_DEFINE_TYPE (EmpathyRosterContact, empathy_roster_contact, GTK_TYPE_ALIGNMENT)
 

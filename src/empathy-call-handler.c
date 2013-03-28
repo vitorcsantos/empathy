@@ -22,14 +22,14 @@
 
 #include <telepathy-farstream/telepathy-farstream.h>
 
-#include <libempathy/empathy-utils.h>
+#include "libempathy/empathy-utils.h"
 
-#include <libempathy-gtk/empathy-call-utils.h>
+#include "libempathy-gtk/empathy-call-utils.h"
 
 #include "empathy-call-handler.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_VOIP
-#include <libempathy/empathy-debug.h>
+#include "libempathy/empathy-debug.h"
 
 G_DEFINE_TYPE(EmpathyCallHandler, empathy_call_handler, G_TYPE_OBJECT)
 

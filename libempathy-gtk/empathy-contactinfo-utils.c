@@ -24,8 +24,8 @@
 
 #include <glib/gi18n-lib.h>
 
-#include <libempathy/empathy-time.h>
-#include <libempathy/empathy-request-util.h>
+#include "libempathy/empathy-time.h"
+#include "libempathy/empathy-request-util.h"
 
 #include "empathy-contactinfo-utils.h"
 #include "empathy-string-parser.h"

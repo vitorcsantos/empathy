@@ -69,7 +69,7 @@ G_DEFINE_TYPE (EmpathyCameraDeviceMonitor, empathy_camera_device_monitor, G_TYPE
 #define EMPATHY_CAMERA_DEVICE_MONITOR_ERROR empathy_camera_device_monitor_error_quark ()
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
-#include <libempathy/empathy-debug.h>
+#include "libempathy/empathy-debug.h"
 
 enum EmpathyCameraDeviceMonitorError
 {

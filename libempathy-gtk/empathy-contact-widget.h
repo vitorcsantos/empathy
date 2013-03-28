@@ -24,7 +24,7 @@
 
 #include <gtk/gtk.h>
 
-#include <libempathy/empathy-contact.h>
+#include "libempathy/empathy-contact.h"
 #include "empathy-account-chooser.h"
 
 G_BEGIN_DECLS

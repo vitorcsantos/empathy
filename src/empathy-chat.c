@@ -26,16 +26,16 @@
 
 #include <libnotify/notify.h>
 
-#include <libempathy/empathy-presence-manager.h>
+#include "libempathy/empathy-presence-manager.h"
 
-#include <libempathy-gtk/empathy-theme-manager.h>
-#include <libempathy-gtk/empathy-ui-utils.h>
+#include "libempathy-gtk/empathy-theme-manager.h"
+#include "libempathy-gtk/empathy-ui-utils.h"
 
 #include "empathy-chat-manager.h"
 #include "empathy-chat-resources.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_CHAT
-#include <libempathy/empathy-debug.h>
+#include "libempathy/empathy-debug.h"
 
 /* Exit after $TIMEOUT seconds if not displaying any call window */
 #define TIMEOUT 60

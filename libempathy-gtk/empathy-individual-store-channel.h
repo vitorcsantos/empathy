@@ -28,7 +28,7 @@
 
 #include <gtk/gtk.h>
 
-#include <libempathy-gtk/empathy-individual-store.h>
+#include "libempathy-gtk/empathy-individual-store.h"
 
 G_BEGIN_DECLS
 #define EMPATHY_TYPE_INDIVIDUAL_STORE_CHANNEL         (empathy_individual_store_channel_get_type ())

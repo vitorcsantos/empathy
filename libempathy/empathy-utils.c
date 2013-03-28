@@ -37,7 +37,7 @@
 #include "empathy-utils.h"
 #include "empathy-presence-manager.h"
 
-#include <extensions/extensions.h>
+#include "extensions/extensions.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include "empathy-debug.h"

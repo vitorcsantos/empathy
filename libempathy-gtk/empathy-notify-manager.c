@@ -21,13 +21,13 @@
 
 #include <libnotify/notify.h>
 
-#include <libempathy/empathy-gsettings.h>
-#include <libempathy/empathy-utils.h>
+#include "libempathy/empathy-gsettings.h"
+#include "libempathy/empathy-utils.h"
 
-#include <libempathy-gtk/empathy-ui-utils.h>
+#include "libempathy-gtk/empathy-ui-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
-#include <libempathy/empathy-debug.h>
+#include "libempathy/empathy-debug.h"
 
 #include "empathy-notify-manager.h"
 
