@@ -4,8 +4,8 @@ include $(top_srcdir)/tools/flymake.mk
 
 AM_CPPFLAGS =                                           \
 	$(ERROR_CFLAGS)					\
-	-I.                                             \
-	-I$(top_srcdir)                                 \
+	-I$(top_srcdir)/libempathy			\
+	-I$(top_srcdir)/extensions			\
 	-DDATADIR=\""$(datadir)"\"              	\
 	-DPKGDATADIR=\""$(pkgdatadir)"\"		\
 	-DGCR_API_SUBJECT_TO_CHANGE			\
@@ -245,7 +245,7 @@ stamp-empathy-gtk-enum-types.h: Makefile $(libempathy_gtk_headers)
 			--fhead "G_BEGIN_DECLS\n\n" \
 			--ftail "G_END_DECLS\n\n" \
 			--ftail "#endif /* __LIBEMPATHY_GTK_ENUM_TYPES_H__ */\n" \
-			--fprod '#include "libempathy-gtk/@filename@"\n' \
+			--fprod '#include "@filename@"\n' \
 			--eprod "#define EMPATHY_TYPE_@ENUMSHORT@ @enum_name@_get_type()\n" \
 			--eprod "GType @enum_name@_get_type (void);\n" \
 		$(libempathy_gtk_headers) ) > xgen-gth \

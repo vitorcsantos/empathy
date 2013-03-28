@@ -31,13 +31,13 @@
 #include <X11/Xlib.h>
 #endif
 
-#include "libempathy-gtk/empathy-ui-utils.h"
+#include "empathy-ui-utils.h"
 
 #include "empathy-call-window.h"
 #include "empathy-call-factory.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_VOIP
-#include "libempathy/empathy-debug.h"
+#include "empathy-debug.h"
 
 /* Exit after $TIMEOUT seconds if not displaying any call window */
 #define TIMEOUT 60

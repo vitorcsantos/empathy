@@ -4,7 +4,7 @@
 
 #include "test-helper.h"
 
-#include "libempathy/empathy-chatroom.h"
+#include "empathy-chatroom.h"
 
 #if 0
 static EmpathyChatroom *

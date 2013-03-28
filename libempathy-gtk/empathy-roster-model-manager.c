@@ -29,7 +29,7 @@
 
 #include <glib/gi18n-lib.h>
 
-#include "libempathy/empathy-utils.h"
+#include "empathy-utils.h"
 
 static void roster_model_iface_init (EmpathyRosterModelInterface *iface);
 

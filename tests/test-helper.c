@@ -22,7 +22,7 @@
 #include <glib-object.h>
 #include <gtk/gtk.h>
 
-#include "libempathy-gtk/empathy-ui-utils.h"
+#include "empathy-ui-utils.h"
 
 #include "test-helper.h"
 

@@ -22,7 +22,7 @@
 
 #include <glib-object.h>
 
-#include "libempathy-gtk/empathy-chat.h"
+#include "empathy-chat.h"
 
 G_BEGIN_DECLS
 

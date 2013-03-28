@@ -23,8 +23,8 @@
 
 #include <glib/gi18n-lib.h>
 
-#include "libempathy/empathy-individual-manager.h"
-#include "libempathy/empathy-utils.h"
+#include "empathy-individual-manager.h"
+#include "empathy-utils.h"
 
 #include "empathy-individual-dialogs.h"
 #include "empathy-contact-widget.h"

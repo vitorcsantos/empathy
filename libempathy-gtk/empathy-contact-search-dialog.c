@@ -26,8 +26,8 @@
 
 #include <glib/gi18n-lib.h>
 
-#include "libempathy/empathy-utils.h"
-#include "libempathy/empathy-client-factory.h"
+#include "empathy-utils.h"
+#include "empathy-client-factory.h"
 
 #include "empathy-account-chooser.h"
 #include "empathy-cell-renderer-text.h"
@@ -36,7 +36,7 @@
 #include "empathy-images.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
-#include "libempathy/empathy-debug.h"
+#include "empathy-debug.h"
 
 #include "empathy-contact-search-dialog.h"
 

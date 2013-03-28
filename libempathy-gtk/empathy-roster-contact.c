@@ -4,7 +4,7 @@
 
 #include "empathy-roster-contact.h"
 
-#include "libempathy/empathy-utils.h"
+#include "empathy-utils.h"
 
 #include "empathy-images.h"
 #include "empathy-ui-utils.h"

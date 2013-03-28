@@ -24,8 +24,8 @@
 
 #include "empathy-call-window-fullscreen.h"
 
-#include "libempathy/empathy-utils.h"
-#include "libempathy-gtk/empathy-ui-utils.h"
+#include "empathy-utils.h"
+#include "empathy-ui-utils.h"
 
 /* The number of seconds for which the "leave fullscreen" popup should
    be shown */

@@ -27,18 +27,18 @@
 
 #include <glib/gi18n.h>
 
-#include "libempathy/empathy-client-factory.h"
-#include "libempathy/empathy-gsettings.h"
-#include "libempathy/empathy-utils.h"
+#include "empathy-client-factory.h"
+#include "empathy-gsettings.h"
+#include "empathy-utils.h"
 
-#include "libempathy-gtk/empathy-ui-utils.h"
-#include "libempathy-gtk/empathy-theme-manager.h"
-#include "libempathy-gtk/empathy-spell.h"
+#include "empathy-ui-utils.h"
+#include "empathy-theme-manager.h"
+#include "empathy-spell.h"
 
 #include "empathy-preferences.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
-#include "libempathy/empathy-debug.h"
+#include "empathy-debug.h"
 
 G_DEFINE_TYPE (EmpathyPreferences, empathy_preferences, GTK_TYPE_DIALOG);
 

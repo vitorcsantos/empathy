@@ -25,7 +25,7 @@
 #include "empathy-mic-monitor.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_VOIP
-#include "libempathy/empathy-debug.h"
+#include "empathy-debug.h"
 
 struct _EmpathyMicMenuPrivate
 {

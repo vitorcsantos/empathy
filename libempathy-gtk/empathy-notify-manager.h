@@ -23,7 +23,7 @@
 
 #include <glib-object.h>
 
-#include "libempathy/empathy-contact.h"
+#include "empathy-contact.h"
 
 #include <libnotify/notification.h>
 

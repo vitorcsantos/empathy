@@ -27,11 +27,11 @@
 
 #include <glib/gi18n.h>
 
-#include "libempathy/empathy-chatroom-manager.h"
-#include "libempathy/empathy-utils.h"
+#include "empathy-chatroom-manager.h"
+#include "empathy-utils.h"
 
-#include "libempathy-gtk/empathy-account-chooser.h"
-#include "libempathy-gtk/empathy-ui-utils.h"
+#include "empathy-account-chooser.h"
+#include "empathy-ui-utils.h"
 
 #include "empathy-chatrooms-window.h"
 

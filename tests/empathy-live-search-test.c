@@ -7,9 +7,9 @@
 #include "test-helper.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_TESTS
-#include "libempathy/empathy-debug.h"
+#include "empathy-debug.h"
 
-#include "libempathy-gtk/empathy-live-search.h"
+#include "empathy-live-search.h"
 
 typedef struct
 {

@@ -21,7 +21,7 @@
 #ifndef __EMPATHY_SHARE_MY_DESKTOP_H__
 #define __EMPATHY_SHARE_MY_DESKTOP_H__
 
-#include "libempathy/empathy-contact.h"
+#include "empathy-contact.h"
 
 void empathy_share_my_desktop_share_with_contact (EmpathyContact *contact);
 

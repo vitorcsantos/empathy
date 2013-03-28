@@ -2,7 +2,8 @@ plugindir = $(libdir)/nautilus-sendto/plugins
 
 INCLUDES =					\
 	-I$(top_builddir)			\
-	-I$(top_srcdir)				\
+	-I$(top_srcdir)/libempathy		\
+	-I$(top_srcdir)/libempathy-gtk		\
 	-DLOCALEDIR=\""$(datadir)/locale"\"	\
 	$(NST_CFLAGS)				\
 	$(WARN_CFLAGS)				\

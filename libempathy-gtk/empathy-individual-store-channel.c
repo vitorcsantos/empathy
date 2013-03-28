@@ -25,12 +25,12 @@
 
 #include "config.h"
 
-#include "libempathy/empathy-utils.h"
+#include "empathy-utils.h"
 
 #include "empathy-individual-store-channel.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_CONTACT
-#include "libempathy/empathy-debug.h"
+#include "empathy-debug.h"
 
 struct _EmpathyIndividualStoreChannelPriv
 {

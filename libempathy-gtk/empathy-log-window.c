@@ -29,13 +29,13 @@
 
 #include <telepathy-glib/proxy-subclass.h>
 
-#include "extensions/extensions.h"
+#include "extensions.h"
 
-#include "libempathy/action-chain-internal.h"
-#include "libempathy/empathy-camera-monitor.h"
-#include "libempathy/empathy-gsettings.h"
-#include "libempathy/empathy-request-util.h"
-#include "libempathy/empathy-utils.h"
+#include "action-chain-internal.h"
+#include "empathy-camera-monitor.h"
+#include "empathy-gsettings.h"
+#include "empathy-request-util.h"
+#include "empathy-utils.h"
 
 #include "empathy-log-window.h"
 #include "empathy-account-chooser.h"
@@ -48,7 +48,7 @@
 #include "empathy-geometry.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
-#include "libempathy/empathy-debug.h"
+#include "empathy-debug.h"
 
 #define EMPATHY_NS "http://live.gnome.org/Empathy"
 

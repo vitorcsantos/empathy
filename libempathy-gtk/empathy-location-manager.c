@@ -25,12 +25,12 @@
 
 #include "empathy-location-manager.h"
 
-#include "libempathy/empathy-gsettings.h"
-#include "libempathy/empathy-location.h"
-#include "libempathy/empathy-time.h"
+#include "empathy-gsettings.h"
+#include "empathy-location.h"
+#include "empathy-time.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_LOCATION
-#include "libempathy/empathy-debug.h"
+#include "empathy-debug.h"
 
 /* Seconds before updating the location */
 #define TIMEOUT 10

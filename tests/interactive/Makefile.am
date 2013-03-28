@@ -1,6 +1,7 @@
 AM_CPPFLAGS =						\
 	$(ERROR_CFLAGS)					\
-	-I$(top_srcdir)                          	\
+	-I$(top_srcdir)/libempathy                     	\
+	-I$(top_srcdir)/libempathy-gtk                 	\
 	-DPKGDATADIR=\""$(pkgdatadir)"\"		\
 	$(EMPATHY_CFLAGS)				\
 	$(WARN_CFLAGS)					\

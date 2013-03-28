@@ -2,7 +2,8 @@ plugindir = $(ACCOUNTS_PROVIDER_PLUGIN_DIR)
 
 INCLUDES =					\
 	-I$(top_builddir)			\
-	-I$(top_srcdir)				\
+	-I$(top_srcdir)/libempathy		\
+	-I$(top_srcdir)/libempathy-gtk		\
 	-DLOCALEDIR=\""$(datadir)/locale"\"	\
 	$(UOA_CFLAGS)				\
 	$(WARN_CFLAGS)				\

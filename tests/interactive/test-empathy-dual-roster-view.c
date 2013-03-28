@@ -1,10 +1,10 @@
 #include <config.h>
 
-#include "libempathy-gtk/empathy-roster-model.h"
-#include "libempathy-gtk/empathy-roster-model-manager.h"
+#include "empathy-roster-model.h"
+#include "empathy-roster-model-manager.h"
 
-#include "libempathy-gtk/empathy-roster-view.h"
-#include "libempathy-gtk/empathy-ui-utils.h"
+#include "empathy-roster-view.h"
+#include "empathy-ui-utils.h"
 
 static void
 individual_activated_cb (EmpathyRosterView *self,

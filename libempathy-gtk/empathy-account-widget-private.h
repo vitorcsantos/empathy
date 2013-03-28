@@ -22,7 +22,7 @@
 #ifndef __EMPATHY_ACCOUNT_WIDGET_PRIVATE_H__
 #define __EMPATHY_ACCOUNT_WIDGET_PRIVATE_H__
 
-#include "libempathy-gtk/empathy-account-widget.h"
+#include "empathy-account-widget.h"
 #include <glib.h>
 #include <gtk/gtk.h>
 

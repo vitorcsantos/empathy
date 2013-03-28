@@ -16,7 +16,7 @@
 
 #include <telepathy-glib/telepathy-glib.h>
 
-#include "libempathy/empathy-tp-chat.h"
+#include "empathy-tp-chat.h"
 
 G_BEGIN_DECLS
 

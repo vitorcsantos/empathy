@@ -24,7 +24,7 @@
 
 #include <glib/gi18n-lib.h>
 
-#include "libempathy/empathy-utils.h"
+#include "empathy-utils.h"
 
 #include "empathy-individual-edit-dialog.h"
 #include "empathy-individual-widget.h"

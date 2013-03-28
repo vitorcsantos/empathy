@@ -24,7 +24,7 @@
 #include "empathy-calendar-button.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER_THING
-#include "libempathy/empathy-debug.h"
+#include "empathy-debug.h"
 
 G_DEFINE_TYPE (EmpathyCalendarButton, empathy_calendar_button, GTK_TYPE_BOX)
 

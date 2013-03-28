@@ -28,7 +28,7 @@
 
 #include <glib/gi18n-lib.h>
 
-#include "libempathy/empathy-utils.h"
+#include "empathy-utils.h"
 
 #include <dbus/dbus-protocol.h>
 
@@ -38,7 +38,7 @@
 #include "empathy-ui-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_ACCOUNT
-#include "libempathy/empathy-debug.h"
+#include "empathy-debug.h"
 
 G_DEFINE_TYPE (EmpathyAccountWidget, empathy_account_widget, GTK_TYPE_BOX)
 

@@ -21,7 +21,7 @@
 
 #include "empathy-server-sasl-handler.h"
 
-#include "extensions/extensions.h"
+#include "extensions.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_SASL
 #include "empathy-debug.h"

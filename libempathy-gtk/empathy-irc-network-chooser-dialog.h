@@ -24,8 +24,8 @@
 
 #include <gtk/gtk.h>
 
-#include "libempathy/empathy-account-settings.h"
-#include "libempathy/empathy-irc-network.h"
+#include "empathy-account-settings.h"
+#include "empathy-irc-network.h"
 
 G_BEGIN_DECLS
 

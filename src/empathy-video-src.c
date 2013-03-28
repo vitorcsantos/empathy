@@ -27,7 +27,7 @@
 #endif
 
 #define DEBUG_FLAG EMPATHY_DEBUG_VOIP
-#include "libempathy/empathy-debug.h"
+#include "empathy-debug.h"
 
 #include "empathy-video-src.h"
 

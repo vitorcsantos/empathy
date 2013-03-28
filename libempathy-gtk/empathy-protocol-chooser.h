@@ -28,7 +28,7 @@
 
 #include <telepathy-glib/telepathy-glib.h>
 
-#include "libempathy/empathy-account-settings.h"
+#include "empathy-account-settings.h"
 
 G_BEGIN_DECLS
 

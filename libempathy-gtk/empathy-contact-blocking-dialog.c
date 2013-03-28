@@ -25,7 +25,7 @@
 
 #include <glib/gi18n-lib.h>
 
-#include "libempathy/empathy-utils.h"
+#include "empathy-utils.h"
 
 #include "empathy-account-chooser.h"
 #include "empathy-ui-utils.h"
@@ -33,7 +33,7 @@
 #include "empathy-contact-blocking-dialog.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
-#include "libempathy/empathy-debug.h"
+#include "empathy-debug.h"
 
 #define GET_PRIVATE(o) (EMPATHY_CONTACT_BLOCKING_DIALOG (o)->priv)
 #define DECLARE_CALLBACK(func) \

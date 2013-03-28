@@ -10,7 +10,8 @@ EXTRA_DIST = 		\
 
 AM_CPPFLAGS =						\
 	$(ERROR_CFLAGS)					\
-	-I$(top_srcdir)                          	\
+	-I$(top_srcdir)/libempathy                     	\
+	-I$(top_srcdir)/libempathy-gtk                 	\
 	-DPKGDATADIR=\""$(pkgdatadir)"\"		\
 	-DGCR_API_SUBJECT_TO_CHANGE			\
 	$(EMPATHY_CFLAGS)				\

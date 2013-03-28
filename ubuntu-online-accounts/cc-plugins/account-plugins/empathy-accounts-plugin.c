@@ -22,8 +22,8 @@
 
 #include "empathy-accounts-plugin.h"
 
-#include "libempathy/empathy-client-factory.h"
-#include "libempathy/empathy-uoa-utils.h"
+#include "empathy-client-factory.h"
+#include "empathy-uoa-utils.h"
 
 #include "empathy-accounts-plugin-widget.h"
 

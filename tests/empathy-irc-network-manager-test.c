@@ -6,7 +6,7 @@
 #include "test-irc-helper.h"
 #include "test-helper.h"
 
-#include "libempathy/empathy-irc-network-manager.h"
+#include "empathy-irc-network-manager.h"
 
 #define GLOBAL_SAMPLE "default-irc-networks-sample.xml"
 #define USER_SAMPLE "user-irc-networks-sample.xml"

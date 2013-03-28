@@ -41,9 +41,9 @@
 #include "empathy-live-search.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
-#include "libempathy/empathy-debug.h"
-#include "libempathy/empathy-utils.h"
-#include "libempathy/empathy-ft-factory.h"
+#include "empathy-debug.h"
+#include "empathy-utils.h"
+#include "empathy-ft-factory.h"
 
 void
 empathy_gtk_init (void)

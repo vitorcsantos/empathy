@@ -25,13 +25,13 @@
 
 #include "empathy-sanity-cleaning.h"
 
-#include "libempathy/empathy-gsettings.h"
+#include "empathy-gsettings.h"
 
-#include "libempathy-gtk/empathy-theme-manager.h"
+#include "empathy-theme-manager.h"
 
 #ifdef HAVE_UOA
-#include "libempathy/empathy-pkg-kit.h"
-#include "libempathy/empathy-uoa-utils.h"
+#include "empathy-pkg-kit.h"
+#include "empathy-uoa-utils.h"
 
 #include <libaccounts-glib/ag-account-service.h>
 #include <libaccounts-glib/ag-manager.h>
@@ -39,7 +39,7 @@
 #endif
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
-#include "libempathy/empathy-debug.h"
+#include "empathy-debug.h"
 
 /*
  * This number has to be increased each time a new task is added or modified.

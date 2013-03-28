@@ -23,14 +23,14 @@
 
 #include <glib/gi18n-lib.h>
 
-#include "libempathy/empathy-utils.h"
-#include "libempathy/empathy-irc-network-manager.h"
+#include "empathy-utils.h"
+#include "empathy-irc-network-manager.h"
 
 #include "empathy-irc-network-dialog.h"
 #include "empathy-live-search.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_ACCOUNT | EMPATHY_DEBUG_IRC
-#include "libempathy/empathy-debug.h"
+#include "empathy-debug.h"
 
 #include "empathy-irc-network-chooser-dialog.h"
 

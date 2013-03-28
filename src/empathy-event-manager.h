@@ -25,7 +25,7 @@
 #include <glib.h>
 #include <glib-object.h>
 
-#include "libempathy/empathy-contact.h"
+#include "empathy-contact.h"
 
 G_BEGIN_DECLS
 

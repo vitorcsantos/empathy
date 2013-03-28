@@ -27,20 +27,20 @@
 #include <farstream/fs-element-added-notifier.h>
 #include <farstream/fs-utils.h>
 
-#include "libempathy/empathy-camera-monitor.h"
-#include "libempathy/empathy-gsettings.h"
-#include "libempathy/empathy-request-util.h"
-#include "libempathy/empathy-utils.h"
+#include "empathy-camera-monitor.h"
+#include "empathy-gsettings.h"
+#include "empathy-request-util.h"
+#include "empathy-utils.h"
 
-#include "libempathy-gtk/empathy-dialpad-widget.h"
-#include "libempathy-gtk/empathy-ui-utils.h"
-#include "libempathy-gtk/empathy-sound-manager.h"
-#include "libempathy-gtk/empathy-geometry.h"
-#include "libempathy-gtk/empathy-images.h"
-#include "libempathy-gtk/empathy-call-utils.h"
+#include "empathy-dialpad-widget.h"
+#include "empathy-ui-utils.h"
+#include "empathy-sound-manager.h"
+#include "empathy-geometry.h"
+#include "empathy-images.h"
+#include "empathy-call-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_VOIP
-#include "libempathy/empathy-debug.h"
+#include "empathy-debug.h"
 
 #include "empathy-call-window-fullscreen.h"
 #include "empathy-about-dialog.h"

@@ -29,17 +29,17 @@
 
 #include <telepathy-glib/telepathy-glib.h>
 
-#include "libempathy/empathy-contact.h"
-#include "libempathy/empathy-debug.h"
-#include "libempathy/empathy-ft-factory.h"
-#include "libempathy/empathy-ft-handler.h"
+#include "empathy-contact.h"
+#include "empathy-debug.h"
+#include "empathy-ft-factory.h"
+#include "empathy-ft-handler.h"
 
-#include "libempathy-gtk/empathy-roster-model.h"
-#include "libempathy-gtk/empathy-roster-model-manager.h"
-#include "libempathy-gtk/empathy-contact-chooser.h"
-#include "libempathy-gtk/empathy-ui-utils.h"
-#include "libempathy-gtk/empathy-roster-view.h"
-#include "libempathy-gtk/empathy-roster-contact.h"
+#include "empathy-roster-model.h"
+#include "empathy-roster-model-manager.h"
+#include "empathy-contact-chooser.h"
+#include "empathy-ui-utils.h"
+#include "empathy-roster-view.h"
+#include "empathy-roster-contact.h"
 
 
 #include "nautilus-sendto-plugin.h"

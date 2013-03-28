@@ -3,7 +3,11 @@ include $(top_srcdir)/tools/flymake.mk
 CPPFLAGS_COMMON =					\
 	$(EMPATHY_CFLAGS)				\
 	$(ERROR_CFLAGS)					\
-	-I$(top_srcdir)                          	\
+	-I$(top_srcdir)/libempathy-gtk			\
+	-I$(top_srcdir)/libempathy			\
+	-I$(top_srcdir)/extensions			\
+	-I$(top_builddir)/libempathy-gtk		\
+	-I$(top_builddir)/libempathy			\
 	-DG_LOG_DOMAIN=\"empathy\"			\
 	-DBIN_DIR=\"$(bindir)\"                         \
 	$(DISABLE_DEPRECATED)				\

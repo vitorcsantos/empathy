@@ -25,16 +25,16 @@
 
 #include <glib/gi18n-lib.h>
 
-#include "libempathy/empathy-individual-manager.h"
-#include "libempathy/empathy-utils.h"
-#include "libempathy/empathy-pkg-kit.h"
+#include "empathy-individual-manager.h"
+#include "empathy-utils.h"
+#include "empathy-pkg-kit.h"
 
 #include "empathy-individual-information-dialog.h"
 #include "empathy-individual-widget.h"
 #include "empathy-ui-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_CONTACT
-#include "libempathy/empathy-debug.h"
+#include "empathy-debug.h"
 
 #define GET_PRIV(obj) EMPATHY_GET_PRIV (obj, EmpathyIndividualInformationDialog)
 typedef struct {

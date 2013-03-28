@@ -23,10 +23,10 @@
 
 #include <gtk/gtk.h>
 
-#include "libempathy/empathy-client-factory.h"
+#include "empathy-client-factory.h"
 
-#include "libempathy-gtk/empathy-ui-utils.h"
-#include "libempathy-gtk/empathy-contact-blocking-dialog.h"
+#include "empathy-ui-utils.h"
+#include "empathy-contact-blocking-dialog.h"
 
 static void
 am_prepare_cb (GObject *source,

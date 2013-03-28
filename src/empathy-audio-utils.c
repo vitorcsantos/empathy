@@ -24,10 +24,10 @@
 
 #include "empathy-audio-utils.h"
 
-#include "libempathy/empathy-gsettings.h"
+#include "empathy-gsettings.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
-#include "libempathy/empathy-debug.h"
+#include "empathy-debug.h"
 
 void
 empathy_audio_set_stream_properties (GstElement *element,

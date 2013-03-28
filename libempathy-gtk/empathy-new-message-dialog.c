@@ -22,10 +22,10 @@
 
 #include <glib/gi18n-lib.h>
 
-#include "libempathy/empathy-request-util.h"
+#include "empathy-request-util.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_CONTACT
-#include "libempathy/empathy-debug.h"
+#include "empathy-debug.h"
 
 #include "empathy-contact-chooser.h"
 #include "empathy-ui-utils.h"

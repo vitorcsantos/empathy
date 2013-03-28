@@ -30,10 +30,10 @@
 
 #include <gtk/gtk.h>
 
-#include "libempathy/empathy-contact.h"
-#include "libempathy/empathy-tp-chat.h"
+#include "empathy-contact.h"
+#include "empathy-tp-chat.h"
 
-#include "libempathy-gtk/empathy-theme-adium.h"
+#include "empathy-theme-adium.h"
 
 G_BEGIN_DECLS
 

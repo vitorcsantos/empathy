@@ -25,11 +25,11 @@
 #include <libsoup/soup.h>
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
-#include "libempathy/empathy-debug.h"
-#include "libempathy/empathy-utils.h"
+#include "empathy-debug.h"
+#include "empathy-utils.h"
 
-#include "libempathy-gtk/empathy-geometry.h"
-#include "libempathy-gtk/empathy-ui-utils.h"
+#include "empathy-geometry.h"
+#include "empathy-ui-utils.h"
 
 #include "empathy-debug-window.h"
 

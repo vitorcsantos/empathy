@@ -26,7 +26,7 @@
 #include "empathy-debug.h"
 #include "empathy-utils.h"
 
-#include "extensions/extensions.h"
+#include "extensions.h"
 
 static void async_initable_iface_init (GAsyncInitableIface *iface);
 

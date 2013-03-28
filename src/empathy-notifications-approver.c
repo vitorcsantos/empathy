@@ -21,13 +21,13 @@
 
 #include <glib/gi18n.h>
 
-#include "libempathy-gtk/empathy-notify-manager.h"
-#include "libempathy-gtk/empathy-call-utils.h"
+#include "empathy-notify-manager.h"
+#include "empathy-call-utils.h"
 
 #include "empathy-event-manager.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
-#include "libempathy/empathy-debug.h"
+#include "empathy-debug.h"
 
 #include "empathy-notifications-approver.h"
 

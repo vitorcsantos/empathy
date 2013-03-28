@@ -26,7 +26,7 @@
 #include <glib/gi18n-lib.h>
 #include <gdk/gdkx.h>
 
-#include "libempathy/empathy-utils.h"
+#include "empathy-utils.h"
 #include "empathy-avatar-image.h"
 #include "empathy-ui-utils.h"
 

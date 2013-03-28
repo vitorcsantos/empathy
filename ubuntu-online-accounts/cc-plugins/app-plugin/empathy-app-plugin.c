@@ -22,7 +22,7 @@
 
 #include "empathy-app-plugin.h"
 
-#include "libempathy/empathy-client-factory.h"
+#include "empathy-client-factory.h"
 
 #include "empathy-app-plugin-widget.h"
 

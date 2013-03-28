@@ -27,8 +27,8 @@
 #include <libaccounts-glib/ag-manager.h>
 #include <libaccounts-glib/ag-provider.h>
 
-#include "libempathy/empathy-contact.h"
-#include "libempathy-gtk/empathy-user-info.h"
+#include "empathy-contact.h"
+#include "empathy-user-info.h"
 
 #include "empathy-app-plugin-widget.h"
 

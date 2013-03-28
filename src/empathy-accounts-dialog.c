@@ -28,14 +28,14 @@
 
 #include <glib/gi18n-lib.h>
 
-#include "libempathy/empathy-utils.h"
-#include "libempathy/empathy-pkg-kit.h"
+#include "empathy-utils.h"
+#include "empathy-pkg-kit.h"
 
-#include "libempathy-gtk/empathy-ui-utils.h"
-#include "libempathy-gtk/empathy-account-widget-sip.h"
-#include "libempathy-gtk/empathy-user-info.h"
-#include "libempathy-gtk/empathy-local-xmpp-assistant-widget.h"
-#include "libempathy-gtk/empathy-new-account-dialog.h"
+#include "empathy-ui-utils.h"
+#include "empathy-account-widget-sip.h"
+#include "empathy-user-info.h"
+#include "empathy-local-xmpp-assistant-widget.h"
+#include "empathy-new-account-dialog.h"
 
 #include "empathy-accounts-common.h"
 #include "empathy-accounts-dialog.h"
@@ -43,7 +43,7 @@
 #include "empathy-import-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_ACCOUNT
-#include "libempathy/empathy-debug.h"
+#include "empathy-debug.h"
 
 /* Flashing delay for icons (milliseconds). */
 #define FLASH_TIMEOUT 500

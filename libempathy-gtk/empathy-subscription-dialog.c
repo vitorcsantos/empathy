@@ -22,7 +22,7 @@
 
 #include "empathy-subscription-dialog.h"
 
-#include "libempathy/empathy-utils.h"
+#include "empathy-utils.h"
 #include "empathy-individual-widget.h"
 
 #include <glib/gi18n-lib.h>

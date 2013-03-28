@@ -38,7 +38,7 @@
 #include "empathy-uoa-auth-handler.h"
 #endif /* HAVE_UOA */
 
-#include "extensions/extensions.h"
+#include "extensions.h"
 
 G_DEFINE_TYPE (EmpathyAuthFactory, empathy_auth_factory, TP_TYPE_BASE_CLIENT);
 

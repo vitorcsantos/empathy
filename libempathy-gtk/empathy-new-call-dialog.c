@@ -22,11 +22,11 @@
 
 #include <glib/gi18n-lib.h>
 
-#include "libempathy/empathy-camera-monitor.h"
-#include "libempathy/empathy-utils.h"
+#include "empathy-camera-monitor.h"
+#include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_CONTACT
-#include "libempathy/empathy-debug.h"
+#include "empathy-debug.h"
 
 #include "empathy-contact-chooser.h"
 #include "empathy-ui-utils.h"

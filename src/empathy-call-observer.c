@@ -22,13 +22,13 @@
 
 #include <glib/gi18n-lib.h>
 
-#include "libempathy-gtk/empathy-images.h"
-#include "libempathy-gtk/empathy-notify-manager.h"
+#include "empathy-images.h"
+#include "empathy-notify-manager.h"
 
 #include "empathy-call-observer.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_VOIP
-#include "libempathy/empathy-debug.h"
+#include "empathy-debug.h"
 
 struct _EmpathyCallObserverPriv {
   EmpathyNotifyManager *notify_mgr;

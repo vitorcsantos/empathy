@@ -23,8 +23,8 @@
 
 #include <glib/gi18n-lib.h>
 
-#include "libempathy/empathy-utils.h"
-#include "libempathy/empathy-connection-aggregator.h"
+#include "empathy-utils.h"
+#include "empathy-connection-aggregator.h"
 
 #include "empathy-groups-widget.h"
 

@@ -13,8 +13,8 @@
 
 #include "empathy-contact-chooser.h"
 
-#include "libempathy/empathy-utils.h"
-#include "libempathy/empathy-client-factory.h"
+#include "empathy-utils.h"
+#include "empathy-client-factory.h"
 
 #include "empathy-individual-store-manager.h"
 #include "empathy-individual-view.h"

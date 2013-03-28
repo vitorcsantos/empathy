@@ -23,23 +23,23 @@
 
 #include <glib/gi18n.h>
 
-#include "libempathy/empathy-presence-manager.h"
-#include "libempathy/empathy-connection-aggregator.h"
-#include "libempathy/empathy-tp-chat.h"
-#include "libempathy/empathy-utils.h"
-#include "libempathy/empathy-gsettings.h"
-#include "libempathy/empathy-sasl-mechanisms.h"
+#include "empathy-presence-manager.h"
+#include "empathy-connection-aggregator.h"
+#include "empathy-tp-chat.h"
+#include "empathy-utils.h"
+#include "empathy-gsettings.h"
+#include "empathy-sasl-mechanisms.h"
 
-#include "libempathy-gtk/empathy-images.h"
-#include "libempathy-gtk/empathy-sound-manager.h"
-#include "libempathy-gtk/empathy-ui-utils.h"
-#include "libempathy-gtk/empathy-call-utils.h"
-#include "libempathy-gtk/empathy-subscription-dialog.h"
+#include "empathy-images.h"
+#include "empathy-sound-manager.h"
+#include "empathy-ui-utils.h"
+#include "empathy-call-utils.h"
+#include "empathy-subscription-dialog.h"
 
 #include "empathy-event-manager.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_DISPATCHER
-#include "libempathy/empathy-debug.h"
+#include "empathy-debug.h"
 
 #define GET_PRIV(obj) EMPATHY_GET_PRIV (obj, EmpathyEventManager)
 
