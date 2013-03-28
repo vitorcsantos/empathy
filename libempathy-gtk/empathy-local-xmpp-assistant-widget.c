@@ -25,8 +25,8 @@
 
 #include "libempathy/empathy-utils.h"
 
-#include "libempathy-gtk/empathy-account-widget.h"
-#include "libempathy-gtk/empathy-ui-utils.h"
+#include "empathy-account-widget.h"
+#include "empathy-ui-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_ACCOUNT
 #include "libempathy/empathy-debug.h"

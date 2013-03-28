@@ -16,9 +16,9 @@
 #include "libempathy/empathy-utils.h"
 #include "libempathy/empathy-client-factory.h"
 
-#include "libempathy-gtk/empathy-individual-store-manager.h"
-#include "libempathy-gtk/empathy-individual-view.h"
-#include "libempathy-gtk/empathy-ui-utils.h"
+#include "empathy-individual-store-manager.h"
+#include "empathy-individual-view.h"
+#include "empathy-ui-utils.h"
 
 G_DEFINE_TYPE (EmpathyContactChooser,
     empathy_contact_chooser, GTK_TYPE_BOX);

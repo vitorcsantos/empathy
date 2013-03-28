@@ -24,7 +24,7 @@
 #include "empathy-request-util.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_DISPATCHER
-#include "libempathy/empathy-debug.h"
+#include "empathy-debug.h"
 
 void
 empathy_chat_with_contact (EmpathyContact *contact,

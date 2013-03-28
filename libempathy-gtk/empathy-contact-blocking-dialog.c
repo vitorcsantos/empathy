@@ -27,8 +27,8 @@
 
 #include "libempathy/empathy-utils.h"
 
-#include "libempathy-gtk/empathy-account-chooser.h"
-#include "libempathy-gtk/empathy-ui-utils.h"
+#include "empathy-account-chooser.h"
+#include "empathy-ui-utils.h"
 
 #include "empathy-contact-blocking-dialog.h"
 

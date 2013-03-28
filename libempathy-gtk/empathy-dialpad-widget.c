@@ -23,7 +23,7 @@
 
 #include "empathy-dialpad-widget.h"
 
-#include "libempathy-gtk/empathy-dialpad-button.h"
+#include "empathy-dialpad-button.h"
 
 G_DEFINE_TYPE (EmpathyDialpadWidget, empathy_dialpad_widget, GTK_TYPE_BOX);
 

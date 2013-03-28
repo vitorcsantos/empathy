@@ -6,9 +6,9 @@
 
 #include "libempathy/empathy-contact-groups.h"
 
-#include "libempathy-gtk/empathy-roster-contact.h"
-#include "libempathy-gtk/empathy-roster-group.h"
-#include "libempathy-gtk/empathy-ui-utils.h"
+#include "empathy-roster-contact.h"
+#include "empathy-roster-group.h"
+#include "empathy-ui-utils.h"
 
 G_DEFINE_TYPE (EmpathyRosterView, empathy_roster_view, EGG_TYPE_LIST_BOX)
 

@@ -20,7 +20,7 @@
 
 #include "config.h"
 
-#include "libempathy/empathy-pkg-kit.h"
+#include "empathy-pkg-kit.h"
 
 typedef struct
 {

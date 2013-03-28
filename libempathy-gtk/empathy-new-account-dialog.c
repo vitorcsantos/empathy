@@ -25,8 +25,8 @@
 #define DEBUG_FLAG EMPATHY_DEBUG_ACCOUNT
 #include "libempathy/empathy-debug.h"
 
-#include "libempathy-gtk/empathy-account-widget.h"
-#include "libempathy-gtk/empathy-protocol-chooser.h"
+#include "empathy-account-widget.h"
+#include "empathy-protocol-chooser.h"
 
 G_DEFINE_TYPE (EmpathyNewAccountDialog, empathy_new_account_dialog, \
     GTK_TYPE_DIALOG)

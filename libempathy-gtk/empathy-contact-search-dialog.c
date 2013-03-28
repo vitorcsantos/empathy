@@ -29,11 +29,11 @@
 #include "libempathy/empathy-utils.h"
 #include "libempathy/empathy-client-factory.h"
 
-#include "libempathy-gtk/empathy-account-chooser.h"
-#include "libempathy-gtk/empathy-cell-renderer-text.h"
-#include "libempathy-gtk/empathy-cell-renderer-activatable.h"
-#include "libempathy-gtk/empathy-individual-information-dialog.h"
-#include "libempathy-gtk/empathy-images.h"
+#include "empathy-account-chooser.h"
+#include "empathy-cell-renderer-text.h"
+#include "empathy-cell-renderer-activatable.h"
+#include "empathy-individual-information-dialog.h"
+#include "empathy-images.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include "libempathy/empathy-debug.h"
