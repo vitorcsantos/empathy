@@ -24,6 +24,7 @@
 
 #include <glib/gi18n-lib.h>
 
+#include <libempathy/empathy-camera-monitor.h>
 #include <libempathy/empathy-gsettings.h>
 #include <libempathy/empathy-utils.h>
 
