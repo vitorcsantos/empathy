@@ -147,6 +147,12 @@ response_cb (GtkWidget *widget,
     gint response,
     EmpathyAccountsPluginWidget *self)
 {
+  if (!self->priv->account_widget)
+    {
+      // widget might not be ready yet
+      g_signal_emit (self, signals[SIG_DONE], 0);
+      return;
+    }
   if (response == GTK_RESPONSE_OK)
     {
       empathy_account_widget_apply_and_log_in (self->priv->account_widget);
@@ -279,8 +285,8 @@ maybe_add_account_widget (EmpathyAccountsPluginWidget *self)
     }
   else
     {
-      g_signal_connect_swapped (self->priv->settings, "notify::ready",
-          G_CALLBACK (add_account_widget), self);
+      tp_g_signal_connect_object (self->priv->settings, "notify::ready",
+          G_CALLBACK (add_account_widget), self, G_CONNECT_SWAPPED);
     }
 }
 
