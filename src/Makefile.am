@@ -207,14 +207,10 @@ BUILT_SOURCES = \
 
 CLEANFILES = $(BUILT_SOURCES)
 
-empathy-chat-resources.c: empathy-chat.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --generate-dependencies $(srcdir)/empathy-chat.gresource.xml)
-	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ \
-		--sourcedir=$(srcdir) \
-		--generate-source \
-		$<
+chat_resource_files: $(shell $(GLIB_COMPILE_RESOURCES) --generate-dependencies --sourcedir=$(srcdir) $(srcdir)/empathy-chat.gresource.xml)
 
-empathy-chat-resources.h: empathy-chat.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --generate-dependencies $(srcdir)/empathy-chat.gresource.xml)
-	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ \
-		--sourcedir=$(srcdir) \
-		--generate-header \
-		$<
+empathy-chat-resources.c: empathy-chat.gresource.xml $(chat_resource_files)
+	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate-source $<
+
+empathy-chat-resources.h: empathy-chat.gresource.xml $(chat_resource_files)
+	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate-header $<
