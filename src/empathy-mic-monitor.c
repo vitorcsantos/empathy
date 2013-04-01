@@ -20,7 +20,6 @@
 #include "config.h"
 #include "empathy-mic-monitor.h"
 
-#include <gtk/gtk.h>
 #include <pulse/glib-mainloop.h>
 
 #include "empathy-utils.h"

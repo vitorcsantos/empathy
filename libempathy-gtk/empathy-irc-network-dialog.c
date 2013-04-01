@@ -24,7 +24,6 @@
 #include <glib/gi18n-lib.h>
 
 #include "empathy-ui-utils.h"
-#include "empathy-utils.h"
 #include "totem-subtitle-encoding.h"
 
 typedef struct {

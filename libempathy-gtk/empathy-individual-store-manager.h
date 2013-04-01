@@ -26,7 +26,7 @@
 #ifndef __EMPATHY_INDIVIDUAL_STORE_MANAGER_H__
 #define __EMPATHY_INDIVIDUAL_STORE_MANAGER_H__
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "empathy-individual-manager.h"
 #include "empathy-individual-store.h"

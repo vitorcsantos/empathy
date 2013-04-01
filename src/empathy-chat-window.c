@@ -28,7 +28,6 @@
 #include "config.h"
 #include "empathy-chat-window.h"
 
-#include <gtk/gtk.h>
 #include <glib/gi18n.h>
 
 #include "empathy-about-dialog.h"
@@ -38,7 +37,6 @@
 #include "empathy-geometry.h"
 #include "empathy-gsettings.h"
 #include "empathy-images.h"
-#include "empathy-individual-manager.h"
 #include "empathy-invite-participant-dialog.h"
 #include "empathy-notify-manager.h"
 #include "empathy-request-util.h"

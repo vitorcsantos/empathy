@@ -24,7 +24,6 @@
 #ifndef __EMPATHY_NEW_CHATROOM_DIALOG_H__
 #define __EMPATHY_NEW_CHATROOM_DIALOG_H__
 
-#include <glib-object.h>
 #include <gtk/gtk.h>
 
 G_BEGIN_DECLS

@@ -27,7 +27,6 @@
 
 #include <glib/gi18n-lib.h>
 #include <telepathy-glib/proxy-subclass.h>
-#include <webkit/webkit.h>
 
 #include "action-chain-internal.h"
 #include "empathy-account-chooser.h"

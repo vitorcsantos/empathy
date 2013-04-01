@@ -21,7 +21,6 @@
 #ifndef __EMPATHY_CALL_WINDOW_H__
 #define __EMPATHY_CALL_WINDOW_H__
 
-#include <glib-object.h>
 #include <gtk/gtk.h>
 
 #include "empathy-audio-src.h"

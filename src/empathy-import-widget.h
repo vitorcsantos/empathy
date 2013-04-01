@@ -25,7 +25,6 @@
 #ifndef __EMPATHY_IMPORT_WIDGET_H__
 #define __EMPATHY_IMPORT_WIDGET_H__
 
-#include <glib-object.h>
 #include <gtk/gtk.h>
 
 #include "empathy-connection-managers.h"

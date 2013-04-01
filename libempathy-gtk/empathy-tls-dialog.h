@@ -21,7 +21,6 @@
 #ifndef __EMPATHY_TLS_DIALOG_H__
 #define __EMPATHY_TLS_DIALOG_H__
 
-#include <glib-object.h>
 #include <gtk/gtk.h>
 #include <telepathy-glib/telepathy-glib.h>
 

@@ -20,7 +20,6 @@
 #ifndef __EMPATHY_CALENDAR_BUTTON_H__
 #define __EMPATHY_CALENDAR_BUTTON_H__
 
-#include <glib-object.h>
 #include <gtk/gtk.h>
 
 G_BEGIN_DECLS

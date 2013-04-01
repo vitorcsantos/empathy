@@ -28,7 +28,6 @@
 #include "empathy-accounts-common.h"
 
 #include "empathy-accounts-dialog.h"
-#include "empathy-ui-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_ACCOUNT
 #include "empathy-debug.h"

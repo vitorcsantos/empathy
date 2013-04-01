@@ -22,21 +22,13 @@
 
 #include "config.h"
 
-#include <glib.h>
 #include <glib/gi18n-lib.h>
-#include <gtk/gtk.h>
-#include <gio/gio.h>
 
-#include <telepathy-glib/telepathy-glib.h>
 
-#include "empathy-contact.h"
 #include "empathy-debug.h"
 #include "empathy-ft-factory.h"
-#include "empathy-ft-handler.h"
 
-#include "empathy-roster-model.h"
 #include "empathy-roster-model-manager.h"
-#include "empathy-contact-chooser.h"
 #include "empathy-ui-utils.h"
 #include "empathy-roster-view.h"
 #include "empathy-roster-contact.h"

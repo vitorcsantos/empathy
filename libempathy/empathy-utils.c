@@ -30,7 +30,6 @@
 #include "empathy-utils.h"
 
 #include <glib/gi18n-lib.h>
-#include <libxml/uri.h>
 #include <dbus/dbus-protocol.h>
 
 #include "empathy-client-factory.h"

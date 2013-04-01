@@ -24,7 +24,6 @@
 
 #include "empathy-chatroom-manager.h"
 #include "empathy-chat-window.h"
-#include "empathy-individual-manager.h"
 #include "empathy-request-util.h"
 #include "empathy-ui-utils.h"
 #include "extensions.h"

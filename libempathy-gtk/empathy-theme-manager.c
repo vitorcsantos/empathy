@@ -23,9 +23,6 @@
 #include "config.h"
 #include "empathy-theme-manager.h"
 
-#include <string.h>
-#include <gtk/gtk.h>
-
 #include "empathy-gsettings.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER

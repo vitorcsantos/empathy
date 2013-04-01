@@ -21,7 +21,6 @@
 #ifndef __EMPATHY_CONTACTINFO_UTILS_H__
 #define __EMPATHY_CONTACTINFO_UTILS_H__
 
-#include <glib.h>
 #include <gtk/gtk.h>
 #include <telepathy-glib/telepathy-glib.h>
 

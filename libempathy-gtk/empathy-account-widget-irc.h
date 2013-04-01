@@ -21,8 +21,6 @@
 #ifndef __EMPATHY_ACCOUNT_WIDGET_IRC_H__
 #define __EMPATHY_ACCOUNT_WIDGET_IRC_H__
 
-#include <gtk/gtk.h>
-
 #include "empathy-account-widget.h"
 #include "empathy-irc-network-chooser.h"
 

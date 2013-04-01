@@ -20,7 +20,6 @@
 #ifndef __EMPATHY_PASSWORD_DIALOG_H__
 #define __EMPATHY_PASSWORD_DIALOG_H__
 
-#include <glib-object.h>
 #include <gtk/gtk.h>
 
 #include "empathy-base-password-dialog.h"

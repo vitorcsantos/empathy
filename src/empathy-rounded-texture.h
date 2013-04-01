@@ -21,7 +21,6 @@
 #ifndef __EMPATHY_ROUNDED_TEXTURE_H__
 #define __EMPATHY_ROUNDED_TEXTURE_H__
 
-#include <glib-object.h>
 #include <clutter/clutter.h>
 
 G_BEGIN_DECLS

@@ -20,11 +20,6 @@
 #include "config.h"
 #include "test-helper.h"
 
-#include <stdlib.h>
-#include <glib.h>
-#include <glib-object.h>
-#include <gtk/gtk.h>
-
 #include "empathy-ui-utils.h"
 
 void

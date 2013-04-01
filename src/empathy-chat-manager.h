@@ -20,7 +20,6 @@
 #ifndef __EMPATHY_CHAT_MANAGER_H__
 #define __EMPATHY_CHAT_MANAGER_H__
 
-#include <glib-object.h>
 
 #include "empathy-chat.h"
 

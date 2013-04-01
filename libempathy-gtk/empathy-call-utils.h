@@ -21,7 +21,6 @@
 #ifndef __EMPATHY_CALL_UTILS_H__
 #define __EMPATHY_CALL_UTILS_H__
 
-#include <glib.h>
 #include <telepathy-glib/telepathy-glib.h>
 
 G_BEGIN_DECLS

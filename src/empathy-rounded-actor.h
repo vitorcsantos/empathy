@@ -21,7 +21,6 @@
 #ifndef __EMPATHY_ROUNDED_ACTOR_H__
 #define __EMPATHY_ROUNDED_ACTOR_H__
 
-#include <glib-object.h>
 #include <clutter-gtk/clutter-gtk.h>
 
 G_BEGIN_DECLS

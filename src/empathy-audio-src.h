@@ -21,7 +21,6 @@
 #ifndef __EMPATHY_GST_AUDIO_SRC_H__
 #define __EMPATHY_GST_AUDIO_SRC_H__
 
-#include <glib-object.h>
 #include <gst/gst.h>
 #include <gio/gio.h>
 

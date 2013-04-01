@@ -20,7 +20,6 @@
 #ifndef __EMPATHY_ROSTER_MODEL_H__
 #define __EMPATHY_ROSTER_MODEL_H__
 
-#include <glib-object.h>
 #include <folks/folks.h>
 
 G_BEGIN_DECLS

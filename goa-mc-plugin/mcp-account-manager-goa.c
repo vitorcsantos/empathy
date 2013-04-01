@@ -28,7 +28,6 @@
 
 #define GOA_API_IS_SUBJECT_TO_CHANGE /* awesome! */
 #include <goa/goa.h>
-#include <telepathy-glib/telepathy-glib.h>
 
 #define DEBUG g_debug
 #define GET_PRIVATE(self) (((McpAccountManagerGoa *) self)->priv)

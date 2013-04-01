@@ -27,7 +27,6 @@
 
 #include <glib/gi18n-lib.h>
 
-#include "empathy-import-dialog.h"
 #include "empathy-ui-utils.h"
 #include "empathy-utils.h"
 

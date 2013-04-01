@@ -24,7 +24,6 @@
 #ifndef __EMPATHY_GEOMETRY_H__
 #define __EMPATHY_GEOMETRY_H__
 
-#include <glib.h>
 #include <gtk/gtk.h>
 
 G_BEGIN_DECLS

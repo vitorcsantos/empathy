@@ -22,7 +22,6 @@
 #ifndef __EMPATHY_ACCOUNTS_COMMON_H__
 #define __EMPATHY_ACCOUNTS_COMMON_H__
 
-#include <glib.h>
 #include <telepathy-glib/telepathy-glib.h>
 
 G_BEGIN_DECLS

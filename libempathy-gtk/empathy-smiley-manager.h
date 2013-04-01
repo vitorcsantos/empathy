@@ -23,7 +23,6 @@
 #ifndef __EMPATHY_SMILEY_MANAGER__H__
 #define __EMPATHY_SMILEY_MANAGER_H__
 
-#include <glib-object.h>
 #include <gtk/gtk.h>
 
 G_BEGIN_DECLS

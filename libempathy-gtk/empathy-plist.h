@@ -21,7 +21,6 @@
 #ifndef __EMPATHY_PLIST_H__
 #define __EMPATHY_PLIST_H__
 
-#include <glib.h>
 #include <glib-object.h>
 
 G_BEGIN_DECLS

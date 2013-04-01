@@ -21,7 +21,6 @@
 #ifndef __EMPATHY_SOUND_MANAGER_H__
 #define __EMPATHY_SOUND_MANAGER_H__
 
-#include <gtk/gtk.h>
 #include <canberra-gtk.h>
 
 G_BEGIN_DECLS

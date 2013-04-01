@@ -23,7 +23,6 @@
 #ifndef __EMPATHY_PROTOCOL_CHOOSER_H__
 #define __EMPATHY_PROTOCOL_CHOOSER_H__
 
-#include <glib-object.h>
 #include <gtk/gtk.h>
 #include <telepathy-glib/telepathy-glib.h>
 

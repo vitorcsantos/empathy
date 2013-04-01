@@ -21,7 +21,6 @@
 #ifndef __EMPATHY_DEBUG_WINDOW_H__
 #define __EMPATHY_DEBUG_WINDOW_H__
 
-#include <glib-object.h>
 #include <gtk/gtk.h>
 
 G_BEGIN_DECLS
