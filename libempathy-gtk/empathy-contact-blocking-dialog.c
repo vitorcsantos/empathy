@@ -21,16 +21,15 @@
  *
  * Authors: Danielle Madeley <danielle.madeley@collabora.co.uk>
  */
+
 #include "config.h"
+#include "empathy-contact-blocking-dialog.h"
 
 #include <glib/gi18n-lib.h>
 
-#include "empathy-utils.h"
-
 #include "empathy-account-chooser.h"
 #include "empathy-ui-utils.h"
-
-#include "empathy-contact-blocking-dialog.h"
+#include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include "empathy-debug.h"

@@ -20,17 +20,16 @@
  */
 
 #include "config.h"
+#include "empathy-contact-widget.h"
 
 #include <glib/gi18n-lib.h>
 
-#include "empathy-utils.h"
-#include "empathy-client-factory.h"
-
-#include "empathy-contact-widget.h"
 #include "empathy-avatar-image.h"
+#include "empathy-client-factory.h"
 #include "empathy-groups-widget.h"
-#include "empathy-ui-utils.h"
 #include "empathy-string-parser.h"
+#include "empathy-ui-utils.h"
+#include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_CONTACT
 #include "empathy-debug.h"

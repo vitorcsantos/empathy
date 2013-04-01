@@ -19,6 +19,7 @@
  */
 
 #include "config.h"
+#include "empathy-video-src.h"
 
 #ifdef HAVE_GST1
 #include <gst/video/colorbalance.h>
@@ -28,8 +29,6 @@
 
 #define DEBUG_FLAG EMPATHY_DEBUG_VOIP
 #include "empathy-debug.h"
-
-#include "empathy-video-src.h"
 
 G_DEFINE_TYPE(EmpathyGstVideoSrc, empathy_video_src, GST_TYPE_BIN)
 

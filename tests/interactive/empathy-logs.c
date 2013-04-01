@@ -19,15 +19,16 @@
  * Authors: Xavier Claessens <xclaesse@gmail.com>
  */
 
-#include <config.h>
+#include "config.h"
+
 #include <stdlib.h>
 #include <glib.h>
 #include <gtk/gtk.h>
 
 #include "empathy-debug.h"
-#include "empathy-utils.h"
 #include "empathy-log-window.h"
 #include "empathy-ui-utils.h"
+#include "empathy-utils.h"
 
 static void
 destroy_cb (GtkWidget *dialog,

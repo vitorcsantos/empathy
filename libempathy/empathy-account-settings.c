@@ -19,12 +19,12 @@
  */
 
 #include "config.h"
-
 #include "empathy-account-settings.h"
+
 #include "empathy-connection-managers.h"
 #include "empathy-keyring.h"
-#include "empathy-utils.h"
 #include "empathy-presence-manager.h"
+#include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_ACCOUNT
 #include "empathy-debug.h"

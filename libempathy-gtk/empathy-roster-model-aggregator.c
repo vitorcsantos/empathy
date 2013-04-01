@@ -22,10 +22,9 @@
  */
 
 #include "config.h"
+#include "empathy-roster-model-aggregator.h"
 
 #include <folks/folks-telepathy.h>
-
-#include "empathy-roster-model-aggregator.h"
 
 /**
  * SECTION: empathy-roster-model-aggregator

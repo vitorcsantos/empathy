@@ -20,6 +20,7 @@
  */
 
 #include "config.h"
+#include "empathy-individual-widget.h"
 
 #include <glib/gi18n-lib.h>
 
@@ -28,15 +29,14 @@
 #include <champlain-gtk/champlain-gtk.h>
 #endif
 
-#include "empathy-utils.h"
-#include "empathy-location.h"
-#include "empathy-time.h"
-
 #include "empathy-avatar-image.h"
 #include "empathy-contactinfo-utils.h"
 #include "empathy-groups-widget.h"
 #include "empathy-gtk-enum-types.h"
+#include "empathy-location.h"
+#include "empathy-time.h"
 #include "empathy-ui-utils.h"
+#include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_CONTACT
 #include "empathy-debug.h"

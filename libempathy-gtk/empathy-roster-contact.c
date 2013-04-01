@@ -1,13 +1,11 @@
 #include "config.h"
+#include "empathy-roster-contact.h"
 
 #include <glib/gi18n-lib.h>
 
-#include "empathy-roster-contact.h"
-
-#include "empathy-utils.h"
-
 #include "empathy-images.h"
 #include "empathy-ui-utils.h"
+#include "empathy-utils.h"
 
 G_DEFINE_TYPE (EmpathyRosterContact, empathy_roster_contact, GTK_TYPE_ALIGNMENT)
 

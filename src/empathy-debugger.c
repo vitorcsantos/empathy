@@ -21,9 +21,8 @@
 
 #include <glib/gi18n.h>
 
-#include "empathy-ui-utils.h"
-
 #include "empathy-debug-window.h"
+#include "empathy-ui-utils.h"
 
 #define EMPATHY_DEBUGGER_DBUS_NAME "org.gnome.Empathy.Debugger"
 

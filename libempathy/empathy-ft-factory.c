@@ -21,7 +21,9 @@
 
 /* empathy-ft-factory.c */
 
+#include "config.h"
 #include "empathy-ft-factory.h"
+
 #include "empathy-request-util.h"
 #include "empathy-utils.h"
 

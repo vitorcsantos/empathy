@@ -22,11 +22,11 @@
  */
 
 #include "config.h"
+#include "empathy-account-chooser.h"
 
 #include <glib/gi18n-lib.h>
 
 #include "empathy-ui-utils.h"
-#include "empathy-account-chooser.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include "empathy-debug.h"

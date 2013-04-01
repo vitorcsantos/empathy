@@ -21,27 +21,27 @@
  */
 
 #include "config.h"
+#include "empathy-individual-menu.h"
 
 #include <glib/gi18n-lib.h>
 
-#include "empathy-camera-monitor.h"
-#include "empathy-request-util.h"
-#include "empathy-individual-manager.h"
-#include "empathy-chatroom-manager.h"
-#include "empathy-utils.h"
-
 #include "empathy-account-selector-dialog.h"
-#include "empathy-images.h"
-#include "empathy-log-window.h"
-#include "empathy-individual-dialogs.h"
+#include "empathy-call-utils.h"
+#include "empathy-camera-monitor.h"
+#include "empathy-chatroom-manager.h"
 #include "empathy-gtk-enum-types.h"
+#include "empathy-images.h"
+#include "empathy-individual-dialogs.h"
 #include "empathy-individual-dialogs.h"
 #include "empathy-individual-edit-dialog.h"
-#include "empathy-ui-utils.h"
-#include "empathy-share-my-desktop.h"
-#include "empathy-call-utils.h"
-#include "empathy-individual-store-channel.h"
 #include "empathy-individual-information-dialog.h"
+#include "empathy-individual-manager.h"
+#include "empathy-individual-store-channel.h"
+#include "empathy-log-window.h"
+#include "empathy-request-util.h"
+#include "empathy-share-my-desktop.h"
+#include "empathy-ui-utils.h"
+#include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_CONTACT
 #include "empathy-debug.h"

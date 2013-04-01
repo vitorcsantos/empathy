@@ -20,17 +20,15 @@
  */
 
 #include "config.h"
+#include "empathy-status-icon.h"
 
+#include "empathy-event-manager.h"
 #include "empathy-gsettings.h"
-#include "empathy-utils.h"
-
+#include "empathy-new-call-dialog.h"
+#include "empathy-new-message-dialog.h"
 #include "empathy-presence-chooser.h"
 #include "empathy-ui-utils.h"
-#include "empathy-new-message-dialog.h"
-#include "empathy-new-call-dialog.h"
-
-#include "empathy-status-icon.h"
-#include "empathy-event-manager.h"
+#include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_DISPATCHER
 #include "empathy-debug.h"

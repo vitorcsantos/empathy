@@ -22,21 +22,19 @@
 #include "config.h"
 
 #include <glib/gi18n.h>
+#include <gnutls/gnutls.h>
+
+#include "empathy-auth-factory.h"
+#include "empathy-bad-password-dialog.h"
+#include "empathy-password-dialog.h"
+#include "empathy-sanity-cleaning.h"
+#include "empathy-server-tls-handler.h"
+#include "empathy-tls-dialog.h"
+#include "empathy-tls-verifier.h"
+#include "empathy-ui-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_TLS
 #include "empathy-debug.h"
-#include "empathy-auth-factory.h"
-#include "empathy-server-tls-handler.h"
-#include "empathy-tls-verifier.h"
-
-#include "empathy-bad-password-dialog.h"
-#include "empathy-password-dialog.h"
-#include "empathy-tls-dialog.h"
-#include "empathy-ui-utils.h"
-
-#include "empathy-sanity-cleaning.h"
-
-#include <gnutls/gnutls.h>
 
 #define TIMEOUT 60
 

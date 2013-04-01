@@ -19,8 +19,8 @@
  */
 
 #include "config.h"
-
 #include "empathy-camera-monitor.h"
+
 #include "cheese-camera-device-monitor.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER

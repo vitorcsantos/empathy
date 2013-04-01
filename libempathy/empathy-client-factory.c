@@ -20,7 +20,6 @@
  */
 
 #include "config.h"
-
 #include "empathy-client-factory.h"
 
 #include "empathy-tp-chat.h"

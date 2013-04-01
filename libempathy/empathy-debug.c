@@ -19,7 +19,6 @@
  */
 
 #include "config.h"
-
 #include "empathy-debug.h"
 
 #ifdef ENABLE_DEBUG

@@ -19,13 +19,13 @@
  */
 
 #include "config.h"
+#include "empathy-webkit-utils.h"
 
 #include <glib/gi18n-lib.h>
 
-#include "empathy-webkit-utils.h"
 #include "empathy-smiley-manager.h"
-#include "empathy-ui-utils.h"
 #include "empathy-theme-adium.h"
+#include "empathy-ui-utils.h"
 
 #define BORING_DPI_DEFAULT 96
 

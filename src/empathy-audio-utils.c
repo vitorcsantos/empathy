@@ -19,10 +19,9 @@
  */
 
 #include "config.h"
+#include "empathy-audio-utils.h"
 
 #include <pulse/pulseaudio.h>
-
-#include "empathy-audio-utils.h"
 
 #include "empathy-gsettings.h"
 

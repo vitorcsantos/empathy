@@ -20,10 +20,9 @@
  */
 
 #include "config.h"
+#include "empathy-location-manager.h"
 
 #include <geoclue/geoclue-master.h>
-
-#include "empathy-location-manager.h"
 
 #include "empathy-gsettings.h"
 #include "empathy-location.h"

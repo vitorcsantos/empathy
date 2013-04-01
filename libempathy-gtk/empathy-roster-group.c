@@ -1,5 +1,4 @@
 #include "config.h"
-
 #include "empathy-roster-group.h"
 
 #include <telepathy-glib/telepathy-glib.h>

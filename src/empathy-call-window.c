@@ -19,38 +19,35 @@
  */
 
 #include "config.h"
+#include "empathy-call-window.h"
 
 #include <glib/gi18n.h>
-
 #include <telepathy-farstream/telepathy-farstream.h>
-
 #include <farstream/fs-element-added-notifier.h>
 #include <farstream/fs-utils.h>
 
-#include "empathy-camera-monitor.h"
-#include "empathy-gsettings.h"
-#include "empathy-request-util.h"
-#include "empathy-utils.h"
-
-#include "empathy-dialpad-widget.h"
-#include "empathy-ui-utils.h"
-#include "empathy-sound-manager.h"
-#include "empathy-geometry.h"
-#include "empathy-images.h"
-#include "empathy-call-utils.h"
-
-#define DEBUG_FLAG EMPATHY_DEBUG_VOIP
-#include "empathy-debug.h"
-
-#include "empathy-call-window-fullscreen.h"
 #include "empathy-about-dialog.h"
 #include "empathy-audio-sink.h"
+#include "empathy-call-utils.h"
+#include "empathy-call-window-fullscreen.h"
+#include "empathy-camera-menu.h"
+#include "empathy-camera-monitor.h"
+#include "empathy-dialpad-widget.h"
+#include "empathy-geometry.h"
+#include "empathy-gsettings.h"
+#include "empathy-images.h"
 #include "empathy-mic-menu.h"
 #include "empathy-preferences.h"
+#include "empathy-request-util.h"
 #include "empathy-rounded-actor.h"
 #include "empathy-rounded-rectangle.h"
 #include "empathy-rounded-texture.h"
-#include "empathy-camera-menu.h"
+#include "empathy-sound-manager.h"
+#include "empathy-ui-utils.h"
+#include "empathy-utils.h"
+
+#define DEBUG_FLAG EMPATHY_DEBUG_VOIP
+#include "empathy-debug.h"
 
 #define CONTENT_HBOX_SPACING 3
 #define CONTENT_HBOX_CHILDREN_PACKING_PADDING 0

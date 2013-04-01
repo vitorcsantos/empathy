@@ -19,7 +19,6 @@
  */
 
 #include "config.h"
-
 #include "empathy-pkg-kit.h"
 
 typedef struct

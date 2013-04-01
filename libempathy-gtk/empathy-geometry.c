@@ -22,12 +22,12 @@
  */
 
 #include "config.h"
+#include "empathy-geometry.h"
 
 #include <sys/stat.h>
 
-#include "empathy-utils.h"
-#include "empathy-geometry.h"
 #include "empathy-ui-utils.h"
+#include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include "empathy-debug.h"

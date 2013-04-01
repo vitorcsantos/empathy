@@ -21,20 +21,19 @@
  */
 
 #include "config.h"
+#include "empathy-avatar-chooser.h"
 
 #include <glib/gi18n-lib.h>
-
-#include "empathy-camera-monitor.h"
-#include "empathy-gsettings.h"
-#include "empathy-utils.h"
-
-#include "empathy-avatar-chooser.h"
-#include "empathy-images.h"
-#include "empathy-ui-utils.h"
 
 #ifdef HAVE_CHEESE
 #include <cheese-avatar-chooser.h>
 #endif /* HAVE_CHEESE */
+
+#include "empathy-camera-monitor.h"
+#include "empathy-gsettings.h"
+#include "empathy-images.h"
+#include "empathy-ui-utils.h"
+#include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include "empathy-debug.h"

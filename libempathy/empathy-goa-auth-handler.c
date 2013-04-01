@@ -19,14 +19,15 @@
  */
 
 #include "config.h"
+#include "empathy-goa-auth-handler.h"
 
 #define GOA_API_IS_SUBJECT_TO_CHANGE /* awesome! */
 #include <goa/goa.h>
 
+#include "empathy-sasl-mechanisms.h"
+
 #define DEBUG_FLAG EMPATHY_DEBUG_SASL
 #include "empathy-debug.h"
-#include "empathy-goa-auth-handler.h"
-#include "empathy-sasl-mechanisms.h"
 
 struct _EmpathyGoaAuthHandlerPriv
 {

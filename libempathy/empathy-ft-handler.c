@@ -22,10 +22,10 @@
 /* empathy-ft-handler.c */
 
 #include "config.h"
+#include "empathy-ft-handler.h"
 
 #include <glib/gi18n-lib.h>
 
-#include "empathy-ft-handler.h"
 #include "empathy-time.h"
 #include "empathy-utils.h"
 

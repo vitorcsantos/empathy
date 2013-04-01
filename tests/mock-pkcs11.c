@@ -19,13 +19,10 @@
  */
 
 #include "config.h"
-
 #include "mock-pkcs11.h"
 
 #include <gcr/gcr.h>
-
 #include <glib.h>
-
 #include <string.h>
 
 /*

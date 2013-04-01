@@ -24,10 +24,9 @@
  */
 
 #include "config.h"
+#include "empathy-individual-store-channel.h"
 
 #include "empathy-utils.h"
-
-#include "empathy-individual-store-channel.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_CONTACT
 #include "empathy-debug.h"

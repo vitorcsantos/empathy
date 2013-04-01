@@ -20,7 +20,6 @@
  */
 
 #include "config.h"
-
 #include "empathy-dialpad-widget.h"
 
 #include "empathy-dialpad-button.h"

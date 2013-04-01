@@ -22,10 +22,11 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+#include "config.h"
 #include "empathy-call-window-fullscreen.h"
 
-#include "empathy-utils.h"
 #include "empathy-ui-utils.h"
+#include "empathy-utils.h"
 
 /* The number of seconds for which the "leave fullscreen" popup should
    be shown */

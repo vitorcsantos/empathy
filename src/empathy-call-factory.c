@@ -19,12 +19,11 @@
  */
 
 #include "config.h"
-
 #include "empathy-client-factory.h"
-#include "empathy-request-util.h"
 
 #include "empathy-call-factory.h"
 #include "empathy-call-handler.h"
+#include "empathy-request-util.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_VOIP
 #include "empathy-debug.h"

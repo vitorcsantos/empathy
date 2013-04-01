@@ -25,12 +25,13 @@
  */
 
 #include "config.h"
+#include "empathy-presence-chooser.h"
 
 #include <glib/gi18n-lib.h>
 
 #include "empathy-presence-manager.h"
-#include "empathy-utils.h"
 #include "empathy-status-presets.h"
+#include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include "empathy-debug.h"

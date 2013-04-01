@@ -19,10 +19,10 @@
  */
 
 #include "config.h"
+#include "empathy-uoa-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_ACCOUNT
 #include "empathy-debug.h"
-#include "empathy-uoa-utils.h"
 
 static AgManager *singleton = NULL;
 

@@ -2,11 +2,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <glib/gstdio.h>
-
 #include <telepathy-glib/telepathy-glib.h>
 
 #include "empathy-chatroom-manager.h"
-
 #include "test-helper.h"
 
 #define CHATROOM_SAMPLE "chatrooms-sample.xml"

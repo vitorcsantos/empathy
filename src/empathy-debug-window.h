@@ -21,10 +21,10 @@
 #ifndef __EMPATHY_DEBUG_WINDOW_H__
 #define __EMPATHY_DEBUG_WINDOW_H__
 
-G_BEGIN_DECLS
-
 #include <glib-object.h>
 #include <gtk/gtk.h>
+
+G_BEGIN_DECLS
 
 #define EMPATHY_TYPE_DEBUG_WINDOW (empathy_debug_window_get_type ())
 #define EMPATHY_DEBUG_WINDOW(object) (G_TYPE_CHECK_INSTANCE_CAST \

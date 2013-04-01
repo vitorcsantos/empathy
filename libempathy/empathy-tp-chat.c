@@ -19,8 +19,8 @@
  */
 
 #include "config.h"
-
 #include "empathy-tp-chat.h"
+
 #include "empathy-request-util.h"
 #include "empathy-utils.h"
 

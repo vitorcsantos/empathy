@@ -20,11 +20,10 @@
  */
 
 #include "config.h"
+#include "empathy-camera-menu.h"
 
 #include "empathy-camera-monitor.h"
 #include "empathy-gsettings.h"
-
-#include "empathy-camera-menu.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_VOIP
 #include "empathy-debug.h"

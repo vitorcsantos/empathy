@@ -22,9 +22,9 @@
  */
 
 #include "config.h"
+#include "empathy-cell-renderer-text.h"
 
 #include "empathy-utils.h"
-#include "empathy-cell-renderer-text.h"
 
 #define GET_PRIV(obj) EMPATHY_GET_PRIV (obj, EmpathyCellRendererText)
 typedef struct {

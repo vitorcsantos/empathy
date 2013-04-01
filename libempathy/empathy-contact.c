@@ -20,6 +20,7 @@
  */
 
 #include "config.h"
+#include "empathy-contact.h"
 
 #ifdef HAVE_GEOCODE
 #include <geocode-glib/geocode-glib.h>

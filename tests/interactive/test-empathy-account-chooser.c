@@ -1,9 +1,9 @@
-#include <config.h>
+#include "config.h"
 
 #include <gtk/gtk.h>
 
-#include "empathy-ui-utils.h"
 #include "empathy-account-chooser.h"
+#include "empathy-ui-utils.h"
 
 static void
 filter_func (TpAccount *account,

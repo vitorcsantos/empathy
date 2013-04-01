@@ -20,18 +20,17 @@
  */
 
 #include "config.h"
+#include "empathy-theme-adium.h"
 
 #include <glib/gi18n-lib.h>
 
 #include "empathy-gsettings.h"
-#include "empathy-time.h"
-#include "empathy-utils.h"
-
-#include "empathy-theme-adium.h"
-#include "empathy-smiley-manager.h"
-#include "empathy-ui-utils.h"
-#include "empathy-plist.h"
 #include "empathy-images.h"
+#include "empathy-plist.h"
+#include "empathy-smiley-manager.h"
+#include "empathy-time.h"
+#include "empathy-ui-utils.h"
+#include "empathy-utils.h"
 #include "empathy-webkit-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_CHAT

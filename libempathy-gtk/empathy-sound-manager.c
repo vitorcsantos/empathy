@@ -18,15 +18,15 @@
  */
 
 #include "config.h"
-
 #include "empathy-sound-manager.h"
 
 #include <glib/gi18n-lib.h>
 
-#define DEBUG_FLAG EMPATHY_DEBUG_OTHER
-#include "empathy-debug.h"
 #include "empathy-gsettings.h"
 #include "empathy-utils.h"
+
+#define DEBUG_FLAG EMPATHY_DEBUG_OTHER
+#include "empathy-debug.h"
 
 typedef struct {
   EmpathySound sound_id;

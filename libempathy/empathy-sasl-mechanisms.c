@@ -19,13 +19,13 @@
  */
 
 #include "config.h"
+#include "empathy-sasl-mechanisms.h"
 
 #include <libsoup/soup.h>
 
 #define DEBUG_FLAG EMPATHY_DEBUG_SASL
 #include "empathy-debug.h"
 #include "empathy-utils.h"
-#include "empathy-sasl-mechanisms.h"
 
 #define MECH_FACEBOOK "X-FACEBOOK-PLATFORM"
 #define MECH_WLM "X-MESSENGER-OAUTH2"

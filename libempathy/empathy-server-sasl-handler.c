@@ -18,15 +18,14 @@
  */
 
 #include "config.h"
-
 #include "empathy-server-sasl-handler.h"
 
+#include "empathy-keyring.h"
+#include "empathy-sasl-mechanisms.h"
 #include "extensions.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_SASL
 #include "empathy-debug.h"
-#include "empathy-keyring.h"
-#include "empathy-sasl-mechanisms.h"
 
 enum {
   PROP_CHANNEL = 1,

@@ -24,16 +24,14 @@
  */
 
 #include "config.h"
+#include "empathy-chatrooms-window.h"
 
 #include <glib/gi18n.h>
 
-#include "empathy-chatroom-manager.h"
-#include "empathy-utils.h"
-
 #include "empathy-account-chooser.h"
+#include "empathy-chatroom-manager.h"
 #include "empathy-ui-utils.h"
-
-#include "empathy-chatrooms-window.h"
+#include "empathy-utils.h"
 
 typedef struct {
 	EmpathyChatroomManager *manager;

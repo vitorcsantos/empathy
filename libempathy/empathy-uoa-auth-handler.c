@@ -19,6 +19,7 @@
  */
 
 #include "config.h"
+#include "empathy-uoa-auth-handler.h"
 
 #include <libaccounts-glib/ag-account.h>
 #include <libaccounts-glib/ag-account-service.h>
@@ -29,13 +30,13 @@
 #include <libsignon-glib/signon-identity.h>
 #include <libsignon-glib/signon-auth-session.h>
 
-#define DEBUG_FLAG EMPATHY_DEBUG_SASL
-#include "empathy-debug.h"
 #include "empathy-keyring.h"
 #include "empathy-utils.h"
-#include "empathy-uoa-auth-handler.h"
 #include "empathy-uoa-utils.h"
 #include "empathy-sasl-mechanisms.h"
+
+#define DEBUG_FLAG EMPATHY_DEBUG_SASL
+#include "empathy-debug.h"
 
 struct _EmpathyUoaAuthHandlerPriv
 {

@@ -20,7 +20,7 @@
 #define __EMPATHY_MIC_MONITOR_H__
 
 #include <glib-object.h>
-
+#include <gio/gio.h>
 #include <pulse/pulseaudio.h>
 
 G_BEGIN_DECLS

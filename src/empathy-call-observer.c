@@ -19,13 +19,12 @@
  */
 
 #include "config.h"
+#include "empathy-call-observer.h"
 
 #include <glib/gi18n-lib.h>
 
 #include "empathy-images.h"
 #include "empathy-notify-manager.h"
-
-#include "empathy-call-observer.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_VOIP
 #include "empathy-debug.h"

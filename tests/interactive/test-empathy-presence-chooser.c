@@ -20,14 +20,13 @@
  * Authors: Davyd Madeley <davyd.madeley@collabora.co.uk>
  */
 
-#include <config.h>
+#include "config.h"
 
 #include <gtk/gtk.h>
 
-#include "empathy-status-presets.h"
-
-#include "empathy-ui-utils.h"
 #include "empathy-presence-chooser.h"
+#include "empathy-status-presets.h"
+#include "empathy-ui-utils.h"
 
 int
 main (int argc, char **argv)

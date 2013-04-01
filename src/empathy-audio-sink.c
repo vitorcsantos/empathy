@@ -19,6 +19,7 @@
  */
 
 #include "config.h"
+#include "empathy-audio-sink.h"
 
 #ifdef HAVE_GST1
 #include <gst/audio/streamvolume.h>
@@ -27,7 +28,6 @@
 #endif
 
 #include "empathy-audio-utils.h"
-#include "empathy-audio-sink.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_VOIP
 #include "empathy-debug.h"

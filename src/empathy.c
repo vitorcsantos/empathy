@@ -23,31 +23,28 @@
 
 #include <glib/gstdio.h>
 #include <glib/gi18n.h>
+#include <libnotify/notify.h>
 
 #ifdef HAVE_LIBCHAMPLAIN
 #include <clutter-gtk/clutter-gtk.h>
 #endif
 
-#include <libnotify/notify.h>
-
-#include "empathy-client-factory.h"
-#include "empathy-connection-aggregator.h"
-#include "empathy-presence-manager.h"
-#include "empathy-utils.h"
-#include "empathy-chatroom-manager.h"
-#include "empathy-request-util.h"
-#include "empathy-ft-factory.h"
-#include "empathy-gsettings.h"
-
-#include "empathy-ui-utils.h"
-#include "empathy-location-manager.h"
-
-#include "empathy-roster-window.h"
 #include "empathy-accounts-common.h"
 #include "empathy-accounts-dialog.h"
-#include "empathy-status-icon.h"
+#include "empathy-chatroom-manager.h"
+#include "empathy-client-factory.h"
+#include "empathy-connection-aggregator.h"
+#include "empathy-ft-factory.h"
 #include "empathy-ft-manager.h"
+#include "empathy-gsettings.h"
+#include "empathy-location-manager.h"
 #include "empathy-notifications-approver.h"
+#include "empathy-presence-manager.h"
+#include "empathy-request-util.h"
+#include "empathy-roster-window.h"
+#include "empathy-status-icon.h"
+#include "empathy-ui-utils.h"
+#include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include "empathy-debug.h"

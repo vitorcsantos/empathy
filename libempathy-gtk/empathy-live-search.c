@@ -22,10 +22,9 @@
  */
 
 #include "config.h"
+#include "empathy-live-search.h"
 
 #include "empathy-utils.h"
-
-#include "empathy-live-search.h"
 
 G_DEFINE_TYPE (EmpathyLiveSearch, empathy_live_search, GTK_TYPE_HBOX)
 

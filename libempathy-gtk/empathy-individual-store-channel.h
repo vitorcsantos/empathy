@@ -27,6 +27,7 @@
 #define __EMPATHY_INDIVIDUAL_STORE_CHANNEL_H__
 
 #include <gtk/gtk.h>
+#include <telepathy-glib/telepathy-glib.h>
 
 #include "empathy-individual-store.h"
 

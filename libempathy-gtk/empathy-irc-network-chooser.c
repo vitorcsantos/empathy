@@ -20,17 +20,15 @@
  */
 
 #include "config.h"
+#include "empathy-irc-network-chooser.h"
 
-#include "empathy-utils.h"
-#include "empathy-irc-network-manager.h"
-
-#include "empathy-ui-utils.h"
 #include "empathy-irc-network-chooser-dialog.h"
+#include "empathy-irc-network-manager.h"
+#include "empathy-ui-utils.h"
+#include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_ACCOUNT | EMPATHY_DEBUG_IRC
 #include "empathy-debug.h"
-
-#include "empathy-irc-network-chooser.h"
 
 #define DEFAULT_IRC_NETWORK "irc.gimp.org"
 #define DEFAULT_IRC_PORT 6667

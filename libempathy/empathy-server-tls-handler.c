@@ -19,14 +19,13 @@
  */
 
 #include "config.h"
-
 #include "empathy-server-tls-handler.h"
+
+#include "empathy-utils.h"
+#include "extensions.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_TLS
 #include "empathy-debug.h"
-#include "empathy-utils.h"
-
-#include "extensions.h"
 
 static void async_initable_iface_init (GAsyncInitableIface *iface);
 

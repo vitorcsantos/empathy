@@ -18,13 +18,12 @@
  */
 
 #include "config.h"
+#include "empathy-search-bar.h"
 
 #include <glib/gi18n-lib.h>
 
-#include "empathy-utils.h"
-
-#include "empathy-search-bar.h"
 #include "empathy-ui-utils.h"
+#include "empathy-utils.h"
 
 #define GET_PRIV(obj) EMPATHY_GET_PRIV (obj, EmpathySearchBar)
 

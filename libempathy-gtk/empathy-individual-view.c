@@ -25,22 +25,22 @@
  */
 
 #include "config.h"
+#include "empathy-individual-view.h"
 
 #include <glib/gi18n-lib.h>
 
-#include "empathy-connection-aggregator.h"
-#include "empathy-individual-manager.h"
-#include "empathy-contact-groups.h"
-#include "empathy-request-util.h"
-#include "empathy-utils.h"
-
-#include "empathy-individual-edit-dialog.h"
-#include "empathy-images.h"
+#include "empathy-cell-renderer-activatable.h"
 #include "empathy-cell-renderer-expander.h"
 #include "empathy-cell-renderer-text.h"
-#include "empathy-cell-renderer-activatable.h"
-#include "empathy-ui-utils.h"
+#include "empathy-connection-aggregator.h"
+#include "empathy-contact-groups.h"
 #include "empathy-gtk-enum-types.h"
+#include "empathy-images.h"
+#include "empathy-individual-edit-dialog.h"
+#include "empathy-individual-manager.h"
+#include "empathy-request-util.h"
+#include "empathy-ui-utils.h"
+#include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_CONTACT
 #include "empathy-debug.h"

@@ -20,7 +20,6 @@
  */
 
 #include "config.h"
-
 #include "empathy-request-util.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_DISPATCHER

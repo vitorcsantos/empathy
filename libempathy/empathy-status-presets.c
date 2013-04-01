@@ -21,11 +21,11 @@
  */
 
 #include "config.h"
+#include "empathy-status-presets.h"
 
 #include <sys/stat.h>
 
 #include "empathy-utils.h"
-#include "empathy-status-presets.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include "empathy-debug.h"

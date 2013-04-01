@@ -25,17 +25,17 @@
  */
 
 #include "config.h"
+#include "empathy-account-widget.h"
+#include "empathy-account-widget-private.h"
 
 #include <glib/gi18n-lib.h>
-
-#include "empathy-utils.h"
-
 #include <dbus/dbus-protocol.h>
 
+#include "empathy-account-widget-irc.h"
 #include "empathy-account-widget-private.h"
 #include "empathy-account-widget-sip.h"
-#include "empathy-account-widget-irc.h"
 #include "empathy-ui-utils.h"
+#include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_ACCOUNT
 #include "empathy-debug.h"

@@ -20,13 +20,12 @@
  */
 
 #include "config.h"
+#include "empathy-groups-widget.h"
 
 #include <glib/gi18n-lib.h>
 
 #include "empathy-utils.h"
 #include "empathy-connection-aggregator.h"
-
-#include "empathy-groups-widget.h"
 
 /**
  * SECTION:empathy-groups-widget

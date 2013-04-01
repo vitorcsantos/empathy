@@ -19,14 +19,13 @@
  * Authors: Danielle Madeley <danielle.madeley@collabora.co.uk>
  */
 
-#include <config.h>
+#include "config.h"
 
 #include <gtk/gtk.h>
 
 #include "empathy-client-factory.h"
-
-#include "empathy-ui-utils.h"
 #include "empathy-contact-blocking-dialog.h"
+#include "empathy-ui-utils.h"
 
 static void
 am_prepare_cb (GObject *source,

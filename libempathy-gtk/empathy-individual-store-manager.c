@@ -24,7 +24,6 @@
  */
 
 #include "config.h"
-
 #include "empathy-individual-store-manager.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_CONTACT

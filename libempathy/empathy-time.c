@@ -20,10 +20,9 @@
  */
 
 #include "config.h"
+#include "empathy-time.h"
 
 #include <glib/gi18n-lib.h>
-
-#include "empathy-time.h"
 
 /* Note: EmpathyTime is always in UTC. */
 

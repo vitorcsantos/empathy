@@ -22,11 +22,11 @@
 
 #include <glib/gi18n-lib.h>
 
-#define DEBUG_FLAG EMPATHY_DEBUG_ACCOUNT
-#include "empathy-debug.h"
-
 #include "empathy-account-widget.h"
 #include "empathy-protocol-chooser.h"
+
+#define DEBUG_FLAG EMPATHY_DEBUG_ACCOUNT
+#include "empathy-debug.h"
 
 G_DEFINE_TYPE (EmpathyNewAccountDialog, empathy_new_account_dialog, \
     GTK_TYPE_DIALOG)

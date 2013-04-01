@@ -2,10 +2,9 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "test-irc-helper.h"
-#include "test-helper.h"
-
 #include "empathy-irc-network.h"
+#include "test-helper.h"
+#include "test-irc-helper.h"
 
 static void
 test_empathy_irc_network_new (void)

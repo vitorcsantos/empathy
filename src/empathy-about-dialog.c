@@ -23,10 +23,9 @@
  */
 
 #include "config.h"
+#include "empathy-about-dialog.h"
 
 #include <glib/gi18n.h>
-
-#include "empathy-about-dialog.h"
 
 #define WEB_SITE "http://live.gnome.org/Empathy"
 

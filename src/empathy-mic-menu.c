@@ -20,8 +20,8 @@
  */
 
 #include "config.h"
-
 #include "empathy-mic-menu.h"
+
 #include "empathy-mic-monitor.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_VOIP

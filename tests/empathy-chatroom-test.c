@@ -3,7 +3,6 @@
 #include <string.h>
 
 #include "test-helper.h"
-
 #include "empathy-chatroom.h"
 
 #if 0

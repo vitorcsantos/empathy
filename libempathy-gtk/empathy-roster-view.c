@@ -1,11 +1,9 @@
 #include "config.h"
-
 #include "empathy-roster-view.h"
 
 #include <glib/gi18n-lib.h>
 
 #include "empathy-contact-groups.h"
-
 #include "empathy-roster-contact.h"
 #include "empathy-roster-group.h"
 #include "empathy-ui-utils.h"

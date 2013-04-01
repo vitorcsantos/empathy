@@ -19,7 +19,6 @@
  */
 
 #include "config.h"
-
 #include "empathy-presence-manager.h"
 
 #include "empathy-utils.h"

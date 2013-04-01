@@ -20,12 +20,10 @@
 #include "mcp-account-manager-uoa.h"
 
 #include <telepathy-glib/telepathy-glib.h>
-
 #include <libaccounts-glib/ag-account.h>
 #include <libaccounts-glib/ag-account-service.h>
 #include <libaccounts-glib/ag-manager.h>
 #include <libaccounts-glib/ag-service.h>
-
 #include <string.h>
 #include <ctype.h>
 

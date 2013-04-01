@@ -22,14 +22,14 @@
 
 #include <glib/gi18n-lib.h>
 
-#define DEBUG_FLAG EMPATHY_DEBUG_CONTACT
-#include "empathy-debug.h"
-#include "empathy-time.h"
-#include "empathy-utils.h"
-
 #include "empathy-avatar-chooser.h"
 #include "empathy-calendar-button.h"
 #include "empathy-contactinfo-utils.h"
+#include "empathy-time.h"
+#include "empathy-utils.h"
+
+#define DEBUG_FLAG EMPATHY_DEBUG_CONTACT
+#include "empathy-debug.h"
 
 G_DEFINE_TYPE (EmpathyUserInfo, empathy_user_info, GTK_TYPE_GRID)
 

@@ -35,17 +35,16 @@
  */
 
 #include "config.h"
+#include "empathy-status-preset-dialog.h"
 
 #include <glib/gi18n-lib.h>
 
-#include "empathy-utils.h"
 #include "empathy-status-presets.h"
+#include "empathy-ui-utils.h"
+#include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include "empathy-debug.h"
-
-#include "empathy-ui-utils.h"
-#include "empathy-status-preset-dialog.h"
 
 #define GET_PRIV(obj) EMPATHY_GET_PRIV (obj, EmpathyStatusPresetDialog)
 

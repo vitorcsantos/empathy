@@ -19,15 +19,15 @@
  */
 
 #include "config.h"
-
 #include "empathy-tls-dialog.h"
 
 #include <glib/gi18n-lib.h>
 #include <gcr/gcr.h>
 
+#include "empathy-utils.h"
+
 #define DEBUG_FLAG EMPATHY_DEBUG_TLS
 #include "empathy-debug.h"
-#include "empathy-utils.h"
 
 G_DEFINE_TYPE (EmpathyTLSDialog, empathy_tls_dialog,
     GTK_TYPE_MESSAGE_DIALOG)

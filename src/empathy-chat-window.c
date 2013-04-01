@@ -26,28 +26,26 @@
  */
 
 #include "config.h"
+#include "empathy-chat-window.h"
 
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
 
-#include "empathy-client-factory.h"
+#include "empathy-about-dialog.h"
+#include "empathy-chat-manager.h"
 #include "empathy-chatroom-manager.h"
-#include "empathy-gsettings.h"
-#include "empathy-utils.h"
-#include "empathy-request-util.h"
-#include "empathy-individual-manager.h"
-
-#include "empathy-images.h"
+#include "empathy-client-factory.h"
 #include "empathy-geometry.h"
+#include "empathy-gsettings.h"
+#include "empathy-images.h"
+#include "empathy-individual-manager.h"
+#include "empathy-invite-participant-dialog.h"
+#include "empathy-notify-manager.h"
+#include "empathy-request-util.h"
 #include "empathy-smiley-manager.h"
 #include "empathy-sound-manager.h"
 #include "empathy-ui-utils.h"
-#include "empathy-notify-manager.h"
-
-#include "empathy-chat-manager.h"
-#include "empathy-chat-window.h"
-#include "empathy-about-dialog.h"
-#include "empathy-invite-participant-dialog.h"
+#include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_CHAT
 #include "empathy-debug.h"

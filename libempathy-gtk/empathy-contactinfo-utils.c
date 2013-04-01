@@ -21,14 +21,13 @@
  */
 
 #include "config.h"
+#include "empathy-contactinfo-utils.h"
 
 #include <glib/gi18n-lib.h>
 
-#include "empathy-time.h"
 #include "empathy-request-util.h"
-
-#include "empathy-contactinfo-utils.h"
 #include "empathy-string-parser.h"
+#include "empathy-time.h"
 #include "empathy-ui-utils.h"
 
 static gchar *

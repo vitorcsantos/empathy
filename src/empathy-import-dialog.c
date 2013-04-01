@@ -21,15 +21,15 @@
  */
 
 #include "config.h"
+#include "empathy-import-dialog.h"
 
 #include <glib/gi18n-lib.h>
 
-#include "empathy-import-dialog.h"
 #include "empathy-import-widget.h"
+#include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include "empathy-debug.h"
-#include "empathy-utils.h"
 
 enum {
   PROP_PARENT = 1,

@@ -19,21 +19,19 @@
  */
 
 #include "config.h"
+#include "empathy-new-call-dialog.h"
 
 #include <glib/gi18n-lib.h>
 
+#include "empathy-call-utils.h"
 #include "empathy-camera-monitor.h"
+#include "empathy-contact-chooser.h"
+#include "empathy-images.h"
+#include "empathy-ui-utils.h"
 #include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_CONTACT
 #include "empathy-debug.h"
-
-#include "empathy-contact-chooser.h"
-#include "empathy-ui-utils.h"
-#include "empathy-images.h"
-
-#include "empathy-new-call-dialog.h"
-#include "empathy-call-utils.h"
 
 static EmpathyNewCallDialog *dialog_singleton = NULL;
 

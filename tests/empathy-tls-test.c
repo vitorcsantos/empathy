@@ -1,18 +1,15 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-
-#include "empathy-tls-verifier.h"
-#include "test-helper.h"
-#include "mock-pkcs11.h"
-
 #include <gcr/gcr.h>
-
 #include <gnutls/gnutls.h>
-
 #include <telepathy-glib/telepathy-glib.h>
 #include <telepathy-glib/svc-tls.h>
 #include <telepathy-glib/svc-generic.h>
+
+#include "empathy-tls-verifier.h"
+#include "mock-pkcs11.h"
+#include "test-helper.h"
 
 #define MOCK_TLS_CERTIFICATE_PATH "/mock/certificate"
 

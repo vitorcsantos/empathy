@@ -19,13 +19,12 @@
  */
 
 #include "config.h"
-
 #include "empathy-subscription-dialog.h"
 
-#include "empathy-utils.h"
-#include "empathy-individual-widget.h"
-
 #include <glib/gi18n-lib.h>
+
+#include "empathy-individual-widget.h"
+#include "empathy-utils.h"
 
 G_DEFINE_TYPE (EmpathySubscriptionDialog, empathy_subscription_dialog, GTK_TYPE_MESSAGE_DIALOG)
 

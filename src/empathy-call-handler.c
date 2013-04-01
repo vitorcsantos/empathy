@@ -19,14 +19,12 @@
  */
 
 #include "config.h"
+#include "empathy-call-handler.h"
 
 #include <telepathy-farstream/telepathy-farstream.h>
 
-#include "empathy-utils.h"
-
 #include "empathy-call-utils.h"
-
-#include "empathy-call-handler.h"
+#include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_VOIP
 #include "empathy-debug.h"

@@ -21,10 +21,10 @@
  */
 
 #include "config.h"
-
-#include "empathy-utils.h"
 #include "empathy-smiley-manager.h"
+
 #include "empathy-ui-utils.h"
+#include "empathy-utils.h"
 
 typedef struct _SmileyManagerTree SmileyManagerTree;
 

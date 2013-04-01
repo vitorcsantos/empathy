@@ -17,11 +17,9 @@
  */
 
 #include "config.h"
-
-#include <glib/gi18n-lib.h>
-
 #include "empathy-keyring.h"
 
+#include <glib/gi18n-lib.h>
 #include <libsecret/secret.h>
 
 #ifdef HAVE_UOA

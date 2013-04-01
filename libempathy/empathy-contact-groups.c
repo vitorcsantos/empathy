@@ -21,11 +21,11 @@
  */
 
 #include "config.h"
+#include "empathy-contact-groups.h"
 
 #include <sys/stat.h>
 
 #include "empathy-utils.h"
-#include "empathy-contact-groups.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_CONTACT
 #include "empathy-debug.h"

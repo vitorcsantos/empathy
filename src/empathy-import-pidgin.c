@@ -20,16 +20,16 @@
  * */
 
 #include "config.h"
+#include "empathy-import-pidgin.h"
 
 #include <glib/gstdio.h>
 #include <dbus/dbus-protocol.h>
 
 #include "empathy-import-utils.h"
-#include "empathy-import-pidgin.h"
+#include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include "empathy-debug.h"
-#include "empathy-utils.h"
 
 /* Pidgin to CM map */
 typedef struct

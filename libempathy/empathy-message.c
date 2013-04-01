@@ -23,11 +23,11 @@
  */
 
 #include "config.h"
+#include "empathy-message.h"
 
 #include <glib/gi18n-lib.h>
 
 #include "empathy-client-factory.h"
-#include "empathy-message.h"
 #include "empathy-time.h"
 #include "empathy-utils.h"
 #include "empathy-enum-types.h"

@@ -18,14 +18,14 @@
  */
 
 #include "config.h"
-
 #include "empathy-base-password-dialog.h"
 
 #include <glib/gi18n-lib.h>
 
+#include "empathy-utils.h"
+
 #define DEBUG_FLAG EMPATHY_DEBUG_SASL
 #include "empathy-debug.h"
-#include "empathy-utils.h"
 
 G_DEFINE_TYPE (EmpathyBasePasswordDialog, empathy_base_password_dialog,
     GTK_TYPE_MESSAGE_DIALOG)

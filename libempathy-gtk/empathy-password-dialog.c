@@ -18,7 +18,6 @@
  */
 
 #include "config.h"
-
 #include "empathy-password-dialog.h"
 
 #include <glib/gi18n-lib.h>

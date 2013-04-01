@@ -30,20 +30,20 @@
  */
 
 #include "config.h"
+#include "empathy-ui-utils.h"
 
 #include <X11/Xatom.h>
 #include <gdk/gdkx.h>
 #include <glib/gi18n-lib.h>
 #include <gio/gdesktopappinfo.h>
 
-#include "empathy-ui-utils.h"
+#include "empathy-ft-factory.h"
 #include "empathy-images.h"
 #include "empathy-live-search.h"
+#include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include "empathy-debug.h"
-#include "empathy-utils.h"
-#include "empathy-ft-factory.h"
 
 void
 empathy_gtk_init (void)

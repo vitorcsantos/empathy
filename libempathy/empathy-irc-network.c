@@ -20,8 +20,8 @@
  */
 
 #include "config.h"
-
 #include "empathy-irc-network.h"
+
 #include "empathy-utils.h"
 
 #define GET_PRIV(obj) EMPATHY_GET_PRIV (obj, EmpathyIrcNetwork)

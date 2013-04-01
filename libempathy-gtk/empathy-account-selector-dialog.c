@@ -19,7 +19,6 @@
  */
 
 #include "config.h"
-
 #include "empathy-account-selector-dialog.h"
 
 enum

@@ -18,10 +18,9 @@
  */
 
 #include "config.h"
+#include "empathy-calendar-button.h"
 
 #include <glib/gi18n-lib.h>
-
-#include "empathy-calendar-button.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER_THING
 #include "empathy-debug.h"

@@ -25,6 +25,7 @@
  */
 
 #include "config.h"
+#include "empathy-accounts.h"
 
 #include <glib/gi18n.h>
 
@@ -32,10 +33,9 @@
 #include <cheese-gtk.h>
 #endif
 
-#include "empathy-utils.h"
-#include "empathy-ui-utils.h"
-
 #include "empathy-accounts-common.h"
+#include "empathy-ui-utils.h"
+#include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_ACCOUNT
 #include "empathy-debug.h"

@@ -22,6 +22,11 @@
 #ifndef __EMPATHY_ACCOUNTS_COMMON_H__
 #define __EMPATHY_ACCOUNTS_COMMON_H__
 
+#include <glib.h>
+#include <telepathy-glib/telepathy-glib.h>
+
+G_BEGIN_DECLS
+
 gboolean empathy_accounts_has_non_salut_accounts (TpAccountManager *manager);
 
 gboolean empathy_accounts_has_accounts (TpAccountManager *manager);
@@ -29,5 +34,7 @@ gboolean empathy_accounts_has_accounts (TpAccountManager *manager);
 void empathy_accounts_show_accounts_ui (TpAccountManager *manager,
     TpAccount *account,
     GApplication *app);
+
+G_END_DECLS
 
 #endif /* __EMPATHY_ACCOUNTS_COMMON_H__ */

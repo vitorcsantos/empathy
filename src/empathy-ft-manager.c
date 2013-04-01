@@ -28,17 +28,16 @@
 /* The original file transfer manager code was copied from Epiphany */
 
 #include "config.h"
+#include "empathy-ft-manager.h"
 
 #include <glib/gi18n.h>
 
-#define DEBUG_FLAG EMPATHY_DEBUG_FT
-#include "empathy-debug.h"
+#include "empathy-geometry.h"
+#include "empathy-ui-utils.h"
 #include "empathy-utils.h"
 
-#include "empathy-ui-utils.h"
-#include "empathy-geometry.h"
-
-#include "empathy-ft-manager.h"
+#define DEBUG_FLAG EMPATHY_DEBUG_FT
+#include "empathy-debug.h"
 
 enum
 {

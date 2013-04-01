@@ -19,11 +19,12 @@
  *          Cosimo Cecchi <cosimo.cecchi@collabora.co.uk>
  */
 
-#include "empathy-connection-managers.h"
-#include "empathy-utils.h"
-
+#include "config.h"
 #include "empathy-import-utils.h"
+
+#include "empathy-connection-managers.h"
 #include "empathy-import-pidgin.h"
+#include "empathy-utils.h"
 
 EmpathyImportAccountData *
 empathy_import_account_data_new (const gchar *source)

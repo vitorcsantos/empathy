@@ -19,15 +19,13 @@
  */
 
 #include "config.h"
+#include "empathy-irc-network-dialog.h"
 
 #include <glib/gi18n-lib.h>
 
-#include "empathy-utils.h"
-
 #include "empathy-ui-utils.h"
+#include "empathy-utils.h"
 #include "totem-subtitle-encoding.h"
-
-#include "empathy-irc-network-dialog.h"
 
 typedef struct {
   EmpathyIrcNetwork *network;

@@ -18,23 +18,19 @@
  */
 
 #include "config.h"
+#include "empathy-chat-manager.h"
 
 #include <telepathy-glib/proxy-subclass.h>
 
 #include "empathy-chatroom-manager.h"
-#include "empathy-request-util.h"
-#include "empathy-individual-manager.h"
-
-#include "empathy-ui-utils.h"
-
 #include "empathy-chat-window.h"
+#include "empathy-individual-manager.h"
+#include "empathy-request-util.h"
+#include "empathy-ui-utils.h"
+#include "extensions.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include "empathy-debug.h"
-
-#include "empathy-chat-manager.h"
-
-#include "extensions.h"
 
 enum {
   CLOSED_CHATS_CHANGED,

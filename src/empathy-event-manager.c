@@ -20,23 +20,21 @@
  */
 
 #include "config.h"
+#include "empathy-event-manager.h"
 
 #include <glib/gi18n.h>
 
-#include "empathy-presence-manager.h"
-#include "empathy-connection-aggregator.h"
-#include "empathy-tp-chat.h"
-#include "empathy-utils.h"
-#include "empathy-gsettings.h"
-#include "empathy-sasl-mechanisms.h"
-
-#include "empathy-images.h"
-#include "empathy-sound-manager.h"
-#include "empathy-ui-utils.h"
 #include "empathy-call-utils.h"
+#include "empathy-connection-aggregator.h"
+#include "empathy-gsettings.h"
+#include "empathy-images.h"
+#include "empathy-presence-manager.h"
+#include "empathy-sasl-mechanisms.h"
+#include "empathy-sound-manager.h"
 #include "empathy-subscription-dialog.h"
-
-#include "empathy-event-manager.h"
+#include "empathy-tp-chat.h"
+#include "empathy-ui-utils.h"
+#include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_DISPATCHER
 #include "empathy-debug.h"

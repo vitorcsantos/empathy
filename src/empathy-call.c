@@ -23,7 +23,6 @@
 #include "config.h"
 
 #include <glib/gi18n.h>
-
 #include <clutter-gtk/clutter-gtk.h>
 #include <clutter-gst/clutter-gst.h>
 
@@ -31,10 +30,9 @@
 #include <X11/Xlib.h>
 #endif
 
-#include "empathy-ui-utils.h"
-
-#include "empathy-call-window.h"
 #include "empathy-call-factory.h"
+#include "empathy-call-window.h"
+#include "empathy-ui-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_VOIP
 #include "empathy-debug.h"

@@ -3,15 +3,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-
-#include "test-helper.h"
-
 #include <telepathy-glib/telepathy-glib.h>
+
+#include "empathy-string-parser.h"
+#include "test-helper.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_TESTS
 #include "empathy-debug.h"
-
-#include "empathy-string-parser.h"
 
 static void
 test_replace_match (const gchar *text,

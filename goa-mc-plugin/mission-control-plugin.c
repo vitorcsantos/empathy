@@ -23,6 +23,8 @@
  *    Danielle Madeley <danielle.madeley@collabora.co.uk>
  */
 
+#include "config.h"
+
 #include <mission-control-plugins/mission-control-plugins.h>
 
 #include "mcp-account-manager-goa.h"

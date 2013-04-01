@@ -1,8 +1,7 @@
-#include <config.h>
+#include "config.h"
 
 #include "empathy-roster-model.h"
 #include "empathy-roster-model-manager.h"
-
 #include "empathy-roster-view.h"
 #include "empathy-ui-utils.h"
 

@@ -18,18 +18,16 @@
  */
 
 #include "config.h"
+#include "empathy-notify-manager.h"
 
 #include <libnotify/notify.h>
 
 #include "empathy-gsettings.h"
-#include "empathy-utils.h"
-
 #include "empathy-ui-utils.h"
+#include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include "empathy-debug.h"
-
-#include "empathy-notify-manager.h"
 
 #define GET_PRIV(obj) EMPATHY_GET_PRIV (obj, EmpathyNotifyManager)
 

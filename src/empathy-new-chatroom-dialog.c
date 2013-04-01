@@ -22,17 +22,15 @@
  */
 
 #include "config.h"
+#include "empathy-new-chatroom-dialog.h"
 
 #include <glib/gi18n.h>
 
-#include "empathy-utils.h"
-#include "empathy-request-util.h"
-#include "empathy-gsettings.h"
-
 #include "empathy-account-chooser.h"
+#include "empathy-gsettings.h"
+#include "empathy-request-util.h"
 #include "empathy-ui-utils.h"
-
-#include "empathy-new-chatroom-dialog.h"
+#include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include "empathy-debug.h"

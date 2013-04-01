@@ -3,10 +3,9 @@
 #include <string.h>
 #include <glib/gstdio.h>
 
-#include "test-irc-helper.h"
-#include "test-helper.h"
-
 #include "empathy-irc-network-manager.h"
+#include "test-helper.h"
+#include "test-irc-helper.h"
 
 #define GLOBAL_SAMPLE "default-irc-networks-sample.xml"
 #define USER_SAMPLE "user-irc-networks-sample.xml"

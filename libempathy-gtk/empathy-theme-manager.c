@@ -21,14 +21,12 @@
  */
 
 #include "config.h"
+#include "empathy-theme-manager.h"
 
 #include <string.h>
-
 #include <gtk/gtk.h>
 
 #include "empathy-gsettings.h"
-
-#include "empathy-theme-manager.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include "empathy-debug.h"

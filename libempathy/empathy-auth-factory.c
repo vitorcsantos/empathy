@@ -19,11 +19,8 @@
  */
 
 #include "config.h"
-
 #include "empathy-auth-factory.h"
 
-#define DEBUG_FLAG EMPATHY_DEBUG_TLS
-#include "empathy-debug.h"
 #include "empathy-keyring.h"
 #include "empathy-sasl-mechanisms.h"
 #include "empathy-server-sasl-handler.h"
@@ -39,6 +36,9 @@
 #endif /* HAVE_UOA */
 
 #include "extensions.h"
+
+#define DEBUG_FLAG EMPATHY_DEBUG_TLS
+#include "empathy-debug.h"
 
 G_DEFINE_TYPE (EmpathyAuthFactory, empathy_auth_factory, TP_TYPE_BASE_CLIENT);
 

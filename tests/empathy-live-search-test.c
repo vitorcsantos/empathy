@@ -4,12 +4,11 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "empathy-live-search.h"
 #include "test-helper.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_TESTS
 #include "empathy-debug.h"
-
-#include "empathy-live-search.h"
 
 typedef struct
 {

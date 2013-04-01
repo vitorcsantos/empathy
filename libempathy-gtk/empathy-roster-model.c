@@ -18,7 +18,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 #include "config.h"
-
 #include "empathy-roster-model.h"
 
 G_DEFINE_INTERFACE (EmpathyRosterModel, empathy_roster_model, G_TYPE_OBJECT)

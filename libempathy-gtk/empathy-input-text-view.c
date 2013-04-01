@@ -25,6 +25,7 @@
  *          Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
  */
 
+#include "config.h"
 #include "empathy-input-text-view.h"
 
 G_DEFINE_TYPE (EmpathyInputTextView, empathy_input_text_view,

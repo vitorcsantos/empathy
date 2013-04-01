@@ -25,22 +25,20 @@
  */
 
 #include "config.h"
+#include "empathy-accounts-dialog.h"
 
 #include <glib/gi18n-lib.h>
 
-#include "empathy-utils.h"
-#include "empathy-pkg-kit.h"
-
-#include "empathy-ui-utils.h"
-#include "empathy-account-widget-sip.h"
-#include "empathy-user-info.h"
-#include "empathy-local-xmpp-assistant-widget.h"
-#include "empathy-new-account-dialog.h"
-
 #include "empathy-accounts-common.h"
-#include "empathy-accounts-dialog.h"
+#include "empathy-account-widget-sip.h"
 #include "empathy-import-dialog.h"
 #include "empathy-import-utils.h"
+#include "empathy-local-xmpp-assistant-widget.h"
+#include "empathy-new-account-dialog.h"
+#include "empathy-pkg-kit.h"
+#include "empathy-ui-utils.h"
+#include "empathy-user-info.h"
+#include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_ACCOUNT
 #include "empathy-debug.h"

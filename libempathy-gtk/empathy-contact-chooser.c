@@ -10,15 +10,13 @@
  */
 
 #include "config.h"
-
 #include "empathy-contact-chooser.h"
 
-#include "empathy-utils.h"
 #include "empathy-client-factory.h"
-
 #include "empathy-individual-store-manager.h"
 #include "empathy-individual-view.h"
 #include "empathy-ui-utils.h"
+#include "empathy-utils.h"
 
 G_DEFINE_TYPE (EmpathyContactChooser,
     empathy_contact_chooser, GTK_TYPE_BOX);

@@ -20,14 +20,14 @@
  */
 
 #include "config.h"
-
 #include "empathy-tls-verifier.h"
 
 #include <gcr/gcr.h>
 
+#include "empathy-utils.h"
+
 #define DEBUG_FLAG EMPATHY_DEBUG_TLS
 #include "empathy-debug.h"
-#include "empathy-utils.h"
 
 G_DEFINE_TYPE (EmpathyTLSVerifier, empathy_tls_verifier,
     G_TYPE_OBJECT)

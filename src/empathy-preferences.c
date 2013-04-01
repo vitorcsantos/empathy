@@ -24,18 +24,16 @@
  */
 
 #include "config.h"
+#include "empathy-preferences.h"
 
 #include <glib/gi18n.h>
 
 #include "empathy-client-factory.h"
 #include "empathy-gsettings.h"
-#include "empathy-utils.h"
-
-#include "empathy-ui-utils.h"
-#include "empathy-theme-manager.h"
 #include "empathy-spell.h"
-
-#include "empathy-preferences.h"
+#include "empathy-theme-manager.h"
+#include "empathy-ui-utils.h"
+#include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include "empathy-debug.h"

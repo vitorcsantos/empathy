@@ -23,29 +23,26 @@
  */
 
 #include "config.h"
+#include "empathy-log-window.h"
 
 #include <glib/gi18n-lib.h>
+#include <telepathy-glib/proxy-subclass.h>
 #include <webkit/webkit.h>
 
-#include <telepathy-glib/proxy-subclass.h>
-
-#include "extensions.h"
-
 #include "action-chain-internal.h"
-#include "empathy-camera-monitor.h"
-#include "empathy-gsettings.h"
-#include "empathy-request-util.h"
-#include "empathy-utils.h"
-
-#include "empathy-log-window.h"
 #include "empathy-account-chooser.h"
 #include "empathy-call-utils.h"
-#include "empathy-individual-information-dialog.h"
+#include "empathy-camera-monitor.h"
+#include "empathy-geometry.h"
+#include "empathy-gsettings.h"
 #include "empathy-images.h"
+#include "empathy-individual-information-dialog.h"
+#include "empathy-request-util.h"
 #include "empathy-theme-manager.h"
 #include "empathy-ui-utils.h"
+#include "empathy-utils.h"
 #include "empathy-webkit-utils.h"
-#include "empathy-geometry.h"
+#include "extensions.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include "empathy-debug.h"

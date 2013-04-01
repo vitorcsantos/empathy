@@ -29,10 +29,10 @@
 
 #include <glib-object.h>
 #include <gtk/gtk.h>
-
 #include <telepathy-glib/telepathy-glib.h>
 
 #include "empathy-chat.h"
+#include "empathy-individual-manager.h"
 
 G_BEGIN_DECLS
 

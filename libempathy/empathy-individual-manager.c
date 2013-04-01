@@ -21,8 +21,8 @@
  */
 
 #include "config.h"
-
 #include "empathy-individual-manager.h"
+
 #include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_CONTACT

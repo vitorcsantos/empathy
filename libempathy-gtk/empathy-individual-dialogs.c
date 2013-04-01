@@ -20,14 +20,13 @@
  */
 
 #include "config.h"
+#include "empathy-individual-dialogs.h"
 
 #include <glib/gi18n-lib.h>
 
+#include "empathy-contact-widget.h"
 #include "empathy-individual-manager.h"
 #include "empathy-utils.h"
-
-#include "empathy-individual-dialogs.h"
-#include "empathy-contact-widget.h"
 
 #define BULLET_POINT "\342\200\242"
 

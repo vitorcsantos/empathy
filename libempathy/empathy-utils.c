@@ -27,16 +27,14 @@
  */
 
 #include "config.h"
+#include "empathy-utils.h"
 
 #include <glib/gi18n-lib.h>
-
 #include <libxml/uri.h>
 #include <dbus/dbus-protocol.h>
 
 #include "empathy-client-factory.h"
-#include "empathy-utils.h"
 #include "empathy-presence-manager.h"
-
 #include "extensions.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER

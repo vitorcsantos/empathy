@@ -22,16 +22,15 @@
  */
 
 #include "config.h"
+#include "empathy-individual-information-dialog.h"
 
 #include <glib/gi18n-lib.h>
 
 #include "empathy-individual-manager.h"
-#include "empathy-utils.h"
-#include "empathy-pkg-kit.h"
-
-#include "empathy-individual-information-dialog.h"
 #include "empathy-individual-widget.h"
+#include "empathy-pkg-kit.h"
 #include "empathy-ui-utils.h"
+#include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_CONTACT
 #include "empathy-debug.h"

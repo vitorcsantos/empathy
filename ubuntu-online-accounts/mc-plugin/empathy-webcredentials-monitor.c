@@ -1,12 +1,9 @@
 #include "config.h"
+#include "empathy-webcredentials-monitor.h"
 
 #include <gio/gio.h>
-
 #include <telepathy-glib/telepathy-glib.h>
-
 #include <libaccounts-glib/ag-account.h>
-
-#include "empathy-webcredentials-monitor.h"
 
 G_DEFINE_TYPE (EmpathyWebcredentialsMonitor, empathy_webcredentials_monitor, G_TYPE_OBJECT)
 

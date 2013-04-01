@@ -20,18 +20,17 @@
 */
 
 #include "config.h"
+#include "empathy-debug-window.h"
 
 #include <glib/gi18n.h>
 #include <libsoup/soup.h>
 
-#define DEBUG_FLAG EMPATHY_DEBUG_OTHER
-#include "empathy-debug.h"
-#include "empathy-utils.h"
-
 #include "empathy-geometry.h"
 #include "empathy-ui-utils.h"
+#include "empathy-utils.h"
 
-#include "empathy-debug-window.h"
+#define DEBUG_FLAG EMPATHY_DEBUG_OTHER
+#include "empathy-debug.h"
 
 G_DEFINE_TYPE (EmpathyDebugWindow, empathy_debug_window,
     GTK_TYPE_WINDOW)

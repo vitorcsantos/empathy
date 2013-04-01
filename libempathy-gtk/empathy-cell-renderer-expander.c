@@ -21,8 +21,10 @@
  * Authors: Kristian Rietveld <kris@imendio.com>
  */
 
-#include "empathy-utils.h"
+#include "config.h"
 #include "empathy-cell-renderer-expander.h"
+
+#include "empathy-utils.h"
 
 #define GET_PRIV(obj) EMPATHY_GET_PRIV (obj, EmpathyCellRendererExpander)
 typedef struct {

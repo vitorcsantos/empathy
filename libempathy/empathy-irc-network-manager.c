@@ -19,11 +19,11 @@
  */
 
 #include "config.h"
+#include "empathy-irc-network-manager.h"
 
 #include <sys/stat.h>
 
 #include "empathy-utils.h"
-#include "empathy-irc-network-manager.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_IRC
 #include "empathy-debug.h"

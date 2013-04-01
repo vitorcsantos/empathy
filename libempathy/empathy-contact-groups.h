@@ -23,9 +23,9 @@
 #ifndef __EMPATHY_CONTACT_GROUPS_H__
 #define __EMPATHY_CONTACT_GROUPS_H__
 
-G_BEGIN_DECLS
-
 #include <glib.h>
+
+G_BEGIN_DECLS
 
 void     empathy_contact_groups_get_all     (void);
 

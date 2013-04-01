@@ -19,7 +19,6 @@
  */
 
 #include "config.h"
-
 #include "empathy-rounded-actor.h"
 
 G_DEFINE_TYPE(EmpathyRoundedActor, empathy_rounded_actor, GTK_CLUTTER_TYPE_ACTOR)

@@ -22,21 +22,19 @@
  */
 
 #include "config.h"
-
 #include "empathy-sanity-cleaning.h"
 
-#include "empathy-gsettings.h"
-
-#include "empathy-theme-manager.h"
-
 #ifdef HAVE_UOA
-#include "empathy-pkg-kit.h"
-#include "empathy-uoa-utils.h"
-
 #include <libaccounts-glib/ag-account-service.h>
 #include <libaccounts-glib/ag-manager.h>
 #include <libaccounts-glib/ag-service.h>
+
+#include "empathy-pkg-kit.h"
+#include "empathy-uoa-utils.h"
 #endif
+
+#include "empathy-gsettings.h"
+#include "empathy-theme-manager.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include "empathy-debug.h"

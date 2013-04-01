@@ -26,9 +26,9 @@
 #define __EMPATHY_IMPORT_WIDGET_H__
 
 #include <glib-object.h>
+#include <gtk/gtk.h>
 
 #include "empathy-connection-managers.h"
-
 #include "empathy-import-utils.h"
 
 G_BEGIN_DECLS

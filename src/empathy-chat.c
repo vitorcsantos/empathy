@@ -23,16 +23,13 @@
 #include "config.h"
 
 #include <glib/gi18n.h>
-
 #include <libnotify/notify.h>
-
-#include "empathy-presence-manager.h"
-
-#include "empathy-theme-manager.h"
-#include "empathy-ui-utils.h"
 
 #include "empathy-chat-manager.h"
 #include "empathy-chat-resources.h"
+#include "empathy-presence-manager.h"
+#include "empathy-theme-manager.h"
+#include "empathy-ui-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_CHAT
 #include "empathy-debug.h"

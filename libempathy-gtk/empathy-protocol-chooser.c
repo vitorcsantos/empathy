@@ -21,14 +21,13 @@
  */
 
 #include "config.h"
+#include "empathy-protocol-chooser.h"
 
 #include <glib/gi18n-lib.h>
 
-#include "empathy-utils.h"
 #include "empathy-connection-managers.h"
-
-#include "empathy-protocol-chooser.h"
 #include "empathy-ui-utils.h"
+#include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_ACCOUNT
 #include "empathy-debug.h"

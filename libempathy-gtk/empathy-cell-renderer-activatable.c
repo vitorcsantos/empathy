@@ -21,10 +21,9 @@
  */
 
 #include "config.h"
+#include "empathy-cell-renderer-activatable.h"
 
 #include "empathy-utils.h"
-
-#include "empathy-cell-renderer-activatable.h"
 
 enum {
   PATH_ACTIVATED,

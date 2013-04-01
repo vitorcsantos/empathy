@@ -26,29 +26,29 @@
  *          Xavier Claessens <xclaesse@gmail.com>
  */
 
-#include "config.h"
 /* for GCompletion */
 #define GLIB_DISABLE_DEPRECATION_WARNINGS 1
 
+#include "config.h"
+#include "empathy-chat.h"
+
 #include <glib/gi18n-lib.h>
 
-#include "empathy-gsettings.h"
-#include "empathy-keyring.h"
-#include "empathy-utils.h"
-#include "empathy-request-util.h"
 #include "empathy-client-factory.h"
-
-#include "empathy-chat.h"
-#include "empathy-spell.h"
+#include "empathy-gsettings.h"
 #include "empathy-individual-information-dialog.h"
 #include "empathy-individual-store-channel.h"
 #include "empathy-individual-view.h"
 #include "empathy-input-text-view.h"
+#include "empathy-keyring.h"
+#include "empathy-request-util.h"
 #include "empathy-search-bar.h"
-#include "empathy-theme-manager.h"
 #include "empathy-smiley-manager.h"
-#include "empathy-ui-utils.h"
+#include "empathy-spell.h"
 #include "empathy-string-parser.h"
+#include "empathy-theme-manager.h"
+#include "empathy-ui-utils.h"
+#include "empathy-utils.h"
 #include "extensions.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_CHAT

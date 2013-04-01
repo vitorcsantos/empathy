@@ -19,11 +19,10 @@
  */
 
 #include "config.h"
+#include "empathy-share-my-desktop.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_SHARE_DESKTOP
 #include "empathy-debug.h"
-
-#include "empathy-share-my-desktop.h"
 
 static void
 create_tube_channel_cb (GObject *source,

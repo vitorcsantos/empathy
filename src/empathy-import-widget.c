@@ -23,17 +23,16 @@
 /* empathy-import-widget.c */
 
 #include "config.h"
+#include "empathy-import-widget.h"
+
+#include <glib/gi18n-lib.h>
 
 #include "empathy-import-dialog.h"
-#include "empathy-import-widget.h"
+#include "empathy-ui-utils.h"
+#include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include "empathy-debug.h"
-#include "empathy-utils.h"
-
-#include "empathy-ui-utils.h"
-
-#include <glib/gi18n-lib.h>
 
 G_DEFINE_TYPE (EmpathyImportWidget, empathy_import_widget, G_TYPE_OBJECT)
 

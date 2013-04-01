@@ -22,6 +22,7 @@
  */
 
 #include "config.h"
+#include "empathy-spell.h"
 
 #include <glib/gi18n-lib.h>
 
@@ -29,11 +30,10 @@
 #include <enchant.h>
 #endif
 
-#include "empathy-spell.h"
+#include "empathy-gsettings.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include "empathy-debug.h"
-#include "empathy-gsettings.h"
 
 #ifdef HAVE_ENCHANT
 

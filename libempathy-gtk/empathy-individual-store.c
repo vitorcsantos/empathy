@@ -25,13 +25,13 @@
  */
 
 #include "config.h"
+#include "empathy-individual-store.h"
 
 #include <glib/gi18n-lib.h>
 
-#include "empathy-utils.h"
-
-#include "empathy-ui-utils.h"
 #include "empathy-gtk-enum-types.h"
+#include "empathy-ui-utils.h"
+#include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_CONTACT
 #include "empathy-debug.h"

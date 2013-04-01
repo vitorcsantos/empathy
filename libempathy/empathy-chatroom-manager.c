@@ -22,11 +22,11 @@
  */
 
 #include "config.h"
+#include "empathy-chatroom-manager.h"
 
 #include <sys/stat.h>
 
 #include "empathy-client-factory.h"
-#include "empathy-chatroom-manager.h"
 #include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
