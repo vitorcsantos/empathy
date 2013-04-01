@@ -13,7 +13,6 @@
 #define __EMPATHY_INVITE_PARTICIPANT_DIALOG_H__
 
 #include <gtk/gtk.h>
-
 #include <telepathy-glib/telepathy-glib.h>
 
 #include "empathy-tp-chat.h"

@@ -23,9 +23,8 @@
 #include <glib-object.h>
 #include <gtk/gtk.h>
 
-#include "empathy-server-sasl-handler.h"
-
 #include "empathy-base-password-dialog.h"
+#include "empathy-server-sasl-handler.h"
 
 G_BEGIN_DECLS
 

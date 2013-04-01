@@ -31,9 +31,8 @@
 #include <gtk/gtk.h>
 
 #include "empathy-contact.h"
-#include "empathy-tp-chat.h"
-
 #include "empathy-theme-adium.h"
+#include "empathy-tp-chat.h"
 
 G_BEGIN_DECLS
 

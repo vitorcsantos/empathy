@@ -25,7 +25,6 @@
 
 #include <glib-object.h>
 
-
 G_BEGIN_DECLS
 
 #define EMPATHY_TYPE_LOCATION_MANAGER         (empathy_location_manager_get_type ())

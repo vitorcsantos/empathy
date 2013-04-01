@@ -28,12 +28,11 @@
 #define __EMPATHY_INDIVIDUAL_VIEW_H__
 
 #include <gtk/gtk.h>
-
 #include <folks/folks.h>
 
-#include "empathy-live-search.h"
 #include "empathy-individual-menu.h"
 #include "empathy-individual-store.h"
+#include "empathy-live-search.h"
 
 G_BEGIN_DECLS
 #define EMPATHY_TYPE_INDIVIDUAL_VIEW         (empathy_individual_view_get_type ())

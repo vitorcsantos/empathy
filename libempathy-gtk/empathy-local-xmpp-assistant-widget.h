@@ -22,7 +22,6 @@
 #define __EMPATHY_LOCAL_XMPP_ASSISTANT_WIDGET_H__
 
 #include <gtk/gtk.h>
-
 #include <telepathy-glib/telepathy-glib.h>
 
 G_BEGIN_DECLS

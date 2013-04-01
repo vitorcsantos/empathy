@@ -24,7 +24,6 @@
 #define __USE_XOPEN
 #endif
 #include <time.h>
-
 #include <glib.h>
 
 G_BEGIN_DECLS

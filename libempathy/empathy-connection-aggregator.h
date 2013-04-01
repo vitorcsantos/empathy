@@ -22,7 +22,6 @@
 #define __EMPATHY_CONNECTION_AGGREGATOR_H__
 
 #include <glib-object.h>
-
 #include <telepathy-glib/telepathy-glib.h>
 
 G_BEGIN_DECLS

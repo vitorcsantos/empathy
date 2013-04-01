@@ -22,10 +22,9 @@
 #define __EMPATHY_NOTIFY_MANAGER_H__
 
 #include <glib-object.h>
+#include <libnotify/notification.h>
 
 #include "empathy-contact.h"
-
-#include <libnotify/notification.h>
 
 G_BEGIN_DECLS
 

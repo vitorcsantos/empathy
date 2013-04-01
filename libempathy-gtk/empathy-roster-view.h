@@ -4,7 +4,6 @@
 
 #include "egg-list-box/egg-list-box.h"
 #include "empathy-live-search.h"
-
 #include "empathy-roster-model.h"
 
 G_BEGIN_DECLS

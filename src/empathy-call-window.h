@@ -24,8 +24,8 @@
 #include <glib-object.h>
 #include <gtk/gtk.h>
 
-#include "empathy-call-handler.h"
 #include "empathy-audio-src.h"
+#include "empathy-call-handler.h"
 #include "empathy-video-src.h"
 
 G_BEGIN_DECLS

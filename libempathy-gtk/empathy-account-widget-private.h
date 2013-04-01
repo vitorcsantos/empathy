@@ -22,9 +22,10 @@
 #ifndef __EMPATHY_ACCOUNT_WIDGET_PRIVATE_H__
 #define __EMPATHY_ACCOUNT_WIDGET_PRIVATE_H__
 
-#include "empathy-account-widget.h"
 #include <glib.h>
 #include <gtk/gtk.h>
+
+#include "empathy-account-widget.h"
 
 G_BEGIN_DECLS
 

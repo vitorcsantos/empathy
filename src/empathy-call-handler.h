@@ -22,10 +22,8 @@
 #define __EMPATHY_CALL_HANDLER_H__
 
 #include <glib-object.h>
-
 #include <gst/gst.h>
 #include <farstream/fs-conference.h>
-
 #include <telepathy-glib/telepathy-glib.h>
 
 #include "empathy-contact.h"

@@ -22,6 +22,7 @@
 #define __EMPATHY_ACCOUNT_WIDGET_SIP_H__
 
 #include <gtk/gtk.h>
+
 #include "empathy-account-widget.h"
 
 G_BEGIN_DECLS

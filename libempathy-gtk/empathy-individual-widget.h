@@ -22,7 +22,6 @@
 #define __EMPATHY_INDIVIDUAL_WIDGET_H__
 
 #include <gtk/gtk.h>
-
 #include <folks/folks.h>
 
 G_BEGIN_DECLS

@@ -33,7 +33,6 @@
 #define __EMPATHY_UI_UTILS_H__
 
 #include <gtk/gtk.h>
-
 #include <folks/folks.h>
 
 #include "empathy-contact.h"

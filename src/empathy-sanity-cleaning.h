@@ -24,10 +24,14 @@
 
 #include <gio/gio.h>
 
+G_BEGIN_DECLS
+
 void empathy_sanity_checking_run_async (GAsyncReadyCallback callback,
     gpointer user_data);
 
 gboolean empathy_sanity_checking_run_finish (GAsyncResult *result,
     GError **error);
+
+G_END_DECLS
 
 #endif

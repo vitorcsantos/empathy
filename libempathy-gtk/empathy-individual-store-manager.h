@@ -29,7 +29,6 @@
 #include <gtk/gtk.h>
 
 #include "empathy-individual-manager.h"
-
 #include "empathy-individual-store.h"
 
 G_BEGIN_DECLS

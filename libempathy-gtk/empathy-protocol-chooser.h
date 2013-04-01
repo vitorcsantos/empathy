@@ -25,7 +25,6 @@
 
 #include <glib-object.h>
 #include <gtk/gtk.h>
-
 #include <telepathy-glib/telepathy-glib.h>
 
 #include "empathy-account-settings.h"

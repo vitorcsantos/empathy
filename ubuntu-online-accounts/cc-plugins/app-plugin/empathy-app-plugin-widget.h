@@ -18,12 +18,10 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-
 #ifndef __EMPATHY_APP_PLUGIN_WIDGET_H__
 #define __EMPATHY_APP_PLUGIN_WIDGET_H__
 
 #include <gtk/gtk.h>
-
 #include <libaccounts-glib/ag-account.h>
 
 G_BEGIN_DECLS

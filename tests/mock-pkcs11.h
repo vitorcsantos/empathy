@@ -19,11 +19,9 @@
  */
 
 #include <glib.h>
-
-#include <gcr/gcr.h>
-
-#include <p11-kit/pkcs11.h>
 #include <gck/pkcs11x.h>
+#include <gcr/gcr.h>
+#include <p11-kit/pkcs11.h>
 
 #ifndef MOCK_MODULE_H
 #define MOCK_MODULE_H

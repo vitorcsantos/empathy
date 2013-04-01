@@ -23,7 +23,6 @@
 #define __EMPATHY_INDIVIDUAL_EDIT_DIALOG_H__
 
 #include <gtk/gtk.h>
-
 #include <folks/folks.h>
 
 G_BEGIN_DECLS
