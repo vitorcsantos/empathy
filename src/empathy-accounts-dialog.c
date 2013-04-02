@@ -30,7 +30,7 @@
 #include <glib/gi18n-lib.h>
 
 #include "empathy-accounts-common.h"
-#include "empathy-account-widget-sip.h"
+#include "empathy-account-widget.h"
 #include "empathy-import-dialog.h"
 #include "empathy-import-utils.h"
 #include "empathy-local-xmpp-assistant-widget.h"
