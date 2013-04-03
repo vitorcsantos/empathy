@@ -2,7 +2,7 @@
 #include "test-irc-helper.h"
 
 void
-check_server (EmpathyIrcServer *server,
+check_server (TpawIrcServer *server,
               const gchar *_address,
               guint _port,
               gboolean _ssl)
@@ -27,7 +27,7 @@ check_server (EmpathyIrcServer *server,
 }
 
 void
-check_network (EmpathyIrcNetwork *network,
+check_network (TpawIrcNetwork *network,
               const gchar *_name,
               const gchar *_charset,
               struct server_t *_servers,
@@ -47,13 +47,13 @@ check_network (EmpathyIrcNetwork *network,
   g_assert (name != NULL && strcmp (name, _name) == 0);
   g_assert (charset != NULL && strcmp (charset, _charset) == 0);
 
-  servers = empathy_irc_network_get_servers (network);
+  servers = tpaw_irc_network_get_servers (network);
   g_assert (g_slist_length (servers) == nb_servers);
 
   /* Is that the right servers ? */
   for (l = servers, i = 0; l != NULL; l = g_slist_next (l), i++)
     {
-      EmpathyIrcServer *server;
+      TpawIrcServer *server;
       gchar *address;
       guint port;
       gboolean ssl;

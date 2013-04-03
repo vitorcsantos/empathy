@@ -28,7 +28,7 @@
 #include "empathy-ui-utils.h"
 
 typedef struct {
-  EmpathyAccountWidget *self;
+  TpawAccountWidget *self;
   GtkWidget *vbox_settings;
 
   GtkWidget *label_stun_server;
@@ -39,19 +39,19 @@ typedef struct {
   GtkWidget *combobox_transport;
   GtkWidget *combobox_keep_alive_mechanism;
   GtkWidget *spinbutton_keepalive_interval;
-} EmpathyAccountWidgetSip;
+} TpawAccountWidgetSip;
 
 static void
 account_widget_sip_destroy_cb (GtkWidget *widget,
-                               EmpathyAccountWidgetSip *settings)
+                               TpawAccountWidgetSip *settings)
 {
-  g_slice_free (EmpathyAccountWidgetSip, settings);
+  g_slice_free (TpawAccountWidgetSip, settings);
 }
 
 static void
 account_widget_sip_discover_stun_toggled_cb (
     GtkWidget *checkbox,
-    EmpathyAccountWidgetSip *settings)
+    TpawAccountWidgetSip *settings)
 {
   gboolean active;
 
@@ -64,7 +64,7 @@ account_widget_sip_discover_stun_toggled_cb (
 
 static void
 keep_alive_mechanism_combobox_change_cb (GtkWidget *widget,
-    EmpathyAccountWidgetSip *self)
+    TpawAccountWidgetSip *self)
 {
   GtkTreeIter iter;
   GtkTreeModel *model;
@@ -87,24 +87,24 @@ keep_alive_mechanism_combobox_change_cb (GtkWidget *widget,
 static void
 checkbutton_tel_toggled (
     GtkWidget *checkbox,
-    EmpathyAccountWidgetSip *sip_settings)
+    TpawAccountWidgetSip *sip_settings)
 {
   EmpathyAccountSettings *settings;
 
-  settings = empathy_account_widget_get_settings (sip_settings->self);
+  settings = tpaw_account_widget_get_settings (sip_settings->self);
 
   empathy_account_settings_set_uri_scheme_tel (settings,
       gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (checkbox)));
 
-  empathy_account_widget_changed (sip_settings->self);
+  tpaw_account_widget_changed (sip_settings->self);
 }
 
 GtkWidget *
-empathy_account_widget_sip_build (EmpathyAccountWidget *self,
+tpaw_account_widget_sip_build (TpawAccountWidget *self,
     const char *filename,
     GtkWidget **grid_common_settings)
 {
-  EmpathyAccountWidgetSip *settings;
+  TpawAccountWidgetSip *settings;
   GtkWidget *vbox_settings;
   gboolean is_simple;
   GtkWidget *grid_advanced;
@@ -117,7 +117,7 @@ empathy_account_widget_sip_build (EmpathyAccountWidget *self,
           "vbox_sip_simple", &vbox_settings,
           NULL);
 
-      empathy_account_widget_handle_params (self,
+      tpaw_account_widget_handle_params (self,
           "entry_userid_simple", "account",
           "entry_password_simple", "password",
           NULL);
@@ -130,7 +130,7 @@ empathy_account_widget_sip_build (EmpathyAccountWidget *self,
       GtkCellRenderer *renderer;
       GtkToggleButton *checkbutton_tel;
 
-      settings = g_slice_new0 (EmpathyAccountWidgetSip);
+      settings = g_slice_new0 (TpawAccountWidgetSip);
       settings->self = self;
 
       self->ui_details->gui = empathy_builder_get_resource (filename,
@@ -150,9 +150,9 @@ empathy_account_widget_sip_build (EmpathyAccountWidget *self,
 
       gtk_toggle_button_set_active (checkbutton_tel,
           empathy_account_settings_has_uri_scheme_tel (
-            empathy_account_widget_get_settings (self)));
+            tpaw_account_widget_get_settings (self)));
 
-      empathy_account_widget_handle_params (self,
+      tpaw_account_widget_handle_params (self,
           "entry_userid", "account",
           "entry_password", "password",
           "checkbutton_discover-stun", "discover-stun",
@@ -206,7 +206,7 @@ empathy_account_widget_sip_build (EmpathyAccountWidget *self,
       gtk_list_store_insert_with_values (store, NULL, -1,
           0, "tls", 1, _("TLS"), -1);
 
-      empathy_account_widget_setup_widget (self, settings->combobox_transport,
+      tpaw_account_widget_setup_widget (self, settings->combobox_transport,
           "transport");
 
       gtk_grid_attach (GTK_GRID (grid_advanced), settings->combobox_transport,
@@ -246,7 +246,7 @@ empathy_account_widget_sip_build (EmpathyAccountWidget *self,
       g_signal_connect (settings->combobox_keep_alive_mechanism, "changed",
           G_CALLBACK (keep_alive_mechanism_combobox_change_cb), settings);
 
-      empathy_account_widget_setup_widget (self,
+      tpaw_account_widget_setup_widget (self,
           settings->combobox_keep_alive_mechanism, "keepalive-mechanism");
 
       gtk_grid_attach (GTK_GRID (grid_advanced),

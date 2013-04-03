@@ -34,7 +34,7 @@ G_DEFINE_TYPE (EmpathyNewAccountDialog, empathy_new_account_dialog, \
 struct _EmpathyNewAccountDialogPrivate
 {
   GtkWidget *chooser;
-  EmpathyAccountWidget *current_account_widget;
+  TpawAccountWidget *current_account_widget;
   GtkWidget *main_vbox;
   GtkWidget *connect_button;
 
@@ -42,7 +42,7 @@ struct _EmpathyNewAccountDialogPrivate
 };
 
 static void
-close_cb (EmpathyAccountWidget *widget,
+close_cb (TpawAccountWidget *widget,
     GtkResponseType response,
     EmpathyNewAccountDialog *self)
 {
@@ -54,7 +54,7 @@ protocol_changed_cb (GtkComboBox *chooser,
     EmpathyNewAccountDialog *self)
 {
   EmpathyAccountSettings *settings;
-  EmpathyAccountWidget *account_widget;
+  TpawAccountWidget *account_widget;
   gchar *password = NULL, *account = NULL;
 
   settings = empathy_protocol_chooser_create_account_settings (
@@ -75,7 +75,7 @@ protocol_changed_cb (GtkComboBox *chooser,
       g_object_unref (self->priv->settings);
     }
 
-  account_widget = empathy_account_widget_new_for_protocol (settings, TRUE);
+  account_widget = tpaw_account_widget_new_for_protocol (settings, TRUE);
 
   if (self->priv->current_account_widget != NULL)
     {
@@ -95,13 +95,13 @@ protocol_changed_cb (GtkComboBox *chooser,
   /* Restore "account" and "password" parameters in the new widget */
   if (account != NULL)
     {
-      empathy_account_widget_set_account_param (account_widget, account);
+      tpaw_account_widget_set_account_param (account_widget, account);
       g_free (account);
     }
 
   if (password != NULL)
     {
-      empathy_account_widget_set_password_param (account_widget, password);
+      tpaw_account_widget_set_password_param (account_widget, password);
       g_free (password);
     }
 

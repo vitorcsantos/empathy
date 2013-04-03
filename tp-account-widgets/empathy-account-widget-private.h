@@ -19,28 +19,28 @@
  * Authors: Cosimo Cecchi <cosimo.cecchi@collabora.co.uk>
  */
 
-#ifndef __EMPATHY_ACCOUNT_WIDGET_PRIVATE_H__
-#define __EMPATHY_ACCOUNT_WIDGET_PRIVATE_H__
+#ifndef __TPAW_ACCOUNT_WIDGET_PRIVATE_H__
+#define __TPAW_ACCOUNT_WIDGET_PRIVATE_H__
 
 #include "empathy-account-widget.h"
 
 G_BEGIN_DECLS
 
-struct _EmpathyAccountWidgetUIDetails {
+struct _TpawAccountWidgetUIDetails {
   GtkBuilder *gui;
 
   char *default_focus;
 };
 
 
-void empathy_account_widget_handle_params (EmpathyAccountWidget *self,
+void tpaw_account_widget_handle_params (TpawAccountWidget *self,
     const gchar *first_widget,
     ...);
 
-void empathy_account_widget_setup_widget (EmpathyAccountWidget *self,
+void tpaw_account_widget_setup_widget (TpawAccountWidget *self,
     GtkWidget *widget,
     const gchar *param_name);
 
 G_END_DECLS
 
-#endif /* __EMPATHY_ACCOUNT_WIDGET_PRIVATE_H__ */
+#endif /* __TPAW_ACCOUNT_WIDGET_PRIVATE_H__ */

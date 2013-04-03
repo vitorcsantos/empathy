@@ -7,11 +7,11 @@
 #include "test-irc-helper.h"
 
 static void
-test_empathy_irc_network_new (void)
+test_tpaw_irc_network_new (void)
 {
-  EmpathyIrcNetwork *network;
+  TpawIrcNetwork *network;
 
-  network = empathy_irc_network_new ("Network1");
+  network = tpaw_irc_network_new ("Network1");
   check_network (network, "Network1", "UTF-8", NULL, 0);
 
   g_object_unref (network);
@@ -20,9 +20,9 @@ test_empathy_irc_network_new (void)
 static void
 test_property_change (void)
 {
-  EmpathyIrcNetwork *network;
+  TpawIrcNetwork *network;
 
-  network = empathy_irc_network_new ("Network1");
+  network = tpaw_irc_network_new ("Network1");
   check_network (network, "Network1", "UTF-8", NULL, 0);
 
   g_object_set (network,
@@ -39,7 +39,7 @@ test_property_change (void)
 static gboolean modified;
 
 static void
-modified_cb (EmpathyIrcNetwork *network,
+modified_cb (TpawIrcNetwork *network,
              gpointer unused)
 {
   modified = TRUE;
@@ -48,9 +48,9 @@ modified_cb (EmpathyIrcNetwork *network,
 static void
 test_modified_signal (void)
 {
-  EmpathyIrcNetwork *network;
+  TpawIrcNetwork *network;
 
-  network = empathy_irc_network_new ("Network1");
+  network = tpaw_irc_network_new ("Network1");
   check_network (network, "Network1", "UTF-8", NULL, 0);
 
   modified = FALSE;
@@ -66,7 +66,7 @@ test_modified_signal (void)
 }
 
 static void
-add_servers (EmpathyIrcNetwork *network,
+add_servers (TpawIrcNetwork *network,
              struct server_t *servers,
              guint nb_servers)
 {
@@ -74,12 +74,12 @@ add_servers (EmpathyIrcNetwork *network,
 
   for (i = 0; i < nb_servers; i ++)
     {
-      EmpathyIrcServer *server;
+      TpawIrcServer *server;
 
-      server = empathy_irc_server_new (servers[i].address,
+      server = tpaw_irc_server_new (servers[i].address,
           servers[i].port, servers[i].ssl);
       modified = FALSE;
-      empathy_irc_network_append_server (network, server);
+      tpaw_irc_network_append_server (network, server);
       g_assert (modified);
       g_object_unref (server);
     }
@@ -88,8 +88,8 @@ add_servers (EmpathyIrcNetwork *network,
 static void
 test_add_server (void)
 {
-  EmpathyIrcNetwork *network;
-  EmpathyIrcServer *server;
+  TpawIrcNetwork *network;
+  TpawIrcServer *server;
   GSList *servers, *l;
   struct server_t test_servers[] = {
     { "server1", 6667, FALSE },
@@ -101,7 +101,7 @@ test_add_server (void)
     { "server2", 6668, TRUE },
     { "server4", 6669, TRUE }};
 
-  network = empathy_irc_network_new ("Network1");
+  network = tpaw_irc_network_new ("Network1");
   check_network (network, "Network1", "UTF-8", NULL, 0);
 
   modified = FALSE;
@@ -115,12 +115,12 @@ test_add_server (void)
   check_network (network, "Network1", "UTF-8", test_servers, 4);
 
   /* Now let's remove the 3rd server */
-  servers = empathy_irc_network_get_servers (network);
+  servers = tpaw_irc_network_get_servers (network);
   l = g_slist_nth (servers, 2);
   g_assert (l != NULL);
   server = l->data;
   modified = FALSE;
-  empathy_irc_network_remove_server (network, server);
+  tpaw_irc_network_remove_server (network, server);
   g_assert (modified);
 
   /* free the list */
@@ -136,16 +136,16 @@ test_add_server (void)
 static void
 test_modified_signal_because_of_server (void)
 {
-  EmpathyIrcNetwork *network;
-  EmpathyIrcServer *server;
+  TpawIrcNetwork *network;
+  TpawIrcServer *server;
 
-  network = empathy_irc_network_new ("Network1");
+  network = tpaw_irc_network_new ("Network1");
   check_network (network, "Network1", "UTF-8", NULL, 0);
 
   g_signal_connect (network, "modified", G_CALLBACK (modified_cb), NULL);
 
-  server = empathy_irc_server_new ("server1", 6667, FALSE);
-  empathy_irc_network_append_server (network, server);
+  server = tpaw_irc_server_new ("server1", 6667, FALSE);
+  tpaw_irc_network_append_server (network, server);
 
   /* Change server properties */
   modified = FALSE;
@@ -158,7 +158,7 @@ test_modified_signal_because_of_server (void)
   g_object_set (server, "ssl", TRUE, NULL);
   g_assert (modified);
 
-  empathy_irc_network_remove_server (network, server);
+  tpaw_irc_network_remove_server (network, server);
   modified = FALSE;
   g_object_set (server, "address", "server3", NULL);
   /* We removed the server so the network is not modified anymore */
@@ -168,9 +168,9 @@ test_modified_signal_because_of_server (void)
 }
 
 static void
-test_empathy_irc_network_set_server_position (void)
+test_tpaw_irc_network_set_server_position (void)
 {
-  EmpathyIrcNetwork *network;
+  TpawIrcNetwork *network;
   GSList *servers, *l;
   struct server_t test_servers[] = {
     { "server1", 6667, FALSE },
@@ -183,7 +183,7 @@ test_empathy_irc_network_set_server_position (void)
     { "server3", 6667, FALSE },
     { "server1", 6667, FALSE }};
 
-  network = empathy_irc_network_new ("Network1");
+  network = tpaw_irc_network_new ("Network1");
   check_network (network, "Network1", "UTF-8", NULL, 0);
 
   modified = FALSE;
@@ -194,24 +194,24 @@ test_empathy_irc_network_set_server_position (void)
   check_network (network, "Network1", "UTF-8", test_servers, 4);
 
   /* get servers list */
-  servers = empathy_irc_network_get_servers (network);
+  servers = tpaw_irc_network_get_servers (network);
   g_assert (g_slist_length (servers) == 4);
   modified = FALSE;
 
   /* server1 go to the last position */
-  empathy_irc_network_set_server_position (network, servers->data, -1);
+  tpaw_irc_network_set_server_position (network, servers->data, -1);
 
   /* server2 go to the first position */
   l = servers->next;
-  empathy_irc_network_set_server_position (network, l->data, 0);
+  tpaw_irc_network_set_server_position (network, l->data, 0);
 
   /* server3 go to the third position */
   l = l->next;
-  empathy_irc_network_set_server_position (network, l->data, 2);
+  tpaw_irc_network_set_server_position (network, l->data, 2);
 
   /* server4 go to the second position*/
   l = l->next;
-  empathy_irc_network_set_server_position (network, l->data, 1);
+  tpaw_irc_network_set_server_position (network, l->data, 1);
 
   g_assert (modified);
 
@@ -231,14 +231,14 @@ main (int argc,
 
   test_init (argc, argv);
 
-  g_test_add_func ("/irc-network/new", test_empathy_irc_network_new);
+  g_test_add_func ("/irc-network/new", test_tpaw_irc_network_new);
   g_test_add_func ("/irc-network/property-change", test_property_change);
   g_test_add_func ("/irc-network/modified-signal", test_modified_signal);
   g_test_add_func ("/irc-network/add-server", test_add_server);
   g_test_add_func ("/irc-network/modified-signal-because-of-server",
       test_modified_signal_because_of_server);
   g_test_add_func ("/irc-network/set-server-position",
-      test_empathy_irc_network_set_server_position);
+      test_tpaw_irc_network_set_server_position);
 
   result = g_test_run ();
   test_deinit ();

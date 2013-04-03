@@ -18,8 +18,8 @@
  * Authors: Guillaume Desmottes <gdesmott@gnome.org>
  */
 
-#ifndef __EMPATHY_IRC_NETWORK_H__
-#define __EMPATHY_IRC_NETWORK_H__
+#ifndef __TPAW_IRC_NETWORK_H__
+#define __TPAW_IRC_NETWORK_H__
 
 #include <glib-object.h>
 
@@ -27,10 +27,10 @@
 
 G_BEGIN_DECLS
 
-typedef struct _EmpathyIrcNetwork EmpathyIrcNetwork;
-typedef struct _EmpathyIrcNetworkClass EmpathyIrcNetworkClass;
+typedef struct _TpawIrcNetwork TpawIrcNetwork;
+typedef struct _TpawIrcNetworkClass TpawIrcNetworkClass;
 
-struct _EmpathyIrcNetwork
+struct _TpawIrcNetwork
 {
   GObject parent;
   gpointer priv;
@@ -39,48 +39,48 @@ struct _EmpathyIrcNetwork
   gboolean dropped;
 };
 
-struct _EmpathyIrcNetworkClass
+struct _TpawIrcNetworkClass
 {
     GObjectClass parent_class;
 };
 
-GType empathy_irc_network_get_type (void);
+GType tpaw_irc_network_get_type (void);
 
 /* TYPE MACROS */
-#define EMPATHY_TYPE_IRC_NETWORK (empathy_irc_network_get_type ())
-#define EMPATHY_IRC_NETWORK(o) \
-  (G_TYPE_CHECK_INSTANCE_CAST ((o), EMPATHY_TYPE_IRC_NETWORK, \
-                               EmpathyIrcNetwork))
-#define EMPATHY_IRC_NETWORK_CLASS(k) \
-  (G_TYPE_CHECK_CLASS_CAST ((k), EMPATHY_TYPE_IRC_NETWORK,\
-                            EmpathyIrcNetworkClass))
-#define EMPATHY_IS_IRC_NETWORK(o) \
-  (G_TYPE_CHECK_INSTANCE_TYPE ((o), EMPATHY_TYPE_IRC_NETWORK))
-#define EMPATHY_IS_IRC_NETWORK_CLASS(k) \
-  (G_TYPE_CHECK_CLASS_TYPE ((k), EMPATHY_TYPE_IRC_NETWORK))
-#define EMPATHY_IRC_NETWORK_GET_CLASS(o) \
-  (G_TYPE_INSTANCE_GET_CLASS ((o), EMPATHY_TYPE_IRC_NETWORK, \
-                              EmpathyIrcNetworkClass))
+#define TPAW_TYPE_IRC_NETWORK (tpaw_irc_network_get_type ())
+#define TPAW_IRC_NETWORK(o) \
+  (G_TYPE_CHECK_INSTANCE_CAST ((o), TPAW_TYPE_IRC_NETWORK, \
+                               TpawIrcNetwork))
+#define TPAW_IRC_NETWORK_CLASS(k) \
+  (G_TYPE_CHECK_CLASS_CAST ((k), TPAW_TYPE_IRC_NETWORK,\
+                            TpawIrcNetworkClass))
+#define TPAW_IS_IRC_NETWORK(o) \
+  (G_TYPE_CHECK_INSTANCE_TYPE ((o), TPAW_TYPE_IRC_NETWORK))
+#define TPAW_IS_IRC_NETWORK_CLASS(k) \
+  (G_TYPE_CHECK_CLASS_TYPE ((k), TPAW_TYPE_IRC_NETWORK))
+#define TPAW_IRC_NETWORK_GET_CLASS(o) \
+  (G_TYPE_INSTANCE_GET_CLASS ((o), TPAW_TYPE_IRC_NETWORK, \
+                              TpawIrcNetworkClass))
 
-void empathy_irc_network_activate (EmpathyIrcNetwork *self);
+void tpaw_irc_network_activate (TpawIrcNetwork *self);
 
-EmpathyIrcNetwork * empathy_irc_network_new (const gchar *name);
+TpawIrcNetwork * tpaw_irc_network_new (const gchar *name);
 
-GSList * empathy_irc_network_get_servers (EmpathyIrcNetwork *network);
+GSList * tpaw_irc_network_get_servers (TpawIrcNetwork *network);
 
-void empathy_irc_network_append_server (EmpathyIrcNetwork *network,
-    EmpathyIrcServer *server);
+void tpaw_irc_network_append_server (TpawIrcNetwork *network,
+    TpawIrcServer *server);
 
-void empathy_irc_network_remove_server (EmpathyIrcNetwork *network,
-    EmpathyIrcServer *server);
+void tpaw_irc_network_remove_server (TpawIrcNetwork *network,
+    TpawIrcServer *server);
 
-void empathy_irc_network_set_server_position (EmpathyIrcNetwork *network,
-    EmpathyIrcServer *server, gint pos);
+void tpaw_irc_network_set_server_position (TpawIrcNetwork *network,
+    TpawIrcServer *server, gint pos);
 
-const gchar * empathy_irc_network_get_name (EmpathyIrcNetwork *network);
+const gchar * tpaw_irc_network_get_name (TpawIrcNetwork *network);
 
-const gchar * empathy_irc_network_get_charset (EmpathyIrcNetwork *network);
+const gchar * tpaw_irc_network_get_charset (TpawIrcNetwork *network);
 
 G_END_DECLS
 
-#endif /* __EMPATHY_IRC_NETWORK_H__ */
+#endif /* __TPAW_IRC_NETWORK_H__ */

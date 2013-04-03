@@ -21,8 +21,8 @@
  *          Martyn Russell <martyn@imendio.com>
  */
 
-#ifndef __EMPATHY_ACCOUNT_WIDGET_H__
-#define __EMPATHY_ACCOUNT_WIDGET_H__
+#ifndef __TPAW_ACCOUNT_WIDGET_H__
+#define __TPAW_ACCOUNT_WIDGET_H__
 
 #include <gtk/gtk.h>
 
@@ -30,66 +30,66 @@
 
 G_BEGIN_DECLS
 
-#define EMPATHY_TYPE_ACCOUNT_WIDGET empathy_account_widget_get_type()
-#define EMPATHY_ACCOUNT_WIDGET(obj) \
-  (G_TYPE_CHECK_INSTANCE_CAST ((obj), EMPATHY_TYPE_ACCOUNT_WIDGET, EmpathyAccountWidget))
-#define EMPATHY_ACCOUNT_WIDGET_CLASS(klass) \
-  (G_TYPE_CHECK_CLASS_CAST ((klass), EMPATHY_TYPE_ACCOUNT_WIDGET, EmpathyAccountWidgetClass))
-#define EMPATHY_IS_ACCOUNT_WIDGET(obj) \
-  (G_TYPE_CHECK_INSTANCE_TYPE ((obj), EMPATHY_TYPE_ACCOUNT_WIDGET))
-#define EMPATHY_IS_ACCOUNT_WIDGET_CLASS(klass) \
-  (G_TYPE_CHECK_CLASS_TYPE ((klass), EMPATHY_TYPE_ACCOUNT_WIDGET))
-#define EMPATHY_ACCOUNT_WIDGET_GET_CLASS(obj) \
-  (G_TYPE_INSTANCE_GET_CLASS ((obj), EMPATHY_TYPE_ACCOUNT_WIDGET, EmpathyAccountWidgetClass))
+#define TPAW_TYPE_ACCOUNT_WIDGET tpaw_account_widget_get_type()
+#define TPAW_ACCOUNT_WIDGET(obj) \
+  (G_TYPE_CHECK_INSTANCE_CAST ((obj), TPAW_TYPE_ACCOUNT_WIDGET, TpawAccountWidget))
+#define TPAW_ACCOUNT_WIDGET_CLASS(klass) \
+  (G_TYPE_CHECK_CLASS_CAST ((klass), TPAW_TYPE_ACCOUNT_WIDGET, TpawAccountWidgetClass))
+#define TPAW_IS_ACCOUNT_WIDGET(obj) \
+  (G_TYPE_CHECK_INSTANCE_TYPE ((obj), TPAW_TYPE_ACCOUNT_WIDGET))
+#define TPAW_IS_ACCOUNT_WIDGET_CLASS(klass) \
+  (G_TYPE_CHECK_CLASS_TYPE ((klass), TPAW_TYPE_ACCOUNT_WIDGET))
+#define TPAW_ACCOUNT_WIDGET_GET_CLASS(obj) \
+  (G_TYPE_INSTANCE_GET_CLASS ((obj), TPAW_TYPE_ACCOUNT_WIDGET, TpawAccountWidgetClass))
 
-typedef struct _EmpathyAccountWidgetPriv EmpathyAccountWidgetPriv;
-typedef struct _EmpathyAccountWidgetUIDetails EmpathyAccountWidgetUIDetails;
+typedef struct _TpawAccountWidgetPriv TpawAccountWidgetPriv;
+typedef struct _TpawAccountWidgetUIDetails TpawAccountWidgetUIDetails;
 
 typedef struct {
   GtkBox parent;
 
-  EmpathyAccountWidgetUIDetails *ui_details;
+  TpawAccountWidgetUIDetails *ui_details;
 
-  EmpathyAccountWidgetPriv *priv;
-} EmpathyAccountWidget;
+  TpawAccountWidgetPriv *priv;
+} TpawAccountWidget;
 
 typedef struct {
   GtkBoxClass parent_class;
-} EmpathyAccountWidgetClass;
+} TpawAccountWidgetClass;
 
-GType empathy_account_widget_get_type (void);
+GType tpaw_account_widget_get_type (void);
 
-EmpathyAccountWidget * empathy_account_widget_new_for_protocol (
+TpawAccountWidget * tpaw_account_widget_new_for_protocol (
     EmpathyAccountSettings *settings,
     gboolean simple);
 
-gboolean empathy_account_widget_contains_pending_changes
-    (EmpathyAccountWidget *widget);
-void empathy_account_widget_discard_pending_changes
-    (EmpathyAccountWidget *widget);
+gboolean tpaw_account_widget_contains_pending_changes
+    (TpawAccountWidget *widget);
+void tpaw_account_widget_discard_pending_changes
+    (TpawAccountWidget *widget);
 
-gchar * empathy_account_widget_get_default_display_name (
-    EmpathyAccountWidget *widget);
+gchar * tpaw_account_widget_get_default_display_name (
+    TpawAccountWidget *widget);
 
-void empathy_account_widget_set_account_param (EmpathyAccountWidget *widget,
+void tpaw_account_widget_set_account_param (TpawAccountWidget *widget,
     const gchar *account);
 
-void empathy_account_widget_set_password_param (EmpathyAccountWidget *self,
+void tpaw_account_widget_set_password_param (TpawAccountWidget *self,
     const gchar *password);
 
-void empathy_account_widget_set_other_accounts_exist (
-    EmpathyAccountWidget *self, gboolean others_exist);
+void tpaw_account_widget_set_other_accounts_exist (
+    TpawAccountWidget *self, gboolean others_exist);
 
-void empathy_account_widget_hide_buttons (EmpathyAccountWidget *self);
+void tpaw_account_widget_hide_buttons (TpawAccountWidget *self);
 
-void empathy_account_widget_apply_and_log_in (EmpathyAccountWidget *self);
+void tpaw_account_widget_apply_and_log_in (TpawAccountWidget *self);
 
 /* protected methods */
-void empathy_account_widget_changed (EmpathyAccountWidget *widget);
+void tpaw_account_widget_changed (TpawAccountWidget *widget);
 
-EmpathyAccountSettings * empathy_account_widget_get_settings (
-    EmpathyAccountWidget *self);
+EmpathyAccountSettings * tpaw_account_widget_get_settings (
+    TpawAccountWidget *self);
 
 G_END_DECLS
 
-#endif /* __EMPATHY_ACCOUNT_WIDGET_H__ */
+#endif /* __TPAW_ACCOUNT_WIDGET_H__ */

@@ -18,8 +18,8 @@
  * Authors: Guillaume Desmottes <gdesmott@gnome.org>
  */
 
-#ifndef __EMPATHY_IRC_NETWORK_MANAGER_H__
-#define __EMPATHY_IRC_NETWORK_MANAGER_H__
+#ifndef __TPAW_IRC_NETWORK_MANAGER_H__
+#define __TPAW_IRC_NETWORK_MANAGER_H__
 
 #include <glib-object.h>
 
@@ -27,59 +27,59 @@
 
 G_BEGIN_DECLS
 
-typedef struct _EmpathyIrcNetworkManager      EmpathyIrcNetworkManager;
-typedef struct _EmpathyIrcNetworkManagerClass EmpathyIrcNetworkManagerClass;
+typedef struct _TpawIrcNetworkManager      TpawIrcNetworkManager;
+typedef struct _TpawIrcNetworkManagerClass TpawIrcNetworkManagerClass;
 
-struct _EmpathyIrcNetworkManager
+struct _TpawIrcNetworkManager
 {
   GObject parent;
   gpointer priv;
 };
 
-struct _EmpathyIrcNetworkManagerClass
+struct _TpawIrcNetworkManagerClass
 {
   GObjectClass parent_class;
 };
 
-GType empathy_irc_network_manager_get_type (void);
+GType tpaw_irc_network_manager_get_type (void);
 
 /* TYPE MACROS */
-#define EMPATHY_TYPE_IRC_NETWORK_MANAGER \
-  (empathy_irc_network_manager_get_type ())
-#define EMPATHY_IRC_NETWORK_MANAGER(o) \
-  (G_TYPE_CHECK_INSTANCE_CAST ((o), EMPATHY_TYPE_IRC_NETWORK_MANAGER, \
-                               EmpathyIrcNetworkManager))
-#define EMPATHY_IRC_NETWORK_MANAGER_CLASS(k) \
-  (G_TYPE_CHECK_CLASS_CAST ((k), EMPATHY_TYPE_IRC_NETWORK_MANAGER, \
-                            EmpathyIrcNetworkManagerClass))
-#define EMPATHY_IS_IRC_NETWORK_MANAGER(o) \
-  (G_TYPE_CHECK_INSTANCE_TYPE ((o), EMPATHY_TYPE_IRC_NETWORK_MANAGER))
-#define EMPATHY_IS_IRC_NETWORK_MANAGER_CLASS(k) \
-  (G_TYPE_CHECK_CLASS_TYPE ((k), EMPATHY_TYPE_IRC_NETWORK_MANAGER))
-#define EMPATHY_IRC_NETWORK_MANAGER_GET_CLASS(o) \
-  (G_TYPE_INSTANCE_GET_CLASS ((o), EMPATHY_TYPE_IRC_NETWORK_MANAGER, \
-                              EmpathyIrcNetworkManagerClass))
+#define TPAW_TYPE_IRC_NETWORK_MANAGER \
+  (tpaw_irc_network_manager_get_type ())
+#define TPAW_IRC_NETWORK_MANAGER(o) \
+  (G_TYPE_CHECK_INSTANCE_CAST ((o), TPAW_TYPE_IRC_NETWORK_MANAGER, \
+                               TpawIrcNetworkManager))
+#define TPAW_IRC_NETWORK_MANAGER_CLASS(k) \
+  (G_TYPE_CHECK_CLASS_CAST ((k), TPAW_TYPE_IRC_NETWORK_MANAGER, \
+                            TpawIrcNetworkManagerClass))
+#define TPAW_IS_IRC_NETWORK_MANAGER(o) \
+  (G_TYPE_CHECK_INSTANCE_TYPE ((o), TPAW_TYPE_IRC_NETWORK_MANAGER))
+#define TPAW_IS_IRC_NETWORK_MANAGER_CLASS(k) \
+  (G_TYPE_CHECK_CLASS_TYPE ((k), TPAW_TYPE_IRC_NETWORK_MANAGER))
+#define TPAW_IRC_NETWORK_MANAGER_GET_CLASS(o) \
+  (G_TYPE_INSTANCE_GET_CLASS ((o), TPAW_TYPE_IRC_NETWORK_MANAGER, \
+                              TpawIrcNetworkManagerClass))
 
-EmpathyIrcNetworkManager * empathy_irc_network_manager_new (
+TpawIrcNetworkManager * tpaw_irc_network_manager_new (
     const gchar *global_file, const gchar *user_file);
 
-EmpathyIrcNetworkManager * empathy_irc_network_manager_dup_default (void);
+TpawIrcNetworkManager * tpaw_irc_network_manager_dup_default (void);
 
-void empathy_irc_network_manager_add (EmpathyIrcNetworkManager *manager,
-    EmpathyIrcNetwork *network);
+void tpaw_irc_network_manager_add (TpawIrcNetworkManager *manager,
+    TpawIrcNetwork *network);
 
-void empathy_irc_network_manager_remove (EmpathyIrcNetworkManager *manager,
-    EmpathyIrcNetwork *network);
+void tpaw_irc_network_manager_remove (TpawIrcNetworkManager *manager,
+    TpawIrcNetwork *network);
 
-GSList * empathy_irc_network_manager_get_networks (
-    EmpathyIrcNetworkManager *manager);
+GSList * tpaw_irc_network_manager_get_networks (
+    TpawIrcNetworkManager *manager);
 
-GSList * empathy_irc_network_manager_get_dropped_networks (
-    EmpathyIrcNetworkManager *manager);
+GSList * tpaw_irc_network_manager_get_dropped_networks (
+    TpawIrcNetworkManager *manager);
 
-EmpathyIrcNetwork * empathy_irc_network_manager_find_network_by_address (
-    EmpathyIrcNetworkManager *manager, const gchar *address);
+TpawIrcNetwork * tpaw_irc_network_manager_find_network_by_address (
+    TpawIrcNetworkManager *manager, const gchar *address);
 
 G_END_DECLS
 
-#endif /* __EMPATHY_IRC_NETWORK_MANAGER_H__ */
+#endif /* __TPAW_IRC_NETWORK_MANAGER_H__ */

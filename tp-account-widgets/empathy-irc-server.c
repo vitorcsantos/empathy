@@ -23,13 +23,13 @@
 
 #include "empathy-utils.h"
 
-#define GET_PRIV(obj) EMPATHY_GET_PRIV (obj, EmpathyIrcServer)
+#define GET_PRIV(obj) EMPATHY_GET_PRIV (obj, TpawIrcServer)
 typedef struct
 {
   gchar *address;
   guint port;
   gboolean ssl;
-} EmpathyIrcServerPriv;
+} TpawIrcServerPriv;
 
 /* properties */
 enum
@@ -49,16 +49,16 @@ enum
 
 static guint signals[LAST_SIGNAL] = {0};
 
-G_DEFINE_TYPE (EmpathyIrcServer, empathy_irc_server, G_TYPE_OBJECT);
+G_DEFINE_TYPE (TpawIrcServer, tpaw_irc_server, G_TYPE_OBJECT);
 
 static void
-empathy_irc_server_get_property (GObject *object,
+tpaw_irc_server_get_property (GObject *object,
                                  guint property_id,
                                  GValue *value,
                                  GParamSpec *pspec)
 {
-  EmpathyIrcServer *self = EMPATHY_IRC_SERVER (object);
-  EmpathyIrcServerPriv *priv = GET_PRIV (self);
+  TpawIrcServer *self = TPAW_IRC_SERVER (object);
+  TpawIrcServerPriv *priv = GET_PRIV (self);
 
   switch (property_id)
     {
@@ -78,13 +78,13 @@ empathy_irc_server_get_property (GObject *object,
 }
 
 static void
-empathy_irc_server_set_property (GObject *object,
+tpaw_irc_server_set_property (GObject *object,
                                  guint property_id,
                                  const GValue *value,
                                  GParamSpec *pspec)
 {
-  EmpathyIrcServer *self = EMPATHY_IRC_SERVER (object);
-  EmpathyIrcServerPriv *priv = GET_PRIV (self);
+  TpawIrcServer *self = TPAW_IRC_SERVER (object);
+  TpawIrcServerPriv *priv = GET_PRIV (self);
 
   switch (property_id)
     {
@@ -117,37 +117,37 @@ empathy_irc_server_set_property (GObject *object,
 }
 
 static void
-empathy_irc_server_finalize (GObject *object)
+tpaw_irc_server_finalize (GObject *object)
 {
-  EmpathyIrcServer *self = EMPATHY_IRC_SERVER (object);
-  EmpathyIrcServerPriv *priv = GET_PRIV (self);
+  TpawIrcServer *self = TPAW_IRC_SERVER (object);
+  TpawIrcServerPriv *priv = GET_PRIV (self);
 
   g_free (priv->address);
 
-  G_OBJECT_CLASS (empathy_irc_server_parent_class)->finalize (object);
+  G_OBJECT_CLASS (tpaw_irc_server_parent_class)->finalize (object);
 }
 
 static void
-empathy_irc_server_init (EmpathyIrcServer *self)
+tpaw_irc_server_init (TpawIrcServer *self)
 {
-  EmpathyIrcServerPriv *priv = G_TYPE_INSTANCE_GET_PRIVATE (self,
-      EMPATHY_TYPE_IRC_SERVER, EmpathyIrcServerPriv);
+  TpawIrcServerPriv *priv = G_TYPE_INSTANCE_GET_PRIVATE (self,
+      TPAW_TYPE_IRC_SERVER, TpawIrcServerPriv);
 
   self->priv = priv;
 }
 
 static void
-empathy_irc_server_class_init (EmpathyIrcServerClass *klass)
+tpaw_irc_server_class_init (TpawIrcServerClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GParamSpec *param_spec;
 
-  object_class->get_property = empathy_irc_server_get_property;
-  object_class->set_property = empathy_irc_server_set_property;
+  object_class->get_property = tpaw_irc_server_get_property;
+  object_class->set_property = tpaw_irc_server_set_property;
 
-  g_type_class_add_private (object_class, sizeof (EmpathyIrcServerPriv));
+  g_type_class_add_private (object_class, sizeof (TpawIrcServerPriv));
 
-  object_class->finalize = empathy_irc_server_finalize;
+  object_class->finalize = tpaw_irc_server_finalize;
 
   param_spec = g_param_spec_string (
       "address",
@@ -183,7 +183,7 @@ empathy_irc_server_class_init (EmpathyIrcServerClass *klass)
   g_object_class_install_property (object_class, PROP_SSL, param_spec);
 
   /**
-   * EmpathyIrcServer::modified:
+   * TpawIrcServer::modified:
    * @server: the object that received the signal
    *
    * Emitted when a property of the server is modified.
@@ -200,21 +200,21 @@ empathy_irc_server_class_init (EmpathyIrcServerClass *klass)
 }
 
 /**
- * empathy_irc_server_new:
+ * tpaw_irc_server_new:
  * @address: the address
  * @port: the port
  * @ssl: %TRUE if the server needs a SSL connection
  *
- * Creates a new #EmpathyIrcServer
+ * Creates a new #TpawIrcServer
  *
- * Returns: a new #EmpathyIrcServer
+ * Returns: a new #TpawIrcServer
  */
-EmpathyIrcServer *
-empathy_irc_server_new (const gchar *address,
+TpawIrcServer *
+tpaw_irc_server_new (const gchar *address,
                         guint port,
                         gboolean ssl)
 {
-  return g_object_new (EMPATHY_TYPE_IRC_SERVER,
+  return g_object_new (TPAW_TYPE_IRC_SERVER,
       "address", address,
       "port", port,
       "ssl", ssl,

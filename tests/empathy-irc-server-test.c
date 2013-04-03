@@ -7,11 +7,11 @@
 #include "test-irc-helper.h"
 
 static void
-test_empathy_irc_server_new (void)
+test_tpaw_irc_server_new (void)
 {
-  EmpathyIrcServer *server;
+  TpawIrcServer *server;
 
-  server = empathy_irc_server_new ("test.localhost", 6667, TRUE);
+  server = tpaw_irc_server_new ("test.localhost", 6667, TRUE);
   check_server (server, "test.localhost", 6667, TRUE);
 
   g_object_unref (server);
@@ -20,9 +20,9 @@ test_empathy_irc_server_new (void)
 static void
 test_property_change (void)
 {
-  EmpathyIrcServer *server;
+  TpawIrcServer *server;
 
-  server = empathy_irc_server_new ("test.localhost", 6667, TRUE);
+  server = tpaw_irc_server_new ("test.localhost", 6667, TRUE);
   g_assert (server != NULL);
 
   g_object_set (server,
@@ -39,7 +39,7 @@ test_property_change (void)
 static gboolean modified = FALSE;
 
 static void
-modified_cb (EmpathyIrcServer *server,
+modified_cb (TpawIrcServer *server,
              gpointer unused)
 {
   modified = TRUE;
@@ -48,9 +48,9 @@ modified_cb (EmpathyIrcServer *server,
 static void
 test_modified_signal (void)
 {
-  EmpathyIrcServer *server;
+  TpawIrcServer *server;
 
-  server = empathy_irc_server_new ("test.localhost", 6667, TRUE);
+  server = tpaw_irc_server_new ("test.localhost", 6667, TRUE);
   g_assert (server != NULL);
 
   g_signal_connect (server, "modified", G_CALLBACK (modified_cb), NULL);
@@ -87,7 +87,7 @@ main (int argc,
 
   test_init (argc, argv);
 
-  g_test_add_func ("/irc-server/new", test_empathy_irc_server_new);
+  g_test_add_func ("/irc-server/new", test_tpaw_irc_server_new);
   g_test_add_func ("/irc-server/property-change", test_property_change);
   g_test_add_func ("/irc-server/modified-signal", test_modified_signal);
 

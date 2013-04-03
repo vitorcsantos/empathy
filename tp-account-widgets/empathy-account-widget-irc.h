@@ -18,25 +18,25 @@
  * Authors: Guillaume Desmottes <gdesmott@gnome.org>
  */
 
-#ifndef __EMPATHY_ACCOUNT_WIDGET_IRC_H__
-#define __EMPATHY_ACCOUNT_WIDGET_IRC_H__
+#ifndef __TPAW_ACCOUNT_WIDGET_IRC_H__
+#define __TPAW_ACCOUNT_WIDGET_IRC_H__
 
 #include "empathy-account-widget.h"
 #include "empathy-irc-network-chooser.h"
 
 G_BEGIN_DECLS
 
-EmpathyIrcNetworkChooser * empathy_account_widget_irc_build (
-    EmpathyAccountWidget *self,
+TpawIrcNetworkChooser * tpaw_account_widget_irc_build (
+    TpawAccountWidget *self,
     const char *filename,
     GtkWidget **table_common_settings,
     GtkWidget **box);
 
-EmpathyIrcNetworkChooser * empathy_account_widget_irc_build_simple (
-    EmpathyAccountWidget *self,
+TpawIrcNetworkChooser * tpaw_account_widget_irc_build_simple (
+    TpawAccountWidget *self,
     const char *filename,
     GtkWidget **box);
 
 G_END_DECLS
 
-#endif /* __EMPATHY_ACCOUNT_WIDGET_IRC_H__ */
+#endif /* __TPAW_ACCOUNT_WIDGET_IRC_H__ */

@@ -40,7 +40,7 @@
 #define DEBUG_FLAG EMPATHY_DEBUG_ACCOUNT
 #include "empathy-debug.h"
 
-G_DEFINE_TYPE (EmpathyAccountWidget, empathy_account_widget, GTK_TYPE_BOX)
+G_DEFINE_TYPE (TpawAccountWidget, tpaw_account_widget, GTK_TYPE_BOX)
 
 typedef enum
 {
@@ -62,7 +62,7 @@ static ServiceInfo services_infos[N_SERVICES] = {
     { "label_username_f_example", FALSE },
 };
 
-struct _EmpathyAccountWidgetPriv {
+struct _TpawAccountWidgetPriv {
   EmpathyAccountSettings *settings;
 
   GtkWidget *grid_common_settings;
@@ -77,7 +77,7 @@ struct _EmpathyAccountWidgetPriv {
 
   gboolean contains_pending_changes;
 
-  /* An EmpathyAccountWidget can be used to either create an account or
+  /* An TpawAccountWidget can be used to either create an account or
    * modify it. When we are creating an account, this member is set to TRUE */
   gboolean creating_account;
 
@@ -101,7 +101,7 @@ struct _EmpathyAccountWidgetPriv {
   GtkWidget *remember_password_widget;
 
   /* Used only for IRC accounts */
-  EmpathyIrcNetworkChooser *irc_network_chooser;
+  TpawIrcNetworkChooser *irc_network_chooser;
 
   /* Used for 'special' XMPP account having a service associated ensuring that
    * JIDs have a specific suffix; such as Facebook for example */
@@ -183,7 +183,7 @@ static guint signals[LAST_SIGNAL] = { 0 };
 #define ACCOUNT_REGEX_YAHOO    "^"YAHOO_USER_NAME"$"
 
 static void
-account_widget_set_control_buttons_sensitivity (EmpathyAccountWidget *self,
+account_widget_set_control_buttons_sensitivity (TpawAccountWidget *self,
     gboolean sensitive)
 {
   /* we hit this case because of the 'other-accounts-exist' property handler
@@ -240,7 +240,7 @@ account_widget_set_entry_highlighting (GtkEntry *entry,
 }
 
 static void
-account_widget_handle_control_buttons_sensitivity (EmpathyAccountWidget *self)
+account_widget_handle_control_buttons_sensitivity (TpawAccountWidget *self)
 {
   gboolean is_valid;
 
@@ -252,7 +252,7 @@ account_widget_handle_control_buttons_sensitivity (EmpathyAccountWidget *self)
 }
 
 static void
-account_widget_entry_changed_common (EmpathyAccountWidget *self,
+account_widget_entry_changed_common (TpawAccountWidget *self,
     GtkEntry *entry, gboolean focus)
 {
   const gchar *str;
@@ -298,18 +298,18 @@ account_widget_entry_changed_common (EmpathyAccountWidget *self,
 
 static void
 account_widget_entry_changed_cb (GtkEditable *entry,
-    EmpathyAccountWidget *self)
+    TpawAccountWidget *self)
 {
   if (self->priv->automatic_change)
     return;
 
   account_widget_entry_changed_common (self, GTK_ENTRY (entry), FALSE);
-  empathy_account_widget_changed (self);
+  tpaw_account_widget_changed (self);
 }
 
 static void
 account_widget_entry_map_cb (GtkEntry *entry,
-    EmpathyAccountWidget *self)
+    TpawAccountWidget *self)
 {
   const gchar *param_name;
   gboolean is_valid;
@@ -323,7 +323,7 @@ account_widget_entry_map_cb (GtkEntry *entry,
 
 static void
 account_widget_int_changed_cb (GtkWidget *widget,
-    EmpathyAccountWidget *self)
+    TpawAccountWidget *self)
 {
   const gchar *param_name;
   gint value;
@@ -362,12 +362,12 @@ account_widget_int_changed_cb (GtkWidget *widget,
       g_return_if_reached ();
     }
 
-  empathy_account_widget_changed (self);
+  tpaw_account_widget_changed (self);
 }
 
 static void
 account_widget_checkbutton_toggled_cb (GtkWidget *widget,
-    EmpathyAccountWidget *self)
+    TpawAccountWidget *self)
 {
   gboolean     value;
   gboolean     default_value;
@@ -394,12 +394,12 @@ account_widget_checkbutton_toggled_cb (GtkWidget *widget,
           g_variant_new_boolean (value));
     }
 
-  empathy_account_widget_changed (self);
+  tpaw_account_widget_changed (self);
 }
 
 static void
 account_widget_jabber_ssl_toggled_cb (GtkWidget *checkbutton_ssl,
-    EmpathyAccountWidget *self)
+    TpawAccountWidget *self)
 {
   gboolean   value;
   gint32       port = 0;
@@ -426,7 +426,7 @@ account_widget_jabber_ssl_toggled_cb (GtkWidget *checkbutton_ssl,
 
 static void
 account_widget_combobox_changed_cb (GtkWidget *widget,
-    EmpathyAccountWidget *self)
+    TpawAccountWidget *self)
 {
   GtkTreeIter iter;
   GtkTreeModel *model;
@@ -460,7 +460,7 @@ account_widget_combobox_changed_cb (GtkWidget *widget,
           g_variant_new_string (value));
     }
 
-  empathy_account_widget_changed (self);
+  tpaw_account_widget_changed (self);
 
   tp_clear_pointer (&v, g_variant_unref);
 }
@@ -469,7 +469,7 @@ static void
 clear_icon_released_cb (GtkEntry *entry,
     GtkEntryIconPosition icon_pos,
     GdkEvent *event,
-    EmpathyAccountWidget *self)
+    TpawAccountWidget *self)
 {
   const gchar *param_name;
 
@@ -479,12 +479,12 @@ clear_icon_released_cb (GtkEntry *entry,
   empathy_account_settings_unset (self->priv->settings, param_name);
   gtk_entry_set_text (entry, "");
 
-  empathy_account_widget_changed (self);
+  tpaw_account_widget_changed (self);
 }
 
 static void
 password_entry_changed_cb (GtkEditable *entry,
-    EmpathyAccountWidget *self)
+    TpawAccountWidget *self)
 {
   const gchar *str;
 
@@ -496,22 +496,22 @@ password_entry_changed_cb (GtkEditable *entry,
 
 static void
 password_entry_activated_cb (GtkEntry *entry,
-    EmpathyAccountWidget *self)
+    TpawAccountWidget *self)
 {
     if (gtk_widget_get_sensitive (self->priv->apply_button))
-        empathy_account_widget_apply_and_log_in (self);
+        tpaw_account_widget_apply_and_log_in (self);
 }
 
 static void
 account_entry_activated_cb (GtkEntry *entry,
-    EmpathyAccountWidget *self)
+    TpawAccountWidget *self)
 {
     if (gtk_widget_get_sensitive (self->priv->apply_button))
-        empathy_account_widget_apply_and_log_in (self);
+        tpaw_account_widget_apply_and_log_in (self);
 }
 
 void
-empathy_account_widget_setup_widget (EmpathyAccountWidget *self,
+tpaw_account_widget_setup_widget (TpawAccountWidget *self,
     GtkWidget *widget,
     const gchar *param_name)
 {
@@ -710,7 +710,7 @@ account_widget_generic_format_param_name (const gchar *param_name)
 }
 
 static void
-accounts_widget_generic_setup (EmpathyAccountWidget *self,
+accounts_widget_generic_setup (TpawAccountWidget *self,
     GtkWidget *grid_common_settings,
     GtkWidget *grid_advanced_settings)
 {
@@ -835,7 +835,7 @@ accounts_widget_generic_setup (EmpathyAccountWidget *self,
         }
 
       if (widget)
-        empathy_account_widget_setup_widget (self, widget,
+        tpaw_account_widget_setup_widget (self, widget,
             tp_connection_manager_param_get_name (param));
 
       g_free (param_name_formatted);
@@ -845,7 +845,7 @@ accounts_widget_generic_setup (EmpathyAccountWidget *self,
 }
 
 static void
-account_widget_handle_params_valist (EmpathyAccountWidget *self,
+account_widget_handle_params_valist (TpawAccountWidget *self,
     const gchar *first_widget,
     va_list args)
 {
@@ -865,14 +865,14 @@ account_widget_handle_params_valist (EmpathyAccountWidget *self,
           continue;
         }
 
-      empathy_account_widget_setup_widget (self, GTK_WIDGET (object),
+      tpaw_account_widget_setup_widget (self, GTK_WIDGET (object),
           param_name);
     }
 }
 
 static void
 account_widget_cancel_clicked_cb (GtkWidget *button,
-    EmpathyAccountWidget *self)
+    TpawAccountWidget *self)
 {
   g_signal_emit (self, signals[CANCELLED], 0);
   g_signal_emit (self, signals[CLOSE], 0, GTK_RESPONSE_CANCEL);
@@ -885,7 +885,7 @@ account_widget_account_enabled_cb (GObject *source_object,
 {
   GError *error = NULL;
   TpAccount *account = TP_ACCOUNT (source_object);
-  EmpathyAccountWidget *self = EMPATHY_ACCOUNT_WIDGET (user_data);
+  TpawAccountWidget *self = TPAW_ACCOUNT_WIDGET (user_data);
 
   tp_account_set_enabled_finish (account, res, &error);
 
@@ -913,7 +913,7 @@ account_widget_applied_cb (GObject *source_object,
   GError *error = NULL;
   TpAccount *account;
   EmpathyAccountSettings *settings = EMPATHY_ACCOUNT_SETTINGS (source_object);
-  EmpathyAccountWidget *self = EMPATHY_ACCOUNT_WIDGET (user_data);
+  TpawAccountWidget *self = TPAW_ACCOUNT_WIDGET (user_data);
   gboolean reconnect_required;
   gboolean fire_close = TRUE;
 
@@ -982,7 +982,7 @@ account_widget_applied_cb (GObject *source_object,
 }
 
 void
-empathy_account_widget_apply_and_log_in (EmpathyAccountWidget *self)
+tpaw_account_widget_apply_and_log_in (TpawAccountWidget *self)
 {
   gboolean display_name_overridden;
 
@@ -1005,7 +1005,7 @@ empathy_account_widget_apply_and_log_in (EmpathyAccountWidget *self)
 
       /* set default display name for new accounts or update if user didn't
        * manually override it. */
-      display_name = empathy_account_widget_get_default_display_name (self);
+      display_name = tpaw_account_widget_get_default_display_name (self);
 
       empathy_account_settings_set_display_name_async (self->priv->settings,
           display_name, NULL, NULL);
@@ -1021,13 +1021,13 @@ empathy_account_widget_apply_and_log_in (EmpathyAccountWidget *self)
 
 static void
 account_widget_apply_clicked_cb (GtkWidget *button,
-    EmpathyAccountWidget *self)
+    TpawAccountWidget *self)
 {
-    empathy_account_widget_apply_and_log_in (self);
+    tpaw_account_widget_apply_and_log_in (self);
 }
 
 static void
-account_widget_setup_generic (EmpathyAccountWidget *self)
+account_widget_setup_generic (TpawAccountWidget *self)
 {
   GtkWidget *grid_common_settings;
   GtkWidget *grid_advanced_settings;
@@ -1048,14 +1048,14 @@ account_widget_settings_ready_cb (EmpathyAccountSettings *settings,
     GParamSpec *pspec,
     gpointer user_data)
 {
-  EmpathyAccountWidget *self = user_data;
+  TpawAccountWidget *self = user_data;
 
   if (empathy_account_settings_is_ready (self->priv->settings))
     account_widget_setup_generic (self);
 }
 
 static GtkWidget *
-account_widget_build_generic (EmpathyAccountWidget *self,
+account_widget_build_generic (TpawAccountWidget *self,
     const char *filename)
 {
   GtkWidget *expander_advanced, *box;
@@ -1081,7 +1081,7 @@ account_widget_build_generic (EmpathyAccountWidget *self,
 }
 
 static GtkWidget *
-account_widget_build_salut (EmpathyAccountWidget *self,
+account_widget_build_salut (TpawAccountWidget *self,
     const char *filename)
 {
   GtkWidget *expander_advanced, *box;
@@ -1092,7 +1092,7 @@ account_widget_build_salut (EmpathyAccountWidget *self,
       "expander_advanced_settings", &expander_advanced,
       NULL);
 
-  empathy_account_widget_handle_params (self,
+  tpaw_account_widget_handle_params (self,
       "entry_published", "published-name",
       "entry_nickname", "nickname",
       "entry_first_name", "first-name",
@@ -1110,7 +1110,7 @@ account_widget_build_salut (EmpathyAccountWidget *self,
 }
 
 static GtkWidget *
-account_widget_build_irc (EmpathyAccountWidget *self,
+account_widget_build_irc (TpawAccountWidget *self,
   const char *filename)
 {
   GtkWidget *box;
@@ -1120,12 +1120,12 @@ account_widget_build_irc (EmpathyAccountWidget *self,
 
   if (self->priv->simple)
     {
-      self->priv->irc_network_chooser = empathy_account_widget_irc_build_simple
+      self->priv->irc_network_chooser = tpaw_account_widget_irc_build_simple
         (self, filename, &box);
     }
   else
     {
-      self->priv->irc_network_chooser = empathy_account_widget_irc_build (self,
+      self->priv->irc_network_chooser = tpaw_account_widget_irc_build (self,
           filename, &self->priv->grid_common_settings, &box);
     }
 
@@ -1133,12 +1133,12 @@ account_widget_build_irc (EmpathyAccountWidget *self,
 }
 
 static GtkWidget *
-account_widget_build_sip (EmpathyAccountWidget *self,
+account_widget_build_sip (TpawAccountWidget *self,
   const char *filename)
 {
   GtkWidget *box;
 
-  box = empathy_account_widget_sip_build (self, filename,
+  box = tpaw_account_widget_sip_build (self, filename,
     &self->priv->grid_common_settings);
 
   if (self->priv->simple)
@@ -1157,7 +1157,7 @@ account_widget_build_sip (EmpathyAccountWidget *self,
 }
 
 static GtkWidget *
-account_widget_build_msn (EmpathyAccountWidget *self,
+account_widget_build_msn (TpawAccountWidget *self,
     const char *filename)
 {
   GtkWidget *box;
@@ -1171,7 +1171,7 @@ account_widget_build_msn (EmpathyAccountWidget *self,
           "vbox_msn_simple", &box,
           NULL);
 
-      empathy_account_widget_handle_params (self,
+      tpaw_account_widget_handle_params (self,
           "entry_id_simple", "account",
           "entry_password_simple", "password",
           NULL);
@@ -1189,7 +1189,7 @@ account_widget_build_msn (EmpathyAccountWidget *self,
           "vbox_msn_settings", &box,
           NULL);
 
-      empathy_account_widget_handle_params (self,
+      tpaw_account_widget_handle_params (self,
           "entry_id", "account",
           "entry_password", "password",
           "entry_server", "server",
@@ -1207,7 +1207,7 @@ account_widget_build_msn (EmpathyAccountWidget *self,
 
 static void
 suffix_id_widget_changed_cb (GtkWidget *entry,
-    EmpathyAccountWidget *self)
+    TpawAccountWidget *self)
 {
   gchar *account;
 
@@ -1232,13 +1232,13 @@ suffix_id_widget_changed_cb (GtkWidget *entry,
       g_free (tmp);
     }
 
-  empathy_account_widget_changed (self);
+  tpaw_account_widget_changed (self);
 
   g_free (account);
 }
 
 static gchar *
-remove_jid_suffix (EmpathyAccountWidget *self,
+remove_jid_suffix (TpawAccountWidget *self,
     const gchar *str)
 {
   g_assert (self->priv->jid_suffix != NULL);
@@ -1250,7 +1250,7 @@ remove_jid_suffix (EmpathyAccountWidget *self,
 }
 
 static void
-setup_id_widget_with_suffix (EmpathyAccountWidget *self,
+setup_id_widget_with_suffix (TpawAccountWidget *self,
     GtkWidget *widget,
     const gchar *suffix)
 {
@@ -1280,14 +1280,14 @@ setup_id_widget_with_suffix (EmpathyAccountWidget *self,
 }
 
 static Service
-account_widget_get_service (EmpathyAccountWidget *self)
+account_widget_get_service (TpawAccountWidget *self)
 {
   const gchar *icon_name, *service;
 
   icon_name = empathy_account_settings_get_icon_name (self->priv->settings);
   service = empathy_account_settings_get_service (self->priv->settings);
 
-  /* Previous versions of Empathy didn't set the Service property on Facebook
+  /* Previous versions of Tpaw didn't set the Service property on Facebook
    * and gtalk accounts, so we check using the icon name as well. */
   if (!tp_strdiff (icon_name, "im-google-talk") ||
       !tp_strdiff (service, "google-talk"))
@@ -1301,7 +1301,7 @@ account_widget_get_service (EmpathyAccountWidget *self)
 }
 
 static GtkWidget *
-account_widget_build_jabber (EmpathyAccountWidget *self,
+account_widget_build_jabber (TpawAccountWidget *self,
     const char *filename)
 {
   GtkWidget *spinbutton_port;
@@ -1340,7 +1340,7 @@ account_widget_build_jabber (EmpathyAccountWidget *self,
           gtk_widget_show (label_password_create);
         }
 
-      empathy_account_widget_handle_params (self,
+      tpaw_account_widget_handle_params (self,
           "entry_id_simple", "account",
           "entry_password_simple", "password",
           NULL);
@@ -1358,7 +1358,7 @@ account_widget_build_jabber (EmpathyAccountWidget *self,
           "vbox_gtalk_simple", &box,
           NULL);
 
-      empathy_account_widget_handle_params (self,
+      tpaw_account_widget_handle_params (self,
           "entry_id_g_simple", "account",
           "entry_password_g_simple", "password",
           NULL);
@@ -1377,7 +1377,7 @@ account_widget_build_jabber (EmpathyAccountWidget *self,
           "entry_id_fb_simple", &entry_id,
           NULL);
 
-      empathy_account_widget_handle_params (self,
+      tpaw_account_widget_handle_params (self,
           "entry_password_fb_simple", "password",
           NULL);
 
@@ -1406,7 +1406,7 @@ account_widget_build_jabber (EmpathyAccountWidget *self,
           "label_id", &label_id,
           NULL);
 
-      empathy_account_widget_handle_params (self,
+      tpaw_account_widget_handle_params (self,
           "entry_password", "password",
           "entry_resource", "resource",
           "entry_server", "server",
@@ -1427,7 +1427,7 @@ account_widget_build_jabber (EmpathyAccountWidget *self,
         }
       else
         {
-          empathy_account_widget_setup_widget (self, entry_id, "account");
+          tpaw_account_widget_setup_widget (self, entry_id, "account");
         }
 
       self->ui_details->default_focus = g_strdup ("entry_id");
@@ -1463,7 +1463,7 @@ account_widget_build_jabber (EmpathyAccountWidget *self,
 }
 
 static GtkWidget *
-account_widget_build_icq (EmpathyAccountWidget *self,
+account_widget_build_icq (TpawAccountWidget *self,
     const char *filename)
 {
   GtkWidget *spinbutton_port;
@@ -1478,7 +1478,7 @@ account_widget_build_icq (EmpathyAccountWidget *self,
           "vbox_icq_simple", &box,
           NULL);
 
-      empathy_account_widget_handle_params (self,
+      tpaw_account_widget_handle_params (self,
           "entry_uin_simple", "account",
           "entry_password_simple", "password",
           NULL);
@@ -1497,7 +1497,7 @@ account_widget_build_icq (EmpathyAccountWidget *self,
           "spinbutton_port", &spinbutton_port,
           NULL);
 
-      empathy_account_widget_handle_params (self,
+      tpaw_account_widget_handle_params (self,
           "entry_uin", "account",
           "entry_password", "password",
           "entry_server", "server",
@@ -1515,7 +1515,7 @@ account_widget_build_icq (EmpathyAccountWidget *self,
 }
 
 static GtkWidget *
-account_widget_build_aim (EmpathyAccountWidget *self,
+account_widget_build_aim (TpawAccountWidget *self,
     const char *filename)
 {
   GtkWidget *spinbutton_port, *box;
@@ -1526,7 +1526,7 @@ account_widget_build_aim (EmpathyAccountWidget *self,
           "vbox_aim_simple", &box,
           NULL);
 
-      empathy_account_widget_handle_params (self,
+      tpaw_account_widget_handle_params (self,
           "entry_screenname_simple", "account",
           "entry_password_simple", "password",
           NULL);
@@ -1545,7 +1545,7 @@ account_widget_build_aim (EmpathyAccountWidget *self,
           "spinbutton_port", &spinbutton_port,
           NULL);
 
-      empathy_account_widget_handle_params (self,
+      tpaw_account_widget_handle_params (self,
           "entry_screenname", "account",
           "entry_password", "password",
           "entry_server", "server",
@@ -1562,7 +1562,7 @@ account_widget_build_aim (EmpathyAccountWidget *self,
 }
 
 static GtkWidget *
-account_widget_build_yahoo (EmpathyAccountWidget *self,
+account_widget_build_yahoo (TpawAccountWidget *self,
     const char *filename)
 {
   GtkWidget *box;
@@ -1576,7 +1576,7 @@ account_widget_build_yahoo (EmpathyAccountWidget *self,
           "vbox_yahoo_simple", &box,
           NULL);
 
-      empathy_account_widget_handle_params (self,
+      tpaw_account_widget_handle_params (self,
           "entry_id_simple", "account",
           "entry_password_simple", "password",
           NULL);
@@ -1594,7 +1594,7 @@ account_widget_build_yahoo (EmpathyAccountWidget *self,
           "vbox_yahoo_settings", &box,
           NULL);
 
-      empathy_account_widget_handle_params (self,
+      tpaw_account_widget_handle_params (self,
           "entry_id", "account",
           "entry_password", "password",
           "entry_locale", "room-list-locale",
@@ -1613,7 +1613,7 @@ account_widget_build_yahoo (EmpathyAccountWidget *self,
 }
 
 static GtkWidget *
-account_widget_build_groupwise (EmpathyAccountWidget *self,
+account_widget_build_groupwise (TpawAccountWidget *self,
     const char *filename)
 {
   GtkWidget *box;
@@ -1624,7 +1624,7 @@ account_widget_build_groupwise (EmpathyAccountWidget *self,
           "vbox_groupwise_simple", &box,
           NULL);
 
-      empathy_account_widget_handle_params (self,
+      tpaw_account_widget_handle_params (self,
           "entry_id_simple", "account",
           "entry_password_simple", "password",
           NULL);
@@ -1642,7 +1642,7 @@ account_widget_build_groupwise (EmpathyAccountWidget *self,
           "vbox_groupwise_settings", &box,
           NULL);
 
-      empathy_account_widget_handle_params (self,
+      tpaw_account_widget_handle_params (self,
           "entry_id", "account",
           "entry_password", "password",
           "entry_server", "server",
@@ -1659,7 +1659,7 @@ account_widget_build_groupwise (EmpathyAccountWidget *self,
 }
 
 void
-empathy_account_widget_set_other_accounts_exist (EmpathyAccountWidget *self,
+tpaw_account_widget_set_other_accounts_exist (TpawAccountWidget *self,
     gboolean others_exist)
 {
   self->priv->other_accounts_exist = others_exist;
@@ -1674,7 +1674,7 @@ do_set_property (GObject *object,
     const GValue *value,
     GParamSpec *pspec)
 {
-  EmpathyAccountWidget *self = EMPATHY_ACCOUNT_WIDGET (object);
+  TpawAccountWidget *self = TPAW_ACCOUNT_WIDGET (object);
 
   switch (prop_id)
     {
@@ -1688,8 +1688,8 @@ do_set_property (GObject *object,
       self->priv->creating_account = g_value_get_boolean (value);
       break;
     case PROP_OTHER_ACCOUNTS_EXIST:
-      empathy_account_widget_set_other_accounts_exist (
-          EMPATHY_ACCOUNT_WIDGET (object), g_value_get_boolean (value));
+      tpaw_account_widget_set_other_accounts_exist (
+          TPAW_ACCOUNT_WIDGET (object), g_value_get_boolean (value));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -1702,7 +1702,7 @@ do_get_property (GObject *object,
     GValue *value,
     GParamSpec *pspec)
 {
-  EmpathyAccountWidget *self = EMPATHY_ACCOUNT_WIDGET (object);
+  TpawAccountWidget *self = TPAW_ACCOUNT_WIDGET (object);
 
   switch (prop_id)
     {
@@ -1728,7 +1728,7 @@ do_get_property (GObject *object,
 }
 
 static void
-set_apply_button (EmpathyAccountWidget *self)
+set_apply_button (TpawAccountWidget *self)
 {
   GtkWidget *image;
 
@@ -1748,7 +1748,7 @@ presence_changed_cb (TpAccountManager *manager,
     TpConnectionPresenceType state,
     const gchar *status,
     const gchar *message,
-    EmpathyAccountWidget *self)
+    TpawAccountWidget *self)
 {
   if (self->priv->destroyed)
     return;
@@ -1784,7 +1784,7 @@ account_manager_ready_cb (GObject *source_object,
     GAsyncResult *result,
     gpointer user_data)
 {
-  EmpathyAccountWidget *self = EMPATHY_ACCOUNT_WIDGET (user_data);
+  TpawAccountWidget *self = TPAW_ACCOUNT_WIDGET (user_data);
   TpAccountManager *account_manager = TP_ACCOUNT_MANAGER (source_object);
   GError *error = NULL;
   TpConnectionPresenceType state;
@@ -1812,7 +1812,7 @@ out:
     account_widget_build_##proto }
 
 static void
-add_register_buttons (EmpathyAccountWidget *self,
+add_register_buttons (TpawAccountWidget *self,
     TpAccount *account)
 {
   TpProtocol *protocol;
@@ -1852,20 +1852,20 @@ add_register_buttons (EmpathyAccountWidget *self,
 
 static void
 remember_password_toggled_cb (GtkToggleButton *button,
-    EmpathyAccountWidget *self)
+    TpawAccountWidget *self)
 {
   empathy_account_settings_set_remember_password (self->priv->settings,
       gtk_toggle_button_get_active (button));
 
   if (!self->priv->automatic_change)
-    empathy_account_widget_changed (self);
+    tpaw_account_widget_changed (self);
 }
 
 static void
 account_settings_password_retrieved_cb (GObject *object,
     gpointer user_data)
 {
-  EmpathyAccountWidget *self = user_data;
+  TpawAccountWidget *self = user_data;
   gchar *password;
 
   password = empathy_account_settings_dup_string (
@@ -1894,7 +1894,7 @@ account_settings_password_retrieved_cb (GObject *object,
 static void
 do_constructed (GObject *obj)
 {
-  EmpathyAccountWidget *self = EMPATHY_ACCOUNT_WIDGET (obj);
+  TpawAccountWidget *self = TPAW_ACCOUNT_WIDGET (obj);
   TpAccount *account;
   const gchar *display_name, *default_display_name;
   guint i = 0;
@@ -1902,7 +1902,7 @@ do_constructed (GObject *obj)
     const gchar *cm_name;
     const gchar *protocol;
     const char *file;
-    GtkWidget * (*func)(EmpathyAccountWidget *self, const gchar *filename);
+    GtkWidget * (*func)(TpawAccountWidget *self, const gchar *filename);
   } widgets [] = {
     { "salut", "local-xmpp", ACCOUNT_WIDGETS_RESOURCES_PREFIX "/empathy-account-widget-local-xmpp.ui",
         account_widget_build_salut },
@@ -2057,7 +2057,7 @@ do_constructed (GObject *obj)
 
   display_name = empathy_account_settings_get_display_name (
       self->priv->settings);
-  default_display_name = empathy_account_widget_get_default_display_name (self);
+  default_display_name = tpaw_account_widget_get_default_display_name (self);
 
   if (tp_strdiff (display_name, default_display_name) &&
       !self->priv->creating_account)
@@ -2072,31 +2072,31 @@ do_constructed (GObject *obj)
 static void
 do_dispose (GObject *obj)
 {
-  EmpathyAccountWidget *self = EMPATHY_ACCOUNT_WIDGET (obj);
+  TpawAccountWidget *self = TPAW_ACCOUNT_WIDGET (obj);
 
   g_clear_object (&self->priv->settings);
   g_clear_object (&self->priv->account_manager);
 
-  if (G_OBJECT_CLASS (empathy_account_widget_parent_class)->dispose != NULL)
-    G_OBJECT_CLASS (empathy_account_widget_parent_class)->dispose (obj);
+  if (G_OBJECT_CLASS (tpaw_account_widget_parent_class)->dispose != NULL)
+    G_OBJECT_CLASS (tpaw_account_widget_parent_class)->dispose (obj);
 }
 
 static void
 do_finalize (GObject *obj)
 {
-  EmpathyAccountWidget *self = EMPATHY_ACCOUNT_WIDGET (obj);
+  TpawAccountWidget *self = TPAW_ACCOUNT_WIDGET (obj);
 
   g_free (self->ui_details->default_focus);
-  g_slice_free (EmpathyAccountWidgetUIDetails, self->ui_details);
+  g_slice_free (TpawAccountWidgetUIDetails, self->ui_details);
 
   g_free (self->priv->jid_suffix);
 
-  if (G_OBJECT_CLASS (empathy_account_widget_parent_class)->finalize != NULL)
-    G_OBJECT_CLASS (empathy_account_widget_parent_class)->finalize (obj);
+  if (G_OBJECT_CLASS (tpaw_account_widget_parent_class)->finalize != NULL)
+    G_OBJECT_CLASS (tpaw_account_widget_parent_class)->finalize (obj);
 }
 
 static void
-empathy_account_widget_class_init (EmpathyAccountWidgetClass *klass)
+tpaw_account_widget_class_init (TpawAccountWidgetClass *klass)
 {
   GObjectClass *oclass = G_OBJECT_CLASS (klass);
   GParamSpec *param_spec;
@@ -2169,35 +2169,35 @@ empathy_account_widget_class_init (EmpathyAccountWidgetClass *klass)
         G_TYPE_NONE,
         1, G_TYPE_INT);
 
-  g_type_class_add_private (klass, sizeof (EmpathyAccountWidgetPriv));
+  g_type_class_add_private (klass, sizeof (TpawAccountWidgetPriv));
 }
 
 static void
-empathy_account_widget_init (EmpathyAccountWidget *self)
+tpaw_account_widget_init (TpawAccountWidget *self)
 {
-  self->priv = G_TYPE_INSTANCE_GET_PRIVATE ((self), EMPATHY_TYPE_ACCOUNT_WIDGET,
-        EmpathyAccountWidgetPriv);
+  self->priv = G_TYPE_INSTANCE_GET_PRIVATE ((self), TPAW_TYPE_ACCOUNT_WIDGET,
+        TpawAccountWidgetPriv);
 
-  self->ui_details = g_slice_new0 (EmpathyAccountWidgetUIDetails);
+  self->ui_details = g_slice_new0 (TpawAccountWidgetUIDetails);
 }
 
 /* public methods */
 
 void
-empathy_account_widget_discard_pending_changes (EmpathyAccountWidget *self)
+tpaw_account_widget_discard_pending_changes (TpawAccountWidget *self)
 {
   empathy_account_settings_discard_changes (self->priv->settings);
   self->priv->contains_pending_changes = FALSE;
 }
 
 gboolean
-empathy_account_widget_contains_pending_changes (EmpathyAccountWidget *self)
+tpaw_account_widget_contains_pending_changes (TpawAccountWidget *self)
 {
   return self->priv->contains_pending_changes;
 }
 
 void
-empathy_account_widget_handle_params (EmpathyAccountWidget *self,
+tpaw_account_widget_handle_params (TpawAccountWidget *self,
     const gchar *first_widget,
     ...)
 {
@@ -2208,13 +2208,13 @@ empathy_account_widget_handle_params (EmpathyAccountWidget *self,
   va_end (args);
 }
 
-EmpathyAccountWidget *
-empathy_account_widget_new_for_protocol (EmpathyAccountSettings *settings,
+TpawAccountWidget *
+tpaw_account_widget_new_for_protocol (EmpathyAccountSettings *settings,
     gboolean simple)
 {
   g_return_val_if_fail (EMPATHY_IS_ACCOUNT_SETTINGS (settings), NULL);
 
-  return g_object_new (EMPATHY_TYPE_ACCOUNT_WIDGET,
+  return g_object_new (TPAW_TYPE_ACCOUNT_WIDGET,
         "orientation", GTK_ORIENTATION_VERTICAL,
         "settings", settings,
         "simple", simple,
@@ -2224,7 +2224,7 @@ empathy_account_widget_new_for_protocol (EmpathyAccountSettings *settings,
 }
 
 gchar *
-empathy_account_widget_get_default_display_name (EmpathyAccountWidget *self)
+tpaw_account_widget_get_default_display_name (TpawAccountWidget *self)
 {
   gchar *login_id;
   const gchar *protocol, *p;
@@ -2241,9 +2241,9 @@ empathy_account_widget_get_default_display_name (EmpathyAccountWidget *self)
       /* TODO: this should be done in empathy-account-widget-irc */
       if (!tp_strdiff (protocol, "irc"))
         {
-          EmpathyIrcNetwork *network;
+          TpawIrcNetwork *network;
 
-          network = empathy_irc_network_chooser_get_network (
+          network = tpaw_irc_network_chooser_get_network (
               self->priv->irc_network_chooser);
           g_assert (network != NULL);
 
@@ -2253,7 +2253,7 @@ empathy_account_widget_get_default_display_name (EmpathyAccountWidget *self)
            * You should reverse the order of these arguments if the
            * server should come before the login id in your locale.*/
           default_display_name = g_strdup_printf (_("%1$s on %2$s"),
-              login_id, empathy_irc_network_get_name (network));
+              login_id, tpaw_irc_network_get_name (network));
         }
       else if (service == FACEBOOK_SERVICE && self->priv->jid_suffix != NULL)
         {
@@ -2292,14 +2292,14 @@ empathy_account_widget_get_default_display_name (EmpathyAccountWidget *self)
 
 /* Used by subclass to indicate that widget contains pending changes */
 void
-empathy_account_widget_changed (EmpathyAccountWidget *self)
+tpaw_account_widget_changed (TpawAccountWidget *self)
 {
   account_widget_handle_control_buttons_sensitivity (self);
   self->priv->contains_pending_changes = TRUE;
 }
 
 void
-empathy_account_widget_set_account_param (EmpathyAccountWidget *self,
+tpaw_account_widget_set_account_param (TpawAccountWidget *self,
     const gchar *account)
 {
   if (self->priv->param_account_widget == NULL)
@@ -2309,7 +2309,7 @@ empathy_account_widget_set_account_param (EmpathyAccountWidget *self,
 }
 
 void
-empathy_account_widget_set_password_param (EmpathyAccountWidget *self,
+tpaw_account_widget_set_password_param (TpawAccountWidget *self,
     const gchar *account)
 {
   if (self->priv->param_password_widget == NULL)
@@ -2319,13 +2319,13 @@ empathy_account_widget_set_password_param (EmpathyAccountWidget *self,
 }
 
 EmpathyAccountSettings *
-empathy_account_widget_get_settings (EmpathyAccountWidget *self)
+tpaw_account_widget_get_settings (TpawAccountWidget *self)
 {
   return self->priv->settings;
 }
 
 void
-empathy_account_widget_hide_buttons (EmpathyAccountWidget *self)
+tpaw_account_widget_hide_buttons (TpawAccountWidget *self)
 {
   gtk_widget_hide (self->priv->hbox_buttons);
 }

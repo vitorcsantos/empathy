@@ -18,47 +18,47 @@
  * Authors: Guillaume Desmottes <gdesmott@gnome.org>
  */
 
-#ifndef __EMPATHY_IRC_SERVER_H__
-#define __EMPATHY_IRC_SERVER_H__
+#ifndef __TPAW_IRC_SERVER_H__
+#define __TPAW_IRC_SERVER_H__
 
 #include <glib-object.h>
 
 G_BEGIN_DECLS
 
-typedef struct _EmpathyIrcServer EmpathyIrcServer;
-typedef struct _EmpathyIrcServerClass EmpathyIrcServerClass;
+typedef struct _TpawIrcServer TpawIrcServer;
+typedef struct _TpawIrcServerClass TpawIrcServerClass;
 
-struct _EmpathyIrcServer
+struct _TpawIrcServer
 {
   GObject parent;
   gpointer priv;
 };
 
-struct _EmpathyIrcServerClass
+struct _TpawIrcServerClass
 {
     GObjectClass parent_class;
 };
 
-GType empathy_irc_server_get_type (void);
+GType tpaw_irc_server_get_type (void);
 
 /* TYPE MACROS */
-#define EMPATHY_TYPE_IRC_SERVER (empathy_irc_server_get_type ())
-#define EMPATHY_IRC_SERVER(o)  \
-  (G_TYPE_CHECK_INSTANCE_CAST ((o), EMPATHY_TYPE_IRC_SERVER, EmpathyIrcServer))
-#define EMPATHY_IRC_SERVER_CLASS(k) \
-  (G_TYPE_CHECK_CLASS_CAST ((k), EMPATHY_TYPE_IRC_SERVER, \
-                            EmpathyIrcServerClass))
-#define EMPATHY_IS_IRC_SERVER(o) \
-  (G_TYPE_CHECK_INSTANCE_TYPE ((o), EMPATHY_TYPE_IRC_SERVER))
-#define EMPATHY_IS_IRC_SERVER_CLASS(k) \
-  (G_TYPE_CHECK_CLASS_TYPE ((k), EMPATHY_TYPE_IRC_SERVER))
-#define EMPATHY_IRC_SERVER_GET_CLASS(o) \
-  (G_TYPE_INSTANCE_GET_CLASS ((o), EMPATHY_TYPE_IRC_SERVER,\
-                              EmpathyIrcServerClass))
+#define TPAW_TYPE_IRC_SERVER (tpaw_irc_server_get_type ())
+#define TPAW_IRC_SERVER(o)  \
+  (G_TYPE_CHECK_INSTANCE_CAST ((o), TPAW_TYPE_IRC_SERVER, TpawIrcServer))
+#define TPAW_IRC_SERVER_CLASS(k) \
+  (G_TYPE_CHECK_CLASS_CAST ((k), TPAW_TYPE_IRC_SERVER, \
+                            TpawIrcServerClass))
+#define TPAW_IS_IRC_SERVER(o) \
+  (G_TYPE_CHECK_INSTANCE_TYPE ((o), TPAW_TYPE_IRC_SERVER))
+#define TPAW_IS_IRC_SERVER_CLASS(k) \
+  (G_TYPE_CHECK_CLASS_TYPE ((k), TPAW_TYPE_IRC_SERVER))
+#define TPAW_IRC_SERVER_GET_CLASS(o) \
+  (G_TYPE_INSTANCE_GET_CLASS ((o), TPAW_TYPE_IRC_SERVER,\
+                              TpawIrcServerClass))
 
-EmpathyIrcServer * empathy_irc_server_new (const gchar *address, guint port,
+TpawIrcServer * tpaw_irc_server_new (const gchar *address, guint port,
     gboolean ssl);
 
 G_END_DECLS
 
-#endif /* __EMPATHY_IRC_SERVER_H__ */
+#endif /* __TPAW_IRC_SERVER_H__ */

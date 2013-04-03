@@ -34,7 +34,7 @@
 #define DEFAULT_IRC_PORT 6667
 #define DEFAULT_IRC_SSL FALSE
 
-#define GET_PRIV(obj) EMPATHY_GET_PRIV (obj, EmpathyIrcNetworkChooser)
+#define GET_PRIV(obj) EMPATHY_GET_PRIV (obj, TpawIrcNetworkChooser)
 
 enum {
     PROP_SETTINGS = 1
@@ -50,22 +50,22 @@ static guint signals[LAST_SIGNAL] = { 0 };
 typedef struct {
     EmpathyAccountSettings *settings;
 
-    EmpathyIrcNetworkManager *network_manager;
+    TpawIrcNetworkManager *network_manager;
     GtkWidget *dialog;
     /* Displayed network */
-    EmpathyIrcNetwork *network;
-} EmpathyIrcNetworkChooserPriv;
+    TpawIrcNetwork *network;
+} TpawIrcNetworkChooserPriv;
 
-G_DEFINE_TYPE (EmpathyIrcNetworkChooser, empathy_irc_network_chooser,
+G_DEFINE_TYPE (TpawIrcNetworkChooser, tpaw_irc_network_chooser,
     GTK_TYPE_BUTTON);
 
 static void
-empathy_irc_network_chooser_set_property (GObject *object,
+tpaw_irc_network_chooser_set_property (GObject *object,
     guint prop_id,
     const GValue *value,
     GParamSpec *pspec)
 {
-  EmpathyIrcNetworkChooserPriv *priv = GET_PRIV (object);
+  TpawIrcNetworkChooserPriv *priv = GET_PRIV (object);
 
   switch (prop_id)
     {
@@ -79,12 +79,12 @@ empathy_irc_network_chooser_set_property (GObject *object,
 }
 
 static void
-empathy_irc_network_chooser_get_property (GObject *object,
+tpaw_irc_network_chooser_get_property (GObject *object,
     guint prop_id,
     GValue *value,
     GParamSpec *pspec)
 {
-  EmpathyIrcNetworkChooserPriv *priv = GET_PRIV (object);
+  TpawIrcNetworkChooserPriv *priv = GET_PRIV (object);
 
   switch (prop_id)
     {
@@ -98,9 +98,9 @@ empathy_irc_network_chooser_get_property (GObject *object,
 }
 
 static void
-unset_server_params (EmpathyIrcNetworkChooser *self)
+unset_server_params (TpawIrcNetworkChooser *self)
 {
-  EmpathyIrcNetworkChooserPriv *priv = GET_PRIV (self);
+  TpawIrcNetworkChooserPriv *priv = GET_PRIV (self);
 
   DEBUG ("Unset server, port and use-ssl");
   empathy_account_settings_unset (priv->settings, "server");
@@ -109,14 +109,14 @@ unset_server_params (EmpathyIrcNetworkChooser *self)
 }
 
 static gchar *
-dup_network_service (EmpathyIrcNetwork *network)
+dup_network_service (TpawIrcNetwork *network)
 {
   /* Account.Service has to be a lower case alphanumeric string which may
    * also contain '-' but not start with it. */
 #define VALID G_CSET_a_2_z G_CSET_DIGITS "-"
   gchar *service, *tmp;
 
-  service = g_strdup (empathy_irc_network_get_name (network));
+  service = g_strdup (tpaw_irc_network_get_name (network));
   service = g_strstrip (service);
 
   if (tp_str_empty (service))
@@ -143,24 +143,24 @@ dup_network_service (EmpathyIrcNetwork *network)
 }
 
 static void
-update_server_params (EmpathyIrcNetworkChooser *self)
+update_server_params (TpawIrcNetworkChooser *self)
 {
-  EmpathyIrcNetworkChooserPriv *priv = GET_PRIV (self);
+  TpawIrcNetworkChooserPriv *priv = GET_PRIV (self);
   GSList *servers;
   const gchar *charset;
 
   g_assert (priv->network != NULL);
 
-  charset = empathy_irc_network_get_charset (priv->network);
+  charset = tpaw_irc_network_get_charset (priv->network);
   DEBUG ("Setting charset to %s", charset);
   empathy_account_settings_set (priv->settings, "charset",
       g_variant_new_string (charset));
 
-  servers = empathy_irc_network_get_servers (priv->network);
+  servers = tpaw_irc_network_get_servers (priv->network);
   if (g_slist_length (servers) > 0)
     {
       /* set the first server as CM server */
-      EmpathyIrcServer *server = servers->data;
+      TpawIrcServer *server = servers->data;
       gchar *address;
       guint port;
       gboolean ssl;
@@ -201,20 +201,20 @@ update_server_params (EmpathyIrcNetworkChooser *self)
 }
 
 static void
-set_label (EmpathyIrcNetworkChooser *self)
+set_label (TpawIrcNetworkChooser *self)
 {
-  EmpathyIrcNetworkChooserPriv *priv = GET_PRIV (self);
+  TpawIrcNetworkChooserPriv *priv = GET_PRIV (self);
 
   g_assert (priv->network != NULL);
 
   gtk_button_set_label (GTK_BUTTON (self),
-      empathy_irc_network_get_name (priv->network));
+      tpaw_irc_network_get_name (priv->network));
 }
 
 static void
-set_label_from_settings (EmpathyIrcNetworkChooser *self)
+set_label_from_settings (TpawIrcNetworkChooser *self)
 {
-  EmpathyIrcNetworkChooserPriv *priv = GET_PRIV (self);
+  TpawIrcNetworkChooserPriv *priv = GET_PRIV (self);
   gchar *server;
 
   tp_clear_object (&priv->network);
@@ -223,11 +223,11 @@ set_label_from_settings (EmpathyIrcNetworkChooser *self)
 
   if (server != NULL)
     {
-      EmpathyIrcServer *srv;
+      TpawIrcServer *srv;
       gint port;
       gboolean ssl;
 
-      priv->network = empathy_irc_network_manager_find_network_by_address (
+      priv->network = tpaw_irc_network_manager_find_network_by_address (
           priv->network_manager, server);
 
       if (priv->network != NULL)
@@ -244,11 +244,11 @@ set_label_from_settings (EmpathyIrcNetworkChooser *self)
           "use-ssl");
 
       DEBUG ("Create a network %s", server);
-      priv->network = empathy_irc_network_new (server);
-      srv = empathy_irc_server_new (server, port, ssl);
+      priv->network = tpaw_irc_network_new (server);
+      srv = tpaw_irc_server_new (server, port, ssl);
 
-      empathy_irc_network_append_server (priv->network, srv);
-      empathy_irc_network_manager_add (priv->network_manager, priv->network);
+      tpaw_irc_network_append_server (priv->network, srv);
+      tpaw_irc_network_manager_add (priv->network_manager, priv->network);
 
       set_label (self);
 
@@ -258,21 +258,21 @@ set_label_from_settings (EmpathyIrcNetworkChooser *self)
     }
 
   /* Set default network */
-  priv->network = empathy_irc_network_manager_find_network_by_address (
+  priv->network = tpaw_irc_network_manager_find_network_by_address (
           priv->network_manager, DEFAULT_IRC_NETWORK);
 
   if (priv->network == NULL)
     {
       /* Default network is not known, recreate it */
-      EmpathyIrcServer *srv;
+      TpawIrcServer *srv;
 
-      priv->network = empathy_irc_network_new (DEFAULT_IRC_NETWORK);
+      priv->network = tpaw_irc_network_new (DEFAULT_IRC_NETWORK);
 
-      srv = empathy_irc_server_new (DEFAULT_IRC_NETWORK, DEFAULT_IRC_PORT,
+      srv = tpaw_irc_server_new (DEFAULT_IRC_NETWORK, DEFAULT_IRC_PORT,
           DEFAULT_IRC_SSL);
 
-      empathy_irc_network_append_server (priv->network, srv);
-      empathy_irc_network_manager_add (priv->network_manager, priv->network);
+      tpaw_irc_network_append_server (priv->network, srv);
+      tpaw_irc_network_manager_add (priv->network_manager, priv->network);
 
       g_object_unref (srv);
     }
@@ -285,22 +285,22 @@ set_label_from_settings (EmpathyIrcNetworkChooser *self)
 static void
 dialog_response_cb (GtkDialog *dialog,
     gint response,
-    EmpathyIrcNetworkChooser *self)
+    TpawIrcNetworkChooser *self)
 {
-  EmpathyIrcNetworkChooserPriv *priv = GET_PRIV (self);
-  EmpathyIrcNetworkChooserDialog *chooser =
-    EMPATHY_IRC_NETWORK_CHOOSER_DIALOG (priv->dialog);
+  TpawIrcNetworkChooserPriv *priv = GET_PRIV (self);
+  TpawIrcNetworkChooserDialog *chooser =
+    TPAW_IRC_NETWORK_CHOOSER_DIALOG (priv->dialog);
 
   if (response != GTK_RESPONSE_CLOSE &&
       response != GTK_RESPONSE_DELETE_EVENT)
     return;
 
-  if (empathy_irc_network_chooser_dialog_get_changed (chooser))
+  if (tpaw_irc_network_chooser_dialog_get_changed (chooser))
     {
       tp_clear_object (&priv->network);
 
       priv->network = g_object_ref (
-          empathy_irc_network_chooser_dialog_get_network (chooser));
+          tpaw_irc_network_chooser_dialog_get_network (chooser));
 
       update_server_params (self);
       set_label (self);
@@ -316,7 +316,7 @@ static void
 clicked_cb (GtkButton *button,
     gpointer user_data)
 {
-  EmpathyIrcNetworkChooserPriv *priv = GET_PRIV (button);
+  TpawIrcNetworkChooserPriv *priv = GET_PRIV (button);
   GtkWindow *window;
 
   if (priv->dialog != NULL)
@@ -324,7 +324,7 @@ clicked_cb (GtkButton *button,
 
   window = empathy_get_toplevel_window (GTK_WIDGET (button));
 
-  priv->dialog = empathy_irc_network_chooser_dialog_new (priv->settings,
+  priv->dialog = tpaw_irc_network_chooser_dialog_new (priv->settings,
       priv->network, window);
   gtk_widget_show_all (priv->dialog);
 
@@ -336,10 +336,10 @@ out:
 }
 
 static void
-empathy_irc_network_chooser_constructed (GObject *object)
+tpaw_irc_network_chooser_constructed (GObject *object)
 {
-  EmpathyIrcNetworkChooser *self = (EmpathyIrcNetworkChooser *) object;
-  EmpathyIrcNetworkChooserPriv *priv = GET_PRIV (self);
+  TpawIrcNetworkChooser *self = (TpawIrcNetworkChooser *) object;
+  TpawIrcNetworkChooserPriv *priv = GET_PRIV (self);
 
   g_assert (priv->settings != NULL);
 
@@ -349,28 +349,28 @@ empathy_irc_network_chooser_constructed (GObject *object)
 }
 
 static void
-empathy_irc_network_chooser_dispose (GObject *object)
+tpaw_irc_network_chooser_dispose (GObject *object)
 {
-  EmpathyIrcNetworkManager *self = (EmpathyIrcNetworkManager *) object;
-  EmpathyIrcNetworkChooserPriv *priv = GET_PRIV (self);
+  TpawIrcNetworkManager *self = (TpawIrcNetworkManager *) object;
+  TpawIrcNetworkChooserPriv *priv = GET_PRIV (self);
 
   tp_clear_object (&priv->settings);
   tp_clear_object (&priv->network_manager);
   tp_clear_object (&priv->network);
 
-  if (G_OBJECT_CLASS (empathy_irc_network_chooser_parent_class)->dispose)
-    G_OBJECT_CLASS (empathy_irc_network_chooser_parent_class)->dispose (object);
+  if (G_OBJECT_CLASS (tpaw_irc_network_chooser_parent_class)->dispose)
+    G_OBJECT_CLASS (tpaw_irc_network_chooser_parent_class)->dispose (object);
 }
 
 static void
-empathy_irc_network_chooser_class_init (EmpathyIrcNetworkChooserClass *klass)
+tpaw_irc_network_chooser_class_init (TpawIrcNetworkChooserClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->get_property = empathy_irc_network_chooser_get_property;
-  object_class->set_property = empathy_irc_network_chooser_set_property;
-  object_class->constructed = empathy_irc_network_chooser_constructed;
-  object_class->dispose = empathy_irc_network_chooser_dispose;
+  object_class->get_property = tpaw_irc_network_chooser_get_property;
+  object_class->set_property = tpaw_irc_network_chooser_set_property;
+  object_class->constructed = tpaw_irc_network_chooser_constructed;
+  object_class->dispose = tpaw_irc_network_chooser_dispose;
 
   g_object_class_install_property (object_class, PROP_SETTINGS,
     g_param_spec_object ("settings",
@@ -389,33 +389,33 @@ empathy_irc_network_chooser_class_init (EmpathyIrcNetworkChooserClass *klass)
       0);
 
   g_type_class_add_private (object_class,
-      sizeof (EmpathyIrcNetworkChooserPriv));
+      sizeof (TpawIrcNetworkChooserPriv));
 }
 
 static void
-empathy_irc_network_chooser_init (EmpathyIrcNetworkChooser *self)
+tpaw_irc_network_chooser_init (TpawIrcNetworkChooser *self)
 {
-  EmpathyIrcNetworkChooserPriv *priv;
+  TpawIrcNetworkChooserPriv *priv;
 
   priv = G_TYPE_INSTANCE_GET_PRIVATE (self,
-      EMPATHY_TYPE_IRC_NETWORK_CHOOSER, EmpathyIrcNetworkChooserPriv);
+      TPAW_TYPE_IRC_NETWORK_CHOOSER, TpawIrcNetworkChooserPriv);
   self->priv = priv;
 
-  priv->network_manager = empathy_irc_network_manager_dup_default ();
+  priv->network_manager = tpaw_irc_network_manager_dup_default ();
 }
 
 GtkWidget *
-empathy_irc_network_chooser_new (EmpathyAccountSettings *settings)
+tpaw_irc_network_chooser_new (EmpathyAccountSettings *settings)
 {
-  return g_object_new (EMPATHY_TYPE_IRC_NETWORK_CHOOSER,
+  return g_object_new (TPAW_TYPE_IRC_NETWORK_CHOOSER,
       "settings", settings,
       NULL);
 }
 
-EmpathyIrcNetwork *
-empathy_irc_network_chooser_get_network (EmpathyIrcNetworkChooser *self)
+TpawIrcNetwork *
+tpaw_irc_network_chooser_get_network (TpawIrcNetworkChooser *self)
 {
-  EmpathyIrcNetworkChooserPriv *priv = GET_PRIV (self);
+  TpawIrcNetworkChooserPriv *priv = GET_PRIV (self);
 
   return priv->network;
 }

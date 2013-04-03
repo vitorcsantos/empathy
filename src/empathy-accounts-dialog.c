@@ -93,19 +93,19 @@ typedef struct {
   GtkWidget *spinner;
   gboolean loading;
 
-  /* We have to keep a weak reference on the actual EmpathyAccountWidget, not
+  /* We have to keep a weak reference on the actual TpawAccountWidget, not
    * just its GtkWidget. It is the only reliable source we can query to know if
    * there are any unsaved changes to the currently selected account. We can't
    * look at the account settings because it does not contain everything that
-   * can be changed using the EmpathyAccountWidget. For instance, it does not
+   * can be changed using the TpawAccountWidget. For instance, it does not
    * contain the state of the "Enabled" checkbox.
    *
    * Even if we create it ourself, we just get a weak ref and not a strong one
-   * as EmpathyAccountWidget unrefs itself when the GtkWidget is destroyed.
+   * as TpawAccountWidget unrefs itself when the GtkWidget is destroyed.
    * That's kinda ugly; cf bgo #640417.
    *
    * */
-  EmpathyAccountWidget *setting_widget;
+  TpawAccountWidget *setting_widget;
 
   gboolean  connecting_show;
   guint connecting_id;
@@ -518,7 +518,7 @@ empathy_account_dialog_cancel (EmpathyAccountsDialog *dialog)
       COL_ACCOUNT_SETTINGS, &settings,
       COL_ACCOUNT, &account, -1);
 
-  empathy_account_widget_discard_pending_changes (priv->setting_widget);
+  tpaw_account_widget_discard_pending_changes (priv->setting_widget);
 
   if (account == NULL)
     {
@@ -544,7 +544,7 @@ empathy_account_dialog_cancel (EmpathyAccountsDialog *dialog)
 
 static void
 empathy_account_dialog_widget_cancelled_cb (
-    EmpathyAccountWidget *widget_object,
+    TpawAccountWidget *widget_object,
     EmpathyAccountsDialog *dialog)
 {
   empathy_account_dialog_cancel (dialog);
@@ -590,14 +590,14 @@ account_dialog_create_edit_params_dialog (EmpathyAccountsDialog *dialog)
 
   gtk_window_set_resizable (GTK_WINDOW (subdialog), FALSE);
 
-  priv->setting_widget = (EmpathyAccountWidget *)
-    empathy_account_widget_new_for_protocol (settings, FALSE);
+  priv->setting_widget = (TpawAccountWidget *)
+    tpaw_account_widget_new_for_protocol (settings, FALSE);
 
   g_object_add_weak_pointer (G_OBJECT (priv->setting_widget),
       (gpointer *) &priv->setting_widget);
 
   if (accounts_dialog_has_valid_accounts (dialog))
-    empathy_account_widget_set_other_accounts_exist (
+    tpaw_account_widget_set_other_accounts_exist (
         priv->setting_widget, TRUE);
 
   g_signal_connect (priv->setting_widget, "cancelled",
@@ -783,7 +783,7 @@ accounts_dialog_has_pending_change (EmpathyAccountsDialog *dialog,
     gtk_tree_model_get (model, &iter, COL_ACCOUNT, account, -1);
 
   return priv->setting_widget != NULL
-      && empathy_account_widget_contains_pending_changes (
+      && tpaw_account_widget_contains_pending_changes (
           priv->setting_widget);
 }
 
@@ -1395,7 +1395,7 @@ accounts_dialog_selection_change_response_cb (GtkDialog *message_dialog,
         GtkTreeSelection *selection;
 
         priv->force_change_row = TRUE;
-        empathy_account_widget_discard_pending_changes (
+        tpaw_account_widget_discard_pending_changes (
             priv->setting_widget);
 
         path = gtk_tree_row_reference_get_path (priv->destination_row);
@@ -1922,7 +1922,7 @@ accounts_dialog_accounts_model_row_inserted_cb (GtkTreeModel *model,
   if (priv->setting_widget != NULL &&
       accounts_dialog_has_valid_accounts (dialog))
     {
-      empathy_account_widget_set_other_accounts_exist (
+      tpaw_account_widget_set_other_accounts_exist (
           priv->setting_widget, TRUE);
     }
 }
@@ -1937,7 +1937,7 @@ accounts_dialog_accounts_model_row_deleted_cb (GtkTreeModel *model,
   if (priv->setting_widget != NULL &&
       !accounts_dialog_has_valid_accounts (dialog))
     {
-      empathy_account_widget_set_other_accounts_exist (
+      tpaw_account_widget_set_other_accounts_exist (
           priv->setting_widget, FALSE);
     }
 }

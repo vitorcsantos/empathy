@@ -18,17 +18,17 @@
  * Authors: Frederic Peters <fpeters@0d.be>
  */
 
-#ifndef __EMPATHY_ACCOUNT_WIDGET_SIP_H__
-#define __EMPATHY_ACCOUNT_WIDGET_SIP_H__
+#ifndef __TPAW_ACCOUNT_WIDGET_SIP_H__
+#define __TPAW_ACCOUNT_WIDGET_SIP_H__
 
 #include "empathy-account-widget.h"
 
 G_BEGIN_DECLS
 
-GtkWidget * empathy_account_widget_sip_build (EmpathyAccountWidget *self,
+GtkWidget * tpaw_account_widget_sip_build (TpawAccountWidget *self,
     const char *filename,
     GtkWidget **grid_common_settings);
 
 G_END_DECLS
 
-#endif /* __EMPATHY_ACCOUNT_WIDGET_SIP_H__ */
+#endif /* __TPAW_ACCOUNT_WIDGET_SIP_H__ */

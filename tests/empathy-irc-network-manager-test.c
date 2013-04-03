@@ -12,26 +12,26 @@
 #define USER_FILE "user-irc-networks.xml"
 
 static void
-test_empathy_irc_network_manager_add (void)
+test_tpaw_irc_network_manager_add (void)
 {
-  EmpathyIrcNetworkManager *mgr;
-  EmpathyIrcNetwork *network;
+  TpawIrcNetworkManager *mgr;
+  TpawIrcNetwork *network;
   GSList *networks;
   gchar *name;
 
-  mgr = empathy_irc_network_manager_new (NULL, NULL);
+  mgr = tpaw_irc_network_manager_new (NULL, NULL);
   g_assert (mgr != NULL);
 
-  networks = empathy_irc_network_manager_get_networks (mgr);
+  networks = tpaw_irc_network_manager_get_networks (mgr);
   g_assert (networks == NULL);
 
   /* add a network */
-  network = empathy_irc_network_new ("My Network");
+  network = tpaw_irc_network_new ("My Network");
   g_assert (network != NULL);
-  empathy_irc_network_manager_add (mgr, network);
+  tpaw_irc_network_manager_add (mgr, network);
   g_object_unref (network);
 
-  networks = empathy_irc_network_manager_get_networks (mgr);
+  networks = tpaw_irc_network_manager_get_networks (mgr);
   g_assert_cmpuint (g_slist_length (networks), ==, 1);
   g_object_get (networks->data, "name", &name, NULL);
   g_assert_cmpstr (name, ==, "My Network");
@@ -40,12 +40,12 @@ test_empathy_irc_network_manager_add (void)
   g_slist_free (networks);
 
   /* add another network having the same name */
-  network = empathy_irc_network_new ("My Network");
+  network = tpaw_irc_network_new ("My Network");
   g_assert (network != NULL);
-  empathy_irc_network_manager_add (mgr, network);
+  tpaw_irc_network_manager_add (mgr, network);
   g_object_unref (network);
 
-  networks = empathy_irc_network_manager_get_networks (mgr);
+  networks = tpaw_irc_network_manager_get_networks (mgr);
   g_assert_cmpuint (g_slist_length (networks), ==, 2);
   g_object_get (networks->data, "name", &name, NULL);
   g_assert_cmpstr (name, ==, "My Network");
@@ -62,7 +62,7 @@ test_empathy_irc_network_manager_add (void)
 static void
 test_load_global_file (void)
 {
-  EmpathyIrcNetworkManager *mgr;
+  TpawIrcNetworkManager *mgr;
   gchar *global_file, *user_file;
   GSList *networks, *l;
   struct server_t freenode_servers[] = {
@@ -79,7 +79,7 @@ test_load_global_file (void)
   gchar *global_file_orig;
 
   global_file_orig = get_xml_file (GLOBAL_SAMPLE);
-  mgr = empathy_irc_network_manager_new (global_file_orig, NULL);
+  mgr = tpaw_irc_network_manager_new (global_file_orig, NULL);
 
   g_object_get (mgr,
       "global-file", &global_file,
@@ -90,7 +90,7 @@ test_load_global_file (void)
   g_free (global_file_orig);
   g_free (user_file);
 
-  networks = empathy_irc_network_manager_get_networks (mgr);
+  networks = tpaw_irc_network_manager_get_networks (mgr);
   g_assert_cmpuint (g_slist_length (networks), ==, 4);
 
   network_checked[0] = network_checked[1] = network_checked[2] =
@@ -139,18 +139,18 @@ test_load_global_file (void)
 }
 
 static gboolean
-remove_network_named (EmpathyIrcNetworkManager *mgr,
+remove_network_named (TpawIrcNetworkManager *mgr,
                       const gchar *network_name)
 {
   GSList *networks, *l;
   gboolean removed = FALSE;
 
-  networks = empathy_irc_network_manager_get_networks (mgr);
+  networks = tpaw_irc_network_manager_get_networks (mgr);
 
   /* check networks and servers */
   for (l = networks; l != NULL && !removed; l = g_slist_next (l))
     {
-      EmpathyIrcNetwork *network = l->data;
+      TpawIrcNetwork *network = l->data;
       gchar *name;
 
       g_object_get (network, "name", &name, NULL);
@@ -158,7 +158,7 @@ remove_network_named (EmpathyIrcNetworkManager *mgr,
 
       if (strcmp (name, network_name) == 0)
         {
-          empathy_irc_network_manager_remove (mgr, network);
+          tpaw_irc_network_manager_remove (mgr, network);
           removed = TRUE;
         }
 
@@ -172,9 +172,9 @@ remove_network_named (EmpathyIrcNetworkManager *mgr,
 }
 
 static void
-test_empathy_irc_network_manager_remove (void)
+test_tpaw_irc_network_manager_remove (void)
 {
-  EmpathyIrcNetworkManager *mgr;
+  TpawIrcNetworkManager *mgr;
   GSList *networks, *l;
   struct server_t freenode_servers[] = {
     { "irc.freenode.net", 6667, FALSE },
@@ -188,13 +188,13 @@ test_empathy_irc_network_manager_remove (void)
   gchar *global_file_orig;
 
   global_file_orig = get_xml_file (GLOBAL_SAMPLE);
-  mgr = empathy_irc_network_manager_new (global_file_orig, NULL);
+  mgr = tpaw_irc_network_manager_new (global_file_orig, NULL);
   g_free (global_file_orig);
 
   result = remove_network_named (mgr, "GIMPNet");
   g_assert (result);
 
-  networks = empathy_irc_network_manager_get_networks (mgr);
+  networks = tpaw_irc_network_manager_get_networks (mgr);
   g_assert_cmpuint (g_slist_length (networks), ==, 3);
 
   network_checked[0] = network_checked[1] = network_checked[2] = FALSE;
@@ -238,7 +238,7 @@ test_empathy_irc_network_manager_remove (void)
 static void
 test_load_user_file (void)
 {
-  EmpathyIrcNetworkManager *mgr;
+  TpawIrcNetworkManager *mgr;
   gchar *global_file, *user_file;
   GSList *networks, *l;
   struct server_t gimpnet_servers[] = {
@@ -254,7 +254,7 @@ test_load_user_file (void)
 
   copy_xml_file (USER_SAMPLE, USER_FILE);
   user_file_orig = get_user_xml_file (USER_FILE);
-  mgr = empathy_irc_network_manager_new (NULL, user_file_orig);
+  mgr = tpaw_irc_network_manager_new (NULL, user_file_orig);
 
   g_object_get (mgr,
       "global-file", &global_file,
@@ -266,7 +266,7 @@ test_load_user_file (void)
   g_free (user_file);
   g_free (user_file_orig);
 
-  networks = empathy_irc_network_manager_get_networks (mgr);
+  networks = tpaw_irc_network_manager_get_networks (mgr);
   g_assert_cmpuint (g_slist_length (networks), ==, 3);
 
   network_checked[0] = network_checked[1] = network_checked[2] = FALSE;
@@ -310,7 +310,7 @@ test_load_user_file (void)
 static void
 test_load_both_files (void)
 {
-  EmpathyIrcNetworkManager *mgr;
+  TpawIrcNetworkManager *mgr;
   gchar *global_file, *user_file;
   GSList *networks, *l;
   struct server_t freenode_servers[] = {
@@ -331,7 +331,7 @@ test_load_both_files (void)
 
   global_file_orig = get_xml_file (GLOBAL_SAMPLE);
   user_file_orig = get_user_xml_file (USER_FILE);
-  mgr = empathy_irc_network_manager_new (global_file_orig, user_file_orig);
+  mgr = tpaw_irc_network_manager_new (global_file_orig, user_file_orig);
 
   g_object_get (mgr,
       "global-file", &global_file,
@@ -344,7 +344,7 @@ test_load_both_files (void)
   g_free (user_file);
   g_free (user_file_orig);
 
-  networks = empathy_irc_network_manager_get_networks (mgr);
+  networks = tpaw_irc_network_manager_get_networks (mgr);
   g_assert_cmpuint (g_slist_length (networks), ==, 5);
 
   network_checked[0] = network_checked[1] = network_checked[2] =
@@ -400,9 +400,9 @@ test_load_both_files (void)
 static void
 test_modify_user_file (void)
 {
-  EmpathyIrcNetworkManager *mgr;
-  EmpathyIrcNetwork *network;
-  EmpathyIrcServer *server;
+  TpawIrcNetworkManager *mgr;
+  TpawIrcNetwork *network;
+  TpawIrcServer *server;
   gchar *global_file, *user_file;
   GSList *networks, *l;
   struct server_t gimpnet_servers[] = {
@@ -418,7 +418,7 @@ test_modify_user_file (void)
 
   copy_xml_file (USER_SAMPLE, USER_FILE);
   user_file_orig = get_user_xml_file (USER_FILE);
-  mgr = empathy_irc_network_manager_new (NULL, user_file_orig);
+  mgr = tpaw_irc_network_manager_new (NULL, user_file_orig);
 
   g_object_get (mgr,
       "global-file", &global_file,
@@ -429,7 +429,7 @@ test_modify_user_file (void)
   g_free (global_file);
   g_free (user_file);
 
-  networks = empathy_irc_network_manager_get_networks (mgr);
+  networks = tpaw_irc_network_manager_get_networks (mgr);
   g_assert_cmpuint (g_slist_length (networks), ==, 3);
 
   network_modified[0] = network_modified[1] = FALSE;
@@ -449,7 +449,7 @@ test_modify_user_file (void)
           /* change charset */
           g_object_set (network, "charset", "ISO-8859-1", NULL);
 
-          servers = empathy_irc_network_get_servers (network);
+          servers = tpaw_irc_network_get_servers (network);
           for (ll = servers; ll != NULL; ll = g_slist_next (ll))
             {
               gchar *address;
@@ -469,7 +469,7 @@ test_modify_user_file (void)
               else if (strcmp (address, "irc.au.gimp.org") == 0)
                 {
                   /* remove this server */
-                  empathy_irc_network_remove_server (network, server);
+                  tpaw_irc_network_remove_server (network, server);
                 }
               else
                 {
@@ -487,7 +487,7 @@ test_modify_user_file (void)
       else if (strcmp (name, "My Server") == 0)
         {
           /* remove this network */
-          empathy_irc_network_manager_remove (mgr, network);
+          tpaw_irc_network_manager_remove (mgr, network);
           network_modified[1] = TRUE;
         }
       else if (strcmp (name, "Another Server") == 0)
@@ -504,10 +504,10 @@ test_modify_user_file (void)
   g_assert (network_modified[0] && network_modified[1]);
 
   /* Add a new network */
-  network = empathy_irc_network_new ("Great Server");
-  server = empathy_irc_server_new ("irc.greatserver.com", 7873, TRUE);
-  empathy_irc_network_append_server (network, server);
-  empathy_irc_network_manager_add (mgr, network);
+  network = tpaw_irc_network_new ("Great Server");
+  server = tpaw_irc_server_new ("irc.greatserver.com", 7873, TRUE);
+  tpaw_irc_network_append_server (network, server);
+  tpaw_irc_network_manager_add (mgr, network);
   g_object_unref (server);
   g_object_unref (network);
 
@@ -517,10 +517,10 @@ test_modify_user_file (void)
 
 
   /* Now let's reload the file and check its contain */
-  mgr = empathy_irc_network_manager_new (NULL, user_file_orig);
+  mgr = tpaw_irc_network_manager_new (NULL, user_file_orig);
   g_free (user_file_orig);
 
-  networks = empathy_irc_network_manager_get_networks (mgr);
+  networks = tpaw_irc_network_manager_get_networks (mgr);
   g_assert_cmpuint (g_slist_length (networks), ==, 3);
 
   network_checked[0] = network_checked[1] = network_checked[2] = FALSE;
@@ -564,9 +564,9 @@ test_modify_user_file (void)
 static void
 test_modify_both_files (void)
 {
-  EmpathyIrcNetworkManager *mgr;
-  EmpathyIrcNetwork *network;
-  EmpathyIrcServer *server;
+  TpawIrcNetworkManager *mgr;
+  TpawIrcNetwork *network;
+  TpawIrcServer *server;
   gchar *global_file, *user_file;
   GSList *networks, *l;
   struct server_t gimpnet_servers[] = {
@@ -586,7 +586,7 @@ test_modify_both_files (void)
   copy_xml_file (USER_SAMPLE, USER_FILE);
   global_file_orig = get_xml_file (GLOBAL_SAMPLE);
   user_file_orig = get_user_xml_file (USER_FILE);
-  mgr = empathy_irc_network_manager_new (global_file_orig, user_file_orig);
+  mgr = tpaw_irc_network_manager_new (global_file_orig, user_file_orig);
 
   g_object_get (mgr,
       "global-file", &global_file,
@@ -599,7 +599,7 @@ test_modify_both_files (void)
   g_free (user_file);
   g_free (user_file_orig);
 
-  networks = empathy_irc_network_manager_get_networks (mgr);
+  networks = tpaw_irc_network_manager_get_networks (mgr);
   g_assert_cmpuint (g_slist_length (networks), ==, 5);
 
   network_modified[0] = network_modified[1] = network_modified[2] =
@@ -618,7 +618,7 @@ test_modify_both_files (void)
           /* Modify user network */
           GSList *servers, *ll;
 
-          servers = empathy_irc_network_get_servers (network);
+          servers = tpaw_irc_network_get_servers (network);
           for (ll = servers; ll != NULL; ll = g_slist_next (ll))
             {
               gchar *address;
@@ -638,7 +638,7 @@ test_modify_both_files (void)
               else if (strcmp (address, "irc.au.gimp.org") == 0)
                 {
                   /* remove this server */
-                  empathy_irc_network_remove_server (network, server);
+                  tpaw_irc_network_remove_server (network, server);
                 }
               else
                 {
@@ -656,20 +656,20 @@ test_modify_both_files (void)
       else if (strcmp (name, "My Server") == 0)
         {
           /* remove user network */
-          empathy_irc_network_manager_remove (mgr, network);
+          tpaw_irc_network_manager_remove (mgr, network);
           network_modified[1] = TRUE;
         }
       else if (strcmp (name, "Freenode") == 0)
         {
           /* remove global network */
-          empathy_irc_network_manager_remove (mgr, network);
+          tpaw_irc_network_manager_remove (mgr, network);
           network_modified[2] = TRUE;
         }
       else if (strcmp (name, "Undernet") == 0)
         {
           /* modify global network */
-          server = empathy_irc_server_new ("us.undernet.org", 6667, FALSE);
-          empathy_irc_network_append_server (network, server);
+          server = tpaw_irc_server_new ("us.undernet.org", 6667, FALSE);
+          tpaw_irc_network_append_server (network, server);
           g_object_unref (server);
 
           network_modified[3] = TRUE;
@@ -689,10 +689,10 @@ test_modify_both_files (void)
       && network_modified[3]);
 
   /* Add a new network */
-  network = empathy_irc_network_new ("Great Server");
-  server = empathy_irc_server_new ("irc.greatserver.com", 7873, TRUE);
-  empathy_irc_network_append_server (network, server);
-  empathy_irc_network_manager_add (mgr, network);
+  network = tpaw_irc_network_new ("Great Server");
+  server = tpaw_irc_server_new ("irc.greatserver.com", 7873, TRUE);
+  tpaw_irc_network_append_server (network, server);
+  tpaw_irc_network_manager_add (mgr, network);
   g_object_unref (server);
   g_object_unref (network);
 
@@ -704,11 +704,11 @@ test_modify_both_files (void)
   /* Now let's reload the file and check its contain */
   global_file_orig = get_xml_file (GLOBAL_SAMPLE);
   user_file_orig = get_user_xml_file (USER_FILE);
-  mgr = empathy_irc_network_manager_new (global_file_orig, user_file_orig);
+  mgr = tpaw_irc_network_manager_new (global_file_orig, user_file_orig);
   g_free (global_file_orig);
   g_free (user_file_orig);
 
-  networks = empathy_irc_network_manager_get_networks (mgr);
+  networks = tpaw_irc_network_manager_get_networks (mgr);
   g_assert_cmpuint (g_slist_length (networks), ==, 4);
 
   network_checked[0] = network_checked[1] = network_checked[2] =
@@ -757,30 +757,30 @@ test_modify_both_files (void)
 }
 
 static void
-test_empathy_irc_network_manager_find_network_by_address (void)
+test_tpaw_irc_network_manager_find_network_by_address (void)
 {
-  EmpathyIrcNetworkManager *mgr;
-  EmpathyIrcNetwork *network;
+  TpawIrcNetworkManager *mgr;
+  TpawIrcNetwork *network;
   struct server_t freenode_servers[] = {
     { "irc.freenode.net", 6667, FALSE },
     { "irc.eu.freenode.net", 6667, FALSE }};
   gchar *global_file_orig;
 
   global_file_orig = get_xml_file (GLOBAL_SAMPLE);
-  mgr = empathy_irc_network_manager_new (global_file_orig, NULL);
+  mgr = tpaw_irc_network_manager_new (global_file_orig, NULL);
   g_free (global_file_orig);
 
-  network = empathy_irc_network_manager_find_network_by_address (mgr,
+  network = tpaw_irc_network_manager_find_network_by_address (mgr,
       "irc.freenode.net");
   g_assert (network != NULL);
   check_network (network, "Freenode", "UTF-8", freenode_servers, 2);
 
-  network = empathy_irc_network_manager_find_network_by_address (mgr,
+  network = tpaw_irc_network_manager_find_network_by_address (mgr,
       "irc.eu.freenode.net");
   g_assert (network != NULL);
   check_network (network, "Freenode", "UTF-8", freenode_servers, 2);
 
-  network = empathy_irc_network_manager_find_network_by_address (mgr,
+  network = tpaw_irc_network_manager_find_network_by_address (mgr,
       "unknown");
   g_assert (network == NULL);
 
@@ -790,7 +790,7 @@ test_empathy_irc_network_manager_find_network_by_address (void)
 static void
 test_no_modify_with_empty_user_file (void)
 {
-  EmpathyIrcNetworkManager *mgr;
+  TpawIrcNetworkManager *mgr;
   GSList *networks;
   gchar *global_file_orig;
   gchar *user_file_orig;
@@ -800,15 +800,15 @@ test_no_modify_with_empty_user_file (void)
   g_unlink (user_file_orig);
 
   global_file_orig = get_xml_file (GLOBAL_SAMPLE);
-  mgr = empathy_irc_network_manager_new (global_file_orig, user_file_orig);
+  mgr = tpaw_irc_network_manager_new (global_file_orig, user_file_orig);
   g_free (global_file_orig);
   g_object_unref (mgr);
 
   /* We didn't modify anything so USER_FILE should be empty */
-  mgr = empathy_irc_network_manager_new (NULL, user_file_orig);
+  mgr = tpaw_irc_network_manager_new (NULL, user_file_orig);
   g_free (user_file_orig);
 
-  networks = empathy_irc_network_manager_get_networks (mgr);
+  networks = tpaw_irc_network_manager_get_networks (mgr);
   g_assert_cmpuint (g_slist_length (networks), ==, 0);
 
   g_slist_foreach (networks, (GFunc) g_object_unref, NULL);
@@ -825,11 +825,11 @@ main (int argc,
   test_init (argc, argv);
 
   g_test_add_func ("/irc-network-manager/add",
-      test_empathy_irc_network_manager_add);
+      test_tpaw_irc_network_manager_add);
   g_test_add_func ("/irc-network-manager/load-global-file",
       test_load_global_file);
   g_test_add_func ("/irc-network-manager/remove",
-      test_empathy_irc_network_manager_remove);
+      test_tpaw_irc_network_manager_remove);
   g_test_add_func ("/irc-network-manager/load-user-file", test_load_user_file);
   g_test_add_func ("/irc-network-manager/load-both-files",
       test_load_both_files);
@@ -838,7 +838,7 @@ main (int argc,
   g_test_add_func ("/irc-network-manager/modify-both-files",
       test_modify_both_files);
   g_test_add_func ("/irc-network-manager/find-network-by-address",
-      test_empathy_irc_network_manager_find_network_by_address);
+      test_tpaw_irc_network_manager_find_network_by_address);
   g_test_add_func ("/irc-network-manager/no-modify-with-empty-user-file",
       test_no_modify_with_empty_user_file);
 

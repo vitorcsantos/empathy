@@ -54,7 +54,7 @@ empathy_local_xmpp_assistant_widget_init (EmpathyLocalXmppAssistantWidget *self)
 }
 
 static void
-handle_apply_cb (EmpathyAccountWidget *widget_object,
+handle_apply_cb (TpawAccountWidget *widget_object,
     gboolean is_valid,
     EmpathyLocalXmppAssistantWidget *self)
 {
@@ -68,7 +68,7 @@ empathy_local_xmpp_assistant_widget_constructed (GObject *object)
     object;
   GtkWidget *w;
   GdkPixbuf *pix;
-  EmpathyAccountWidget *account_widget;
+  TpawAccountWidget *account_widget;
   gchar *markup;
 
   G_OBJECT_CLASS (empathy_local_xmpp_assistant_widget_parent_class)->
@@ -99,9 +99,9 @@ empathy_local_xmpp_assistant_widget_constructed (GObject *object)
   self->priv->settings = empathy_account_settings_new ("salut", "local-xmpp",
       NULL, _("People nearby"));
 
-  account_widget = empathy_account_widget_new_for_protocol (
+  account_widget = tpaw_account_widget_new_for_protocol (
       self->priv->settings, TRUE);
-  empathy_account_widget_hide_buttons (account_widget);
+  tpaw_account_widget_hide_buttons (account_widget);
 
   g_signal_connect (account_widget, "handle-apply",
       G_CALLBACK (handle_apply_cb), self);

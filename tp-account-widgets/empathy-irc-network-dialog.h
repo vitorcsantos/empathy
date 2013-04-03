@@ -18,8 +18,8 @@
  * Authors: Guillaume Desmottes <gdesmott@gnome.org>
  */
 
-#ifndef __EMPATHY_IRC_NETWORK_DIALOG_H__
-#define __EMPATHY_IRC_NETWORK_DIALOG_H__
+#ifndef __TPAW_IRC_NETWORK_DIALOG_H__
+#define __TPAW_IRC_NETWORK_DIALOG_H__
 
 #include <gtk/gtk.h>
 
@@ -27,9 +27,9 @@
 
 G_BEGIN_DECLS
 
-GtkWidget * empathy_irc_network_dialog_show (EmpathyIrcNetwork *network,
+GtkWidget * tpaw_irc_network_dialog_show (TpawIrcNetwork *network,
     GtkWidget *parent);
 
 G_END_DECLS
 
-#endif /* __EMPATHY_IRC_NETWORK_DIALOG_H__ */
+#endif /* __TPAW_IRC_NETWORK_DIALOG_H__ */

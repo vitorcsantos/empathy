@@ -19,8 +19,8 @@
  * Authors: Guillaume Desmottes <gdesmott@gnome.org>
  */
 
-#ifndef __EMPATHY_IRC_NETWORK_CHOOSER_H__
-#define __EMPATHY_IRC_NETWORK_CHOOSER_H__
+#ifndef __TPAW_IRC_NETWORK_CHOOSER_H__
+#define __TPAW_IRC_NETWORK_CHOOSER_H__
 
 #include <gtk/gtk.h>
 
@@ -29,37 +29,37 @@
 
 G_BEGIN_DECLS
 
-#define EMPATHY_TYPE_IRC_NETWORK_CHOOSER (empathy_irc_network_chooser_get_type ())
-#define EMPATHY_IRC_NETWORK_CHOOSER(o) (G_TYPE_CHECK_INSTANCE_CAST ((o), \
-    EMPATHY_TYPE_IRC_NETWORK_CHOOSER, EmpathyIrcNetworkChooser))
-#define EMPATHY_IRC_NETWORK_CHOOSER_CLASS(k) (G_TYPE_CHECK_CLASS_CAST ((k), \
-    EMPATHY_TYPE_IRC_NETWORK_CHOOSER, EmpathyIrcNetworkChooserClass))
-#define EMPATHY_IS_IRC_NETWORK_CHOOSER(o) (G_TYPE_CHECK_INSTANCE_TYPE ((o), \
-    EMPATHY_TYPE_IRC_NETWORK_CHOOSER))
-#define EMPATHY_IS_IRC_NETWORK_CHOOSER_CLASS(k) (G_TYPE_CHECK_CLASS_TYPE ((k), \
-    EMPATHY_TYPE_IRC_NETWORK_CHOOSER))
-#define EMPATHY_IRC_NETWORK_CHOOSER_GET_CLASS(o) ( \
-    G_TYPE_INSTANCE_GET_CLASS ((o), EMPATHY_TYPE_IRC_NETWORK_CHOOSER, \
-        EmpathyIrcNetworkChooserClass))
+#define TPAW_TYPE_IRC_NETWORK_CHOOSER (tpaw_irc_network_chooser_get_type ())
+#define TPAW_IRC_NETWORK_CHOOSER(o) (G_TYPE_CHECK_INSTANCE_CAST ((o), \
+    TPAW_TYPE_IRC_NETWORK_CHOOSER, TpawIrcNetworkChooser))
+#define TPAW_IRC_NETWORK_CHOOSER_CLASS(k) (G_TYPE_CHECK_CLASS_CAST ((k), \
+    TPAW_TYPE_IRC_NETWORK_CHOOSER, TpawIrcNetworkChooserClass))
+#define TPAW_IS_IRC_NETWORK_CHOOSER(o) (G_TYPE_CHECK_INSTANCE_TYPE ((o), \
+    TPAW_TYPE_IRC_NETWORK_CHOOSER))
+#define TPAW_IS_IRC_NETWORK_CHOOSER_CLASS(k) (G_TYPE_CHECK_CLASS_TYPE ((k), \
+    TPAW_TYPE_IRC_NETWORK_CHOOSER))
+#define TPAW_IRC_NETWORK_CHOOSER_GET_CLASS(o) ( \
+    G_TYPE_INSTANCE_GET_CLASS ((o), TPAW_TYPE_IRC_NETWORK_CHOOSER, \
+        TpawIrcNetworkChooserClass))
 
 typedef struct {
   GtkButton parent;
 
   /*<private>*/
   gpointer priv;
-} EmpathyIrcNetworkChooser;
+} TpawIrcNetworkChooser;
 
 typedef struct {
   GtkButtonClass parent_class;
-} EmpathyIrcNetworkChooserClass;
+} TpawIrcNetworkChooserClass;
 
-GType empathy_irc_network_chooser_get_type (void) G_GNUC_CONST;
+GType tpaw_irc_network_chooser_get_type (void) G_GNUC_CONST;
 
-GtkWidget * empathy_irc_network_chooser_new (EmpathyAccountSettings *settings);
+GtkWidget * tpaw_irc_network_chooser_new (EmpathyAccountSettings *settings);
 
-EmpathyIrcNetwork * empathy_irc_network_chooser_get_network (
-    EmpathyIrcNetworkChooser *self);
+TpawIrcNetwork * tpaw_irc_network_chooser_get_network (
+    TpawIrcNetworkChooser *self);
 
 G_END_DECLS
 
-#endif /* __EMPATHY_IRC_NETWORK_CHOOSER_H__ */
+#endif /* __TPAW_IRC_NETWORK_CHOOSER_H__ */

@@ -19,8 +19,8 @@
  * Authors: Guillaume Desmottes <gdesmott@gnome.org>
  */
 
-#ifndef __EMPATHY_IRC_NETWORK_CHOOSER_DIALOG_H__
-#define __EMPATHY_IRC_NETWORK_CHOOSER_DIALOG_H__
+#ifndef __TPAW_IRC_NETWORK_CHOOSER_DIALOG_H__
+#define __TPAW_IRC_NETWORK_CHOOSER_DIALOG_H__
 
 #include <gtk/gtk.h>
 
@@ -29,43 +29,43 @@
 
 G_BEGIN_DECLS
 
-#define EMPATHY_TYPE_IRC_NETWORK_CHOOSER_DIALOG (empathy_irc_network_chooser_dialog_get_type ())
-#define EMPATHY_IRC_NETWORK_CHOOSER_DIALOG(o) (G_TYPE_CHECK_INSTANCE_CAST ((o), \
-    EMPATHY_TYPE_IRC_NETWORK_CHOOSER_DIALOG, EmpathyIrcNetworkChooserDialog))
-#define EMPATHY_IRC_NETWORK_CHOOSER_DIALOG_CLASS(k) (G_TYPE_CHECK_CLASS_CAST ((k), \
-    EMPATHY_TYPE_IRC_NETWORK_CHOOSER_DIALOG, EmpathyIrcNetworkChooserDialogClass))
-#define EMPATHY_IS_IRC_NETWORK_CHOOSER_DIALOG(o) (G_TYPE_CHECK_INSTANCE_TYPE ((o), \
-    EMPATHY_TYPE_IRC_NETWORK_CHOOSER_DIALOG))
-#define EMPATHY_IS_IRC_NETWORK_CHOOSER_DIALOG_CLASS(k) (G_TYPE_CHECK_CLASS_TYPE ((k), \
-    EMPATHY_TYPE_IRC_NETWORK_CHOOSER_DIALOG))
-#define EMPATHY_IRC_NETWORK_CHOOSER_DIALOG_GET_CLASS(o) ( \
-    G_TYPE_INSTANCE_GET_CLASS ((o), EMPATHY_TYPE_IRC_NETWORK_CHOOSER_DIALOG, \
-        EmpathyIrcNetworkChooserDialogClass))
+#define TPAW_TYPE_IRC_NETWORK_CHOOSER_DIALOG (tpaw_irc_network_chooser_dialog_get_type ())
+#define TPAW_IRC_NETWORK_CHOOSER_DIALOG(o) (G_TYPE_CHECK_INSTANCE_CAST ((o), \
+    TPAW_TYPE_IRC_NETWORK_CHOOSER_DIALOG, TpawIrcNetworkChooserDialog))
+#define TPAW_IRC_NETWORK_CHOOSER_DIALOG_CLASS(k) (G_TYPE_CHECK_CLASS_CAST ((k), \
+    TPAW_TYPE_IRC_NETWORK_CHOOSER_DIALOG, TpawIrcNetworkChooserDialogClass))
+#define TPAW_IS_IRC_NETWORK_CHOOSER_DIALOG(o) (G_TYPE_CHECK_INSTANCE_TYPE ((o), \
+    TPAW_TYPE_IRC_NETWORK_CHOOSER_DIALOG))
+#define TPAW_IS_IRC_NETWORK_CHOOSER_DIALOG_CLASS(k) (G_TYPE_CHECK_CLASS_TYPE ((k), \
+    TPAW_TYPE_IRC_NETWORK_CHOOSER_DIALOG))
+#define TPAW_IRC_NETWORK_CHOOSER_DIALOG_GET_CLASS(o) ( \
+    G_TYPE_INSTANCE_GET_CLASS ((o), TPAW_TYPE_IRC_NETWORK_CHOOSER_DIALOG, \
+        TpawIrcNetworkChooserDialogClass))
 
 typedef struct {
   GtkDialog parent;
 
   /*<private>*/
   gpointer priv;
-} EmpathyIrcNetworkChooserDialog;
+} TpawIrcNetworkChooserDialog;
 
 typedef struct {
   GtkDialogClass parent_class;
-} EmpathyIrcNetworkChooserDialogClass;
+} TpawIrcNetworkChooserDialogClass;
 
-GType empathy_irc_network_chooser_dialog_get_type (void) G_GNUC_CONST;
+GType tpaw_irc_network_chooser_dialog_get_type (void) G_GNUC_CONST;
 
-GtkWidget * empathy_irc_network_chooser_dialog_new (
+GtkWidget * tpaw_irc_network_chooser_dialog_new (
     EmpathyAccountSettings *settings,
-    EmpathyIrcNetwork *network,
+    TpawIrcNetwork *network,
     GtkWindow *parent);
 
-EmpathyIrcNetwork * empathy_irc_network_chooser_dialog_get_network (
-    EmpathyIrcNetworkChooserDialog *self);
+TpawIrcNetwork * tpaw_irc_network_chooser_dialog_get_network (
+    TpawIrcNetworkChooserDialog *self);
 
-gboolean empathy_irc_network_chooser_dialog_get_changed (
-    EmpathyIrcNetworkChooserDialog *self);
+gboolean tpaw_irc_network_chooser_dialog_get_changed (
+    TpawIrcNetworkChooserDialog *self);
 
 G_END_DECLS
 
-#endif /* __EMPATHY_IRC_NETWORK_CHOOSER_DIALOG_H__ */
+#endif /* __TPAW_IRC_NETWORK_CHOOSER_DIALOG_H__ */

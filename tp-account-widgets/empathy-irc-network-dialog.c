@@ -27,7 +27,7 @@
 #include "totem-subtitle-encoding.h"
 
 typedef struct {
-  EmpathyIrcNetwork *network;
+  TpawIrcNetwork *network;
 
   GtkWidget *dialog;
   GtkWidget *button_close;
@@ -40,20 +40,20 @@ typedef struct {
   GtkWidget *button_remove;
   GtkWidget *button_up;
   GtkWidget *button_down;
-} EmpathyIrcNetworkDialog;
+} TpawIrcNetworkDialog;
 
 static void
 irc_network_dialog_destroy_cb (GtkWidget *widget,
-                               EmpathyIrcNetworkDialog *dialog)
+                               TpawIrcNetworkDialog *dialog)
 {
   g_object_unref (dialog->network);
 
-  g_slice_free (EmpathyIrcNetworkDialog, dialog);
+  g_slice_free (TpawIrcNetworkDialog, dialog);
 }
 
 static void
 irc_network_dialog_close_clicked_cb (GtkWidget *widget,
-                                     EmpathyIrcNetworkDialog *dialog)
+                                     TpawIrcNetworkDialog *dialog)
 {
   gtk_widget_destroy (dialog->dialog);
 }
@@ -67,7 +67,7 @@ enum {
 
 static void
 add_server_to_store (GtkListStore *store,
-                     EmpathyIrcServer *server,
+                     TpawIrcServer *server,
                      GtkTreeIter *iter)
 {
   gchar *address;
@@ -91,7 +91,7 @@ add_server_to_store (GtkListStore *store,
 }
 
 static void
-irc_network_dialog_setup (EmpathyIrcNetworkDialog *dialog)
+irc_network_dialog_setup (TpawIrcNetworkDialog *dialog)
 {
   gchar *name, *charset;
   GSList *servers, *l;
@@ -106,10 +106,10 @@ irc_network_dialog_setup (EmpathyIrcNetworkDialog *dialog)
   store = GTK_LIST_STORE (gtk_tree_view_get_model (
         GTK_TREE_VIEW (dialog->treeview_servers)));
 
-  servers = empathy_irc_network_get_servers (dialog->network);
+  servers = tpaw_irc_network_get_servers (dialog->network);
   for (l = servers; l != NULL; l = g_slist_next (l))
     {
-      EmpathyIrcServer *server = l->data;
+      TpawIrcServer *server = l->data;
       GtkTreeIter iter;
 
       add_server_to_store (store, server, &iter);
@@ -128,9 +128,9 @@ static void
 irc_network_dialog_address_edited_cb (GtkCellRendererText *renderer,
                                       gchar *path,
                                       gchar *new_text,
-                                      EmpathyIrcNetworkDialog *dialog)
+                                      TpawIrcNetworkDialog *dialog)
 {
-  EmpathyIrcServer *server;
+  TpawIrcServer *server;
   GtkTreeModel *model;
   GtkTreePath  *treepath;
   GtkTreeIter iter;
@@ -155,9 +155,9 @@ static void
 irc_network_dialog_port_edited_cb (GtkCellRendererText *renderer,
                                    gchar *path,
                                    gchar *new_text,
-                                   EmpathyIrcNetworkDialog *dialog)
+                                   TpawIrcNetworkDialog *dialog)
 {
-  EmpathyIrcServer *server;
+  TpawIrcServer *server;
   GtkTreeModel *model;
   GtkTreePath  *treepath;
   GtkTreeIter iter;
@@ -183,9 +183,9 @@ irc_network_dialog_port_edited_cb (GtkCellRendererText *renderer,
 static void
 irc_network_dialog_ssl_toggled_cb (GtkCellRendererText *renderer,
                                    gchar *path,
-                                   EmpathyIrcNetworkDialog *dialog)
+                                   TpawIrcNetworkDialog *dialog)
 {
-  EmpathyIrcServer *server;
+  TpawIrcServer *server;
   GtkTreeModel *model;
   GtkTreePath  *treepath;
   GtkTreeIter iter;
@@ -212,7 +212,7 @@ irc_network_dialog_ssl_toggled_cb (GtkCellRendererText *renderer,
 static gboolean
 irc_network_dialog_network_focus_cb (GtkWidget *widget,
                                      GdkEventFocus *event,
-                                     EmpathyIrcNetworkDialog *dialog)
+                                     TpawIrcNetworkDialog *dialog)
 {
   const gchar *str;
 
@@ -224,7 +224,7 @@ irc_network_dialog_network_focus_cb (GtkWidget *widget,
 }
 
 static void
-irc_network_dialog_network_update_buttons (EmpathyIrcNetworkDialog *dialog)
+irc_network_dialog_network_update_buttons (TpawIrcNetworkDialog *dialog)
 {
   GtkTreeSelection *selection;
   GtkTreeModel *model;
@@ -257,9 +257,9 @@ irc_network_dialog_network_update_buttons (EmpathyIrcNetworkDialog *dialog)
 
 static void
 irc_network_dialog_button_add_clicked_cb (GtkWidget *widget,
-                                          EmpathyIrcNetworkDialog *dialog)
+                                          TpawIrcNetworkDialog *dialog)
 {
-  EmpathyIrcServer *server;
+  TpawIrcServer *server;
   GtkListStore *store;
   GtkTreeIter iter;
   GtkTreePath *path;
@@ -268,8 +268,8 @@ irc_network_dialog_button_add_clicked_cb (GtkWidget *widget,
   store = GTK_LIST_STORE (gtk_tree_view_get_model (
         GTK_TREE_VIEW (dialog->treeview_servers)));
 
-  server = empathy_irc_server_new (_("new server"), 6667, FALSE);
-  empathy_irc_network_append_server (dialog->network, server);
+  server = tpaw_irc_server_new (_("new server"), 6667, FALSE);
+  tpaw_irc_network_append_server (dialog->network, server);
   add_server_to_store (store, server, &iter);
 
   path = gtk_tree_model_get_path (GTK_TREE_MODEL (store), &iter);
@@ -286,12 +286,12 @@ irc_network_dialog_button_add_clicked_cb (GtkWidget *widget,
 
 static void
 irc_network_dialog_button_remove_clicked_cb (GtkWidget *widget,
-                                             EmpathyIrcNetworkDialog *dialog)
+                                             TpawIrcNetworkDialog *dialog)
 {
   GtkTreeSelection *selection;
   GtkTreeModel *model;
   GtkTreeIter iter;
-  EmpathyIrcServer *server;
+  TpawIrcServer *server;
 
   selection = gtk_tree_view_get_selection (
       GTK_TREE_VIEW (dialog->treeview_servers));
@@ -302,7 +302,7 @@ irc_network_dialog_button_remove_clicked_cb (GtkWidget *widget,
   gtk_tree_model_get (model, &iter, COL_SRV_OBJ, &server, -1);
 
   gtk_list_store_remove (GTK_LIST_STORE (model), &iter);
-  empathy_irc_network_remove_server (dialog->network, server);
+  tpaw_irc_network_remove_server (dialog->network, server);
 
   irc_network_dialog_network_update_buttons (dialog);
 
@@ -311,14 +311,14 @@ irc_network_dialog_button_remove_clicked_cb (GtkWidget *widget,
 
 static void
 irc_network_dialog_button_up_clicked_cb (GtkWidget *widget,
-                                         EmpathyIrcNetworkDialog *dialog)
+                                         TpawIrcNetworkDialog *dialog)
 {
   GtkTreeSelection *selection;
   GtkTreeModel *model;
   GtkTreeIter iter, iter_prev;
   GtkTreePath *path;
   gint *pos;
-  EmpathyIrcServer *server;
+  TpawIrcServer *server;
 
   selection = gtk_tree_view_get_selection (
       GTK_TREE_VIEW (dialog->treeview_servers));
@@ -340,7 +340,7 @@ irc_network_dialog_button_up_clicked_cb (GtkWidget *widget,
   gtk_list_store_swap (GTK_LIST_STORE (model), &iter_prev, &iter);
 
   pos = gtk_tree_path_get_indices (path);
-  empathy_irc_network_set_server_position (dialog->network, server, *pos);
+  tpaw_irc_network_set_server_position (dialog->network, server, *pos);
 
   irc_network_dialog_network_update_buttons (dialog);
 
@@ -350,13 +350,13 @@ irc_network_dialog_button_up_clicked_cb (GtkWidget *widget,
 
 static void
 irc_network_dialog_button_down_clicked_cb (GtkWidget *widget,
-                                           EmpathyIrcNetworkDialog *dialog)
+                                           TpawIrcNetworkDialog *dialog)
 {
   GtkTreeSelection *selection;
   GtkTreeModel *model;
   GtkTreeIter iter, iter_prev;
   GtkTreePath *path;
-  EmpathyIrcServer *server;
+  TpawIrcServer *server;
   gint *pos;
 
   selection = gtk_tree_view_get_selection (
@@ -379,7 +379,7 @@ irc_network_dialog_button_down_clicked_cb (GtkWidget *widget,
   gtk_list_store_swap (GTK_LIST_STORE (model), &iter_prev, &iter);
 
   pos = gtk_tree_path_get_indices (path);
-  empathy_irc_network_set_server_position (dialog->network, server, *pos);
+  tpaw_irc_network_set_server_position (dialog->network, server, *pos);
 
   irc_network_dialog_network_update_buttons (dialog);
 
@@ -388,14 +388,14 @@ irc_network_dialog_button_down_clicked_cb (GtkWidget *widget,
 
 static void
 irc_network_dialog_selection_changed_cb (GtkTreeSelection  *treeselection,
-                                         EmpathyIrcNetworkDialog *dialog)
+                                         TpawIrcNetworkDialog *dialog)
 {
   irc_network_dialog_network_update_buttons (dialog);
 }
 
 static void
 irc_network_dialog_combobox_charset_changed_cb (GtkWidget *combobox,
-                                                EmpathyIrcNetworkDialog *dialog)
+                                                TpawIrcNetworkDialog *dialog)
 {
   const gchar *charset;
 
@@ -404,8 +404,8 @@ irc_network_dialog_combobox_charset_changed_cb (GtkWidget *combobox,
 }
 
 static void
-change_network (EmpathyIrcNetworkDialog *dialog,
-                EmpathyIrcNetwork *network)
+change_network (TpawIrcNetworkDialog *dialog,
+                TpawIrcNetwork *network)
 {
   GtkListStore *store;
 
@@ -429,21 +429,21 @@ change_network (EmpathyIrcNetworkDialog *dialog,
 }
 
 /**
- * empathy_irc_network_dialog_show:
- * @network: the #EmpathyIrcNetwork to configure
+ * tpaw_irc_network_dialog_show:
+ * @network: the #TpawIrcNetwork to configure
  * @parent: the parent of this dialog
  *
- * Display a dialog to configure a given #EmpathyIrcNetwork.
+ * Display a dialog to configure a given #TpawIrcNetwork.
  * This function is a singleton so if a configuration dialog already
  * exists we use this one to edit the network.
  *
  * Returns: The displayed #GtkDialog
  */
 GtkWidget *
-empathy_irc_network_dialog_show (EmpathyIrcNetwork *network,
+tpaw_irc_network_dialog_show (TpawIrcNetwork *network,
                                  GtkWidget *parent)
 {
-  static EmpathyIrcNetworkDialog *dialog = NULL;
+  static TpawIrcNetworkDialog *dialog = NULL;
   GtkBuilder *gui;
   GtkListStore *store;
   GtkCellRenderer *renderer;
@@ -463,7 +463,7 @@ empathy_irc_network_dialog_show (EmpathyIrcNetwork *network,
       return dialog->dialog;
     }
 
-  dialog = g_slice_new0 (EmpathyIrcNetworkDialog);
+  dialog = g_slice_new0 (TpawIrcNetworkDialog);
 
   dialog->network = network;
   g_object_ref (dialog->network);
