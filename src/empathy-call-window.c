@@ -2906,6 +2906,7 @@ empathy_call_window_get_audio_sink_pad (EmpathyCallWindow *self,
           g_warning ("Could not start audio sink");
           goto error;
         }
+      priv->audio_output_added = TRUE;
     }
 
   template = gst_element_class_get_pad_template (
