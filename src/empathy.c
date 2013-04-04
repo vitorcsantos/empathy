@@ -435,15 +435,16 @@ empathy_app_local_command_line (GApplication *app,
 
       *exit_status = EXIT_FAILURE;
     }
+  else
+    {
+      self->no_connect = no_connect;
+      self->start_hidden = start_hidden;
+
+      g_application_activate (app);
+    }
 
   g_free (argv);
-
   g_option_context_free (optcontext);
-
-  self->no_connect = no_connect;
-  self->start_hidden = start_hidden;
-
-  g_application_activate (app);
 
   return retval;
 }
