@@ -30,6 +30,7 @@
 #include "empathy-presence-manager.h"
 #include "empathy-theme-manager.h"
 #include "empathy-ui-utils.h"
+#include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_CHAT
 #include "empathy-debug.h"
@@ -65,6 +66,7 @@ activate_cb (GApplication *application)
     return;
 
   activated = TRUE;
+  empathy_gtk_init ();
 
   if (!use_timer)
     {
@@ -97,7 +99,7 @@ main (int argc,
   gint retval;
 
   optcontext = g_option_context_new (N_("- Empathy Chat Client"));
-  g_option_context_add_group (optcontext, gtk_get_option_group (TRUE));
+  g_option_context_add_group (optcontext, gtk_get_option_group (FALSE));
   g_option_context_add_main_entries (optcontext, options, GETTEXT_PACKAGE);
   g_option_context_set_translation_domain (optcontext, GETTEXT_PACKAGE);
 
@@ -112,7 +114,7 @@ main (int argc,
 
   g_option_context_free (optcontext);
 
-  empathy_gtk_init ();
+  empathy_init ();
 
   /* Make empathy and empathy-chat appear as the same app in gnome-shell */
   gdk_set_program_class ("Empathy");
