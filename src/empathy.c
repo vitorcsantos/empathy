@@ -211,11 +211,6 @@ new_ft_handler_cb (EmpathyFTFactory *factory,
   g_object_unref (handler);
 }
 
-static gboolean
-empathy_app_local_command_line (GApplication *app,
-    gchar ***arguments,
-    gint *exit_status);
-
 static void
 empathy_presence_manager_set_auto_away_cb (GSettings *gsettings,
     const gchar *key,
@@ -406,6 +401,7 @@ empathy_app_local_command_line (GApplication *app,
   if (!g_application_register (app, NULL, &error))
     {
       g_warning("Impossible to register empathy: %s", error->message);
+      g_clear_error (&error);
       *exit_status = EXIT_FAILURE;
       return retval;
     }
@@ -435,6 +431,7 @@ empathy_app_local_command_line (GApplication *app,
           "line options.\n",
           error->message, argv[0]);
       g_warning ("Error in empathy init: %s", error->message);
+      g_clear_error (&error);
 
       *exit_status = EXIT_FAILURE;
     }
