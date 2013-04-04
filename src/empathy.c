@@ -334,7 +334,8 @@ empathy_app_activate (GApplication *app)
   if (self->show_preferences)
     {
       empathy_roster_window_show_preferences (
-          EMPATHY_ROSTER_WINDOW (self->window), self->preferences_tab);
+          EMPATHY_ROSTER_WINDOW (self->window),
+          tp_str_empty (self->preferences_tab) ? NULL : self->preferences_tab);
 
       self->show_preferences = FALSE;
     }
@@ -371,12 +372,26 @@ show_version_cb (const char *option_name,
     gpointer data,
     GError **error);
 
+static void
+open_preference_action_cb (GAction  *action,
+    GVariant *parameter,
+    gpointer  data)
+{
+  EmpathyApp *self = EMPATHY_APP (data);
+
+  self->show_preferences = TRUE;
+
+  g_free (self->preferences_tab);
+  self->preferences_tab = g_variant_dup_string (parameter, NULL);
+}
+
 static gboolean
 empathy_app_local_command_line (GApplication *app,
     gchar ***arguments,
     gint *exit_status)
 {
   EmpathyApp *self = (EmpathyApp *) app;
+  GSimpleAction *action;
   gint i;
   gchar **argv;
   gint argc = 0;
@@ -412,6 +427,11 @@ empathy_app_local_command_line (GApplication *app,
       return retval;
     }
 
+  action = g_simple_action_new ("open-preferences", G_VARIANT_TYPE_STRING);
+  g_signal_connect (action, "activate", G_CALLBACK (open_preference_action_cb), app);
+  g_action_map_add_action (G_ACTION_MAP (app), G_ACTION (action));
+  g_object_unref (action);
+
   /* We create a group so that GOptionArgFuncs get the user data */
   group = g_option_group_new ("empathy", NULL, NULL, app, NULL);
   g_option_group_set_translation_domain (group, GETTEXT_PACKAGE);
@@ -445,6 +465,13 @@ empathy_app_local_command_line (GApplication *app,
     {
       self->no_connect = no_connect;
       self->start_hidden = start_hidden;
+
+      if (self->show_preferences)
+        {
+          GVariant *parameter;
+          parameter = g_variant_new_string (self->preferences_tab ? self->preferences_tab : "");
+          g_action_group_activate_action (G_ACTION_GROUP (app), "open-preferences", parameter);
+        }
 
       g_application_activate (app);
     }
