@@ -354,11 +354,17 @@ empathy_app_command_line (GApplication *app,
     }
 
   if (self->show_preferences)
-    empathy_roster_window_show_preferences (
-        EMPATHY_ROSTER_WINDOW (self->window), self->preferences_tab);
+    {
+      empathy_roster_window_show_preferences (
+          EMPATHY_ROSTER_WINDOW (self->window), self->preferences_tab);
 
-  if (!self->start_hidden)
-    empathy_window_present (GTK_WINDOW (self->window));
+      self->show_preferences = FALSE;
+    }
+  else
+    {
+      if (!self->start_hidden)
+        empathy_window_present (GTK_WINDOW (self->window));
+    }
 
   /* Display the accounts dialog if needed */
   tp_proxy_prepare_async (self->account_manager, NULL,
