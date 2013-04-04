@@ -282,31 +282,17 @@ out:
     }
 }
 
-static int
-empathy_app_command_line (GApplication *app,
-    GApplicationCommandLine *cmdline)
+static void
+empathy_app_activate (GApplication *app)
 {
   EmpathyApp *self = (EmpathyApp *) app;
-  gchar **args, **argv;
-  gint argc, exit_status, i;
-
-  args = g_application_command_line_get_arguments (cmdline, &argc);
-  /* We have to make an extra copy of the array, since g_option_context_parse()
-   * assumes that it can remove strings from the array without freeing them. */
-  argv = g_new (gchar*, argc + 1);
-  for (i = 0; i <= argc; i++)
-    argv[i] = args[i];
-
-  if (empathy_app_local_command_line (app, &argv, &exit_status))
-    DEBUG ("failed to parse command line!");
-
-  g_free (argv);
-  g_strfreev (args);
 
   if (!self->activated)
     {
       GError *error = NULL;
       TpDBusDaemon *dbus;
+
+      empathy_gtk_init ();
 
       /* Create the FT factory */
       self->ft_factory = empathy_ft_factory_dup_singleton ();
@@ -360,8 +346,6 @@ empathy_app_command_line (GApplication *app,
   /* Display the accounts dialog if needed */
   tp_proxy_prepare_async (self->account_manager, NULL,
       account_manager_ready_cb, self);
-
-  return 0;
 }
 
 static gboolean
@@ -395,7 +379,7 @@ empathy_app_local_command_line (GApplication *app,
   gint i;
   gchar **argv;
   gint argc = 0;
-  gboolean retval = FALSE;
+  gboolean retval = TRUE;
   GError *error = NULL;
   gboolean no_connect = FALSE, start_hidden = FALSE;
 
@@ -419,13 +403,20 @@ empathy_app_local_command_line (GApplication *app,
       { NULL }
   };
 
+  if (!g_application_register (app, NULL, &error))
+    {
+      g_warning("Impossible to register empathy: %s", error->message);
+      *exit_status = EXIT_FAILURE;
+      return retval;
+    }
+
   /* We create a group so that GOptionArgFuncs get the user data */
   group = g_option_group_new ("empathy", NULL, NULL, app, NULL);
   g_option_group_set_translation_domain (group, GETTEXT_PACKAGE);
   g_option_group_add_entries (group, options);
 
   optcontext = g_option_context_new (N_("- Empathy IM Client"));
-  g_option_context_add_group (optcontext, gtk_get_option_group (TRUE));
+  g_option_context_add_group (optcontext, gtk_get_option_group (FALSE));
   g_option_context_set_main_group (optcontext, group);
   g_option_context_set_translation_domain (optcontext, GETTEXT_PACKAGE);
 
@@ -446,7 +437,6 @@ empathy_app_local_command_line (GApplication *app,
       g_warning ("Error in empathy init: %s", error->message);
 
       *exit_status = EXIT_FAILURE;
-      retval = TRUE;
     }
 
   g_free (argv);
@@ -455,6 +445,8 @@ empathy_app_local_command_line (GApplication *app,
 
   self->no_connect = no_connect;
   self->start_hidden = start_hidden;
+
+  g_application_activate (app);
 
   return retval;
 }
@@ -473,8 +465,8 @@ empathy_app_class_init (EmpathyAppClass *klass)
   gobject_class->dispose = empathy_app_dispose;
   gobject_class->finalize = empathy_app_finalize;
 
-  g_app_class->command_line = empathy_app_command_line;
   g_app_class->local_command_line = empathy_app_local_command_line;
+  g_app_class->activate = empathy_app_activate;
 
   spec = g_param_spec_boolean ("no-connect", "no connect",
       "Don't connect on startup",
@@ -809,14 +801,11 @@ main (int argc, char *argv[])
 
   g_type_init ();
   empathy_init ();
-  gtk_init (&argc, &argv);
-  empathy_gtk_init ();
 
   add_empathy_features ();
 
   app = g_object_new (EMPATHY_TYPE_APP,
       "application-id", EMPATHY_DBUS_NAME,
-      "flags", G_APPLICATION_HANDLES_COMMAND_LINE,
       NULL);
 
   retval = g_application_run (G_APPLICATION (app), argc, argv);
