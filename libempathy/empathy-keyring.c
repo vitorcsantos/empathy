@@ -49,12 +49,6 @@ static const SecretSchema room_keyring_schema =
       { "room-id", SECRET_SCHEMA_ATTRIBUTE_STRING },
       { NULL } } };
 
-gboolean
-empathy_keyring_is_available (void)
-{
-  return TRUE;
-}
-
 /* get */
 
 static void

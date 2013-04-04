@@ -3855,14 +3855,8 @@ provide_password_cb (GObject *tp_chat,
 		return;
 	}
 
-	if (empathy_keyring_is_available ()) {
-		/* ask whether they want to save the password */
-		chat_prompt_to_save_password (self, data);
-	} else {
-		/* Get rid of the password info bar finally */
-		gtk_widget_destroy (data->info_bar);
-		g_slice_free (PasswordData, data);
-	}
+    /* ask whether they want to save the password */
+    chat_prompt_to_save_password (self, data);
 
 	/* Room joined */
 	gtk_widget_set_sensitive (priv->hpaned, TRUE);

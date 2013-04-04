@@ -24,8 +24,6 @@
 
 G_BEGIN_DECLS
 
-gboolean empathy_keyring_is_available (void);
-
 void empathy_keyring_get_account_password_async (TpAccount *account,
     GAsyncReadyCallback callback, gpointer user_data);
 
