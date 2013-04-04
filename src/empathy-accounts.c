@@ -136,12 +136,12 @@ out:
   g_application_release (app);
 }
 
-static int
-app_command_line_cb (GApplication *app,
-    GApplicationCommandLine *cmdline)
+static void
+app_activate (GApplication *app)
 {
   TpAccountManager *account_manager;
 
+  empathy_gtk_init ();
   account_manager = tp_account_manager_dup ();
 
   /* Hold the application while preparing the AM */
@@ -151,8 +151,6 @@ app_command_line_cb (GApplication *app,
     account_manager_ready_for_accounts_cb, app);
 
   g_object_unref (account_manager);
-
-  return 0;
 }
 
 static gboolean
@@ -163,7 +161,7 @@ local_cmdline (GApplication *app,
   gint i;
   gchar **argv;
   gint argc = 0;
-  gboolean retval = FALSE;
+  gboolean retval = TRUE;
   GError *error = NULL;
 
   GOptionContext *optcontext;
@@ -186,7 +184,7 @@ local_cmdline (GApplication *app,
   };
 
   optcontext = g_option_context_new (N_("- Empathy Accounts"));
-  g_option_context_add_group (optcontext, gtk_get_option_group (TRUE));
+  g_option_context_add_group (optcontext, gtk_get_option_group (FALSE));
   g_option_context_add_main_entries (optcontext, options, GETTEXT_PACKAGE);
   g_option_context_set_translation_domain (optcontext, GETTEXT_PACKAGE);
 
@@ -199,9 +197,22 @@ local_cmdline (GApplication *app,
       g_print ("%s\nRun '%s --help' to see a full list of available command line options.\n",
           error->message, argv[0]);
       g_warning ("Error in empathy init: %s", error->message);
+      g_clear_error (&error);
 
       *exit_status = EXIT_FAILURE;
-      retval = TRUE;
+    }
+  else
+    {
+      if (g_application_register (app, NULL, &error))
+        {
+          g_application_activate (app);
+        }
+      else
+        {
+          g_warning("Impossible to register empathy-application: %s", error->message);
+          g_clear_error (&error);
+          *exit_status = EXIT_FAILURE;
+        }
     }
 
   g_option_context_free (optcontext);
@@ -225,22 +236,16 @@ main (int argc, char *argv[])
 
   empathy_init ();
 
-  gtk_init (&argc, &argv);
-  empathy_gtk_init ();
-
   g_set_application_name (_("Empathy Accounts"));
 
   /* Make empathy and empathy-accounts appear as the same app in gnome-shell */
   gdk_set_program_class ("Empathy");
   gtk_window_set_default_icon_name ("empathy");
 
-  app = gtk_application_new (EMPATHY_ACCOUNTS_DBUS_NAME,
-      G_APPLICATION_HANDLES_COMMAND_LINE);
+  app = gtk_application_new (EMPATHY_ACCOUNTS_DBUS_NAME, G_APPLICATION_FLAGS_NONE);
   app_class = G_OBJECT_GET_CLASS (app);
   G_APPLICATION_CLASS (app_class)->local_command_line = local_cmdline;
-
-  g_signal_connect (app, "command-line", G_CALLBACK (app_command_line_cb),
-      NULL);
+  G_APPLICATION_CLASS (app_class)->activate = app_activate;
 
   retval = g_application_run (G_APPLICATION (app), argc, argv);
 
