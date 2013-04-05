@@ -30,7 +30,7 @@ static GtkWidget *window = NULL;
 static gchar *service = NULL;
 
 static void
-activate_cb (GApplication *app)
+app_activate (GApplication *app)
 {
   if (window == NULL)
     {
@@ -44,20 +44,31 @@ activate_cb (GApplication *app)
       gtk_window_present (GTK_WINDOW (window));
     }
 
-  if (service != NULL)
+  if (!tp_str_empty (service))
     empathy_debug_window_show (EMPATHY_DEBUG_WINDOW (window),
         service);
 }
 
-static gint
-command_line_cb (GApplication *application,
-    GApplicationCommandLine *command_line,
-    gpointer user_data)
+static void
+on_show_service_cb (GAction  *action,
+    GVariant *parameter,
+    gpointer  data)
+{
+  g_free (service);
+  service = g_variant_dup_string (parameter, NULL);
+}
+
+static gboolean
+local_cmdline (GApplication *app,
+    gchar ***arguments,
+    gint *exit_status)
 {
   GError *error = NULL;
+  GSimpleAction *action;
   gchar **argv;
   gint argc;
-  gint retval = 0;
+  gint i;
+  gboolean retval = TRUE;
 
   GOptionContext *optcontext;
   GOptionEntry options[] = {
@@ -69,10 +80,18 @@ command_line_cb (GApplication *application,
   };
 
   optcontext = g_option_context_new (N_("- Empathy Debugger"));
-  g_option_context_add_group (optcontext, gtk_get_option_group (TRUE));
+  g_option_context_add_group (optcontext, gtk_get_option_group (FALSE));
   g_option_context_add_main_entries (optcontext, options, GETTEXT_PACKAGE);
   g_option_context_set_translation_domain (optcontext, GETTEXT_PACKAGE);
-  argv = g_application_command_line_get_arguments (command_line, &argc);
+
+  action = g_simple_action_new ("show-service", G_VARIANT_TYPE_STRING);
+  g_signal_connect (action, "activate", G_CALLBACK (on_show_service_cb), app);
+  g_action_map_add_action (G_ACTION_MAP (app), G_ACTION (action));
+  g_object_unref (action);
+
+  argv = *arguments;
+  for (i = 0; argv[i] != NULL; i++)
+    argc++;
 
   if (!g_option_context_parse (optcontext, &argc, &argv, &error))
     {
@@ -80,13 +99,27 @@ command_line_cb (GApplication *application,
           "line options.\n",
           error->message, argv[0]);
 
-      retval = 1;
+      g_clear_error (&error);
+      *exit_status = EXIT_FAILURE;
+    }
+  else
+    {
+      if (g_application_register (app, NULL, &error))
+        {
+          GVariant *parameter = g_variant_new_string (service ? service : "");
+          g_action_group_activate_action (G_ACTION_GROUP (app), "show-service", parameter);
+
+          g_application_activate (app);
+        }
+      else
+        {
+          g_warning("Impossible to register empathy-debugger: %s", error->message);
+          g_clear_error (&error);
+          *exit_status = EXIT_FAILURE;
+        }
     }
 
   g_option_context_free (optcontext);
-  g_strfreev (argv);
-
-  g_application_activate (application);
 
   return retval;
 }
@@ -96,16 +129,15 @@ main (int argc,
     char **argv)
 {
   GtkApplication *app;
+  GApplicationClass *app_class;
   gint retval;
 
-  gtk_init (&argc, &argv);
-  empathy_gtk_init ();
   textdomain (GETTEXT_PACKAGE);
 
-  app = gtk_application_new (EMPATHY_DEBUGGER_DBUS_NAME,
-      G_APPLICATION_HANDLES_COMMAND_LINE);
-  g_signal_connect (app, "activate", G_CALLBACK (activate_cb), NULL);
-  g_signal_connect (app, "command-line", G_CALLBACK (command_line_cb), NULL);
+  app = gtk_application_new (EMPATHY_DEBUGGER_DBUS_NAME, G_APPLICATION_FLAGS_NONE);
+  app_class = G_APPLICATION_CLASS (G_OBJECT_GET_CLASS (app));
+  app_class->local_command_line = local_cmdline;
+  app_class->activate = app_activate;
 
   g_set_application_name (_("Empathy Debugger"));
 
