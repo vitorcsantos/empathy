@@ -31,6 +31,7 @@
 
 #include <glib/gi18n-lib.h>
 #include <dbus/dbus-protocol.h>
+#include <math.h>
 
 #include "empathy-client-factory.h"
 #include "empathy-presence-manager.h"
