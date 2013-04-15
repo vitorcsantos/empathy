@@ -2,7 +2,6 @@
 
 HELP_ID = empathy
 HELP_MEDIA = \
-	figures/audio-input-microphone.png \
 	figures/available.png \
 	figures/away.png \
 	figures/busy.png \

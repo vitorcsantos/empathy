@@ -1,5 +1,6 @@
 <page xmlns="http://projectmallard.org/1.0/"
       xmlns:e="http://projectmallard.org/experimental/"
+      xmlns:its="http://www.w3.org/2005/11/its"
       type="topic" style="task"
       id="audio-call">
 
@@ -15,10 +16,17 @@
     </revision>
     <revision pkgversion="2.30" version="0.3" date="2010-02-14" status="review"/>
     <revision pkgversion="2.32" version="0.4" date="2010-09-09" status="review"/>   
+    <revision pkgversion="3.8" version="0.4" date="2013-04-15" status="review"/>
+
     <credit type="author">
       <name>Milo Casagrande</name>
-      <email>milo@ubuntu.com</email>
+      <email its:translate="no">milo@ubuntu.com</email>
     </credit>
+    <credit type="author">
+      <name>Ekaterina Gerasimova</name>
+      <email its:translate="no">kittykat3756@gmail.com</email>
+    </credit>
+
     <license>
       <p>Creative Commons Share Alike 3.0</p>
     </license>
@@ -26,27 +34,27 @@
 
   <title>Start an audio conversation</title>
 
-  <p>You can call your contacts and have an audio conversation with them.
-  This features only works with certain types of accounts, and it requires
-  the other person to have an application that supports audio calls.</p>
+  <p>You can call your contacts and have an audio conversation with them. This
+  features only works with certain types of accounts and it requires the other
+  person to have an application that supports audio calls.</p>
+
   <steps>
     <item>
       <p>
-        From the <gui>Contact List</gui> window, click the
-        <media type="image" mime="image/png" src="figures/camera-web.png">video call</media>
-        icon next to the name of the contact you wish to call and
-        choose <gui style="menuitem">Audio Call</gui>.
+        Right-click on the contact that you want to call and select
+        <gui style="menuitem">Audio Call</gui>.
       </p>
     </item>
     <item>
       <p>
         A new window will open. When the connection is established, you will
-        see <gui>Connected</gui> at the bottom of the window, along with the
-        total conversation time.</p>
+        see the total conversation time at the bottom of the window.
+      </p>
     </item>
     <item>
       <p>
-        To end the conversation, click on <gui style="button">Hang up</gui>.
+        To end the conversation, click the <gui style="button">hand up</gui>
+        button.
       </p>
     </item>
   </steps>
