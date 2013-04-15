@@ -5,7 +5,6 @@ HELP_MEDIA = \
 	figures/available.png \
 	figures/away.png \
 	figures/busy.png \
-	figures/camera-web.png \
 	figures/empathy-main-window.png \
 	figures/empathy-logo.png \
 	figures/gtk-add.png \

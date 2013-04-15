@@ -1,5 +1,6 @@
 <page xmlns="http://projectmallard.org/1.0/"
       xmlns:e="http://projectmallard.org/experimental/"
+      xmlns:its="http://www.w3.org/2005/11/its"
       type="topic" style="task"
       id="video-call">
 
@@ -18,10 +19,17 @@
     </revision>
     <revision pkgversion="2.30" version="0.3" date="2010-02-14" status="review"/>
     <revision pkgversion="3.2" version="0.4" date="2011-12-18" status="review"/>
+    <revision pkgversion="3.8" version="0.4" date="2013-04-15" status="review"/>
+
     <credit type="author">
       <name>Milo Casagrande</name>
-      <email>milo@ubuntu.com</email>
+      <email its:translate="no">milo@ubuntu.com</email>
     </credit>
+    <credit type="author">
+      <name>Ekaterina Gerasimova</name>
+      <email its:translate="no">kittykat3756@gmail.com</email>
+    </credit>
+
     <license>
       <p>Creative Commons Share Alike 3.0</p>
     </license>
@@ -35,28 +43,24 @@
 
   <steps>
     <item>
-      <p>From the <gui>Contact List</gui> window, click the
-      <media type="image" mime="image/png" src="figures/camera-web.png">video call</media>
-      icon next to the name of the contact you wish to call and choose <gui style="menuitem">Video Call</gui>.
-      </p>
+      <p>Right-click on the contact that you want to call and select
+      <gui style="menuitem">Video Call</gui>.</p>
     </item>
     <item>
       <p>A new window will open. When the connection is established, you will
-      see <gui>Connected</gui> at the bottom of the window, along with the
-      total conversation time.</p>
+      see the total conversation time at the bottom of the window.</p>
     </item>
     <item>
-      <p>
-        To end the conversation, click on <gui style="button">Hang up</gui>.
-      </p>
+      <p>To end the conversation, click on the <gui style="button">hang
+      up</gui> button.</p>
     </item>
   </steps>
+
   <note style="tip">
-    <p>
-      To turn a video conversation into an audio conversation, choose
-      <guiseq><gui style="menu">Video</gui><gui style="menuitem">Video Off</gui></guiseq>.
-    </p>
+    <p>To turn a video conversation into an audio conversation, choose
+    <guiseq><gui style="menu">Video</gui><gui style="menuitem">Video Off</gui></guiseq>.</p>
   </note>
+
   <section id="video-meta-contact">
     <title>Start a video conversation with a meta-contact</title>
     <steps>
