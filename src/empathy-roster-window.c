@@ -475,7 +475,7 @@ static void
 display_page_no_account (EmpathyRosterWindow *self)
 {
   display_page_message (self,
-      _("You need to setup an account to see contacts here."),
+      _("You need to set up an account to see contacts here."),
       PAGE_MESSAGE_FLAG_ACCOUNTS);
 }
 
