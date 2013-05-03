@@ -37,6 +37,8 @@
 #include "empathy-presence-manager.h"
 #include "extensions.h"
 
+#include <math.h>
+
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include "empathy-debug.h"
 
