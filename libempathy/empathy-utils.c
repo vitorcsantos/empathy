@@ -428,21 +428,6 @@ empathy_uint_compare (gconstpointer a,
   return *(guint *) a - *(guint *) b;
 }
 
-gchar *
-empathy_protocol_icon_name (const gchar *protocol)
-{
-  if (!tp_strdiff (protocol, "yahoojp"))
-    /* Yahoo Japan uses the same icon as Yahoo */
-    protocol = "yahoo";
-  else if (!tp_strdiff (protocol, "simple"))
-    /* SIMPLE uses the same icon as SIP */
-    protocol = "sip";
-  else if (!tp_strdiff (protocol, "sms"))
-    return g_strdup ("phone");
-
-  return g_strdup_printf ("im-%s", protocol);
-}
-
 GType
 empathy_type_dbus_ao (void)
 {
@@ -452,77 +437,6 @@ empathy_type_dbus_ao (void)
      t = dbus_g_type_get_collection ("GPtrArray", DBUS_TYPE_G_OBJECT_PATH);
 
   return t;
-}
-
-const char *
-empathy_protocol_name_to_display_name (const gchar *proto_name)
-{
-  int i;
-  static struct {
-    const gchar *proto;
-    const gchar *display;
-    gboolean translated;
-  } names[] = {
-    { "jabber", "Jabber", FALSE },
-    { "msn", "Windows Live (MSN)", FALSE, },
-    { "local-xmpp", N_("People Nearby"), TRUE },
-    { "irc", "IRC", FALSE },
-    { "icq", "ICQ", FALSE },
-    { "aim", "AIM", FALSE },
-    { "yahoo", "Yahoo!", FALSE },
-    { "yahoojp", N_("Yahoo! Japan"), TRUE },
-    { "groupwise", "GroupWise", FALSE },
-    { "sip", "SIP", FALSE },
-    { "gadugadu", "Gadu-Gadu", FALSE },
-    { "mxit", "Mxit", FALSE },
-    { "myspace", "Myspace", FALSE },
-    { "sametime", "Sametime", FALSE },
-    { "skype-dbus", "Skype (D-BUS)", FALSE },
-    { "skype-x11", "Skype (X11)", FALSE },
-    { "zephyr", "Zephyr", FALSE },
-    { NULL, NULL }
-  };
-
-  for (i = 0; names[i].proto != NULL; i++)
-    {
-      if (!tp_strdiff (proto_name, names[i].proto))
-        {
-          if (names[i].translated)
-            return gettext (names[i].display);
-          else
-            return names[i].display;
-        }
-    }
-
-  return proto_name;
-}
-
-const char *
-empathy_service_name_to_display_name (const gchar *service_name)
-{
-  int i;
-  static struct {
-    const gchar *service;
-    const gchar *display;
-    gboolean translated;
-  } names[] = {
-    { "google-talk", N_("Google Talk"), FALSE },
-    { "facebook", N_("Facebook Chat"), TRUE },
-    { NULL, NULL }
-  };
-
-  for (i = 0; names[i].service != NULL; i++)
-    {
-      if (!tp_strdiff (service_name, names[i].service))
-        {
-          if (names[i].translated)
-            return gettext (names[i].display);
-          else
-            return names[i].display;
-        }
-    }
-
-  return service_name;
 }
 
 gboolean

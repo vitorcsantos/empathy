@@ -25,6 +25,7 @@
 
 #include <glib/gi18n-lib.h>
 #include <tp-account-widgets/tpaw-connection-managers.h>
+#include <tp-account-widgets/tpaw-utils.h>
 
 #include "empathy-ui-utils.h"
 #include "empathy-utils.h"
@@ -229,10 +230,10 @@ protocol_choosers_add_cm (EmpathyProtocolChooser *chooser,
       g_hash_table_insert (priv->protocols,
           g_strdup (proto_name), g_strdup (cm_name));
 
-      icon_name = empathy_protocol_icon_name (proto_name);
+      icon_name = tpaw_protocol_icon_name (proto_name);
       pixbuf = empathy_pixbuf_from_icon_name (icon_name, GTK_ICON_SIZE_BUTTON);
 
-      display_name = empathy_protocol_name_to_display_name (proto_name);
+      display_name = tpaw_protocol_name_to_display_name (proto_name);
 
       gtk_list_store_insert_with_values (priv->store,
           NULL, 0,
@@ -247,7 +248,7 @@ protocol_choosers_add_cm (EmpathyProtocolChooser *chooser,
       if (!tp_strdiff (proto_name, "jabber") &&
           !tp_strdiff (cm_name, "gabble"))
         {
-          display_name = empathy_service_name_to_display_name ("google-talk");
+          display_name = tpaw_service_name_to_display_name ("google-talk");
           pixbuf = empathy_pixbuf_from_icon_name ("im-google-talk",
                   GTK_ICON_SIZE_BUTTON);
 
@@ -262,7 +263,7 @@ protocol_choosers_add_cm (EmpathyProtocolChooser *chooser,
 
           g_clear_object (&pixbuf);
 
-          display_name = empathy_service_name_to_display_name ("facebook");
+          display_name = tpaw_service_name_to_display_name ("facebook");
           pixbuf = empathy_pixbuf_from_icon_name ("im-facebook",
                   GTK_ICON_SIZE_BUTTON);
 
@@ -591,9 +592,9 @@ empathy_protocol_chooser_create_account_settings (EmpathyProtocolChooser *self)
     goto out;
 
   if (service != NULL)
-    display_name = empathy_service_name_to_display_name (service);
+    display_name = tpaw_service_name_to_display_name (service);
   else
-    display_name = empathy_protocol_name_to_display_name (
+    display_name = tpaw_protocol_name_to_display_name (
         tp_protocol_get_name (proto));
 
   /* Create account */

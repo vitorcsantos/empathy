@@ -23,6 +23,7 @@
 #include "empathy-theme-adium.h"
 
 #include <glib/gi18n-lib.h>
+#include <tp-account-widgets/tpaw-utils.h>
 
 #include "empathy-gsettings.h"
 #include "empathy-images.h"
@@ -901,7 +902,7 @@ theme_adium_add_message (EmpathyThemeAdium *self,
   /* Get information */
   sender = empathy_message_get_sender (msg);
   account = empathy_contact_get_account (sender);
-  service_name = empathy_protocol_name_to_display_name
+  service_name = tpaw_protocol_name_to_display_name
     (tp_account_get_protocol_name (account));
   if (service_name == NULL)
     service_name = tp_account_get_protocol_name (account);

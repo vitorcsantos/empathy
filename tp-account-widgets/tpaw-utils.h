@@ -3,6 +3,7 @@
  *
  * Authors: Marco Barisione <marco.barisione@collabora.co.uk>
  *          Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+ *          Sjoerd Simons <sjoerd.simons@collabora.co.uk>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -29,6 +30,10 @@ G_BEGIN_DECLS
 
 void tpaw_connect_new_account (TpAccount *account,
     TpAccountManager *account_manager);
+
+gchar *tpaw_protocol_icon_name (const gchar *protocol);
+const gchar *tpaw_protocol_name_to_display_name (const gchar *proto_name);
+const gchar *tpaw_service_name_to_display_name (const gchar *proto_name);
 
 G_END_DECLS
 

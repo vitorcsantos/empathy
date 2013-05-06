@@ -2271,7 +2271,7 @@ tpaw_account_widget_get_default_display_name (TpawAccountWidget *self)
       return default_display_name;
     }
 
-  if ((p = empathy_protocol_name_to_display_name (protocol)) != NULL)
+  if ((p = tpaw_protocol_name_to_display_name (protocol)) != NULL)
     protocol = p;
 
   if (protocol != NULL)

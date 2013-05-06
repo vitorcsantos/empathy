@@ -25,6 +25,7 @@
 #include "tpaw-keyring.h"
 #include "empathy-presence-manager.h"
 #include "empathy-utils.h"
+#include "tpaw-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_ACCOUNT
 #include "empathy-debug.h"
@@ -231,7 +232,7 @@ tpaw_account_settings_constructed (GObject *object)
     }
   else
     {
-      priv->icon_name = empathy_protocol_icon_name (priv->protocol);
+      priv->icon_name = tpaw_protocol_icon_name (priv->protocol);
     }
 
   g_assert (priv->cm_name != NULL && priv->protocol != NULL);

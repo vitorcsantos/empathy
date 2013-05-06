@@ -729,7 +729,7 @@ account_dialog_create_dialog_content (EmpathyAccountsDialog *dialog,
   gtk_image_set_from_icon_name (GTK_IMAGE (priv->image_type),
       icon_name, GTK_ICON_SIZE_DIALOG);
   gtk_widget_set_tooltip_text (priv->image_type,
-      empathy_protocol_name_to_display_name
+      tpaw_protocol_name_to_display_name
       (tpaw_account_settings_get_protocol (settings)));
   gtk_widget_show (priv->image_type);
 

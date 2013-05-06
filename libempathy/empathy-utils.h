@@ -66,10 +66,6 @@ gint empathy_uint_compare (gconstpointer a,
 const gchar * empathy_account_get_error_message (TpAccount *account,
     gboolean *user_requested);
 
-gchar *empathy_protocol_icon_name (const gchar *protocol);
-const gchar *empathy_protocol_name_to_display_name (const gchar *proto_name);
-const gchar *empathy_service_name_to_display_name (const gchar *proto_name);
-
 #define EMPATHY_ARRAY_TYPE_OBJECT (empathy_type_dbus_ao ())
 GType empathy_type_dbus_ao (void);
 
