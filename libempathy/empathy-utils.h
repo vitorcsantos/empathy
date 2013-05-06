@@ -94,8 +94,6 @@ gchar *empathy_format_currency (gint amount,
     guint scale,
     const gchar *currency);
 
-gboolean empathy_account_has_uri_scheme_tel (TpAccount *account);
-
 TpContact * empathy_get_tp_contact_for_individual (FolksIndividual *individual,
     TpConnection *conn);
 
