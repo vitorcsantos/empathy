@@ -29,6 +29,7 @@ libtp_account_widgets_sources =            	\
 	tpaw-irc-network-manager.c		\
 	tpaw-irc-network.c			\
 	tpaw-irc-server.c			\
+	tpaw-utils.c				\
 	totem-subtitle-encoding.c		\
 	$(NULL)
 
