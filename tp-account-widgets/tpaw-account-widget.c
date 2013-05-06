@@ -29,13 +29,13 @@
 
 #include <glib/gi18n-lib.h>
 #include <dbus/dbus-protocol.h>
-#include <tp-account-widgets/tpaw-utils.h>
 
 #include "tpaw-account-widget-irc.h"
 #include "tpaw-account-widget-private.h"
 #include "tpaw-account-widget-sip.h"
 #include "empathy-ui-utils.h"
 #include "empathy-utils.h"
+#include "tpaw-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_ACCOUNT
 #include "empathy-debug.h"
@@ -229,7 +229,7 @@ account_widget_set_entry_highlighting (GtkEntry *entry,
        * gives a colour which is inline with the theme but
        * slightly whiter.
        */
-      empathy_make_color_whiter (&color);
+      tpaw_make_color_whiter (&color);
 
       gtk_widget_override_background_color (GTK_WIDGET (entry), 0, &color);
     }

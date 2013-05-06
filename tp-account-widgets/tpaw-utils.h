@@ -24,6 +24,7 @@
 #define __TPAW_UTILS_H__
 
 #include <glib.h>
+#include <gtk/gtk.h>
 #include <telepathy-glib/telepathy-glib.h>
 
 G_BEGIN_DECLS
@@ -34,6 +35,8 @@ void tpaw_connect_new_account (TpAccount *account,
 gchar *tpaw_protocol_icon_name (const gchar *protocol);
 const gchar *tpaw_protocol_name_to_display_name (const gchar *proto_name);
 const gchar *tpaw_service_name_to_display_name (const gchar *proto_name);
+
+void  tpaw_make_color_whiter (GdkRGBA *color);
 
 G_END_DECLS
 
