@@ -29,6 +29,7 @@
 
 #include <glib/gi18n-lib.h>
 #include <dbus/dbus-protocol.h>
+#include <tp-account-widgets/tpaw-utils.h>
 
 #include "tpaw-account-widget-irc.h"
 #include "tpaw-account-widget-private.h"
@@ -895,7 +896,7 @@ account_widget_account_enabled_cb (GObject *source_object,
     }
   else
     {
-      empathy_connect_new_account (account, self->priv->account_manager);
+      tpaw_connect_new_account (account, self->priv->account_manager);
     }
 
   g_signal_emit (self, signals[CLOSE], 0, GTK_RESPONSE_APPLY);

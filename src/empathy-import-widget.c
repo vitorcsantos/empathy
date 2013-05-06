@@ -26,6 +26,7 @@
 #include "empathy-import-widget.h"
 
 #include <glib/gi18n-lib.h>
+#include <tp-account-widgets/tpaw-utils.h>
 
 #include "empathy-ui-utils.h"
 #include "empathy-utils.h"
@@ -169,7 +170,7 @@ import_widget_create_account_cb (GObject *source,
   if (tp_account_is_enabled (account))
     {
       account_manager = tp_account_manager_dup ();
-      empathy_connect_new_account (account, account_manager);
+      tpaw_connect_new_account (account, account_manager);
       g_object_unref (account_manager);
     }
 

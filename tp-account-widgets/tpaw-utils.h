@@ -1,7 +1,8 @@
 /*
- * Copyright (C) 2013 Collabora Ltd.
+ * Copyright (C) 2009-2013 Collabora Ltd.
  *
  * Authors: Marco Barisione <marco.barisione@collabora.co.uk>
+ *          Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -22,8 +23,12 @@
 #define __TPAW_UTILS_H__
 
 #include <glib.h>
+#include <telepathy-glib/telepathy-glib.h>
 
 G_BEGIN_DECLS
+
+void tpaw_connect_new_account (TpAccount *account,
+    TpAccountManager *account_manager);
 
 G_END_DECLS
 

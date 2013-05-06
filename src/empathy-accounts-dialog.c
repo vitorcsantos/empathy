@@ -29,6 +29,7 @@
 
 #include <glib/gi18n-lib.h>
 #include <tp-account-widgets/tpaw-account-widget.h>
+#include <tp-account-widgets/tpaw-utils.h>
 
 #include "empathy-accounts-common.h"
 #include "empathy-import-dialog.h"
@@ -212,7 +213,7 @@ accounts_dialog_enable_account_cb (GObject *object,
     {
       am = tp_account_manager_dup ();
 
-      empathy_connect_new_account (account, am);
+      tpaw_connect_new_account (account, am);
       g_object_unref (am);
     }
 }

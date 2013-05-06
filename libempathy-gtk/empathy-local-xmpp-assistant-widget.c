@@ -23,6 +23,7 @@
 
 #include <glib/gi18n-lib.h>
 #include <tp-account-widgets/tpaw-account-widget.h>
+#include <tp-account-widgets/tpaw-utils.h>
 
 #include "empathy-ui-utils.h"
 #include "empathy-utils.h"
@@ -181,7 +182,7 @@ account_enabled_cb (GObject *source,
 
   account_mgr = tp_account_manager_dup ();
 
-  empathy_connect_new_account (account, account_mgr);
+  tpaw_connect_new_account (account, account_mgr);
 
   g_object_unref (account_mgr);
 }
