@@ -192,6 +192,17 @@ fill_contact_info_grid (EmpathyUserInfo *self)
     {
       TpContactInfoField *field = l->data;
 
+      /* For some reason it can happen that the vCard contains fields the CM
+       * claims to be not supported. This is a workaround for gabble bug
+       * https://bugs.freedesktop.org/show_bug.cgi?id=64319. But we shouldn't
+       * crash on buggy CM anyway. */
+      if (get_spec_from_list (specs, field->field_name) == NULL)
+        {
+          DEBUG ("Buggy CM: self's vCard contains %s field but it is not in "
+              "Connection' supported fields", field->field_name);
+          continue;
+        }
+
       /* make a copy for the details_to_set list */
       field = tp_contact_info_field_copy (field);
       DEBUG ("Field %s is in our vCard", field->field_name);
