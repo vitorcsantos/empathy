@@ -28,9 +28,9 @@
 #include "empathy-accounts-dialog.h"
 
 #include <glib/gi18n-lib.h>
+#include <tp-account-widgets/tpaw-account-widget.h>
 
 #include "empathy-accounts-common.h"
-#include "empathy-account-widget.h"
 #include "empathy-import-dialog.h"
 #include "empathy-import-utils.h"
 #include "empathy-local-xmpp-assistant-widget.h"

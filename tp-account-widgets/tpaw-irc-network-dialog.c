@@ -19,7 +19,7 @@
  */
 
 #include "config.h"
-#include "empathy-irc-network-dialog.h"
+#include "tpaw-irc-network-dialog.h"
 
 #include <glib/gi18n-lib.h>
 

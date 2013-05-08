@@ -23,7 +23,7 @@
 
 #include <glib-object.h>
 
-#include "empathy-irc-network.h"
+#include "tpaw-irc-network.h"
 
 G_BEGIN_DECLS
 

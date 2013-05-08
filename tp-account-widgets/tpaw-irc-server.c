@@ -19,7 +19,7 @@
  */
 
 #include "config.h"
-#include "empathy-irc-server.h"
+#include "tpaw-irc-server.h"
 
 #include "empathy-utils.h"
 

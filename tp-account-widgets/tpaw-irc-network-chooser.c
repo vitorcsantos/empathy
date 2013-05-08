@@ -20,10 +20,10 @@
  */
 
 #include "config.h"
-#include "empathy-irc-network-chooser.h"
+#include "tpaw-irc-network-chooser.h"
 
-#include "empathy-irc-network-chooser-dialog.h"
-#include "empathy-irc-network-manager.h"
+#include "tpaw-irc-network-chooser-dialog.h"
+#include "tpaw-irc-network-manager.h"
 #include "empathy-ui-utils.h"
 #include "empathy-utils.h"
 

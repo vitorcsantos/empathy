@@ -20,11 +20,11 @@
  */
 
 #include "config.h"
-#include "empathy-account-widget-sip.h"
+#include "tpaw-account-widget-sip.h"
 
 #include <glib/gi18n-lib.h>
 
-#include "empathy-account-widget-private.h"
+#include "tpaw-account-widget-private.h"
 #include "empathy-ui-utils.h"
 
 typedef struct {

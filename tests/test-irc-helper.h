@@ -1,6 +1,6 @@
 #include <string.h>
 
-#include "empathy-irc-network-manager.h"
+#include <tp-account-widgets/tpaw-irc-network-manager.h>
 
 #ifndef __CHECK_IRC_HELPER_H__
 #define __CHECK_IRC_HELPER_H__

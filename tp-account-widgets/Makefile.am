@@ -11,35 +11,35 @@ AM_CPPFLAGS =                                           \
 	$(DISABLE_DEPRECATED)
 
 BUILT_SOURCES = 					\
-	empathy-account-widgets-resources.c		\
-	empathy-account-widgets-resources.h		\
+	tpaw-account-widgets-resources.c		\
+	tpaw-account-widgets-resources.h		\
 	$(NULL)
 
 libtp_account_widgets_sources =            	\
-	empathy-account-widget.c		\
-	empathy-account-widget-irc.c		\
-	empathy-account-widget-private.h	\
-	empathy-account-widget-sip.c		\
-	empathy-irc-network-chooser.c		\
-	empathy-irc-network-chooser-dialog.c	\
-	empathy-irc-network-dialog.c		\
-	empathy-irc-network-manager.c		\
-	empathy-irc-network.c			\
-	empathy-irc-server.c			\
+	tpaw-account-widget.c			\
+	tpaw-account-widget-irc.c		\
+	tpaw-account-widget-private.h		\
+	tpaw-account-widget-sip.c		\
+	tpaw-irc-network-chooser.c		\
+	tpaw-irc-network-chooser-dialog.c	\
+	tpaw-irc-network-dialog.c		\
+	tpaw-irc-network-manager.c		\
+	tpaw-irc-network.c			\
+	tpaw-irc-server.c			\
 	totem-subtitle-encoding.c		\
 	$(NULL)
 
 libtp_account_widgets_headers =			\
-	empathy-account-widget.h		\
-	empathy-account-widget-irc.h		\
-	empathy-account-widget-sip.h		\
-	empathy-irc-network-chooser-dialog.h	\
-	empathy-irc-network-chooser.h		\
-	empathy-irc-network-dialog.h		\
-	empathy-irc-network-manager.h		\
-	empathy-irc-network.h			\
-	empathy-irc-server.h			\
-	empathy-utils.h				\
+	tpaw-account-widget.h			\
+	tpaw-account-widget-irc.h		\
+	tpaw-account-widget-sip.h		\
+	tpaw-irc-network-chooser-dialog.h	\
+	tpaw-irc-network-chooser.h		\
+	tpaw-irc-network-dialog.h		\
+	tpaw-irc-network-manager.h		\
+	tpaw-irc-network.h			\
+	tpaw-irc-server.h			\
+	tpaw-utils.h				\
 	totem-subtitle-encoding.h		\
 	$(NULL)
 
@@ -68,8 +68,8 @@ check_c_sources = \
 include $(top_srcdir)/tools/check-coding-style.mk
 check-local: check-coding-style
 
-account_widgets_dtd_files =			\
-	empathy-irc-networks.dtd		\
+account_widgets_dtd_files =		\
+	tpaw-irc-networks.dtd		\
 	$(NULL)
 
 ircnetworksdir = $(datadir)/empathy
@@ -77,28 +77,28 @@ ircnetworks_DATA =		\
 	irc-networks.xml
 
 account_widgets_ui_files =			\
-	empathy-account-widget-generic.ui	\
-	empathy-account-widget-jabber.ui	\
-	empathy-account-widget-msn.ui		\
-	empathy-account-widget-sip.ui		\
-	empathy-account-widget-local-xmpp.ui	\
-	empathy-account-widget-irc.ui		\
-	empathy-account-widget-icq.ui		\
-	empathy-account-widget-yahoo.ui		\
-	empathy-account-widget-groupwise.ui	\
-	empathy-account-widget-aim.ui		\
+	tpaw-account-widget-generic.ui		\
+	tpaw-account-widget-jabber.ui		\
+	tpaw-account-widget-msn.ui		\
+	tpaw-account-widget-sip.ui		\
+	tpaw-account-widget-local-xmpp.ui	\
+	tpaw-account-widget-irc.ui		\
+	tpaw-account-widget-icq.ui		\
+	tpaw-account-widget-yahoo.ui		\
+	tpaw-account-widget-groupwise.ui	\
+	tpaw-account-widget-aim.ui		\
 	$(NULL)
 
-account_widgets_resource_files = $(shell $(GLIB_COMPILE_RESOURCES) --generate-dependencies --sourcedir=$(srcdir) $(srcdir)/empathy-account-widgets.gresource.xml)
+account_widgets_resource_files = $(shell $(GLIB_COMPILE_RESOURCES) --generate-dependencies --sourcedir=$(srcdir) $(srcdir)/tpaw-account-widgets.gresource.xml)
 
-empathy-account-widgets-resources.c: empathy-account-widgets.gresource.xml $(account_widgets_resource_files)
+tpaw-account-widgets-resources.c: tpaw-account-widgets.gresource.xml $(account_widgets_resource_files)
 	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate-source $<
 
-empathy-account-widgets-resources.h: empathy-account-widgets.gresource.xml $(account_widgets_resource_files)
+tpaw-account-widgets-resources.h: tpaw-account-widgets.gresource.xml $(account_widgets_resource_files)
 	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate-header $<
 
 EXTRA_DIST =					\
-	empathy-account-widgets.gresource.xml	\
+	tpaw-account-widgets.gresource.xml	\
 	$(account_widgets_dtd_files)		\
 	$(account_widgets_ui_files)		\
 	$(ircnetworks_DATA)			\

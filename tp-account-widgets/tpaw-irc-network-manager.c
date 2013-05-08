@@ -19,7 +19,7 @@
  */
 
 #include "config.h"
-#include "empathy-irc-network-manager.h"
+#include "tpaw-irc-network-manager.h"
 
 #include <sys/stat.h>
 
@@ -28,7 +28,7 @@
 #define DEBUG_FLAG EMPATHY_DEBUG_IRC
 #include "empathy-debug.h"
 
-#define IRC_NETWORKS_DTD_RESOURCENAME "/org/gnome/AccountWidgets/empathy-irc-networks.dtd"
+#define IRC_NETWORKS_DTD_RESOURCENAME "/org/gnome/AccountWidgets/tpaw-irc-networks.dtd"
 #define IRC_NETWORKS_FILENAME "irc-networks.xml"
 #define SAVE_TIMER 4
 

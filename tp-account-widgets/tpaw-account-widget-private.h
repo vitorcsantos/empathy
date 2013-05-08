@@ -22,7 +22,7 @@
 #ifndef __TPAW_ACCOUNT_WIDGET_PRIVATE_H__
 #define __TPAW_ACCOUNT_WIDGET_PRIVATE_H__
 
-#include "empathy-account-widget.h"
+#include "tpaw-account-widget.h"
 
 G_BEGIN_DECLS
 

@@ -20,19 +20,19 @@
  */
 
 #include "config.h"
-#include "empathy-irc-network-chooser-dialog.h"
+#include "tpaw-irc-network-chooser-dialog.h"
 
 #include <glib/gi18n-lib.h>
 
-#include "empathy-irc-network-dialog.h"
-#include "empathy-irc-network-manager.h"
+#include "tpaw-irc-network-dialog.h"
+#include "tpaw-irc-network-manager.h"
 #include "empathy-live-search.h"
 #include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_ACCOUNT | EMPATHY_DEBUG_IRC
 #include "empathy-debug.h"
 
-#include "empathy-irc-network-chooser-dialog.h"
+#include "tpaw-irc-network-chooser-dialog.h"
 
 #define GET_PRIV(obj) EMPATHY_GET_PRIV (obj, TpawIrcNetworkChooserDialog)
 

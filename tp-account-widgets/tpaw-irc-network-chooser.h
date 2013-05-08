@@ -25,7 +25,7 @@
 #include <gtk/gtk.h>
 
 #include "empathy-account-settings.h"
-#include "empathy-irc-network.h"
+#include "tpaw-irc-network.h"
 
 G_BEGIN_DECLS
 

@@ -19,9 +19,9 @@
  */
 
 #include "config.h"
-#include "empathy-account-widget-irc.h"
+#include "tpaw-account-widget-irc.h"
 
-#include "empathy-account-widget-private.h"
+#include "tpaw-account-widget-private.h"
 #include "empathy-ui-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_ACCOUNT | EMPATHY_DEBUG_IRC

@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <tp-account-widgets/tpaw-irc-network.h>
 
-#include "empathy-irc-network.h"
 #include "test-helper.h"
 #include "test-irc-helper.h"
 

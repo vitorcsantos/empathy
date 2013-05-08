@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <glib/gstdio.h>
+#include <tp-account-widgets/tpaw-irc-network-manager.h>
 
-#include "empathy-irc-network-manager.h"
 #include "test-helper.h"
 #include "test-irc-helper.h"
 

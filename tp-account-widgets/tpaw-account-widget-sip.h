@@ -15,28 +15,20 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
- * Authors: Guillaume Desmottes <gdesmott@gnome.org>
+ * Authors: Frederic Peters <fpeters@0d.be>
  */
 
-#ifndef __TPAW_ACCOUNT_WIDGET_IRC_H__
-#define __TPAW_ACCOUNT_WIDGET_IRC_H__
+#ifndef __TPAW_ACCOUNT_WIDGET_SIP_H__
+#define __TPAW_ACCOUNT_WIDGET_SIP_H__
 
-#include "empathy-account-widget.h"
-#include "empathy-irc-network-chooser.h"
+#include "tpaw-account-widget.h"
 
 G_BEGIN_DECLS
 
-TpawIrcNetworkChooser * tpaw_account_widget_irc_build (
-    TpawAccountWidget *self,
+GtkWidget * tpaw_account_widget_sip_build (TpawAccountWidget *self,
     const char *filename,
-    GtkWidget **table_common_settings,
-    GtkWidget **box);
-
-TpawIrcNetworkChooser * tpaw_account_widget_irc_build_simple (
-    TpawAccountWidget *self,
-    const char *filename,
-    GtkWidget **box);
+    GtkWidget **grid_common_settings);
 
 G_END_DECLS
 
-#endif /* __TPAW_ACCOUNT_WIDGET_IRC_H__ */
+#endif /* __TPAW_ACCOUNT_WIDGET_SIP_H__ */

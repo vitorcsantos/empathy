@@ -22,8 +22,8 @@
 #include "empathy-local-xmpp-assistant-widget.h"
 
 #include <glib/gi18n-lib.h>
+#include <tp-account-widgets/tpaw-account-widget.h>
 
-#include "empathy-account-widget.h"
 #include "empathy-ui-utils.h"
 #include "empathy-utils.h"
 

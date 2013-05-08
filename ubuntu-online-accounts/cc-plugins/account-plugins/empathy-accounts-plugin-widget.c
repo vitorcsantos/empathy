@@ -21,7 +21,7 @@
 
 #include "config.h"
 
-#include "empathy-accounts-plugin-widget.h"
+#include "tpaw-accounts-plugin-widget.h"
 
 #include <glib/gi18n-lib.h>
 
@@ -30,7 +30,7 @@
 #include <libaccounts-glib/ag-service.h>
 #include <libaccounts-glib/ag-account-service.h>
 
-#include "empathy-account-widget.h"
+#include "tpaw-account-widget.h"
 
 G_DEFINE_TYPE (EmpathyAccountsPluginWidget, empathy_accounts_plugin_widget, GTK_TYPE_BOX)
 
