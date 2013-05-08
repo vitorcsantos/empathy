@@ -458,6 +458,12 @@ tpaw_account_settings_get_password_cb (GObject *source,
   g_signal_emit (self, signals[PASSWORD_RETRIEVED], 0);
 }
 
+static gboolean
+account_has_uri_scheme_tel (TpAccount *account)
+{
+  return tp_account_associated_with_uri_scheme (account, "tel");
+}
+
 static GVariant * tpaw_account_settings_dup (
     TpawAccountSettings *settings,
     const gchar *param);
@@ -499,7 +505,7 @@ tpaw_account_settings_check_readyness (TpawAccountSettings *self)
       priv->icon_name =
         g_strdup (tp_account_get_icon_name (priv->account));
 
-      priv->uri_scheme_tel = empathy_account_has_uri_scheme_tel (priv->account);
+      priv->uri_scheme_tel = account_has_uri_scheme_tel (priv->account);
     }
 
   if (priv->protocol_obj == NULL)
@@ -846,7 +852,7 @@ tpaw_account_settings_discard_changes (TpawAccountSettings *settings)
   priv->password = g_strdup (priv->password_original);
 
   if (priv->account != NULL)
-    priv->uri_scheme_tel = empathy_account_has_uri_scheme_tel (priv->account);
+    priv->uri_scheme_tel = account_has_uri_scheme_tel (priv->account);
   else
     priv->uri_scheme_tel = FALSE;
 }
@@ -1269,7 +1275,7 @@ update_account_uri_schemes (TpawAccountSettings *self)
 {
   TpawAccountSettingsPriv *priv = GET_PRIV (self);
 
-  if (priv->uri_scheme_tel == empathy_account_has_uri_scheme_tel (
+  if (priv->uri_scheme_tel == account_has_uri_scheme_tel (
         priv->account))
     return;
 
