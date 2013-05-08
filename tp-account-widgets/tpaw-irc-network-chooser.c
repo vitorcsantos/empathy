@@ -48,7 +48,7 @@ enum {
 static guint signals[LAST_SIGNAL] = { 0 };
 
 typedef struct {
-    EmpathyAccountSettings *settings;
+    TpawAccountSettings *settings;
 
     TpawIrcNetworkManager *network_manager;
     GtkWidget *dialog;
@@ -103,9 +103,9 @@ unset_server_params (TpawIrcNetworkChooser *self)
   TpawIrcNetworkChooserPriv *priv = GET_PRIV (self);
 
   DEBUG ("Unset server, port and use-ssl");
-  empathy_account_settings_unset (priv->settings, "server");
-  empathy_account_settings_unset (priv->settings, "port");
-  empathy_account_settings_unset (priv->settings, "use-ssl");
+  tpaw_account_settings_unset (priv->settings, "server");
+  tpaw_account_settings_unset (priv->settings, "port");
+  tpaw_account_settings_unset (priv->settings, "use-ssl");
 }
 
 static gchar *
@@ -153,7 +153,7 @@ update_server_params (TpawIrcNetworkChooser *self)
 
   charset = tpaw_irc_network_get_charset (priv->network);
   DEBUG ("Setting charset to %s", charset);
-  empathy_account_settings_set (priv->settings, "charset",
+  tpaw_account_settings_set (priv->settings, "charset",
       g_variant_new_string (charset));
 
   servers = tpaw_irc_network_get_servers (priv->network);
@@ -173,19 +173,19 @@ update_server_params (TpawIrcNetworkChooser *self)
           NULL);
 
       DEBUG ("Setting server to %s", address);
-      empathy_account_settings_set (priv->settings, "server",
+      tpaw_account_settings_set (priv->settings, "server",
           g_variant_new_string (address));
       DEBUG ("Setting port to %u", port);
-      empathy_account_settings_set (priv->settings, "port",
+      tpaw_account_settings_set (priv->settings, "port",
           g_variant_new_uint32 (port));
       DEBUG ("Setting use-ssl to %s", ssl ? "TRUE": "FALSE" );
-      empathy_account_settings_set (priv->settings, "use-ssl",
+      tpaw_account_settings_set (priv->settings, "use-ssl",
           g_variant_new_boolean (ssl));
 
       /* Set Account.Service */
       service = dup_network_service (priv->network);
       DEBUG ("Setting Service to %s", service);
-      empathy_account_settings_set_service (priv->settings, service);
+      tpaw_account_settings_set_service (priv->settings, service);
 
       g_free (address);
       g_free (service);
@@ -219,7 +219,7 @@ set_label_from_settings (TpawIrcNetworkChooser *self)
 
   tp_clear_object (&priv->network);
 
-  server = empathy_account_settings_dup_string (priv->settings, "server");
+  server = tpaw_account_settings_dup_string (priv->settings, "server");
 
   if (server != NULL)
     {
@@ -239,8 +239,8 @@ set_label_from_settings (TpawIrcNetworkChooser *self)
         }
 
       /* We don't have this network. Let's create it */
-      port = empathy_account_settings_get_uint32 (priv->settings, "port");
-      ssl = empathy_account_settings_get_boolean (priv->settings,
+      port = tpaw_account_settings_get_uint32 (priv->settings, "port");
+      ssl = tpaw_account_settings_get_boolean (priv->settings,
           "use-ssl");
 
       DEBUG ("Create a network %s", server);
@@ -375,8 +375,8 @@ tpaw_irc_network_chooser_class_init (TpawIrcNetworkChooserClass *klass)
   g_object_class_install_property (object_class, PROP_SETTINGS,
     g_param_spec_object ("settings",
       "Settings",
-      "The EmpathyAccountSettings to show and edit",
-      EMPATHY_TYPE_ACCOUNT_SETTINGS,
+      "The TpawAccountSettings to show and edit",
+      TPAW_TYPE_ACCOUNT_SETTINGS,
       G_PARAM_STATIC_STRINGS | G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 
   signals[SIG_CHANGED] = g_signal_new ("changed",
@@ -405,7 +405,7 @@ tpaw_irc_network_chooser_init (TpawIrcNetworkChooser *self)
 }
 
 GtkWidget *
-tpaw_irc_network_chooser_new (EmpathyAccountSettings *settings)
+tpaw_irc_network_chooser_new (TpawAccountSettings *settings)
 {
   return g_object_new (TPAW_TYPE_IRC_NETWORK_CHOOSER,
       "settings", settings,

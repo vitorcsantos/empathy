@@ -47,19 +47,19 @@ account_widget_irc_setup (TpawAccountWidgetIrc *settings)
 {
   gchar *nick = NULL;
   gchar *fullname = NULL;
-  EmpathyAccountSettings *ac_settings;
+  TpawAccountSettings *ac_settings;
 
   g_object_get (settings->self, "settings", &ac_settings, NULL);
 
-  nick = empathy_account_settings_dup_string (ac_settings, "account");
-  fullname = empathy_account_settings_dup_string (ac_settings,
+  nick = tpaw_account_settings_dup_string (ac_settings, "account");
+  fullname = tpaw_account_settings_dup_string (ac_settings,
       "fullname");
 
   if (nick == NULL)
     {
       nick = g_strdup (g_get_user_name ());
 
-      empathy_account_settings_set (ac_settings,
+      tpaw_account_settings_set (ac_settings,
         "account", g_variant_new_string (nick));
     }
 
@@ -70,7 +70,7 @@ account_widget_irc_setup (TpawAccountWidgetIrc *settings)
       if (fullname == NULL)
           fullname = g_strdup (nick);
 
-      empathy_account_settings_set (ac_settings,
+      tpaw_account_settings_set (ac_settings,
           "fullname", g_variant_new_string (fullname));
     }
 
@@ -95,18 +95,18 @@ network_changed_cb (TpawIrcNetworkChooser *chooser,
  * Return: %TRUE if the password-prompt param has been changed
  */
 static gboolean
-set_password_prompt_if_needed (EmpathyAccountSettings *ac_settings,
+set_password_prompt_if_needed (TpawAccountSettings *ac_settings,
     const gchar *password)
 {
   gboolean prompt;
 
   prompt = !tp_str_empty (password);
 
-  if (prompt == empathy_account_settings_get_boolean (ac_settings,
+  if (prompt == tpaw_account_settings_get_boolean (ac_settings,
         "password-prompt"))
     return FALSE;
 
-  empathy_account_settings_set (ac_settings, "password-prompt",
+  tpaw_account_settings_set (ac_settings, "password-prompt",
       g_variant_new_boolean (prompt));
 
   return TRUE;
@@ -117,7 +117,7 @@ entry_password_changed_cb (GtkEntry *entry,
     TpawAccountWidgetIrc *settings)
 {
   const gchar *password;
-  EmpathyAccountSettings *ac_settings;
+  TpawAccountSettings *ac_settings;
 
   g_object_get (settings->self, "settings", &ac_settings, NULL);
 
@@ -135,7 +135,7 @@ tpaw_account_widget_irc_build (TpawAccountWidget *self,
     GtkWidget **box)
 {
   TpawAccountWidgetIrc *settings;
-  EmpathyAccountSettings *ac_settings;
+  TpawAccountSettings *ac_settings;
   GtkWidget *entry_password;
   gchar *password;
 
@@ -181,12 +181,12 @@ tpaw_account_widget_irc_build (TpawAccountWidget *self,
   g_object_unref (ac_settings);
 
   /* Automatically set password-prompt when needed */
-  password = empathy_account_settings_dup_string (ac_settings, "password");
+  password = tpaw_account_settings_dup_string (ac_settings, "password");
 
   if (set_password_prompt_if_needed (ac_settings, password))
     {
       /* Apply right now to save password-prompt */
-      empathy_account_settings_apply_async (ac_settings, NULL, NULL);
+      tpaw_account_settings_apply_async (ac_settings, NULL, NULL);
     }
 
   g_free (password);
@@ -203,7 +203,7 @@ tpaw_account_widget_irc_build_simple (TpawAccountWidget *self,
     GtkWidget **box)
 {
   TpawAccountWidgetIrc *settings;
-  EmpathyAccountSettings *ac_settings;
+  TpawAccountSettings *ac_settings;
   GtkAlignment *alignment;
 
   settings = g_slice_new0 (TpawAccountWidgetIrc);

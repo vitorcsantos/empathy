@@ -16,6 +16,7 @@ BUILT_SOURCES = 					\
 	$(NULL)
 
 libtp_account_widgets_sources =            	\
+	tpaw-account-settings.c			\
 	tpaw-account-widget.c			\
 	tpaw-account-widget-irc.c		\
 	tpaw-account-widget-private.h		\
@@ -30,6 +31,7 @@ libtp_account_widgets_sources =            	\
 	$(NULL)
 
 libtp_account_widgets_headers =			\
+	tpaw-account-settings.h			\
 	tpaw-account-widget.h			\
 	tpaw-account-widget-irc.h		\
 	tpaw-account-widget-sip.h		\

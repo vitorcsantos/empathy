@@ -62,7 +62,7 @@ static ServiceInfo services_infos[N_SERVICES] = {
 };
 
 struct _TpawAccountWidgetPriv {
-  EmpathyAccountSettings *settings;
+  TpawAccountSettings *settings;
 
   GtkWidget *grid_common_settings;
   GtkWidget *apply_button;
@@ -243,7 +243,7 @@ account_widget_handle_control_buttons_sensitivity (TpawAccountWidget *self)
 {
   gboolean is_valid;
 
-  is_valid = empathy_account_settings_is_valid (self->priv->settings);
+  is_valid = tpaw_account_settings_is_valid (self->priv->settings);
 
   account_widget_set_control_buttons_sensitivity (self, is_valid);
 
@@ -261,18 +261,18 @@ account_widget_entry_changed_common (TpawAccountWidget *self,
 
   str = gtk_entry_get_text (entry);
   param_name = g_object_get_data (G_OBJECT (entry), "param_name");
-  prev_status = empathy_account_settings_parameter_is_valid (
+  prev_status = tpaw_account_settings_parameter_is_valid (
       self->priv->settings, param_name);
 
   if (EMP_STR_EMPTY (str))
     {
-      empathy_account_settings_unset (self->priv->settings, param_name);
+      tpaw_account_settings_unset (self->priv->settings, param_name);
 
       if (focus)
         {
           gchar *value;
 
-          value = empathy_account_settings_dup_string (self->priv->settings,
+          value = tpaw_account_settings_dup_string (self->priv->settings,
               param_name);
 
           DEBUG ("Unset %s and restore to %s", param_name, value);
@@ -284,11 +284,11 @@ account_widget_entry_changed_common (TpawAccountWidget *self,
     {
       DEBUG ("Setting %s to %s", param_name,
           tp_strdiff (param_name, "password") ? str : "***");
-      empathy_account_settings_set (self->priv->settings, param_name,
+      tpaw_account_settings_set (self->priv->settings, param_name,
           g_variant_new_string (str));
     }
 
-  curr_status = empathy_account_settings_parameter_is_valid (
+  curr_status = tpaw_account_settings_parameter_is_valid (
       self->priv->settings, param_name);
 
   if (curr_status != prev_status)
@@ -315,7 +315,7 @@ account_widget_entry_map_cb (GtkEntry *entry,
 
   /* need to initialize input highlighting */
   param_name = g_object_get_data (G_OBJECT (entry), "param_name");
-  is_valid = empathy_account_settings_parameter_is_valid (self->priv->settings,
+  is_valid = tpaw_account_settings_parameter_is_valid (self->priv->settings,
       param_name);
   account_widget_set_entry_highlighting (entry, !is_valid);
 }
@@ -331,7 +331,7 @@ account_widget_int_changed_cb (GtkWidget *widget,
   value = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (widget));
   param_name = g_object_get_data (G_OBJECT (widget), "param_name");
 
-  signature = empathy_account_settings_get_dbus_signature (self->priv->settings,
+  signature = tpaw_account_settings_get_dbus_signature (self->priv->settings,
     param_name);
   g_return_if_fail (signature != NULL);
 
@@ -341,20 +341,20 @@ account_widget_int_changed_cb (GtkWidget *widget,
     {
     case DBUS_TYPE_INT16:
     case DBUS_TYPE_INT32:
-      empathy_account_settings_set (self->priv->settings, param_name,
+      tpaw_account_settings_set (self->priv->settings, param_name,
           g_variant_new_int32 (value));
       break;
     case DBUS_TYPE_INT64:
-      empathy_account_settings_set (self->priv->settings, param_name,
+      tpaw_account_settings_set (self->priv->settings, param_name,
           g_variant_new_int64 (value));
       break;
     case DBUS_TYPE_UINT16:
     case DBUS_TYPE_UINT32:
-      empathy_account_settings_set (self->priv->settings, param_name,
+      tpaw_account_settings_set (self->priv->settings, param_name,
           g_variant_new_uint32 (value));
       break;
     case DBUS_TYPE_UINT64:
-      empathy_account_settings_set (self->priv->settings, param_name,
+      tpaw_account_settings_set (self->priv->settings, param_name,
           g_variant_new_uint64 (value));
       break;
     default:
@@ -378,8 +378,8 @@ account_widget_checkbutton_toggled_cb (GtkWidget *widget,
   /* FIXME: This is ugly! checkbox don't have a "not-set" value so we
    * always unset the param and set the value if different from the
    * default value. */
-  empathy_account_settings_unset (self->priv->settings, param_name);
-  default_value = empathy_account_settings_get_boolean (self->priv->settings,
+  tpaw_account_settings_unset (self->priv->settings, param_name);
+  default_value = tpaw_account_settings_get_boolean (self->priv->settings,
       param_name);
 
   if (default_value == value)
@@ -389,7 +389,7 @@ account_widget_checkbutton_toggled_cb (GtkWidget *widget,
   else
     {
       DEBUG ("Setting %s to %d", param_name, value);
-      empathy_account_settings_set (self->priv->settings, param_name,
+      tpaw_account_settings_set (self->priv->settings, param_name,
           g_variant_new_boolean (value));
     }
 
@@ -404,7 +404,7 @@ account_widget_jabber_ssl_toggled_cb (GtkWidget *checkbutton_ssl,
   gint32       port = 0;
 
   value = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (checkbutton_ssl));
-  port = empathy_account_settings_get_uint32 (self->priv->settings, "port");
+  port = tpaw_account_settings_get_uint32 (self->priv->settings, "port");
 
   if (value)
     {
@@ -443,19 +443,19 @@ account_widget_combobox_changed_cb (GtkWidget *widget,
 
   param_name = g_object_get_data (G_OBJECT (widget), "param_name");
 
-  v = empathy_account_settings_dup_default (self->priv->settings, param_name);
+  v = tpaw_account_settings_dup_default (self->priv->settings, param_name);
   if (v != NULL && g_variant_is_of_type (v, G_VARIANT_TYPE_STRING))
     default_value = g_variant_get_string (v, NULL);
 
   if (!tp_strdiff (value, default_value))
     {
       DEBUG ("Unset %s and restore to %s", param_name, default_value);
-      empathy_account_settings_unset (self->priv->settings, param_name);
+      tpaw_account_settings_unset (self->priv->settings, param_name);
     }
   else
     {
       DEBUG ("Setting %s to %s", param_name, value);
-      empathy_account_settings_set (self->priv->settings, param_name,
+      tpaw_account_settings_set (self->priv->settings, param_name,
           g_variant_new_string (value));
     }
 
@@ -475,7 +475,7 @@ clear_icon_released_cb (GtkEntry *entry,
   param_name = g_object_get_data (G_OBJECT (entry), "param_name");
 
   DEBUG ("Unset %s", param_name);
-  empathy_account_settings_unset (self->priv->settings, param_name);
+  tpaw_account_settings_unset (self->priv->settings, param_name);
   gtk_entry_set_text (entry, "");
 
   tpaw_account_widget_changed (self);
@@ -522,7 +522,7 @@ tpaw_account_widget_setup_widget (TpawAccountWidget *self,
       gint value = 0;
       const gchar *signature;
 
-      signature = empathy_account_settings_get_dbus_signature (
+      signature = tpaw_account_settings_get_dbus_signature (
           self->priv->settings, param_name);
       g_return_if_fail (signature != NULL);
 
@@ -530,20 +530,20 @@ tpaw_account_widget_setup_widget (TpawAccountWidget *self,
         {
           case DBUS_TYPE_INT16:
           case DBUS_TYPE_INT32:
-            value = empathy_account_settings_get_int32 (self->priv->settings,
+            value = tpaw_account_settings_get_int32 (self->priv->settings,
               param_name);
             break;
           case DBUS_TYPE_INT64:
-            value = empathy_account_settings_get_int64 (self->priv->settings,
+            value = tpaw_account_settings_get_int64 (self->priv->settings,
               param_name);
             break;
           case DBUS_TYPE_UINT16:
           case DBUS_TYPE_UINT32:
-            value = empathy_account_settings_get_uint32 (self->priv->settings,
+            value = tpaw_account_settings_get_uint32 (self->priv->settings,
               param_name);
             break;
           case DBUS_TYPE_UINT64:
-            value = empathy_account_settings_get_uint64 (self->priv->settings,
+            value = tpaw_account_settings_get_uint64 (self->priv->settings,
                 param_name);
             break;
           default:
@@ -560,7 +560,7 @@ tpaw_account_widget_setup_widget (TpawAccountWidget *self,
     {
       gchar *str;
 
-      str = empathy_account_settings_dup_string (self->priv->settings,
+      str = tpaw_account_settings_dup_string (self->priv->settings,
           param_name);
       gtk_entry_set_text (GTK_ENTRY (widget), str ? str : "");
 
@@ -602,7 +602,7 @@ tpaw_account_widget_setup_widget (TpawAccountWidget *self,
     {
       gboolean value = FALSE;
 
-      value = empathy_account_settings_get_boolean (self->priv->settings,
+      value = tpaw_account_settings_get_boolean (self->priv->settings,
           param_name);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), value);
 
@@ -619,7 +619,7 @@ tpaw_account_widget_setup_widget (TpawAccountWidget *self,
       GtkTreeIter iter;
       gboolean valid;
 
-      str = empathy_account_settings_dup_string (self->priv->settings,
+      str = tpaw_account_settings_dup_string (self->priv->settings,
           param_name);
       model = gtk_combo_box_get_model (GTK_COMBO_BOX (widget));
 
@@ -654,7 +654,7 @@ tpaw_account_widget_setup_widget (TpawAccountWidget *self,
     }
 
   gtk_widget_set_sensitive (widget,
-      empathy_account_settings_param_is_supported (self->priv->settings,
+      tpaw_account_settings_param_is_supported (self->priv->settings,
         param_name));
 }
 
@@ -716,7 +716,7 @@ accounts_widget_generic_setup (TpawAccountWidget *self,
   GList *params, *l;
   guint row_common = 0, row_advanced = 0;
 
-  params = empathy_account_settings_dup_tp_params (self->priv->settings);
+  params = tpaw_account_settings_dup_tp_params (self->priv->settings);
 
   for (l = params; l != NULL; l = g_list_next (l))
     {
@@ -911,12 +911,12 @@ account_widget_applied_cb (GObject *source_object,
 {
   GError *error = NULL;
   TpAccount *account;
-  EmpathyAccountSettings *settings = EMPATHY_ACCOUNT_SETTINGS (source_object);
+  TpawAccountSettings *settings = TPAW_ACCOUNT_SETTINGS (source_object);
   TpawAccountWidget *self = TPAW_ACCOUNT_WIDGET (user_data);
   gboolean reconnect_required;
   gboolean fire_close = TRUE;
 
-  empathy_account_settings_apply_finish (settings, res, &reconnect_required,
+  tpaw_account_settings_apply_finish (settings, res, &reconnect_required,
       &error);
 
   if (error != NULL)
@@ -926,7 +926,7 @@ account_widget_applied_cb (GObject *source_object,
       return;
     }
 
-  account = empathy_account_settings_get_account (self->priv->settings);
+  account = tpaw_account_settings_get_account (self->priv->settings);
 
   if (account != NULL)
     {
@@ -991,7 +991,7 @@ tpaw_account_widget_apply_and_log_in (TpawAccountWidget *self)
             self->priv->radiobutton_reuse));
 
       DEBUG ("Set register param: %d", !reuse);
-      empathy_account_settings_set (self->priv->settings, "register",
+      tpaw_account_settings_set (self->priv->settings, "register",
           g_variant_new_boolean (!reuse));
     }
 
@@ -1006,7 +1006,7 @@ tpaw_account_widget_apply_and_log_in (TpawAccountWidget *self)
        * manually override it. */
       display_name = tpaw_account_widget_get_default_display_name (self);
 
-      empathy_account_settings_set_display_name_async (self->priv->settings,
+      tpaw_account_settings_set_display_name_async (self->priv->settings,
           display_name, NULL, NULL);
 
       g_free (display_name);
@@ -1014,7 +1014,7 @@ tpaw_account_widget_apply_and_log_in (TpawAccountWidget *self)
 
   /* workaround to keep widget alive during async call */
   g_object_ref (self);
-  empathy_account_settings_apply_async (self->priv->settings,
+  tpaw_account_settings_apply_async (self->priv->settings,
       account_widget_applied_cb, self);
 }
 
@@ -1043,13 +1043,13 @@ account_widget_setup_generic (TpawAccountWidget *self)
 }
 
 static void
-account_widget_settings_ready_cb (EmpathyAccountSettings *settings,
+account_widget_settings_ready_cb (TpawAccountSettings *settings,
     GParamSpec *pspec,
     gpointer user_data)
 {
   TpawAccountWidget *self = user_data;
 
-  if (empathy_account_settings_is_ready (self->priv->settings))
+  if (tpaw_account_settings_is_ready (self->priv->settings))
     account_widget_setup_generic (self);
 }
 
@@ -1070,7 +1070,7 @@ account_widget_build_generic (TpawAccountWidget *self,
 
   g_object_ref (self->ui_details->gui);
 
-  if (empathy_account_settings_is_ready (self->priv->settings))
+  if (tpaw_account_settings_is_ready (self->priv->settings))
     account_widget_setup_generic (self);
   else
     g_signal_connect (self->priv->settings, "notify::ready",
@@ -1114,7 +1114,7 @@ account_widget_build_irc (TpawAccountWidget *self,
 {
   GtkWidget *box;
 
-  empathy_account_settings_set_regex (self->priv->settings, "account",
+  tpaw_account_settings_set_regex (self->priv->settings, "account",
       ACCOUNT_REGEX_IRC);
 
   if (self->priv->simple)
@@ -1161,7 +1161,7 @@ account_widget_build_msn (TpawAccountWidget *self,
 {
   GtkWidget *box;
 
-  empathy_account_settings_set_regex (self->priv->settings, "account",
+  tpaw_account_settings_set_regex (self->priv->settings, "account",
       ACCOUNT_REGEX_MSN);
 
   if (self->priv->simple)
@@ -1214,7 +1214,7 @@ suffix_id_widget_changed_cb (GtkWidget *entry,
 
   account_widget_entry_changed_common (self, GTK_ENTRY (entry), FALSE);
 
-  account = empathy_account_settings_dup_string (self->priv->settings,
+  account = tpaw_account_settings_dup_string (self->priv->settings,
       "account");
 
   if (!EMP_STR_EMPTY (account) &&
@@ -1226,7 +1226,7 @@ suffix_id_widget_changed_cb (GtkWidget *entry,
 
       DEBUG ("Change account from '%s' to '%s'", account, tmp);
 
-      empathy_account_settings_set (self->priv->settings, "account",
+      tpaw_account_settings_set (self->priv->settings, "account",
           g_variant_new_string (tmp));
       g_free (tmp);
     }
@@ -1261,7 +1261,7 @@ setup_id_widget_with_suffix (TpawAccountWidget *self,
   g_assert (self->priv->jid_suffix == NULL);
   self->priv->jid_suffix = g_strdup (suffix);
 
-  str = empathy_account_settings_dup_string (self->priv->settings, "account");
+  str = tpaw_account_settings_dup_string (self->priv->settings, "account");
   if (str != NULL)
     {
       gchar *tmp;
@@ -1283,8 +1283,8 @@ account_widget_get_service (TpawAccountWidget *self)
 {
   const gchar *icon_name, *service;
 
-  icon_name = empathy_account_settings_get_icon_name (self->priv->settings);
-  service = empathy_account_settings_get_service (self->priv->settings);
+  icon_name = tpaw_account_settings_get_icon_name (self->priv->settings);
+  service = tpaw_account_settings_get_service (self->priv->settings);
 
   /* Previous versions of Tpaw didn't set the Service property on Facebook
    * and gtalk accounts, so we check using the icon name as well. */
@@ -1316,7 +1316,7 @@ account_widget_build_jabber (TpawAccountWidget *self,
 
   service = account_widget_get_service (self);
 
-  empathy_account_settings_set_regex (self->priv->settings, "account",
+  tpaw_account_settings_set_regex (self->priv->settings, "account",
       ACCOUNT_REGEX_JABBER);
 
   if (self->priv->simple && service == NO_SERVICE)
@@ -1330,7 +1330,7 @@ account_widget_build_jabber (TpawAccountWidget *self,
           "label_password_create", &label_password_create,
           NULL);
 
-      if (empathy_account_settings_get_boolean (self->priv->settings,
+      if (tpaw_account_settings_get_boolean (self->priv->settings,
             "register"))
         {
           gtk_widget_hide (label_id);
@@ -1468,7 +1468,7 @@ account_widget_build_icq (TpawAccountWidget *self,
   GtkWidget *spinbutton_port;
   GtkWidget *box;
 
-  empathy_account_settings_set_regex (self->priv->settings, "account",
+  tpaw_account_settings_set_regex (self->priv->settings, "account",
       ACCOUNT_REGEX_ICQ);
 
   if (self->priv->simple)
@@ -1566,7 +1566,7 @@ account_widget_build_yahoo (TpawAccountWidget *self,
 {
   GtkWidget *box;
 
-  empathy_account_settings_set_regex (self->priv->settings, "account",
+  tpaw_account_settings_set_regex (self->priv->settings, "account",
       ACCOUNT_REGEX_YAHOO);
 
   if (self->priv->simple)
@@ -1707,7 +1707,7 @@ do_get_property (GObject *object,
     {
     case PROP_PROTOCOL:
       g_value_set_string (value,
-        empathy_account_settings_get_protocol (self->priv->settings));
+        tpaw_account_settings_get_protocol (self->priv->settings));
       break;
     case PROP_SETTINGS:
       g_value_set_object (value, self->priv->settings);
@@ -1820,7 +1820,7 @@ add_register_buttons (TpawAccountWidget *self,
   if (!self->priv->creating_account)
     return;
 
-  protocol = empathy_account_settings_get_tp_protocol (self->priv->settings);
+  protocol = tpaw_account_settings_get_tp_protocol (self->priv->settings);
   if (protocol == NULL)
     return;
 
@@ -1853,7 +1853,7 @@ static void
 remember_password_toggled_cb (GtkToggleButton *button,
     TpawAccountWidget *self)
 {
-  empathy_account_settings_set_remember_password (self->priv->settings,
+  tpaw_account_settings_set_remember_password (self->priv->settings,
       gtk_toggle_button_get_active (button));
 
   if (!self->priv->automatic_change)
@@ -1867,7 +1867,7 @@ account_settings_password_retrieved_cb (GObject *object,
   TpawAccountWidget *self = user_data;
   gchar *password;
 
-  password = empathy_account_settings_dup_string (
+  password = tpaw_account_settings_dup_string (
       self->priv->settings, "password");
 
   /* We have to do this so that when we call gtk_entry_set_text,
@@ -1917,10 +1917,10 @@ do_constructed (GObject *obj)
   const gchar *protocol, *cm_name;
   GtkWidget *box;
 
-  account = empathy_account_settings_get_account (self->priv->settings);
+  account = tpaw_account_settings_get_account (self->priv->settings);
 
-  cm_name = empathy_account_settings_get_cm (self->priv->settings);
-  protocol = empathy_account_settings_get_protocol (self->priv->settings);
+  cm_name = tpaw_account_settings_get_cm (self->priv->settings);
+  protocol = tpaw_account_settings_get_protocol (self->priv->settings);
 
   for (i = 0 ; i < G_N_ELEMENTS (widgets); i++)
     {
@@ -1955,7 +1955,7 @@ do_constructed (GObject *obj)
   /* remember password */
   if (self->priv->param_password_widget != NULL
       && self->priv->remember_password_widget != NULL
-      && empathy_account_settings_supports_sasl (self->priv->settings))
+      && tpaw_account_settings_supports_sasl (self->priv->settings))
     {
       if (self->priv->simple)
         {
@@ -1966,7 +1966,7 @@ do_constructed (GObject *obj)
         {
           gchar *password;
 
-          password = empathy_account_settings_dup_string (self->priv->settings,
+          password = tpaw_account_settings_dup_string (self->priv->settings,
               "password");
 
           /* FIXME: we should enable this checkbox only if the password is
@@ -1995,10 +1995,10 @@ do_constructed (GObject *obj)
       self->priv->automatic_change = FALSE;
     }
   else if (self->priv->remember_password_widget != NULL
-      && !empathy_account_settings_supports_sasl (self->priv->settings))
+      && !tpaw_account_settings_supports_sasl (self->priv->settings))
     {
       gtk_widget_set_visible (self->priv->remember_password_widget, FALSE);
-      empathy_account_settings_set_remember_password (self->priv->settings,
+      tpaw_account_settings_set_remember_password (self->priv->settings,
           TRUE);
     }
 
@@ -2054,7 +2054,7 @@ do_constructed (GObject *obj)
 
   g_clear_object (&self->ui_details->gui);
 
-  display_name = empathy_account_settings_get_display_name (
+  display_name = tpaw_account_settings_get_display_name (
       self->priv->settings);
   default_display_name = tpaw_account_widget_get_default_display_name (self);
 
@@ -2114,7 +2114,7 @@ tpaw_account_widget_class_init (TpawAccountWidgetClass *klass)
 
   param_spec = g_param_spec_object ("settings",
       "settings", "The settings of the account",
-      EMPATHY_TYPE_ACCOUNT_SETTINGS,
+      TPAW_TYPE_ACCOUNT_SETTINGS,
       G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS | G_PARAM_CONSTRUCT_ONLY);
   g_object_class_install_property (oclass, PROP_SETTINGS, param_spec);
 
@@ -2185,7 +2185,7 @@ tpaw_account_widget_init (TpawAccountWidget *self)
 void
 tpaw_account_widget_discard_pending_changes (TpawAccountWidget *self)
 {
-  empathy_account_settings_discard_changes (self->priv->settings);
+  tpaw_account_settings_discard_changes (self->priv->settings);
   self->priv->contains_pending_changes = FALSE;
 }
 
@@ -2208,17 +2208,17 @@ tpaw_account_widget_handle_params (TpawAccountWidget *self,
 }
 
 TpawAccountWidget *
-tpaw_account_widget_new_for_protocol (EmpathyAccountSettings *settings,
+tpaw_account_widget_new_for_protocol (TpawAccountSettings *settings,
     gboolean simple)
 {
-  g_return_val_if_fail (EMPATHY_IS_ACCOUNT_SETTINGS (settings), NULL);
+  g_return_val_if_fail (TPAW_IS_ACCOUNT_SETTINGS (settings), NULL);
 
   return g_object_new (TPAW_TYPE_ACCOUNT_WIDGET,
         "orientation", GTK_ORIENTATION_VERTICAL,
         "settings", settings,
         "simple", simple,
         "creating-account",
-          empathy_account_settings_get_account (settings) == NULL,
+          tpaw_account_settings_get_account (settings) == NULL,
         NULL);
 }
 
@@ -2230,9 +2230,9 @@ tpaw_account_widget_get_default_display_name (TpawAccountWidget *self)
   gchar *default_display_name;
   Service service;
 
-  login_id = empathy_account_settings_dup_string (self->priv->settings,
+  login_id = tpaw_account_settings_dup_string (self->priv->settings,
       "account");
-  protocol = empathy_account_settings_get_protocol (self->priv->settings);
+  protocol = tpaw_account_settings_get_protocol (self->priv->settings);
   service = account_widget_get_service (self);
 
   if (login_id != NULL)
@@ -2317,7 +2317,7 @@ tpaw_account_widget_set_password_param (TpawAccountWidget *self,
   gtk_entry_set_text (GTK_ENTRY (self->priv->param_password_widget), account);
 }
 
-EmpathyAccountSettings *
+TpawAccountSettings *
 tpaw_account_widget_get_settings (TpawAccountWidget *self)
 {
   return self->priv->settings;

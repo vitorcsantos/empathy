@@ -89,11 +89,11 @@ checkbutton_tel_toggled (
     GtkWidget *checkbox,
     TpawAccountWidgetSip *sip_settings)
 {
-  EmpathyAccountSettings *settings;
+  TpawAccountSettings *settings;
 
   settings = tpaw_account_widget_get_settings (sip_settings->self);
 
-  empathy_account_settings_set_uri_scheme_tel (settings,
+  tpaw_account_settings_set_uri_scheme_tel (settings,
       gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (checkbox)));
 
   tpaw_account_widget_changed (sip_settings->self);
@@ -149,7 +149,7 @@ tpaw_account_widget_sip_build (TpawAccountWidget *self,
       settings->vbox_settings = vbox_settings;
 
       gtk_toggle_button_set_active (checkbutton_tel,
-          empathy_account_settings_has_uri_scheme_tel (
+          tpaw_account_settings_has_uri_scheme_tel (
             tpaw_account_widget_get_settings (self)));
 
       tpaw_account_widget_handle_params (self,

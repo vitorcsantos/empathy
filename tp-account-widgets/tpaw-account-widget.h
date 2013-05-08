@@ -25,7 +25,7 @@
 
 #include <gtk/gtk.h>
 
-#include "empathy-account-settings.h"
+#include "tpaw-account-settings.h"
 
 G_BEGIN_DECLS
 
@@ -59,7 +59,7 @@ typedef struct {
 GType tpaw_account_widget_get_type (void);
 
 TpawAccountWidget * tpaw_account_widget_new_for_protocol (
-    EmpathyAccountSettings *settings,
+    TpawAccountSettings *settings,
     gboolean simple);
 
 gboolean tpaw_account_widget_contains_pending_changes
@@ -86,7 +86,7 @@ void tpaw_account_widget_apply_and_log_in (TpawAccountWidget *self);
 /* protected methods */
 void tpaw_account_widget_changed (TpawAccountWidget *widget);
 
-EmpathyAccountSettings * tpaw_account_widget_get_settings (
+TpawAccountSettings * tpaw_account_widget_get_settings (
     TpawAccountWidget *self);
 
 G_END_DECLS

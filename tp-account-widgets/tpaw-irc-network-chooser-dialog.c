@@ -46,7 +46,7 @@ enum {
 };
 
 typedef struct {
-    EmpathyAccountSettings *settings;
+    TpawAccountSettings *settings;
     TpawIrcNetwork *network;
 
     TpawIrcNetworkManager *network_manager;
@@ -682,8 +682,8 @@ tpaw_irc_network_chooser_dialog_class_init (TpawIrcNetworkChooserDialogClass *kl
   g_object_class_install_property (object_class, PROP_SETTINGS,
     g_param_spec_object ("settings",
       "Settings",
-      "The EmpathyAccountSettings to show and edit",
-      EMPATHY_TYPE_ACCOUNT_SETTINGS,
+      "The TpawAccountSettings to show and edit",
+      TPAW_TYPE_ACCOUNT_SETTINGS,
       G_PARAM_STATIC_STRINGS | G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_NETWORK,
@@ -710,7 +710,7 @@ tpaw_irc_network_chooser_dialog_init (TpawIrcNetworkChooserDialog *self)
 }
 
 GtkWidget *
-tpaw_irc_network_chooser_dialog_new (EmpathyAccountSettings *settings,
+tpaw_irc_network_chooser_dialog_new (TpawAccountSettings *settings,
     TpawIrcNetwork *network,
     GtkWindow *parent)
 {

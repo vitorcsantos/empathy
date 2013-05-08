@@ -24,7 +24,7 @@
 
 #include <gtk/gtk.h>
 
-#include "empathy-account-settings.h"
+#include "tpaw-account-settings.h"
 #include "tpaw-irc-network.h"
 
 G_BEGIN_DECLS
@@ -55,7 +55,7 @@ typedef struct {
 
 GType tpaw_irc_network_chooser_get_type (void) G_GNUC_CONST;
 
-GtkWidget * tpaw_irc_network_chooser_new (EmpathyAccountSettings *settings);
+GtkWidget * tpaw_irc_network_chooser_new (TpawAccountSettings *settings);
 
 TpawIrcNetwork * tpaw_irc_network_chooser_get_network (
     TpawIrcNetworkChooser *self);

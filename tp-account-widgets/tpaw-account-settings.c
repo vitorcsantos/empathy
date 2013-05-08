@@ -1,5 +1,5 @@
 /*
- * empathy-account-settings.c - Source for EmpathyAccountSettings
+ * tpaw-account-settings.c - Source for TpawAccountSettings
  * Copyright (C) 2009 Collabora Ltd.
  * @author Sjoerd Simons <sjoerd.simons@collabora.co.uk>
  *
@@ -19,7 +19,7 @@
  */
 
 #include "config.h"
-#include "empathy-account-settings.h"
+#include "tpaw-account-settings.h"
 
 #include "empathy-connection-managers.h"
 #include "empathy-keyring.h"
@@ -29,9 +29,9 @@
 #define DEBUG_FLAG EMPATHY_DEBUG_ACCOUNT
 #include "empathy-debug.h"
 
-#define GET_PRIV(obj) EMPATHY_GET_PRIV (obj, EmpathyAccountSettings)
+#define GET_PRIV(obj) EMPATHY_GET_PRIV (obj, TpawAccountSettings)
 
-G_DEFINE_TYPE(EmpathyAccountSettings, empathy_account_settings, G_TYPE_OBJECT)
+G_DEFINE_TYPE(TpawAccountSettings, tpaw_account_settings, G_TYPE_OBJECT)
 
 enum {
   PROP_ACCOUNT = 1,
@@ -51,9 +51,9 @@ enum {
 static gulong signals[LAST_SIGNAL] = { 0, };
 
 /* private structure */
-typedef struct _EmpathyAccountSettingsPriv EmpathyAccountSettingsPriv;
+typedef struct _TpawAccountSettingsPriv TpawAccountSettingsPriv;
 
-struct _EmpathyAccountSettingsPriv
+struct _TpawAccountSettingsPriv
 {
   gboolean dispose_has_run;
   EmpathyConnectionManagers *managers;
@@ -104,10 +104,10 @@ struct _EmpathyAccountSettingsPriv
 };
 
 static void
-empathy_account_settings_init (EmpathyAccountSettings *obj)
+tpaw_account_settings_init (TpawAccountSettings *obj)
 {
-  EmpathyAccountSettingsPriv *priv = G_TYPE_INSTANCE_GET_PRIVATE ((obj),
-    EMPATHY_TYPE_ACCOUNT_SETTINGS, EmpathyAccountSettingsPriv);
+  TpawAccountSettingsPriv *priv = G_TYPE_INSTANCE_GET_PRIVATE ((obj),
+    TPAW_TYPE_ACCOUNT_SETTINGS, TpawAccountSettingsPriv);
 
   obj->priv = priv;
 
@@ -126,23 +126,23 @@ empathy_account_settings_init (EmpathyAccountSettings *obj)
   priv->required_params = NULL;
 }
 
-static void empathy_account_settings_dispose (GObject *object);
-static void empathy_account_settings_finalize (GObject *object);
-static void empathy_account_settings_account_ready_cb (GObject *source_object,
+static void tpaw_account_settings_dispose (GObject *object);
+static void tpaw_account_settings_finalize (GObject *object);
+static void tpaw_account_settings_account_ready_cb (GObject *source_object,
     GAsyncResult *result, gpointer user_data);
-static void empathy_account_settings_managers_ready_cb (GObject *obj,
+static void tpaw_account_settings_managers_ready_cb (GObject *obj,
     GParamSpec *pspec, gpointer user_data);
-static void empathy_account_settings_check_readyness (
-    EmpathyAccountSettings *self);
+static void tpaw_account_settings_check_readyness (
+    TpawAccountSettings *self);
 
 static void
-empathy_account_settings_set_property (GObject *object,
+tpaw_account_settings_set_property (GObject *object,
     guint prop_id,
     const GValue *value,
     GParamSpec *pspec)
 {
-  EmpathyAccountSettings *settings = EMPATHY_ACCOUNT_SETTINGS (object);
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (settings);
+  TpawAccountSettings *settings = TPAW_ACCOUNT_SETTINGS (object);
+  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
 
   switch (prop_id)
     {
@@ -171,13 +171,13 @@ empathy_account_settings_set_property (GObject *object,
 }
 
 static void
-empathy_account_settings_get_property (GObject *object,
+tpaw_account_settings_get_property (GObject *object,
     guint prop_id,
     GValue *value,
     GParamSpec *pspec)
 {
-  EmpathyAccountSettings *settings = EMPATHY_ACCOUNT_SETTINGS (object);
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (settings);
+  TpawAccountSettings *settings = TPAW_ACCOUNT_SETTINGS (object);
+  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
 
   switch (prop_id)
     {
@@ -209,10 +209,10 @@ empathy_account_settings_get_property (GObject *object,
 }
 
 static void
-empathy_account_settings_constructed (GObject *object)
+tpaw_account_settings_constructed (GObject *object)
 {
-  EmpathyAccountSettings *self = EMPATHY_ACCOUNT_SETTINGS (object);
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (self);
+  TpawAccountSettings *self = TPAW_ACCOUNT_SETTINGS (object);
+  TpawAccountSettingsPriv *priv = GET_PRIV (self);
 
   if (priv->account != NULL)
     {
@@ -236,7 +236,7 @@ empathy_account_settings_constructed (GObject *object)
 
   g_assert (priv->cm_name != NULL && priv->protocol != NULL);
 
-  empathy_account_settings_check_readyness (self);
+  tpaw_account_settings_check_readyness (self);
 
   if (!priv->ready)
     {
@@ -249,34 +249,34 @@ empathy_account_settings_constructed (GObject *object)
       if (priv->account != NULL)
         {
           tp_proxy_prepare_async (priv->account, features,
-              empathy_account_settings_account_ready_cb, self);
+              tpaw_account_settings_account_ready_cb, self);
         }
 
       tp_g_signal_connect_object (priv->managers, "notify::ready",
-        G_CALLBACK (empathy_account_settings_managers_ready_cb), object, 0);
+        G_CALLBACK (tpaw_account_settings_managers_ready_cb), object, 0);
     }
 
   if (G_OBJECT_CLASS (
-        empathy_account_settings_parent_class)->constructed != NULL)
+        tpaw_account_settings_parent_class)->constructed != NULL)
     G_OBJECT_CLASS (
-        empathy_account_settings_parent_class)->constructed (object);
+        tpaw_account_settings_parent_class)->constructed (object);
 }
 
 
 static void
-empathy_account_settings_class_init (
-    EmpathyAccountSettingsClass *empathy_account_settings_class)
+tpaw_account_settings_class_init (
+    TpawAccountSettingsClass *tpaw_account_settings_class)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (empathy_account_settings_class);
+  GObjectClass *object_class = G_OBJECT_CLASS (tpaw_account_settings_class);
 
-  g_type_class_add_private (empathy_account_settings_class, sizeof
-      (EmpathyAccountSettingsPriv));
+  g_type_class_add_private (tpaw_account_settings_class, sizeof
+      (TpawAccountSettingsPriv));
 
-  object_class->dispose = empathy_account_settings_dispose;
-  object_class->finalize = empathy_account_settings_finalize;
-  object_class->set_property = empathy_account_settings_set_property;
-  object_class->get_property = empathy_account_settings_get_property;
-  object_class->constructed = empathy_account_settings_constructed;
+  object_class->dispose = tpaw_account_settings_dispose;
+  object_class->finalize = tpaw_account_settings_finalize;
+  object_class->set_property = tpaw_account_settings_set_property;
+  object_class->get_property = tpaw_account_settings_get_property;
+  object_class->constructed = tpaw_account_settings_constructed;
 
   g_object_class_install_property (object_class, PROP_ACCOUNT,
     g_param_spec_object ("account",
@@ -330,17 +330,17 @@ empathy_account_settings_class_init (
 
   signals[PASSWORD_RETRIEVED] =
       g_signal_new ("password-retrieved",
-          G_TYPE_FROM_CLASS (empathy_account_settings_class),
+          G_TYPE_FROM_CLASS (tpaw_account_settings_class),
           G_SIGNAL_RUN_LAST, 0, NULL, NULL,
           g_cclosure_marshal_generic,
           G_TYPE_NONE, 0);
 }
 
 static void
-empathy_account_settings_dispose (GObject *object)
+tpaw_account_settings_dispose (GObject *object)
 {
-  EmpathyAccountSettings *self = EMPATHY_ACCOUNT_SETTINGS (object);
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (self);
+  TpawAccountSettings *self = TPAW_ACCOUNT_SETTINGS (object);
+  TpawAccountSettingsPriv *priv = GET_PRIV (self);
 
   if (priv->dispose_has_run)
     return;
@@ -358,15 +358,15 @@ empathy_account_settings_dispose (GObject *object)
   tp_clear_object (&priv->protocol_obj);
 
   /* release any references held by the object here */
-  if (G_OBJECT_CLASS (empathy_account_settings_parent_class)->dispose)
-    G_OBJECT_CLASS (empathy_account_settings_parent_class)->dispose (object);
+  if (G_OBJECT_CLASS (tpaw_account_settings_parent_class)->dispose)
+    G_OBJECT_CLASS (tpaw_account_settings_parent_class)->dispose (object);
 }
 
 static void
-empathy_account_settings_free_unset_parameters (
-    EmpathyAccountSettings *settings)
+tpaw_account_settings_free_unset_parameters (
+    TpawAccountSettings *settings)
 {
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (settings);
+  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
   guint i;
 
   for (i = 0 ; i < priv->unset_parameters->len; i++)
@@ -376,10 +376,10 @@ empathy_account_settings_free_unset_parameters (
 }
 
 static void
-empathy_account_settings_finalize (GObject *object)
+tpaw_account_settings_finalize (GObject *object)
 {
-  EmpathyAccountSettings *self = EMPATHY_ACCOUNT_SETTINGS (object);
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (self);
+  TpawAccountSettings *self = TPAW_ACCOUNT_SETTINGS (object);
+  TpawAccountSettingsPriv *priv = GET_PRIV (self);
   GList *l;
 
   /* free any data held directly by the object here */
@@ -402,18 +402,18 @@ empathy_account_settings_finalize (GObject *object)
   g_hash_table_unref (priv->parameters);
   g_hash_table_unref (priv->param_regexps);
 
-  empathy_account_settings_free_unset_parameters (self);
+  tpaw_account_settings_free_unset_parameters (self);
   g_array_unref (priv->unset_parameters);
 
-  G_OBJECT_CLASS (empathy_account_settings_parent_class)->finalize (object);
+  G_OBJECT_CLASS (tpaw_account_settings_parent_class)->finalize (object);
 }
 
 static void
-empathy_account_settings_protocol_obj_prepared_cb (GObject *source,
+tpaw_account_settings_protocol_obj_prepared_cb (GObject *source,
     GAsyncResult *result,
     gpointer user_data)
 {
-  EmpathyAccountSettings *self = user_data;
+  TpawAccountSettings *self = user_data;
   GError *error = NULL;
 
   if (!tp_proxy_prepare_finish (source, result, &error))
@@ -423,16 +423,16 @@ empathy_account_settings_protocol_obj_prepared_cb (GObject *source,
       return;
     }
 
-  empathy_account_settings_check_readyness (self);
+  tpaw_account_settings_check_readyness (self);
 }
 
 static void
-empathy_account_settings_get_password_cb (GObject *source,
+tpaw_account_settings_get_password_cb (GObject *source,
     GAsyncResult *result,
     gpointer user_data)
 {
-  EmpathyAccountSettings *self = user_data;
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (self);
+  TpawAccountSettings *self = user_data;
+  TpawAccountSettingsPriv *priv = GET_PRIV (self);
   const gchar *password;
   GError *error = NULL;
 
@@ -457,14 +457,14 @@ empathy_account_settings_get_password_cb (GObject *source,
   g_signal_emit (self, signals[PASSWORD_RETRIEVED], 0);
 }
 
-static GVariant * empathy_account_settings_dup (
-    EmpathyAccountSettings *settings,
+static GVariant * tpaw_account_settings_dup (
+    TpawAccountSettings *settings,
     const gchar *param);
 
 static void
-empathy_account_settings_check_readyness (EmpathyAccountSettings *self)
+tpaw_account_settings_check_readyness (TpawAccountSettings *self)
 {
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (self);
+  TpawAccountSettingsPriv *priv = GET_PRIV (self);
   GQuark features[] = { TP_PROTOCOL_FEATURE_CORE, 0 };
 
   if (priv->ready)
@@ -513,7 +513,7 @@ empathy_account_settings_check_readyness (EmpathyAccountSettings *self)
     {
       priv->preparing_protocol = TRUE;
       tp_proxy_prepare_async (priv->protocol_obj, features,
-          empathy_account_settings_protocol_obj_prepared_cb, self);
+          tpaw_account_settings_protocol_obj_prepared_cb, self);
       return;
     }
   else
@@ -556,7 +556,7 @@ empathy_account_settings_check_readyness (EmpathyAccountSettings *self)
       /* Make this call but don't block on its readiness. We'll signal
        * if it's updated later with ::password-retrieved. */
       empathy_keyring_get_account_password_async (priv->account,
-          empathy_account_settings_get_password_cb, self);
+          tpaw_account_settings_get_password_cb, self);
     }
 
   priv->ready = TRUE;
@@ -564,11 +564,11 @@ empathy_account_settings_check_readyness (EmpathyAccountSettings *self)
 }
 
 static void
-empathy_account_settings_account_ready_cb (GObject *source_object,
+tpaw_account_settings_account_ready_cb (GObject *source_object,
     GAsyncResult *result,
     gpointer user_data)
 {
-  EmpathyAccountSettings *settings = EMPATHY_ACCOUNT_SETTINGS (user_data);
+  TpawAccountSettings *settings = TPAW_ACCOUNT_SETTINGS (user_data);
   TpAccount *account = TP_ACCOUNT (source_object);
   GError *error = NULL;
 
@@ -579,26 +579,26 @@ empathy_account_settings_account_ready_cb (GObject *source_object,
       return;
     }
 
-  empathy_account_settings_check_readyness (settings);
+  tpaw_account_settings_check_readyness (settings);
 }
 
 static void
-empathy_account_settings_managers_ready_cb (GObject *object,
+tpaw_account_settings_managers_ready_cb (GObject *object,
     GParamSpec *pspec,
     gpointer user_data)
 {
-  EmpathyAccountSettings *settings = EMPATHY_ACCOUNT_SETTINGS (user_data);
+  TpawAccountSettings *settings = TPAW_ACCOUNT_SETTINGS (user_data);
 
-  empathy_account_settings_check_readyness (settings);
+  tpaw_account_settings_check_readyness (settings);
 }
 
-EmpathyAccountSettings *
-empathy_account_settings_new (const gchar *connection_manager,
+TpawAccountSettings *
+tpaw_account_settings_new (const gchar *connection_manager,
     const gchar *protocol,
     const gchar *service,
     const char *display_name)
 {
-  return g_object_new (EMPATHY_TYPE_ACCOUNT_SETTINGS,
+  return g_object_new (TPAW_TYPE_ACCOUNT_SETTINGS,
       "connection-manager", connection_manager,
       "protocol", protocol,
       "service", service,
@@ -606,18 +606,18 @@ empathy_account_settings_new (const gchar *connection_manager,
       NULL);
 }
 
-EmpathyAccountSettings *
-empathy_account_settings_new_for_account (TpAccount *account)
+TpawAccountSettings *
+tpaw_account_settings_new_for_account (TpAccount *account)
 {
-  return g_object_new (EMPATHY_TYPE_ACCOUNT_SETTINGS,
+  return g_object_new (TPAW_TYPE_ACCOUNT_SETTINGS,
       "account", account,
       NULL);
 }
 
 GList *
-empathy_account_settings_dup_tp_params (EmpathyAccountSettings *settings)
+tpaw_account_settings_dup_tp_params (TpawAccountSettings *settings)
 {
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (settings);
+  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
 
   g_return_val_if_fail (priv->protocol_obj != NULL, NULL);
 
@@ -625,42 +625,42 @@ empathy_account_settings_dup_tp_params (EmpathyAccountSettings *settings)
 }
 
 gboolean
-empathy_account_settings_is_ready (EmpathyAccountSettings *settings)
+tpaw_account_settings_is_ready (TpawAccountSettings *settings)
 {
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (settings);
+  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
 
   return priv->ready;
 }
 
 const gchar *
-empathy_account_settings_get_cm (EmpathyAccountSettings *settings)
+tpaw_account_settings_get_cm (TpawAccountSettings *settings)
 {
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (settings);
+  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
 
   return priv->cm_name;
 }
 
 const gchar *
-empathy_account_settings_get_protocol (EmpathyAccountSettings *settings)
+tpaw_account_settings_get_protocol (TpawAccountSettings *settings)
 {
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (settings);
+  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
 
   return priv->protocol;
 }
 
 const gchar *
-empathy_account_settings_get_service (EmpathyAccountSettings *settings)
+tpaw_account_settings_get_service (TpawAccountSettings *settings)
 {
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (settings);
+  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
 
   return priv->service;
 }
 
 void
-empathy_account_settings_set_service (EmpathyAccountSettings *settings,
+tpaw_account_settings_set_service (TpawAccountSettings *settings,
     const gchar *service)
 {
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (settings);
+  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
 
   if (!tp_strdiff (priv->service, service))
     return;
@@ -672,34 +672,34 @@ empathy_account_settings_set_service (EmpathyAccountSettings *settings,
 }
 
 gchar *
-empathy_account_settings_get_icon_name (EmpathyAccountSettings *settings)
+tpaw_account_settings_get_icon_name (TpawAccountSettings *settings)
 {
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (settings);
+  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
 
   return priv->icon_name;
 }
 
 const gchar *
-empathy_account_settings_get_display_name (EmpathyAccountSettings *settings)
+tpaw_account_settings_get_display_name (TpawAccountSettings *settings)
 {
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (settings);
+  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
 
   return priv->display_name;
 }
 
 TpAccount *
-empathy_account_settings_get_account (EmpathyAccountSettings *settings)
+tpaw_account_settings_get_account (TpawAccountSettings *settings)
 {
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (settings);
+  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
 
   return priv->account;
 }
 
 static gboolean
-empathy_account_settings_is_unset (EmpathyAccountSettings *settings,
+tpaw_account_settings_is_unset (TpawAccountSettings *settings,
     const gchar *param)
 {
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (settings);
+  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
   GArray *a;
   guint i;
 
@@ -715,26 +715,26 @@ empathy_account_settings_is_unset (EmpathyAccountSettings *settings,
 }
 
 static const TpConnectionManagerParam *
-empathy_account_settings_get_tp_param (EmpathyAccountSettings *settings,
+tpaw_account_settings_get_tp_param (TpawAccountSettings *settings,
     const gchar *param)
 {
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (settings);
+  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
 
   return tp_protocol_get_param (priv->protocol_obj, param);
 }
 
 gboolean
-empathy_account_settings_have_tp_param (EmpathyAccountSettings *settings,
+tpaw_account_settings_have_tp_param (TpawAccountSettings *settings,
     const gchar *param)
 {
-  return (empathy_account_settings_get_tp_param (settings, param) != NULL);
+  return (tpaw_account_settings_get_tp_param (settings, param) != NULL);
 }
 
 static void
-account_settings_remove_from_unset (EmpathyAccountSettings *settings,
+account_settings_remove_from_unset (TpawAccountSettings *settings,
     const gchar *param)
 {
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (settings);
+  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
   guint idx;
   gchar *val;
 
@@ -754,12 +754,12 @@ account_settings_remove_from_unset (EmpathyAccountSettings *settings,
 }
 
 GVariant *
-empathy_account_settings_dup_default (EmpathyAccountSettings *settings,
+tpaw_account_settings_dup_default (TpawAccountSettings *settings,
     const gchar *param)
 {
   const TpConnectionManagerParam *p;
 
-  p = empathy_account_settings_get_tp_param (settings, param);
+  p = tpaw_account_settings_get_tp_param (settings, param);
   if (p == NULL)
     return NULL;
 
@@ -767,12 +767,12 @@ empathy_account_settings_dup_default (EmpathyAccountSettings *settings,
 }
 
 const gchar *
-empathy_account_settings_get_dbus_signature (EmpathyAccountSettings *settings,
+tpaw_account_settings_get_dbus_signature (TpawAccountSettings *settings,
     const gchar *param)
 {
   const TpConnectionManagerParam *p;
 
-  p = empathy_account_settings_get_tp_param (settings, param);
+  p = tpaw_account_settings_get_tp_param (settings, param);
 
   if (p == NULL)
     return NULL;
@@ -781,10 +781,10 @@ empathy_account_settings_get_dbus_signature (EmpathyAccountSettings *settings,
 }
 
 static GVariant *
-empathy_account_settings_dup (EmpathyAccountSettings *settings,
+tpaw_account_settings_dup (TpawAccountSettings *settings,
     const gchar *param)
 {
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (settings);
+  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
   GVariant *result;
 
   /* Lookup the update parameters we set */
@@ -794,7 +794,7 @@ empathy_account_settings_dup (EmpathyAccountSettings *settings,
 
   /* If the parameters isn't unset use the accounts setting if any */
   if (priv->account != NULL
-      && !empathy_account_settings_is_unset (settings, param))
+      && !tpaw_account_settings_is_unset (settings, param))
     {
       GVariant *parameters;
 
@@ -808,16 +808,16 @@ empathy_account_settings_dup (EmpathyAccountSettings *settings,
     }
 
   /* fallback to the default */
-  return empathy_account_settings_dup_default (settings, param);
+  return tpaw_account_settings_dup_default (settings, param);
 }
 
 void
-empathy_account_settings_unset (EmpathyAccountSettings *settings,
+tpaw_account_settings_unset (TpawAccountSettings *settings,
     const gchar *param)
 {
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (settings);
+  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
   gchar *v;
-  if (empathy_account_settings_is_unset (settings, param))
+  if (tpaw_account_settings_is_unset (settings, param))
     return;
 
   if (priv->supports_sasl && !tp_strdiff (param, "password"))
@@ -834,12 +834,12 @@ empathy_account_settings_unset (EmpathyAccountSettings *settings,
 }
 
 void
-empathy_account_settings_discard_changes (EmpathyAccountSettings *settings)
+tpaw_account_settings_discard_changes (TpawAccountSettings *settings)
 {
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (settings);
+  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
 
   g_hash_table_remove_all (priv->parameters);
-  empathy_account_settings_free_unset_parameters (settings);
+  tpaw_account_settings_free_unset_parameters (settings);
 
   g_free (priv->password);
   priv->password = g_strdup (priv->password_original);
@@ -851,10 +851,10 @@ empathy_account_settings_discard_changes (EmpathyAccountSettings *settings)
 }
 
 gchar *
-empathy_account_settings_dup_string (EmpathyAccountSettings *settings,
+tpaw_account_settings_dup_string (TpawAccountSettings *settings,
     const gchar *param)
 {
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (settings);
+  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
   GVariant *v;
   gchar *result = NULL;
 
@@ -863,7 +863,7 @@ empathy_account_settings_dup_string (EmpathyAccountSettings *settings,
       return g_strdup (priv->password);
     }
 
-  v = empathy_account_settings_dup (settings, param);
+  v = tpaw_account_settings_dup (settings, param);
   if (v == NULL)
     return NULL;
 
@@ -875,13 +875,13 @@ empathy_account_settings_dup_string (EmpathyAccountSettings *settings,
 }
 
 GStrv
-empathy_account_settings_dup_strv (EmpathyAccountSettings *settings,
+tpaw_account_settings_dup_strv (TpawAccountSettings *settings,
     const gchar *param)
 {
   GVariant *v;
   GStrv result = NULL;
 
-  v = empathy_account_settings_dup (settings, param);
+  v = tpaw_account_settings_dup (settings, param);
   if (v == NULL)
     return NULL;
 
@@ -893,13 +893,13 @@ empathy_account_settings_dup_strv (EmpathyAccountSettings *settings,
 }
 
 gint32
-empathy_account_settings_get_int32 (EmpathyAccountSettings *settings,
+tpaw_account_settings_get_int32 (TpawAccountSettings *settings,
     const gchar *param)
 {
   GVariant *v;
   gint32 ret = 0;
 
-  v = empathy_account_settings_dup (settings, param);
+  v = tpaw_account_settings_dup (settings, param);
   if (v == NULL)
     return 0;
 
@@ -928,13 +928,13 @@ empathy_account_settings_get_int32 (EmpathyAccountSettings *settings,
 }
 
 gint64
-empathy_account_settings_get_int64 (EmpathyAccountSettings *settings,
+tpaw_account_settings_get_int64 (TpawAccountSettings *settings,
     const gchar *param)
 {
   GVariant *v;
   gint64 ret = 0;
 
-  v = empathy_account_settings_dup (settings, param);
+  v = tpaw_account_settings_dup (settings, param);
   if (v == NULL)
     return 0;
 
@@ -962,13 +962,13 @@ empathy_account_settings_get_int64 (EmpathyAccountSettings *settings,
 }
 
 guint32
-empathy_account_settings_get_uint32 (EmpathyAccountSettings *settings,
+tpaw_account_settings_get_uint32 (TpawAccountSettings *settings,
     const gchar *param)
 {
   GVariant *v;
   guint32 ret = 0;
 
-  v = empathy_account_settings_dup (settings, param);
+  v = tpaw_account_settings_dup (settings, param);
   if (v == NULL)
     return 0;
 
@@ -996,13 +996,13 @@ empathy_account_settings_get_uint32 (EmpathyAccountSettings *settings,
 }
 
 guint64
-empathy_account_settings_get_uint64 (EmpathyAccountSettings *settings,
+tpaw_account_settings_get_uint64 (TpawAccountSettings *settings,
     const gchar *param)
 {
   GVariant *v;
   guint64 ret = 0;
 
-  v = empathy_account_settings_dup (settings, param);
+  v = tpaw_account_settings_dup (settings, param);
   if (v == NULL)
     return 0;
 
@@ -1031,13 +1031,13 @@ empathy_account_settings_get_uint64 (EmpathyAccountSettings *settings,
 }
 
 gboolean
-empathy_account_settings_get_boolean (EmpathyAccountSettings *settings,
+tpaw_account_settings_get_boolean (TpawAccountSettings *settings,
     const gchar *param)
 {
   GVariant *v;
   gboolean result = FALSE;
 
-  v = empathy_account_settings_dup (settings, param);
+  v = tpaw_account_settings_dup (settings, param);
   if (v == NULL)
     return result;
 
@@ -1048,11 +1048,11 @@ empathy_account_settings_get_boolean (EmpathyAccountSettings *settings,
 }
 
 void
-empathy_account_settings_set (EmpathyAccountSettings *settings,
+tpaw_account_settings_set (TpawAccountSettings *settings,
     const gchar *param,
     GVariant *v)
 {
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (settings);
+  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
 
   g_return_if_fail (param != NULL);
   g_return_if_fail (v != NULL);
@@ -1094,19 +1094,19 @@ account_settings_display_name_set_cb (GObject *src,
 }
 
 void
-empathy_account_settings_set_display_name_async (
-  EmpathyAccountSettings *settings,
+tpaw_account_settings_set_display_name_async (
+  TpawAccountSettings *settings,
   const gchar *name,
   GAsyncReadyCallback callback,
   gpointer user_data)
 {
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (settings);
+  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
   GSimpleAsyncResult *result;
 
   g_return_if_fail (name != NULL);
 
   result = g_simple_async_result_new (G_OBJECT (settings),
-      callback, user_data, empathy_account_settings_set_display_name_finish);
+      callback, user_data, tpaw_account_settings_set_display_name_finish);
 
   if (!tp_strdiff (name, priv->display_name))
     {
@@ -1129,8 +1129,8 @@ empathy_account_settings_set_display_name_async (
 }
 
 gboolean
-empathy_account_settings_set_display_name_finish (
-  EmpathyAccountSettings *settings,
+tpaw_account_settings_set_display_name_finish (
+  TpawAccountSettings *settings,
   GAsyncResult *result,
   GError **error)
 {
@@ -1139,7 +1139,7 @@ empathy_account_settings_set_display_name_finish (
     return FALSE;
 
   g_return_val_if_fail (g_simple_async_result_is_valid (result,
-    G_OBJECT (settings), empathy_account_settings_set_display_name_finish),
+    G_OBJECT (settings), tpaw_account_settings_set_display_name_finish),
       FALSE);
 
   return TRUE;
@@ -1167,19 +1167,19 @@ account_settings_icon_name_set_cb (GObject *src,
 }
 
 void
-empathy_account_settings_set_icon_name_async (
-  EmpathyAccountSettings *settings,
+tpaw_account_settings_set_icon_name_async (
+  TpawAccountSettings *settings,
   const gchar *name,
   GAsyncReadyCallback callback,
   gpointer user_data)
 {
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (settings);
+  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
   GSimpleAsyncResult *result;
 
   g_return_if_fail (name != NULL);
 
   result = g_simple_async_result_new (G_OBJECT (settings),
-      callback, user_data, empathy_account_settings_set_icon_name_finish);
+      callback, user_data, tpaw_account_settings_set_icon_name_finish);
 
   if (priv->account == NULL)
     {
@@ -1198,8 +1198,8 @@ empathy_account_settings_set_icon_name_async (
 }
 
 gboolean
-empathy_account_settings_set_icon_name_finish (
-  EmpathyAccountSettings *settings,
+tpaw_account_settings_set_icon_name_finish (
+  TpawAccountSettings *settings,
   GAsyncResult *result,
   GError **error)
 {
@@ -1208,20 +1208,20 @@ empathy_account_settings_set_icon_name_finish (
     return FALSE;
 
   g_return_val_if_fail (g_simple_async_result_is_valid (result,
-    G_OBJECT (settings), empathy_account_settings_set_icon_name_finish),
+    G_OBJECT (settings), tpaw_account_settings_set_icon_name_finish),
       FALSE);
 
   return TRUE;
 }
 
 static void
-empathy_account_settings_processed_password (GObject *source,
+tpaw_account_settings_processed_password (GObject *source,
     GAsyncResult *result,
     gpointer user_data,
     gpointer finish_func)
 {
-  EmpathyAccountSettings *settings = EMPATHY_ACCOUNT_SETTINGS (user_data);
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (settings);
+  TpawAccountSettings *settings = TPAW_ACCOUNT_SETTINGS (user_data);
+  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
   GSimpleAsyncResult *r;
   GError *error = NULL;
   gboolean (*func) (TpAccount *source, GAsyncResult *result, GError **error) =
@@ -1236,7 +1236,7 @@ empathy_account_settings_processed_password (GObject *source,
       g_error_free (error);
     }
 
-  empathy_account_settings_discard_changes (settings);
+  tpaw_account_settings_discard_changes (settings);
 
   r = priv->apply_result;
   priv->apply_result = NULL;
@@ -1246,27 +1246,27 @@ empathy_account_settings_processed_password (GObject *source,
 }
 
 static void
-empathy_account_settings_set_password_cb (GObject *source,
+tpaw_account_settings_set_password_cb (GObject *source,
     GAsyncResult *result,
     gpointer user_data)
 {
-  empathy_account_settings_processed_password (source, result, user_data,
+  tpaw_account_settings_processed_password (source, result, user_data,
       empathy_keyring_set_account_password_finish);
 }
 
 static void
-empathy_account_settings_delete_password_cb (GObject *source,
+tpaw_account_settings_delete_password_cb (GObject *source,
     GAsyncResult *result,
     gpointer user_data)
 {
-  empathy_account_settings_processed_password (source, result, user_data,
+  tpaw_account_settings_processed_password (source, result, user_data,
       empathy_keyring_delete_account_password_finish);
 }
 
 static void
-update_account_uri_schemes (EmpathyAccountSettings *self)
+update_account_uri_schemes (TpawAccountSettings *self)
 {
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (self);
+  TpawAccountSettingsPriv *priv = GET_PRIV (self);
 
   if (priv->uri_scheme_tel == empathy_account_has_uri_scheme_tel (
         priv->account))
@@ -1291,9 +1291,9 @@ set_service_cb (GObject *source,
 }
 
 static void
-update_account_service (EmpathyAccountSettings *self)
+update_account_service (TpawAccountSettings *self)
 {
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (self);
+  TpawAccountSettingsPriv *priv = GET_PRIV (self);
 
   if (!priv->update_service)
     return;
@@ -1303,12 +1303,12 @@ update_account_service (EmpathyAccountSettings *self)
 }
 
 static void
-empathy_account_settings_account_updated (GObject *source,
+tpaw_account_settings_account_updated (GObject *source,
     GAsyncResult *result,
     gpointer user_data)
 {
-  EmpathyAccountSettings *settings = EMPATHY_ACCOUNT_SETTINGS (user_data);
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (settings);
+  TpawAccountSettings *settings = TPAW_ACCOUNT_SETTINGS (user_data);
+  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
   GSimpleAsyncResult *r;
   GError *error = NULL;
   GStrv reconnect_required = NULL;
@@ -1337,19 +1337,19 @@ empathy_account_settings_account_updated (GObject *source,
            * at this point (fdo #35382). */
           empathy_keyring_set_account_password_async (priv->account,
               priv->password, priv->remember_password,
-              empathy_account_settings_set_password_cb, settings);
+              tpaw_account_settings_set_password_cb, settings);
         }
       else
         {
           empathy_keyring_delete_account_password_async (priv->account,
-              empathy_account_settings_delete_password_cb, settings);
+              tpaw_account_settings_delete_password_cb, settings);
         }
 
       return;
     }
 
 out:
-  empathy_account_settings_discard_changes (settings);
+  tpaw_account_settings_discard_changes (settings);
 
   r = priv->apply_result;
   priv->apply_result = NULL;
@@ -1360,12 +1360,12 @@ out:
 }
 
 static void
-empathy_account_settings_created_cb (GObject *source,
+tpaw_account_settings_created_cb (GObject *source,
     GAsyncResult *result,
     gpointer user_data)
 {
-  EmpathyAccountSettings *settings = EMPATHY_ACCOUNT_SETTINGS (user_data);
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (settings);
+  TpawAccountSettings *settings = TPAW_ACCOUNT_SETTINGS (user_data);
+  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
   GError *error = NULL;
   GSimpleAsyncResult *r;
 
@@ -1386,14 +1386,14 @@ empathy_account_settings_created_cb (GObject *source,
            * at this point (fdo #35382). */
           empathy_keyring_set_account_password_async (priv->account,
               priv->password, priv->remember_password,
-              empathy_account_settings_set_password_cb,
+              tpaw_account_settings_set_password_cb,
               settings);
           return;
         }
 
       update_account_uri_schemes (settings);
 
-      empathy_account_settings_discard_changes (settings);
+      tpaw_account_settings_discard_changes (settings);
     }
 
   r = priv->apply_result;
@@ -1404,9 +1404,9 @@ empathy_account_settings_created_cb (GObject *source,
 }
 
 static void
-empathy_account_settings_do_create_account (EmpathyAccountSettings *self)
+tpaw_account_settings_do_create_account (TpawAccountSettings *self)
 {
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (self);
+  TpawAccountSettingsPriv *priv = GET_PRIV (self);
   TpAccountRequest *account_req;
   TpConnectionPresenceType type;
   gchar *status;
@@ -1452,13 +1452,13 @@ empathy_account_settings_do_create_account (EmpathyAccountSettings *self)
     }
 
   tp_account_request_create_account_async (account_req,
-      empathy_account_settings_created_cb, self);
+      tpaw_account_settings_created_cb, self);
 }
 
 static GVariant *
-build_parameters_variant (EmpathyAccountSettings *self)
+build_parameters_variant (TpawAccountSettings *self)
 {
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (self);
+  TpawAccountSettingsPriv *priv = GET_PRIV (self);
   GVariantBuilder *builder;
   GHashTableIter iter;
   gpointer k, v;
@@ -1482,11 +1482,11 @@ build_parameters_variant (EmpathyAccountSettings *self)
 }
 
 void
-empathy_account_settings_apply_async (EmpathyAccountSettings *settings,
+tpaw_account_settings_apply_async (TpawAccountSettings *settings,
     GAsyncReadyCallback callback,
     gpointer user_data)
 {
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (settings);
+  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
 
   if (priv->apply_result != NULL)
     {
@@ -1497,7 +1497,7 @@ empathy_account_settings_apply_async (EmpathyAccountSettings *settings,
     }
 
   priv->apply_result = g_simple_async_result_new (G_OBJECT (settings),
-      callback, user_data, empathy_account_settings_apply_finish);
+      callback, user_data, tpaw_account_settings_apply_finish);
 
   /* We'll have to reconnect only if we change none DBus_Property on an
    * existing account. */
@@ -1507,19 +1507,19 @@ empathy_account_settings_apply_async (EmpathyAccountSettings *settings,
     {
       g_assert (priv->apply_result != NULL && priv->account == NULL);
 
-      empathy_account_settings_do_create_account (settings);
+      tpaw_account_settings_do_create_account (settings);
     }
   else
     {
       tp_account_update_parameters_vardict_async (priv->account,
           build_parameters_variant (settings),
           (const gchar **) priv->unset_parameters->data,
-          empathy_account_settings_account_updated, settings);
+          tpaw_account_settings_account_updated, settings);
     }
 }
 
 gboolean
-empathy_account_settings_apply_finish (EmpathyAccountSettings *settings,
+tpaw_account_settings_apply_finish (TpawAccountSettings *settings,
     GAsyncResult *result,
     gboolean *reconnect_required,
     GError **error)
@@ -1529,7 +1529,7 @@ empathy_account_settings_apply_finish (EmpathyAccountSettings *settings,
     return FALSE;
 
   g_return_val_if_fail (g_simple_async_result_is_valid (result,
-    G_OBJECT (settings), empathy_account_settings_apply_finish), FALSE);
+    G_OBJECT (settings), tpaw_account_settings_apply_finish), FALSE);
 
   if (reconnect_required != NULL)
     *reconnect_required = g_simple_async_result_get_op_res_gboolean (
@@ -1539,14 +1539,14 @@ empathy_account_settings_apply_finish (EmpathyAccountSettings *settings,
 }
 
 gboolean
-empathy_account_settings_has_account (EmpathyAccountSettings *settings,
+tpaw_account_settings_has_account (TpawAccountSettings *settings,
     TpAccount *account)
 {
-  EmpathyAccountSettingsPriv *priv;
+  TpawAccountSettingsPriv *priv;
   const gchar *account_path;
   const gchar *priv_account_path;
 
-  g_return_val_if_fail (EMPATHY_IS_ACCOUNT_SETTINGS (settings), FALSE);
+  g_return_val_if_fail (TPAW_IS_ACCOUNT_SETTINGS (settings), FALSE);
   g_return_val_if_fail (TP_IS_ACCOUNT (account), FALSE);
 
   priv = GET_PRIV (settings);
@@ -1561,11 +1561,11 @@ empathy_account_settings_has_account (EmpathyAccountSettings *settings,
 }
 
 void
-empathy_account_settings_set_regex (EmpathyAccountSettings *settings,
+tpaw_account_settings_set_regex (TpawAccountSettings *settings,
     const gchar *param,
     const gchar *pattern)
 {
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (settings);
+  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
   GRegex *regex;
   GError *error = NULL;
 
@@ -1581,14 +1581,14 @@ empathy_account_settings_set_regex (EmpathyAccountSettings *settings,
 }
 
 gboolean
-empathy_account_settings_parameter_is_valid (
-    EmpathyAccountSettings *settings,
+tpaw_account_settings_parameter_is_valid (
+    TpawAccountSettings *settings,
     const gchar *param)
 {
-  EmpathyAccountSettingsPriv *priv;
+  TpawAccountSettingsPriv *priv;
   const GRegex *regex;
 
-  g_return_val_if_fail (EMPATHY_IS_ACCOUNT_SETTINGS (settings), FALSE);
+  g_return_val_if_fail (TPAW_IS_ACCOUNT_SETTINGS (settings), FALSE);
 
   priv = GET_PRIV (settings);
 
@@ -1600,7 +1600,7 @@ empathy_account_settings_parameter_is_valid (
 
       /* if we did not unset the parameter, look if it's in the account */
       if (priv->account != NULL &&
-          !empathy_account_settings_is_unset (settings, param))
+          !tpaw_account_settings_is_unset (settings, param))
         {
           const GHashTable *account_params;
 
@@ -1620,7 +1620,7 @@ test_regex:
       gchar *value;
       gboolean match;
 
-      value = empathy_account_settings_dup_string (settings, param);
+      value = tpaw_account_settings_dup_string (settings, param);
       if (value == NULL)
         return FALSE;
 
@@ -1634,27 +1634,27 @@ test_regex:
 }
 
 gboolean
-empathy_account_settings_is_valid (EmpathyAccountSettings *settings)
+tpaw_account_settings_is_valid (TpawAccountSettings *settings)
 {
-  EmpathyAccountSettingsPriv *priv;
+  TpawAccountSettingsPriv *priv;
   const gchar *param;
   GHashTableIter iter;
   GList *l;
 
-  g_return_val_if_fail (EMPATHY_IS_ACCOUNT_SETTINGS (settings), FALSE);
+  g_return_val_if_fail (TPAW_IS_ACCOUNT_SETTINGS (settings), FALSE);
 
   priv = GET_PRIV (settings);
 
   for (l = priv->required_params; l; l = l->next)
     {
-      if (!empathy_account_settings_parameter_is_valid (settings, l->data))
+      if (!tpaw_account_settings_parameter_is_valid (settings, l->data))
         return FALSE;
     }
 
   g_hash_table_iter_init (&iter, priv->param_regexps);
   while (g_hash_table_iter_next (&iter, (gpointer *) &param, NULL))
     {
-      if (!empathy_account_settings_parameter_is_valid (settings, param))
+      if (!tpaw_account_settings_parameter_is_valid (settings, param))
         return FALSE;
     }
 
@@ -1662,63 +1662,63 @@ empathy_account_settings_is_valid (EmpathyAccountSettings *settings)
 }
 
 TpProtocol *
-empathy_account_settings_get_tp_protocol (EmpathyAccountSettings *self)
+tpaw_account_settings_get_tp_protocol (TpawAccountSettings *self)
 {
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (self);
+  TpawAccountSettingsPriv *priv = GET_PRIV (self);
 
   return priv->protocol_obj;
 }
 
 gboolean
-empathy_account_settings_supports_sasl (EmpathyAccountSettings *self)
+tpaw_account_settings_supports_sasl (TpawAccountSettings *self)
 {
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (self);
+  TpawAccountSettingsPriv *priv = GET_PRIV (self);
 
   return priv->supports_sasl;
 }
 
 gboolean
-empathy_account_settings_param_is_supported (EmpathyAccountSettings *self,
+tpaw_account_settings_param_is_supported (TpawAccountSettings *self,
     const gchar *param)
 {
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (self);
+  TpawAccountSettingsPriv *priv = GET_PRIV (self);
 
   return tp_protocol_has_param (priv->protocol_obj, param);
 }
 
 void
-empathy_account_settings_set_uri_scheme_tel (EmpathyAccountSettings *self,
+tpaw_account_settings_set_uri_scheme_tel (TpawAccountSettings *self,
     gboolean associate)
 {
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (self);
+  TpawAccountSettingsPriv *priv = GET_PRIV (self);
 
   priv->uri_scheme_tel = associate;
 }
 
 gboolean
-empathy_account_settings_has_uri_scheme_tel (
-    EmpathyAccountSettings *self)
+tpaw_account_settings_has_uri_scheme_tel (
+    TpawAccountSettings *self)
 {
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (self);
+  TpawAccountSettingsPriv *priv = GET_PRIV (self);
 
   return priv->uri_scheme_tel;
 }
 
 void
-empathy_account_settings_set_storage_provider (EmpathyAccountSettings *self,
+tpaw_account_settings_set_storage_provider (TpawAccountSettings *self,
     const gchar *storage)
 {
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (self);
+  TpawAccountSettingsPriv *priv = GET_PRIV (self);
 
   g_free (priv->storage_provider);
   priv->storage_provider = g_strdup (storage);
 }
 
 void
-empathy_account_settings_set_remember_password (EmpathyAccountSettings *self,
+tpaw_account_settings_set_remember_password (TpawAccountSettings *self,
     gboolean remember)
 {
-  EmpathyAccountSettingsPriv *priv = GET_PRIV (self);
+  TpawAccountSettingsPriv *priv = GET_PRIV (self);
 
   priv->remember_password = remember;
 }

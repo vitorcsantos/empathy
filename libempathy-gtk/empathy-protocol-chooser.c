@@ -576,10 +576,10 @@ empathy_protocol_chooser_set_visible (EmpathyProtocolChooser *protocol_chooser,
   gtk_combo_box_set_active (GTK_COMBO_BOX (protocol_chooser), 0);
 }
 
-EmpathyAccountSettings *
+TpawAccountSettings *
 empathy_protocol_chooser_create_account_settings (EmpathyProtocolChooser *self)
 {
-  EmpathyAccountSettings *settings = NULL;
+  TpawAccountSettings *settings = NULL;
   gchar *str;
   const gchar *display_name;
   TpConnectionManager *cm;
@@ -602,7 +602,7 @@ empathy_protocol_chooser_create_account_settings (EmpathyProtocolChooser *self)
    */
   str = g_strdup_printf (_("New %s account"), display_name);
 
-  settings = empathy_account_settings_new (tp_connection_manager_get_name (cm),
+  settings = tpaw_account_settings_new (tp_connection_manager_get_name (cm),
       tp_protocol_get_name (proto), service, str);
 
   g_free (str);
@@ -619,19 +619,19 @@ empathy_protocol_chooser_create_account_settings (EmpathyProtocolChooser *self)
           "talk.google.com",
           NULL};
 
-      empathy_account_settings_set_icon_name_async (settings, "im-google-talk",
+      tpaw_account_settings_set_icon_name_async (settings, "im-google-talk",
           NULL, NULL);
-      empathy_account_settings_set (settings, "server",
+      tpaw_account_settings_set (settings, "server",
           g_variant_new_string (extra_certificate_identities[0]));
-      empathy_account_settings_set (settings, "require-encryption",
+      tpaw_account_settings_set (settings, "require-encryption",
           g_variant_new_boolean (TRUE));
-      empathy_account_settings_set (settings, "fallback-servers",
+      tpaw_account_settings_set (settings, "fallback-servers",
           g_variant_new_strv (fallback_servers, -1));
 
-      if (empathy_account_settings_have_tp_param (settings,
+      if (tpaw_account_settings_have_tp_param (settings,
               "extra-certificate-identities"))
         {
-          empathy_account_settings_set (settings,
+          tpaw_account_settings_set (settings,
               "extra-certificate-identities",
               g_variant_new_strv (extra_certificate_identities, -1));
         }
@@ -642,13 +642,13 @@ empathy_protocol_chooser_create_account_settings (EmpathyProtocolChooser *self)
           "chat.facebook.com:443",
           NULL };
 
-      empathy_account_settings_set_icon_name_async (settings, "im-facebook",
+      tpaw_account_settings_set_icon_name_async (settings, "im-facebook",
           NULL, NULL);
-      empathy_account_settings_set (settings, "require-encryption",
+      tpaw_account_settings_set (settings, "require-encryption",
           g_variant_new_boolean (TRUE));
-      empathy_account_settings_set (settings, "server",
+      tpaw_account_settings_set (settings, "server",
           g_variant_new_string ("chat.facebook.com"));
-      empathy_account_settings_set (settings, "fallback-servers",
+      tpaw_account_settings_set (settings, "fallback-servers",
           g_variant_new_strv (fallback_servers, -1));
     }
 

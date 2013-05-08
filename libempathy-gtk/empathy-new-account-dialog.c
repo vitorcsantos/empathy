@@ -38,7 +38,7 @@ struct _EmpathyNewAccountDialogPrivate
   GtkWidget *main_vbox;
   GtkWidget *connect_button;
 
-  EmpathyAccountSettings *settings;
+  TpawAccountSettings *settings;
 };
 
 static void
@@ -53,7 +53,7 @@ static void
 protocol_changed_cb (GtkComboBox *chooser,
     EmpathyNewAccountDialog *self)
 {
-  EmpathyAccountSettings *settings;
+  TpawAccountSettings *settings;
   TpawAccountWidget *account_widget;
   gchar *password = NULL, *account = NULL;
 
@@ -66,10 +66,10 @@ protocol_changed_cb (GtkComboBox *chooser,
   /* Save "account" and "password" parameters */
   if (self->priv->settings != NULL)
     {
-      account = empathy_account_settings_dup_string (
+      account = tpaw_account_settings_dup_string (
             self->priv->settings, "account");
 
-      password = empathy_account_settings_dup_string (
+      password = tpaw_account_settings_dup_string (
             self->priv->settings, "password");
 
       g_object_unref (self->priv->settings);
@@ -190,7 +190,7 @@ empathy_new_account_dialog_new (GtkWindow *parent)
   return result;
 }
 
-EmpathyAccountSettings *
+TpawAccountSettings *
 empathy_new_account_dialog_get_settings (EmpathyNewAccountDialog *self)
 {
   return self->priv->settings;

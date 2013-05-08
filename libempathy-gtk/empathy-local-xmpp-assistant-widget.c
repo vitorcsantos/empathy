@@ -42,7 +42,7 @@ static gulong signals[LAST_SIGNAL] = { 0, };
 
 struct _EmpathyLocalXmppAssistantWidgetPrivate
 {
-  EmpathyAccountSettings  *settings;
+  TpawAccountSettings  *settings;
 };
 
 static void
@@ -96,7 +96,7 @@ empathy_local_xmpp_assistant_widget_constructed (GObject *object)
       g_object_unref (pix);
     }
 
-  self->priv->settings = empathy_account_settings_new ("salut", "local-xmpp",
+  self->priv->settings = tpaw_account_settings_new ("salut", "local-xmpp",
       NULL, _("People nearby"));
 
   account_widget = tpaw_account_widget_new_for_protocol (
@@ -191,11 +191,11 @@ apply_account_cb (GObject *source,
     GAsyncResult *result,
     gpointer user_data)
 {
-  EmpathyAccountSettings *settings = EMPATHY_ACCOUNT_SETTINGS (source);
+  TpawAccountSettings *settings = TPAW_ACCOUNT_SETTINGS (source);
   TpAccount *account;
   GError *error = NULL;
 
-  if (!empathy_account_settings_apply_finish (settings, result, NULL, &error))
+  if (!tpaw_account_settings_apply_finish (settings, result, NULL, &error))
     {
       DEBUG ("Failed to create account: %s", error->message);
       g_error_free (error);
@@ -203,7 +203,7 @@ apply_account_cb (GObject *source,
     }
 
   /* enable the newly created account */
-  account = empathy_account_settings_get_account (settings);
+  account = tpaw_account_settings_get_account (settings);
   tp_account_set_enabled_async (account, TRUE, account_enabled_cb, NULL);
 }
 
@@ -211,7 +211,7 @@ void
 empathy_local_xmpp_assistant_widget_create_account (
     EmpathyLocalXmppAssistantWidget *self)
 {
-  empathy_account_settings_apply_async (self->priv->settings,
+  tpaw_account_settings_apply_async (self->priv->settings,
       apply_account_cb, NULL);
 }
 
@@ -244,5 +244,5 @@ gboolean
 empathy_local_xmpp_assistant_widget_is_valid (
         EmpathyLocalXmppAssistantWidget *self)
 {
-  return empathy_account_settings_is_valid (self->priv->settings);
+  return tpaw_account_settings_is_valid (self->priv->settings);
 }

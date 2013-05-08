@@ -25,8 +25,7 @@
 
 #include <gtk/gtk.h>
 #include <telepathy-glib/telepathy-glib.h>
-
-#include "empathy-account-settings.h"
+#include <tp-account-widgets/tpaw-account-settings.h>
 
 G_BEGIN_DECLS
 
@@ -75,7 +74,7 @@ void empathy_protocol_chooser_set_visible (
     EmpathyProtocolChooserFilterFunc func,
     gpointer user_data);
 
-EmpathyAccountSettings * empathy_protocol_chooser_create_account_settings (
+TpawAccountSettings * empathy_protocol_chooser_create_account_settings (
     EmpathyProtocolChooser *self);
 
 G_END_DECLS

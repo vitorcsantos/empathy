@@ -24,7 +24,7 @@
 
 #include <gtk/gtk.h>
 
-#include "empathy-account-settings.h"
+#include "tpaw-account-settings.h"
 #include "tpaw-irc-network.h"
 
 G_BEGIN_DECLS
@@ -56,7 +56,7 @@ typedef struct {
 GType tpaw_irc_network_chooser_dialog_get_type (void) G_GNUC_CONST;
 
 GtkWidget * tpaw_irc_network_chooser_dialog_new (
-    EmpathyAccountSettings *settings,
+    TpawAccountSettings *settings,
     TpawIrcNetwork *network,
     GtkWindow *parent);
 
