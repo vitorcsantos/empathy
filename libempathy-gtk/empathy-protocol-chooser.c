@@ -24,8 +24,8 @@
 #include "empathy-protocol-chooser.h"
 
 #include <glib/gi18n-lib.h>
+#include <tp-account-widgets/tpaw-connection-managers.h>
 
-#include "empathy-connection-managers.h"
 #include "empathy-ui-utils.h"
 #include "empathy-utils.h"
 
@@ -56,7 +56,7 @@ typedef struct
   GtkListStore *store;
 
   gboolean dispose_run;
-  EmpathyConnectionManagers *cms;
+  TpawConnectionManagers *cms;
 
   EmpathyProtocolChooserFilterFunc filter_func;
   gpointer filter_user_data;
@@ -301,14 +301,14 @@ protocol_chooser_cms_prepare_cb (GObject *source,
     GAsyncResult *result,
     gpointer user_data)
 {
-  EmpathyConnectionManagers *cms = EMPATHY_CONNECTION_MANAGERS (source);
+  TpawConnectionManagers *cms = TPAW_CONNECTION_MANAGERS (source);
   EmpathyProtocolChooser *protocol_chooser = user_data;
 
-  if (!empathy_connection_managers_prepare_finish (cms, result, NULL))
+  if (!tpaw_connection_managers_prepare_finish (cms, result, NULL))
     return;
 
   protocol_chooser_add_cms_list (protocol_chooser,
-      empathy_connection_managers_get_cms (cms));
+      tpaw_connection_managers_get_cms (cms));
 }
 
 static void
@@ -353,7 +353,7 @@ protocol_chooser_constructed (GObject *object)
       "text", COL_LABEL,
       NULL);
 
-  empathy_connection_managers_prepare_async (priv->cms,
+  tpaw_connection_managers_prepare_async (priv->cms,
       protocol_chooser_cms_prepare_cb, protocol_chooser);
 
   if (G_OBJECT_CLASS (empathy_protocol_chooser_parent_class)->constructed)
@@ -369,7 +369,7 @@ empathy_protocol_chooser_init (EmpathyProtocolChooser *protocol_chooser)
         EMPATHY_TYPE_PROTOCOL_CHOOSER, EmpathyProtocolChooserPriv);
 
   priv->dispose_run = FALSE;
-  priv->cms = empathy_connection_managers_dup_singleton ();
+  priv->cms = tpaw_connection_managers_dup_singleton ();
   priv->protocols = g_hash_table_new_full (g_str_hash, g_str_equal,
       g_free, g_free);
 

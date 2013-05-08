@@ -26,8 +26,8 @@
 #define __EMPATHY_IMPORT_WIDGET_H__
 
 #include <gtk/gtk.h>
+#include <tp-account-widgets/tpaw-connection-managers.h>
 
-#include "empathy-connection-managers.h"
 #include "empathy-import-utils.h"
 
 G_BEGIN_DECLS
@@ -61,7 +61,7 @@ typedef struct {
 GType empathy_import_widget_get_type (void);
 
 EmpathyImportWidget* empathy_import_widget_new (EmpathyImportApplication id,
-    EmpathyConnectionManagers *cms);
+    TpawConnectionManagers *cms);
 
 GtkWidget * empathy_import_widget_get_widget (EmpathyImportWidget *self);
 

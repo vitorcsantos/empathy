@@ -1,5 +1,5 @@
 /*
- * empathy-connection-managers.c - Source for EmpathyConnectionManagers
+ * tpaw-connection-managers.c - Source for TpawConnectionManagers
  * Copyright (C) 2009 Collabora Ltd.
  * @author Sjoerd Simons <sjoerd.simons@collabora.co.uk>
  *
@@ -19,7 +19,7 @@
  */
 
 #include "config.h"
-#include "empathy-connection-managers.h"
+#include "tpaw-connection-managers.h"
 
 #include "empathy-utils.h"
 
@@ -28,7 +28,7 @@
 
 static GObject *managers = NULL;
 
-G_DEFINE_TYPE(EmpathyConnectionManagers, empathy_connection_managers,
+G_DEFINE_TYPE(TpawConnectionManagers, tpaw_connection_managers,
     G_TYPE_OBJECT)
 
 /* signal enum */
@@ -45,14 +45,14 @@ enum {
   PROP_READY = 1
 };
 
-#define GET_PRIV(obj) EMPATHY_GET_PRIV (obj, EmpathyConnectionManagers)
+#define GET_PRIV(obj) EMPATHY_GET_PRIV (obj, TpawConnectionManagers)
 
 
 /* private structure */
-typedef struct _EmpathyConnectionManagersPriv
-  EmpathyConnectionManagersPriv;
+typedef struct _TpawConnectionManagersPriv
+  TpawConnectionManagersPriv;
 
-struct _EmpathyConnectionManagersPriv
+struct _TpawConnectionManagersPriv
 {
   gboolean dispose_has_run;
   gboolean ready;
@@ -63,26 +63,26 @@ struct _EmpathyConnectionManagersPriv
 };
 
 static void
-empathy_connection_managers_init (EmpathyConnectionManagers *obj)
+tpaw_connection_managers_init (TpawConnectionManagers *obj)
 {
-  EmpathyConnectionManagersPriv *priv =
+  TpawConnectionManagersPriv *priv =
     G_TYPE_INSTANCE_GET_PRIVATE ((obj), \
-      EMPATHY_TYPE_CONNECTION_MANAGERS, EmpathyConnectionManagersPriv);
+      TPAW_TYPE_CONNECTION_MANAGERS, TpawConnectionManagersPriv);
 
   obj->priv = priv;
 
   priv->dbus = tp_dbus_daemon_dup (NULL);
   g_assert (priv->dbus != NULL);
 
-  empathy_connection_managers_update (obj);
+  tpaw_connection_managers_update (obj);
 
   /* allocate any data required by the object here */
 }
 
-static void empathy_connection_managers_dispose (GObject *object);
+static void tpaw_connection_managers_dispose (GObject *object);
 
 static GObject *
-empathy_connection_managers_constructor (GType type,
+tpaw_connection_managers_constructor (GType type,
                         guint n_construct_params,
                         GObjectConstructParam *construct_params)
 {
@@ -90,7 +90,7 @@ empathy_connection_managers_constructor (GType type,
     return g_object_ref (managers);
 
   managers =
-      G_OBJECT_CLASS (empathy_connection_managers_parent_class)->constructor
+      G_OBJECT_CLASS (tpaw_connection_managers_parent_class)->constructor
           (type, n_construct_params, construct_params);
 
   g_object_add_weak_pointer (managers, (gpointer) &managers);
@@ -101,13 +101,13 @@ empathy_connection_managers_constructor (GType type,
 
 
 static void
-empathy_connection_managers_get_property (GObject *object,
+tpaw_connection_managers_get_property (GObject *object,
     guint prop_id,
     GValue *value,
     GParamSpec *pspec)
 {
-  EmpathyConnectionManagers *self = EMPATHY_CONNECTION_MANAGERS (object);
-  EmpathyConnectionManagersPriv *priv = GET_PRIV (self);
+  TpawConnectionManagers *self = TPAW_CONNECTION_MANAGERS (object);
+  TpawConnectionManagersPriv *priv = GET_PRIV (self);
 
   switch (prop_id)
     {
@@ -121,18 +121,18 @@ empathy_connection_managers_get_property (GObject *object,
 }
 
 static void
-empathy_connection_managers_class_init (
-    EmpathyConnectionManagersClass *empathy_connection_managers_class)
+tpaw_connection_managers_class_init (
+    TpawConnectionManagersClass *tpaw_connection_managers_class)
 {
   GObjectClass *object_class =
-      G_OBJECT_CLASS (empathy_connection_managers_class);
+      G_OBJECT_CLASS (tpaw_connection_managers_class);
 
-  g_type_class_add_private (empathy_connection_managers_class, sizeof
-      (EmpathyConnectionManagersPriv));
+  g_type_class_add_private (tpaw_connection_managers_class, sizeof
+      (TpawConnectionManagersPriv));
 
-  object_class->constructor = empathy_connection_managers_constructor;
-  object_class->dispose = empathy_connection_managers_dispose;
-  object_class->get_property = empathy_connection_managers_get_property;
+  object_class->constructor = tpaw_connection_managers_constructor;
+  object_class->dispose = tpaw_connection_managers_dispose;
+  object_class->get_property = tpaw_connection_managers_get_property;
 
   g_object_class_install_property (object_class, PROP_READY,
     g_param_spec_boolean ("ready",
@@ -150,9 +150,9 @@ empathy_connection_managers_class_init (
 }
 
 static void
-empathy_connection_managers_free_cm_list (EmpathyConnectionManagers *self)
+tpaw_connection_managers_free_cm_list (TpawConnectionManagers *self)
 {
-  EmpathyConnectionManagersPriv *priv = GET_PRIV (self);
+  TpawConnectionManagersPriv *priv = GET_PRIV (self);
   GList *l;
 
   for (l = priv->cms ; l != NULL ; l = g_list_next (l))
@@ -165,10 +165,10 @@ empathy_connection_managers_free_cm_list (EmpathyConnectionManagers *self)
 }
 
 static void
-empathy_connection_managers_dispose (GObject *object)
+tpaw_connection_managers_dispose (GObject *object)
 {
-  EmpathyConnectionManagers *self = EMPATHY_CONNECTION_MANAGERS (object);
-  EmpathyConnectionManagersPriv *priv = GET_PRIV (self);
+  TpawConnectionManagers *self = TPAW_CONNECTION_MANAGERS (object);
+  TpawConnectionManagersPriv *priv = GET_PRIV (self);
 
   if (priv->dispose_has_run)
     return;
@@ -179,38 +179,38 @@ empathy_connection_managers_dispose (GObject *object)
     g_object_unref (priv->dbus);
   priv->dbus = NULL;
 
-  empathy_connection_managers_free_cm_list (self);
+  tpaw_connection_managers_free_cm_list (self);
 
   /* release any references held by the object here */
 
-  if (G_OBJECT_CLASS (empathy_connection_managers_parent_class)->dispose)
-    G_OBJECT_CLASS (empathy_connection_managers_parent_class)->dispose (object);
+  if (G_OBJECT_CLASS (tpaw_connection_managers_parent_class)->dispose)
+    G_OBJECT_CLASS (tpaw_connection_managers_parent_class)->dispose (object);
 }
 
-EmpathyConnectionManagers *
-empathy_connection_managers_dup_singleton (void)
+TpawConnectionManagers *
+tpaw_connection_managers_dup_singleton (void)
 {
-  return EMPATHY_CONNECTION_MANAGERS (
-      g_object_new (EMPATHY_TYPE_CONNECTION_MANAGERS, NULL));
+  return TPAW_CONNECTION_MANAGERS (
+      g_object_new (TPAW_TYPE_CONNECTION_MANAGERS, NULL));
 }
 
 gboolean
-empathy_connection_managers_is_ready (EmpathyConnectionManagers *self)
+tpaw_connection_managers_is_ready (TpawConnectionManagers *self)
 {
-  EmpathyConnectionManagersPriv *priv = GET_PRIV (self);
+  TpawConnectionManagersPriv *priv = GET_PRIV (self);
   return priv->ready;
 }
 
 static void
-empathy_connection_managers_listed_cb (GObject *source,
+tpaw_connection_managers_listed_cb (GObject *source,
     GAsyncResult *result,
     gpointer user_data)
 {
   TpWeakRef *wr = user_data;
   GError *error = NULL;
-  EmpathyConnectionManagers *self = tp_weak_ref_dup_object (wr);
+  TpawConnectionManagers *self = tp_weak_ref_dup_object (wr);
   GList *cms, *l;
-  EmpathyConnectionManagersPriv *priv;
+  TpawConnectionManagersPriv *priv;
 
   if (self == NULL)
     {
@@ -220,7 +220,7 @@ empathy_connection_managers_listed_cb (GObject *source,
 
   priv = GET_PRIV (self);
 
-  empathy_connection_managers_free_cm_list (self);
+  tpaw_connection_managers_free_cm_list (self);
 
   cms = tp_list_connection_managers_finish (result, &error);
   if (error != NULL)
@@ -252,28 +252,28 @@ out:
 }
 
 void
-empathy_connection_managers_update (EmpathyConnectionManagers *self)
+tpaw_connection_managers_update (TpawConnectionManagers *self)
 {
-  EmpathyConnectionManagersPriv *priv = GET_PRIV (self);
+  TpawConnectionManagersPriv *priv = GET_PRIV (self);
 
   tp_list_connection_managers_async (priv->dbus,
-    empathy_connection_managers_listed_cb,
+    tpaw_connection_managers_listed_cb,
     tp_weak_ref_new (self, NULL, NULL));
 }
 
 GList *
-empathy_connection_managers_get_cms (EmpathyConnectionManagers *self)
+tpaw_connection_managers_get_cms (TpawConnectionManagers *self)
 {
-  EmpathyConnectionManagersPriv *priv = GET_PRIV (self);
+  TpawConnectionManagersPriv *priv = GET_PRIV (self);
 
   return priv->cms;
 }
 
 TpConnectionManager *
-empathy_connection_managers_get_cm (EmpathyConnectionManagers *self,
+tpaw_connection_managers_get_cm (TpawConnectionManagers *self,
   const gchar *cm)
 {
-  EmpathyConnectionManagersPriv *priv = GET_PRIV (self);
+  TpawConnectionManagersPriv *priv = GET_PRIV (self);
   GList *l;
 
   for (l = priv->cms ; l != NULL; l = g_list_next (l))
@@ -288,11 +288,11 @@ empathy_connection_managers_get_cm (EmpathyConnectionManagers *self,
 }
 
 guint
-empathy_connection_managers_get_cms_num (EmpathyConnectionManagers *self)
+tpaw_connection_managers_get_cms_num (TpawConnectionManagers *self)
 {
-  EmpathyConnectionManagersPriv *priv;
+  TpawConnectionManagersPriv *priv;
 
-  g_return_val_if_fail (EMPATHY_IS_CONNECTION_MANAGERS (self), 0);
+  g_return_val_if_fail (TPAW_IS_CONNECTION_MANAGERS (self), 0);
 
   priv = GET_PRIV (self);
 
@@ -300,7 +300,7 @@ empathy_connection_managers_get_cms_num (EmpathyConnectionManagers *self)
 }
 
 static void
-notify_ready_cb (EmpathyConnectionManagers *self,
+notify_ready_cb (TpawConnectionManagers *self,
     GParamSpec *spec,
     GSimpleAsyncResult *result)
 {
@@ -309,16 +309,16 @@ notify_ready_cb (EmpathyConnectionManagers *self,
 }
 
 void
-empathy_connection_managers_prepare_async (
-    EmpathyConnectionManagers *self,
+tpaw_connection_managers_prepare_async (
+    TpawConnectionManagers *self,
     GAsyncReadyCallback callback,
     gpointer user_data)
 {
-  EmpathyConnectionManagersPriv *priv = GET_PRIV (self);
+  TpawConnectionManagersPriv *priv = GET_PRIV (self);
   GSimpleAsyncResult *result;
 
   result = g_simple_async_result_new (G_OBJECT (managers),
-      callback, user_data, empathy_connection_managers_prepare_finish);
+      callback, user_data, tpaw_connection_managers_prepare_finish);
 
   if (priv->ready)
     {
@@ -332,15 +332,15 @@ empathy_connection_managers_prepare_async (
 }
 
 gboolean
-empathy_connection_managers_prepare_finish (
-    EmpathyConnectionManagers *self,
+tpaw_connection_managers_prepare_finish (
+    TpawConnectionManagers *self,
     GAsyncResult *result,
     GError **error)
 {
   GSimpleAsyncResult *simple = G_SIMPLE_ASYNC_RESULT (result);
 
   g_return_val_if_fail (g_simple_async_result_is_valid (result,
-          G_OBJECT (self), empathy_connection_managers_prepare_finish), FALSE);
+          G_OBJECT (self), tpaw_connection_managers_prepare_finish), FALSE);
 
   if (g_simple_async_result_propagate_error (simple, error))
     return FALSE;

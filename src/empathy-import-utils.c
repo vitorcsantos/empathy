@@ -22,7 +22,8 @@
 #include "config.h"
 #include "empathy-import-utils.h"
 
-#include "empathy-connection-managers.h"
+#include <tp-account-widgets/tpaw-connection-managers.h>
+
 #include "empathy-import-pidgin.h"
 #include "empathy-utils.h"
 
@@ -80,13 +81,13 @@ gboolean
 empathy_import_protocol_is_supported (const gchar *protocol,
     TpConnectionManager **cm)
 {
-  EmpathyConnectionManagers *manager;
+  TpawConnectionManagers *manager;
   GList *cms;
   GList *l;
   gboolean proto_is_supported = FALSE;
 
-  manager = empathy_connection_managers_dup_singleton ();
-  cms = empathy_connection_managers_get_cms (manager);
+  manager = tpaw_connection_managers_dup_singleton ();
+  cms = tpaw_connection_managers_get_cms (manager);
 
   for (l = cms; l; l = l->next)
     {

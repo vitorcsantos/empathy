@@ -60,7 +60,7 @@ typedef struct {
   GList *accounts;
   EmpathyImportApplication app_id;
 
-  EmpathyConnectionManagers *cms;
+  TpawConnectionManagers *cms;
 
   gboolean dispose_run;
 } EmpathyImportWidgetPriv;
@@ -464,8 +464,8 @@ empathy_import_widget_class_init (EmpathyImportWidgetClass *klass)
   g_object_class_install_property (oclass, PROP_APPLICATION_ID, param_spec);
 
   param_spec = g_param_spec_object ("cms",
-      "EmpathyConnectionManagers", "EmpathyConnectionManager",
-      EMPATHY_TYPE_CONNECTION_MANAGERS,
+      "TpawConnectionManagers", "TpawConnectionManagers",
+      TPAW_TYPE_CONNECTION_MANAGERS,
       G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS | G_PARAM_CONSTRUCT_ONLY);
   g_object_class_install_property (oclass, PROP_CMS, param_spec);
 
@@ -484,9 +484,9 @@ empathy_import_widget_init (EmpathyImportWidget *self)
 
 EmpathyImportWidget *
 empathy_import_widget_new (EmpathyImportApplication id,
-    EmpathyConnectionManagers *cms)
+    TpawConnectionManagers *cms)
 {
-  g_return_val_if_fail (EMPATHY_IS_CONNECTION_MANAGERS (cms), NULL);
+  g_return_val_if_fail (TPAW_IS_CONNECTION_MANAGERS (cms), NULL);
 
   return g_object_new (EMPATHY_TYPE_IMPORT_WIDGET,
       "application-id", id,

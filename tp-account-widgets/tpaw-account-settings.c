@@ -21,7 +21,7 @@
 #include "config.h"
 #include "tpaw-account-settings.h"
 
-#include "empathy-connection-managers.h"
+#include "tpaw-connection-managers.h"
 #include "empathy-keyring.h"
 #include "empathy-presence-manager.h"
 #include "empathy-utils.h"
@@ -56,7 +56,7 @@ typedef struct _TpawAccountSettingsPriv TpawAccountSettingsPriv;
 struct _TpawAccountSettingsPriv
 {
   gboolean dispose_has_run;
-  EmpathyConnectionManagers *managers;
+  TpawConnectionManagers *managers;
   TpAccountManager *account_manager;
 
   TpConnectionManager *manager;
@@ -112,7 +112,7 @@ tpaw_account_settings_init (TpawAccountSettings *obj)
   obj->priv = priv;
 
   /* allocate any data required by the object here */
-  priv->managers = empathy_connection_managers_dup_singleton ();
+  priv->managers = tpaw_connection_managers_dup_singleton ();
   priv->account_manager = tp_account_manager_dup ();
 
   priv->parameters = g_hash_table_new_full (g_str_hash, g_str_equal,
@@ -474,12 +474,12 @@ tpaw_account_settings_check_readyness (TpawAccountSettings *self)
       && !tp_account_is_prepared (priv->account, TP_ACCOUNT_FEATURE_CORE))
       return;
 
-  if (!empathy_connection_managers_is_ready (priv->managers))
+  if (!tpaw_connection_managers_is_ready (priv->managers))
     return;
 
   if (priv->manager == NULL)
     {
-      priv->manager = empathy_connection_managers_get_cm (
+      priv->manager = tpaw_connection_managers_get_cm (
           priv->managers, priv->cm_name);
     }
 

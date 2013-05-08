@@ -21,6 +21,7 @@ libtp_account_widgets_sources =            	\
 	tpaw-account-widget-irc.c		\
 	tpaw-account-widget-private.h		\
 	tpaw-account-widget-sip.c		\
+	tpaw-connection-managers.c		\
 	tpaw-irc-network-chooser.c		\
 	tpaw-irc-network-chooser-dialog.c	\
 	tpaw-irc-network-dialog.c		\
@@ -35,6 +36,7 @@ libtp_account_widgets_headers =			\
 	tpaw-account-widget.h			\
 	tpaw-account-widget-irc.h		\
 	tpaw-account-widget-sip.h		\
+	tpaw-connection-managers.h		\
 	tpaw-irc-network-chooser-dialog.h	\
 	tpaw-irc-network-chooser.h		\
 	tpaw-irc-network-dialog.h		\

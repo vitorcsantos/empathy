@@ -114,7 +114,7 @@ typedef struct {
   TpawAccountSettings *settings_ready;
 
   TpAccountManager *account_manager;
-  EmpathyConnectionManagers *cms;
+  TpawConnectionManagers *cms;
   GNetworkMonitor *connectivity;
 
   GtkWindow *parent_window;
@@ -2150,11 +2150,11 @@ accounts_dialog_cms_prepare_cb (GObject *source,
     GAsyncResult *result,
     gpointer user_data)
 {
-  EmpathyConnectionManagers *cms = EMPATHY_CONNECTION_MANAGERS (source);
+  TpawConnectionManagers *cms = TPAW_CONNECTION_MANAGERS (source);
   EmpathyAccountsDialog *dialog = user_data;
   EmpathyAccountsDialogPriv *priv = GET_PRIV (dialog);
 
-  if (!empathy_connection_managers_prepare_finish (cms, result, NULL))
+  if (!tpaw_connection_managers_prepare_finish (cms, result, NULL))
     goto out;
 
   /* No need to update the settings if we are already preparing one */
@@ -2199,9 +2199,9 @@ accounts_dialog_accounts_setup (EmpathyAccountsDialog *dialog)
     }
   g_list_free_full (accounts, g_object_unref);
 
-  priv->cms = empathy_connection_managers_dup_singleton ();
+  priv->cms = tpaw_connection_managers_dup_singleton ();
 
-  empathy_connection_managers_prepare_async (priv->cms,
+  tpaw_connection_managers_prepare_async (priv->cms,
       accounts_dialog_cms_prepare_cb, dialog);
 
   accounts_dialog_model_select_first (dialog);
@@ -2581,7 +2581,7 @@ empathy_accounts_dialog_show (GtkWindow *parent,
 
   if (selected_account)
     {
-      if (priv->cms != NULL && empathy_connection_managers_is_ready (priv->cms))
+      if (priv->cms != NULL && tpaw_connection_managers_is_ready (priv->cms))
         accounts_dialog_set_selected_account (dialog, selected_account);
       else
         /* save the selection to set it later when the cms

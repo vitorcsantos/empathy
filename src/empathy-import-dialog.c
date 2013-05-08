@@ -43,7 +43,7 @@ typedef struct {
   EmpathyImportWidget *iw;
 
   gboolean show_warning;
-  EmpathyConnectionManagers *cms;
+  TpawConnectionManagers *cms;
 } EmpathyImportDialogPriv;
 
 G_DEFINE_TYPE (EmpathyImportDialog, empathy_import_dialog, GTK_TYPE_DIALOG)
@@ -241,8 +241,8 @@ empathy_import_dialog_class_init (EmpathyImportDialogClass *klass)
   g_object_class_install_property (oclass, PROP_SHOW_WARNING, param_spec);
 
   param_spec = g_param_spec_object ("cms",
-      "EmpathyConnectionManagers", "EmpathyConnectionManager",
-      EMPATHY_TYPE_CONNECTION_MANAGERS,
+      "TpawConnectionManagers", "EmpathyConnectionManager",
+      TPAW_TYPE_CONNECTION_MANAGERS,
       G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS | G_PARAM_CONSTRUCT_ONLY);
   g_object_class_install_property (oclass, PROP_CMS, param_spec);
 
@@ -252,9 +252,9 @@ empathy_import_dialog_class_init (EmpathyImportDialogClass *klass)
 GtkWidget *
 empathy_import_dialog_new (GtkWindow *parent,
     gboolean warning,
-    EmpathyConnectionManagers *cms)
+    TpawConnectionManagers *cms)
 {
-  g_return_val_if_fail (EMPATHY_IS_CONNECTION_MANAGERS (cms), NULL);
+  g_return_val_if_fail (TPAW_IS_CONNECTION_MANAGERS (cms), NULL);
 
   return g_object_new (EMPATHY_TYPE_IMPORT_DIALOG,
       "parent-window", parent,
