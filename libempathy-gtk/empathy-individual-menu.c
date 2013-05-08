@@ -296,7 +296,7 @@ find_phone_accounts (void)
           TP_CONNECTION_STATUS_CONNECTED)
         continue;
 
-      if (!empathy_account_has_uri_scheme_tel (account))
+      if (!tp_account_associated_with_uri_scheme (account, "tel"))
         continue;
 
       found = g_list_prepend (found, g_object_ref (account));
