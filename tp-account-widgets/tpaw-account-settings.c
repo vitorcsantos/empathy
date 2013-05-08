@@ -23,7 +23,6 @@
 
 #include "tpaw-connection-managers.h"
 #include "tpaw-keyring.h"
-#include "empathy-presence-manager.h"
 #include "empathy-utils.h"
 #include "tpaw-utils.h"
 
@@ -1415,26 +1414,11 @@ tpaw_account_settings_do_create_account (TpawAccountSettings *self)
 {
   TpawAccountSettingsPriv *priv = GET_PRIV (self);
   TpAccountRequest *account_req;
-  TpConnectionPresenceType type;
-  gchar *status;
-  gchar *message;
-  EmpathyPresenceManager *presence_mgr;
   GHashTableIter iter;
   gpointer k, v;
 
   account_req = tp_account_request_new (priv->account_manager, priv->cm_name,
       priv->protocol, "New Account");
-
-  presence_mgr = empathy_presence_manager_dup_singleton ();
-  type = empathy_presence_manager_get_requested_presence (presence_mgr, &status,
-      &message);
-  g_object_unref (presence_mgr);
-
-  if (type != TP_CONNECTION_PRESENCE_TYPE_UNSET)
-    {
-      tp_account_request_set_requested_presence (account_req, type,
-          status, message);
-    }
 
   tp_account_request_set_icon_name (account_req, priv->icon_name);
 
