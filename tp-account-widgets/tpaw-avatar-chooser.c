@@ -27,6 +27,7 @@
 #include <tp-account-widgets/tpaw-camera-monitor.h>
 #include <tp-account-widgets/tpaw-gsettings.h>
 #include <tp-account-widgets/tpaw-images.h>
+#include <tp-account-widgets/tpaw-utils.h>
 
 #ifdef HAVE_CHEESE
 #include <cheese-avatar-chooser.h>
@@ -1218,5 +1219,5 @@ tpaw_avatar_chooser_apply_finish (TpawAvatarChooser *self,
     GAsyncResult *result,
     GError **error)
 {
-  empathy_implement_finish_void (self, tpaw_avatar_chooser_apply_async);
+  tpaw_implement_finish_void (self, tpaw_avatar_chooser_apply_async);
 }

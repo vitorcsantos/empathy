@@ -23,6 +23,8 @@
 #include "config.h"
 #include "empathy-individual-manager.h"
 
+#include <tp-account-widgets/tpaw-utils.h>
+
 #include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_CONTACT
@@ -946,6 +948,6 @@ empathy_individual_manager_unprepare_finish (
     GAsyncResult *result,
     GError **error)
 {
-  empathy_implement_finish_void (self,
+  tpaw_implement_finish_void (self,
       empathy_individual_manager_unprepare_async)
 }

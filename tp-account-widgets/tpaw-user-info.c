@@ -25,6 +25,7 @@
 #include <tp-account-widgets/tpaw-calendar-button.h>
 #include <tp-account-widgets/tpaw-contactinfo-utils.h>
 #include <tp-account-widgets/tpaw-time.h>
+#include <tp-account-widgets/tpaw-utils.h>
 
 #include "empathy-utils.h"
 
@@ -772,5 +773,5 @@ tpaw_user_info_apply_finish (TpawUserInfo *self,
     GAsyncResult *result,
     GError **error)
 {
-  empathy_implement_finish_void (self, tpaw_user_info_apply_async);
+  tpaw_implement_finish_void (self, tpaw_user_info_apply_async);
 }

@@ -21,6 +21,7 @@
 #include "empathy-mic-monitor.h"
 
 #include <pulse/glib-mainloop.h>
+#include <tp-account-widgets/tpaw-utils.h>
 
 #include "empathy-utils.h"
 
@@ -475,7 +476,7 @@ empathy_mic_monitor_change_microphone_finish (EmpathyMicMonitor *self,
     GAsyncResult *result,
     GError **error)
 {
-  empathy_implement_finish_void (self,
+  tpaw_implement_finish_void (self,
       empathy_mic_monitor_change_microphone_async);
 }
 
@@ -613,7 +614,7 @@ empathy_mic_monitor_get_default_finish (EmpathyMicMonitor *self,
     GAsyncResult *result,
     GError **error)
 {
-  empathy_implement_finish_return_pointer (self,
+  tpaw_implement_finish_return_pointer (self,
       empathy_mic_monitor_get_default_async);
 }
 
@@ -677,6 +678,6 @@ empathy_mic_monitor_set_default_finish (EmpathyMicMonitor *self,
     GAsyncResult *result,
     GError **error)
 {
-  empathy_implement_finish_void (self,
+  tpaw_implement_finish_void (self,
       empathy_mic_monitor_set_default_async);
 }

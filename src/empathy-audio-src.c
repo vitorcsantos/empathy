@@ -21,6 +21,8 @@
 #include "config.h"
 #include "empathy-audio-src.h"
 
+#include <tp-account-widgets/tpaw-utils.h>
+
 #ifdef HAVE_GST1
 #include <gst/audio/streamvolume.h>
 #else
@@ -623,7 +625,7 @@ empathy_audio_src_change_microphone_finish (EmpathyGstAudioSrc *src,
     GAsyncResult *result,
     GError **error)
 {
-  empathy_implement_finish_void (src,
+  tpaw_implement_finish_void (src,
       empathy_audio_src_change_microphone_async);
 }
 

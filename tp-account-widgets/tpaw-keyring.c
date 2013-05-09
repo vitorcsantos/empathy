@@ -33,6 +33,7 @@
 #endif
 
 #include "empathy-utils.h"
+#include "tpaw-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include "empathy-debug.h"
@@ -324,7 +325,7 @@ tpaw_keyring_get_account_password_finish (TpAccount *account,
     GAsyncResult *result,
     GError **error)
 {
-  empathy_implement_finish_return_pointer (account,
+  tpaw_implement_finish_return_pointer (account,
       tpaw_keyring_get_account_password_async);
 }
 
@@ -333,7 +334,7 @@ tpaw_keyring_get_room_password_finish (TpAccount *account,
     GAsyncResult *result,
     GError **error)
 {
-  empathy_implement_finish_return_pointer (account,
+  tpaw_implement_finish_return_pointer (account,
       tpaw_keyring_get_room_password_async);
 }
 
@@ -637,7 +638,7 @@ tpaw_keyring_set_account_password_finish (TpAccount *account,
     GAsyncResult *result,
     GError **error)
 {
-  empathy_implement_finish_void (account, tpaw_keyring_set_account_password_async);
+  tpaw_implement_finish_void (account, tpaw_keyring_set_account_password_async);
 }
 
 gboolean
@@ -645,7 +646,7 @@ tpaw_keyring_set_room_password_finish (TpAccount *account,
     GAsyncResult *result,
     GError **error)
 {
-  empathy_implement_finish_void (account, tpaw_keyring_set_room_password_async);
+  tpaw_implement_finish_void (account, tpaw_keyring_set_room_password_async);
 }
 
 /* delete */
@@ -716,5 +717,5 @@ tpaw_keyring_delete_account_password_finish (TpAccount *account,
     GAsyncResult *result,
     GError **error)
 {
-  empathy_implement_finish_void (account, tpaw_keyring_delete_account_password_async);
+  tpaw_implement_finish_void (account, tpaw_keyring_delete_account_password_async);
 }

@@ -38,6 +38,51 @@ const gchar *tpaw_service_name_to_display_name (const gchar *proto_name);
 
 void  tpaw_make_color_whiter (GdkRGBA *color);
 
+/* Copied from wocky/wocky-utils.h */
+
+#define tpaw_implement_finish_void(source, tag) \
+    if (g_simple_async_result_propagate_error (\
+      G_SIMPLE_ASYNC_RESULT (result), error)) \
+      return FALSE; \
+    g_return_val_if_fail (g_simple_async_result_is_valid (result, \
+            G_OBJECT(source), tag), \
+        FALSE); \
+    return TRUE;
+
+#define tpaw_implement_finish_copy_pointer(source, tag, copy_func, \
+    out_param) \
+    GSimpleAsyncResult *_simple; \
+    _simple = (GSimpleAsyncResult *) result; \
+    if (g_simple_async_result_propagate_error (_simple, error)) \
+      return FALSE; \
+    g_return_val_if_fail (g_simple_async_result_is_valid (result, \
+            G_OBJECT (source), tag), \
+        FALSE); \
+    if (out_param != NULL) \
+      *out_param = copy_func ( \
+          g_simple_async_result_get_op_res_gpointer (_simple)); \
+    return TRUE;
+
+#define tpaw_implement_finish_return_copy_pointer(source, tag, copy_func) \
+    GSimpleAsyncResult *_simple; \
+    _simple = (GSimpleAsyncResult *) result; \
+    if (g_simple_async_result_propagate_error (_simple, error)) \
+      return NULL; \
+    g_return_val_if_fail (g_simple_async_result_is_valid (result, \
+            G_OBJECT (source), tag), \
+        NULL); \
+    return copy_func (g_simple_async_result_get_op_res_gpointer (_simple));
+
+#define tpaw_implement_finish_return_pointer(source, tag) \
+    GSimpleAsyncResult *_simple; \
+    _simple = (GSimpleAsyncResult *) result; \
+    if (g_simple_async_result_propagate_error (_simple, error)) \
+      return NULL; \
+    g_return_val_if_fail (g_simple_async_result_is_valid (result, \
+            G_OBJECT (source), tag), \
+        NULL); \
+    return g_simple_async_result_get_op_res_gpointer (_simple);
+
 G_END_DECLS
 
 #endif /*  __TPAW_UTILS_H__ */

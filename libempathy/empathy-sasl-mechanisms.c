@@ -22,6 +22,7 @@
 #include "empathy-sasl-mechanisms.h"
 
 #include <libsoup/soup.h>
+#include <tp-account-widgets/tpaw-utils.h>
 
 #define DEBUG_FLAG EMPATHY_DEBUG_SASL
 #include "empathy-debug.h"
@@ -336,7 +337,7 @@ empathy_sasl_auth_finish (TpChannel *channel,
     GAsyncResult *result,
     GError **error)
 {
-  empathy_implement_finish_void (channel, empathy_sasl_auth_common_async);
+  tpaw_implement_finish_void (channel, empathy_sasl_auth_common_async);
 }
 
 gboolean
