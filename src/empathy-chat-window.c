@@ -29,6 +29,7 @@
 #include "empathy-chat-window.h"
 
 #include <glib/gi18n.h>
+#include <tp-account-widgets/tpaw-builder.h>
 
 #include "empathy-about-dialog.h"
 #include "empathy-chat-manager.h"
@@ -2411,7 +2412,7 @@ empathy_chat_window_init (EmpathyChatWindow *self)
     EMPATHY_TYPE_CHAT_WINDOW, EmpathyChatWindowPriv);
 
   filename = empathy_file_lookup ("empathy-chat-window.ui", "src");
-  gui = empathy_builder_get_file (filename,
+  gui = tpaw_builder_get_file (filename,
       "chat_vbox", &chat_vbox,
       "ui_manager", &self->priv->ui_manager,
       "menu_conv_insert_smiley", &self->priv->menu_conv_insert_smiley,
@@ -2433,7 +2434,7 @@ empathy_chat_window_init (EmpathyChatWindow *self)
       NULL);
   g_free (filename);
 
-  empathy_builder_connect (gui, self,
+  tpaw_builder_connect (gui, self,
       "menu_conv", "activate", chat_window_conv_activate_cb,
       "menu_conv_clear", "activate", chat_window_clear_activate_cb,
       "menu_conv_favorite", "toggled", chat_window_favorite_toggled_cb,

@@ -26,6 +26,7 @@
 
 #include <sys/stat.h>
 #include <glib/gi18n.h>
+#include <tp-account-widgets/tpaw-builder.h>
 
 #include "empathy-about-dialog.h"
 #include "empathy-accounts-dialog.h"
@@ -2245,7 +2246,7 @@ empathy_roster_window_init (EmpathyRosterWindow *self)
 
   /* Set up interface */
   filename = empathy_file_lookup ("empathy-roster-window.ui", "src");
-  gui = empathy_builder_get_file (filename,
+  gui = tpaw_builder_get_file (filename,
       "main_vbox", &self->priv->main_vbox,
       "balance_vbox", &self->priv->balance_vbox,
       "errors_vbox", &self->priv->errors_vbox,
@@ -2290,7 +2291,7 @@ empathy_roster_window_init (EmpathyRosterWindow *self)
   roster_window_setup_actions (self);
 
   filename = empathy_file_lookup ("empathy-roster-window-menubar.ui", "src");
-  gui = empathy_builder_get_file (filename,
+  gui = tpaw_builder_get_file (filename,
       "appmenu", &self->priv->menumodel,
       "rooms", &self->priv->rooms_section,
       NULL);

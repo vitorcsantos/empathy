@@ -33,6 +33,7 @@
 #include "tpaw-account-widget-irc.h"
 #include "tpaw-account-widget-private.h"
 #include "tpaw-account-widget-sip.h"
+#include "tpaw-builder.h"
 #include "empathy-ui-utils.h"
 #include "empathy-utils.h"
 #include "tpaw-utils.h"
@@ -1060,7 +1061,7 @@ account_widget_build_generic (TpawAccountWidget *self,
 {
   GtkWidget *expander_advanced, *box;
 
-  self->ui_details->gui = empathy_builder_get_resource (filename,
+  self->ui_details->gui = tpaw_builder_get_resource (filename,
       "grid_common_settings", &self->priv->grid_common_settings,
       "vbox_generic_settings", &box,
       "expander_advanced_settings", &expander_advanced,
@@ -1086,7 +1087,7 @@ account_widget_build_salut (TpawAccountWidget *self,
 {
   GtkWidget *expander_advanced, *box;
 
-  self->ui_details->gui = empathy_builder_get_resource (filename,
+  self->ui_details->gui = tpaw_builder_get_resource (filename,
       "grid_common_settings", &self->priv->grid_common_settings,
       "vbox_salut_settings", &box,
       "expander_advanced_settings", &expander_advanced,
@@ -1167,7 +1168,7 @@ account_widget_build_msn (TpawAccountWidget *self,
 
   if (self->priv->simple)
     {
-      self->ui_details->gui = empathy_builder_get_resource (filename,
+      self->ui_details->gui = tpaw_builder_get_resource (filename,
           "vbox_msn_simple", &box,
           NULL);
 
@@ -1184,7 +1185,7 @@ account_widget_build_msn (TpawAccountWidget *self,
     }
   else
     {
-      self->ui_details->gui = empathy_builder_get_resource (filename,
+      self->ui_details->gui = tpaw_builder_get_resource (filename,
           "grid_common_msn_settings", &self->priv->grid_common_settings,
           "vbox_msn_settings", &box,
           NULL);
@@ -1323,7 +1324,7 @@ account_widget_build_jabber (TpawAccountWidget *self,
   if (self->priv->simple && service == NO_SERVICE)
     {
       /* Simple widget for XMPP */
-      self->ui_details->gui = empathy_builder_get_resource (filename,
+      self->ui_details->gui = tpaw_builder_get_resource (filename,
           "vbox_jabber_simple", &box,
           "label_id_simple", &label_id,
           "label_id_create", &label_id_create,
@@ -1354,7 +1355,7 @@ account_widget_build_jabber (TpawAccountWidget *self,
   else if (self->priv->simple && service == GTALK_SERVICE)
     {
       /* Simple widget for Google Talk */
-      self->ui_details->gui = empathy_builder_get_resource (filename,
+      self->ui_details->gui = tpaw_builder_get_resource (filename,
           "vbox_gtalk_simple", &box,
           NULL);
 
@@ -1372,7 +1373,7 @@ account_widget_build_jabber (TpawAccountWidget *self,
   else if (self->priv->simple && service == FACEBOOK_SERVICE)
     {
       /* Simple widget for Facebook */
-      self->ui_details->gui = empathy_builder_get_resource (filename,
+      self->ui_details->gui = tpaw_builder_get_resource (filename,
           "vbox_fb_simple", &box,
           "entry_id_fb_simple", &entry_id,
           NULL);
@@ -1394,7 +1395,7 @@ account_widget_build_jabber (TpawAccountWidget *self,
       ServiceInfo info = services_infos[service];
 
       /* Full widget for XMPP, Google Talk and Facebook*/
-      self->ui_details->gui = empathy_builder_get_resource (filename,
+      self->ui_details->gui = tpaw_builder_get_resource (filename,
           "grid_common_settings", &self->priv->grid_common_settings,
           "vbox_jabber_settings", &box,
           "spinbutton_port", &spinbutton_port,
@@ -1474,7 +1475,7 @@ account_widget_build_icq (TpawAccountWidget *self,
 
   if (self->priv->simple)
     {
-      self->ui_details->gui = empathy_builder_get_resource (filename,
+      self->ui_details->gui = tpaw_builder_get_resource (filename,
           "vbox_icq_simple", &box,
           NULL);
 
@@ -1491,7 +1492,7 @@ account_widget_build_icq (TpawAccountWidget *self,
     }
   else
     {
-      self->ui_details->gui = empathy_builder_get_resource (filename,
+      self->ui_details->gui = tpaw_builder_get_resource (filename,
           "grid_common_settings", &self->priv->grid_common_settings,
           "vbox_icq_settings", &box,
           "spinbutton_port", &spinbutton_port,
@@ -1522,7 +1523,7 @@ account_widget_build_aim (TpawAccountWidget *self,
 
   if (self->priv->simple)
     {
-      self->ui_details->gui = empathy_builder_get_resource (filename,
+      self->ui_details->gui = tpaw_builder_get_resource (filename,
           "vbox_aim_simple", &box,
           NULL);
 
@@ -1539,7 +1540,7 @@ account_widget_build_aim (TpawAccountWidget *self,
     }
   else
     {
-      self->ui_details->gui = empathy_builder_get_resource (filename,
+      self->ui_details->gui = tpaw_builder_get_resource (filename,
           "grid_common_settings", &self->priv->grid_common_settings,
           "vbox_aim_settings", &box,
           "spinbutton_port", &spinbutton_port,
@@ -1572,7 +1573,7 @@ account_widget_build_yahoo (TpawAccountWidget *self,
 
   if (self->priv->simple)
     {
-      self->ui_details->gui = empathy_builder_get_resource (filename,
+      self->ui_details->gui = tpaw_builder_get_resource (filename,
           "vbox_yahoo_simple", &box,
           NULL);
 
@@ -1589,7 +1590,7 @@ account_widget_build_yahoo (TpawAccountWidget *self,
     }
   else
     {
-      self->ui_details->gui = empathy_builder_get_resource (filename,
+      self->ui_details->gui = tpaw_builder_get_resource (filename,
           "grid_common_settings", &self->priv->grid_common_settings,
           "vbox_yahoo_settings", &box,
           NULL);
@@ -1620,7 +1621,7 @@ account_widget_build_groupwise (TpawAccountWidget *self,
 
   if (self->priv->simple)
     {
-      self->ui_details->gui = empathy_builder_get_resource (filename,
+      self->ui_details->gui = tpaw_builder_get_resource (filename,
           "vbox_groupwise_simple", &box,
           NULL);
 
@@ -1637,7 +1638,7 @@ account_widget_build_groupwise (TpawAccountWidget *self,
     }
   else
     {
-      self->ui_details->gui = empathy_builder_get_resource (filename,
+      self->ui_details->gui = tpaw_builder_get_resource (filename,
           "grid_common_groupwise_settings", &self->priv->grid_common_settings,
           "vbox_groupwise_settings", &box,
           NULL);

@@ -38,6 +38,7 @@
 #include "empathy-status-preset-dialog.h"
 
 #include <glib/gi18n-lib.h>
+#include <tp-account-widgets/tpaw-builder.h>
 
 #include "empathy-status-presets.h"
 #include "empathy-ui-utils.h"
@@ -298,7 +299,7 @@ empathy_status_preset_dialog_init (EmpathyStatusPresetDialog *self)
 
 	filename = empathy_file_lookup ("empathy-status-preset-dialog.ui",
 			"libempathy-gtk");
-	gui = empathy_builder_get_file (filename,
+	gui = tpaw_builder_get_file (filename,
 			"toplevel-vbox", &toplevel_vbox,
 			"presets-sw", &presets_sw,
 			"presets-treeview", &priv->presets_treeview,
@@ -321,7 +322,7 @@ empathy_status_preset_dialog_init (EmpathyStatusPresetDialog *self)
 			remove_button);
 	gtk_tree_selection_set_mode (selection, GTK_SELECTION_MULTIPLE);
 
-	empathy_builder_connect (gui, self,
+	tpaw_builder_connect (gui, self,
 			"remove-button", "clicked", status_preset_dialog_preset_remove,
 			NULL);
 

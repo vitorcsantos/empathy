@@ -29,6 +29,7 @@
 
 #include <glib/gi18n-lib.h>
 #include <tp-account-widgets/tpaw-account-widget.h>
+#include <tp-account-widgets/tpaw-builder.h>
 #include <tp-account-widgets/tpaw-utils.h>
 
 #include "empathy-accounts-common.h"
@@ -2283,7 +2284,7 @@ accounts_dialog_build_ui (EmpathyAccountsDialog *dialog)
 
   filename = empathy_file_lookup ("empathy-accounts-dialog.ui", "src");
 
-  gui = empathy_builder_get_file (filename,
+  gui = tpaw_builder_get_file (filename,
       "accounts_dialog_hbox", &top_hbox,
       "vbox_details", &priv->vbox_details,
       "alignment_settings", &priv->alignment_settings,
@@ -2299,7 +2300,7 @@ accounts_dialog_build_ui (EmpathyAccountsDialog *dialog)
       NULL);
   g_free (filename);
 
-  empathy_builder_connect (gui, dialog,
+  tpaw_builder_connect (gui, dialog,
       "button_add", "clicked", accounts_dialog_button_add_clicked_cb,
       "button_remove", "clicked", accounts_dialog_button_remove_clicked_cb,
       "button_import", "clicked", accounts_dialog_button_import_clicked_cb,

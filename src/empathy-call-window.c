@@ -25,6 +25,7 @@
 #include <telepathy-farstream/telepathy-farstream.h>
 #include <farstream/fs-element-added-notifier.h>
 #include <farstream/fs-utils.h>
+#include <tp-account-widgets/tpaw-builder.h>
 
 #include "empathy-about-dialog.h"
 #include "empathy-audio-sink.h"
@@ -1622,7 +1623,7 @@ empathy_call_window_init (EmpathyCallWindow *self)
   priv->timer = g_timer_new ();
 
   filename = empathy_file_lookup ("empathy-call-window.ui", "src");
-  gui = empathy_builder_get_file (filename,
+  gui = tpaw_builder_get_file (filename,
     "call_window_vbox", &top_vbox,
     "errors_vbox", &priv->errors_vbox,
     "pane", &priv->pane,
@@ -1659,7 +1660,7 @@ empathy_call_window_init (EmpathyCallWindow *self)
     NULL);
   g_free (filename);
 
-  empathy_builder_connect (gui, self,
+  tpaw_builder_connect (gui, self,
     "hangup", "clicked", empathy_call_window_hangup_cb,
     "audiocall", "clicked", empathy_call_window_audio_call_cb,
     "videocall", "clicked", empathy_call_window_video_call_cb,

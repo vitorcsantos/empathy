@@ -34,6 +34,7 @@
 
 #include <glib/gi18n-lib.h>
 #include <tp-account-widgets/tpaw-keyring.h>
+#include <tp-account-widgets/tpaw-builder.h>
 
 #include "empathy-client-factory.h"
 #include "empathy-gsettings.h"
@@ -3251,7 +3252,7 @@ chat_create_ui (EmpathyChat *chat)
 
 	filename = empathy_file_lookup ("empathy-chat.ui",
 					"libempathy-gtk");
-	gui = empathy_builder_get_file (filename,
+	gui = tpaw_builder_get_file (filename,
 					"chat_widget", &priv->widget,
 					"hpaned", &priv->hpaned,
 					"vbox_left", &priv->vbox_left,
@@ -3264,7 +3265,7 @@ chat_create_ui (EmpathyChat *chat)
 					"info_bar_vbox", &priv->info_bar_vbox,
 					NULL);
 
-	empathy_builder_connect (gui, chat,
+	tpaw_builder_connect (gui, chat,
 		"expander_topic", "notify::expanded", chat_topic_expander_activate_cb,
 		"label_topic", "size-allocate", chat_topic_label_size_allocate_cb,
 		NULL);

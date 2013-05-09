@@ -27,6 +27,7 @@
 
 #include <glib/gi18n-lib.h>
 #include <telepathy-glib/proxy-subclass.h>
+#include <tp-account-widgets/tpaw-builder.h>
 
 #include "action-chain-internal.h"
 #include "empathy-account-chooser.h"
@@ -629,7 +630,7 @@ empathy_log_window_init (EmpathyLogWindow *self)
   gtk_window_set_default_size (GTK_WINDOW (self), 800, 600);
 
   filename = empathy_file_lookup ("empathy-log-window.ui", "libempathy-gtk");
-  gui = empathy_builder_get_file (filename,
+  gui = tpaw_builder_get_file (filename,
       "vbox1", &self->priv->vbox,
       "toolbutton_profile", &self->priv->button_profile,
       "toolbutton_chat", &self->priv->button_chat,
@@ -647,7 +648,7 @@ empathy_log_window_init (EmpathyLogWindow *self)
       NULL);
   g_free (filename);
 
-  empathy_builder_connect (gui, self,
+  tpaw_builder_connect (gui, self,
       "toolbutton_profile", "clicked", toolbutton_profile_clicked,
       "toolbutton_chat", "clicked", toolbutton_chat_clicked,
       "toolbutton_call", "clicked", toolbutton_av_clicked,

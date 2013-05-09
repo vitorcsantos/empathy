@@ -24,6 +24,7 @@
 #include <glib/gi18n-lib.h>
 
 #include "empathy-ui-utils.h"
+#include "tpaw-builder.h"
 #include "totem-subtitle-encoding.h"
 
 typedef struct {
@@ -468,7 +469,7 @@ tpaw_irc_network_dialog_show (TpawIrcNetwork *network,
   dialog->network = network;
   g_object_ref (dialog->network);
 
-  gui = empathy_builder_get_resource (ACCOUNT_WIDGETS_RESOURCES_PREFIX "/tpaw-account-widget-irc.ui",
+  gui = tpaw_builder_get_resource (ACCOUNT_WIDGETS_RESOURCES_PREFIX "/tpaw-account-widget-irc.ui",
       "irc_network_dialog", &dialog->dialog,
       "button_close", &dialog->button_close,
       "entry_network", &dialog->entry_network,
@@ -548,7 +549,7 @@ tpaw_irc_network_dialog_show (TpawIrcNetwork *network,
 
   irc_network_dialog_setup (dialog);
 
-  empathy_builder_connect (gui, dialog,
+  tpaw_builder_connect (gui, dialog,
       "irc_network_dialog", "destroy", irc_network_dialog_destroy_cb,
       "button_close", "clicked", irc_network_dialog_close_clicked_cb,
       "entry_network", "focus-out-event", irc_network_dialog_network_focus_cb,

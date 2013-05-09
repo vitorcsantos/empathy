@@ -25,6 +25,8 @@
 #include "config.h"
 #include "empathy-call-window-fullscreen.h"
 
+#include <tp-account-widgets/tpaw-builder.h>
+
 #include "empathy-ui-utils.h"
 #include "empathy-utils.h"
 
@@ -185,7 +187,7 @@ empathy_call_window_fullscreen_init (EmpathyCallWindowFullscreen *self)
   gchar *filename;
 
   filename = empathy_file_lookup ("empathy-call-window-fullscreen.ui", "src");
-  gui = empathy_builder_get_file (filename,
+  gui = tpaw_builder_get_file (filename,
     "leave_fullscreen_window", &priv->leave_fullscreen_popup,
     "leave_fullscreen_button", &self->leave_fullscreen_button,
     NULL);

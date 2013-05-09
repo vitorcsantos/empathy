@@ -2,6 +2,11 @@
  * Copyright (C) 2013 Collabora Ltd.
  *
  * Authors: Marco Barisione <marco.barisione@collabora.co.uk>
+ *          Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+ *          Xavier Claessens <xavier.claessens@collabora.co.uk>
+ *          Mikael Hallendal <micke@imendio.com>
+ *          Richard Hult <richard@imendio.com>
+ *          Martyn Russell <martyn@imendio.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -25,6 +30,19 @@
 #include <gtk/gtk.h>
 
 G_BEGIN_DECLS
+
+GtkBuilder * tpaw_builder_get_file (const gchar *filename,
+    const gchar *first_object,
+    ...);
+GtkBuilder * tpaw_builder_get_resource (const gchar *resourcename,
+    const gchar *first_object,
+    ...);
+void tpaw_builder_connect (GtkBuilder *gui,
+    gpointer user_data,
+    const gchar *first_object,
+    ...);
+GtkWidget * tpaw_builder_unref_and_keep_widget (GtkBuilder *gui,
+    GtkWidget *root);
 
 G_END_DECLS
 

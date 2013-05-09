@@ -26,6 +26,7 @@
 #include "empathy-contact-blocking-dialog.h"
 
 #include <glib/gi18n-lib.h>
+#include <tp-account-widgets/tpaw-builder.h>
 
 #include "empathy-account-chooser.h"
 #include "empathy-ui-utils.h"
@@ -614,7 +615,7 @@ empathy_contact_blocking_dialog_init (EmpathyContactBlockingDialog *self)
   filename = empathy_file_lookup ("empathy-contact-blocking-dialog.ui",
       "libempathy-gtk");
 
-  gui = empathy_builder_get_file (filename,
+  gui = tpaw_builder_get_file (filename,
       "contents", &contents,
       "account-hbox", &account_hbox,
       "add-button", &self->priv->add_button,
@@ -626,7 +627,7 @@ empathy_contact_blocking_dialog_init (EmpathyContactBlockingDialog *self)
       "remove-toolbar", &remove_toolbar,
       NULL);
 
-  empathy_builder_connect (gui, self,
+  tpaw_builder_connect (gui, self,
       "add-button", "clicked", contact_blocking_dialog_add_contact,
       "add-contact-entry", "activate", contact_blocking_dialog_add_contact,
       "remove-button", "clicked", contact_blocking_dialog_remove_contacts,

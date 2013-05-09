@@ -22,6 +22,7 @@
 #include "tpaw-account-widget-irc.h"
 
 #include "tpaw-account-widget-private.h"
+#include "tpaw-builder.h"
 #include "empathy-ui-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_ACCOUNT | EMPATHY_DEBUG_IRC
@@ -142,7 +143,7 @@ tpaw_account_widget_irc_build (TpawAccountWidget *self,
   settings = g_slice_new0 (TpawAccountWidgetIrc);
   settings->self = self;
 
-  self->ui_details->gui = empathy_builder_get_resource (filename,
+  self->ui_details->gui = tpaw_builder_get_resource (filename,
       "table_irc_settings", table_common_settings,
       "vbox_irc", box,
       "table_irc_settings", &settings->vbox_settings,
@@ -172,7 +173,7 @@ tpaw_account_widget_irc_build (TpawAccountWidget *self,
       "entry_username", "username",
       NULL);
 
-  empathy_builder_connect (self->ui_details->gui, settings,
+  tpaw_builder_connect (self->ui_details->gui, settings,
       "table_irc_settings", "destroy", account_widget_irc_destroy_cb,
       NULL);
 
@@ -209,7 +210,7 @@ tpaw_account_widget_irc_build_simple (TpawAccountWidget *self,
   settings = g_slice_new0 (TpawAccountWidgetIrc);
   settings->self = self;
 
-  self->ui_details->gui = empathy_builder_get_resource (filename,
+  self->ui_details->gui = tpaw_builder_get_resource (filename,
       "vbox_irc_simple", box,
       "alignment_network_simple", &alignment,
       NULL);
@@ -230,7 +231,7 @@ tpaw_account_widget_irc_build_simple (TpawAccountWidget *self,
       "entry_nick_simple", "account",
       NULL);
 
-  empathy_builder_connect (self->ui_details->gui, settings,
+  tpaw_builder_connect (self->ui_details->gui, settings,
       "vbox_irc_simple", "destroy", account_widget_irc_destroy_cb,
       NULL);
 

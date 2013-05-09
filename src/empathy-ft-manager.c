@@ -31,6 +31,7 @@
 #include "empathy-ft-manager.h"
 
 #include <glib/gi18n.h>
+#include <tp-account-widgets/tpaw-builder.h>
 
 #include "empathy-geometry.h"
 #include "empathy-ui-utils.h"
@@ -970,7 +971,7 @@ ft_manager_build_ui (EmpathyFTManager *manager)
   EmpathyFTManagerPriv *priv = GET_PRIV (manager);
 
   filename = empathy_file_lookup ("empathy-ft-manager.ui", "src");
-  gui = empathy_builder_get_file (filename,
+  gui = tpaw_builder_get_file (filename,
       "ft_manager_dialog", &priv->window,
       "ft_list", &priv->treeview,
       "clear_button", &priv->clear_button,
@@ -979,14 +980,14 @@ ft_manager_build_ui (EmpathyFTManager *manager)
       NULL);
   g_free (filename);
 
-  empathy_builder_connect (gui, manager,
+  tpaw_builder_connect (gui, manager,
       "ft_manager_dialog", "destroy", ft_manager_destroy_cb,
       "ft_manager_dialog", "response", ft_manager_response_cb,
       "ft_manager_dialog", "delete-event", ft_manager_delete_event_cb,
       "ft_manager_dialog", "key-press-event", ft_manager_key_press_event_cb,
       NULL);
 
-  empathy_builder_unref_and_keep_widget (gui, priv->window);
+  tpaw_builder_unref_and_keep_widget (gui, priv->window);
 
   /* Window geometry. */
   empathy_geometry_bind (GTK_WINDOW (priv->window), "ft-manager");

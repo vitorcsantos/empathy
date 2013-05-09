@@ -21,6 +21,7 @@
 #include "empathy-search-bar.h"
 
 #include <glib/gi18n-lib.h>
+#include <tp-account-widgets/tpaw-builder.h>
 
 #include "empathy-ui-utils.h"
 #include "empathy-utils.h"
@@ -263,7 +264,7 @@ empathy_search_bar_init (EmpathySearchBar * self)
   self->priv = priv;
 
   filename = empathy_file_lookup ("empathy-search-bar.ui", "libempathy-gtk");
-  gui = empathy_builder_get_file (filename,
+  gui = tpaw_builder_get_file (filename,
       "search_widget", &internal,
       "search_close", &priv->search_close,
       "search_entry", &priv->search_entry,
@@ -275,7 +276,7 @@ empathy_search_bar_init (EmpathySearchBar * self)
   g_free (filename);
 
   /* Add the signals */
-  empathy_builder_connect (gui, self,
+  tpaw_builder_connect (gui, self,
       "search_close", "clicked", empathy_search_bar_close_cb,
       "search_entry", "changed", empathy_search_bar_entry_changed,
       "search_previous", "clicked", empathy_search_bar_previous_cb,

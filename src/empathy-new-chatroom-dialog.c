@@ -25,6 +25,7 @@
 #include "empathy-new-chatroom-dialog.h"
 
 #include <glib/gi18n.h>
+#include <tp-account-widgets/tpaw-builder.h>
 
 #include "empathy-account-chooser.h"
 #include "empathy-gsettings.h"
@@ -747,7 +748,7 @@ empathy_new_chatroom_dialog_init (EmpathyNewChatroomDialog *self)
       EMPATHY_TYPE_NEW_CHATROOM_DIALOG, EmpathyNewChatroomDialogPriv);
 
   filename = empathy_file_lookup ("empathy-new-chatroom-dialog.ui", "src");
-  gui = empathy_builder_get_file (filename,
+  gui = tpaw_builder_get_file (filename,
       "vbox_new_chatroom", &vbox,
       "table_grid", &self->priv->table_grid,
       "label_account", &self->priv->label_account,
@@ -763,7 +764,7 @@ empathy_new_chatroom_dialog_init (EmpathyNewChatroomDialog *self)
       NULL);
   g_free (filename);
 
-  empathy_builder_connect (gui, self,
+  tpaw_builder_connect (gui, self,
       "entry_server", "changed", new_chatroom_dialog_entry_changed_cb,
       "entry_server", "activate", new_chatroom_dialog_entry_server_activate_cb,
       "entry_server", "focus-out-event",

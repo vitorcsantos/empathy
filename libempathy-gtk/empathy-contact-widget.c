@@ -23,6 +23,7 @@
 #include "empathy-contact-widget.h"
 
 #include <glib/gi18n-lib.h>
+#include <tp-account-widgets/tpaw-builder.h>
 
 #include "empathy-avatar-image.h"
 #include "empathy-client-factory.h"
@@ -660,7 +661,7 @@ empathy_contact_widget_new (EmpathyContact *contact)
 
   filename = empathy_file_lookup ("empathy-contact-widget.ui",
       "libempathy-gtk");
-  gui = empathy_builder_get_file (filename,
+  gui = tpaw_builder_get_file (filename,
        "vbox_contact_widget", &main_vbox,
        "hbox_presence", &self->priv->hbox_presence,
        "label_alias", &self->priv->label_alias,

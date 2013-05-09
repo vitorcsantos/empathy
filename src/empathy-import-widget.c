@@ -26,6 +26,7 @@
 #include "empathy-import-widget.h"
 
 #include <glib/gi18n-lib.h>
+#include <tp-account-widgets/tpaw-builder.h>
 #include <tp-account-widgets/tpaw-utils.h>
 
 #include "empathy-ui-utils.h"
@@ -431,14 +432,14 @@ do_constructed (GObject *obj)
   gchar *filename;
 
   filename = empathy_file_lookup ("empathy-import-dialog.ui", "src");
-  gui = empathy_builder_get_file (filename,
+  gui = tpaw_builder_get_file (filename,
       "widget_vbox", &priv->vbox,
       "treeview", &priv->treeview,
       "scrolledwindow", &priv->scrolledwindow,
       NULL);
 
   g_free (filename);
-  empathy_builder_unref_and_keep_widget (gui, priv->vbox);
+  tpaw_builder_unref_and_keep_widget (gui, priv->vbox);
 
   g_signal_connect (priv->vbox, "destroy",
       G_CALLBACK (import_widget_destroy_cb), self);

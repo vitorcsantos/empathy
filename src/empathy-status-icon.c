@@ -22,6 +22,8 @@
 #include "config.h"
 #include "empathy-status-icon.h"
 
+#include <tp-account-widgets/tpaw-builder.h>
+
 #include "empathy-event-manager.h"
 #include "empathy-gsettings.h"
 #include "empathy-new-call-dialog.h"
@@ -351,7 +353,7 @@ status_icon_create_menu (EmpathyStatusIcon *icon)
 	gchar                 *filename;
 
 	filename = empathy_file_lookup ("empathy-status-icon.ui", "src");
-	gui = empathy_builder_get_file (filename,
+	gui = tpaw_builder_get_file (filename,
 					"ui_manager", &priv->ui_manager,
 					"menu", &priv->popup_menu,
 					"show_list", &priv->show_window_item,
@@ -360,7 +362,7 @@ status_icon_create_menu (EmpathyStatusIcon *icon)
 				       NULL);
 	g_free (filename);
 
-	empathy_builder_connect (gui, icon,
+	tpaw_builder_connect (gui, icon,
 			      "show_list", "toggled", status_icon_show_hide_window_cb,
 			      "new_message", "activate", status_icon_new_message_cb,
 			      "new_call", "activate", status_icon_new_call_cb,

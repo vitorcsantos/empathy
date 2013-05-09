@@ -23,6 +23,7 @@
 #include "empathy-individual-widget.h"
 
 #include <glib/gi18n-lib.h>
+#include <tp-account-widgets/tpaw-builder.h>
 
 #ifdef HAVE_LIBCHAMPLAIN
 #include <champlain/champlain.h>
@@ -1965,7 +1966,7 @@ empathy_individual_widget_init (EmpathyIndividualWidget *self)
 
   filename = empathy_file_lookup ("empathy-individual-widget.ui",
       "libempathy-gtk");
-  gui = empathy_builder_get_file (filename,
+  gui = tpaw_builder_get_file (filename,
       "scrolled_window_individual", &priv->scrolled_window_individual,
       "viewport_individual", &priv->viewport_individual,
       "vbox_individual_widget", &priv->vbox_individual_widget,

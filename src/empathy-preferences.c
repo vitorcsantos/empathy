@@ -27,6 +27,7 @@
 #include "empathy-preferences.h"
 
 #include <glib/gi18n.h>
+#include <tp-account-widgets/tpaw-builder.h>
 
 #include "empathy-client-factory.h"
 #include "empathy-gsettings.h"
@@ -1029,7 +1030,7 @@ empathy_preferences_init (EmpathyPreferences *preferences)
 	gtk_window_set_icon_name (GTK_WINDOW (preferences), "preferences-desktop");
 
 	filename = empathy_file_lookup ("empathy-preferences.ui", "src");
-	gui = empathy_builder_get_file (filename,
+	gui = tpaw_builder_get_file (filename,
 		"notebook", &priv->notebook,
 		"vbox_chat_theme", &priv->vbox_chat_theme,
 		"combobox_chat_theme", &priv->combobox_chat_theme,

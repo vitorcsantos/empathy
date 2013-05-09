@@ -25,6 +25,7 @@
 #include <glib/gi18n-lib.h>
 
 #include "tpaw-account-widget-private.h"
+#include "tpaw-builder.h"
 #include "empathy-ui-utils.h"
 
 typedef struct {
@@ -113,7 +114,7 @@ tpaw_account_widget_sip_build (TpawAccountWidget *self,
 
   if (is_simple)
     {
-      self->ui_details->gui = empathy_builder_get_resource (filename,
+      self->ui_details->gui = tpaw_builder_get_resource (filename,
           "vbox_sip_simple", &vbox_settings,
           NULL);
 
@@ -133,7 +134,7 @@ tpaw_account_widget_sip_build (TpawAccountWidget *self,
       settings = g_slice_new0 (TpawAccountWidgetSip);
       settings->self = self;
 
-      self->ui_details->gui = empathy_builder_get_resource (filename,
+      self->ui_details->gui = tpaw_builder_get_resource (filename,
           "grid_common_settings", grid_common_settings,
           "grid_advanced_sip_settings", &grid_advanced,
           "vbox_sip_settings", &vbox_settings,
@@ -173,7 +174,7 @@ tpaw_account_widget_sip_build (TpawAccountWidget *self,
           settings->checkbutton_discover_stun,
           settings);
 
-      empathy_builder_connect (self->ui_details->gui, settings,
+      tpaw_builder_connect (self->ui_details->gui, settings,
           "vbox_sip_settings", "destroy", account_widget_sip_destroy_cb,
           "checkbutton_discover-stun", "toggled",
           account_widget_sip_discover_stun_toggled_cb,
