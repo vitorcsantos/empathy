@@ -36,10 +36,10 @@
 #include <gdk/gdkx.h>
 #include <glib/gi18n-lib.h>
 #include <gio/gdesktopappinfo.h>
+#include <tp-account-widgets/tpaw-live-search.h>
 
 #include "empathy-ft-factory.h"
 #include "empathy-images.h"
-#include "empathy-live-search.h"
 #include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
@@ -1406,7 +1406,7 @@ empathy_get_current_action_time (void)
   return (tp_user_action_time_from_x11 (gtk_get_current_event_time ()));
 }
 
-/* @words = empathy_live_search_strip_utf8_string (@text);
+/* @words = tpaw_live_search_strip_utf8_string (@text);
  *
  * User has to pass both so we don't have to compute @words ourself each time
  * this function is called. */
@@ -1423,7 +1423,7 @@ empathy_individual_match_string (FolksIndividual *individual,
   /* check alias name */
   str = folks_alias_details_get_alias (FOLKS_ALIAS_DETAILS (individual));
 
-  if (empathy_live_search_match_words (str, words))
+  if (tpaw_live_search_match_words (str, words))
     return TRUE;
 
   personas = folks_individual_get_personas (individual);
@@ -1454,7 +1454,7 @@ empathy_individual_match_string (FolksIndividual *individual,
               if (p != NULL)
                 str = dup_str = g_strndup (str, p - str);
 
-              visible = empathy_live_search_match_words (str, words);
+              visible = tpaw_live_search_match_words (str, words);
               g_free (dup_str);
               if (visible)
                 retval = TRUE;

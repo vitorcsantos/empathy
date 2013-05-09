@@ -1327,7 +1327,7 @@ individual_view_start_search_cb (EmpathyIndividualView *view,
 }
 
 static void
-individual_view_search_text_notify_cb (EmpathyLiveSearch *search,
+individual_view_search_text_notify_cb (TpawLiveSearch *search,
     GParamSpec *pspec,
     EmpathyIndividualView *view)
 {
@@ -1420,7 +1420,7 @@ individual_view_search_key_navigation_cb (GtkWidget *search,
 }
 
 static void
-individual_view_search_hide_cb (EmpathyLiveSearch *search,
+individual_view_search_hide_cb (TpawLiveSearch *search,
     EmpathyIndividualView *view)
 {
   EmpathyIndividualViewPriv *priv = GET_PRIV (view);
@@ -1489,7 +1489,7 @@ individual_view_search_hide_cb (EmpathyLiveSearch *search,
 }
 
 static void
-individual_view_search_show_cb (EmpathyLiveSearch *search,
+individual_view_search_show_cb (TpawLiveSearch *search,
     EmpathyIndividualView *view)
 {
   /* block expand or collapse handlers during expand all, they would
@@ -1639,7 +1639,7 @@ individual_view_is_visible_individual (EmpathyIndividualView *self,
     guint event_count)
 {
   EmpathyIndividualViewPriv *priv = GET_PRIV (self);
-  EmpathyLiveSearch *live = EMPATHY_LIVE_SEARCH (priv->search_widget);
+  TpawLiveSearch *live = TPAW_LIVE_SEARCH (priv->search_widget);
   GeeSet *personas;
   GeeIterator *iter;
   gboolean is_favorite;
@@ -1691,8 +1691,8 @@ individual_view_is_visible_individual (EmpathyIndividualView *self,
   }
 
   return empathy_individual_match_string (individual,
-      empathy_live_search_get_text (live),
-      empathy_live_search_get_words (live));
+      tpaw_live_search_get_text (live),
+      tpaw_live_search_get_words (live));
 }
 
 static gchar *
@@ -2483,7 +2483,7 @@ out:
 
 void
 empathy_individual_view_set_live_search (EmpathyIndividualView *view,
-    EmpathyLiveSearch *search)
+    TpawLiveSearch *search)
 {
   EmpathyIndividualViewPriv *priv = GET_PRIV (view);
 

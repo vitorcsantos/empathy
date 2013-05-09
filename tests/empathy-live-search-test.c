@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <tp-account-widgets/tpaw-live-search.h>
 
-#include "empathy-live-search.h"
 #include "test-helper.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_TESTS
@@ -57,7 +57,7 @@ test_live_search (void)
       gboolean match;
       gboolean ok;
 
-      match = empathy_live_search_match_string (tests[i].string, tests[i].prefix);
+      match = tpaw_live_search_match_string (tests[i].string, tests[i].prefix);
       ok = (match == tests[i].should_match);
 
       DEBUG ("'%s' - '%s' %s: %s", tests[i].string, tests[i].prefix,

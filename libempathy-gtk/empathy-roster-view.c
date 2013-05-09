@@ -67,7 +67,7 @@ struct _EmpathyRosterViewPriv
   gboolean show_groups;
   gboolean empty;
 
-  EmpathyLiveSearch *search;
+  TpawLiveSearch *search;
 
   EmpathyRosterModel *model;
 };
@@ -864,8 +864,8 @@ contact_should_be_displayed (EmpathyRosterView *self,
       individual = empathy_roster_contact_get_individual (contact);
 
       return empathy_individual_match_string (individual,
-          empathy_live_search_get_text (self->priv->search),
-          empathy_live_search_get_words (self->priv->search));
+          tpaw_live_search_get_text (self->priv->search),
+          tpaw_live_search_get_words (self->priv->search));
     }
 
   if (self->priv->show_offline)
@@ -1473,7 +1473,7 @@ search_timeout_cb (EmpathyRosterView *self)
 }
 
 static void
-search_text_notify_cb (EmpathyLiveSearch *search,
+search_text_notify_cb (TpawLiveSearch *search,
     GParamSpec *pspec,
     EmpathyRosterView *self)
 {
@@ -1500,7 +1500,7 @@ search_activate_cb (GtkWidget *search,
 
 void
 empathy_roster_view_set_live_search (EmpathyRosterView *self,
-    EmpathyLiveSearch *search)
+    TpawLiveSearch *search)
 {
   if (self->priv->search != NULL)
     {

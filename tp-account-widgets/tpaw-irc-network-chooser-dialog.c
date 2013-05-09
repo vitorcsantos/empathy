@@ -26,7 +26,7 @@
 
 #include "tpaw-irc-network-dialog.h"
 #include "tpaw-irc-network-manager.h"
-#include "empathy-live-search.h"
+#include "tpaw-live-search.h"
 #include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_ACCOUNT | EMPATHY_DEBUG_IRC
@@ -436,7 +436,7 @@ filter_visible_func (GtkTreeModel *model,
 
   gtk_tree_model_get (model, iter, COL_NETWORK_OBJ, &network, -1);
 
-  visible = empathy_live_search_match (EMPATHY_LIVE_SEARCH (priv->search),
+  visible = tpaw_live_search_match (TPAW_LIVE_SEARCH (priv->search),
       tpaw_irc_network_get_name (network));
 
   g_object_unref (network);
@@ -452,7 +452,7 @@ search_activate_cb (GtkWidget *search,
 }
 
 static void
-search_text_notify_cb (EmpathyLiveSearch *search,
+search_text_notify_cb (TpawLiveSearch *search,
     GParamSpec *pspec,
     TpawIrcNetworkChooserDialog *self)
 {
@@ -468,7 +468,7 @@ search_text_notify_cb (EmpathyLiveSearch *search,
     {
       const gchar *text;
 
-      text = empathy_live_search_get_text (EMPATHY_LIVE_SEARCH (priv->search));
+      text = tpaw_live_search_get_text (TPAW_LIVE_SEARCH (priv->search));
       if (!EMP_STR_EMPTY (text))
         {
           /* We are doing a search, select the first matching network */
@@ -592,7 +592,7 @@ tpaw_irc_network_chooser_dialog_constructed (GObject *object)
   gtk_style_context_set_junction_sides (context, GTK_JUNCTION_TOP);
 
   /* Live search */
-  priv->search = empathy_live_search_new (priv->treeview);
+  priv->search = tpaw_live_search_new (priv->treeview);
 
   gtk_box_pack_start (GTK_BOX (vbox), priv->search, FALSE, TRUE, 0);
 
@@ -653,7 +653,7 @@ tpaw_irc_network_chooser_dialog_dispose (GObject *object)
 
   if (priv->search != NULL)
     {
-      empathy_live_search_set_hook_widget (EMPATHY_LIVE_SEARCH (priv->search),
+      tpaw_live_search_set_hook_widget (TPAW_LIVE_SEARCH (priv->search),
           NULL);
 
       priv->search = NULL;

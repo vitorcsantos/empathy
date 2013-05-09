@@ -29,6 +29,7 @@ libtp_account_widgets_sources =            	\
 	tpaw-irc-network-manager.c		\
 	tpaw-irc-network.c			\
 	tpaw-irc-server.c			\
+	tpaw-live-search.c			\
 	tpaw-utils.c				\
 	totem-subtitle-encoding.c		\
 	$(NULL)
@@ -46,6 +47,7 @@ libtp_account_widgets_headers =			\
 	tpaw-irc-network-manager.h		\
 	tpaw-irc-network.h			\
 	tpaw-irc-server.h			\
+	tpaw-live-search.h			\
 	tpaw-utils.h				\
 	totem-subtitle-encoding.h		\
 	$(NULL)

@@ -2,8 +2,9 @@
 #ifndef __EMPATHY_ROSTER_VIEW_H__
 #define __EMPATHY_ROSTER_VIEW_H__
 
+#include <tp-account-widgets/tpaw-live-search.h>
+
 #include "egg-list-box/egg-list-box.h"
-#include "empathy-live-search.h"
 #include "empathy-roster-model.h"
 
 G_BEGIN_DECLS
@@ -58,7 +59,7 @@ void empathy_roster_view_show_groups (EmpathyRosterView *self,
     gboolean show);
 
 void empathy_roster_view_set_live_search (EmpathyRosterView *self,
-    EmpathyLiveSearch *search);
+    TpawLiveSearch *search);
 
 gboolean empathy_roster_view_is_empty (EmpathyRosterView *self);
 
