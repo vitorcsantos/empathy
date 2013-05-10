@@ -34,6 +34,7 @@ libtp_account_widgets_sources =            	\
 	tpaw-camera-monitor.c			\
 	tpaw-connection-managers.c		\
 	tpaw-contactinfo-utils.c		\
+	tpaw-debug.c				\
 	tpaw-keyring.c				\
 	tpaw-irc-network-chooser.c		\
 	tpaw-irc-network-chooser-dialog.c	\
@@ -61,6 +62,7 @@ libtp_account_widgets_headers =			\
 	tpaw-camera-monitor.h			\
 	tpaw-connection-managers.h		\
 	tpaw-contactinfo-utils.h		\
+	tpaw-debug.h				\
 	tpaw-gsettings.h			\
 	tpaw-images.h				\
 	tpaw-keyring.h				\
