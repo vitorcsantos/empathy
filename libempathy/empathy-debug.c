@@ -32,7 +32,6 @@ static GDebugKey keys[] = {
   { "Chat", EMPATHY_DEBUG_CHAT },
   { "Contact", EMPATHY_DEBUG_CONTACT },
   { "Account", EMPATHY_DEBUG_ACCOUNT },
-  { "Irc", EMPATHY_DEBUG_IRC },
   { "Dispatcher", EMPATHY_DEBUG_DISPATCHER },
   { "Ft", EMPATHY_DEBUG_FT },
   { "Location", EMPATHY_DEBUG_LOCATION },
