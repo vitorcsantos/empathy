@@ -58,8 +58,6 @@ tpaw_debug_set_flags (const gchar *flags_string)
 
   for (nkeys = 0; keys[nkeys].value; nkeys++);
 
-  tp_debug_set_flags (flags_string);
-
   if (flags_string)
       debug_set_flags (g_parse_debug_string (flags_string, keys, nkeys));
 }
