@@ -22,6 +22,7 @@
 #include "tpaw-connection-managers.h"
 
 #include "empathy-utils.h"
+#include "tpaw-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include "empathy-debug.h"
@@ -45,13 +46,7 @@ enum {
   PROP_READY = 1
 };
 
-#define GET_PRIV(obj) EMPATHY_GET_PRIV (obj, TpawConnectionManagers)
-
-
 /* private structure */
-typedef struct _TpawConnectionManagersPriv
-  TpawConnectionManagersPriv;
-
 struct _TpawConnectionManagersPriv
 {
   gboolean dispose_has_run;
@@ -65,14 +60,11 @@ struct _TpawConnectionManagersPriv
 static void
 tpaw_connection_managers_init (TpawConnectionManagers *obj)
 {
-  TpawConnectionManagersPriv *priv =
-    G_TYPE_INSTANCE_GET_PRIVATE ((obj), \
+  obj->priv = G_TYPE_INSTANCE_GET_PRIVATE ((obj),
       TPAW_TYPE_CONNECTION_MANAGERS, TpawConnectionManagersPriv);
 
-  obj->priv = priv;
-
-  priv->dbus = tp_dbus_daemon_dup (NULL);
-  g_assert (priv->dbus != NULL);
+  obj->priv->dbus = tp_dbus_daemon_dup (NULL);
+  g_assert (obj->priv->dbus != NULL);
 
   tpaw_connection_managers_update (obj);
 
@@ -107,12 +99,11 @@ tpaw_connection_managers_get_property (GObject *object,
     GParamSpec *pspec)
 {
   TpawConnectionManagers *self = TPAW_CONNECTION_MANAGERS (object);
-  TpawConnectionManagersPriv *priv = GET_PRIV (self);
 
   switch (prop_id)
     {
       case PROP_READY:
-        g_value_set_boolean (value, priv->ready);
+        g_value_set_boolean (value, self->priv->ready);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -152,32 +143,30 @@ tpaw_connection_managers_class_init (
 static void
 tpaw_connection_managers_free_cm_list (TpawConnectionManagers *self)
 {
-  TpawConnectionManagersPriv *priv = GET_PRIV (self);
   GList *l;
 
-  for (l = priv->cms ; l != NULL ; l = g_list_next (l))
+  for (l = self->priv->cms ; l != NULL ; l = g_list_next (l))
     {
       g_object_unref (l->data);
     }
-  g_list_free (priv->cms);
+  g_list_free (self->priv->cms);
 
-  priv->cms = NULL;
+  self->priv->cms = NULL;
 }
 
 static void
 tpaw_connection_managers_dispose (GObject *object)
 {
   TpawConnectionManagers *self = TPAW_CONNECTION_MANAGERS (object);
-  TpawConnectionManagersPriv *priv = GET_PRIV (self);
 
-  if (priv->dispose_has_run)
+  if (self->priv->dispose_has_run)
     return;
 
-  priv->dispose_has_run = TRUE;
+  self->priv->dispose_has_run = TRUE;
 
-  if (priv->dbus != NULL)
-    g_object_unref (priv->dbus);
-  priv->dbus = NULL;
+  if (self->priv->dbus != NULL)
+    g_object_unref (self->priv->dbus);
+  self->priv->dbus = NULL;
 
   tpaw_connection_managers_free_cm_list (self);
 
@@ -197,8 +186,7 @@ tpaw_connection_managers_dup_singleton (void)
 gboolean
 tpaw_connection_managers_is_ready (TpawConnectionManagers *self)
 {
-  TpawConnectionManagersPriv *priv = GET_PRIV (self);
-  return priv->ready;
+  return self->priv->ready;
 }
 
 static void
@@ -210,15 +198,12 @@ tpaw_connection_managers_listed_cb (GObject *source,
   GError *error = NULL;
   TpawConnectionManagers *self = tp_weak_ref_dup_object (wr);
   GList *cms, *l;
-  TpawConnectionManagersPriv *priv;
 
   if (self == NULL)
     {
       tp_weak_ref_destroy (wr);
       return;
     }
-
-  priv = GET_PRIV (self);
 
   tpaw_connection_managers_free_cm_list (self);
 
@@ -236,13 +221,14 @@ tpaw_connection_managers_listed_cb (GObject *source,
 
       /* only list cms that didn't hit errors */
       if (tp_proxy_is_prepared (cm, TP_CONNECTION_MANAGER_FEATURE_CORE))
-        priv->cms = g_list_prepend (priv->cms, g_object_ref (cm));
+        self->priv->cms = g_list_prepend (self->priv->cms,
+            g_object_ref (cm));
     }
 
 out:
-  if (!priv->ready)
+  if (!self->priv->ready)
     {
-      priv->ready = TRUE;
+      self->priv->ready = TRUE;
       g_object_notify (G_OBJECT (self), "ready");
     }
 
@@ -254,9 +240,7 @@ out:
 void
 tpaw_connection_managers_update (TpawConnectionManagers *self)
 {
-  TpawConnectionManagersPriv *priv = GET_PRIV (self);
-
-  tp_list_connection_managers_async (priv->dbus,
+  tp_list_connection_managers_async (self->priv->dbus,
     tpaw_connection_managers_listed_cb,
     tp_weak_ref_new (self, NULL, NULL));
 }
@@ -264,19 +248,16 @@ tpaw_connection_managers_update (TpawConnectionManagers *self)
 GList *
 tpaw_connection_managers_get_cms (TpawConnectionManagers *self)
 {
-  TpawConnectionManagersPriv *priv = GET_PRIV (self);
-
-  return priv->cms;
+  return self->priv->cms;
 }
 
 TpConnectionManager *
 tpaw_connection_managers_get_cm (TpawConnectionManagers *self,
   const gchar *cm)
 {
-  TpawConnectionManagersPriv *priv = GET_PRIV (self);
   GList *l;
 
-  for (l = priv->cms ; l != NULL; l = g_list_next (l))
+  for (l = self->priv->cms ; l != NULL; l = g_list_next (l))
     {
       TpConnectionManager *c = TP_CONNECTION_MANAGER (l->data);
 
@@ -290,13 +271,9 @@ tpaw_connection_managers_get_cm (TpawConnectionManagers *self,
 guint
 tpaw_connection_managers_get_cms_num (TpawConnectionManagers *self)
 {
-  TpawConnectionManagersPriv *priv;
-
   g_return_val_if_fail (TPAW_IS_CONNECTION_MANAGERS (self), 0);
 
-  priv = GET_PRIV (self);
-
-  return g_list_length (priv->cms);
+  return g_list_length (self->priv->cms);
 }
 
 static void
@@ -314,13 +291,12 @@ tpaw_connection_managers_prepare_async (
     GAsyncReadyCallback callback,
     gpointer user_data)
 {
-  TpawConnectionManagersPriv *priv = GET_PRIV (self);
   GSimpleAsyncResult *result;
 
   result = g_simple_async_result_new (G_OBJECT (managers),
       callback, user_data, tpaw_connection_managers_prepare_finish);
 
-  if (priv->ready)
+  if (self->priv->ready)
     {
       g_simple_async_result_complete_in_idle (result);
       g_object_unref (result);

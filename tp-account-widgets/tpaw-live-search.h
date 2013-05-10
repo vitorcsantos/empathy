@@ -36,13 +36,14 @@ G_BEGIN_DECLS
 #define TPAW_LIVE_SEARCH_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), TPAW_TYPE_LIVE_SEARCH, TpawLiveSearchClass))
 
 typedef struct _TpawLiveSearch      TpawLiveSearch;
+typedef struct _TpawLiveSearchPriv  TpawLiveSearchPriv;
 typedef struct _TpawLiveSearchClass TpawLiveSearchClass;
 
 struct _TpawLiveSearch {
   GtkHBox parent;
 
   /*<private>*/
-  gpointer priv;
+  TpawLiveSearchPriv *priv;
 };
 
 struct _TpawLiveSearchClass {

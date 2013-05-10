@@ -28,6 +28,7 @@
 G_BEGIN_DECLS
 
 typedef struct _TpawAccountSettings TpawAccountSettings;
+typedef struct _TpawAccountSettingsPriv TpawAccountSettingsPriv;
 typedef struct _TpawAccountSettingsClass TpawAccountSettingsClass;
 
 struct _TpawAccountSettingsClass {
@@ -36,7 +37,9 @@ struct _TpawAccountSettingsClass {
 
 struct _TpawAccountSettings {
     GObject parent;
-    gpointer priv;
+
+  /*<private>*/
+    TpawAccountSettingsPriv *priv;
 };
 
 GType tpaw_account_settings_get_type (void);

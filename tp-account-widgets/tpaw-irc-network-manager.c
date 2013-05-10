@@ -33,8 +33,7 @@
 #define IRC_NETWORKS_FILENAME "irc-networks.xml"
 #define SAVE_TIMER 4
 
-#define GET_PRIV(obj) EMPATHY_GET_PRIV (obj, TpawIrcNetworkManager)
-typedef struct {
+struct _TpawIrcNetworkManagerPriv {
   GHashTable *networks;
 
   gchar *global_file;
@@ -47,7 +46,7 @@ typedef struct {
   gboolean loading;
   /* source id of the autosave timer */
   gint save_timer_id;
-} TpawIrcNetworkManagerPriv;
+};
 
 /* properties */
 enum
@@ -75,15 +74,14 @@ tpaw_irc_network_manager_get_property (GObject *object,
                                           GParamSpec *pspec)
 {
   TpawIrcNetworkManager *self = TPAW_IRC_NETWORK_MANAGER (object);
-  TpawIrcNetworkManagerPriv *priv = GET_PRIV (self);
 
   switch (property_id)
     {
       case PROP_GLOBAL_FILE:
-        g_value_set_string (value, priv->global_file);
+        g_value_set_string (value, self->priv->global_file);
         break;
       case PROP_USER_FILE:
-        g_value_set_string (value, priv->user_file);
+        g_value_set_string (value, self->priv->user_file);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -98,17 +96,16 @@ tpaw_irc_network_manager_set_property (GObject *object,
                                           GParamSpec *pspec)
 {
   TpawIrcNetworkManager *self = TPAW_IRC_NETWORK_MANAGER (object);
-  TpawIrcNetworkManagerPriv *priv = GET_PRIV (self);
 
   switch (property_id)
     {
       case PROP_GLOBAL_FILE:
-        g_free (priv->global_file);
-        priv->global_file = g_value_dup_string (value);
+        g_free (self->priv->global_file);
+        self->priv->global_file = g_value_dup_string (value);
         break;
       case PROP_USER_FILE:
-        g_free (priv->user_file);
-        priv->user_file = g_value_dup_string (value);
+        g_free (self->priv->user_file);
+        self->priv->user_file = g_value_dup_string (value);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -138,22 +135,21 @@ static void
 tpaw_irc_network_manager_finalize (GObject *object)
 {
   TpawIrcNetworkManager *self = TPAW_IRC_NETWORK_MANAGER (object);
-  TpawIrcNetworkManagerPriv *priv = GET_PRIV (self);
 
-  if (priv->save_timer_id > 0)
+  if (self->priv->save_timer_id > 0)
     {
-      g_source_remove (priv->save_timer_id);
+      g_source_remove (self->priv->save_timer_id);
     }
 
-  if (priv->have_to_save)
+  if (self->priv->have_to_save)
     {
       irc_network_manager_file_save (self);
     }
 
-  g_free (priv->global_file);
-  g_free (priv->user_file);
+  g_free (self->priv->global_file);
+  g_free (self->priv->user_file);
 
-  g_hash_table_unref (priv->networks);
+  g_hash_table_unref (self->priv->networks);
 
   G_OBJECT_CLASS (tpaw_irc_network_manager_parent_class)->finalize (object);
 }
@@ -161,19 +157,17 @@ tpaw_irc_network_manager_finalize (GObject *object)
 static void
 tpaw_irc_network_manager_init (TpawIrcNetworkManager *self)
 {
-  TpawIrcNetworkManagerPriv *priv = G_TYPE_INSTANCE_GET_PRIVATE (self,
+  self->priv = G_TYPE_INSTANCE_GET_PRIVATE (self,
       TPAW_TYPE_IRC_NETWORK_MANAGER, TpawIrcNetworkManagerPriv);
 
-  self->priv = priv;
-
-  priv->networks = g_hash_table_new_full (g_str_hash, g_str_equal,
+  self->priv->networks = g_hash_table_new_full (g_str_hash, g_str_equal,
       (GDestroyNotify) g_free, (GDestroyNotify) g_object_unref);
 
-  priv->last_id = 0;
+  self->priv->last_id = 0;
 
-  priv->have_to_save = FALSE;
-  priv->loading = FALSE;
-  priv->save_timer_id = 0;
+  self->priv->have_to_save = FALSE;
+  self->priv->loading = FALSE;
+  self->priv->save_timer_id = 0;
 }
 
 static void
@@ -243,9 +237,7 @@ tpaw_irc_network_manager_new (const gchar *global_file,
 static gboolean
 save_timeout (TpawIrcNetworkManager *self)
 {
-  TpawIrcNetworkManagerPriv *priv = GET_PRIV (self);
-
-  priv->save_timer_id = 0;
+  self->priv->save_timer_id = 0;
   irc_network_manager_file_save (self);
 
   return FALSE;
@@ -254,14 +246,12 @@ save_timeout (TpawIrcNetworkManager *self)
 static void
 reset_save_timeout (TpawIrcNetworkManager *self)
 {
-  TpawIrcNetworkManagerPriv *priv = GET_PRIV (self);
-
-  if (priv->save_timer_id > 0)
+  if (self->priv->save_timer_id > 0)
     {
-      g_source_remove (priv->save_timer_id);
+      g_source_remove (self->priv->save_timer_id);
     }
 
-  priv->save_timer_id = g_timeout_add_seconds (SAVE_TIMER,
+  self->priv->save_timer_id = g_timeout_add_seconds (SAVE_TIMER,
       (GSourceFunc) save_timeout, self);
 }
 
@@ -269,13 +259,11 @@ static void
 network_modified (TpawIrcNetwork *network,
                   TpawIrcNetworkManager *self)
 {
-  TpawIrcNetworkManagerPriv *priv = GET_PRIV (self);
-
   network->user_defined = TRUE;
 
-  if (!priv->loading)
+  if (!self->priv->loading)
     {
-      priv->have_to_save = TRUE;
+      self->priv->have_to_save = TRUE;
       reset_save_timeout (self);
     }
 }
@@ -285,9 +273,8 @@ add_network (TpawIrcNetworkManager *self,
              TpawIrcNetwork *network,
              const gchar *id)
 {
-  TpawIrcNetworkManagerPriv *priv = GET_PRIV (self);
-
-  g_hash_table_insert (priv->networks, g_strdup (id), g_object_ref (network));
+  g_hash_table_insert (self->priv->networks, g_strdup (id),
+      g_object_ref (network));
 
   g_signal_connect (network, "modified", G_CALLBACK (network_modified), self);
 }
@@ -304,23 +291,20 @@ void
 tpaw_irc_network_manager_add (TpawIrcNetworkManager *self,
                                  TpawIrcNetwork *network)
 {
-  TpawIrcNetworkManagerPriv *priv;
   gchar *id = NULL;
 
   g_return_if_fail (TPAW_IS_IRC_NETWORK_MANAGER (self));
   g_return_if_fail (TPAW_IS_IRC_NETWORK (network));
 
-  priv = GET_PRIV (self);
-
   /* generate an id for this network */
   do
     {
       g_free (id);
-      id = g_strdup_printf ("id%u", ++priv->last_id);
-    } while (g_hash_table_lookup (priv->networks, id) != NULL &&
-        priv->last_id < G_MAXUINT);
+      id = g_strdup_printf ("id%u", ++self->priv->last_id);
+    } while (g_hash_table_lookup (self->priv->networks, id) != NULL &&
+        self->priv->last_id < G_MAXUINT);
 
-  if (priv->last_id == G_MAXUINT)
+  if (self->priv->last_id == G_MAXUINT)
     {
       DEBUG ("Can't add network: too many networks using a similar ID");
       return;
@@ -331,7 +315,7 @@ tpaw_irc_network_manager_add (TpawIrcNetworkManager *self,
   network->user_defined = TRUE;
   add_network (self, network, id);
 
-  priv->have_to_save = TRUE;
+  self->priv->have_to_save = TRUE;
   reset_save_timeout (self);
 
   g_free (id);
@@ -349,17 +333,13 @@ void
 tpaw_irc_network_manager_remove (TpawIrcNetworkManager *self,
                                     TpawIrcNetwork *network)
 {
-  TpawIrcNetworkManagerPriv *priv;
-
   g_return_if_fail (TPAW_IS_IRC_NETWORK_MANAGER (self));
   g_return_if_fail (TPAW_IS_IRC_NETWORK (network));
-
-  priv = GET_PRIV (self);
 
   network->user_defined = TRUE;
   network->dropped = TRUE;
 
-  priv->have_to_save = TRUE;
+  self->priv->have_to_save = TRUE;
   reset_save_timeout (self);
 }
 
@@ -389,21 +369,18 @@ static GSList *
 get_network_list (TpawIrcNetworkManager *self,
     gboolean get_active)
 {
-  TpawIrcNetworkManagerPriv *priv;
   GSList *irc_networks = NULL;
 
   g_return_val_if_fail (TPAW_IS_IRC_NETWORK_MANAGER (self), NULL);
 
-  priv = GET_PRIV (self);
-
   if (get_active)
     {
-      g_hash_table_foreach (priv->networks,
+      g_hash_table_foreach (self->priv->networks,
           (GHFunc) append_active_networks_to_list, &irc_networks);
     }
   else
     {
-      g_hash_table_foreach (priv->networks,
+      g_hash_table_foreach (self->priv->networks,
           (GHFunc) append_dropped_networks_to_list, &irc_networks);
     }
 
@@ -447,49 +424,44 @@ tpaw_irc_network_manager_get_dropped_networks (TpawIrcNetworkManager *self)
 static void
 load_global_file (TpawIrcNetworkManager *self)
 {
-  TpawIrcNetworkManagerPriv *priv = GET_PRIV (self);
-
-  if (priv->global_file == NULL)
+  if (self->priv->global_file == NULL)
     return;
 
-  if (!g_file_test (priv->global_file, G_FILE_TEST_EXISTS))
+  if (!g_file_test (self->priv->global_file, G_FILE_TEST_EXISTS))
     {
-      DEBUG ("Global networks file %s doesn't exist", priv->global_file);
+      DEBUG ("Global networks file %s doesn't exist",
+          self->priv->global_file);
       return;
     }
 
-  irc_network_manager_file_parse (self, priv->global_file, FALSE);
+  irc_network_manager_file_parse (self, self->priv->global_file, FALSE);
 }
 
 static void
 load_user_file (TpawIrcNetworkManager *self)
 {
-  TpawIrcNetworkManagerPriv *priv = GET_PRIV (self);
-
-  if (priv->user_file == NULL)
+  if (self->priv->user_file == NULL)
     return;
 
-  if (!g_file_test (priv->user_file, G_FILE_TEST_EXISTS))
+  if (!g_file_test (self->priv->user_file, G_FILE_TEST_EXISTS))
     {
-      DEBUG ("User networks file %s doesn't exist", priv->global_file);
+      DEBUG ("User networks file %s doesn't exist", self->priv->global_file);
       return;
     }
 
-  irc_network_manager_file_parse (self, priv->user_file, TRUE);
+  irc_network_manager_file_parse (self, self->priv->user_file, TRUE);
 }
 
 static void
 irc_network_manager_load_servers (TpawIrcNetworkManager *self)
 {
-  TpawIrcNetworkManagerPriv *priv = GET_PRIV (self);
-
-  priv->loading = TRUE;
+  self->priv->loading = TRUE;
 
   load_global_file (self);
   load_user_file (self);
 
-  priv->loading = FALSE;
-  priv->have_to_save = FALSE;
+  self->priv->loading = FALSE;
+  self->priv->have_to_save = FALSE;
 }
 
 static void
@@ -545,7 +517,6 @@ irc_network_manager_parse_irc_network (TpawIrcNetworkManager *self,
                                        xmlNodePtr node,
                                        gboolean user_defined)
 {
-  TpawIrcNetworkManagerPriv *priv = GET_PRIV (self);
   TpawIrcNetwork  *network;
   xmlNodePtr child;
   gchar *str;
@@ -559,7 +530,7 @@ irc_network_manager_parse_irc_network (TpawIrcNetworkManager *self,
           DEBUG ("the 'dropped' attribute shouldn't be used in the global file");
         }
 
-      network = g_hash_table_lookup (priv->networks, id);
+      network = g_hash_table_lookup (self->priv->networks, id);
       if (network != NULL)
         {
           network->dropped = TRUE;
@@ -732,11 +703,10 @@ write_network_to_xml (const gchar *id,
 static gboolean
 irc_network_manager_file_save (TpawIrcNetworkManager *self)
 {
-  TpawIrcNetworkManagerPriv *priv = GET_PRIV (self);
   xmlDocPtr doc;
   xmlNodePtr root;
 
-  if (priv->user_file == NULL)
+  if (self->priv->user_file == NULL)
     {
       DEBUG ("can't save: no user file defined");
       return FALSE;
@@ -748,17 +718,18 @@ irc_network_manager_file_save (TpawIrcNetworkManager *self)
   root = xmlNewNode (NULL, (const xmlChar *) "networks");
   xmlDocSetRootElement (doc, root);
 
-  g_hash_table_foreach (priv->networks, (GHFunc) write_network_to_xml, root);
+  g_hash_table_foreach (self->priv->networks,
+      (GHFunc) write_network_to_xml, root);
 
   /* Make sure the XML is indented properly */
   xmlIndentTreeOutput = 1;
 
-  xmlSaveFormatFileEnc (priv->user_file, doc, "utf-8", 1);
+  xmlSaveFormatFileEnc (self->priv->user_file, doc, "utf-8", 1);
   xmlFreeDoc (doc);
 
   xmlMemoryDump ();
 
-  priv->have_to_save = FALSE;
+  self->priv->have_to_save = FALSE;
 
   return TRUE;
 }
@@ -808,12 +779,11 @@ tpaw_irc_network_manager_find_network_by_address (
     TpawIrcNetworkManager *self,
     const gchar *address)
 {
-  TpawIrcNetworkManagerPriv *priv = GET_PRIV (self);
   TpawIrcNetwork *network;
 
   g_return_val_if_fail (address != NULL, NULL);
 
-  network = g_hash_table_find (priv->networks,
+  network = g_hash_table_find (self->priv->networks,
       (GHRFunc) find_network_by_address, (gchar *) address);
 
   return network;

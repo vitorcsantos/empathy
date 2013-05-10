@@ -22,14 +22,14 @@
 #include "tpaw-irc-server.h"
 
 #include "empathy-utils.h"
+#include "tpaw-utils.h"
 
-#define GET_PRIV(obj) EMPATHY_GET_PRIV (obj, TpawIrcServer)
-typedef struct
+struct _TpawIrcServerPriv
 {
   gchar *address;
   guint port;
   gboolean ssl;
-} TpawIrcServerPriv;
+};
 
 /* properties */
 enum
@@ -58,18 +58,17 @@ tpaw_irc_server_get_property (GObject *object,
                                  GParamSpec *pspec)
 {
   TpawIrcServer *self = TPAW_IRC_SERVER (object);
-  TpawIrcServerPriv *priv = GET_PRIV (self);
 
   switch (property_id)
     {
       case PROP_ADDRESS:
-        g_value_set_string (value, priv->address);
+        g_value_set_string (value, self->priv->address);
         break;
       case PROP_PORT:
-        g_value_set_uint (value, priv->port);
+        g_value_set_uint (value, self->priv->port);
         break;
       case PROP_SSL:
-        g_value_set_boolean (value, priv->ssl);
+        g_value_set_boolean (value, self->priv->ssl);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -84,29 +83,28 @@ tpaw_irc_server_set_property (GObject *object,
                                  GParamSpec *pspec)
 {
   TpawIrcServer *self = TPAW_IRC_SERVER (object);
-  TpawIrcServerPriv *priv = GET_PRIV (self);
 
   switch (property_id)
     {
       case PROP_ADDRESS:
-        if (tp_strdiff (priv->address, g_value_get_string (value)))
+        if (tp_strdiff (self->priv->address, g_value_get_string (value)))
           {
-            g_free (priv->address);
-            priv->address = g_value_dup_string (value);
+            g_free (self->priv->address);
+            self->priv->address = g_value_dup_string (value);
             g_signal_emit (object, signals[MODIFIED], 0);
           }
         break;
       case PROP_PORT:
-        if (priv->port != g_value_get_uint (value))
+        if (self->priv->port != g_value_get_uint (value))
           {
-            priv->port = g_value_get_uint (value);
+            self->priv->port = g_value_get_uint (value);
             g_signal_emit (object, signals[MODIFIED], 0);
           }
         break;
       case PROP_SSL:
-        if (priv->ssl != g_value_get_boolean (value))
+        if (self->priv->ssl != g_value_get_boolean (value))
           {
-            priv->ssl = g_value_get_boolean (value);
+            self->priv->ssl = g_value_get_boolean (value);
             g_signal_emit (object, signals[MODIFIED], 0);
           }
         break;
@@ -120,9 +118,8 @@ static void
 tpaw_irc_server_finalize (GObject *object)
 {
   TpawIrcServer *self = TPAW_IRC_SERVER (object);
-  TpawIrcServerPriv *priv = GET_PRIV (self);
 
-  g_free (priv->address);
+  g_free (self->priv->address);
 
   G_OBJECT_CLASS (tpaw_irc_server_parent_class)->finalize (object);
 }
@@ -130,10 +127,8 @@ tpaw_irc_server_finalize (GObject *object)
 static void
 tpaw_irc_server_init (TpawIrcServer *self)
 {
-  TpawIrcServerPriv *priv = G_TYPE_INSTANCE_GET_PRIVATE (self,
-      TPAW_TYPE_IRC_SERVER, TpawIrcServerPriv);
-
-  self->priv = priv;
+  self->priv = G_TYPE_INSTANCE_GET_PRIVATE (self, TPAW_TYPE_IRC_SERVER,
+      TpawIrcServerPriv);
 }
 
 static void

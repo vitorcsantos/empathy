@@ -22,14 +22,14 @@
 #include "tpaw-irc-network.h"
 
 #include "empathy-utils.h"
+#include "tpaw-utils.h"
 
-#define GET_PRIV(obj) EMPATHY_GET_PRIV (obj, TpawIrcNetwork)
-typedef struct
+struct _TpawIrcNetworkPriv
 {
   gchar *name;
   gchar *charset;
   GSList *servers;
-} TpawIrcNetworkPriv;
+};
 
 /* properties */
 enum
@@ -64,15 +64,14 @@ tpaw_irc_network_get_property (GObject *object,
                                   GParamSpec *pspec)
 {
   TpawIrcNetwork *self = TPAW_IRC_NETWORK (object);
-  TpawIrcNetworkPriv *priv = GET_PRIV (self);
 
   switch (property_id)
     {
       case PROP_NAME:
-        g_value_set_string (value, priv->name);
+        g_value_set_string (value, self->priv->name);
         break;
       case PROP_CHARSET:
-        g_value_set_string (value, priv->charset);
+        g_value_set_string (value, self->priv->charset);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -87,23 +86,22 @@ tpaw_irc_network_set_property (GObject *object,
                                   GParamSpec *pspec)
 {
   TpawIrcNetwork *self = TPAW_IRC_NETWORK (object);
-  TpawIrcNetworkPriv *priv = GET_PRIV (self);
 
   switch (property_id)
     {
       case PROP_NAME:
-        if (tp_strdiff (priv->name, g_value_get_string (value)))
+        if (tp_strdiff (self->priv->name, g_value_get_string (value)))
           {
-            g_free (priv->name);
-            priv->name = g_value_dup_string (value);
+            g_free (self->priv->name);
+            self->priv->name = g_value_dup_string (value);
             g_signal_emit (object, signals[MODIFIED], 0);
           }
         break;
       case PROP_CHARSET:
-        if (tp_strdiff (priv->charset, g_value_get_string (value)))
+        if (tp_strdiff (self->priv->charset, g_value_get_string (value)))
           {
-            g_free (priv->charset);
-            priv->charset = g_value_dup_string (value);
+            g_free (self->priv->charset);
+            self->priv->charset = g_value_dup_string (value);
             g_signal_emit (object, signals[MODIFIED], 0);
           }
         break;
@@ -117,10 +115,9 @@ static void
 tpaw_irc_network_dispose (GObject *object)
 {
   TpawIrcNetwork *self = TPAW_IRC_NETWORK (object);
-  TpawIrcNetworkPriv *priv = GET_PRIV (self);
   GSList *l;
 
-  for (l = priv->servers; l != NULL; l = g_slist_next (l))
+  for (l = self->priv->servers; l != NULL; l = g_slist_next (l))
     {
       g_signal_handlers_disconnect_by_func (l->data,
           G_CALLBACK (server_modified_cb), self);
@@ -134,11 +131,10 @@ static void
 tpaw_irc_network_finalize (GObject *object)
 {
   TpawIrcNetwork *self = TPAW_IRC_NETWORK (object);
-  TpawIrcNetworkPriv *priv = GET_PRIV (self);
 
-  g_slist_free (priv->servers);
-  g_free (priv->name);
-  g_free (priv->charset);
+  g_slist_free (self->priv->servers);
+  g_free (self->priv->name);
+  g_free (self->priv->charset);
 
   G_OBJECT_CLASS (tpaw_irc_network_parent_class)->finalize (object);
 }
@@ -146,12 +142,10 @@ tpaw_irc_network_finalize (GObject *object)
 static void
 tpaw_irc_network_init (TpawIrcNetwork *self)
 {
-  TpawIrcNetworkPriv *priv = G_TYPE_INSTANCE_GET_PRIVATE (self,
-      TPAW_TYPE_IRC_NETWORK, TpawIrcNetworkPriv);
+  self->priv = G_TYPE_INSTANCE_GET_PRIVATE (self, TPAW_TYPE_IRC_NETWORK,
+      TpawIrcNetworkPriv);
 
-  self->priv = priv;
-
-  priv->servers = NULL;
+  self->priv->servers = NULL;
 
   self->user_defined = TRUE;
   self->dropped = FALSE;
@@ -260,13 +254,11 @@ tpaw_irc_network_new (const gchar *name)
 GSList *
 tpaw_irc_network_get_servers (TpawIrcNetwork *self)
 {
-  TpawIrcNetworkPriv *priv;
   GSList *servers = NULL, *l;
 
   g_return_val_if_fail (TPAW_IS_IRC_NETWORK (self), NULL);
-  priv = GET_PRIV (self);
 
-  for (l = priv->servers; l != NULL; l = g_slist_next (l))
+  for (l = self->priv->servers; l != NULL; l = g_slist_next (l))
     {
       servers = g_slist_prepend (servers, g_object_ref (l->data));
     }
@@ -287,16 +279,11 @@ void
 tpaw_irc_network_append_server (TpawIrcNetwork *self,
                                    TpawIrcServer *server)
 {
-  TpawIrcNetworkPriv *priv;
-
   g_return_if_fail (TPAW_IS_IRC_NETWORK (self));
   g_return_if_fail (server != NULL && TPAW_IS_IRC_SERVER (server));
+  g_return_if_fail (g_slist_find (self->priv->servers, server) == NULL);
 
-  priv = GET_PRIV (self);
-
-  g_return_if_fail (g_slist_find (priv->servers, server) == NULL);
-
-  priv->servers = g_slist_append (priv->servers, g_object_ref (server));
+  self->priv->servers = g_slist_append (self->priv->servers, g_object_ref (server));
 
   g_signal_connect (server, "modified", G_CALLBACK (server_modified_cb), self);
 
@@ -316,20 +303,17 @@ void
 tpaw_irc_network_remove_server (TpawIrcNetwork *self,
                                    TpawIrcServer *server)
 {
-  TpawIrcNetworkPriv *priv;
   GSList *l;
 
   g_return_if_fail (TPAW_IS_IRC_NETWORK (self));
   g_return_if_fail (server != NULL && TPAW_IS_IRC_SERVER (server));
 
-  priv = GET_PRIV (self);
-
-  l = g_slist_find (priv->servers, server);
+  l = g_slist_find (self->priv->servers, server);
   if (l == NULL)
     return;
 
   g_object_unref (l->data);
-  priv->servers = g_slist_delete_link (priv->servers, l);
+  self->priv->servers = g_slist_delete_link (self->priv->servers, l);
   g_signal_handlers_disconnect_by_func (server, G_CALLBACK (server_modified_cb),
       self);
 
@@ -353,20 +337,17 @@ tpaw_irc_network_set_server_position (TpawIrcNetwork *self,
                                          TpawIrcServer *server,
                                          gint pos)
 {
-  TpawIrcNetworkPriv *priv;
   GSList *l;
 
   g_return_if_fail (TPAW_IS_IRC_NETWORK (self));
   g_return_if_fail (server != NULL && TPAW_IS_IRC_SERVER (server));
 
-  priv = GET_PRIV (self);
-
-  l = g_slist_find (priv->servers, server);
+  l = g_slist_find (self->priv->servers, server);
   if (l == NULL)
     return;
 
-  priv->servers = g_slist_delete_link (priv->servers, l);
-  priv->servers = g_slist_insert (priv->servers, server, pos);
+  self->priv->servers = g_slist_delete_link (self->priv->servers, l);
+  self->priv->servers = g_slist_insert (self->priv->servers, server, pos);
 
   g_signal_emit (self, signals[MODIFIED], 0);
 }
@@ -374,15 +355,11 @@ tpaw_irc_network_set_server_position (TpawIrcNetwork *self,
 const gchar *
 tpaw_irc_network_get_name (TpawIrcNetwork *self)
 {
-  TpawIrcNetworkPriv *priv = GET_PRIV (self);
-
-  return priv->name;
+  return self->priv->name;
 }
 
 const gchar *
 tpaw_irc_network_get_charset (TpawIrcNetwork *self)
 {
-  TpawIrcNetworkPriv *priv = GET_PRIV (self);
-
-  return priv->charset;
+  return self->priv->charset;
 }

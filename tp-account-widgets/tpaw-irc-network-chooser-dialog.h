@@ -42,11 +42,13 @@ G_BEGIN_DECLS
     G_TYPE_INSTANCE_GET_CLASS ((o), TPAW_TYPE_IRC_NETWORK_CHOOSER_DIALOG, \
         TpawIrcNetworkChooserDialogClass))
 
+typedef struct _TpawIrcNetworkChooserDialogPriv TpawIrcNetworkChooserDialogPriv;
+
 typedef struct {
   GtkDialog parent;
 
   /*<private>*/
-  gpointer priv;
+  TpawIrcNetworkChooserDialogPriv *priv;
 } TpawIrcNetworkChooserDialog;
 
 typedef struct {

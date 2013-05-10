@@ -26,12 +26,13 @@
 G_BEGIN_DECLS
 
 typedef struct _TpawIrcServer TpawIrcServer;
+typedef struct _TpawIrcServerPriv TpawIrcServerPriv;
 typedef struct _TpawIrcServerClass TpawIrcServerClass;
 
 struct _TpawIrcServer
 {
   GObject parent;
-  gpointer priv;
+  TpawIrcServerPriv *priv;
 };
 
 struct _TpawIrcServerClass

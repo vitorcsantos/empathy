@@ -28,6 +28,7 @@
 G_BEGIN_DECLS
 
 typedef struct _TpawConnectionManagers TpawConnectionManagers;
+typedef struct _TpawConnectionManagersPriv TpawConnectionManagersPriv;
 typedef struct _TpawConnectionManagersClass TpawConnectionManagersClass;
 
 struct _TpawConnectionManagersClass {
@@ -36,7 +37,8 @@ struct _TpawConnectionManagersClass {
 
 struct _TpawConnectionManagers {
     GObject parent;
-    gpointer priv;
+  /*<private>*/
+    TpawConnectionManagersPriv *priv;
 };
 
 GType tpaw_connection_managers_get_type (void);

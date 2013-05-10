@@ -29,8 +29,6 @@
 #define DEBUG_FLAG EMPATHY_DEBUG_ACCOUNT
 #include "empathy-debug.h"
 
-#define GET_PRIV(obj) EMPATHY_GET_PRIV (obj, TpawAccountSettings)
-
 G_DEFINE_TYPE(TpawAccountSettings, tpaw_account_settings, G_TYPE_OBJECT)
 
 enum {
@@ -49,9 +47,6 @@ enum {
 };
 
 static gulong signals[LAST_SIGNAL] = { 0, };
-
-/* private structure */
-typedef struct _TpawAccountSettingsPriv TpawAccountSettingsPriv;
 
 struct _TpawAccountSettingsPriv
 {
@@ -106,24 +101,22 @@ struct _TpawAccountSettingsPriv
 static void
 tpaw_account_settings_init (TpawAccountSettings *obj)
 {
-  TpawAccountSettingsPriv *priv = G_TYPE_INSTANCE_GET_PRIVATE ((obj),
+  obj->priv = G_TYPE_INSTANCE_GET_PRIVATE ((obj),
     TPAW_TYPE_ACCOUNT_SETTINGS, TpawAccountSettingsPriv);
 
-  obj->priv = priv;
-
   /* allocate any data required by the object here */
-  priv->managers = tpaw_connection_managers_dup_singleton ();
-  priv->account_manager = tp_account_manager_dup ();
+  obj->priv->managers = tpaw_connection_managers_dup_singleton ();
+  obj->priv->account_manager = tp_account_manager_dup ();
 
-  priv->parameters = g_hash_table_new_full (g_str_hash, g_str_equal,
+  obj->priv->parameters = g_hash_table_new_full (g_str_hash, g_str_equal,
     g_free, (GDestroyNotify) g_variant_unref);
 
-  priv->param_regexps = g_hash_table_new_full (g_str_hash, g_str_equal,
+  obj->priv->param_regexps = g_hash_table_new_full (g_str_hash, g_str_equal,
     g_free, (GDestroyNotify) g_regex_unref);
 
-  priv->unset_parameters = g_array_new (TRUE, FALSE, sizeof (gchar *));
+  obj->priv->unset_parameters = g_array_new (TRUE, FALSE, sizeof (gchar *));
 
-  priv->required_params = NULL;
+  obj->priv->required_params = NULL;
 }
 
 static void tpaw_account_settings_dispose (GObject *object);
@@ -141,28 +134,27 @@ tpaw_account_settings_set_property (GObject *object,
     const GValue *value,
     GParamSpec *pspec)
 {
-  TpawAccountSettings *settings = TPAW_ACCOUNT_SETTINGS (object);
-  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
+  TpawAccountSettings *self = TPAW_ACCOUNT_SETTINGS (object);
 
   switch (prop_id)
     {
       case PROP_ACCOUNT:
-        priv->account = g_value_dup_object (value);
+        self->priv->account = g_value_dup_object (value);
         break;
       case PROP_CM_NAME:
-        priv->cm_name = g_value_dup_string (value);
+        self->priv->cm_name = g_value_dup_string (value);
         break;
       case PROP_PROTOCOL:
-        priv->protocol = g_value_dup_string (value);
+        self->priv->protocol = g_value_dup_string (value);
         break;
       case PROP_SERVICE:
-        priv->service = g_value_dup_string (value);
+        self->priv->service = g_value_dup_string (value);
         break;
       case PROP_DISPLAY_NAME:
-        priv->display_name = g_value_dup_string (value);
+        self->priv->display_name = g_value_dup_string (value);
         break;
       case PROP_DISPLAY_NAME_OVERRIDDEN:
-        priv->display_name_overridden = g_value_get_boolean (value);
+        self->priv->display_name_overridden = g_value_get_boolean (value);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -176,31 +168,30 @@ tpaw_account_settings_get_property (GObject *object,
     GValue *value,
     GParamSpec *pspec)
 {
-  TpawAccountSettings *settings = TPAW_ACCOUNT_SETTINGS (object);
-  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
+  TpawAccountSettings *self = TPAW_ACCOUNT_SETTINGS (object);
 
   switch (prop_id)
     {
       case PROP_ACCOUNT:
-        g_value_set_object (value, priv->account);
+        g_value_set_object (value, self->priv->account);
         break;
       case PROP_CM_NAME:
-        g_value_set_string (value, priv->cm_name);
+        g_value_set_string (value, self->priv->cm_name);
         break;
       case PROP_PROTOCOL:
-        g_value_set_string (value, priv->protocol);
+        g_value_set_string (value, self->priv->protocol);
         break;
       case PROP_SERVICE:
-        g_value_set_string (value, priv->service);
+        g_value_set_string (value, self->priv->service);
         break;
       case PROP_DISPLAY_NAME:
-        g_value_set_string (value, priv->display_name);
+        g_value_set_string (value, self->priv->display_name);
         break;
       case PROP_DISPLAY_NAME_OVERRIDDEN:
-        g_value_set_boolean (value, priv->display_name_overridden);
+        g_value_set_boolean (value, self->priv->display_name_overridden);
         break;
       case PROP_READY:
-        g_value_set_boolean (value, priv->ready);
+        g_value_set_boolean (value, self->priv->ready);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -212,33 +203,32 @@ static void
 tpaw_account_settings_constructed (GObject *object)
 {
   TpawAccountSettings *self = TPAW_ACCOUNT_SETTINGS (object);
-  TpawAccountSettingsPriv *priv = GET_PRIV (self);
 
-  if (priv->account != NULL)
+  if (self->priv->account != NULL)
     {
-      g_free (priv->cm_name);
-      g_free (priv->protocol);
-      g_free (priv->service);
+      g_free (self->priv->cm_name);
+      g_free (self->priv->protocol);
+      g_free (self->priv->service);
 
-      priv->cm_name =
-        g_strdup (tp_account_get_cm_name (priv->account));
-      priv->protocol =
-        g_strdup (tp_account_get_protocol_name (priv->account));
-      priv->service =
-        g_strdup (tp_account_get_service (priv->account));
-      priv->icon_name = g_strdup
-        (tp_account_get_icon_name (priv->account));
+      self->priv->cm_name =
+        g_strdup (tp_account_get_cm_name (self->priv->account));
+      self->priv->protocol =
+        g_strdup (tp_account_get_protocol_name (self->priv->account));
+      self->priv->service =
+        g_strdup (tp_account_get_service (self->priv->account));
+      self->priv->icon_name = g_strdup
+        (tp_account_get_icon_name (self->priv->account));
     }
   else
     {
-      priv->icon_name = tpaw_protocol_icon_name (priv->protocol);
+      self->priv->icon_name = tpaw_protocol_icon_name (self->priv->protocol);
     }
 
-  g_assert (priv->cm_name != NULL && priv->protocol != NULL);
+  g_assert (self->priv->cm_name != NULL && self->priv->protocol != NULL);
 
   tpaw_account_settings_check_readyness (self);
 
-  if (!priv->ready)
+  if (!self->priv->ready)
     {
       GQuark features[] = {
           TP_ACCOUNT_FEATURE_CORE,
@@ -246,13 +236,13 @@ tpaw_account_settings_constructed (GObject *object)
           TP_ACCOUNT_FEATURE_ADDRESSING,
           0 };
 
-      if (priv->account != NULL)
+      if (self->priv->account != NULL)
         {
-          tp_proxy_prepare_async (priv->account, features,
+          tp_proxy_prepare_async (self->priv->account, features,
               tpaw_account_settings_account_ready_cb, self);
         }
 
-      tp_g_signal_connect_object (priv->managers, "notify::ready",
+      tp_g_signal_connect_object (self->priv->managers, "notify::ready",
         G_CALLBACK (tpaw_account_settings_managers_ready_cb), object, 0);
     }
 
@@ -340,22 +330,22 @@ static void
 tpaw_account_settings_dispose (GObject *object)
 {
   TpawAccountSettings *self = TPAW_ACCOUNT_SETTINGS (object);
-  TpawAccountSettingsPriv *priv = GET_PRIV (self);
 
-  if (priv->dispose_has_run)
+  if (self->priv->dispose_has_run)
     return;
 
-  priv->dispose_has_run = TRUE;
+  self->priv->dispose_has_run = TRUE;
 
-  if (priv->managers_ready_id != 0)
-    g_signal_handler_disconnect (priv->managers, priv->managers_ready_id);
-  priv->managers_ready_id = 0;
+  if (self->priv->managers_ready_id != 0)
+    g_signal_handler_disconnect (self->priv->managers,
+        self->priv->managers_ready_id);
+  self->priv->managers_ready_id = 0;
 
-  tp_clear_object (&priv->managers);
-  tp_clear_object (&priv->manager);
-  tp_clear_object (&priv->account_manager);
-  tp_clear_object (&priv->account);
-  tp_clear_object (&priv->protocol_obj);
+  tp_clear_object (&self->priv->managers);
+  tp_clear_object (&self->priv->manager);
+  tp_clear_object (&self->priv->account_manager);
+  tp_clear_object (&self->priv->account);
+  tp_clear_object (&self->priv->protocol_obj);
 
   /* release any references held by the object here */
   if (G_OBJECT_CLASS (tpaw_account_settings_parent_class)->dispose)
@@ -366,44 +356,42 @@ static void
 tpaw_account_settings_free_unset_parameters (
     TpawAccountSettings *settings)
 {
-  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
   guint i;
 
-  for (i = 0 ; i < priv->unset_parameters->len; i++)
-    g_free (g_array_index (priv->unset_parameters, gchar *, i));
+  for (i = 0 ; i < settings->priv->unset_parameters->len; i++)
+    g_free (g_array_index (settings->priv->unset_parameters, gchar *, i));
 
-  g_array_set_size (priv->unset_parameters, 0);
+  g_array_set_size (settings->priv->unset_parameters, 0);
 }
 
 static void
 tpaw_account_settings_finalize (GObject *object)
 {
   TpawAccountSettings *self = TPAW_ACCOUNT_SETTINGS (object);
-  TpawAccountSettingsPriv *priv = GET_PRIV (self);
   GList *l;
 
   /* free any data held directly by the object here */
-  g_free (priv->cm_name);
-  g_free (priv->protocol);
-  g_free (priv->service);
-  g_free (priv->display_name);
-  g_free (priv->icon_name);
-  g_free (priv->password);
-  g_free (priv->password_original);
-  g_free (priv->storage_provider);
+  g_free (self->priv->cm_name);
+  g_free (self->priv->protocol);
+  g_free (self->priv->service);
+  g_free (self->priv->display_name);
+  g_free (self->priv->icon_name);
+  g_free (self->priv->password);
+  g_free (self->priv->password_original);
+  g_free (self->priv->storage_provider);
 
-  if (priv->required_params != NULL)
+  if (self->priv->required_params != NULL)
     {
-      for (l = priv->required_params; l; l = l->next)
+      for (l = self->priv->required_params; l; l = l->next)
         g_free (l->data);
-      g_list_free (priv->required_params);
+      g_list_free (self->priv->required_params);
     }
 
-  g_hash_table_unref (priv->parameters);
-  g_hash_table_unref (priv->param_regexps);
+  g_hash_table_unref (self->priv->parameters);
+  g_hash_table_unref (self->priv->param_regexps);
 
   tpaw_account_settings_free_unset_parameters (self);
-  g_array_unref (priv->unset_parameters);
+  g_array_unref (self->priv->unset_parameters);
 
   G_OBJECT_CLASS (tpaw_account_settings_parent_class)->finalize (object);
 }
@@ -432,7 +420,6 @@ tpaw_account_settings_get_password_cb (GObject *source,
     gpointer user_data)
 {
   TpawAccountSettings *self = user_data;
-  TpawAccountSettingsPriv *priv = GET_PRIV (self);
   const gchar *password;
   GError *error = NULL;
 
@@ -449,10 +436,10 @@ tpaw_account_settings_get_password_cb (GObject *source,
    * just means that it's not there, or let's act like that at
    * least. */
 
-  g_assert (priv->password == NULL);
+  g_assert (self->priv->password == NULL);
 
-  priv->password = g_strdup (password);
-  priv->password_original = g_strdup (password);
+  self->priv->password = g_strdup (password);
+  self->priv->password_original = g_strdup (password);
 
   g_signal_emit (self, signals[PASSWORD_RETRIEVED], 0);
 }
@@ -470,80 +457,83 @@ static GVariant * tpaw_account_settings_dup (
 static void
 tpaw_account_settings_check_readyness (TpawAccountSettings *self)
 {
-  TpawAccountSettingsPriv *priv = GET_PRIV (self);
   GQuark features[] = { TP_PROTOCOL_FEATURE_CORE, 0 };
 
-  if (priv->ready)
+  if (self->priv->ready)
     return;
 
-  if (priv->account != NULL
-      && !tp_account_is_prepared (priv->account, TP_ACCOUNT_FEATURE_CORE))
+  if (self->priv->account != NULL
+      && !tp_account_is_prepared (self->priv->account,
+        TP_ACCOUNT_FEATURE_CORE))
       return;
 
-  if (!tpaw_connection_managers_is_ready (priv->managers))
+  if (!tpaw_connection_managers_is_ready (self->priv->managers))
     return;
 
-  if (priv->manager == NULL)
+  if (self->priv->manager == NULL)
     {
-      priv->manager = tpaw_connection_managers_get_cm (
-          priv->managers, priv->cm_name);
+      self->priv->manager = tpaw_connection_managers_get_cm (
+          self->priv->managers, self->priv->cm_name);
     }
 
-  if (priv->manager == NULL)
+  if (self->priv->manager == NULL)
     return;
 
-  g_object_ref (priv->manager);
+  g_object_ref (self->priv->manager);
 
-  if (priv->account != NULL)
+  if (self->priv->account != NULL)
     {
-      g_free (priv->display_name);
-      priv->display_name =
-        g_strdup (tp_account_get_display_name (priv->account));
+      g_free (self->priv->display_name);
+      self->priv->display_name =
+        g_strdup (tp_account_get_display_name (self->priv->account));
 
-      g_free (priv->icon_name);
-      priv->icon_name =
-        g_strdup (tp_account_get_icon_name (priv->account));
+      g_free (self->priv->icon_name);
+      self->priv->icon_name =
+        g_strdup (tp_account_get_icon_name (self->priv->account));
 
-      priv->uri_scheme_tel = account_has_uri_scheme_tel (priv->account);
+      self->priv->uri_scheme_tel = account_has_uri_scheme_tel (
+          self->priv->account);
     }
 
-  if (priv->protocol_obj == NULL)
+  if (self->priv->protocol_obj == NULL)
     {
-      priv->protocol_obj = g_object_ref (
-          tp_connection_manager_get_protocol_object (priv->manager,
-            priv->protocol));
+      self->priv->protocol_obj = g_object_ref (
+          tp_connection_manager_get_protocol_object (self->priv->manager,
+            self->priv->protocol));
     }
 
-  if (!tp_proxy_is_prepared (priv->protocol_obj, TP_PROTOCOL_FEATURE_CORE)
-      && !priv->preparing_protocol)
+  if (!tp_proxy_is_prepared (self->priv->protocol_obj,
+        TP_PROTOCOL_FEATURE_CORE)
+      && !self->priv->preparing_protocol)
     {
-      priv->preparing_protocol = TRUE;
-      tp_proxy_prepare_async (priv->protocol_obj, features,
+      self->priv->preparing_protocol = TRUE;
+      tp_proxy_prepare_async (self->priv->protocol_obj, features,
           tpaw_account_settings_protocol_obj_prepared_cb, self);
       return;
     }
   else
     {
       if (tp_strv_contains (tp_protocol_get_authentication_types (
-                  priv->protocol_obj),
+                  self->priv->protocol_obj),
               TP_IFACE_CHANNEL_INTERFACE_SASL_AUTHENTICATION))
         {
-          priv->supports_sasl = TRUE;
+          self->priv->supports_sasl = TRUE;
         }
     }
 
-  if (priv->required_params == NULL)
+  if (self->priv->required_params == NULL)
     {
       GList *params, *l;
 
-      params = tp_protocol_dup_params (priv->protocol_obj);
+      params = tp_protocol_dup_params (self->priv->protocol_obj);
       for (l = params; l != NULL; l = g_list_next (l))
         {
           TpConnectionManagerParam *cur = l->data;
 
           if (tp_connection_manager_param_is_required (cur))
             {
-              priv->required_params = g_list_append (priv->required_params,
+              self->priv->required_params = g_list_append (
+                  self->priv->required_params,
                   g_strdup (tp_connection_manager_param_get_name (cur)));
             }
         }
@@ -552,20 +542,20 @@ tpaw_account_settings_check_readyness (TpawAccountSettings *self)
            (GDestroyNotify) tp_connection_manager_param_free);
     }
 
-  /* priv->account won't be a proper account if it's the account
+  /* self->priv->account won't be a proper account if it's the account
    * assistant showing this widget. */
-  if (priv->supports_sasl && !priv->password_requested
-      && priv->account != NULL)
+  if (self->priv->supports_sasl && !self->priv->password_requested
+      && self->priv->account != NULL)
     {
-      priv->password_requested = TRUE;
+      self->priv->password_requested = TRUE;
 
       /* Make this call but don't block on its readiness. We'll signal
        * if it's updated later with ::password-retrieved. */
-      tpaw_keyring_get_account_password_async (priv->account,
+      tpaw_keyring_get_account_password_async (self->priv->account,
           tpaw_account_settings_get_password_cb, self);
     }
 
-  priv->ready = TRUE;
+  self->priv->ready = TRUE;
   g_object_notify (G_OBJECT (self), "ready");
 }
 
@@ -623,93 +613,74 @@ tpaw_account_settings_new_for_account (TpAccount *account)
 GList *
 tpaw_account_settings_dup_tp_params (TpawAccountSettings *settings)
 {
-  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
+  g_return_val_if_fail (settings->priv->protocol_obj != NULL, NULL);
 
-  g_return_val_if_fail (priv->protocol_obj != NULL, NULL);
-
-  return tp_protocol_dup_params (priv->protocol_obj);
+  return tp_protocol_dup_params (settings->priv->protocol_obj);
 }
 
 gboolean
 tpaw_account_settings_is_ready (TpawAccountSettings *settings)
 {
-  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
-
-  return priv->ready;
+  return settings->priv->ready;
 }
 
 const gchar *
 tpaw_account_settings_get_cm (TpawAccountSettings *settings)
 {
-  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
-
-  return priv->cm_name;
+  return settings->priv->cm_name;
 }
 
 const gchar *
 tpaw_account_settings_get_protocol (TpawAccountSettings *settings)
 {
-  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
-
-  return priv->protocol;
+  return settings->priv->protocol;
 }
 
 const gchar *
 tpaw_account_settings_get_service (TpawAccountSettings *settings)
 {
-  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
-
-  return priv->service;
+  return settings->priv->service;
 }
 
 void
 tpaw_account_settings_set_service (TpawAccountSettings *settings,
     const gchar *service)
 {
-  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
-
-  if (!tp_strdiff (priv->service, service))
+  if (!tp_strdiff (settings->priv->service, service))
     return;
 
-  g_free (priv->service);
-  priv->service = g_strdup (service);
+  g_free (settings->priv->service);
+  settings->priv->service = g_strdup (service);
   g_object_notify (G_OBJECT (settings), "service");
-  priv->update_service = TRUE;
+  settings->priv->update_service = TRUE;
 }
 
 gchar *
 tpaw_account_settings_get_icon_name (TpawAccountSettings *settings)
 {
-  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
-
-  return priv->icon_name;
+  return settings->priv->icon_name;
 }
 
 const gchar *
 tpaw_account_settings_get_display_name (TpawAccountSettings *settings)
 {
-  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
-
-  return priv->display_name;
+  return settings->priv->display_name;
 }
 
 TpAccount *
 tpaw_account_settings_get_account (TpawAccountSettings *settings)
 {
-  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
-
-  return priv->account;
+  return settings->priv->account;
 }
 
 static gboolean
 tpaw_account_settings_is_unset (TpawAccountSettings *settings,
     const gchar *param)
 {
-  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
   GArray *a;
   guint i;
 
-  a = priv->unset_parameters;
+  a = settings->priv->unset_parameters;
 
   for (i = 0; i < a->len; i++)
     {
@@ -724,9 +695,7 @@ static const TpConnectionManagerParam *
 tpaw_account_settings_get_tp_param (TpawAccountSettings *settings,
     const gchar *param)
 {
-  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
-
-  return tp_protocol_get_param (priv->protocol_obj, param);
+  return tp_protocol_get_param (settings->priv->protocol_obj, param);
 }
 
 gboolean
@@ -740,18 +709,17 @@ static void
 account_settings_remove_from_unset (TpawAccountSettings *settings,
     const gchar *param)
 {
-  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
   guint idx;
   gchar *val;
 
-  for (idx = 0; idx < priv->unset_parameters->len; idx++)
+  for (idx = 0; idx < settings->priv->unset_parameters->len; idx++)
     {
-      val = g_array_index (priv->unset_parameters, gchar *, idx);
+      val = g_array_index (settings->priv->unset_parameters, gchar *, idx);
 
       if (!tp_strdiff (val, param))
         {
-          priv->unset_parameters =
-            g_array_remove_index (priv->unset_parameters, idx);
+          settings->priv->unset_parameters =
+            g_array_remove_index (settings->priv->unset_parameters, idx);
           g_free (val);
 
           break;
@@ -790,21 +758,21 @@ static GVariant *
 tpaw_account_settings_dup (TpawAccountSettings *settings,
     const gchar *param)
 {
-  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
   GVariant *result;
 
   /* Lookup the update parameters we set */
-  result = g_hash_table_lookup (priv->parameters, param);
+  result = g_hash_table_lookup (settings->priv->parameters, param);
   if (result != NULL)
     return g_variant_ref (result);
 
   /* If the parameters isn't unset use the accounts setting if any */
-  if (priv->account != NULL
+  if (settings->priv->account != NULL
       && !tpaw_account_settings_is_unset (settings, param))
     {
       GVariant *parameters;
 
-      parameters = tp_account_dup_parameters_vardict (priv->account);
+      parameters = tp_account_dup_parameters_vardict (
+          settings->priv->account);
       result = g_variant_lookup_value (parameters, param, NULL);
       g_variant_unref (parameters);
 
@@ -821,52 +789,49 @@ void
 tpaw_account_settings_unset (TpawAccountSettings *settings,
     const gchar *param)
 {
-  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
   gchar *v;
   if (tpaw_account_settings_is_unset (settings, param))
     return;
 
-  if (priv->supports_sasl && !tp_strdiff (param, "password"))
+  if (settings->priv->supports_sasl && !tp_strdiff (param, "password"))
     {
-      g_free (priv->password);
-      priv->password = NULL;
+      g_free (settings->priv->password);
+      settings->priv->password = NULL;
       return;
     }
 
   v = g_strdup (param);
 
-  g_array_append_val (priv->unset_parameters, v);
-  g_hash_table_remove (priv->parameters, param);
+  g_array_append_val (settings->priv->unset_parameters, v);
+  g_hash_table_remove (settings->priv->parameters, param);
 }
 
 void
 tpaw_account_settings_discard_changes (TpawAccountSettings *settings)
 {
-  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
-
-  g_hash_table_remove_all (priv->parameters);
+  g_hash_table_remove_all (settings->priv->parameters);
   tpaw_account_settings_free_unset_parameters (settings);
 
-  g_free (priv->password);
-  priv->password = g_strdup (priv->password_original);
+  g_free (settings->priv->password);
+  settings->priv->password = g_strdup (settings->priv->password_original);
 
-  if (priv->account != NULL)
-    priv->uri_scheme_tel = account_has_uri_scheme_tel (priv->account);
+  if (settings->priv->account != NULL)
+    settings->priv->uri_scheme_tel = account_has_uri_scheme_tel (
+        settings->priv->account);
   else
-    priv->uri_scheme_tel = FALSE;
+    settings->priv->uri_scheme_tel = FALSE;
 }
 
 gchar *
 tpaw_account_settings_dup_string (TpawAccountSettings *settings,
     const gchar *param)
 {
-  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
   GVariant *v;
   gchar *result = NULL;
 
-  if (!tp_strdiff (param, "password") && priv->supports_sasl)
+  if (!tp_strdiff (param, "password") && settings->priv->supports_sasl)
     {
-      return g_strdup (priv->password);
+      return g_strdup (settings->priv->password);
     }
 
   v = tpaw_account_settings_dup (settings, param);
@@ -1058,20 +1023,18 @@ tpaw_account_settings_set (TpawAccountSettings *settings,
     const gchar *param,
     GVariant *v)
 {
-  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
-
   g_return_if_fail (param != NULL);
   g_return_if_fail (v != NULL);
 
-  if (!tp_strdiff (param, "password") && priv->supports_sasl &&
+  if (!tp_strdiff (param, "password") && settings->priv->supports_sasl &&
       g_variant_is_of_type (v, G_VARIANT_TYPE_STRING))
     {
-      g_free (priv->password);
-      priv->password = g_variant_dup_string (v, NULL);
+      g_free (settings->priv->password);
+      settings->priv->password = g_variant_dup_string (v, NULL);
     }
   else
     {
-      g_hash_table_insert (priv->parameters, g_strdup (param),
+      g_hash_table_insert (settings->priv->parameters, g_strdup (param),
           g_variant_ref_sink (v));
     }
 
@@ -1106,7 +1069,6 @@ tpaw_account_settings_set_display_name_async (
   GAsyncReadyCallback callback,
   gpointer user_data)
 {
-  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
   GSimpleAsyncResult *result;
 
   g_return_if_fail (name != NULL);
@@ -1114,23 +1076,23 @@ tpaw_account_settings_set_display_name_async (
   result = g_simple_async_result_new (G_OBJECT (settings),
       callback, user_data, tpaw_account_settings_set_display_name_finish);
 
-  if (!tp_strdiff (name, priv->display_name))
+  if (!tp_strdiff (name, settings->priv->display_name))
     {
       /* Nothing to do */
       g_simple_async_result_complete_in_idle (result);
       return;
     }
 
-  g_free (priv->display_name);
-  priv->display_name = g_strdup (name);
+  g_free (settings->priv->display_name);
+  settings->priv->display_name = g_strdup (name);
 
-  if (priv->account == NULL)
+  if (settings->priv->account == NULL)
     {
       g_simple_async_result_complete_in_idle (result);
       return;
     }
 
-  tp_account_set_display_name_async (priv->account, name,
+  tp_account_set_display_name_async (settings->priv->account, name,
       account_settings_display_name_set_cb, result);
 }
 
@@ -1179,7 +1141,6 @@ tpaw_account_settings_set_icon_name_async (
   GAsyncReadyCallback callback,
   gpointer user_data)
 {
-  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
   GSimpleAsyncResult *result;
 
   g_return_if_fail (name != NULL);
@@ -1187,19 +1148,19 @@ tpaw_account_settings_set_icon_name_async (
   result = g_simple_async_result_new (G_OBJECT (settings),
       callback, user_data, tpaw_account_settings_set_icon_name_finish);
 
-  if (priv->account == NULL)
+  if (settings->priv->account == NULL)
     {
-      if (priv->icon_name != NULL)
-        g_free (priv->icon_name);
+      if (settings->priv->icon_name != NULL)
+        g_free (settings->priv->icon_name);
 
-      priv->icon_name = g_strdup (name);
+      settings->priv->icon_name = g_strdup (name);
 
       g_simple_async_result_complete_in_idle (result);
 
       return;
     }
 
-  tp_account_set_icon_name_async (priv->account, name,
+  tp_account_set_icon_name_async (settings->priv->account, name,
       account_settings_icon_name_set_cb, result);
 }
 
@@ -1227,25 +1188,25 @@ tpaw_account_settings_processed_password (GObject *source,
     gpointer finish_func)
 {
   TpawAccountSettings *settings = TPAW_ACCOUNT_SETTINGS (user_data);
-  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
   GSimpleAsyncResult *r;
   GError *error = NULL;
   gboolean (*func) (TpAccount *source, GAsyncResult *result, GError **error) =
     finish_func;
 
-  g_free (priv->password_original);
-  priv->password_original = g_strdup (priv->password);
+  g_free (settings->priv->password_original);
+  settings->priv->password_original = g_strdup (settings->priv->password);
 
   if (!func (TP_ACCOUNT (source), result, &error))
     {
-      g_simple_async_result_set_from_error (priv->apply_result, error);
+      g_simple_async_result_set_from_error (settings->priv->apply_result,
+          error);
       g_error_free (error);
     }
 
   tpaw_account_settings_discard_changes (settings);
 
-  r = priv->apply_result;
-  priv->apply_result = NULL;
+  r = settings->priv->apply_result;
+  settings->priv->apply_result = NULL;
 
   g_simple_async_result_complete (r);
   g_object_unref (r);
@@ -1272,14 +1233,12 @@ tpaw_account_settings_delete_password_cb (GObject *source,
 static void
 update_account_uri_schemes (TpawAccountSettings *self)
 {
-  TpawAccountSettingsPriv *priv = GET_PRIV (self);
-
-  if (priv->uri_scheme_tel == account_has_uri_scheme_tel (
-        priv->account))
+  if (self->priv->uri_scheme_tel == account_has_uri_scheme_tel (
+        self->priv->account))
     return;
 
-  tp_account_set_uri_scheme_association_async (priv->account, "tel",
-      priv->uri_scheme_tel, NULL, NULL);
+  tp_account_set_uri_scheme_association_async (self->priv->account, "tel",
+      self->priv->uri_scheme_tel, NULL, NULL);
 }
 
 static void
@@ -1299,13 +1258,12 @@ set_service_cb (GObject *source,
 static void
 update_account_service (TpawAccountSettings *self)
 {
-  TpawAccountSettingsPriv *priv = GET_PRIV (self);
-
-  if (!priv->update_service)
+  if (!self->priv->update_service)
     return;
 
-  tp_account_set_service_async (priv->account,
-      priv->service != NULL ? priv->service : "", set_service_cb, self);
+  tp_account_set_service_async (self->priv->account,
+      self->priv->service != NULL ? self->priv->service : "",
+      set_service_cb, self);
 }
 
 static void
@@ -1314,7 +1272,6 @@ tpaw_account_settings_account_updated (GObject *source,
     gpointer user_data)
 {
   TpawAccountSettings *settings = TPAW_ACCOUNT_SETTINGS (user_data);
-  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
   GSimpleAsyncResult *r;
   GError *error = NULL;
   GStrv reconnect_required = NULL;
@@ -1322,7 +1279,8 @@ tpaw_account_settings_account_updated (GObject *source,
   if (!tp_account_update_parameters_vardict_finish (TP_ACCOUNT (source),
           result, &reconnect_required, &error))
     {
-      g_simple_async_result_set_from_error (priv->apply_result, error);
+      g_simple_async_result_set_from_error (settings->priv->apply_result,
+          error);
       g_error_free (error);
       goto out;
     }
@@ -1330,24 +1288,25 @@ tpaw_account_settings_account_updated (GObject *source,
   update_account_uri_schemes (settings);
   update_account_service (settings);
 
-  g_simple_async_result_set_op_res_gboolean (priv->apply_result,
+  g_simple_async_result_set_op_res_gboolean (settings->priv->apply_result,
       g_strv_length (reconnect_required) > 0);
 
   /* Only set the password in the keyring if the CM supports SASL. */
-  if (priv->supports_sasl)
+  if (settings->priv->supports_sasl)
     {
-      if (priv->password != NULL)
+      if (settings->priv->password != NULL)
         {
           /* FIXME: we shouldn't save the password if we
            * can't (MaySaveResponse=False) but we don't have API to check that
            * at this point (fdo #35382). */
-          tpaw_keyring_set_account_password_async (priv->account,
-              priv->password, priv->remember_password,
+          tpaw_keyring_set_account_password_async (settings->priv->account,
+              settings->priv->password, settings->priv->remember_password,
               tpaw_account_settings_set_password_cb, settings);
         }
       else
         {
-          tpaw_keyring_delete_account_password_async (priv->account,
+          tpaw_keyring_delete_account_password_async (
+              settings->priv->account,
               tpaw_account_settings_delete_password_cb, settings);
         }
 
@@ -1357,8 +1316,8 @@ tpaw_account_settings_account_updated (GObject *source,
 out:
   tpaw_account_settings_discard_changes (settings);
 
-  r = priv->apply_result;
-  priv->apply_result = NULL;
+  r = settings->priv->apply_result;
+  settings->priv->apply_result = NULL;
 
   g_simple_async_result_complete (r);
   g_object_unref (r);
@@ -1371,27 +1330,27 @@ tpaw_account_settings_created_cb (GObject *source,
     gpointer user_data)
 {
   TpawAccountSettings *settings = TPAW_ACCOUNT_SETTINGS (user_data);
-  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
   GError *error = NULL;
   GSimpleAsyncResult *r;
 
-  priv->account = tp_account_request_create_account_finish (
+  settings->priv->account = tp_account_request_create_account_finish (
       TP_ACCOUNT_REQUEST (source), result, &error);
 
-  if (priv->account == NULL)
+  if (settings->priv->account == NULL)
     {
-      g_simple_async_result_set_from_error (priv->apply_result, error);
+      g_simple_async_result_set_from_error (settings->priv->apply_result,
+          error);
     }
   else
     {
-      if (priv->supports_sasl && priv->password != NULL)
+      if (settings->priv->supports_sasl && settings->priv->password != NULL)
         {
           /* Save the password before connecting */
           /* FIXME: we shouldn't save the password if we
            * can't (MaySaveResponse=False) but we don't have API to check that
            * at this point (fdo #35382). */
-          tpaw_keyring_set_account_password_async (priv->account,
-              priv->password, priv->remember_password,
+          tpaw_keyring_set_account_password_async (settings->priv->account,
+              settings->priv->password, settings->priv->remember_password,
               tpaw_account_settings_set_password_cb,
               settings);
           return;
@@ -1402,8 +1361,8 @@ tpaw_account_settings_created_cb (GObject *source,
       tpaw_account_settings_discard_changes (settings);
     }
 
-  r = priv->apply_result;
-  priv->apply_result = NULL;
+  r = settings->priv->apply_result;
+  settings->priv->apply_result = NULL;
 
   g_simple_async_result_complete (r);
   g_object_unref (r);
@@ -1412,22 +1371,22 @@ tpaw_account_settings_created_cb (GObject *source,
 static void
 tpaw_account_settings_do_create_account (TpawAccountSettings *self)
 {
-  TpawAccountSettingsPriv *priv = GET_PRIV (self);
   TpAccountRequest *account_req;
   GHashTableIter iter;
   gpointer k, v;
 
-  account_req = tp_account_request_new (priv->account_manager, priv->cm_name,
-      priv->protocol, "New Account");
+  account_req = tp_account_request_new (self->priv->account_manager,
+      self->priv->cm_name, self->priv->protocol, "New Account");
 
-  tp_account_request_set_icon_name (account_req, priv->icon_name);
+  tp_account_request_set_icon_name (account_req, self->priv->icon_name);
 
-  tp_account_request_set_display_name (account_req, priv->display_name);
+  tp_account_request_set_display_name (account_req,
+      self->priv->display_name);
 
-  if (priv->service != NULL)
-    tp_account_request_set_service (account_req, priv->service);
+  if (self->priv->service != NULL)
+    tp_account_request_set_service (account_req, self->priv->service);
 
-  g_hash_table_iter_init (&iter, priv->parameters);
+  g_hash_table_iter_init (&iter, self->priv->parameters);
   while (g_hash_table_iter_next (&iter, &k, &v))
     {
       const gchar *key = k;
@@ -1436,10 +1395,10 @@ tpaw_account_settings_do_create_account (TpawAccountSettings *self)
       tp_account_request_set_parameter (account_req, key, value);
     }
 
-  if (priv->storage_provider != NULL)
+  if (self->priv->storage_provider != NULL)
     {
       tp_account_request_set_storage_provider (account_req,
-          priv->storage_provider);
+          self->priv->storage_provider);
     }
 
   tp_account_request_create_account_async (account_req,
@@ -1449,14 +1408,13 @@ tpaw_account_settings_do_create_account (TpawAccountSettings *self)
 static GVariant *
 build_parameters_variant (TpawAccountSettings *self)
 {
-  TpawAccountSettingsPriv *priv = GET_PRIV (self);
   GVariantBuilder *builder;
   GHashTableIter iter;
   gpointer k, v;
 
   builder = g_variant_builder_new (G_VARIANT_TYPE_VARDICT);
 
-  g_hash_table_iter_init (&iter, priv->parameters);
+  g_hash_table_iter_init (&iter, self->priv->parameters);
   while (g_hash_table_iter_next (&iter, &k, &v))
     {
       const gchar *key = k;
@@ -1477,9 +1435,7 @@ tpaw_account_settings_apply_async (TpawAccountSettings *settings,
     GAsyncReadyCallback callback,
     gpointer user_data)
 {
-  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
-
-  if (priv->apply_result != NULL)
+  if (settings->priv->apply_result != NULL)
     {
       g_simple_async_report_error_in_idle (G_OBJECT (settings),
           callback, user_data,
@@ -1487,24 +1443,27 @@ tpaw_account_settings_apply_async (TpawAccountSettings *settings,
       return;
     }
 
-  priv->apply_result = g_simple_async_result_new (G_OBJECT (settings),
-      callback, user_data, tpaw_account_settings_apply_finish);
+  settings->priv->apply_result = g_simple_async_result_new (
+      G_OBJECT (settings), callback, user_data,
+      tpaw_account_settings_apply_finish);
 
   /* We'll have to reconnect only if we change none DBus_Property on an
    * existing account. */
-  g_simple_async_result_set_op_res_gboolean (priv->apply_result, FALSE);
+  g_simple_async_result_set_op_res_gboolean (settings->priv->apply_result,
+      FALSE);
 
-  if (priv->account == NULL)
+  if (settings->priv->account == NULL)
     {
-      g_assert (priv->apply_result != NULL && priv->account == NULL);
+      g_assert (settings->priv->apply_result != NULL &&
+          settings->priv->account == NULL);
 
       tpaw_account_settings_do_create_account (settings);
     }
   else
     {
-      tp_account_update_parameters_vardict_async (priv->account,
+      tp_account_update_parameters_vardict_async (settings->priv->account,
           build_parameters_variant (settings),
-          (const gchar **) priv->unset_parameters->data,
+          (const gchar **) settings->priv->unset_parameters->data,
           tpaw_account_settings_account_updated, settings);
     }
 }
@@ -1533,20 +1492,18 @@ gboolean
 tpaw_account_settings_has_account (TpawAccountSettings *settings,
     TpAccount *account)
 {
-  TpawAccountSettingsPriv *priv;
   const gchar *account_path;
   const gchar *priv_account_path;
 
   g_return_val_if_fail (TPAW_IS_ACCOUNT_SETTINGS (settings), FALSE);
   g_return_val_if_fail (TP_IS_ACCOUNT (account), FALSE);
 
-  priv = GET_PRIV (settings);
-
-  if (priv->account == NULL)
+  if (settings->priv->account == NULL)
     return FALSE;
 
   account_path = tp_proxy_get_object_path (TP_PROXY (account));
-  priv_account_path = tp_proxy_get_object_path (TP_PROXY (priv->account));
+  priv_account_path = tp_proxy_get_object_path (
+      TP_PROXY (settings->priv->account));
 
   return (!tp_strdiff (account_path, priv_account_path));
 }
@@ -1556,7 +1513,6 @@ tpaw_account_settings_set_regex (TpawAccountSettings *settings,
     const gchar *param,
     const gchar *pattern)
 {
-  TpawAccountSettingsPriv *priv = GET_PRIV (settings);
   GRegex *regex;
   GError *error = NULL;
 
@@ -1568,7 +1524,8 @@ tpaw_account_settings_set_regex (TpawAccountSettings *settings,
       return;
     }
 
-  g_hash_table_insert (priv->param_regexps, g_strdup (param), regex);
+  g_hash_table_insert (settings->priv->param_regexps, g_strdup (param),
+      regex);
 }
 
 gboolean
@@ -1576,26 +1533,25 @@ tpaw_account_settings_parameter_is_valid (
     TpawAccountSettings *settings,
     const gchar *param)
 {
-  TpawAccountSettingsPriv *priv;
   const GRegex *regex;
 
   g_return_val_if_fail (TPAW_IS_ACCOUNT_SETTINGS (settings), FALSE);
 
-  priv = GET_PRIV (settings);
-
-  if (g_list_find_custom (priv->required_params, param, (GCompareFunc) strcmp))
+  if (g_list_find_custom (settings->priv->required_params, param,
+        (GCompareFunc) strcmp))
     {
       /* first, look if it's set in our own parameters */
-      if (g_hash_table_lookup (priv->parameters, param) != NULL)
+      if (g_hash_table_lookup (settings->priv->parameters, param) != NULL)
         goto test_regex;
 
       /* if we did not unset the parameter, look if it's in the account */
-      if (priv->account != NULL &&
+      if (settings->priv->account != NULL &&
           !tpaw_account_settings_is_unset (settings, param))
         {
           const GHashTable *account_params;
 
-          account_params = tp_account_get_parameters (priv->account);
+          account_params = tp_account_get_parameters (
+              settings->priv->account);
           if (tp_asv_lookup (account_params, param))
             goto test_regex;
         }
@@ -1605,7 +1561,7 @@ tpaw_account_settings_parameter_is_valid (
 
 test_regex:
   /* test whether parameter value matches its regex */
-  regex = g_hash_table_lookup (priv->param_regexps, param);
+  regex = g_hash_table_lookup (settings->priv->param_regexps, param);
   if (regex)
     {
       gchar *value;
@@ -1627,22 +1583,19 @@ test_regex:
 gboolean
 tpaw_account_settings_is_valid (TpawAccountSettings *settings)
 {
-  TpawAccountSettingsPriv *priv;
   const gchar *param;
   GHashTableIter iter;
   GList *l;
 
   g_return_val_if_fail (TPAW_IS_ACCOUNT_SETTINGS (settings), FALSE);
 
-  priv = GET_PRIV (settings);
-
-  for (l = priv->required_params; l; l = l->next)
+  for (l = settings->priv->required_params; l; l = l->next)
     {
       if (!tpaw_account_settings_parameter_is_valid (settings, l->data))
         return FALSE;
     }
 
-  g_hash_table_iter_init (&iter, priv->param_regexps);
+  g_hash_table_iter_init (&iter, settings->priv->param_regexps);
   while (g_hash_table_iter_next (&iter, (gpointer *) &param, NULL))
     {
       if (!tpaw_account_settings_parameter_is_valid (settings, param))
@@ -1655,61 +1608,47 @@ tpaw_account_settings_is_valid (TpawAccountSettings *settings)
 TpProtocol *
 tpaw_account_settings_get_tp_protocol (TpawAccountSettings *self)
 {
-  TpawAccountSettingsPriv *priv = GET_PRIV (self);
-
-  return priv->protocol_obj;
+  return self->priv->protocol_obj;
 }
 
 gboolean
 tpaw_account_settings_supports_sasl (TpawAccountSettings *self)
 {
-  TpawAccountSettingsPriv *priv = GET_PRIV (self);
-
-  return priv->supports_sasl;
+  return self->priv->supports_sasl;
 }
 
 gboolean
 tpaw_account_settings_param_is_supported (TpawAccountSettings *self,
     const gchar *param)
 {
-  TpawAccountSettingsPriv *priv = GET_PRIV (self);
-
-  return tp_protocol_has_param (priv->protocol_obj, param);
+  return tp_protocol_has_param (self->priv->protocol_obj, param);
 }
 
 void
 tpaw_account_settings_set_uri_scheme_tel (TpawAccountSettings *self,
     gboolean associate)
 {
-  TpawAccountSettingsPriv *priv = GET_PRIV (self);
-
-  priv->uri_scheme_tel = associate;
+  self->priv->uri_scheme_tel = associate;
 }
 
 gboolean
 tpaw_account_settings_has_uri_scheme_tel (
     TpawAccountSettings *self)
 {
-  TpawAccountSettingsPriv *priv = GET_PRIV (self);
-
-  return priv->uri_scheme_tel;
+  return self->priv->uri_scheme_tel;
 }
 
 void
 tpaw_account_settings_set_storage_provider (TpawAccountSettings *self,
     const gchar *storage)
 {
-  TpawAccountSettingsPriv *priv = GET_PRIV (self);
-
-  g_free (priv->storage_provider);
-  priv->storage_provider = g_strdup (storage);
+  g_free (self->priv->storage_provider);
+  self->priv->storage_provider = g_strdup (storage);
 }
 
 void
 tpaw_account_settings_set_remember_password (TpawAccountSettings *self,
     gboolean remember)
 {
-  TpawAccountSettingsPriv *priv = GET_PRIV (self);
-
-  priv->remember_password = remember;
+  self->priv->remember_password = remember;
 }

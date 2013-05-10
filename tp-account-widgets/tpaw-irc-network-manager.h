@@ -28,12 +28,15 @@
 G_BEGIN_DECLS
 
 typedef struct _TpawIrcNetworkManager      TpawIrcNetworkManager;
+typedef struct _TpawIrcNetworkManagerPriv  TpawIrcNetworkManagerPriv;
 typedef struct _TpawIrcNetworkManagerClass TpawIrcNetworkManagerClass;
 
 struct _TpawIrcNetworkManager
 {
   GObject parent;
-  gpointer priv;
+
+  /*<private>*/
+  TpawIrcNetworkManagerPriv *priv;
 };
 
 struct _TpawIrcNetworkManagerClass

@@ -28,12 +28,13 @@
 G_BEGIN_DECLS
 
 typedef struct _TpawIrcNetwork TpawIrcNetwork;
+typedef struct _TpawIrcNetworkPriv TpawIrcNetworkPriv;
 typedef struct _TpawIrcNetworkClass TpawIrcNetworkClass;
 
 struct _TpawIrcNetwork
 {
   GObject parent;
-  gpointer priv;
+  TpawIrcNetworkPriv *priv;
 
   gboolean user_defined;
   gboolean dropped;

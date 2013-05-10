@@ -35,8 +35,6 @@
 #define DEFAULT_IRC_PORT 6667
 #define DEFAULT_IRC_SSL FALSE
 
-#define GET_PRIV(obj) EMPATHY_GET_PRIV (obj, TpawIrcNetworkChooser)
-
 enum {
     PROP_SETTINGS = 1
 };
@@ -48,14 +46,14 @@ enum {
 
 static guint signals[LAST_SIGNAL] = { 0 };
 
-typedef struct {
+struct _TpawIrcNetworkChooserPriv {
     TpawAccountSettings *settings;
 
     TpawIrcNetworkManager *network_manager;
     GtkWidget *dialog;
     /* Displayed network */
     TpawIrcNetwork *network;
-} TpawIrcNetworkChooserPriv;
+};
 
 G_DEFINE_TYPE (TpawIrcNetworkChooser, tpaw_irc_network_chooser,
     GTK_TYPE_BUTTON);
@@ -66,12 +64,12 @@ tpaw_irc_network_chooser_set_property (GObject *object,
     const GValue *value,
     GParamSpec *pspec)
 {
-  TpawIrcNetworkChooserPriv *priv = GET_PRIV (object);
+  TpawIrcNetworkChooser *self = TPAW_IRC_NETWORK_CHOOSER (object);
 
   switch (prop_id)
     {
       case PROP_SETTINGS:
-        priv->settings = g_value_dup_object (value);
+        self->priv->settings = g_value_dup_object (value);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -85,12 +83,12 @@ tpaw_irc_network_chooser_get_property (GObject *object,
     GValue *value,
     GParamSpec *pspec)
 {
-  TpawIrcNetworkChooserPriv *priv = GET_PRIV (object);
+  TpawIrcNetworkChooser *self = TPAW_IRC_NETWORK_CHOOSER (object);
 
   switch (prop_id)
     {
       case PROP_SETTINGS:
-        g_value_set_object (value, priv->settings);
+        g_value_set_object (value, self->priv->settings);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -101,12 +99,10 @@ tpaw_irc_network_chooser_get_property (GObject *object,
 static void
 unset_server_params (TpawIrcNetworkChooser *self)
 {
-  TpawIrcNetworkChooserPriv *priv = GET_PRIV (self);
-
   DEBUG ("Unset server, port and use-ssl");
-  tpaw_account_settings_unset (priv->settings, "server");
-  tpaw_account_settings_unset (priv->settings, "port");
-  tpaw_account_settings_unset (priv->settings, "use-ssl");
+  tpaw_account_settings_unset (self->priv->settings, "server");
+  tpaw_account_settings_unset (self->priv->settings, "port");
+  tpaw_account_settings_unset (self->priv->settings, "use-ssl");
 }
 
 static gchar *
@@ -146,18 +142,17 @@ dup_network_service (TpawIrcNetwork *network)
 static void
 update_server_params (TpawIrcNetworkChooser *self)
 {
-  TpawIrcNetworkChooserPriv *priv = GET_PRIV (self);
   GSList *servers;
   const gchar *charset;
 
-  g_assert (priv->network != NULL);
+  g_assert (self->priv->network != NULL);
 
-  charset = tpaw_irc_network_get_charset (priv->network);
+  charset = tpaw_irc_network_get_charset (self->priv->network);
   DEBUG ("Setting charset to %s", charset);
-  tpaw_account_settings_set (priv->settings, "charset",
+  tpaw_account_settings_set (self->priv->settings, "charset",
       g_variant_new_string (charset));
 
-  servers = tpaw_irc_network_get_servers (priv->network);
+  servers = tpaw_irc_network_get_servers (self->priv->network);
   if (g_slist_length (servers) > 0)
     {
       /* set the first server as CM server */
@@ -174,19 +169,19 @@ update_server_params (TpawIrcNetworkChooser *self)
           NULL);
 
       DEBUG ("Setting server to %s", address);
-      tpaw_account_settings_set (priv->settings, "server",
+      tpaw_account_settings_set (self->priv->settings, "server",
           g_variant_new_string (address));
       DEBUG ("Setting port to %u", port);
-      tpaw_account_settings_set (priv->settings, "port",
+      tpaw_account_settings_set (self->priv->settings, "port",
           g_variant_new_uint32 (port));
       DEBUG ("Setting use-ssl to %s", ssl ? "TRUE": "FALSE" );
-      tpaw_account_settings_set (priv->settings, "use-ssl",
+      tpaw_account_settings_set (self->priv->settings, "use-ssl",
           g_variant_new_boolean (ssl));
 
       /* Set Account.Service */
-      service = dup_network_service (priv->network);
+      service = dup_network_service (self->priv->network);
       DEBUG ("Setting Service to %s", service);
-      tpaw_account_settings_set_service (priv->settings, service);
+      tpaw_account_settings_set_service (self->priv->settings, service);
 
       g_free (address);
       g_free (service);
@@ -204,23 +199,20 @@ update_server_params (TpawIrcNetworkChooser *self)
 static void
 set_label (TpawIrcNetworkChooser *self)
 {
-  TpawIrcNetworkChooserPriv *priv = GET_PRIV (self);
-
-  g_assert (priv->network != NULL);
+  g_assert (self->priv->network != NULL);
 
   gtk_button_set_label (GTK_BUTTON (self),
-      tpaw_irc_network_get_name (priv->network));
+      tpaw_irc_network_get_name (self->priv->network));
 }
 
 static void
 set_label_from_settings (TpawIrcNetworkChooser *self)
 {
-  TpawIrcNetworkChooserPriv *priv = GET_PRIV (self);
   gchar *server;
 
-  tp_clear_object (&priv->network);
+  tp_clear_object (&self->priv->network);
 
-  server = tpaw_account_settings_dup_string (priv->settings, "server");
+  server = tpaw_account_settings_dup_string (self->priv->settings, "server");
 
   if (server != NULL)
     {
@@ -228,28 +220,30 @@ set_label_from_settings (TpawIrcNetworkChooser *self)
       gint port;
       gboolean ssl;
 
-      priv->network = tpaw_irc_network_manager_find_network_by_address (
-          priv->network_manager, server);
+      self->priv->network =
+        tpaw_irc_network_manager_find_network_by_address (
+            self->priv->network_manager, server);
 
-      if (priv->network != NULL)
+      if (self->priv->network != NULL)
         {
           /* The network is known */
-          g_object_ref (priv->network);
+          g_object_ref (self->priv->network);
           set_label (self);
           return;
         }
 
       /* We don't have this network. Let's create it */
-      port = tpaw_account_settings_get_uint32 (priv->settings, "port");
-      ssl = tpaw_account_settings_get_boolean (priv->settings,
+      port = tpaw_account_settings_get_uint32 (self->priv->settings, "port");
+      ssl = tpaw_account_settings_get_boolean (self->priv->settings,
           "use-ssl");
 
       DEBUG ("Create a network %s", server);
-      priv->network = tpaw_irc_network_new (server);
+      self->priv->network = tpaw_irc_network_new (server);
       srv = tpaw_irc_server_new (server, port, ssl);
 
-      tpaw_irc_network_append_server (priv->network, srv);
-      tpaw_irc_network_manager_add (priv->network_manager, priv->network);
+      tpaw_irc_network_append_server (self->priv->network, srv);
+      tpaw_irc_network_manager_add (self->priv->network_manager,
+          self->priv->network);
 
       set_label (self);
 
@@ -259,28 +253,29 @@ set_label_from_settings (TpawIrcNetworkChooser *self)
     }
 
   /* Set default network */
-  priv->network = tpaw_irc_network_manager_find_network_by_address (
-          priv->network_manager, DEFAULT_IRC_NETWORK);
+  self->priv->network = tpaw_irc_network_manager_find_network_by_address (
+          self->priv->network_manager, DEFAULT_IRC_NETWORK);
 
-  if (priv->network == NULL)
+  if (self->priv->network == NULL)
     {
       /* Default network is not known, recreate it */
       TpawIrcServer *srv;
 
-      priv->network = tpaw_irc_network_new (DEFAULT_IRC_NETWORK);
+      self->priv->network = tpaw_irc_network_new (DEFAULT_IRC_NETWORK);
 
       srv = tpaw_irc_server_new (DEFAULT_IRC_NETWORK, DEFAULT_IRC_PORT,
           DEFAULT_IRC_SSL);
 
-      tpaw_irc_network_append_server (priv->network, srv);
-      tpaw_irc_network_manager_add (priv->network_manager, priv->network);
+      tpaw_irc_network_append_server (self->priv->network, srv);
+      tpaw_irc_network_manager_add (self->priv->network_manager,
+          self->priv->network);
 
       g_object_unref (srv);
     }
 
   set_label (self);
   update_server_params (self);
-  g_object_ref (priv->network);
+  g_object_ref (self->priv->network);
 }
 
 static void
@@ -288,9 +283,8 @@ dialog_response_cb (GtkDialog *dialog,
     gint response,
     TpawIrcNetworkChooser *self)
 {
-  TpawIrcNetworkChooserPriv *priv = GET_PRIV (self);
   TpawIrcNetworkChooserDialog *chooser =
-    TPAW_IRC_NETWORK_CHOOSER_DIALOG (priv->dialog);
+    TPAW_IRC_NETWORK_CHOOSER_DIALOG (self->priv->dialog);
 
   if (response != GTK_RESPONSE_CLOSE &&
       response != GTK_RESPONSE_DELETE_EVENT)
@@ -298,9 +292,9 @@ dialog_response_cb (GtkDialog *dialog,
 
   if (tpaw_irc_network_chooser_dialog_get_changed (chooser))
     {
-      tp_clear_object (&priv->network);
+      tp_clear_object (&self->priv->network);
 
-      priv->network = g_object_ref (
+      self->priv->network = g_object_ref (
           tpaw_irc_network_chooser_dialog_get_network (chooser));
 
       update_server_params (self);
@@ -309,40 +303,39 @@ dialog_response_cb (GtkDialog *dialog,
       g_signal_emit (self, signals[SIG_CHANGED], 0);
     }
 
-  gtk_widget_destroy (priv->dialog);
-  priv->dialog = NULL;
+  gtk_widget_destroy (self->priv->dialog);
+  self->priv->dialog = NULL;
 }
 
 static void
 clicked_cb (GtkButton *button,
     gpointer user_data)
 {
-  TpawIrcNetworkChooserPriv *priv = GET_PRIV (button);
+  TpawIrcNetworkChooser *self = TPAW_IRC_NETWORK_CHOOSER (button);
   GtkWindow *window;
 
-  if (priv->dialog != NULL)
+  if (self->priv->dialog != NULL)
     goto out;
 
   window = tpaw_get_toplevel_window (GTK_WIDGET (button));
 
-  priv->dialog = tpaw_irc_network_chooser_dialog_new (priv->settings,
-      priv->network, window);
-  gtk_widget_show_all (priv->dialog);
+  self->priv->dialog = tpaw_irc_network_chooser_dialog_new (
+      self->priv->settings, self->priv->network, window);
+  gtk_widget_show_all (self->priv->dialog);
 
-  tp_g_signal_connect_object (priv->dialog, "response",
+  tp_g_signal_connect_object (self->priv->dialog, "response",
       G_CALLBACK (dialog_response_cb), button, 0);
 
 out:
-  tpaw_window_present (GTK_WINDOW (priv->dialog));
+  tpaw_window_present (GTK_WINDOW (self->priv->dialog));
 }
 
 static void
 tpaw_irc_network_chooser_constructed (GObject *object)
 {
   TpawIrcNetworkChooser *self = (TpawIrcNetworkChooser *) object;
-  TpawIrcNetworkChooserPriv *priv = GET_PRIV (self);
 
-  g_assert (priv->settings != NULL);
+  g_assert (self->priv->settings != NULL);
 
   set_label_from_settings (self);
 
@@ -352,12 +345,11 @@ tpaw_irc_network_chooser_constructed (GObject *object)
 static void
 tpaw_irc_network_chooser_dispose (GObject *object)
 {
-  TpawIrcNetworkManager *self = (TpawIrcNetworkManager *) object;
-  TpawIrcNetworkChooserPriv *priv = GET_PRIV (self);
+  TpawIrcNetworkChooser *self = (TpawIrcNetworkChooser *) object;
 
-  tp_clear_object (&priv->settings);
-  tp_clear_object (&priv->network_manager);
-  tp_clear_object (&priv->network);
+  tp_clear_object (&self->priv->settings);
+  tp_clear_object (&self->priv->network_manager);
+  tp_clear_object (&self->priv->network);
 
   if (G_OBJECT_CLASS (tpaw_irc_network_chooser_parent_class)->dispose)
     G_OBJECT_CLASS (tpaw_irc_network_chooser_parent_class)->dispose (object);
@@ -396,13 +388,10 @@ tpaw_irc_network_chooser_class_init (TpawIrcNetworkChooserClass *klass)
 static void
 tpaw_irc_network_chooser_init (TpawIrcNetworkChooser *self)
 {
-  TpawIrcNetworkChooserPriv *priv;
-
-  priv = G_TYPE_INSTANCE_GET_PRIVATE (self,
+  self->priv = G_TYPE_INSTANCE_GET_PRIVATE (self,
       TPAW_TYPE_IRC_NETWORK_CHOOSER, TpawIrcNetworkChooserPriv);
-  self->priv = priv;
 
-  priv->network_manager = tpaw_irc_network_manager_dup_default ();
+  self->priv->network_manager = tpaw_irc_network_manager_dup_default ();
 }
 
 GtkWidget *
@@ -416,7 +405,5 @@ tpaw_irc_network_chooser_new (TpawAccountSettings *settings)
 TpawIrcNetwork *
 tpaw_irc_network_chooser_get_network (TpawIrcNetworkChooser *self)
 {
-  TpawIrcNetworkChooserPriv *priv = GET_PRIV (self);
-
-  return priv->network;
+  return self->priv->network;
 }

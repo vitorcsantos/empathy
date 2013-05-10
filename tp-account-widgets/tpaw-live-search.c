@@ -29,15 +29,13 @@
 
 G_DEFINE_TYPE (TpawLiveSearch, tpaw_live_search, GTK_TYPE_HBOX)
 
-#define GET_PRIV(obj) EMPATHY_GET_PRIV (obj, TpawLiveSearch)
-
-typedef struct
+struct _TpawLiveSearchPriv
 {
   GtkWidget *search_entry;
   GtkWidget *hook_widget;
 
   GPtrArray *stripped_words;
-} TpawLiveSearchPriv;
+};
 
 enum
 {
@@ -285,7 +283,6 @@ live_search_text_changed (GtkEntry *entry,
     gpointer user_data)
 {
   TpawLiveSearch *self = TPAW_LIVE_SEARCH (user_data);
-  TpawLiveSearchPriv *priv = GET_PRIV (self);
   const gchar *text;
 
   text = gtk_entry_get_text (entry);
@@ -295,10 +292,10 @@ live_search_text_changed (GtkEntry *entry,
   else
     gtk_widget_show (GTK_WIDGET (self));
 
-  if (priv->stripped_words != NULL)
-    g_ptr_array_unref (priv->stripped_words);
+  if (self->priv->stripped_words != NULL)
+    g_ptr_array_unref (self->priv->stripped_words);
 
-  priv->stripped_words = tpaw_live_search_strip_utf8_string (text);
+  self->priv->stripped_words = tpaw_live_search_strip_utf8_string (text);
 
   g_object_notify (G_OBJECT (self), "text");
 }
@@ -320,7 +317,6 @@ live_search_key_press_event_cb (GtkWidget *widget,
     gpointer user_data)
 {
   TpawLiveSearch *self = TPAW_LIVE_SEARCH (user_data);
-  TpawLiveSearchPriv *priv = GET_PRIV (self);
   GdkEvent *new_event;
   gboolean ret;
 
@@ -364,16 +360,16 @@ live_search_key_press_event_cb (GtkWidget *widget,
        return FALSE;
 
   /* realize the widget if it is not realized yet */
-  gtk_widget_realize (priv->search_entry);
-  if (!gtk_widget_has_focus (priv->search_entry))
+  gtk_widget_realize (self->priv->search_entry);
+  if (!gtk_widget_has_focus (self->priv->search_entry))
     {
-      gtk_widget_grab_focus (priv->search_entry);
-      gtk_editable_set_position (GTK_EDITABLE (priv->search_entry), -1);
+      gtk_widget_grab_focus (self->priv->search_entry);
+      gtk_editable_set_position (GTK_EDITABLE (self->priv->search_entry), -1);
     }
 
   /* forward the event to the search entry */
   new_event = gdk_event_copy ((GdkEvent *) event);
-  ret = gtk_widget_event (priv->search_entry, new_event);
+  ret = gtk_widget_event (self->priv->search_entry, new_event);
   gdk_event_free (new_event);
 
   return ret;
@@ -389,17 +385,15 @@ live_search_entry_activate_cb (GtkEntry *entry,
 static void
 live_search_release_hook_widget (TpawLiveSearch *self)
 {
-  TpawLiveSearchPriv *priv = GET_PRIV (self);
-
   /* remove old handlers if old source was not null */
-  if (priv->hook_widget != NULL)
+  if (self->priv->hook_widget != NULL)
     {
-      g_signal_handlers_disconnect_by_func (priv->hook_widget,
+      g_signal_handlers_disconnect_by_func (self->priv->hook_widget,
           live_search_key_press_event_cb, self);
-      g_signal_handlers_disconnect_by_func (priv->hook_widget,
+      g_signal_handlers_disconnect_by_func (self->priv->hook_widget,
           live_search_hook_widget_destroy_cb, self);
-      g_object_unref (priv->hook_widget);
-      priv->hook_widget = NULL;
+      g_object_unref (self->priv->hook_widget);
+      self->priv->hook_widget = NULL;
     }
 }
 
@@ -429,10 +423,9 @@ static void
 live_search_finalize (GObject *obj)
 {
   TpawLiveSearch *self = TPAW_LIVE_SEARCH (obj);
-  TpawLiveSearchPriv *priv = GET_PRIV (self);
 
-  if (priv->stripped_words != NULL)
-    g_ptr_array_unref (priv->stripped_words);
+  if (self->priv->stripped_words != NULL)
+    g_ptr_array_unref (self->priv->stripped_words);
 
   if (G_OBJECT_CLASS (tpaw_live_search_parent_class)->finalize != NULL)
     G_OBJECT_CLASS (tpaw_live_search_parent_class)->finalize (obj);
@@ -485,7 +478,6 @@ static void
 live_search_unmap (GtkWidget *widget)
 {
   TpawLiveSearch *self = TPAW_LIVE_SEARCH (widget);
-  TpawLiveSearchPriv *priv = GET_PRIV (self);
 
   GTK_WIDGET_CLASS (tpaw_live_search_parent_class)->unmap (widget);
 
@@ -494,20 +486,19 @@ live_search_unmap (GtkWidget *widget)
    * won't be shown. */
   gtk_widget_hide (widget);
 
-  gtk_entry_set_text (GTK_ENTRY (priv->search_entry), "");
+  gtk_entry_set_text (GTK_ENTRY (self->priv->search_entry), "");
 
-  if (priv->hook_widget != NULL)
-    gtk_widget_grab_focus (priv->hook_widget);
+  if (self->priv->hook_widget != NULL)
+    gtk_widget_grab_focus (self->priv->hook_widget);
 }
 
 static void
 live_search_show (GtkWidget *widget)
 {
   TpawLiveSearch *self = TPAW_LIVE_SEARCH (widget);
-  TpawLiveSearchPriv *priv = GET_PRIV (self);
 
-  if (!gtk_widget_has_focus (priv->search_entry))
-    gtk_widget_grab_focus (priv->search_entry);
+  if (!gtk_widget_has_focus (self->priv->search_entry))
+    gtk_widget_grab_focus (self->priv->search_entry);
 
   GTK_WIDGET_CLASS (tpaw_live_search_parent_class)->show (widget);
 }
@@ -516,12 +507,11 @@ static void
 live_search_grab_focus (GtkWidget *widget)
 {
   TpawLiveSearch *self = TPAW_LIVE_SEARCH (widget);
-  TpawLiveSearchPriv *priv = GET_PRIV (self);
 
-  if (!gtk_widget_has_focus (priv->search_entry))
+  if (!gtk_widget_has_focus (self->priv->search_entry))
     {
-      gtk_widget_grab_focus (priv->search_entry);
-      gtk_editable_set_position (GTK_EDITABLE (priv->search_entry), -1);
+      gtk_widget_grab_focus (self->priv->search_entry);
+      gtk_editable_set_position (GTK_EDITABLE (self->priv->search_entry), -1);
     }
 }
 
@@ -574,35 +564,32 @@ tpaw_live_search_class_init (TpawLiveSearchClass *klass)
 static void
 tpaw_live_search_init (TpawLiveSearch *self)
 {
-  TpawLiveSearchPriv *priv =
-    G_TYPE_INSTANCE_GET_PRIVATE ((self), TPAW_TYPE_LIVE_SEARCH,
+  self->priv = G_TYPE_INSTANCE_GET_PRIVATE ((self), TPAW_TYPE_LIVE_SEARCH,
         TpawLiveSearchPriv);
 
   gtk_widget_set_no_show_all (GTK_WIDGET (self), TRUE);
 
-  priv->search_entry = gtk_entry_new ();
-  gtk_entry_set_icon_from_stock (GTK_ENTRY (priv->search_entry),
+  self->priv->search_entry = gtk_entry_new ();
+  gtk_entry_set_icon_from_stock (GTK_ENTRY (self->priv->search_entry),
       GTK_ENTRY_ICON_SECONDARY, GTK_STOCK_CLOSE);
-  gtk_entry_set_icon_activatable (GTK_ENTRY (priv->search_entry),
+  gtk_entry_set_icon_activatable (GTK_ENTRY (self->priv->search_entry),
       GTK_ENTRY_ICON_SECONDARY, TRUE);
-  gtk_entry_set_icon_sensitive (GTK_ENTRY (priv->search_entry),
+  gtk_entry_set_icon_sensitive (GTK_ENTRY (self->priv->search_entry),
       GTK_ENTRY_ICON_SECONDARY, TRUE);
-  gtk_widget_show (priv->search_entry);
+  gtk_widget_show (self->priv->search_entry);
 
-  gtk_box_pack_start (GTK_BOX (self), priv->search_entry, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (self), self->priv->search_entry, TRUE, TRUE, 0);
 
-  g_signal_connect (priv->search_entry, "icon_release",
+  g_signal_connect (self->priv->search_entry, "icon_release",
       G_CALLBACK (live_search_close_pressed), self);
-  g_signal_connect (priv->search_entry, "changed",
+  g_signal_connect (self->priv->search_entry, "changed",
       G_CALLBACK (live_search_text_changed), self);
-  g_signal_connect (priv->search_entry, "key-press-event",
+  g_signal_connect (self->priv->search_entry, "key-press-event",
       G_CALLBACK (live_search_entry_key_pressed_cb), self);
-  g_signal_connect (priv->search_entry, "activate",
+  g_signal_connect (self->priv->search_entry, "activate",
       G_CALLBACK (live_search_entry_activate_cb), self);
 
-  priv->hook_widget = NULL;
-
-  self->priv = priv;
+  self->priv->hook_widget = NULL;
 }
 
 GtkWidget *
@@ -620,23 +607,17 @@ tpaw_live_search_new (GtkWidget *hook)
 GtkWidget *
 tpaw_live_search_get_hook_widget (TpawLiveSearch *self)
 {
-  TpawLiveSearchPriv *priv = GET_PRIV (self);
-
   g_return_val_if_fail (TPAW_IS_LIVE_SEARCH (self), NULL);
 
-  return priv->hook_widget;
+  return self->priv->hook_widget;
 }
 
 void
 tpaw_live_search_set_hook_widget (TpawLiveSearch *self,
     GtkWidget *hook)
 {
-  TpawLiveSearchPriv *priv;
-
   g_return_if_fail (TPAW_IS_LIVE_SEARCH (self));
   g_return_if_fail (hook == NULL || GTK_IS_WIDGET (hook));
-
-  priv = GET_PRIV (self);
 
   /* release the actual widget */
   live_search_release_hook_widget (self);
@@ -644,11 +625,11 @@ tpaw_live_search_set_hook_widget (TpawLiveSearch *self,
   /* connect handlers if new source is not null */
   if (hook != NULL)
     {
-      priv->hook_widget = g_object_ref (hook);
-      g_signal_connect (priv->hook_widget, "key-press-event",
+      self->priv->hook_widget = g_object_ref (hook);
+      g_signal_connect (self->priv->hook_widget, "key-press-event",
           G_CALLBACK (live_search_key_press_event_cb),
           self);
-      g_signal_connect (priv->hook_widget, "destroy",
+      g_signal_connect (self->priv->hook_widget, "destroy",
           G_CALLBACK (live_search_hook_widget_destroy_cb),
           self);
     }
@@ -657,23 +638,19 @@ tpaw_live_search_set_hook_widget (TpawLiveSearch *self,
 const gchar *
 tpaw_live_search_get_text (TpawLiveSearch *self)
 {
-  TpawLiveSearchPriv *priv = GET_PRIV (self);
-
   g_return_val_if_fail (TPAW_IS_LIVE_SEARCH (self), NULL);
 
-  return gtk_entry_get_text (GTK_ENTRY (priv->search_entry));
+  return gtk_entry_get_text (GTK_ENTRY (self->priv->search_entry));
 }
 
 void
 tpaw_live_search_set_text (TpawLiveSearch *self,
     const gchar *text)
 {
-  TpawLiveSearchPriv *priv = GET_PRIV (self);
-
   g_return_if_fail (TPAW_IS_LIVE_SEARCH (self));
   g_return_if_fail (text != NULL);
 
-  gtk_entry_set_text (GTK_ENTRY (priv->search_entry), text);
+  gtk_entry_set_text (GTK_ENTRY (self->priv->search_entry), text);
 }
 
 /**
@@ -696,13 +673,9 @@ gboolean
 tpaw_live_search_match (TpawLiveSearch *self,
     const gchar *string)
 {
-  TpawLiveSearchPriv *priv;
-
   g_return_val_if_fail (TPAW_IS_LIVE_SEARCH (self), FALSE);
 
-  priv = GET_PRIV (self);
-
-  return tpaw_live_search_match_words (string, priv->stripped_words);
+  return tpaw_live_search_match_words (string, self->priv->stripped_words);
 }
 
 gboolean
@@ -723,7 +696,5 @@ tpaw_live_search_match_string (const gchar *string,
 GPtrArray *
 tpaw_live_search_get_words (TpawLiveSearch *self)
 {
-  TpawLiveSearchPriv *priv = GET_PRIV (self);
-
-  return priv->stripped_words;
+  return self->priv->stripped_words;
 }

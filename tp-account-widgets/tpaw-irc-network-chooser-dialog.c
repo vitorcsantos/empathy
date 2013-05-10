@@ -35,8 +35,6 @@
 
 #include "tpaw-irc-network-chooser-dialog.h"
 
-#define GET_PRIV(obj) EMPATHY_GET_PRIV (obj, TpawIrcNetworkChooserDialog)
-
 enum {
     PROP_SETTINGS = 1,
     PROP_NETWORK
@@ -46,7 +44,7 @@ enum {
 	RESPONSE_RESET = 0
 };
 
-typedef struct {
+struct _TpawIrcNetworkChooserDialogPriv {
     TpawAccountSettings *settings;
     TpawIrcNetwork *network;
 
@@ -61,7 +59,7 @@ typedef struct {
 
     gulong search_sig;
     gulong activate_sig;
-} TpawIrcNetworkChooserDialogPriv;
+};
 
 enum {
   COL_NETWORK_OBJ,
@@ -77,15 +75,16 @@ tpaw_irc_network_chooser_dialog_set_property (GObject *object,
     const GValue *value,
     GParamSpec *pspec)
 {
-  TpawIrcNetworkChooserDialogPriv *priv = GET_PRIV (object);
+  TpawIrcNetworkChooserDialog *self =
+    TPAW_IRC_NETWORK_CHOOSER_DIALOG (object);
 
   switch (prop_id)
     {
       case PROP_SETTINGS:
-        priv->settings = g_value_dup_object (value);
+        self->priv->settings = g_value_dup_object (value);
         break;
       case PROP_NETWORK:
-        priv->network = g_value_dup_object (value);
+        self->priv->network = g_value_dup_object (value);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -99,15 +98,16 @@ tpaw_irc_network_chooser_dialog_get_property (GObject *object,
     GValue *value,
     GParamSpec *pspec)
 {
-  TpawIrcNetworkChooserDialogPriv *priv = GET_PRIV (object);
+  TpawIrcNetworkChooserDialog *self =
+    TPAW_IRC_NETWORK_CHOOSER_DIALOG (object);
 
   switch (prop_id)
     {
       case PROP_SETTINGS:
-        g_value_set_object (value, priv->settings);
+        g_value_set_object (value, self->priv->settings);
         break;
       case PROP_NETWORK:
-        g_value_set_object (value, priv->network);
+        g_value_set_object (value, self->priv->network);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -115,18 +115,18 @@ tpaw_irc_network_chooser_dialog_get_property (GObject *object,
     }
 }
 
-/* The iter returned by *it is a priv->store iter (not a filter one) */
+/* The iter returned by *it is a self->priv->store iter (not a filter one) */
 static TpawIrcNetwork *
 dup_selected_network (TpawIrcNetworkChooserDialog *self,
     GtkTreeIter *it)
 {
-  TpawIrcNetworkChooserDialogPriv *priv = GET_PRIV (self);
   TpawIrcNetwork *network;
   GtkTreeSelection *selection;
   GtkTreeIter iter;
   GtkTreeModel *model;
 
-  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (priv->treeview));
+  selection = gtk_tree_view_get_selection (
+      GTK_TREE_VIEW (self->priv->treeview));
   if (selection == NULL)
     return NULL;
 
@@ -138,8 +138,8 @@ dup_selected_network (TpawIrcNetworkChooserDialog *self,
 
   if (it != NULL)
     {
-      gtk_tree_model_filter_convert_iter_to_child_iter (priv->filter, it,
-          &iter);
+      gtk_tree_model_filter_convert_iter_to_child_iter ( self->priv->filter,
+          it, &iter);
     }
 
   return network;
@@ -149,21 +149,20 @@ static void
 treeview_changed_cb (GtkTreeView *treeview,
     TpawIrcNetworkChooserDialog *self)
 {
-  TpawIrcNetworkChooserDialogPriv *priv = GET_PRIV (self);
   TpawIrcNetwork *network;
 
   network = dup_selected_network (self, NULL);
-  if (network == priv->network)
+  if (network == self->priv->network)
     {
       g_clear_object (&network);
       return;
     }
 
-  tp_clear_object (&priv->network);
+  tp_clear_object (&self->priv->network);
   /* Transfer the reference */
-  priv->network = network;
+  self->priv->network = network;
 
-  priv->changed = TRUE;
+  self->priv->changed = TRUE;
 }
 
 /* Take a filter iterator as argument */
@@ -171,14 +170,14 @@ static void
 scroll_to_iter (TpawIrcNetworkChooserDialog *self,
     GtkTreeIter *filter_iter)
 {
-  TpawIrcNetworkChooserDialogPriv *priv = GET_PRIV (self);
   GtkTreePath *path;
 
-  path = gtk_tree_model_get_path (GTK_TREE_MODEL (priv->filter), filter_iter);
+  path = gtk_tree_model_get_path (GTK_TREE_MODEL (self->priv->filter),
+      filter_iter);
 
   if (path != NULL)
     {
-      gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW (priv->treeview),
+      gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW (self->priv->treeview),
           path, NULL, FALSE, 0, 0);
 
       gtk_tree_path_free (path);
@@ -191,20 +190,20 @@ select_iter (TpawIrcNetworkChooserDialog *self,
     GtkTreeIter *filter_iter,
     gboolean emulate_changed)
 {
-  TpawIrcNetworkChooserDialogPriv *priv = GET_PRIV (self);
   GtkTreeSelection *selection;
   GtkTreePath *path;
 
   /* Select the network */
   selection = gtk_tree_view_get_selection (
-      GTK_TREE_VIEW (priv->treeview));
+      GTK_TREE_VIEW (self->priv->treeview));
 
   gtk_tree_selection_select_iter (selection, filter_iter);
 
-  path = gtk_tree_model_get_path (GTK_TREE_MODEL (priv->filter), filter_iter);
+  path = gtk_tree_model_get_path (GTK_TREE_MODEL (self->priv->filter),
+      filter_iter);
   if (path != NULL)
     {
-      gtk_tree_view_set_cursor (GTK_TREE_VIEW (priv->treeview), path,
+      gtk_tree_view_set_cursor (GTK_TREE_VIEW (self->priv->treeview), path,
           NULL, FALSE);
 
       gtk_tree_path_free (path);
@@ -217,7 +216,7 @@ select_iter (TpawIrcNetworkChooserDialog *self,
     {
       /* gtk_tree_selection_select_iter doesn't fire the 'cursor-changed' signal
        * so we call the callback manually. */
-      treeview_changed_cb (GTK_TREE_VIEW (priv->treeview), self);
+      treeview_changed_cb (GTK_TREE_VIEW (self->priv->treeview), self);
     }
 }
 
@@ -225,10 +224,10 @@ static GtkTreeIter
 iter_to_filter_iter (TpawIrcNetworkChooserDialog *self,
     GtkTreeIter *iter)
 {
-  TpawIrcNetworkChooserDialogPriv *priv = GET_PRIV (self);
   GtkTreeIter filter_iter;
 
-  g_assert (gtk_tree_model_filter_convert_child_iter_to_iter (priv->filter,
+  g_assert (
+      gtk_tree_model_filter_convert_child_iter_to_iter (self->priv->filter,
         &filter_iter, iter));
 
   return filter_iter;
@@ -237,23 +236,22 @@ iter_to_filter_iter (TpawIrcNetworkChooserDialog *self,
 static void
 fill_store (TpawIrcNetworkChooserDialog *self)
 {
-  TpawIrcNetworkChooserDialogPriv *priv = GET_PRIV (self);
   GSList *networks, *l;
 
   networks = tpaw_irc_network_manager_get_networks (
-      priv->network_manager);
+      self->priv->network_manager);
 
   for (l = networks; l != NULL; l = g_slist_next (l))
     {
       TpawIrcNetwork *network = l->data;
       GtkTreeIter iter;
 
-      gtk_list_store_insert_with_values (priv->store, &iter, -1,
+      gtk_list_store_insert_with_values (self->priv->store, &iter, -1,
           COL_NETWORK_OBJ, network,
           COL_NETWORK_NAME, tpaw_irc_network_get_name (network),
           -1);
 
-      if (network == priv->network)
+      if (network == self->priv->network)
         {
           GtkTreeIter filter_iter = iter_to_filter_iter (self, &iter);
 
@@ -270,24 +268,23 @@ static void
 irc_network_dialog_destroy_cb (GtkWidget *widget,
     TpawIrcNetworkChooserDialog *self)
 {
-  TpawIrcNetworkChooserDialogPriv *priv = GET_PRIV (self);
   TpawIrcNetwork *network;
   GtkTreeIter iter, filter_iter;
 
-  priv->changed = TRUE;
+  self->priv->changed = TRUE;
 
   network = dup_selected_network (self, &iter);
   if (network == NULL)
     return;
 
   /* name could be changed */
-  gtk_list_store_set (GTK_LIST_STORE (priv->store), &iter,
+  gtk_list_store_set (GTK_LIST_STORE (self->priv->store), &iter,
       COL_NETWORK_NAME, tpaw_irc_network_get_name (network), -1);
 
   filter_iter = iter_to_filter_iter (self, &iter);
   scroll_to_iter (self, &filter_iter);
 
-  gtk_widget_grab_focus (priv->treeview);
+  gtk_widget_grab_focus (self->priv->treeview);
 
   g_object_unref (network);
 }
@@ -321,16 +318,15 @@ edit_network (TpawIrcNetworkChooserDialog *self)
 static void
 add_network (TpawIrcNetworkChooserDialog *self)
 {
-  TpawIrcNetworkChooserDialogPriv *priv = GET_PRIV (self);
   TpawIrcNetwork *network;
   GtkTreeIter iter, filter_iter;
 
-  gtk_widget_hide (priv->search);
+  gtk_widget_hide (self->priv->search);
 
   network = tpaw_irc_network_new (_("New Network"));
-  tpaw_irc_network_manager_add (priv->network_manager, network);
+  tpaw_irc_network_manager_add (self->priv->network_manager, network);
 
-  gtk_list_store_insert_with_values (priv->store, &iter, -1,
+  gtk_list_store_insert_with_values (self->priv->store, &iter, -1,
       COL_NETWORK_OBJ, network,
       COL_NETWORK_NAME, tpaw_irc_network_get_name (network),
       -1);
@@ -346,7 +342,6 @@ add_network (TpawIrcNetworkChooserDialog *self)
 static void
 remove_network (TpawIrcNetworkChooserDialog *self)
 {
-  TpawIrcNetworkChooserDialogPriv *priv = GET_PRIV (self);
   TpawIrcNetwork *network;
   GtkTreeIter iter;
 
@@ -355,12 +350,12 @@ remove_network (TpawIrcNetworkChooserDialog *self)
     return;
 
   /* Hide the search after picking the network to get the right one */
-  gtk_widget_hide (priv->search);
+  gtk_widget_hide (self->priv->search);
 
   DEBUG ("Remove network %s", tpaw_irc_network_get_name (network));
 
   /* Delete network and select next network */
-  if (gtk_list_store_remove (priv->store, &iter))
+  if (gtk_list_store_remove (self->priv->store, &iter))
     {
       GtkTreeIter filter_iter = iter_to_filter_iter (self, &iter);
 
@@ -372,21 +367,21 @@ remove_network (TpawIrcNetworkChooserDialog *self)
       GtkTreeIter last, filter_iter;
       gint n_elements;
 
-      n_elements = gtk_tree_model_iter_n_children (GTK_TREE_MODEL (priv->store),
-          NULL);
+      n_elements = gtk_tree_model_iter_n_children (
+          GTK_TREE_MODEL (self->priv->store), NULL);
 
       if (n_elements > 0)
         {
-          gtk_tree_model_iter_nth_child (GTK_TREE_MODEL (priv->store), &last,
-              NULL, (n_elements-1));
+          gtk_tree_model_iter_nth_child (GTK_TREE_MODEL (self->priv->store),
+              &last, NULL, (n_elements-1));
           filter_iter = iter_to_filter_iter (self, &last);
 
           select_iter (self, &filter_iter, TRUE);
         }
     }
 
-  tpaw_irc_network_manager_remove (priv->network_manager, network);
-  gtk_widget_grab_focus (priv->treeview);
+  tpaw_irc_network_manager_remove (self->priv->network_manager, network);
+  gtk_widget_grab_focus (self->priv->treeview);
 
   g_object_unref (network);
 }
@@ -394,11 +389,10 @@ remove_network (TpawIrcNetworkChooserDialog *self)
 static void
 reset_networks (TpawIrcNetworkChooserDialog *self)
 {
-  TpawIrcNetworkChooserDialogPriv *priv = GET_PRIV (self);
   GSList *networks, *l;
 
   networks = tpaw_irc_network_manager_get_dropped_networks (
-      priv->network_manager);
+      self->priv->network_manager);
 
   for (l = networks; l != NULL; l = g_slist_next (l))
     {
@@ -408,7 +402,7 @@ reset_networks (TpawIrcNetworkChooserDialog *self)
       network = TPAW_IRC_NETWORK (l->data);
       tpaw_irc_network_activate (network);
 
-      gtk_list_store_insert_with_values (priv->store, &iter, -1,
+      gtk_list_store_insert_with_values (self->priv->store, &iter, -1,
           COL_NETWORK_OBJ, network,
           COL_NETWORK_NAME, tpaw_irc_network_get_name (network),
           -1);
@@ -431,13 +425,13 @@ filter_visible_func (GtkTreeModel *model,
     GtkTreeIter *iter,
     gpointer user_data)
 {
-  TpawIrcNetworkChooserDialogPriv *priv = GET_PRIV (user_data);
+  TpawIrcNetworkChooserDialog *self = user_data;
   TpawIrcNetwork *network;
   gboolean visible;
 
   gtk_tree_model_get (model, iter, COL_NETWORK_OBJ, &network, -1);
 
-  visible = tpaw_live_search_match (TPAW_LIVE_SEARCH (priv->search),
+  visible = tpaw_live_search_match (TPAW_LIVE_SEARCH (self->priv->search),
       tpaw_irc_network_get_name (network));
 
   g_object_unref (network);
@@ -457,19 +451,19 @@ search_text_notify_cb (TpawLiveSearch *search,
     GParamSpec *pspec,
     TpawIrcNetworkChooserDialog *self)
 {
-  TpawIrcNetworkChooserDialogPriv *priv = GET_PRIV (self);
   GtkTreeIter filter_iter;
   gboolean sensitive = FALSE;
 
-  gtk_tree_model_filter_refilter (priv->filter);
+  gtk_tree_model_filter_refilter (self->priv->filter);
 
   /* Is there at least one network in the view ? */
-  if (gtk_tree_model_get_iter_first (GTK_TREE_MODEL (priv->filter),
+  if (gtk_tree_model_get_iter_first (GTK_TREE_MODEL (self->priv->filter),
         &filter_iter))
     {
       const gchar *text;
 
-      text = tpaw_live_search_get_text (TPAW_LIVE_SEARCH (priv->search));
+      text = tpaw_live_search_get_text (
+          TPAW_LIVE_SEARCH (self->priv->search));
       if (!TPAW_STR_EMPTY (text))
         {
           /* We are doing a search, select the first matching network */
@@ -481,16 +475,17 @@ search_text_notify_cb (TpawLiveSearch *search,
           GtkTreeSelection *selection;
 
           selection = gtk_tree_view_get_selection (
-              GTK_TREE_VIEW (priv->treeview));
+              GTK_TREE_VIEW (self->priv->treeview));
 
-          if (gtk_tree_selection_get_selected (selection, NULL, &filter_iter))
+          if (gtk_tree_selection_get_selected (selection, NULL,
+                &filter_iter))
             scroll_to_iter (self, &filter_iter);
         }
 
       sensitive = TRUE;
     }
 
-  gtk_widget_set_sensitive (priv->select_button, sensitive);
+  gtk_widget_set_sensitive (self->priv->select_button, sensitive);
 }
 
 static void
@@ -518,7 +513,6 @@ static void
 tpaw_irc_network_chooser_dialog_constructed (GObject *object)
 {
   TpawIrcNetworkChooserDialog *self = (TpawIrcNetworkChooserDialog *) object;
-  TpawIrcNetworkChooserDialogPriv *priv = GET_PRIV (self);
   GtkDialog *dialog = GTK_DIALOG (self);
   GtkCellRenderer *renderer;
   GtkWidget *vbox;
@@ -528,23 +522,26 @@ tpaw_irc_network_chooser_dialog_constructed (GObject *object)
   GtkToolItem *item;
   GtkStyleContext *context;
 
-  g_assert (priv->settings != NULL);
+  g_assert (self->priv->settings != NULL);
 
   gtk_window_set_title (GTK_WINDOW (self), _("Choose an IRC network"));
 
   /* Create store and treeview */
-  priv->store = gtk_list_store_new (2, G_TYPE_OBJECT, G_TYPE_STRING);
+  self->priv->store = gtk_list_store_new (2, G_TYPE_OBJECT, G_TYPE_STRING);
 
-  gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (priv->store),
+  gtk_tree_sortable_set_sort_column_id (
+      GTK_TREE_SORTABLE (self->priv->store),
       COL_NETWORK_NAME,
       GTK_SORT_ASCENDING);
 
-  priv->treeview = gtk_tree_view_new ();
-  gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (priv->treeview), FALSE);
-  gtk_tree_view_set_enable_search (GTK_TREE_VIEW (priv->treeview), FALSE);
+  self->priv->treeview = gtk_tree_view_new ();
+  gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (self->priv->treeview),
+      FALSE);
+  gtk_tree_view_set_enable_search (GTK_TREE_VIEW (self->priv->treeview),
+      FALSE);
 
   column = gtk_tree_view_column_new ();
-  gtk_tree_view_append_column (GTK_TREE_VIEW (priv->treeview), column);
+  gtk_tree_view_append_column (GTK_TREE_VIEW (self->priv->treeview), column);
 
   renderer = gtk_cell_renderer_text_new ();
   gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (column), renderer, TRUE);
@@ -560,7 +557,7 @@ tpaw_irc_network_chooser_dialog_constructed (GObject *object)
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scroll),
       GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
 
-  gtk_container_add (GTK_CONTAINER (scroll), priv->treeview);
+  gtk_container_add (GTK_CONTAINER (scroll), self->priv->treeview);
   gtk_box_pack_start (GTK_BOX (vbox), scroll, TRUE, TRUE, 6);
 
   /* Treeview toolbar */
@@ -593,36 +590,36 @@ tpaw_irc_network_chooser_dialog_constructed (GObject *object)
   gtk_style_context_set_junction_sides (context, GTK_JUNCTION_TOP);
 
   /* Live search */
-  priv->search = tpaw_live_search_new (priv->treeview);
+  self->priv->search = tpaw_live_search_new (self->priv->treeview);
 
-  gtk_box_pack_start (GTK_BOX (vbox), priv->search, FALSE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), self->priv->search, FALSE, TRUE, 0);
 
-  priv->filter = GTK_TREE_MODEL_FILTER (gtk_tree_model_filter_new (
-          GTK_TREE_MODEL (priv->store), NULL));
-  gtk_tree_model_filter_set_visible_func (priv->filter,
+  self->priv->filter = GTK_TREE_MODEL_FILTER (gtk_tree_model_filter_new (
+          GTK_TREE_MODEL (self->priv->store), NULL));
+  gtk_tree_model_filter_set_visible_func (self->priv->filter,
           filter_visible_func, self, NULL);
 
-  gtk_tree_view_set_model (GTK_TREE_VIEW (priv->treeview),
-          GTK_TREE_MODEL (priv->filter));
+  gtk_tree_view_set_model (GTK_TREE_VIEW (self->priv->treeview),
+          GTK_TREE_MODEL (self->priv->filter));
 
-  priv->search_sig = g_signal_connect (priv->search, "notify::text",
-      G_CALLBACK (search_text_notify_cb), self);
+  self->priv->search_sig = g_signal_connect (self->priv->search,
+      "notify::text", G_CALLBACK (search_text_notify_cb), self);
 
-  priv->activate_sig = g_signal_connect (priv->search, "activate",
-      G_CALLBACK (search_activate_cb), self);
+  self->priv->activate_sig = g_signal_connect (self->priv->search,
+      "activate", G_CALLBACK (search_activate_cb), self);
 
   /* Add buttons */
   gtk_dialog_add_buttons (dialog,
       _("Reset _Networks List"), RESPONSE_RESET,
       NULL);
 
-  priv->select_button = gtk_dialog_add_button (dialog,
+  self->priv->select_button = gtk_dialog_add_button (dialog,
       C_("verb displayed on a button to select an IRC network", "Select"),
       GTK_RESPONSE_CLOSE);
 
   fill_store (self);
 
-  g_signal_connect (priv->treeview, "cursor-changed",
+  g_signal_connect (self->priv->treeview, "cursor-changed",
       G_CALLBACK (treeview_changed_cb), self);
 
   g_signal_connect (self, "response",
@@ -637,34 +634,35 @@ tpaw_irc_network_chooser_dialog_constructed (GObject *object)
 static void
 tpaw_irc_network_chooser_dialog_dispose (GObject *object)
 {
-  TpawIrcNetworkManager *self = (TpawIrcNetworkManager *) object;
-  TpawIrcNetworkChooserDialogPriv *priv = GET_PRIV (self);
+  TpawIrcNetworkChooserDialog *self = (TpawIrcNetworkChooserDialog *) object;
 
-  if (priv->search_sig != 0)
+  if (self->priv->search_sig != 0)
     {
-      g_signal_handler_disconnect (priv->search, priv->search_sig);
-      priv->search_sig = 0;
+      g_signal_handler_disconnect (self->priv->search,
+          self->priv->search_sig);
+      self->priv->search_sig = 0;
     }
 
-  if (priv->activate_sig != 0)
+  if (self->priv->activate_sig != 0)
     {
-      g_signal_handler_disconnect (priv->search, priv->activate_sig);
-      priv->activate_sig = 0;
+      g_signal_handler_disconnect (self->priv->search,
+          self->priv->activate_sig);
+      self->priv->activate_sig = 0;
     }
 
-  if (priv->search != NULL)
+  if (self->priv->search != NULL)
     {
-      tpaw_live_search_set_hook_widget (TPAW_LIVE_SEARCH (priv->search),
-          NULL);
+      tpaw_live_search_set_hook_widget (
+          TPAW_LIVE_SEARCH (self->priv->search), NULL);
 
-      priv->search = NULL;
+      self->priv->search = NULL;
     }
 
-  tp_clear_object (&priv->settings);
-  tp_clear_object (&priv->network);
-  tp_clear_object (&priv->network_manager);
-  tp_clear_object (&priv->store);
-  tp_clear_object (&priv->filter);
+  tp_clear_object (&self->priv->settings);
+  tp_clear_object (&self->priv->network);
+  tp_clear_object (&self->priv->network_manager);
+  tp_clear_object (&self->priv->store);
+  tp_clear_object (&self->priv->filter);
 
   if (G_OBJECT_CLASS (tpaw_irc_network_chooser_dialog_parent_class)->dispose)
     G_OBJECT_CLASS (tpaw_irc_network_chooser_dialog_parent_class)->dispose (object);
@@ -701,13 +699,10 @@ tpaw_irc_network_chooser_dialog_class_init (TpawIrcNetworkChooserDialogClass *kl
 static void
 tpaw_irc_network_chooser_dialog_init (TpawIrcNetworkChooserDialog *self)
 {
-  TpawIrcNetworkChooserDialogPriv *priv;
-
-  priv = G_TYPE_INSTANCE_GET_PRIVATE (self,
+  self->priv = G_TYPE_INSTANCE_GET_PRIVATE (self,
       TPAW_TYPE_IRC_NETWORK_CHOOSER_DIALOG, TpawIrcNetworkChooserDialogPriv);
-  self->priv = priv;
 
-  priv->network_manager = tpaw_irc_network_manager_dup_default ();
+  self->priv->network_manager = tpaw_irc_network_manager_dup_default ();
 }
 
 GtkWidget *
@@ -726,16 +721,12 @@ TpawIrcNetwork *
 tpaw_irc_network_chooser_dialog_get_network (
     TpawIrcNetworkChooserDialog *self)
 {
-  TpawIrcNetworkChooserDialogPriv *priv = GET_PRIV (self);
-
-  return priv->network;
+  return self->priv->network;
 }
 
 gboolean
 tpaw_irc_network_chooser_dialog_get_changed (
     TpawIrcNetworkChooserDialog *self)
 {
-  TpawIrcNetworkChooserDialogPriv *priv = GET_PRIV (self);
-
-  return priv->changed;
+  return self->priv->changed;
 }

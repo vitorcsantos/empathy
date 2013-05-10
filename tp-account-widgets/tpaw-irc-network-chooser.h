@@ -42,11 +42,13 @@ G_BEGIN_DECLS
     G_TYPE_INSTANCE_GET_CLASS ((o), TPAW_TYPE_IRC_NETWORK_CHOOSER, \
         TpawIrcNetworkChooserClass))
 
+typedef struct _TpawIrcNetworkChooserPriv TpawIrcNetworkChooserPriv;
+
 typedef struct {
   GtkButton parent;
 
   /*<private>*/
-  gpointer priv;
+  TpawIrcNetworkChooserPriv *priv;
 } TpawIrcNetworkChooser;
 
 typedef struct {
