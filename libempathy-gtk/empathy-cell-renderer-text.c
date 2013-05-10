@@ -24,6 +24,8 @@
 #include "config.h"
 #include "empathy-cell-renderer-text.h"
 
+#include <tp-account-widgets/tpaw-utils.h>
+
 #include "empathy-utils.h"
 
 #define GET_PRIV(obj) EMPATHY_GET_PRIV (obj, EmpathyCellRendererText)
@@ -349,7 +351,7 @@ cell_renderer_text_update_text (EmpathyCellRendererText *cell,
 	}
 
 	if (priv->compact) {
-		if (EMP_STR_EMPTY (priv->status)) {
+		if (TPAW_STR_EMPTY (priv->status)) {
 			str = g_strdup (priv->name);
 		} else {
 			str = g_strdup_printf ("%s %s", priv->name, priv->status);
@@ -358,7 +360,7 @@ cell_renderer_text_update_text (EmpathyCellRendererText *cell,
 		const gchar *status = priv->status;
 		gboolean on_a_phone = FALSE;
 
-		if (EMP_STR_EMPTY (priv->status)) {
+		if (TPAW_STR_EMPTY (priv->status)) {
 			status = empathy_presence_get_default_message (priv->presence_type);
 		}
 

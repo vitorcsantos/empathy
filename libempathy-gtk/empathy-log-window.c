@@ -30,6 +30,7 @@
 #include <tp-account-widgets/tpaw-builder.h>
 #include <tp-account-widgets/tpaw-images.h>
 #include <tp-account-widgets/tpaw-camera-monitor.h>
+#include <tp-account-widgets/tpaw-utils.h>
 
 #include "action-chain-internal.h"
 #include "empathy-account-chooser.h"
@@ -1332,7 +1333,7 @@ log_window_append_call (TplEvent *event,
   GTimeSpan span;
 
   /* If searching, only add the call if the search string appears anywhere */
-  if (!EMP_STR_EMPTY (log_window->priv->last_find))
+  if (!TPAW_STR_EMPTY (log_window->priv->last_find))
     {
       if (strstr (tpl_entity_get_identifier (tpl_event_get_sender (event)),
               log_window->priv->last_find) == NULL &&
@@ -2009,7 +2010,7 @@ log_window_find_populate (EmpathyLogWindow *self,
 
   gtk_list_store_clear (store);
 
-  if (EMP_STR_EMPTY (search_criteria))
+  if (TPAW_STR_EMPTY (search_criteria))
     {
       tp_clear_pointer (&self->priv->hits, tpl_log_manager_search_free);
       webkit_web_view_set_highlight_text_matches (

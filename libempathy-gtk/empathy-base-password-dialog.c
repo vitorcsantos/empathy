@@ -21,6 +21,7 @@
 #include "empathy-base-password-dialog.h"
 
 #include <glib/gi18n-lib.h>
+#include <tp-account-widgets/tpaw-utils.h>
 
 #include "empathy-utils.h"
 
@@ -108,10 +109,10 @@ password_entry_changed_cb (GtkEditable *entry,
   str = gtk_entry_get_text (GTK_ENTRY (entry));
 
   gtk_entry_set_icon_sensitive (GTK_ENTRY (entry),
-      GTK_ENTRY_ICON_SECONDARY, !EMP_STR_EMPTY (str));
+      GTK_ENTRY_ICON_SECONDARY, !TPAW_STR_EMPTY (str));
 
   gtk_widget_set_sensitive (self->ok_button,
-      !EMP_STR_EMPTY (str));
+      !TPAW_STR_EMPTY (str));
 }
 
 static void

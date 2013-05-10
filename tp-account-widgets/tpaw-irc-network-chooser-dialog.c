@@ -27,6 +27,7 @@
 #include "tpaw-irc-network-dialog.h"
 #include "tpaw-irc-network-manager.h"
 #include "tpaw-live-search.h"
+#include "tpaw-utils.h"
 #include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_ACCOUNT | EMPATHY_DEBUG_IRC
@@ -469,7 +470,7 @@ search_text_notify_cb (TpawLiveSearch *search,
       const gchar *text;
 
       text = tpaw_live_search_get_text (TPAW_LIVE_SEARCH (priv->search));
-      if (!EMP_STR_EMPTY (text))
+      if (!TPAW_STR_EMPTY (text))
         {
           /* We are doing a search, select the first matching network */
           select_iter (self, &filter_iter, TRUE);

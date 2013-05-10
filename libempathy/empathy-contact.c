@@ -22,6 +22,8 @@
 #include "config.h"
 #include "empathy-contact.h"
 
+#include <tp-account-widgets/tpaw-utils.h>
+
 #ifdef HAVE_GEOCODE
 #include <geocode-glib/geocode-glib.h>
 #endif
@@ -462,7 +464,7 @@ empathy_contact_set_id (EmpathyContact *contact,
       priv->id = g_strdup (id);
 
       g_object_notify (G_OBJECT (contact), "id");
-      if (EMP_STR_EMPTY (priv->alias))
+      if (TPAW_STR_EMPTY (priv->alias))
           g_object_notify (G_OBJECT (contact), "alias");
     }
 
@@ -768,7 +770,7 @@ empathy_contact_from_tpl_contact (TpAccount *account,
         }
     }
 
-  if (!EMP_STR_EMPTY (tpl_entity_get_avatar_token (tpl_entity)))
+  if (!TPAW_STR_EMPTY (tpl_entity_get_avatar_token (tpl_entity)))
     contact_load_avatar_cache (retval,
         tpl_entity_get_avatar_token (tpl_entity));
 
@@ -812,12 +814,12 @@ empathy_contact_get_alias (EmpathyContact *contact)
 
   priv = GET_PRIV (contact);
 
-  if (!EMP_STR_EMPTY (priv->alias))
+  if (!TPAW_STR_EMPTY (priv->alias))
     alias = priv->alias;
   else if (priv->tp_contact != NULL)
     alias = tp_contact_get_alias (priv->tp_contact);
 
-  if (!EMP_STR_EMPTY (alias))
+  if (!TPAW_STR_EMPTY (alias))
     return alias;
   else
     return empathy_contact_get_id (contact);
@@ -1185,7 +1187,7 @@ empathy_contact_get_status (EmpathyContact *contact)
   g_return_val_if_fail (EMPATHY_IS_CONTACT (contact), "");
 
   message = empathy_contact_get_presence_message (contact);
-  if (!EMP_STR_EMPTY (message))
+  if (!TPAW_STR_EMPTY (message))
     return message;
 
   return empathy_presence_get_default_message (
@@ -1330,7 +1332,7 @@ contact_get_avatar_filename (EmpathyContact *contact,
   gchar *avatar_file;
   gchar *token_escaped;
 
-  if (EMP_STR_EMPTY (empathy_contact_get_id (contact)))
+  if (TPAW_STR_EMPTY (empathy_contact_get_id (contact)))
     return NULL;
 
   token_escaped = tp_escape_as_identifier (token);
@@ -1363,7 +1365,7 @@ contact_load_avatar_cache (EmpathyContact *contact,
   GError *error = NULL;
 
   g_return_val_if_fail (EMPATHY_IS_CONTACT (contact), FALSE);
-  g_return_val_if_fail (!EMP_STR_EMPTY (token), FALSE);
+  g_return_val_if_fail (!TPAW_STR_EMPTY (token), FALSE);
 
   /* Load the avatar from file if it exists */
   filename = contact_get_avatar_filename (contact, token);

@@ -21,6 +21,8 @@
 #include "config.h"
 #include "empathy-tp-chat.h"
 
+#include <tp-account-widgets/tpaw-utils.h>
+
 #include "empathy-request-util.h"
 #include "empathy-utils.h"
 
@@ -1115,7 +1117,7 @@ empathy_tp_chat_get_id (EmpathyTpChat *self)
   g_return_val_if_fail (EMPATHY_IS_TP_CHAT (self), NULL);
 
   id = tp_channel_get_identifier ((TpChannel *) self);
-  if (!EMP_STR_EMPTY (id))
+  if (!TPAW_STR_EMPTY (id))
     return id;
   else if (self->priv->remote_contact)
     return empathy_contact_get_id (self->priv->remote_contact);

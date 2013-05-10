@@ -30,6 +30,7 @@
 
 #include <glib/gi18n.h>
 #include <tp-account-widgets/tpaw-builder.h>
+#include <tp-account-widgets/tpaw-utils.h>
 
 #include "empathy-about-dialog.h"
 #include "empathy-chat-manager.h"
@@ -962,10 +963,10 @@ chat_window_update_chat_tab_full (EmpathyChat *chat,
       g_free (tmp);
     }
 
-  if (!EMP_STR_EMPTY (status))
+  if (!TPAW_STR_EMPTY (status))
     append_markup_printf (tooltip, "\n<i>%s</i>", status);
 
-  if (!EMP_STR_EMPTY (subject))
+  if (!TPAW_STR_EMPTY (subject))
     append_markup_printf (tooltip, "\n<b>%s</b> %s",
         _("Topic:"), subject);
 
@@ -2783,7 +2784,7 @@ empathy_chat_window_find_chat (TpAccount *account,
 {
   GList *l;
 
-  g_return_val_if_fail (!EMP_STR_EMPTY (id), NULL);
+  g_return_val_if_fail (!TPAW_STR_EMPTY (id), NULL);
 
   for (l = chat_windows; l; l = l->next)
     {

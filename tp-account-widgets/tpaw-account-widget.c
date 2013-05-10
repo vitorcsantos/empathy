@@ -266,7 +266,7 @@ account_widget_entry_changed_common (TpawAccountWidget *self,
   prev_status = tpaw_account_settings_parameter_is_valid (
       self->priv->settings, param_name);
 
-  if (EMP_STR_EMPTY (str))
+  if (TPAW_STR_EMPTY (str))
     {
       tpaw_account_settings_unset (self->priv->settings, param_name);
 
@@ -492,7 +492,7 @@ password_entry_changed_cb (GtkEditable *entry,
   str = gtk_entry_get_text (GTK_ENTRY (entry));
 
   gtk_entry_set_icon_sensitive (GTK_ENTRY (entry),
-      GTK_ENTRY_ICON_SECONDARY, !EMP_STR_EMPTY (str));
+      GTK_ENTRY_ICON_SECONDARY, !TPAW_STR_EMPTY (str));
 }
 
 static void
@@ -580,7 +580,7 @@ tpaw_account_widget_setup_widget (TpawAccountWidget *self,
               GTK_ENTRY_ICON_SECONDARY, GTK_STOCK_CLEAR);
 
           gtk_entry_set_icon_sensitive (GTK_ENTRY (widget),
-              GTK_ENTRY_ICON_SECONDARY, !EMP_STR_EMPTY (str));
+              GTK_ENTRY_ICON_SECONDARY, !TPAW_STR_EMPTY (str));
 
           g_signal_connect (widget, "icon-release",
               G_CALLBACK (clear_icon_released_cb), self);
@@ -1219,7 +1219,7 @@ suffix_id_widget_changed_cb (GtkWidget *entry,
   account = tpaw_account_settings_dup_string (self->priv->settings,
       "account");
 
-  if (!EMP_STR_EMPTY (account) &&
+  if (!TPAW_STR_EMPTY (account) &&
       !g_str_has_suffix (account, self->priv->jid_suffix))
     {
       gchar *tmp;
@@ -1885,7 +1885,7 @@ account_settings_password_retrieved_cb (GObject *object,
 
   gtk_toggle_button_set_active (
       GTK_TOGGLE_BUTTON (self->priv->remember_password_widget),
-      !EMP_STR_EMPTY (password));
+      !TPAW_STR_EMPTY (password));
 
   self->priv->automatic_change = FALSE;
 
@@ -1976,7 +1976,7 @@ do_constructed (GObject *obj)
            * (bgo #683571) */
           gtk_toggle_button_set_active (
               GTK_TOGGLE_BUTTON (self->priv->remember_password_widget),
-              !EMP_STR_EMPTY (password));
+              !TPAW_STR_EMPTY (password));
 
           /* The password might not have been retrieved from the
            * keyring yet. We should update the remember password

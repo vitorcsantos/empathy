@@ -21,6 +21,8 @@
 #include "config.h"
 #include "empathy-presence-manager.h"
 
+#include <tp-account-widgets/tpaw-utils.h>
+
 #include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
@@ -107,7 +109,7 @@ most_available_presence_changed (TpAccountManager *manager,
 
   g_free (self->priv->status);
   self->priv->state = state;
-  if (EMP_STR_EMPTY (status_message))
+  if (TPAW_STR_EMPTY (status_message))
     self->priv->status = NULL;
   else
     self->priv->status = g_strdup (status_message);

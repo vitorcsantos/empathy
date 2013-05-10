@@ -83,7 +83,7 @@ status_icon_update_tooltip (EmpathyStatusIcon *icon)
 		type = tp_account_manager_get_most_available_presence (
 			priv->account_manager, NULL, &msg);
 
-		if (!EMP_STR_EMPTY (msg)) {
+		if (!TPAW_STR_EMPTY (msg)) {
 			gtk_status_icon_set_tooltip_text (priv->icon, msg);
 		}
 		else {

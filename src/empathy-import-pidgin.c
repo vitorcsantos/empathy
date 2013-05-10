@@ -24,6 +24,7 @@
 
 #include <glib/gstdio.h>
 #include <dbus/dbus-protocol.h>
+#include <tp-account-widgets/tpaw-utils.h>
 
 #include "empathy-import-utils.h"
 #include "empathy-utils.h"
@@ -356,7 +357,7 @@ empathy_import_pidgin_load (void)
            * http://bugzilla.gnome.org/show_bug.cgi?id=579992 */
           if (!tp_strdiff (data->protocol, "jabber"))
             {
-              if (EMP_STR_EMPTY (tp_asv_get_string (data->settings, "server")))
+              if (TPAW_STR_EMPTY (tp_asv_get_string (data->settings, "server")))
                 {
                   g_hash_table_remove (data->settings, "port");
                   g_hash_table_remove (data->settings, "server");

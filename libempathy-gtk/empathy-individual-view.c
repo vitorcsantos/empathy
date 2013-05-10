@@ -1596,7 +1596,7 @@ individual_view_row_has_child_toggled_cb (GtkTreeModel *model,
       EMPATHY_INDIVIDUAL_STORE_COL_NAME, &name,
       -1);
 
-  if (!is_group || EMP_STR_EMPTY (name))
+  if (!is_group || TPAW_STR_EMPTY (name))
     {
       g_free (name);
       return;

@@ -23,6 +23,7 @@
 #include "empathy-groups-widget.h"
 
 #include <glib/gi18n-lib.h>
+#include <tp-account-widgets/tpaw-utils.h>
 
 #include "empathy-utils.h"
 #include "empathy-connection-aggregator.h"
@@ -117,7 +118,7 @@ model_find_name (EmpathyGroupsWidget *self,
   EmpathyGroupsWidgetPriv *priv = GET_PRIV (self);
   FindNameData data;
 
-  if (EMP_STR_EMPTY (name))
+  if (TPAW_STR_EMPTY (name))
     return FALSE;
 
   data.widget = self;
@@ -192,7 +193,7 @@ add_group_entry_changed_cb (GtkEditable *editable,
   else
     {
       gtk_widget_set_sensitive (GTK_WIDGET (priv->add_group_button),
-          !EMP_STR_EMPTY (group));
+          !TPAW_STR_EMPTY (group));
     }
 }
 

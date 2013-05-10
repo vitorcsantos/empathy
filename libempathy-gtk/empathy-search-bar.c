@@ -22,6 +22,7 @@
 
 #include <glib/gi18n-lib.h>
 #include <tp-account-widgets/tpaw-builder.h>
+#include <tp-account-widgets/tpaw-utils.h>
 
 #include "empathy-ui-utils.h"
 #include "empathy-utils.h"
@@ -72,9 +73,9 @@ empathy_search_bar_update_buttons (EmpathySearchBar *self,
       &can_go_backward, &can_go_forward);
 
   gtk_widget_set_sensitive (priv->search_previous,
-      can_go_backward && !EMP_STR_EMPTY (search));
+      can_go_backward && !TPAW_STR_EMPTY (search));
   gtk_widget_set_sensitive (priv->search_next,
-      can_go_forward && !EMP_STR_EMPTY (search));
+      can_go_forward && !TPAW_STR_EMPTY (search));
 }
 
 static void
@@ -158,7 +159,7 @@ empathy_search_bar_search (EmpathySearchBar *self,
 
   /* (don't) display the not found label */
   gtk_widget_set_visible (priv->search_not_found,
-      !(found || EMP_STR_EMPTY (search)));
+      !(found || TPAW_STR_EMPTY (search)));
 
   /* update the buttons */
   empathy_search_bar_update_buttons (self, search, match_case);

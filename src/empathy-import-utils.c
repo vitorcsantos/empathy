@@ -23,6 +23,7 @@
 #include "empathy-import-utils.h"
 
 #include <tp-account-widgets/tpaw-connection-managers.h>
+#include <tp-account-widgets/tpaw-utils.h>
 
 #include "empathy-import-pidgin.h"
 #include "empathy-utils.h"
@@ -32,7 +33,7 @@ empathy_import_account_data_new (const gchar *source)
 {
   EmpathyImportAccountData *data;
 
-  g_return_val_if_fail (!EMP_STR_EMPTY (source), NULL);
+  g_return_val_if_fail (!TPAW_STR_EMPTY (source), NULL);
 
   data = g_slice_new0 (EmpathyImportAccountData);
   data->settings = g_hash_table_new_full (g_str_hash, g_str_equal, NULL,

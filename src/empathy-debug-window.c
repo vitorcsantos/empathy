@@ -24,6 +24,7 @@
 
 #include <glib/gi18n.h>
 #include <libsoup/soup.h>
+#include <tp-account-widgets/tpaw-utils.h>
 
 #include "empathy-geometry.h"
 #include "empathy-ui-utils.h"
@@ -1005,7 +1006,7 @@ debug_window_name_owner_changed_cb (TpDBusDaemon *proxy,
       return;
     }
 
-  if (EMP_STR_EMPTY (arg1) && !EMP_STR_EMPTY (arg2))
+  if (TPAW_STR_EMPTY (arg1) && !TPAW_STR_EMPTY (arg2))
     {
       GtkTreeIter *found_at_iter = NULL;
       gchar *display_name;
@@ -1085,7 +1086,7 @@ debug_window_name_owner_changed_cb (TpDBusDaemon *proxy,
 
       g_free (display_name);
     }
-  else if (!EMP_STR_EMPTY (arg1) && EMP_STR_EMPTY (arg2))
+  else if (!TPAW_STR_EMPTY (arg1) && TPAW_STR_EMPTY (arg2))
     {
       /* A service died */
       GtkTreeIter *iter = NULL;
@@ -1297,7 +1298,7 @@ debug_window_menu_copy_activate_cb (GtkMenuItem *menu_item,
 
   message = tp_debug_message_get_message (msg);
 
-  if (EMP_STR_EMPTY (message))
+  if (TPAW_STR_EMPTY (message))
     {
       DEBUG ("Log message is empty");
       return;

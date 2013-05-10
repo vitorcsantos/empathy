@@ -26,6 +26,7 @@
 
 #include <glib/gi18n-lib.h>
 #include <tp-account-widgets/tpaw-time.h>
+#include <tp-account-widgets/tpaw-utils.h>
 
 #include "empathy-utils.h"
 
@@ -601,7 +602,7 @@ check_hash_incoming (EmpathyFTHandler *handler)
   HashingData *hash_data;
   EmpathyFTHandlerPriv *priv = GET_PRIV (handler);
 
-  if (!EMP_STR_EMPTY (priv->content_hash))
+  if (!TPAW_STR_EMPTY (priv->content_hash))
     {
       hash_data = g_slice_new0 (HashingData);
       hash_data->total_bytes = priv->total_bytes;
@@ -1512,7 +1513,7 @@ empathy_ft_handler_incoming_set_destination (EmpathyFTHandler *handler,
   /* check if hash is supported. if it isn't, set use_hash to FALSE
    * anyway, so that clients won't be expecting us to checksum.
    */
-  if (EMP_STR_EMPTY (priv->content_hash) ||
+  if (TPAW_STR_EMPTY (priv->content_hash) ||
       priv->content_hash_type == TP_FILE_HASH_TYPE_NONE)
     priv->use_hash = FALSE;
   else

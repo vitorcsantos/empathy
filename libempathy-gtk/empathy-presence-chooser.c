@@ -28,6 +28,7 @@
 #include "empathy-presence-chooser.h"
 
 #include <glib/gi18n-lib.h>
+#include <tp-account-widgets/tpaw-utils.h>
 
 #include "empathy-presence-manager.h"
 #include "empathy-status-presets.h"
@@ -272,7 +273,7 @@ get_state_and_status (EmpathyPresenceChooser *self,
 
 	state = tp_account_manager_get_most_available_presence (
 		priv->account_manager, NULL, &tmp);
-	if (EMP_STR_EMPTY (tmp)) {
+	if (TPAW_STR_EMPTY (tmp)) {
 		/* no message, use the default message */
 		g_free (tmp);
 		tmp = g_strdup (empathy_presence_get_default_message (state));

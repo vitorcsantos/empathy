@@ -24,6 +24,7 @@
 
 #include <glib/gi18n.h>
 #include <tp-account-widgets/tpaw-images.h>
+#include <tp-account-widgets/tpaw-utils.h>
 
 #include "empathy-call-utils.h"
 #include "empathy-connection-aggregator.h"
@@ -1110,7 +1111,7 @@ check_publish_state (EmpathyEventManager *self,
 
   message = tp_contact_get_publish_request (tp_contact);
 
-  if (!EMP_STR_EMPTY (message))
+  if (!TPAW_STR_EMPTY (message))
     event_msg = g_strdup_printf (_("\nMessage: %s"), message);
   else
     event_msg = NULL;

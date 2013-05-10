@@ -25,6 +25,7 @@
 #include <glib/gi18n-lib.h>
 #include <tp-account-widgets/tpaw-builder.h>
 #include <tp-account-widgets/tpaw-string-parser.h>
+#include <tp-account-widgets/tpaw-utils.h>
 
 #include "empathy-avatar-image.h"
 #include "empathy-client-factory.h"
@@ -505,7 +506,7 @@ contact_widget_change_contact (EmpathyContactWidget *self)
       return;
 
   id = gtk_entry_get_text (GTK_ENTRY (self->priv->widget_id));
-  if (!EMP_STR_EMPTY (id))
+  if (!TPAW_STR_EMPTY (id))
     {
       EmpathyClientFactory *factory;
 

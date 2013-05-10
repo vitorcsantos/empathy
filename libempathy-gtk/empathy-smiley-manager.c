@@ -23,6 +23,8 @@
 #include "config.h"
 #include "empathy-smiley-manager.h"
 
+#include <tp-account-widgets/tpaw-utils.h>
+
 #include "empathy-ui-utils.h"
 #include "empathy-utils.h"
 
@@ -242,8 +244,8 @@ empathy_smiley_manager_add (EmpathySmileyManager *manager,
 	va_list    var_args;
 
 	g_return_if_fail (EMPATHY_IS_SMILEY_MANAGER (manager));
-	g_return_if_fail (!EMP_STR_EMPTY (icon_name));
-	g_return_if_fail (!EMP_STR_EMPTY (first_str));
+	g_return_if_fail (!TPAW_STR_EMPTY (icon_name));
+	g_return_if_fail (!TPAW_STR_EMPTY (first_str));
 
 	pixbuf = empathy_pixbuf_from_icon_name (icon_name, GTK_ICON_SIZE_MENU);
 	if (pixbuf) {

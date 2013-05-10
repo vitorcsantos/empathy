@@ -26,6 +26,7 @@
 
 #include <glib/gi18n.h>
 #include <tp-account-widgets/tpaw-builder.h>
+#include <tp-account-widgets/tpaw-utils.h>
 
 #include "empathy-account-chooser.h"
 #include "empathy-gsettings.h"
@@ -114,7 +115,7 @@ new_chatroom_dialog_join (EmpathyNewChatroomDialog *self)
   account_chooser = EMPATHY_ACCOUNT_CHOOSER (self->priv->account_chooser);
   account = empathy_account_chooser_get_account (account_chooser);
 
-  if (!EMP_STR_EMPTY (server))
+  if (!TPAW_STR_EMPTY (server))
     room_name = g_strconcat (room, "@", server, NULL);
   else
     room_name = g_strdup (room);
@@ -289,7 +290,7 @@ update_join_button_sensitivity (EmpathyNewChatroomDialog *self)
 
   room = gtk_entry_get_text (GTK_ENTRY (self->priv->entry_room));
   protocol = tp_account_get_protocol_name (self->priv->account);
-  if (EMP_STR_EMPTY (room))
+  if (TPAW_STR_EMPTY (room))
     goto out;
 
   if (!tp_strdiff (protocol, "irc") &&

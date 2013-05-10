@@ -25,6 +25,7 @@
 #include "tpaw-live-search.h"
 
 #include "empathy-utils.h"
+#include "tpaw-utils.h"
 
 G_DEFINE_TYPE (TpawLiveSearch, tpaw_live_search, GTK_TYPE_HBOX)
 
@@ -133,7 +134,7 @@ tpaw_live_search_strip_utf8_string (const gchar *string)
   GString *word = NULL;
   const gchar *p;
 
-  if (EMP_STR_EMPTY (string))
+  if (TPAW_STR_EMPTY (string))
     return NULL;
 
   for (p = string; *p != '\0'; p = g_utf8_next_char (p))
@@ -175,7 +176,7 @@ live_search_match_prefix (const gchar *string,
   if (prefix == NULL || prefix[0] == 0)
     return TRUE;
 
-  if (EMP_STR_EMPTY (string))
+  if (TPAW_STR_EMPTY (string))
     return FALSE;
 
   prefix_p = prefix;
@@ -289,7 +290,7 @@ live_search_text_changed (GtkEntry *entry,
 
   text = gtk_entry_get_text (entry);
 
-  if (EMP_STR_EMPTY (text))
+  if (TPAW_STR_EMPTY (text))
     gtk_widget_hide (GTK_WIDGET (self));
   else
     gtk_widget_show (GTK_WIDGET (self));

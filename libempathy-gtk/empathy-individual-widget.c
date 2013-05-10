@@ -26,6 +26,7 @@
 #include <tp-account-widgets/tpaw-builder.h>
 #include <tp-account-widgets/tpaw-contactinfo-utils.h>
 #include <tp-account-widgets/tpaw-time.h>
+#include <tp-account-widgets/tpaw-utils.h>
 
 #ifdef HAVE_LIBCHAMPLAIN
 #include <champlain/champlain.h>
@@ -1296,7 +1297,7 @@ notify_presence_cb (gpointer folks_object,
   /* FIXME: Default messages should be moved into libfolks (bgo#627403) */
   message = folks_presence_details_get_presence_message (
       FOLKS_PRESENCE_DETAILS (folks_object));
-  if (EMP_STR_EMPTY (message))
+  if (TPAW_STR_EMPTY (message))
     {
       message = empathy_presence_get_default_message (presence);
     }

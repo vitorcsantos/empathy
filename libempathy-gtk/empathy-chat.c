@@ -35,6 +35,7 @@
 #include <glib/gi18n-lib.h>
 #include <tp-account-widgets/tpaw-keyring.h>
 #include <tp-account-widgets/tpaw-builder.h>
+#include <tp-account-widgets/tpaw-utils.h>
 
 #include "empathy-client-factory.h"
 #include "empathy-gsettings.h"
@@ -328,7 +329,7 @@ chat_new_connection_cb (TpAccount   *account,
 
 	if (priv->tp_chat != NULL || account != priv->account ||
 	    priv->handle_type == TP_HANDLE_TYPE_NONE ||
-	    EMP_STR_EMPTY (priv->id))
+	    TPAW_STR_EMPTY (priv->id))
 		return;
 
 	g_object_ref (chat);
@@ -733,7 +734,7 @@ chat_command_msg_cb (GObject *source,
 		goto OUT;
 	}
 
-	if (!EMP_STR_EMPTY (data->message) && TP_IS_TEXT_CHANNEL (channel)) {
+	if (!TPAW_STR_EMPTY (data->message) && TP_IS_TEXT_CHANNEL (channel)) {
 		TpTextChannel *text = (TpTextChannel *) channel;
 		TpMessage *msg;
 
@@ -823,7 +824,7 @@ chat_command_join (EmpathyChat *chat,
 	* https://bugs.freedesktop.org/show_bug.cgi?id=13422 */
 	while (rooms[i] != NULL) {
 		/* ignore empty strings */
-		if (!EMP_STR_EMPTY (rooms[i])) {
+		if (!TPAW_STR_EMPTY (rooms[i])) {
 			empathy_chat_join_muc (chat, rooms[i]);
 		}
 		i++;
@@ -1194,7 +1195,7 @@ chat_command_parse (const gchar *text, guint max_parts)
 
 	/* Append last part if not empty */
 	item = g_strstrip (g_strdup (text));
-	if (!EMP_STR_EMPTY (item)) {
+	if (!TPAW_STR_EMPTY (item)) {
 		g_ptr_array_add (array, item);
 		DEBUG ("\tITEM: \"%s\"", item);
 	} else {
@@ -1222,7 +1223,7 @@ chat_send (EmpathyChat  *chat,
 	TpMessage  *message;
 	guint            i;
 
-	if (EMP_STR_EMPTY (msg)) {
+	if (TPAW_STR_EMPTY (msg)) {
 		return;
 	}
 
@@ -1674,7 +1675,7 @@ chat_subject_changed_cb (EmpathyChat *chat)
 		priv->subject = g_strdup (empathy_tp_chat_get_subject (priv->tp_chat));
 		g_object_notify (G_OBJECT (chat), "subject");
 
-		if (EMP_STR_EMPTY (priv->subject)) {
+		if (TPAW_STR_EMPTY (priv->subject)) {
 			gtk_widget_hide (priv->hbox_topic);
 		} else {
 			gchar *markup_topic;
@@ -1693,7 +1694,7 @@ chat_subject_changed_cb (EmpathyChat *chat)
 		if (priv->block_events_timeout_id == 0) {
 			gchar *str = NULL;
 
-			if (!EMP_STR_EMPTY (priv->subject)) {
+			if (!TPAW_STR_EMPTY (priv->subject)) {
 				const gchar *actor = empathy_tp_chat_get_subject_actor (priv->tp_chat);
 
 				if (tp_str_empty (actor)) {
@@ -2412,7 +2413,7 @@ chat_input_populate_popup_cb (GtkTextView *view,
 	/* Add the Send menu item. */
 	gtk_text_buffer_get_bounds (buffer, &start, &end);
 	str = gtk_text_buffer_get_text (buffer, &start, &end, FALSE);
-	if (!EMP_STR_EMPTY (str)) {
+	if (!TPAW_STR_EMPTY (str)) {
 		item = gtk_menu_item_new_with_mnemonic (_("_Send"));
 		g_signal_connect (G_OBJECT (item), "activate",
 				  G_CALLBACK (chat_text_send_cb), chat);
@@ -2459,7 +2460,7 @@ chat_input_populate_popup_cb (GtkTextView *view,
 		str = gtk_text_buffer_get_text (buffer,
 						&start, &end, FALSE);
 	}
-	if (!EMP_STR_EMPTY (str)) {
+	if (!TPAW_STR_EMPTY (str)) {
 		chat_spell = chat_spell_new (chat, str, start, end);
 		g_object_set_data_full (G_OBJECT (menu),
 					"chat-spell", chat_spell,
@@ -2852,7 +2853,7 @@ build_part_message (guint           reason,
 		g_string_append_printf (s, _("%s has left the room"), name);
 	}
 
-	if (!EMP_STR_EMPTY (message)) {
+	if (!TPAW_STR_EMPTY (message)) {
 		/* Note to translators: this string is appended to
 		 * notifications like "foo has left the room", with the message
 		 * given by the user living the room. If this poses a problem,
@@ -3923,7 +3924,7 @@ password_entry_changed_cb (GtkEditable *entry,
 	str = gtk_entry_get_text (GTK_ENTRY (entry));
 
 	gtk_entry_set_icon_sensitive (GTK_ENTRY (entry),
-	    GTK_ENTRY_ICON_SECONDARY, !EMP_STR_EMPTY (str));
+	    GTK_ENTRY_ICON_SECONDARY, !TPAW_STR_EMPTY (str));
 }
 
 static void

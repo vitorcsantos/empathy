@@ -28,6 +28,7 @@
 #include "empathy-individual-store.h"
 
 #include <glib/gi18n-lib.h>
+#include <tp-account-widgets/tpaw-utils.h>
 
 #include "empathy-gtk-enum-types.h"
 #include "empathy-ui-utils.h"
@@ -283,7 +284,7 @@ empathy_individual_store_add_individual (EmpathyIndividualStore *self,
   GeeSet *group_set = NULL;
   gboolean grouped = FALSE;
 
-  if (EMP_STR_EMPTY (folks_alias_details_get_alias (
+  if (TPAW_STR_EMPTY (folks_alias_details_get_alias (
           FOLKS_ALIAS_DETAILS (individual))))
     return;
 

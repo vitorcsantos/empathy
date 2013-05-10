@@ -25,6 +25,7 @@
 #include "empathy-geometry.h"
 
 #include <sys/stat.h>
+#include <tp-account-widgets/tpaw-utils.h>
 
 #include "empathy-ui-utils.h"
 #include "empathy-utils.h"
@@ -211,7 +212,7 @@ empathy_geometry_load (GtkWindow *window,
   gboolean  maximized;
 
   g_return_if_fail (GTK_IS_WINDOW (window));
-  g_return_if_fail (!EMP_STR_EMPTY (name));
+  g_return_if_fail (!TPAW_STR_EMPTY (name));
 
   /* escape the name so that unwanted characters such as # are removed */
   escaped_name = g_uri_escape_string (name, NULL, TRUE);
@@ -294,7 +295,7 @@ empathy_geometry_bind (GtkWindow *window,
   gboolean connect_sigs = FALSE;
 
   g_return_if_fail (GTK_IS_WINDOW (window));
-  g_return_if_fail (!EMP_STR_EMPTY (name));
+  g_return_if_fail (!TPAW_STR_EMPTY (name));
 
   /* Check if this window is already bound */
   names = g_object_get_data (G_OBJECT (window), GEOMETRY_NAME_KEY);
