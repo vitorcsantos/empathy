@@ -29,8 +29,8 @@
 
 #include "empathy-utils.h"
 
-#define DEBUG_FLAG EMPATHY_DEBUG_CONTACT
-#include "empathy-debug.h"
+#define DEBUG_FLAG TPAW_DEBUG_CONTACT
+#include "tpaw-debug.h"
 
 G_DEFINE_TYPE (TpawUserInfo, tpaw_user_info, GTK_TYPE_GRID)
 

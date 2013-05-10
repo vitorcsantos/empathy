@@ -25,8 +25,8 @@
 #include "tpaw-builder.h"
 #include "empathy-ui-utils.h"
 
-#define DEBUG_FLAG EMPATHY_DEBUG_ACCOUNT | EMPATHY_DEBUG_IRC
-#include "empathy-debug.h"
+#define DEBUG_FLAG TPAW_DEBUG_ACCOUNT | TPAW_DEBUG_IRC
+#include "tpaw-debug.h"
 
 typedef struct {
   TpawAccountWidget *self;

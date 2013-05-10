@@ -22,8 +22,8 @@
 
 #include <glib/gi18n-lib.h>
 
-#define DEBUG_FLAG EMPATHY_DEBUG_OTHER_THING
-#include "empathy-debug.h"
+#define DEBUG_FLAG TPAW_DEBUG_OTHER_THING
+#include "tpaw-debug.h"
 
 G_DEFINE_TYPE (TpawCalendarButton, tpaw_calendar_button, GTK_TYPE_BOX)
 

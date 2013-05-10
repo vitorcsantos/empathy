@@ -35,8 +35,8 @@
 #include "empathy-utils.h"
 #include "tpaw-utils.h"
 
-#define DEBUG_FLAG EMPATHY_DEBUG_OTHER
-#include "empathy-debug.h"
+#define DEBUG_FLAG TPAW_DEBUG_OTHER
+#include "tpaw-debug.h"
 
 /* We cannot change the schema name for compatibility, so it's still
  * referring to Empathy */

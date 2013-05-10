@@ -35,8 +35,8 @@
 #include <glib/gi18n-lib.h>
 #include <gdk/gdkx.h>
 
-#define DEBUG_FLAG EMPATHY_DEBUG_OTHER
-#include "empathy-debug.h"
+#define DEBUG_FLAG TPAW_DEBUG_OTHER
+#include "tpaw-debug.h"
 
 #define TPAW_RECT_IS_ON_SCREEN(x,y,w,h) ((x) + (w) > 0 && \
               (y) + (h) > 0 && \

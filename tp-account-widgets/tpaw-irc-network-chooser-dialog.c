@@ -30,8 +30,8 @@
 #include "tpaw-utils.h"
 #include "empathy-utils.h"
 
-#define DEBUG_FLAG EMPATHY_DEBUG_ACCOUNT | EMPATHY_DEBUG_IRC
-#include "empathy-debug.h"
+#define DEBUG_FLAG TPAW_DEBUG_ACCOUNT | TPAW_DEBUG_IRC
+#include "tpaw-debug.h"
 
 #include "tpaw-irc-network-chooser-dialog.h"
 

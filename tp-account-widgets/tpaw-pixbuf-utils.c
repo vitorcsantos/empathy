@@ -28,8 +28,8 @@
 
 #include <gdk/gdkx.h>
 
-#define DEBUG_FLAG EMPATHY_DEBUG_OTHER
-#include "empathy-debug.h"
+#define DEBUG_FLAG TPAW_DEBUG_OTHER
+#include "tpaw-debug.h"
 
 GdkPixbuf *
 tpaw_pixbuf_from_data (gchar *data,

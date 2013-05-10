@@ -26,8 +26,8 @@
 #include "empathy-utils.h"
 #include "tpaw-utils.h"
 
-#define DEBUG_FLAG EMPATHY_DEBUG_IRC
-#include "empathy-debug.h"
+#define DEBUG_FLAG TPAW_DEBUG_IRC
+#include "tpaw-debug.h"
 
 #define IRC_NETWORKS_DTD_RESOURCENAME "/org/gnome/AccountWidgets/tpaw-irc-networks.dtd"
 #define IRC_NETWORKS_FILENAME "irc-networks.xml"

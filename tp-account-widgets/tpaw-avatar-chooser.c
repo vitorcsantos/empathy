@@ -37,8 +37,8 @@
 #include "empathy-ui-utils.h"
 #include "empathy-utils.h"
 
-#define DEBUG_FLAG EMPATHY_DEBUG_OTHER
-#include "empathy-debug.h"
+#define DEBUG_FLAG TPAW_DEBUG_OTHER
+#include "tpaw-debug.h"
 
 /**
  * SECTION:tpaw-avatar-chooser

@@ -21,8 +21,8 @@
 #include "config.h"
 #include "tpaw-uoa-utils.h"
 
-#define DEBUG_FLAG EMPATHY_DEBUG_ACCOUNT
-#include "empathy-debug.h"
+#define DEBUG_FLAG TPAW_DEBUG_ACCOUNT
+#include "tpaw-debug.h"
 
 static AgManager *singleton = NULL;
 

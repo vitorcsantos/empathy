@@ -67,8 +67,8 @@ G_DEFINE_TYPE (TpawCameraDeviceMonitor, tpaw_camera_device_monitor, G_TYPE_OBJEC
 
 #define TPAW_CAMERA_DEVICE_MONITOR_ERROR tpaw_camera_device_monitor_error_quark ()
 
-#define DEBUG_FLAG EMPATHY_DEBUG_OTHER
-#include "empathy-debug.h"
+#define DEBUG_FLAG TPAW_DEBUG_OTHER
+#include "tpaw-debug.h"
 
 enum TpawCameraDeviceMonitorError
 {

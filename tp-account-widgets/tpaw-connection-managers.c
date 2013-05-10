@@ -24,8 +24,8 @@
 #include "empathy-utils.h"
 #include "tpaw-utils.h"
 
-#define DEBUG_FLAG EMPATHY_DEBUG_OTHER
-#include "empathy-debug.h"
+#define DEBUG_FLAG TPAW_DEBUG_OTHER
+#include "tpaw-debug.h"
 
 static GObject *managers = NULL;
 

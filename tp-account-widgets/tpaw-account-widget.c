@@ -38,8 +38,8 @@
 #include "empathy-utils.h"
 #include "tpaw-utils.h"
 
-#define DEBUG_FLAG EMPATHY_DEBUG_ACCOUNT
-#include "empathy-debug.h"
+#define DEBUG_FLAG TPAW_DEBUG_ACCOUNT
+#include "tpaw-debug.h"
 
 G_DEFINE_TYPE (TpawAccountWidget, tpaw_account_widget, GTK_TYPE_BOX)
 

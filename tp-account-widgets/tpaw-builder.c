@@ -26,8 +26,8 @@
 #include "config.h"
 #include "tpaw-builder.h"
 
-#define DEBUG_FLAG EMPATHY_DEBUG_OTHER
-#include "empathy-debug.h"
+#define DEBUG_FLAG TPAW_DEBUG_OTHER
+#include "tpaw-debug.h"
 
 enum _BuilderSource
 {
