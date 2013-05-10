@@ -29,23 +29,10 @@ G_BEGIN_DECLS
 /* Please keep this enum in sync with #keys in tpaw-debug.c */
 typedef enum
 {
-  TPAW_DEBUG_TP = 1 << 1,
-  TPAW_DEBUG_CHAT = 1 << 2,
-  TPAW_DEBUG_CONTACT = 1 << 3,
-  TPAW_DEBUG_ACCOUNT = 1 << 4,
-  TPAW_DEBUG_IRC = 1 << 5,
-  TPAW_DEBUG_DISPATCHER = 1 << 6,
-  TPAW_DEBUG_FT = 1 << 7,
-  TPAW_DEBUG_LOCATION = 1 << 8,
-  TPAW_DEBUG_OTHER = 1 << 9,
-  TPAW_DEBUG_SHARE_DESKTOP = 1 << 10,
-  TPAW_DEBUG_CONNECTIVITY = 1 << 11,
-  TPAW_DEBUG_IMPORT_MC4_ACCOUNTS = 1 << 11,
-  TPAW_DEBUG_TESTS = 1 << 12,
-  TPAW_DEBUG_VOIP = 1 << 13,
-  TPAW_DEBUG_TLS = 1 << 14,
-  TPAW_DEBUG_SASL = 1 << 15,
-  TPAW_DEBUG_CAMERA = 1 << 16,
+  TPAW_DEBUG_CONTACT = 1 << 1,
+  TPAW_DEBUG_ACCOUNT = 1 << 2,
+  TPAW_DEBUG_IRC = 1 << 3,
+  TPAW_DEBUG_OTHER = 1 << 4,
 } TpawDebugFlags;
 
 gboolean tpaw_debug_flag_is_set (TpawDebugFlags flag);

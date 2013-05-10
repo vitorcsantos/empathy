@@ -26,22 +26,9 @@
 static TpawDebugFlags flags = 0;
 
 static GDebugKey keys[] = {
-  { "Tp", TPAW_DEBUG_TP },
-  { "Chat", TPAW_DEBUG_CHAT },
-  { "Contact", TPAW_DEBUG_CONTACT },
   { "Account", TPAW_DEBUG_ACCOUNT },
   { "Irc", TPAW_DEBUG_IRC },
-  { "Dispatcher", TPAW_DEBUG_DISPATCHER },
-  { "Ft", TPAW_DEBUG_FT },
-  { "Location", TPAW_DEBUG_LOCATION },
   { "Other", TPAW_DEBUG_OTHER },
-  { "Connectivity", TPAW_DEBUG_CONNECTIVITY },
-  { "ImportMc4Accounts", TPAW_DEBUG_IMPORT_MC4_ACCOUNTS },
-  { "Tests", TPAW_DEBUG_TESTS },
-  { "Voip", TPAW_DEBUG_VOIP },
-  { "Tls", TPAW_DEBUG_TLS },
-  { "Sasl", TPAW_DEBUG_SASL },
-  { "Camera", TPAW_DEBUG_CAMERA },
   { 0, }
 };
 
