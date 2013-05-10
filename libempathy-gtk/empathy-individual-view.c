@@ -28,6 +28,7 @@
 #include "empathy-individual-view.h"
 
 #include <glib/gi18n-lib.h>
+#include <tp-account-widgets/tpaw-utils.h>
 
 #include "empathy-cell-renderer-activatable.h"
 #include "empathy-cell-renderer-expander.h"
@@ -2359,7 +2360,7 @@ individual_view_group_remove_activate_cb (GtkMenuItem *menuitem,
       text =
           g_strdup_printf (_("Do you really want to remove the group '%s'?"),
           group);
-      parent = empathy_get_toplevel_window (GTK_WIDGET (view));
+      parent = tpaw_get_toplevel_window (GTK_WIDGET (view));
       if (individual_view_remove_dialog_show (parent, _("Removing group"),
               text) == REMOVE_DIALOG_RESPONSE_DELETE)
         {

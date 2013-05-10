@@ -950,7 +950,7 @@ choose_avatar_from_webcam (GtkWidget *widget,
   window = cheese_avatar_chooser_new ();
 
   gtk_window_set_transient_for (GTK_WINDOW (window),
-      GTK_WINDOW (empathy_get_toplevel_window (GTK_WIDGET (self))));
+      GTK_WINDOW (tpaw_get_toplevel_window (GTK_WIDGET (self))));
   gtk_window_set_modal (GTK_WINDOW (window), TRUE);
   g_signal_connect (G_OBJECT (window), "response",
       G_CALLBACK (webcam_response_cb), self);
@@ -1023,7 +1023,7 @@ avatar_chooser_clicked_cb (GtkWidget *button,
 
   self->priv->chooser_dialog = GTK_FILE_CHOOSER (
       gtk_file_chooser_dialog_new (_("Select Your Avatar Image"),
-        empathy_get_toplevel_window (GTK_WIDGET (self)),
+        tpaw_get_toplevel_window (GTK_WIDGET (self)),
         GTK_FILE_CHOOSER_ACTION_OPEN,
         NULL, NULL));
 

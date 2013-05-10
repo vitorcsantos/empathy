@@ -24,6 +24,7 @@
 
 #include "tpaw-irc-network-chooser-dialog.h"
 #include "tpaw-irc-network-manager.h"
+#include "tpaw-utils.h"
 #include "empathy-ui-utils.h"
 #include "empathy-utils.h"
 
@@ -322,7 +323,7 @@ clicked_cb (GtkButton *button,
   if (priv->dialog != NULL)
     goto out;
 
-  window = empathy_get_toplevel_window (GTK_WIDGET (button));
+  window = tpaw_get_toplevel_window (GTK_WIDGET (button));
 
   priv->dialog = tpaw_irc_network_chooser_dialog_new (priv->settings,
       priv->network, window);

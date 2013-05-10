@@ -851,21 +851,6 @@ empathy_window_present (GtkWindow *window)
   empathy_window_present_with_time (window, gtk_get_current_event_time ());
 }
 
-GtkWindow *
-empathy_get_toplevel_window (GtkWidget *widget)
-{
-  GtkWidget *toplevel;
-
-  g_return_val_if_fail (GTK_IS_WIDGET (widget), NULL);
-
-  toplevel = gtk_widget_get_toplevel (widget);
-  if (GTK_IS_WINDOW (toplevel) &&
-      gtk_widget_is_toplevel (toplevel))
-    return GTK_WINDOW (toplevel);
-
-  return NULL;
-}
-
 /** empathy_make_absolute_url_len:
  * @url: an url
  * @len: a length

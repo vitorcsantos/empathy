@@ -1,9 +1,11 @@
 /*
- * Copyright (C) 2009-2013 Collabora Ltd.
+ * Copyright (C) 2007-2013 Collabora Ltd.
+ * Copyright (C) 2006 Xavier Claessens <xavier.claessens@gmail.com>
  *
  * Authors: Marco Barisione <marco.barisione@collabora.co.uk>
  *          Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
  *          Sjoerd Simons <sjoerd.simons@collabora.co.uk>
+ *          Xavier Claessens <xavier.claessens@collabora.co.uk>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -165,4 +167,19 @@ tpaw_make_color_whiter (GdkRGBA *color)
   color->red = (color->red + white.red) / 2;
   color->green = (color->green + white.green) / 2;
   color->blue = (color->blue + white.blue) / 2;
+}
+
+GtkWindow *
+tpaw_get_toplevel_window (GtkWidget *widget)
+{
+  GtkWidget *toplevel;
+
+  g_return_val_if_fail (GTK_IS_WIDGET (widget), NULL);
+
+  toplevel = gtk_widget_get_toplevel (widget);
+  if (GTK_IS_WINDOW (toplevel) &&
+      gtk_widget_is_toplevel (toplevel))
+    return GTK_WINDOW (toplevel);
+
+  return NULL;
 }

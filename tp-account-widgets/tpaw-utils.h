@@ -1,9 +1,11 @@
 /*
- * Copyright (C) 2009-2013 Collabora Ltd.
+ * Copyright (C) 2007-2013 Collabora Ltd.
+ * Copyright (C) 2006 Xavier Claessens <xavier.claessens@gmail.com>
  *
  * Authors: Marco Barisione <marco.barisione@collabora.co.uk>
  *          Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
  *          Sjoerd Simons <sjoerd.simons@collabora.co.uk>
+ *          Xavier Claessens <xavier.claessens@collabora.co.uk>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -37,6 +39,9 @@ const gchar *tpaw_protocol_name_to_display_name (const gchar *proto_name);
 const gchar *tpaw_service_name_to_display_name (const gchar *proto_name);
 
 void  tpaw_make_color_whiter (GdkRGBA *color);
+
+/* Windows */
+GtkWindow * tpaw_get_toplevel_window (GtkWidget *widget);
 
 /* Copied from wocky/wocky-utils.h */
 

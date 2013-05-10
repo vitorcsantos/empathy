@@ -98,7 +98,6 @@ gchar * empathy_filename_from_icon_name (const gchar *icon_name,
 void empathy_window_present (GtkWindow *window);
 void empathy_window_present_with_time (GtkWindow *window,
     guint32 timestamp);
-GtkWindow * empathy_get_toplevel_window (GtkWidget *widget);
 
 void empathy_move_to_window_desktop (GtkWindow *window,
     guint32 timestamp);
