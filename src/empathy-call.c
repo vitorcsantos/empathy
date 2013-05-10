@@ -25,6 +25,7 @@
 #include <glib/gi18n.h>
 #include <clutter-gtk/clutter-gtk.h>
 #include <clutter-gst/clutter-gst.h>
+#include <tp-account-widgets/tpaw-utils.h>
 
 #ifdef CLUTTER_WINDOWING_X11
 #include <X11/Xlib.h>
@@ -162,7 +163,7 @@ new_call_handler_cb (EmpathyCallFactory *factory,
       gtk_widget_show (GTK_WIDGET (window));
 
       if (present)
-        empathy_window_present_with_time (GTK_WINDOW (window), x11_time);
+        tpaw_window_present_with_time (GTK_WINDOW (window), x11_time);
     }
 }
 

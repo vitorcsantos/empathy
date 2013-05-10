@@ -810,47 +810,6 @@ empathy_filename_from_icon_name (const gchar *icon_name,
   return ret;
 }
 
-/* Takes care of moving the window to the current workspace. */
-void
-empathy_window_present_with_time (GtkWindow *window,
-    guint32 timestamp)
-{
-  GdkWindow *gdk_window;
-
-  g_return_if_fail (GTK_IS_WINDOW (window));
-
-  /* Move the window to the current workspace before trying to show it.
-   * This is the behaviour people expect when clicking on the statusbar icon. */
-  gdk_window = gtk_widget_get_window (GTK_WIDGET (window));
-
-  if (gdk_window)
-    {
-      gint x, y;
-      gint w, h;
-
-      /* Has no effect if the WM has viewports, like compiz */
-      gdk_x11_window_move_to_current_desktop (gdk_window);
-
-      /* If window is still off-screen, hide it to force it to
-       * reposition on the current workspace. */
-      gtk_window_get_position (window, &x, &y);
-      gtk_window_get_size (window, &w, &h);
-      if (!EMPATHY_RECT_IS_ON_SCREEN (x, y, w, h))
-        gtk_widget_hide (GTK_WIDGET (window));
-    }
-
-  if (timestamp == GDK_CURRENT_TIME)
-    gtk_window_present (window);
-  else
-    gtk_window_present_with_time (window, timestamp);
-}
-
-void
-empathy_window_present (GtkWindow *window)
-{
-  empathy_window_present_with_time (window, gtk_get_current_event_time ());
-}
-
 /** empathy_make_absolute_url_len:
  * @url: an url
  * @len: a length

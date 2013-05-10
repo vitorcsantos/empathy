@@ -1,11 +1,17 @@
 /*
  * Copyright (C) 2007-2013 Collabora Ltd.
+ * Copyright (C) 2005-2006 Imendio AB
  * Copyright (C) 2006 Xavier Claessens <xavier.claessens@gmail.com>
+ * Copyright (C) 2009 Steve Frécinaux <code@istique.net>
  *
  * Authors: Marco Barisione <marco.barisione@collabora.co.uk>
  *          Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
  *          Sjoerd Simons <sjoerd.simons@collabora.co.uk>
  *          Xavier Claessens <xavier.claessens@collabora.co.uk>
+ *          Mikael Hallendal <micke@imendio.com>
+ *          Richard Hult <richard@imendio.com>
+ *          Martyn Russell <martyn@imendio.com>
+ *          Steve Frécinaux <code@istique.net>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -41,6 +47,9 @@ const gchar *tpaw_service_name_to_display_name (const gchar *proto_name);
 void  tpaw_make_color_whiter (GdkRGBA *color);
 
 /* Windows */
+void tpaw_window_present (GtkWindow *window);
+void tpaw_window_present_with_time (GtkWindow *window,
+    guint32 timestamp);
 GtkWindow * tpaw_get_toplevel_window (GtkWidget *widget);
 
 /* Copied from wocky/wocky-utils.h */

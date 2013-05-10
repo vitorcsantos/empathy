@@ -333,7 +333,7 @@ clicked_cb (GtkButton *button,
       G_CALLBACK (dialog_response_cb), button, 0);
 
 out:
-  empathy_window_present (GTK_WINDOW (priv->dialog));
+  tpaw_window_present (GTK_WINDOW (priv->dialog));
 }
 
 static void

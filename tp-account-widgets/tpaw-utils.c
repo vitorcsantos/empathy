@@ -1,11 +1,17 @@
 /*
  * Copyright (C) 2007-2013 Collabora Ltd.
+ * Copyright (C) 2005-2006 Imendio AB
  * Copyright (C) 2006 Xavier Claessens <xavier.claessens@gmail.com>
+ * Copyright (C) 2009 Steve Frécinaux <code@istique.net>
  *
  * Authors: Marco Barisione <marco.barisione@collabora.co.uk>
  *          Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
  *          Sjoerd Simons <sjoerd.simons@collabora.co.uk>
  *          Xavier Claessens <xavier.claessens@collabora.co.uk>
+ *          Mikael Hallendal <micke@imendio.com>
+ *          Richard Hult <richard@imendio.com>
+ *          Martyn Russell <martyn@imendio.com>
+ *          Steve Frécinaux <code@istique.net>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -26,9 +32,15 @@
 #include "tpaw-utils.h"
 
 #include <glib/gi18n-lib.h>
+#include <gdk/gdkx.h>
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include "empathy-debug.h"
+
+#define TPAW_RECT_IS_ON_SCREEN(x,y,w,h) ((x) + (w) > 0 && \
+              (y) + (h) > 0 && \
+              (x) < gdk_screen_width () && \
+              (y) < gdk_screen_height ())
 
 /* Change the RequestedPresence of a newly created account to ensure that it
  * is actually connected. */
@@ -167,6 +179,47 @@ tpaw_make_color_whiter (GdkRGBA *color)
   color->red = (color->red + white.red) / 2;
   color->green = (color->green + white.green) / 2;
   color->blue = (color->blue + white.blue) / 2;
+}
+
+/* Takes care of moving the window to the current workspace. */
+void
+tpaw_window_present_with_time (GtkWindow *window,
+    guint32 timestamp)
+{
+  GdkWindow *gdk_window;
+
+  g_return_if_fail (GTK_IS_WINDOW (window));
+
+  /* Move the window to the current workspace before trying to show it.
+   * This is the behaviour people expect when clicking on the statusbar icon. */
+  gdk_window = gtk_widget_get_window (GTK_WIDGET (window));
+
+  if (gdk_window)
+    {
+      gint x, y;
+      gint w, h;
+
+      /* Has no effect if the WM has viewports, like compiz */
+      gdk_x11_window_move_to_current_desktop (gdk_window);
+
+      /* If window is still off-screen, hide it to force it to
+       * reposition on the current workspace. */
+      gtk_window_get_position (window, &x, &y);
+      gtk_window_get_size (window, &w, &h);
+      if (!TPAW_RECT_IS_ON_SCREEN (x, y, w, h))
+        gtk_widget_hide (GTK_WIDGET (window));
+    }
+
+  if (timestamp == GDK_CURRENT_TIME)
+    gtk_window_present (window);
+  else
+    gtk_window_present_with_time (window, timestamp);
+}
+
+void
+tpaw_window_present (GtkWindow *window)
+{
+  tpaw_window_present_with_time (window, gtk_get_current_event_time ());
 }
 
 GtkWindow *

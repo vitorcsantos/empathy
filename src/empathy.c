@@ -24,6 +24,7 @@
 #include <glib/gstdio.h>
 #include <glib/gi18n.h>
 #include <libnotify/notify.h>
+#include <tp-account-widgets/tpaw-utils.h>
 
 #ifdef HAVE_LIBCHAMPLAIN
 #include <clutter-gtk/clutter-gtk.h>
@@ -342,7 +343,7 @@ empathy_app_activate (GApplication *app)
   else
     {
       if (!self->start_hidden)
-        empathy_window_present (GTK_WINDOW (self->window));
+        tpaw_window_present (GTK_WINDOW (self->window));
     }
 
   /* Display the accounts dialog if needed */

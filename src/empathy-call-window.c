@@ -28,6 +28,7 @@
 #include <tp-account-widgets/tpaw-builder.h>
 #include <tp-account-widgets/tpaw-camera-monitor.h>
 #include <tp-account-widgets/tpaw-images.h>
+#include <tp-account-widgets/tpaw-utils.h>
 
 #include "empathy-about-dialog.h"
 #include "empathy-audio-sink.h"
@@ -2464,7 +2465,7 @@ empathy_call_window_new_handler (EmpathyCallWindow *self,
   g_return_if_fail (EMPATHY_IS_CALL_HANDLER (handler));
 
   if (present)
-    empathy_window_present_with_time (GTK_WINDOW (self), x11_time);
+    tpaw_window_present_with_time (GTK_WINDOW (self), x11_time);
 
   if (self->priv->call_state == DISCONNECTED)
     {

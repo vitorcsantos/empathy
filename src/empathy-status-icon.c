@@ -23,6 +23,7 @@
 #include "empathy-status-icon.h"
 
 #include <tp-account-widgets/tpaw-builder.h>
+#include <tp-account-widgets/tpaw-utils.h>
 
 #include "empathy-event-manager.h"
 #include "empathy-gsettings.h"
@@ -210,7 +211,7 @@ status_icon_set_visibility (EmpathyStatusIcon *icon,
 	if (!visible) {
 		gtk_widget_hide (priv->window);
 	} else {
-		empathy_window_present (GTK_WINDOW (priv->window));
+		tpaw_window_present (GTK_WINDOW (priv->window));
 	}
 }
 

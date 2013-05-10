@@ -94,11 +94,6 @@ GdkPixbuf * empathy_pixbuf_from_icon_name_sized (const gchar *icon_name,
 gchar * empathy_filename_from_icon_name (const gchar *icon_name,
     GtkIconSize icon_size);
 
-/* Windows */
-void empathy_window_present (GtkWindow *window);
-void empathy_window_present_with_time (GtkWindow *window,
-    guint32 timestamp);
-
 void empathy_move_to_window_desktop (GtkWindow *window,
     guint32 timestamp);
 
