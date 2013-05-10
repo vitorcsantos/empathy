@@ -24,6 +24,7 @@
 #include "empathy-status-presets.h"
 
 #include <sys/stat.h>
+#include <tp-account-widgets/tpaw-utils.h>
 
 #include "empathy-utils.h"
 
@@ -92,7 +93,7 @@ status_presets_file_parse (const gchar *filename)
 		return;
 	}
 
-	if (!empathy_xml_validate_from_resource (doc, STATUS_PRESETS_DTD_RESOURCENAME)) {
+	if (!tpaw_xml_validate_from_resource (doc, STATUS_PRESETS_DTD_RESOURCENAME)) {
 		g_warning ("Failed to validate file:'%s'", filename);
 		xmlFreeDoc (doc);
 		xmlFreeParserCtxt (ctxt);

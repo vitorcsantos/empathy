@@ -24,6 +24,7 @@
 #include <sys/stat.h>
 
 #include "empathy-utils.h"
+#include "tpaw-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_IRC
 #include "empathy-debug.h"
@@ -632,7 +633,7 @@ irc_network_manager_file_parse (TpawIrcNetworkManager *self,
       return FALSE;
     }
 
-  if (!empathy_xml_validate_from_resource (doc, IRC_NETWORKS_DTD_RESOURCENAME)) {
+  if (!tpaw_xml_validate_from_resource (doc, IRC_NETWORKS_DTD_RESOURCENAME)) {
     g_warning ("Failed to validate file:'%s'", filename);
     xmlFreeDoc (doc);
     xmlFreeParserCtxt (ctxt);

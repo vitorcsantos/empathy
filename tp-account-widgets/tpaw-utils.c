@@ -12,6 +12,7 @@
  *          Richard Hult <richard@imendio.com>
  *          Martyn Russell <martyn@imendio.com>
  *          Steve Frécinaux <code@istique.net>
+ *          Emanuele Aina <emanuele.aina@collabora.co.uk>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -179,6 +180,41 @@ tpaw_make_color_whiter (GdkRGBA *color)
   color->red = (color->red + white.red) / 2;
   color->green = (color->green + white.green) / 2;
   color->blue = (color->blue + white.blue) / 2;
+}
+
+gboolean
+tpaw_xml_validate_from_resource (xmlDoc *doc,
+    const gchar *dtd_resourcename)
+{
+  GBytes *resourcecontents;
+  gconstpointer resourcedata;
+  gsize resourcesize;
+  xmlParserInputBufferPtr buffer;
+  xmlValidCtxt  cvp;
+  xmlDtd *dtd;
+  GError *error = NULL;
+  gboolean ret;
+
+  DEBUG ("Loading dtd resource %s", dtd_resourcename);
+
+  resourcecontents = g_resources_lookup_data (dtd_resourcename, G_RESOURCE_LOOKUP_FLAGS_NONE, &error);
+  if (error != NULL)
+    {
+      g_warning ("Unable to load dtd resource '%s': %s", dtd_resourcename, error->message);
+      g_error_free (error);
+      return FALSE;
+    }
+  resourcedata = g_bytes_get_data (resourcecontents, &resourcesize);
+  buffer = xmlParserInputBufferCreateStatic (resourcedata, resourcesize, XML_CHAR_ENCODING_UTF8);
+
+  memset (&cvp, 0, sizeof (cvp));
+  dtd = xmlIOParseDTD (NULL, buffer, XML_CHAR_ENCODING_UTF8);
+  ret = xmlValidateDtd (&cvp, doc, dtd);
+
+  xmlFreeDtd (dtd);
+  g_bytes_unref (resourcecontents);
+
+  return ret;
 }
 
 /* Takes care of moving the window to the current workspace. */

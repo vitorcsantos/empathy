@@ -24,6 +24,7 @@
 #include "empathy-contact-groups.h"
 
 #include <sys/stat.h>
+#include <tp-account-widgets/tpaw-utils.h>
 
 #include "empathy-utils.h"
 
@@ -91,7 +92,7 @@ contact_groups_file_parse (const gchar *filename)
 		return;
 	}
 
-	if (!empathy_xml_validate_from_resource (doc, CONTACT_GROUPS_DTD_RESOURCENAME)) {
+	if (!tpaw_xml_validate_from_resource (doc, CONTACT_GROUPS_DTD_RESOURCENAME)) {
 		g_warning ("Failed to validate file:'%s'", filename);
 		xmlFreeDoc (doc);
 		xmlFreeParserCtxt (ctxt);

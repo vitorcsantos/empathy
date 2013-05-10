@@ -12,6 +12,7 @@
  *          Richard Hult <richard@imendio.com>
  *          Martyn Russell <martyn@imendio.com>
  *          Steve Frécinaux <code@istique.net>
+ *          Emanuele Aina <emanuele.aina@collabora.co.uk>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -33,6 +34,7 @@
 
 #include <glib.h>
 #include <gtk/gtk.h>
+#include <libxml/tree.h>
 #include <telepathy-glib/telepathy-glib.h>
 
 G_BEGIN_DECLS
@@ -43,6 +45,10 @@ void tpaw_connect_new_account (TpAccount *account,
 gchar *tpaw_protocol_icon_name (const gchar *protocol);
 const gchar *tpaw_protocol_name_to_display_name (const gchar *proto_name);
 const gchar *tpaw_service_name_to_display_name (const gchar *proto_name);
+
+/* XML */
+gboolean tpaw_xml_validate_from_resource (xmlDoc *doc,
+    const gchar *dtd_resourcename);
 
 void  tpaw_make_color_whiter (GdkRGBA *color);
 

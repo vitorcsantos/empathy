@@ -25,6 +25,7 @@
 #include "empathy-chatroom-manager.h"
 
 #include <sys/stat.h>
+#include <tp-account-widgets/tpaw-utils.h>
 
 #include "empathy-client-factory.h"
 #include "empathy-utils.h"
@@ -320,7 +321,7 @@ chatroom_manager_file_parse (EmpathyChatroomManager *manager,
       return FALSE;
     }
 
-  if (!empathy_xml_validate_from_resource (doc, CHATROOMS_DTD_RESOURCENAME))
+  if (!tpaw_xml_validate_from_resource (doc, CHATROOMS_DTD_RESOURCENAME))
     {
       g_warning ("Failed to validate file:'%s'", filename);
       xmlFreeDoc (doc);
