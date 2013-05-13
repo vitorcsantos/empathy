@@ -37,6 +37,8 @@
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include "empathy-debug.h"
 
+/* We cannot change the schema name for compatibility, so it's still
+ * referring to Empathy */
 static const SecretSchema account_keyring_schema =
   { "org.gnome.Empathy.Account", SECRET_SCHEMA_DONT_MATCH_NAME,
     { { "account-id", SECRET_SCHEMA_ATTRIBUTE_STRING },
