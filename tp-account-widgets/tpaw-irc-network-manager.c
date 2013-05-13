@@ -475,7 +475,7 @@ irc_network_manager_parse_irc_server (TpawIrcNetwork *network,
     {
       gchar *address = NULL, *port = NULL, *ssl = NULL;
 
-      if (strcmp ((const gchar *) server_node->name, "server") != 0)
+      if (g_strcmp0 ((const gchar *) server_node->name, "server") != 0)
         continue;
 
       address = (gchar *) xmlGetProp (server_node, (const xmlChar *) "address");
@@ -494,7 +494,7 @@ irc_network_manager_parse_irc_server (TpawIrcNetwork *network,
           if (port_nb <= 0 || port_nb > G_MAXUINT16)
             port_nb = 6667;
 
-          if (ssl == NULL || strcmp (ssl, "TRUE") == 0)
+          if (ssl == NULL || g_strcmp0 (ssl, "TRUE") == 0)
             have_ssl = TRUE;
 
           DEBUG ("parsed server %s port %d ssl %d", address, port_nb, have_ssl);
@@ -567,7 +567,7 @@ irc_network_manager_parse_irc_network (TpawIrcNetworkManager *self,
       if (!str)
         continue;
 
-      if (strcmp (tag, "servers") == 0)
+      if (g_strcmp0 (tag, "servers") == 0)
         {
           irc_network_manager_parse_irc_server (network, child);
         }
@@ -753,7 +753,7 @@ find_network_by_address (const gchar *id,
       gchar *_address;
 
       g_object_get (server, "address", &_address, NULL);
-      found = (_address != NULL && strcmp (address, _address) == 0);
+      found = (_address != NULL && g_strcmp0 (address, _address) == 0);
 
       g_free (_address);
     }

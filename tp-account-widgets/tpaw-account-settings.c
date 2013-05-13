@@ -1538,7 +1538,7 @@ tpaw_account_settings_parameter_is_valid (
   g_return_val_if_fail (TPAW_IS_ACCOUNT_SETTINGS (settings), FALSE);
 
   if (g_list_find_custom (settings->priv->required_params, param,
-        (GCompareFunc) strcmp))
+        (GCompareFunc) g_strcmp0))
     {
       /* first, look if it's set in our own parameters */
       if (g_hash_table_lookup (settings->priv->parameters, param) != NULL)

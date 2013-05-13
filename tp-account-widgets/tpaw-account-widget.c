@@ -766,7 +766,7 @@ accounts_widget_generic_setup (TpawAccountWidget *self,
           gtk_widget_show (widget);
 
           widget = gtk_entry_new ();
-          if (strcmp (tp_connection_manager_param_get_name (param),
+          if (g_strcmp0 (tp_connection_manager_param_get_name (param),
                 "account") == 0)
             {
               g_signal_connect (widget, "realize",
