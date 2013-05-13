@@ -86,7 +86,7 @@ struct _TpawAccountSettingsPriv
   /* Keys are parameter names from the hash above (gchar *).
    * Values are regular expresions that should match corresponding parameter
    * values (GRegex *). Possible regexp patterns are defined in
-   * empathy-account-widget.c */
+   * tpaw-account-widget.c */
   GHashTable *param_regexps;
   GArray *unset_parameters;
   GList *required_params;
