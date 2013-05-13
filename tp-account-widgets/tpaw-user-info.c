@@ -27,8 +27,6 @@
 #include <tp-account-widgets/tpaw-time.h>
 #include <tp-account-widgets/tpaw-utils.h>
 
-#include "empathy-utils.h"
-
 #define DEBUG_FLAG TPAW_DEBUG_CONTACT
 #include "tpaw-debug.h"
 

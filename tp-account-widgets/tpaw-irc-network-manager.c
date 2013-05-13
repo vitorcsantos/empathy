@@ -23,7 +23,6 @@
 
 #include <sys/stat.h>
 
-#include "empathy-utils.h"
 #include "tpaw-utils.h"
 
 #define DEBUG_FLAG TPAW_DEBUG_IRC

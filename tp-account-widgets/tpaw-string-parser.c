@@ -24,8 +24,6 @@
 #include <string.h>
 #include <tp-account-widgets/tpaw-utils.h>
 
-#include "empathy-ui-utils.h"
-
 #define SCHEMES           "([a-zA-Z\\+]+)"
 #define INVALID_CHARS     "\\s\"<>"
 #define INVALID_CHARS_EXT INVALID_CHARS "\\[\\](){},;:"

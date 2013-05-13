@@ -24,7 +24,6 @@
 #include "config.h"
 #include "tpaw-live-search.h"
 
-#include "empathy-utils.h"
 #include "tpaw-utils.h"
 
 G_DEFINE_TYPE (TpawLiveSearch, tpaw_live_search, GTK_TYPE_HBOX)

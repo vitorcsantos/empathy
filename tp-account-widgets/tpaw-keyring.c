@@ -32,7 +32,6 @@
 #include "tpaw-uoa-utils.h"
 #endif
 
-#include "empathy-utils.h"
 #include "tpaw-utils.h"
 
 #define DEBUG_FLAG TPAW_DEBUG_OTHER

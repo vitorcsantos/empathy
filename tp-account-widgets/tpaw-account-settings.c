@@ -23,7 +23,6 @@
 
 #include "tpaw-connection-managers.h"
 #include "tpaw-keyring.h"
-#include "empathy-utils.h"
 #include "tpaw-utils.h"
 
 #define DEBUG_FLAG TPAW_DEBUG_ACCOUNT

@@ -24,7 +24,6 @@
 #include <glib/gi18n-lib.h>
 #include <stdlib.h>
 
-#include "empathy-ui-utils.h"
 #include "tpaw-builder.h"
 #include "tpaw-utils.h"
 #include "totem-subtitle-encoding.h"

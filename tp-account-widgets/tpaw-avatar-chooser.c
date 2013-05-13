@@ -34,9 +34,6 @@
 #include <cheese-avatar-chooser.h>
 #endif /* HAVE_CHEESE */
 
-#include "empathy-ui-utils.h"
-#include "empathy-utils.h"
-
 #define DEBUG_FLAG TPAW_DEBUG_OTHER
 #include "tpaw-debug.h"
 

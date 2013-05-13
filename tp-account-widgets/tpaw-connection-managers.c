@@ -21,7 +21,6 @@
 #include "config.h"
 #include "tpaw-connection-managers.h"
 
-#include "empathy-utils.h"
 #include "tpaw-utils.h"
 
 #define DEBUG_FLAG TPAW_DEBUG_OTHER

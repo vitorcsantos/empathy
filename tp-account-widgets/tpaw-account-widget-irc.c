@@ -23,7 +23,6 @@
 
 #include "tpaw-account-widget-private.h"
 #include "tpaw-builder.h"
-#include "empathy-ui-utils.h"
 
 #define DEBUG_FLAG TPAW_DEBUG_ACCOUNT | TPAW_DEBUG_IRC
 #include "tpaw-debug.h"

@@ -34,8 +34,6 @@
 #include "tpaw-account-widget-private.h"
 #include "tpaw-account-widget-sip.h"
 #include "tpaw-builder.h"
-#include "empathy-ui-utils.h"
-#include "empathy-utils.h"
 #include "tpaw-utils.h"
 
 #define DEBUG_FLAG TPAW_DEBUG_ACCOUNT

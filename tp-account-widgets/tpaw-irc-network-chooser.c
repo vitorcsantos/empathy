@@ -25,8 +25,6 @@
 #include "tpaw-irc-network-chooser-dialog.h"
 #include "tpaw-irc-network-manager.h"
 #include "tpaw-utils.h"
-#include "empathy-ui-utils.h"
-#include "empathy-utils.h"
 
 #define DEBUG_FLAG TPAW_DEBUG_ACCOUNT | TPAW_DEBUG_IRC
 #include "tpaw-debug.h"

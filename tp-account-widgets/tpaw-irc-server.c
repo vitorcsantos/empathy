@@ -21,7 +21,6 @@
 #include "config.h"
 #include "tpaw-irc-server.h"
 
-#include "empathy-utils.h"
 #include "tpaw-utils.h"
 
 struct _TpawIrcServerPriv

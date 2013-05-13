@@ -28,7 +28,6 @@
 #include "tpaw-irc-network-manager.h"
 #include "tpaw-live-search.h"
 #include "tpaw-utils.h"
-#include "empathy-utils.h"
 
 #define DEBUG_FLAG TPAW_DEBUG_ACCOUNT | TPAW_DEBUG_IRC
 #include "tpaw-debug.h"

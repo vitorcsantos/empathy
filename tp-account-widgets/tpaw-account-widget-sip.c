@@ -26,7 +26,6 @@
 
 #include "tpaw-account-widget-private.h"
 #include "tpaw-builder.h"
-#include "empathy-ui-utils.h"
 
 typedef struct {
   TpawAccountWidget *self;
