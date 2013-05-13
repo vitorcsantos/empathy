@@ -1809,7 +1809,7 @@ out:
 }
 
 #define WIDGET(cm, proto) \
-  { #cm, #proto, ACCOUNT_WIDGETS_RESOURCES_PREFIX "/tpaw-account-widget-"#proto".ui", \
+  { #cm, #proto, TPAW_ACCOUNT_WIDGETS_RESOURCES_PREFIX "/tpaw-account-widget-"#proto".ui", \
     account_widget_build_##proto }
 
 static void
@@ -1905,7 +1905,7 @@ do_constructed (GObject *obj)
     const char *file;
     GtkWidget * (*func)(TpawAccountWidget *self, const gchar *filename);
   } widgets [] = {
-    { "salut", "local-xmpp", ACCOUNT_WIDGETS_RESOURCES_PREFIX "/tpaw-account-widget-local-xmpp.ui",
+    { "salut", "local-xmpp", TPAW_ACCOUNT_WIDGETS_RESOURCES_PREFIX "/tpaw-account-widget-local-xmpp.ui",
         account_widget_build_salut },
     WIDGET (gabble, jabber),
     WIDGET (haze, msn),
@@ -1936,7 +1936,7 @@ do_constructed (GObject *obj)
 
   if (i == G_N_ELEMENTS (widgets))
     {
-      gchar *filename = ACCOUNT_WIDGETS_RESOURCES_PREFIX "/tpaw-account-widget-generic.ui";
+      gchar *filename = TPAW_ACCOUNT_WIDGETS_RESOURCES_PREFIX "/tpaw-account-widget-generic.ui";
       box = account_widget_build_generic (self, filename);
     }
 
