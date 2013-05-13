@@ -1808,7 +1808,7 @@ out:
 }
 
 #define WIDGET(cm, proto) \
-  { #cm, #proto, ACCOUNT_WIDGETS_RESOURCES_PREFIX "/empathy-account-widget-"#proto".ui", \
+  { #cm, #proto, ACCOUNT_WIDGETS_RESOURCES_PREFIX "/tpaw-account-widget-"#proto".ui", \
     account_widget_build_##proto }
 
 static void
@@ -1904,7 +1904,7 @@ do_constructed (GObject *obj)
     const char *file;
     GtkWidget * (*func)(TpawAccountWidget *self, const gchar *filename);
   } widgets [] = {
-    { "salut", "local-xmpp", ACCOUNT_WIDGETS_RESOURCES_PREFIX "/empathy-account-widget-local-xmpp.ui",
+    { "salut", "local-xmpp", ACCOUNT_WIDGETS_RESOURCES_PREFIX "/tpaw-account-widget-local-xmpp.ui",
         account_widget_build_salut },
     WIDGET (gabble, jabber),
     WIDGET (haze, msn),
@@ -1935,7 +1935,7 @@ do_constructed (GObject *obj)
 
   if (i == G_N_ELEMENTS (widgets))
     {
-      gchar *filename = ACCOUNT_WIDGETS_RESOURCES_PREFIX "/empathy-account-widget-generic.ui";
+      gchar *filename = ACCOUNT_WIDGETS_RESOURCES_PREFIX "/tpaw-account-widget-generic.ui";
       box = account_widget_build_generic (self, filename);
     }
 
@@ -2238,7 +2238,7 @@ tpaw_account_widget_get_default_display_name (TpawAccountWidget *self)
 
   if (login_id != NULL)
     {
-      /* TODO: this should be done in empathy-account-widget-irc */
+      /* TODO: this should be done in tpaw-account-widget-irc */
       if (!tp_strdiff (protocol, "irc"))
         {
           TpawIrcNetwork *network;

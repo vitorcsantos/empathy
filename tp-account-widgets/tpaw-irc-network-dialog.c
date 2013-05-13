@@ -468,7 +468,7 @@ tpaw_irc_network_dialog_show (TpawIrcNetwork *network,
   dialog->network = network;
   g_object_ref (dialog->network);
 
-  gui = empathy_builder_get_resource (ACCOUNT_WIDGETS_RESOURCES_PREFIX "/empathy-account-widget-irc.ui",
+  gui = empathy_builder_get_resource (ACCOUNT_WIDGETS_RESOURCES_PREFIX "/tpaw-account-widget-irc.ui",
       "irc_network_dialog", &dialog->dialog,
       "button_close", &dialog->button_close,
       "entry_network", &dialog->entry_network,
