@@ -25,6 +25,7 @@
 
 #include "empathy-ui-utils.h"
 #include "tpaw-builder.h"
+#include "tpaw-utils.h"
 #include "totem-subtitle-encoding.h"
 
 typedef struct {

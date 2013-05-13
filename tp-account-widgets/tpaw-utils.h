@@ -41,6 +41,8 @@ G_BEGIN_DECLS
 
 #define TPAW_STR_EMPTY(s) ((s) == NULL || (s)[0] == '\0')
 
+#define ACCOUNT_WIDGETS_RESOURCES_PREFIX "/org/gnome/AccountWidgets"
+
 void tpaw_connect_new_account (TpAccount *account,
     TpAccountManager *account_manager);
 
