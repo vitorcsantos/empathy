@@ -22,6 +22,7 @@
 #include "tpaw-irc-network-dialog.h"
 
 #include <glib/gi18n-lib.h>
+#include <stdlib.h>
 
 #include "empathy-ui-utils.h"
 #include "tpaw-builder.h"
