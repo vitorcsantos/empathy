@@ -1,7 +1,5 @@
 AM_CPPFLAGS =                                           \
 	$(ERROR_CFLAGS)					\
-	-I$(top_srcdir)/libempathy			\
-	-I$(top_srcdir)/libempathy-gtk			\
 	-DDATADIR=\""$(datadir)"\"              	\
 	-DPKGDATADIR=\""$(pkgdatadir)"\"		\
 	-DG_LOG_DOMAIN=\"empathy\"			\
