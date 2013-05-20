@@ -10,21 +10,21 @@ EXTRA_DIST = 		\
 
 AM_CPPFLAGS =						\
 	$(ERROR_CFLAGS)					\
-	-I$(top_srcdir)/tp-account-widgets		\
 	-I$(top_srcdir)/libempathy                     	\
 	-I$(top_srcdir)/libempathy-gtk                 	\
 	-DPKGDATADIR=\""$(pkgdatadir)"\"		\
 	-DGCR_API_SUBJECT_TO_CHANGE			\
 	$(EMPATHY_CFLAGS)				\
+	$(TPAW_CFLAGS)					\
 	$(WARN_CFLAGS)					\
 	$(DISABLE_DEPRECATED)				\
 	-DSRCDIR=\""$(abs_srcdir)"\"			\
 	$(NULL)
 
 LDADD =								\
-	$(top_builddir)/tp-account-widgets/libtp-account-widgets.la	\
 	$(top_builddir)/libempathy-gtk/libempathy-gtk.la	\
 	$(top_builddir)/libempathy/libempathy.la		\
+	$(TPAW_LIBS)						\
 	$(EMPATHY_LIBS)						\
 	$(NULL)
 

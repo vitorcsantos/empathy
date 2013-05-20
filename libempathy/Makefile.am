@@ -9,6 +9,7 @@ AM_CPPFLAGS =                                           \
 	-DG_LOG_DOMAIN=\"empathy\"			\
 	-DGCR_API_SUBJECT_TO_CHANGE			\
 	$(EMPATHY_CFLAGS)				\
+	$(TPAW_CFLAGS)					\
 	$(GEOCLUE_CFLAGS)				\
 	$(GEOCODE_CFLAGS)				\
 	$(NETWORK_MANAGER_CFLAGS)			\
@@ -107,6 +108,7 @@ libempathy_la_LIBADD =		\
 	$(top_builddir)/extensions/libemp-extensions.la \
 	$(GCR_LIBS) \
 	$(EMPATHY_LIBS) \
+	$(TPAW_LIBS) \
 	$(GEOCLUE_LIBS) \
 	$(GEOCODE_LIBS) \
 	$(NETWORK_MANAGER_LIBS) \

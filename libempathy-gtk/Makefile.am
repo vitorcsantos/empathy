@@ -4,13 +4,13 @@ include $(top_srcdir)/tools/flymake.mk
 
 AM_CPPFLAGS =                                           \
 	$(ERROR_CFLAGS)					\
-	-I$(top_srcdir)/tp-account-widgets		\
 	-I$(top_srcdir)/libempathy			\
 	-I$(top_srcdir)/extensions			\
 	-DDATADIR=\""$(datadir)"\"              	\
 	-DPKGDATADIR=\""$(pkgdatadir)"\"		\
 	-DGCR_API_SUBJECT_TO_CHANGE			\
 	$(EMPATHY_CFLAGS)				\
+	$(TPAW_CFLAGS)					\
 	$(YELL_CFLAGS)					\
 	$(ENCHANT_CFLAGS)				\
 	$(LIBCHAMPLAIN_CFLAGS)				\
@@ -168,6 +168,7 @@ nodist_libempathy_gtk_la_SOURCES =\
 libempathy_gtk_la_LIBADD =			\
 	$(EMPATHY_LIBS)			\
 	$(EMPATHY_LIBS)			\
+	$(TPAW_LIBS)			\
 	$(GTK_LIBS)			\
 	$(LIBNOTIFY_LIBS)			\
 	$(CANBERRA_LIBS) \
@@ -178,7 +179,6 @@ libempathy_gtk_la_LIBADD =			\
 	$(GCR_LIBS)				\
 	$(MEEGO_LIBS)				\
 	$(CHEESE_LIBS)				\
-	$(top_builddir)/tp-account-widgets/libtp-account-widgets.la \
 	$(top_builddir)/libempathy-gtk/egg-list-box/libegglistbox.la \
 	$(top_builddir)/libempathy/libempathy.la
 

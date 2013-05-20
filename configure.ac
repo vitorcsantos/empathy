@@ -87,6 +87,16 @@ MC_PLUGINS_REQUIRED=5.13.1
 #ifelse(empathy_released, 1, [], [enable_maintainer_mode="yes"])
 #GNOME_MAINTAINER_MODE_DEFINES
 
+# tp-account-widgets
+prev_top_build_prefix=$ac_top_build_prefix
+prev_ac_configure_args=$ac_configure_args
+AX_CONFIG_DIR([telepathy-account-widgets])
+ac_top_build_prefix=$prev_top_build_prefix
+ac_configure_args=$prev_ac_configure_args
+
+export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:"$ac_top_build_prefix"telepathy-account-widgets/
+PKG_CHECK_MODULES(TPAW, telepathy-account-widgets)
+
 # egg-list-box
 prev_top_build_prefix=$ac_top_build_prefix
 prev_ac_configure_args=$ac_configure_args
@@ -637,7 +647,6 @@ AC_CONFIG_FILES([
    data/themes/Makefile
    extensions/Makefile
    po/Makefile.in
-   tp-account-widgets/Makefile
    libempathy/Makefile
    libempathy-gtk/Makefile
    src/Makefile
