@@ -1248,7 +1248,6 @@ log_window_append_chat_message (TplEvent *event,
   GtkTreeStore *store = log_window->priv->store_events;
   GtkTreeIter iter, parent;
   gchar *pretty_date, *alias, *body;
-  gchar *msg_escaped;
   GDateTime *date;
   EmpathyStringParser *parsers;
   GString *msg;
@@ -1272,22 +1271,18 @@ log_window_append_chat_message (TplEvent *event,
   empathy_string_parser_substr (empathy_message_get_body (message), -1,
       parsers, msg);
 
-  msg_escaped = g_strescape (msg->str, NULL);
-
   if (tpl_text_event_get_message_type (TPL_TEXT_EVENT (event))
       == TP_CHANNEL_TEXT_MESSAGE_TYPE_ACTION)
     {
       /* Translators: this is an emote: '* Danielle waves' */
-      body = g_strdup_printf (_("<i>* %s %s</i>"), alias, msg_escaped);
+      body = g_strdup_printf (_("<i>* %s %s</i>"), alias, msg->str);
     }
   else
     {
       /* Translators: this is a message: 'Danielle: hello'
        * The string in bold is the sender's name */
-      body = g_strdup_printf (_("<b>%s:</b> %s"), alias, msg_escaped);
+      body = g_strdup_printf (_("<b>%s:</b> %s"), alias, msg->str);
     }
-
-  g_free (msg_escaped);
 
   gtk_tree_store_append (store, &iter, &parent);
   gtk_tree_store_set (store, &iter,
