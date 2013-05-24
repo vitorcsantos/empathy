@@ -506,12 +506,12 @@ new_room_list_cb (GObject *source,
       return;
     }
 
-  g_signal_connect (self->priv->room_list, "got-room",
-      G_CALLBACK (new_chatroom_dialog_got_room_cb), self);
-  g_signal_connect (self->priv->room_list, "failed",
-      G_CALLBACK (listing_failed_cb), self);
-  g_signal_connect (self->priv->room_list, "notify::listing",
-      G_CALLBACK (new_chatroom_dialog_listing_cb), self);
+  tp_g_signal_connect_object (self->priv->room_list, "got-room",
+      G_CALLBACK (new_chatroom_dialog_got_room_cb), self, 0);
+  tp_g_signal_connect_object (self->priv->room_list, "failed",
+      G_CALLBACK (listing_failed_cb), self, 0);
+  tp_g_signal_connect_object (self->priv->room_list, "notify::listing",
+      G_CALLBACK (new_chatroom_dialog_listing_cb), self, 0);
 
   if (gtk_expander_get_expanded (GTK_EXPANDER (self->priv->expander_browse)))
     {
