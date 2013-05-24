@@ -2046,7 +2046,7 @@ am_prepared_cb (GObject *am,
       G_CALLBACK (debug_window_button_press_event_cb), object);
 
   renderer = gtk_cell_renderer_text_new ();
-  g_object_set (renderer, "yalign", 0, NULL);
+  g_object_set (renderer, "yalign", (gfloat) 0, NULL);
 
   gtk_tree_view_insert_column_with_data_func (GTK_TREE_VIEW (self->priv->view),
       -1, _("Time"), renderer,
