@@ -29,6 +29,7 @@
 #include <libaccounts-glib/ag-manager.h>
 #include <libaccounts-glib/ag-service.h>
 
+#include "empathy-keyring.h"
 #include "empathy-pkg-kit.h"
 #include "empathy-uoa-utils.h"
 #endif
