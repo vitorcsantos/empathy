@@ -148,7 +148,7 @@ empathy_new_account_dialog_init (EmpathyNewAccountDialog *self)
   /* trigger show the first account widget */
   protocol_changed_cb (GTK_COMBO_BOX (self->priv->chooser), self);
 
-  gtk_window_set_title (GTK_WINDOW (self), _("Adding new account"));
+  gtk_window_set_title (GTK_WINDOW (self), _("Add new account"));
 }
 
 static void
