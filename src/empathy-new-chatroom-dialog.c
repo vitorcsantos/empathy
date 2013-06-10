@@ -256,8 +256,8 @@ new_chatroom_dialog_model_setup (EmpathyNewChatroomDialog *self)
 
   /* Store/Model */
   store = gtk_list_store_new (COL_COUNT,
-      G_TYPE_STRING,       /* Invite */
-      G_TYPE_STRING,       /* Password */
+      G_TYPE_STRING,       /* Need password */
+      G_TYPE_STRING,       /* Invite only */
       G_TYPE_STRING,       /* Name */
       G_TYPE_STRING,       /* Room */
       G_TYPE_STRING,       /* Member count */
