@@ -496,15 +496,25 @@ new_room_list_cb (GObject *source,
     gpointer user_data)
 {
   EmpathyNewChatroomDialog *self = user_data;
+  TpRoomList *room_list;
   GError *error = NULL;
 
-  self->priv->room_list = tp_room_list_new_finish (result, &error);
-  if (self->priv->room_list == NULL)
+  room_list = tp_room_list_new_finish (result, &error);
+  if (room_list == NULL)
     {
       DEBUG ("Failed to create TpRoomList: %s\n", error->message);
       g_error_free (error);
       return;
     }
+
+  if (tp_room_list_get_account (room_list) != self->priv->account)
+    {
+      /* Account changed while we were creating this TpRoomList */
+      g_object_unref (room_list);
+      return;
+    }
+
+  self->priv->room_list = room_list;
 
   tp_g_signal_connect_object (self->priv->room_list, "got-room",
       G_CALLBACK (new_chatroom_dialog_got_room_cb), self, 0);
@@ -529,7 +539,6 @@ new_room_list_cb (GObject *source,
   gtk_widget_set_sensitive (self->priv->expander_browse, TRUE);
 
   new_chatroom_dialog_update_widgets (self);
-
 }
 
 static void
