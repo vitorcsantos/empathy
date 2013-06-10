@@ -416,6 +416,12 @@ new_chatroom_dialog_got_room_cb (TpRoomList *room_list,
   const gchar *invite_only;
   gchar *tmp;
 
+  if (tp_str_empty (tp_room_info_get_handle_name (room)))
+    {
+      DEBUG ("Room handle name is empty - Broken CM");
+      return;
+    }
+
   DEBUG ("New room listed: %s (%s)", tp_room_info_get_name (room),
       tp_room_info_get_handle_name (room));
 
