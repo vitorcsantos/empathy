@@ -409,6 +409,7 @@ debug_window_get_messages_cb (GObject *object,
           COL_PROXY, debug,
           -1);
     }
+  g_ptr_array_unref (messages);
 
   g_free (proxy_service_name);
 
