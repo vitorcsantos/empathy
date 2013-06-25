@@ -1,3 +1,5 @@
+== Relicensing for Telepathy logger ==
+
 From sjoerd.simons@collabora.co.uk Tue Jun 15 16:28:08 2010
 Received: from [127.0.0.1] (localhost [127.0.0.1]) (Authenticated sender:
  sjoerd) with ESMTPSA id 0BEF66002FD
@@ -409,3 +411,3379 @@ Content-Transfer-Encoding: 8bit
 
 OK!
 
+
+== Telepathy account widgets relicensing (Gossip contributors) ==
+
+Message-ID: <1368796612.5620.19.camel@carbonara>
+Subject: Relicensing some code from Gossip to LGPL
+From: Marco Barisione <marco.barisione@collabora.co.uk>
+To: Martyn Russell <martyn@lanedo.com>, Richard Hult
+ <richard@tinybird.com>, Mikael Hallendal <micke@tinybird.com>
+Date: Fri, 17 May 2013 14:16:52 +0100
+Organization: Collabora Ltd.
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.6.3-1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Evolution-Source: 1205242379.4854.0@cordof
+
+Hi,
+
+I'm currently working on integrating IM account creation with
+gnome-online-accounts. This would allow a Gnome user to create all types
+of accounts directly in the “System Settings”.
+To do so, I need to move to a separate module all the account widget
+code that is currently in Empathy, plus some other utility functions.
+The problem is that gnome-online-accounts is under LGPL, while the
+Empathy code that comes from Gossip is under GPL.
+
+Would it be possible for you (both personally and for Imendio AB) to
+agree to relicense this code to LGPL version 2.1 or later?
+
+Considering that this is the second time we ask your permission to
+relicense code coming from Gossip, I was wondering if you would agree to
+give us permission to relicense your code (to LGPL v2.1+) in case it
+will be needed again for similar projects in the future.
+
+Thanks!
+
+-- 
+Marco Barisione
+
+X-Greylist: delayed 427 seconds by postgrey-1.32 at bhuna; Fri, 17 May 2013
+ 15:05:02 BST
+Received: from lanedo.com (lanedo.com [85.214.136.179]) (using TLSv1 with
+ cipher ADH-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ bhuna.collabora.co.uk (Postfix) with ESMTPS id 828D4170864F for
+ <marco.barisione@collabora.co.uk>; Fri, 17 May 2013 15:05:02 +0100 (BST)
+Received: from [192.168.1.77]
+ (host86-131-206-214.range86-131.btcentralplus.com [86.131.206.214])
+ (Authenticated sender: martyn) by lanedo.com (Postfix) with ESMTPSA id
+ 81DC27F40AD; Fri, 17 May 2013 15:57:54 +0200 (CEST)
+Message-ID: <51963761.3030407@lanedo.com>
+Date: Fri, 17 May 2013 14:57:53 +0100
+From: Martyn Russell <martyn@lanedo.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130510
+ Thunderbird/17.0.6
+MIME-Version: 1.0
+To: Marco Barisione <marco.barisione@collabora.co.uk>
+CC: Richard Hult <richard@tinybird.com>,  Mikael Hallendal
+ <micke@tinybird.com>
+Subject: Re: Relicensing some code from Gossip to LGPL
+References: <1368796612.5620.19.camel@carbonara>
+In-Reply-To: <1368796612.5620.19.camel@carbonara>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-DSPAM-Result: Innocent
+X-DSPAM-Processed: Fri May 17 15:23:07 2013
+X-DSPAM-Confidence: 0.5891
+X-DSPAM-Probability: 0.0000
+X-DSPAM-Signature: 12,51963d4b19129775617922
+X-Evolution-Source: 1205242379.4854.0@cordof
+
+On 17/05/13 14:16, Marco Barisione wrote:
+> Hi,
+>
+> I'm currently working on integrating IM account creation with
+> gnome-online-accounts. This would allow a Gnome user to create all types
+> of accounts directly in the “System Settings”.
+> To do so, I need to move to a separate module all the account widget
+> code that is currently in Empathy, plus some other utility functions.
+> The problem is that gnome-online-accounts is under LGPL, while the
+> Empathy code that comes from Gossip is under GPL.
+>
+> Would it be possible for you (both personally and for Imendio AB) to
+> agree to relicense this code to LGPL version 2.1 or later?
+>
+> Considering that this is the second time we ask your permission to
+> relicense code coming from Gossip, I was wondering if you would agree to
+> give us permission to relicense your code (to LGPL v2.1+) in case it
+> will be needed again for similar projects in the future.
+
+Hello Macro, which code exactly are we talking about out of interest?
+
+-- 
+Regards,
+Martyn
+
+Founder and CEO of Lanedo GmbH.
+
+Message-ID: <1368804002.5620.42.camel@carbonara>
+Subject: Re: Relicensing some code from Gossip to LGPL
+From: Marco Barisione <marco.barisione@collabora.co.uk>
+To: Martyn Russell <martyn@lanedo.com>
+Cc: Richard Hult <richard@tinybird.com>, Mikael Hallendal
+ <micke@tinybird.com>
+Date: Fri, 17 May 2013 16:20:02 +0100
+In-Reply-To: <51963761.3030407@lanedo.com>
+References: <1368796612.5620.19.camel@carbonara>
+         <51963761.3030407@lanedo.com>
+Organization: Collabora Ltd.
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.6.3-1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-Evolution-Source: 1205242379.4854.0@cordof
+
+On Fri, 2013-05-17 at 14:57 +0100, Martyn Russell wrote:
+> Hello Macro, which code exactly are we talking about out of interest?
+
+It's difficult to pinpoint exactly what can be considered code coming
+from Gossip and what not as most code was heavily changed.
+I actually found it interesting how some functions was basically
+completely rewritten and now uses a different library (GtkBuilder
+instead of glade) but you can still see how they look similar to some
+Gossip code written 10 years ago! (It's almost Gossip's 10th birthday as
+the first commit was on the 19th May 2003.)
+
+Anyway, this is the code we need that was written for Gossip under GPL:
+      * UI code for configuring accounts (coming from
+        gossip-account-widget-jabber.[ch]).
+      * Some utility functions related to GtkBuilder (they were
+        originally for Glade). See gossip-glade.[ch].
+      * Some utility code to get the toplevel GtkWindow of a widget (see
+        gossip-account-widget-jabber.c and gossip-presence-chooser.c)
+      * A utility function to present a window, see
+        gossip_window_present() in gossip-ui-utils.c.
+
+-- 
+Marco Barisione
+
+Received: from lanedo.com (lanedo.com [85.214.136.179]) (using TLSv1 with
+ cipher ADH-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ bhuna.collabora.co.uk (Postfix) with ESMTPS id DBC9916986FA for
+ <marco.barisione@collabora.co.uk>; Fri, 17 May 2013 18:00:58 +0100 (BST)
+Received: from [192.168.1.77]
+ (host86-131-206-214.range86-131.btcentralplus.com [86.131.206.214])
+ (Authenticated sender: martyn) by lanedo.com (Postfix) with ESMTPSA id
+ 80C287F40A5; Fri, 17 May 2013 19:00:57 +0200 (CEST)
+Message-ID: <51966248.5020308@lanedo.com>
+Date: Fri, 17 May 2013 18:00:56 +0100
+From: Martyn Russell <martyn@lanedo.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130510
+ Thunderbird/17.0.6
+MIME-Version: 1.0
+To: Marco Barisione <marco.barisione@collabora.co.uk>
+CC: Richard Hult <richard@tinybird.com>,  Mikael Hallendal
+ <micke@tinybird.com>
+Subject: Re: Relicensing some code from Gossip to LGPL
+References: <1368796612.5620.19.camel@carbonara>
+          <51963761.3030407@lanedo.com> <1368804002.5620.42.camel@carbonara>
+In-Reply-To: <1368804002.5620.42.camel@carbonara>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-DSPAM-Result: Innocent
+X-DSPAM-Processed: Fri May 17 18:01:01 2013
+X-DSPAM-Confidence: 0.9916
+X-DSPAM-Probability: 0.0000
+X-DSPAM-Signature: 12,5196624c19123502411123
+X-Evolution-Source: 1205242379.4854.0@cordof
+
+On 17/05/13 16:20, Marco Barisione wrote:
+> On Fri, 2013-05-17 at 14:57 +0100, Martyn Russell wrote:
+>> Hello Macro, which code exactly are we talking about out of interest?
+>
+> It's difficult to pinpoint exactly what can be considered code coming
+> from Gossip and what not as most code was heavily changed.
+> I actually found it interesting how some functions was basically
+> completely rewritten and now uses a different library (GtkBuilder
+> instead of glade) but you can still see how they look similar to some
+> Gossip code written 10 years ago! (It's almost Gossip's 10th birthday as
+> the first commit was on the 19th May 2003.)
+>
+> Anyway, this is the code we need that was written for Gossip under GPL:
+>        * UI code for configuring accounts (coming from
+>          gossip-account-widget-jabber.[ch]).
+>        * Some utility functions related to GtkBuilder (they were
+>          originally for Glade). See gossip-glade.[ch].
+>        * Some utility code to get the toplevel GtkWindow of a widget (see
+>          gossip-account-widget-jabber.c and gossip-presence-chooser.c)
+>        * A utility function to present a window, see
+>          gossip_window_present() in gossip-ui-utils.c.
+
+Fine by me, was just interested :)
+
+Please go ahead.
+
+-- 
+Regards,
+Martyn
+
+Founder and CEO of Lanedo GmbH.
+
+Received: from mail-la0-f45.google.com (mail-la0-f45.google.com
+ [209.85.215.45]) (using TLSv1 with cipher RC4-SHA (128/128 bits)) (No
+ client certificate requested) by bhuna.collabora.co.uk (Postfix) with
+ ESMTPS id 872DB1A8806E for <marco.barisione@collabora.co.uk>; Thu, 30 May
+ 2013 16:32:08 +0100 (BST)
+Received: by mail-la0-f45.google.com with SMTP id fr10so396796lab.4 for
+ <marco.barisione@collabora.co.uk>; Thu, 30 May 2013 08:32:07 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20120113;
+ h=content-type:mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to:x-mailer
+ :x-gm-message-state; bh=em3Xu/rdTkZodWe51PjShChayLOTdb68zV4rd6LL7g4=;
+ b=La4J6KZ/HixmKuI5gj1QqsVpSFy6o/c/kSO2wU6BUAX9El3V12zYyMj1wLEAmAw4Bf
+ DFz0+MX+uaJjF7Kb9NdIlGDUNLT/NLCzjwDwa4wMIeSVj03OLdXhj9O5xKRTr6DAGN6J
+ fUmUVNt14zmFCG+/YxcaaThd+QDkUQ5KXQPuwCKsqiS277LszpdK0mvz67SBr6Kv9Oid
+ 1NQWMApL/Fu39RIkyBPhol9hNtWmtPRU4SrtI8AuQCTCTo5cWeuGTAo3tHCeXnOz4Oht
+ sfqeQlwkZu1Cfw56KF33Lo2shJwR8Aon7yQAx3cC15VglrgH+84j8Bk03tR/tWrwPRXi U/oQ==
+X-Received: by 10.152.22.199 with SMTP id g7mr3105740laf.20.1369927927723;
+ Thu, 30 May 2013 08:32:07 -0700 (PDT)
+Received: from [192.168.50.11] (c80-216-147-62.bredband.comhem.se.
+ [80.216.147.62]) by mx.google.com with ESMTPSA id
+ f8sm17212966lbr.10.2013.05.30.08.32.04 for <multiple recipients>
+ (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128); Thu, 30 May 2013
+ 08:32:06 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 6.3 \(1503\))
+Subject: Re: Relicensing some code from Gossip to LGPL
+From: Richard Hult <richard@tinybird.com>
+In-Reply-To: <1368804002.5620.42.camel@carbonara>
+Date: Thu, 30 May 2013 17:32:03 +0200
+Cc: Martyn Russell <martyn@lanedo.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <48F9E57D-673D-4BB6-BCB1-AA80C80B672E@tinybird.com>
+References: <1368796612.5620.19.camel@carbonara>
+         <51963761.3030407@lanedo.com> <1368804002.5620.42.camel@carbonara>
+To: Marco Barisione <marco.barisione@collabora.co.uk>
+X-Mailer: Apple Mail (2.1503)
+X-Gm-Message-State:
+ ALoCoQmf77Ca0NSy0HMMkExOPJLIE97QTjzE8LPDz6Z999SvJDGstgQWuhv8Gikd2hq9Ydj9G3PA
+X-DSPAM-Result: Innocent
+X-DSPAM-Processed: Thu May 30 16:37:13 2013
+X-DSPAM-Confidence: 0.9915
+X-DSPAM-Probability: 0.0000
+X-DSPAM-Signature: 12,51a7722919121527013877
+X-Evolution-Source: 1205242379.4854.0@cordof
+
+Hi,
+
+We (me and Micke, including Imendio / Tinybird) are fine with =
+relicensing all our contributions in Gossip to LGPL v2.1+.
+
+It's good to see that ancient thing come to use :)
+
+Cheers,
+Richard
+
+17 maj 2013 kl. 17:20 skrev Marco Barisione =
+<marco.barisione@collabora.co.uk>:
+
+> On Fri, 2013-05-17 at 14:57 +0100, Martyn Russell wrote:
+>> Hello Macro, which code exactly are we talking about out of interest?
+>=20
+> It's difficult to pinpoint exactly what can be considered code coming
+> from Gossip and what not as most code was heavily changed.
+> I actually found it interesting how some functions was basically
+> completely rewritten and now uses a different library (GtkBuilder
+> instead of glade) but you can still see how they look similar to some
+> Gossip code written 10 years ago! (It's almost Gossip's 10th birthday =
+as
+> the first commit was on the 19th May 2003.)
+>=20
+> Anyway, this is the code we need that was written for Gossip under =
+GPL:
+>      * UI code for configuring accounts (coming from
+>        gossip-account-widget-jabber.[ch]).
+>      * Some utility functions related to GtkBuilder (they were
+>        originally for Glade). See gossip-glade.[ch].
+>      * Some utility code to get the toplevel GtkWindow of a widget =
+(see
+>        gossip-account-widget-jabber.c and gossip-presence-chooser.c)
+>      * A utility function to present a window, see
+>        gossip_window_present() in gossip-ui-utils.c.
+>=20
+> --=20
+> Marco Barisione
+>=20
+>=20
+
+--=20
+http://tinybird.com/ ~ Tinybird Interactive - Inspiring Software
+
+== Telepathy account widgets relicensing (Collabora contributors) ==
+
+Message-ID: <1368795514.5620.8.camel@carbonara>
+Subject: Relicensing some Empathy code from GPL to LGPL
+From: Marco Barisione <marco.barisione@collabora.co.uk>
+To: Jonny Lamb <jonnylamb@gnome.org>, Marco Barisione
+ <marco@barisione.org>, Felix Kaser <f.kaser@gmx.net>, Cosimo Cecchi
+ <cosimoc@gnome.org>, Travis Reitter <treitter@gmail.com>,  Xavier Claessens
+ <xclaesse@gmail.com>, Danielle Madeley <danielle@madeley.id.au>
+Date: Fri, 17 May 2013 13:58:34 +0100
+Organization: Collabora Ltd.
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.6.3-1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Evolution-Source: 1205242379.4854.0@cordof
+
+Hi all,
+
+I'm currently working on integrating IM account creation with
+gnome-online-accounts. This would allow a Gnome user to create all types
+of accounts directly in the “System Settings”.
+To do so, I need to move all the account creation code to a separate git
+submodule that can be used by gnome-online-accounts.
+The problem is that gnome-online-account is under LGPL, while Empathy
+contains some files under GPL and some files under LGPL.
+
+I'm writing you because you contributed to some Empathy files under GPL
+that we would like to use in gnome-online-accounts. These contributions
+were done using your personal email addresses, so I'm not sure whether
+you wrote the code in your free time or for Collabora.
+In case some of the code was written outside work, would you agree to
+relicense your code from GPL to LGPL (version 2.1 or later)?
+
+Thanks!
+
+-- 
+Marco Barisione
+
+X-Greylist: delayed 416 seconds by postgrey-1.32 at bhuna; Fri, 17 May 2013
+ 14:30:36 BST
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
+ [66.111.4.26]) (using TLSv1 with cipher ADH-AES256-SHA (256/256 bits)) (No
+ client certificate requested) by bhuna.collabora.co.uk (Postfix) with
+ ESMTPS id 5F2FA1708625 for <marco.barisione@collabora.co.uk>; Fri, 17 May
+ 2013 14:30:36 +0100 (BST)
+Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
+ by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id B03CC20A06; Fri, 17
+ May 2013 09:23:37 -0400 (EDT)
+Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161]) by
+ compute2.internal (MEProxy); Fri, 17 May 2013 09:23:37 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d= messagingengine.com;
+ h=message-id:subject:from:to:date
+ :in-reply-to:references:content-type:mime-version
+ :content-transfer-encoding; s=smtpout; bh=ao/XTCWVPrRO0biL9ndAnB w+QVk=;
+ b=H7DVExc4VMFzFtjndObVmJBjaHFaTJ1is040b9gk5UXA8xk40swh2B
+ b7Wqvmmis/uD4G+bkOwAys5fQyzLaAEJeOBK4GFgXKrhWrx7+BslocHL47lXdHLe
+ R1gYDTA2XHAR3eINRqyl46wGcpRbT+dYhyyo69U1CsjR1AUCkGOGE=
+X-Sasl-enc: YaQs8RVRW4bZ4vRd7mOOG8Y768a4nwKSKJng7BgS5qdD 1368797017
+Received: from [10.69.106.15] (unknown [93.45.233.185]) by
+ mail.messagingengine.com (Postfix) with ESMTPA id 11FC120008D for
+ <marco.barisione@collabora.co.uk>; Fri, 17 May 2013 09:23:36 -0400 (EDT)
+Message-ID: <1368797015.19887.48.camel@reger>
+Subject: Re: Relicensing some Empathy code from GPL to LGPL
+From: Jonny Lamb <jonnylamb@jonnylamb.com>
+To: Marco Barisione <marco.barisione@collabora.co.uk>
+Date: Fri, 17 May 2013 15:23:35 +0200
+In-Reply-To: <1368795514.5620.8.camel@carbonara>
+References: <1368795514.5620.8.camel@carbonara>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.8.0-1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-DSPAM-Result: Innocent
+X-DSPAM-Processed: Fri May 17 14:34:23 2013
+X-DSPAM-Confidence: 0.5660
+X-DSPAM-Probability: 0.0354
+X-DSPAM-Signature: 12,519631df19121547611730
+X-Evolution-Source: 1205242379.4854.0@cordof
+
+Il giorno ven, 17/05/2013 alle 13.58 +0100, Marco Barisione ha scritto:
+> In case some of the code was written outside work, would you agree to
+> relicense your code from GPL to LGPL (version 2.1 or later)?
+
+Yes.
+
+-- 
+Jonny Lamb
+
+X-Greylist: delayed 400 seconds by postgrey-1.32 at bhuna; Fri, 17 May 2013
+ 14:37:27 BST
+Received: from dwicky1.webinabox.net.au (dwicky1-3.webinabox.net.au
+ [110.173.224.45]) (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256
+ bits)) (No client certificate requested) by bhuna.collabora.co.uk (Postfix)
+ with ESMTPS id 87461170860A for <marco.barisione@collabora.co.uk>; Fri, 17
+ May 2013 14:37:27 +0100 (BST)
+Received: (qmail 27127 invoked by uid 89); 17 May 2013 13:30:42 -0000
+Received: by simscan 1.1.0 ppid: 27119, pid: 27122, t: 0.4232s scanners:
+ attach: 1.1.0 clamav: 0.88/m:35/d:1235 spam: 3.2.4
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on
+ dwicky1.webinabox.net.au
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.4 required=5.0 tests=ALL_TRUSTED,HTML_MESSAGE
+ autolearn=failed version=3.2.4
+Received: from unknown (HELO mail-qc0-f180.google.com)
+ (danielle@madeley.id.au@209.85.216.180) by dwicky1.webinabox.net.au with
+ ESMTPA; 17 May 2013 13:30:42 -0000
+Received: by mail-qc0-f180.google.com with SMTP id a10so1664685qcx.39 for
+ <marco.barisione@collabora.co.uk>; Fri, 17 May 2013 06:30:39 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20120113;
+ h=mime-version:x-received:in-reply-to:references:date:message-id
+ :subject:from:to:content-type;
+ bh=wYGY0zxDLIoZIN+pv6p78/LjECx1nPfqDufvDG8nVZ4=;
+ b=aLqZXAesRaCr8GuIypucFTsT/VcHfKgeUcY4hgiPsJZkAeB8vP/0BTKR0jmCivGGKH
+ w2axkj3lxAybck2oqj3ViTV73HuL6CJvtGqAFijmSxnyz1bkrPyCJd1L+9xi5F136mCv
+ BWElJG1gobWRyTQaeL0UVUo4tkSobBxNzMrDSmEIWQHWresZBFOpt0GpW34vmTo24qxe
+ EoAYXhnKLrpe0gk48Oa6R81Rmnz0qJ1es3uDiVof4mvuH0wKxrgWKKog2VFaLNlajlS4
+ eb+90OJzfJPoOqLZbt/7MAWI3zG4mj4SvHvRBFURcjB7ZcK5Ru3n8KwbPH56v1GTo6q0 N+pQ==
+MIME-Version: 1.0
+X-Received: by 10.224.192.6 with SMTP id do6mr37195109qab.82.1368797439221;
+ Fri, 17 May 2013 06:30:39 -0700 (PDT)
+Received: by 10.49.117.195 with HTTP; Fri, 17 May 2013 06:30:39 -0700 (PDT)
+In-Reply-To: <1368795514.5620.8.camel@carbonara>
+References: <1368795514.5620.8.camel@carbonara>
+Date: Fri, 17 May 2013 23:30:39 +1000
+Message-ID: <CAKyTCxaNxZBoz99DFcSMkJpq+JJTXuXx5HrUdej6Q4Coi+tXyw@mail.gmail.com>
+Subject: Re: Relicensing some Empathy code from GPL to LGPL
+From: Danielle Madeley <danielle@madeley.id.au>
+To: Marco Barisione <marco.barisione@collabora.co.uk>
+Content-Type: multipart/alternative; boundary=20cf300fb1cb2267ec04dce9fdc8
+X-DSPAM-Result: Innocent
+X-DSPAM-Processed: Fri May 17 14:40:06 2013
+X-DSPAM-Confidence: 0.5883
+X-DSPAM-Probability: 0.0000
+X-DSPAM-Signature: 12,5196333619122110957504
+X-Evolution-Source: 1205242379.4854.0@cordof
+
+
+--20cf300fb1cb2267ec04dce9fdc8
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+Relicence away!
+
+On Friday, 17 May 2013, Marco Barisione wrote:
+
+> Hi all,
+>
+> I'm currently working on integrating IM account creation with
+> gnome-online-accounts. This would allow a Gnome user to create all types
+> of accounts directly in the =E2=80=9CSystem Settings=E2=80=9D.
+> To do so, I need to move all the account creation code to a separate git
+> submodule that can be used by gnome-online-accounts.
+> The problem is that gnome-online-account is under LGPL, while Empathy
+> contains some files under GPL and some files under LGPL.
+>
+> I'm writing you because you contributed to some Empathy files under GPL
+> that we would like to use in gnome-online-accounts. These contributions
+> were done using your personal email addresses, so I'm not sure whether
+> you wrote the code in your free time or for Collabora.
+> In case some of the code was written outside work, would you agree to
+> relicense your code from GPL to LGPL (version 2.1 or later)?
+>
+> Thanks!
+>
+> --
+> Marco Barisione
+>
+>
+
+--20cf300fb1cb2267ec04dce9fdc8
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+Relicence away!<span></span><br><br>On Friday, 17 May 2013, Marco Barisione=
+  wrote:<br><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;bo=
+rder-left:1px #ccc solid;padding-left:1ex">Hi all,<br>
+<br>
+I&#39;m currently working on integrating IM account creation with<br>
+gnome-online-accounts. This would allow a Gnome user to create all types<br=
+>
+of accounts directly in the =E2=80=9CSystem Settings=E2=80=9D.<br>
+To do so, I need to move all the account creation code to a separate git<br=
+>
+submodule that can be used by gnome-online-accounts.<br>
+The problem is that gnome-online-account is under LGPL, while Empathy<br>
+contains some files under GPL and some files under LGPL.<br>
+<br>
+I&#39;m writing you because you contributed to some Empathy files under GPL=
+<br>
+that we would like to use in gnome-online-accounts. These contributions<br>
+were done using your personal email addresses, so I&#39;m not sure whether<=
+br>
+you wrote the code in your free time or for Collabora.<br>
+In case some of the code was written outside work, would you agree to<br>
+relicense your code from GPL to LGPL (version 2.1 or later)?<br>
+<br>
+Thanks!<br>
+<br>
+--<br>
+Marco Barisione<br>
+<br>
+</blockquote>
+
+--20cf300fb1cb2267ec04dce9fdc8--
+
+Received: from mail-ea0-f176.google.com (mail-ea0-f176.google.com
+ [209.85.215.176]) (using TLSv1 with cipher RC4-SHA (128/128 bits)) (No
+ client certificate requested) by bhuna.collabora.co.uk (Postfix) with
+ ESMTPS id 186B11708614 for <marco.barisione@collabora.co.uk>; Fri, 17 May
+ 2013 14:48:20 +0100 (BST)
+Received: by mail-ea0-f176.google.com with SMTP id k11so2440251eaj.35 for
+ <marco.barisione@collabora.co.uk>; Fri, 17 May 2013 06:48:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com;
+ s=20120113; h=x-received:sender:message-id:subject:from:to:date:in-reply-to
+ :references:content-type:x-mailer:mime-version :content-transfer-encoding;
+ bh=ETuqIl7IDAWDEheKJ8nP+MeyQy1GN957saQXDCX81nE=;
+ b=hNdg84v8OuZqXILYOdfUalurTdkfz5eP9pfgO1T2zstl1tg+qu8BO6jLjHPmNN2Lek
+ hirUvvCpOb4wfurTvSG+CMEB2CjU/NRNCg6BVkQTe2YJNwQEDslV79oRma4gpj5CBatd
+ jqJHgz2E8tUMIu+HpZRjZ3NK0ZL9AYodaMnx1jepKuiwKee/UMUKSLG6BYs2IGLkBH0j
+ IL2NUVPLQzybm9DmYQ+xPyyx2asjRbYkPCgYrBw+y2sRgBOMgetHTq7tD2PplGAUMc1x
+ /srnWD9pxbu4oYkm+rDbgp53BDq8oWMTjx9uz2bhRlc1ZV3cw25SmrONfD6RHPpEROCN VbtQ==
+X-Received: by 10.15.35.71 with SMTP id f47mr91722892eev.15.1368798499636;
+ Fri, 17 May 2013 06:48:19 -0700 (PDT)
+Received: from [172.22.64.131] (pakora.collabora.co.uk. [93.93.133.71]) by
+ mx.google.com with ESMTPSA id i2sm18882677eeg.2.2013.05.17.06.48.18 for
+ <marco.barisione@collabora.co.uk> (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA
+ bits=128/128); Fri, 17 May 2013 06:48:18 -0700 (PDT)
+Sender: Marco Barisione <barisione@gmail.com>
+Message-ID: <1368798497.5620.25.camel@carbonara>
+Subject: Re: Relicensing some Empathy code from GPL to LGPL
+From: Marco Barisione <marco@barisione.org>
+To: Marco Barisione <marco.barisione@collabora.co.uk>
+Date: Fri, 17 May 2013 14:48:17 +0100
+In-Reply-To: <1368795514.5620.8.camel@carbonara>
+References: <1368795514.5620.8.camel@carbonara>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.6.3-1
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-DSPAM-Result: Innocent
+X-DSPAM-Processed: Fri May 17 14:51:19 2013
+X-DSPAM-Confidence: 0.9906
+X-DSPAM-Probability: 0.0000
+X-DSPAM-Signature: 12,519635d719122019096701
+X-Evolution-Source: 1205242379.4854.0@cordof
+
+On Fri, 2013-05-17 at 13:58 +0100, Marco Barisione wrote:
+> In case some of the code was written outside work, would you agree to
+> relicense your code from GPL to LGPL (version 2.1 or later)?
+
+Hi Marco,
+I'm fine with relicensing.
+
+-- 
+Marco
+
+Received: from mail-wg0-f44.google.com (mail-wg0-f44.google.com
+ [74.125.82.44]) (using TLSv1 with cipher RC4-SHA (128/128 bits)) (No client
+ certificate requested) by bhuna.collabora.co.uk (Postfix) with ESMTPS id
+ 99A0D16986F8 for <marco.barisione@collabora.co.uk>; Fri, 17 May 2013
+ 16:10:09 +0100 (BST)
+Received: by mail-wg0-f44.google.com with SMTP id a12so1330250wgh.11 for
+ <marco.barisione@collabora.co.uk>; Fri, 17 May 2013 08:10:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com;
+ s=20120113; h=x-received:message-id:subject:from:to:cc:date:in-reply-to
+ :references:content-type:x-mailer:mime-version :content-transfer-encoding;
+ bh=b5rNuRG3vw5UbY/OnAj27wQAWhIx4lXLWkTUJXigGE8=;
+ b=tnYxJmDLfBBoT95ZDw7DCNH0SOXNq9U/lm2iZY2K29bXcd/GjmT5w8XTnsKZQYJaEf
+ xy3ULPyBqPvYWNaKBtd8mubwpk7+K9RNPfBMK/K5TfzSGwso1SuI+ug4ml8yEXme1W47
+ ZlbLweT9BWD9ydMRgRnElEmLYD6/zmQul62AF7OzEVRetFL+c47RR5zfB+2VvjFLFg/9
+ 77OLEx3eR8SWvs9vHFvYwdIQSU+r+9E+rBrH5tsCUnKNzPOKTxS49+f6HCQUnc+mQJR5
+ JeurFsnUiVcNfZ8kgsVaXexisnqmz7itWmUTXA8HmPS8D5tsh+zuizMKlImgN+XhhHfv +Sww==
+X-Received: by 10.181.13.112 with SMTP id
+ ex16mr16564844wid.28.1368803409040; Fri, 17 May 2013 08:10:09 -0700 (PDT)
+Received: from [192.168.1.173] (cable-212.76.254.67.coditel.net.
+ [212.76.254.67]) by mx.google.com with ESMTPSA id
+ fz8sm10089134wib.2.2013.05.17.08.10.07 for <multiple recipients>
+ (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128); Fri, 17 May 2013
+ 08:10:08 -0700 (PDT)
+Message-ID: <1368803406.23948.3.camel@X230>
+Subject: Re: Relicensing some Empathy code from GPL to LGPL
+From: Xavier Claessens <xclaesse@gmail.com>
+To: Marco Barisione <marco.barisione@collabora.co.uk>
+Cc: Jonny Lamb <jonnylamb@gnome.org>, Marco Barisione
+ <marco@barisione.org>, Felix Kaser <f.kaser@gmx.net>, Cosimo Cecchi
+ <cosimoc@gnome.org>, Travis Reitter <treitter@gmail.com>,  Danielle Madeley
+ <danielle@madeley.id.au>
+Date: Fri, 17 May 2013 17:10:06 +0200
+In-Reply-To: <1368795514.5620.8.camel@carbonara>
+References: <1368795514.5620.8.camel@carbonara>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.8.1-0ubuntu1~raring1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-DSPAM-Result: Whitelisted
+X-DSPAM-Processed: Fri May 17 16:10:11 2013
+X-DSPAM-Confidence: 0.9909
+X-DSPAM-Probability: 0.0000
+X-DSPAM-Signature: 12,5196485319129696466813
+X-Evolution-Source: 1205242379.4854.0@cordof
+
+Hello,
+
+No problem for me.
+
+Regards,
+Xavier Claessens.
+
+Le vendredi 17 mai 2013 à 13:58 +0100, Marco Barisione a écrit :
+> Hi all,
+> 
+> I'm currently working on integrating IM account creation with
+> gnome-online-accounts. This would allow a Gnome user to create all types
+> of accounts directly in the “System Settings”.
+> To do so, I need to move all the account creation code to a separate git
+> submodule that can be used by gnome-online-accounts.
+> The problem is that gnome-online-account is under LGPL, while Empathy
+> contains some files under GPL and some files under LGPL.
+> 
+> I'm writing you because you contributed to some Empathy files under GPL
+> that we would like to use in gnome-online-accounts. These contributions
+> were done using your personal email addresses, so I'm not sure whether
+> you wrote the code in your free time or for Collabora.
+> In case some of the code was written outside work, would you agree to
+> relicense your code from GPL to LGPL (version 2.1 or later)?
+> 
+> Thanks!
+> 
+
+Received: from mail-ob0-f179.google.com (mail-ob0-f179.google.com
+ [209.85.214.179]) (using TLSv1 with cipher RC4-SHA (128/128 bits)) (No
+ client certificate requested) by bhuna.collabora.co.uk (Postfix) with
+ ESMTPS id 77A80170861A for <marco.barisione@collabora.co.uk>; Fri, 17 May
+ 2013 16:40:39 +0100 (BST)
+Received: by mail-ob0-f179.google.com with SMTP id wd20so3165117obb.38 for
+ <marco.barisione@collabora.co.uk>; Fri, 17 May 2013 08:40:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com;
+ s=20120113; h=mime-version:x-received:sender:in-reply-to:references:date
+ :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+ bh=W6gVWpVQ2I9yhPP1qYWmUghyxB65GEyrHMaIkls7wNI=;
+ b=q8iyIbLI3hxmJyryDq84NztO6mlwib2yuqPBDK0XmWX0/NuhxuMI4pyOfvp1lduoCE
+ rT+jPqjGTn0NtCylAi2CwahReI7maL8frHk7bz7HXLPr2AcjPhbhfdl3moOyL1FvW92Q
+ B4Qi2cnfa3YuJiL8DxqWvnn7nFHNotsxgK1z3Q1w1PcN4tvCNjWSSK2s45xR4ZxMRpZ8
+ s/HJqC3jceQ2mpcKH9RGi4v9Spk5PsofO6xEjgVbgfXC/u6n1pMzi1QeP6PrUeXyJGM/
+ EMSGxNNfslgOXiPIE2VNu5Bp+dk0BZ4tVqBhEQkfbFL/KUDr1SUFFDRZrQoMJZ1feFkd 3UeQ==
+MIME-Version: 1.0
+X-Received: by 10.60.62.237 with SMTP id b13mr3640322oes.40.1368805238259;
+ Fri, 17 May 2013 08:40:38 -0700 (PDT)
+Sender: cosimo.cecchi@gmail.com
+Received: by 10.60.45.143 with HTTP; Fri, 17 May 2013 08:40:38 -0700 (PDT)
+In-Reply-To: <1368803406.23948.3.camel@X230>
+References: <1368795514.5620.8.camel@carbonara>
+         <1368803406.23948.3.camel@X230>
+Date: Fri, 17 May 2013 08:40:38 -0700
+X-Google-Sender-Auth: BOIuBp3MZ95dGx_Q9NUtAzDmb0Y
+Message-ID: <CAKbt28b2P5mad_c4ydTs2NQrGKRETBg4+ey-PqhOCPvkEeHuKw@mail.gmail.com>
+Subject: Re: Relicensing some Empathy code from GPL to LGPL
+From: Cosimo Cecchi <cosimoc@gnome.org>
+To: Xavier Claessens <xclaesse@gmail.com>
+Cc: Marco Barisione <marco.barisione@collabora.co.uk>, Jonny Lamb
+ <jonnylamb@gnome.org>,  Marco Barisione <marco@barisione.org>, Felix Kaser
+ <f.kaser@gmx.net>,  Travis Reitter <treitter@gmail.com>, Danielle Madeley
+ <danielle@madeley.id.au>
+Content-Type: multipart/alternative; boundary=001a11c21b76fe443c04dcebcddf
+X-DSPAM-Result: Innocent
+X-DSPAM-Processed: Fri May 17 16:41:15 2013
+X-DSPAM-Confidence: 0.9915
+X-DSPAM-Probability: 0.0000
+X-DSPAM-Signature: 12,51964f9a19128002011127
+X-Evolution-Source: 1205242379.4854.0@cordof
+
+
+--001a11c21b76fe443c04dcebcddf
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
+
+Hey Marco,
+
+Sure, no problem.
+
+Cosimo
+
+
+On Fri, May 17, 2013 at 8:10 AM, Xavier Claessens <xclaesse@gmail.com>wrote=
+:
+
+> Hello,
+>
+> No problem for me.
+>
+> Regards,
+> Xavier Claessens.
+>
+> Le vendredi 17 mai 2013 =E0 13:58 +0100, Marco Barisione a =E9crit :
+> > Hi all,
+> >
+> > I'm currently working on integrating IM account creation with
+> > gnome-online-accounts. This would allow a Gnome user to create all type=
+s
+> > of accounts directly in the =93System Settings=94.
+> > To do so, I need to move all the account creation code to a separate gi=
+t
+> > submodule that can be used by gnome-online-accounts.
+> > The problem is that gnome-online-account is under LGPL, while Empathy
+> > contains some files under GPL and some files under LGPL.
+> >
+> > I'm writing you because you contributed to some Empathy files under GPL
+> > that we would like to use in gnome-online-accounts. These contributions
+> > were done using your personal email addresses, so I'm not sure whether
+> > you wrote the code in your free time or for Collabora.
+> > In case some of the code was written outside work, would you agree to
+> > relicense your code from GPL to LGPL (version 2.1 or later)?
+> >
+> > Thanks!
+> >
+>
+>
+>
+
+--001a11c21b76fe443c04dcebcddf
+Content-Type: text/html; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hey Marco,<div><br></div><div style>Sure, no problem.</div=
+><div style><br></div><div style>Cosimo</div></div><div class=3D"gmail_extr=
+a"><br><br><div class=3D"gmail_quote">On Fri, May 17, 2013 at 8:10 AM, Xavi=
+er Claessens <span dir=3D"ltr">&lt;<a href=3D"mailto:xclaesse@gmail.com" ta=
+rget=3D"_blank">xclaesse@gmail.com</a>&gt;</span> wrote:<br>
+<blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1p=
+x #ccc solid;padding-left:1ex">Hello,<br>
+<br>
+No problem for me.<br>
+<br>
+Regards,<br>
+Xavier Claessens.<br>
+<br>
+Le vendredi 17 mai 2013 =E0 13:58 +0100, Marco Barisione a =E9crit :<br>
+<div class=3D"HOEnZb"><div class=3D"h5">&gt; Hi all,<br>
+&gt;<br>
+&gt; I&#39;m currently working on integrating IM account creation with<br>
+&gt; gnome-online-accounts. This would allow a Gnome user to create all typ=
+es<br>
+&gt; of accounts directly in the =93System Settings=94.<br>
+&gt; To do so, I need to move all the account creation code to a separate g=
+it<br>
+&gt; submodule that can be used by gnome-online-accounts.<br>
+&gt; The problem is that gnome-online-account is under LGPL, while Empathy<=
+br>
+&gt; contains some files under GPL and some files under LGPL.<br>
+&gt;<br>
+&gt; I&#39;m writing you because you contributed to some Empathy files unde=
+r GPL<br>
+&gt; that we would like to use in gnome-online-accounts. These contribution=
+s<br>
+&gt; were done using your personal email addresses, so I&#39;m not sure whe=
+ther<br>
+&gt; you wrote the code in your free time or for Collabora.<br>
+&gt; In case some of the code was written outside work, would you agree to<=
+br>
+&gt; relicense your code from GPL to LGPL (version 2.1 or later)?<br>
+&gt;<br>
+&gt; Thanks!<br>
+&gt;<br>
+<br>
+<br>
+</div></div></blockquote></div><br></div>
+
+--001a11c21b76fe443c04dcebcddf--
+
+X-Greylist: delayed 457 seconds by postgrey-1.32 at bhuna; Fri, 17 May 2013
+ 20:09:56 BST
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15]) by
+ bhuna.collabora.co.uk (Postfix) with ESMTP id 22C7B16986BE for
+ <marco.barisione@collabora.co.uk>; Fri, 17 May 2013 20:09:56 +0100 (BST)
+Received: from mailout-de.gmx.net ([10.1.76.12]) by mrigmx.server.lan
+ (mrigmx002) with ESMTP (Nemesis) id 0MB0os-1Ul4os0ZEq-00A1wY for
+ <marco.barisione@collabora.co.uk>; Fri, 17 May 2013 20:57:18 +0200
+Received: (qmail invoked by alias); 17 May 2013 18:57:17 -0000
+Received: from mail-ee0-f49.google.com (EHLO mail-ee0-f49.google.com)
+ [74.125.83.49] by mail.gmx.net (mp012) with SMTP; 17 May 2013 20:57:17 +0200
+X-Authenticated: #24284661
+X-Provags-ID: V01U2FsdGVkX193WC12kHh3qD6oo4BlVAUMeh6TLiexwcKQKX4fCG
+ eL5Rbw1X85d5rv
+Received: by mail-ee0-f49.google.com with SMTP id d17so2709611eek.36 for
+ <marco.barisione@collabora.co.uk>; Fri, 17 May 2013 11:57:17 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20120113;
+ h=mime-version:x-received:in-reply-to:references:date:message-id
+ :subject:from:to:cc:content-type;
+ bh=Q6nI2bLTruB/xc0iwoRE7vmJLnH/v40b9NLCjA7aO38=;
+ b=A8C89zmct65+q133icJvENQ4qVEnHyaH9hs4ggzSyCLontorisJgbraRc3xS4pcKSP
+ +rRHbkDeBVF86WMVTckfv4EhYOeSPcI6THtgAZReoQvfajfotMYVuKZrz5ZqUdfCfGFO
+ 5CDZY0l/y4hsNvMxwj2O7lesJcZV3n6jO44P+gdg0VCNgHceL5ZjQYrGD75vowDtlhY1
+ WRmOt8GgruVbD7gNBZsOE6+Sizm1k4f81I2nysWUSTwNA+TX34wjWxItEzVY0CEf4vDL
+ n0TDvirpbBuBcAsjhQzq66l8Rm8P3OdBzX32Wd4aC1raBeUZ7Gl5wPRbM4+681vDRl1m /Z4w==
+MIME-Version: 1.0
+X-Received: by 10.14.178.129 with SMTP id f1mr95588974eem.10.1368817037194;
+ Fri, 17 May 2013 11:57:17 -0700 (PDT)
+Received: by 10.223.1.19 with HTTP; Fri, 17 May 2013 11:57:17 -0700 (PDT)
+In-Reply-To: <CAKbt28b2P5mad_c4ydTs2NQrGKRETBg4+ey-PqhOCPvkEeHuKw@mail.gmail.com>
+References: <1368795514.5620.8.camel@carbonara>
+         <1368803406.23948.3.camel@X230>
+         <CAKbt28b2P5mad_c4ydTs2NQrGKRETBg4+ey-PqhOCPvkEeHuKw@mail.gmail.com>
+Date: Fri, 17 May 2013 20:57:17 +0200
+Message-ID: <CA+57usN9xF9qxaoUHVf=2N29Gt=E4qu-=J_AHonmVK934aVFqQ@mail.gmail.com>
+Subject: Re: Relicensing some Empathy code from GPL to LGPL
+From: Felix Kaser <f.kaser@gmx.net>
+To: Cosimo Cecchi <cosimoc@gnome.org>
+Cc: Xavier Claessens <xclaesse@gmail.com>, Marco Barisione
+ <marco.barisione@collabora.co.uk>,  Jonny Lamb <jonnylamb@gnome.org>, Marco
+ Barisione <marco@barisione.org>,  Travis Reitter <treitter@gmail.com>,
+ Danielle Madeley <danielle@madeley.id.au>
+Content-Type: multipart/alternative; boundary=047d7b603d8843ffaf04dcee8dbe
+X-Y-GMX-Trusted: 0
+X-DSPAM-Result: Innocent
+X-DSPAM-Processed: Fri May 17 20:09:58 2013
+X-DSPAM-Confidence: 0.6164
+X-DSPAM-Probability: 0.0000
+X-DSPAM-Signature: 12,5196808619121890219965
+X-Evolution-Source: 1205242379.4854.0@cordof
+
+
+--047d7b603d8843ffaf04dcee8dbe
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
+
+Hi Marco,
+
+as we already discussed: No problem on my side either.
+
+cheers
+felix
+
+
+On Fri, May 17, 2013 at 5:40 PM, Cosimo Cecchi <cosimoc@gnome.org> wrote:
+
+> Hey Marco,
+>
+> Sure, no problem.
+>
+> Cosimo
+>
+>
+> On Fri, May 17, 2013 at 8:10 AM, Xavier Claessens <xclaesse@gmail.com>wro=
+te:
+>
+>> Hello,
+>>
+>> No problem for me.
+>>
+>> Regards,
+>> Xavier Claessens.
+>>
+>> Le vendredi 17 mai 2013 =E0 13:58 +0100, Marco Barisione a =E9crit :
+>> > Hi all,
+>> >
+>> > I'm currently working on integrating IM account creation with
+>> > gnome-online-accounts. This would allow a Gnome user to create all typ=
+es
+>> > of accounts directly in the =93System Settings=94.
+>> > To do so, I need to move all the account creation code to a separate g=
+it
+>> > submodule that can be used by gnome-online-accounts.
+>> > The problem is that gnome-online-account is under LGPL, while Empathy
+>> > contains some files under GPL and some files under LGPL.
+>> >
+>> > I'm writing you because you contributed to some Empathy files under GP=
+L
+>> > that we would like to use in gnome-online-accounts. These contribution=
+s
+>> > were done using your personal email addresses, so I'm not sure whether
+>> > you wrote the code in your free time or for Collabora.
+>> > In case some of the code was written outside work, would you agree to
+>> > relicense your code from GPL to LGPL (version 2.1 or later)?
+>> >
+>> > Thanks!
+>> >
+>>
+>>
+>>
+>
+
+--047d7b603d8843ffaf04dcee8dbe
+Content-Type: text/html; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hi Marco,<div><br></div><div>as we already discussed: No p=
+roblem on my side either.</div><div><br></div><div>cheers</div><div>felix</=
+div></div><div class=3D"gmail_extra"><br><br><div class=3D"gmail_quote">On =
+Fri, May 17, 2013 at 5:40 PM, Cosimo Cecchi <span dir=3D"ltr">&lt;<a href=
+=3D"mailto:cosimoc@gnome.org" target=3D"_blank">cosimoc@gnome.org</a>&gt;</=
+span> wrote:<br>
+<blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1p=
+x #ccc solid;padding-left:1ex"><div dir=3D"ltr">Hey Marco,<div><br></div><d=
+iv>Sure, no problem.</div><span class=3D"HOEnZb"><font color=3D"#888888"><d=
+iv><br>
+</div><div>Cosimo</div></font></span></div><div class=3D"HOEnZb"><div class=
+=3D"h5"><div class=3D"gmail_extra"><br><br><div class=3D"gmail_quote">On Fr=
+i, May 17, 2013 at 8:10 AM, Xavier Claessens <span dir=3D"ltr">&lt;<a href=
+=3D"mailto:xclaesse@gmail.com" target=3D"_blank">xclaesse@gmail.com</a>&gt;=
+</span> wrote:<br>
+
+<blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1p=
+x #ccc solid;padding-left:1ex">Hello,<br>
+<br>
+No problem for me.<br>
+<br>
+Regards,<br>
+Xavier Claessens.<br>
+<br>
+Le vendredi 17 mai 2013 =E0 13:58 +0100, Marco Barisione a =E9crit :<br>
+<div><div>&gt; Hi all,<br>
+&gt;<br>
+&gt; I&#39;m currently working on integrating IM account creation with<br>
+&gt; gnome-online-accounts. This would allow a Gnome user to create all typ=
+es<br>
+&gt; of accounts directly in the =93System Settings=94.<br>
+&gt; To do so, I need to move all the account creation code to a separate g=
+it<br>
+&gt; submodule that can be used by gnome-online-accounts.<br>
+&gt; The problem is that gnome-online-account is under LGPL, while Empathy<=
+br>
+&gt; contains some files under GPL and some files under LGPL.<br>
+&gt;<br>
+&gt; I&#39;m writing you because you contributed to some Empathy files unde=
+r GPL<br>
+&gt; that we would like to use in gnome-online-accounts. These contribution=
+s<br>
+&gt; were done using your personal email addresses, so I&#39;m not sure whe=
+ther<br>
+&gt; you wrote the code in your free time or for Collabora.<br>
+&gt; In case some of the code was written outside work, would you agree to<=
+br>
+&gt; relicense your code from GPL to LGPL (version 2.1 or later)?<br>
+&gt;<br>
+&gt; Thanks!<br>
+&gt;<br>
+<br>
+<br>
+</div></div></blockquote></div><br></div>
+</div></div></blockquote></div><br></div>
+
+--047d7b603d8843ffaf04dcee8dbe--
+
+Received: from mail-vb0-f49.google.com (mail-vb0-f49.google.com
+ [209.85.212.49]) (using TLSv1 with cipher RC4-SHA (128/128 bits)) (No
+ client certificate requested) by bhuna.collabora.co.uk (Postfix) with
+ ESMTPS id 45D60170861C for <marco.barisione@collabora.co.uk>; Sat, 18 May
+ 2013 00:21:00 +0100 (BST)
+Received: by mail-vb0-f49.google.com with SMTP id q12so2664559vbe.8 for
+ <marco.barisione@collabora.co.uk>; Fri, 17 May 2013 16:20:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com;
+ s=20120113;
+ h=mime-version:x-received:in-reply-to:references:date:message-id
+ :subject:from:to:cc:content-type;
+ bh=ZPABAGr6X8lwyNqNMCNFEHueMbJys8AAbEjUMRfAtgU=;
+ b=jgD1uU4/qInDb/h9gbKmBGMPR3hSrN1qRXtwm++i8W6aJaCqlc8TMu2IY4DzF05AwV
+ L37kjbcHau3CaR/Y8q8geCSMPWvTVBxO0sBNF2XB+5X9TpDZxUwTsR1Z+49mjHGrY4yU
+ ud3LvnE0e5dWRaxnZiN0IC64yYYNRTOywOwEDXfwa2hs1X72EAU7uy/6iMcRpYElAx2u
+ kcH/ijLml0eoBa1O7tyfnoRXJzZZm479XVU4XpxTZ2EhfGsJwH2JFm5kF62mAgKcNjJT
+ AsKn9UznGkwOntIBHoKkpqOSXAcNZYHIzZz1fd6EDTKd84ERkLeXCvY6hRgFK6jv7lDN 7qXg==
+MIME-Version: 1.0
+X-Received: by 10.58.210.162 with SMTP id
+ mv2mr31045906vec.11.1368832859034; Fri, 17 May 2013 16:20:59 -0700 (PDT)
+Received: by 10.52.32.10 with HTTP; Fri, 17 May 2013 16:20:58 -0700 (PDT)
+In-Reply-To: <1368795514.5620.8.camel@carbonara>
+References: <1368795514.5620.8.camel@carbonara>
+Date: Fri, 17 May 2013 16:20:58 -0700
+Message-ID: <CALtP05tb+xOArR_22s11_yp28q-8C8SnFEto+VxLWBMe7seGCg@mail.gmail.com>
+Subject: Re: Relicensing some Empathy code from GPL to LGPL
+From: "treitter@gmail.com" <treitter@gmail.com>
+To: Marco Barisione <marco.barisione@collabora.co.uk>
+Cc: Jonny Lamb <jonnylamb@gnome.org>, Marco Barisione
+ <marco@barisione.org>,  Felix Kaser <f.kaser@gmx.net>, Cosimo Cecchi
+ <cosimoc@gnome.org>,  Xavier Claessens <xclaesse@gmail.com>, Danielle
+ Madeley <danielle@madeley.id.au>
+Content-Type: multipart/alternative; boundary=047d7bdc075451dd6104dcf23c27
+X-DSPAM-Result: Innocent
+X-DSPAM-Processed: Sat May 18 00:22:20 2013
+X-DSPAM-Confidence: 0.9915
+X-DSPAM-Probability: 0.0000
+X-DSPAM-Signature: 12,5196bbac19122138115084
+X-Evolution-Source: 1205242379.4854.0@cordof
+
+
+--047d7bdc075451dd6104dcf23c27
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
+
+Sounds good to me.
+
+Thanks,
+-Travis
+
+
+On Fri, May 17, 2013 at 5:58 AM, Marco Barisione <
+marco.barisione@collabora.co.uk> wrote:
+
+> Hi all,
+>
+> I'm currently working on integrating IM account creation with
+> gnome-online-accounts. This would allow a Gnome user to create all types
+> of accounts directly in the =93System Settings=94.
+> To do so, I need to move all the account creation code to a separate git
+> submodule that can be used by gnome-online-accounts.
+> The problem is that gnome-online-account is under LGPL, while Empathy
+> contains some files under GPL and some files under LGPL.
+>
+> I'm writing you because you contributed to some Empathy files under GPL
+> that we would like to use in gnome-online-accounts. These contributions
+> were done using your personal email addresses, so I'm not sure whether
+> you wrote the code in your free time or for Collabora.
+> In case some of the code was written outside work, would you agree to
+> relicense your code from GPL to LGPL (version 2.1 or later)?
+>
+> Thanks!
+>
+> --
+> Marco Barisione
+>
+>
+
+--047d7bdc075451dd6104dcf23c27
+Content-Type: text/html; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Sounds good to me.<div><br></div><div style>Thanks,</div><=
+div style>-Travis</div></div><div class=3D"gmail_extra"><br><br><div class=
+=3D"gmail_quote">On Fri, May 17, 2013 at 5:58 AM, Marco Barisione <span dir=
+=3D"ltr">&lt;<a href=3D"mailto:marco.barisione@collabora.co.uk" target=3D"_=
+blank">marco.barisione@collabora.co.uk</a>&gt;</span> wrote:<br>
+<blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1p=
+x #ccc solid;padding-left:1ex">Hi all,<br>
+<br>
+I&#39;m currently working on integrating IM account creation with<br>
+gnome-online-accounts. This would allow a Gnome user to create all types<br=
+>
+of accounts directly in the =93System Settings=94.<br>
+To do so, I need to move all the account creation code to a separate git<br=
+>
+submodule that can be used by gnome-online-accounts.<br>
+The problem is that gnome-online-account is under LGPL, while Empathy<br>
+contains some files under GPL and some files under LGPL.<br>
+<br>
+I&#39;m writing you because you contributed to some Empathy files under GPL=
+<br>
+that we would like to use in gnome-online-accounts. These contributions<br>
+were done using your personal email addresses, so I&#39;m not sure whether<=
+br>
+you wrote the code in your free time or for Collabora.<br>
+In case some of the code was written outside work, would you agree to<br>
+relicense your code from GPL to LGPL (version 2.1 or later)?<br>
+<br>
+Thanks!<br>
+<span class=3D"HOEnZb"><font color=3D"#888888"><br>
+--<br>
+Marco Barisione<br>
+<br>
+</font></span></blockquote></div><br></div>
+
+--047d7bdc075451dd6104dcf23c27--
+
+== Telepathy account widgets relicensing (other contributors) ==
+
+Message-ID: <1368795784.5620.13.camel@carbonara>
+Subject: Relicensing some Empathy code from GPL to LGPL
+From: Marco Barisione <marco.barisione@collabora.co.uk>
+To: Chandni Verma <chandniverma2112@gmail.com>, Cyril Roelandt
+ <tipecaml@gmail.com>, Dimitris Zenios <dimitris.zenios@gmail.com>, Jonathan
+ Tellier <jonathan.tellier@gmail.com>, Marc Plano-Lesay
+ <marc.planolesay@gmail.com>, Vitaly Minko <vitaly.minko@gmail.com>,
+ Frederic Peters <fpeters@0d.be>, Andreas Henriksson <andreas@fatal.se>,
+ Vincent Untz <vuntz@gnome.org>, Baptiste Mille-Mathias
+ <baptistem@gnome.org>, Susana Pereira <susana.pereira@gmail.com>, Steve
+ =?ISO-8859-1?Q?Fr=E9cinaux?= <code@istique.net>
+Date: Fri, 17 May 2013 14:03:04 +0100
+Organization: Collabora Ltd.
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.6.3-1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Evolution-Source: 1205242379.4854.0@cordof
+
+Hi all,
+
+I'm currently working on integrating IM account creation with
+gnome-online-accounts. This would allow a Gnome user to create all types
+of accounts directly in the “System Settings”.
+To do so, I need to move all the account creation code to a separate git
+submodule that can be used by gnome-online-accounts.
+The problem is that gnome-online-accounts is under LGPL, while Empathy
+contains some files under GPL and some files under LGPL.
+
+I'm writing you because you contributed to some Empathy files under GPL
+that we would like to use in gnome-online-accounts. Would you agree to
+relicense your code from GPL to LGPL (version 2.1 or later)?
+
+Thank you!
+
+-- 
+Marco Barisione
+
+Received: from mail-wi0-f169.google.com (mail-wi0-f169.google.com
+ [209.85.212.169]) (using TLSv1 with cipher RC4-SHA (128/128 bits)) (No
+ client certificate requested) by bhuna.collabora.co.uk (Postfix) with
+ ESMTPS id 694871708620 for <marco.barisione@collabora.co.uk>; Fri, 17 May
+ 2013 14:14:55 +0100 (BST)
+Received: by mail-wi0-f169.google.com with SMTP id hn14so746100wib.2 for
+ <marco.barisione@collabora.co.uk>; Fri, 17 May 2013 06:14:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com;
+ s=20120113;
+ h=x-received:date:from:to:subject:message-id:in-reply-to:references
+ :x-mailer:mime-version:content-type:content-transfer-encoding;
+ bh=aRWDQsUSxsYHiA/1BATsoHCmBILdZFqKrF4PPeZ8jCo=;
+ b=wqVv32+z/uDjohO2fo8vt9R4qUnaqepDH+0xKtnjHzDzuzCMwZs/YPHSHphLCp1jnv
+ LWhAxvPcdxKHJMmUWXECgWCE6IeSx6i/j8TPqMZaYbn+YZ77HY0kaJKMr2VM1hBmWiCg
+ o6nMtSpPBPTRAI7wajvTEPoF2T2zXv+Iliaj4zYtG66kjfLHgb42FSmd64IZJoB/2EBb
+ Ex5szRaRqHDCF2kt3G9AJFKFeSmGp5b0pIJXhvH6JVEXcD0XEVAM2vZX79wILGHVoKzr
+ oncTZ6cpoYFnqIO5UikSRW5V0TZbV2q7NMXU0s5x+W2bEYTvwQ15D56CWbwC4g8n184y Nupg==
+X-Received: by 10.194.175.1 with SMTP id bw1mr414615wjc.31.1368796493073;
+ Fri, 17 May 2013 06:14:53 -0700 (PDT)
+Received: from x200.localdomain (radico-m14-2.Obninsk.ru. [195.112.105.39])
+ by mx.google.com with ESMTPSA id ff10sm9470539wib.10.2013.05.17.06.14.52
+ for <marco.barisione@collabora.co.uk> (version=SSLv3 cipher=RC4-SHA
+ bits=128/128); Fri, 17 May 2013 06:14:52 -0700 (PDT)
+Date: Fri, 17 May 2013 17:13:40 +0400
+From: Vitaly Minko <vitaly.minko@gmail.com>
+To: Marco Barisione <marco.barisione@collabora.co.uk>
+Subject: Re: Relicensing some Empathy code from GPL to LGPL
+Message-ID: <20130517171340.2714095d@x200.localdomain>
+In-Reply-To: <1368795784.5620.13.camel@carbonara>
+References: <1368795784.5620.13.camel@carbonara>
+X-Mailer: Claws Mail 3.9.0 (GTK+ 2.24.16; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-DSPAM-Result: Innocent
+X-DSPAM-Processed: Fri May 17 14:21:44 2013
+X-DSPAM-Confidence: 0.9913
+X-DSPAM-Probability: 0.0000
+X-DSPAM-Signature: 12,51962ee819121758791674
+X-Evolution-Source: 1205242379.4854.0@cordof
+
+Hi Marco,
+
+I do agree to relicense my code to LGPL.
+
+Best regards,
+Vitaly
+
+
+On Fri, 17 May 2013 14:03:04 +0100
+Marco Barisione <marco.barisione@collabora.co.uk> wrote:
+
+> Hi all,
+>=20
+> I'm currently working on integrating IM account creation with
+> gnome-online-accounts. This would allow a Gnome user to create all
+> types of accounts directly in the =E2=80=9CSystem Settings=E2=80=9D.
+> To do so, I need to move all the account creation code to a separate
+> git submodule that can be used by gnome-online-accounts.
+> The problem is that gnome-online-accounts is under LGPL, while Empathy
+> contains some files under GPL and some files under LGPL.
+>=20
+> I'm writing you because you contributed to some Empathy files under
+> GPL that we would like to use in gnome-online-accounts. Would you
+> agree to relicense your code from GPL to LGPL (version 2.1 or later)?
+>=20
+> Thank you!
+>=20
+
+Received: from mail-oa0-f46.google.com (mail-oa0-f46.google.com
+ [209.85.219.46]) (using TLSv1 with cipher RC4-SHA (128/128 bits)) (No
+ client certificate requested) by bhuna.collabora.co.uk (Postfix) with
+ ESMTPS id C7B78170862E for <marco.barisione@collabora.co.uk>; Fri, 17 May
+ 2013 14:18:16 +0100 (BST)
+Received: by mail-oa0-f46.google.com with SMTP id h2so5150652oag.33 for
+ <marco.barisione@collabora.co.uk>; Fri, 17 May 2013 06:18:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com;
+ s=20120113;
+ h=x-received:mime-version:in-reply-to:references:from:date:message-id
+ :subject:to:content-type; bh=+G9jOHmG03PHqloQKMa65D5+FolmUzR6f9fM96FMbTg=;
+ b=Hanj+NlQoRX1md1Q6lkZfFsaCmIFZxGqZcRBn0HIajFZFv3Fq4vyG1rOWzFeqKRt6A
+ 68B3HbnR5y+Ele5yAN9nsMNfmRhYSE2kscuz/0aRCnRLZJr4s/Kg4l2pEyQPaVuyqJfS
+ nI/ZUJx9wgyBaQbSDT9OJl2m+P0xZQD/u07rgcAm9wjSt8p5pM8fLBWStMXypeI53kaq
+ c5FkP2yrSfZn6JTKqEas85eMvb8HOB4pD1vk59tbIEUH+QAuUdJAODw6sD4LHnHgEZB9
+ xj7orSX1I9+e84/sey3quvRwz9Zr3pWaAk6LH432AJSAYC2juYM777D9Aj6TyQHEyYl7 SFsA==
+X-Received: by 10.182.56.169 with SMTP id b9mr19255226obq.42.1368796695273;
+ Fri, 17 May 2013 06:18:15 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.76.143.233 with HTTP; Fri, 17 May 2013 06:17:35 -0700 (PDT)
+In-Reply-To: <1368795784.5620.13.camel@carbonara>
+References: <1368795784.5620.13.camel@carbonara>
+From: Dimitris Zenios <dimitris.zenios@gmail.com>
+Date: Fri, 17 May 2013 16:17:35 +0300
+Message-ID: <CAGSzHa3yyLtxUay-1YLHkLrcX+g6ZSV2tAP4L2rQr3iDJLyG+A@mail.gmail.com>
+Subject: Re: Relicensing some Empathy code from GPL to LGPL
+To: Marco Barisione <marco.barisione@collabora.co.uk>
+Content-Type: multipart/alternative; boundary=001a11c2ce16caaade04dce9d060
+X-DSPAM-Result: Innocent
+X-DSPAM-Processed: Fri May 17 14:28:05 2013
+X-DSPAM-Confidence: 0.9913
+X-DSPAM-Probability: 0.0000
+X-DSPAM-Signature: 12,5196306519121737816876
+X-Evolution-Source: 1205242379.4854.0@cordof
+
+
+--001a11c2ce16caaade04dce9d060
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
+
+Sure
+
+
+On Fri, May 17, 2013 at 4:03 PM, Marco Barisione <
+marco.barisione@collabora.co.uk> wrote:
+
+> Hi all,
+>
+> I'm currently working on integrating IM account creation with
+> gnome-online-accounts. This would allow a Gnome user to create all types
+> of accounts directly in the =93System Settings=94.
+> To do so, I need to move all the account creation code to a separate git
+> submodule that can be used by gnome-online-accounts.
+> The problem is that gnome-online-accounts is under LGPL, while Empathy
+> contains some files under GPL and some files under LGPL.
+>
+> I'm writing you because you contributed to some Empathy files under GPL
+> that we would like to use in gnome-online-accounts. Would you agree to
+> relicense your code from GPL to LGPL (version 2.1 or later)?
+>
+> Thank you!
+>
+> --
+> Marco Barisione
+>
+>
+
+--001a11c2ce16caaade04dce9d060
+Content-Type: text/html; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Sure</div><div class=3D"gmail_extra"><br><br><div class=3D=
+"gmail_quote">On Fri, May 17, 2013 at 4:03 PM, Marco Barisione <span dir=3D=
+"ltr">&lt;<a href=3D"mailto:marco.barisione@collabora.co.uk" target=3D"_bla=
+nk">marco.barisione@collabora.co.uk</a>&gt;</span> wrote:<br>
+
+<blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1p=
+x #ccc solid;padding-left:1ex">Hi all,<br>
+<br>
+I&#39;m currently working on integrating IM account creation with<br>
+gnome-online-accounts. This would allow a Gnome user to create all types<br=
+>
+of accounts directly in the =93System Settings=94.<br>
+To do so, I need to move all the account creation code to a separate git<br=
+>
+submodule that can be used by gnome-online-accounts.<br>
+The problem is that gnome-online-accounts is under LGPL, while Empathy<br>
+contains some files under GPL and some files under LGPL.<br>
+<br>
+I&#39;m writing you because you contributed to some Empathy files under GPL=
+<br>
+that we would like to use in gnome-online-accounts. Would you agree to<br>
+relicense your code from GPL to LGPL (version 2.1 or later)?<br>
+<br>
+Thank you!<br>
+<span class=3D"HOEnZb"><font color=3D"#888888"><br>
+--<br>
+Marco Barisione<br>
+<br>
+</font></span></blockquote></div><br></div>
+
+--001a11c2ce16caaade04dce9d060--
+
+X-Greylist: delayed 2095 seconds by postgrey-1.32 at bhuna; Fri, 17 May
+ 2013 15:00:18 BST
+Received: from leucas.entrouvert.org (leucas.entrouvert.org
+ [176.31.123.109]) (using TLSv1 with cipher AES256-SHA (256/256 bits)) (No
+ client certificate requested) by bhuna.collabora.co.uk (Postfix) with
+ ESMTPS id 8FBBE170863B for <marco.barisione@collabora.co.uk>; Fri, 17 May
+ 2013 15:00:18 +0100 (BST)
+Received: from 213.219.168.49.adsl.dyn.edpnet.net ([213.219.168.49]
+ helo=nezt) by leucas.entrouvert.org with esmtpsa
+ (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16) (Exim 4.72) (envelope-from
+ <fpeters@0d.be>) id 1UdKew-00038N-Ld for marco.barisione@collabora.co.uk;
+ Fri, 17 May 2013 15:25:23 +0200
+Received: from fred by nezt with local (Exim 4.80) (envelope-from
+ <fpeters@0d.be>) id 1UdKeq-0001oE-Ot for marco.barisione@collabora.co.uk;
+ Fri, 17 May 2013 15:25:16 +0200
+Date: Fri, 17 May 2013 15:25:16 +0200
+From: Frederic Peters <fpeters@0d.be>
+To: Marco Barisione <marco.barisione@collabora.co.uk>
+Message-ID: <20130517132516.GB6894@0d.be>
+References: <1368795784.5620.13.camel@carbonara>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1368795784.5620.13.camel@carbonara>
+X-Operating-System: Debian GNU/Linux (jessie/sid with kernel Linux
+ 3.2.0-4-amd64)
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-SA-Exim-Connect-IP: 213.219.168.49
+X-SA-Exim-Mail-From: fpeters@0d.be
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on
+ leucas.entrouvert.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.2 required=5.0 tests=ALL_TRUSTED,BAYES_00,
+ TVD_RCVD_IP autolearn=ham version=3.3.1
+Subject: Re: Relicensing some Empathy code from GPL to LGPL
+X-SA-Exim-Version: 4.2.1 (built Mon, 22 Mar 2010 06:26:47 +0000)
+X-SA-Exim-Scanned: Yes (on leucas.entrouvert.org)
+X-DSPAM-Result: Innocent
+X-DSPAM-Processed: Fri May 17 15:13:38 2013
+X-DSPAM-Confidence: 0.5891
+X-DSPAM-Probability: 0.0000
+X-DSPAM-Signature: 12,51963b1219125565015966
+X-Evolution-Source: 1205242379.4854.0@cordof
+
+Marco Barisione wrote:
+
+> I'm currently working on integrating IM account creation with
+> gnome-online-accounts. This would allow a Gnome user to create all types
+> of accounts directly in the “System Settings”.
+> To do so, I need to move all the account creation code to a separate git
+> submodule that can be used by gnome-online-accounts.
+> The problem is that gnome-online-accounts is under LGPL, while Empathy
+> contains some files under GPL and some files under LGPL.
+> 
+> I'm writing you because you contributed to some Empathy files under GPL
+> that we would like to use in gnome-online-accounts. Would you agree to
+> relicense your code from GPL to LGPL (version 2.1 or later)?
+
+I'm fine with my code at the moment in Empathy being relicensed to
+LGPL (2.1 or later).
+
+
+        Fred
+
+X-Greylist: delayed 521 seconds by postgrey-1.32 at bhuna; Fri, 17 May 2013
+ 14:39:08 BST
+Received: from ada.istique.net (istique.net [78.47.68.43]) by
+ bhuna.collabora.co.uk (Postfix) with ESMTP id D55BF170861B for
+ <marco.barisione@collabora.co.uk>; Fri, 17 May 2013 14:39:08 +0100 (BST)
+Received: from [172.30.201.23] (unknown [91.183.36.185]) (using TLSv1 with
+ cipher AES256-SHA (256/256 bits)) (No client certificate requested)
+ (Authenticated sender: sf) by ada.istique.net (Postfix) with ESMTPSA id
+ 49330C8382 for <marco.barisione@collabora.co.uk>; Fri, 17 May 2013 15:30:27
+ +0200 (CEST)
+Message-ID: <519630F2.1000806@istique.net>
+Date: Fri, 17 May 2013 15:30:26 +0200
+From: =?UTF-8?B?U3RldmUgRnLDqWNpbmF1eA==?= <code@istique.net>
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130413
+ Icedove/17.0.5
+MIME-Version: 1.0
+To: Marco Barisione <marco.barisione@collabora.co.uk>
+Subject: Re: Relicensing some Empathy code from GPL to LGPL
+References: <1368795784.5620.13.camel@carbonara>
+In-Reply-To: <1368795784.5620.13.camel@carbonara>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-DSPAM-Result: Innocent
+X-DSPAM-Processed: Fri May 17 14:41:14 2013
+X-DSPAM-Confidence: 0.5887
+X-DSPAM-Probability: 0.0000
+X-DSPAM-Signature: 12,5196337a19122033117475
+X-Evolution-Source: 1205242379.4854.0@cordof
+
+Hello,
+
+I have no objection with that, my contribution was rather trivial anyway...
+
+Regards,
+Steve
+
+On 05/17/2013 03:03 PM, Marco Barisione wrote:
+> Hi all,
+>
+> I'm currently working on integrating IM account creation with
+> gnome-online-accounts. This would allow a Gnome user to create all types
+> of accounts directly in the “System Settings”.
+> To do so, I need to move all the account creation code to a separate git
+> submodule that can be used by gnome-online-accounts.
+> The problem is that gnome-online-accounts is under LGPL, while Empathy
+> contains some files under GPL and some files under LGPL.
+>
+> I'm writing you because you contributed to some Empathy files under GPL
+> that we would like to use in gnome-online-accounts. Would you agree to
+> relicense your code from GPL to LGPL (version 2.1 or later)?
+>
+> Thank you!
+>
+
+Received: from smtp3-g21.free.fr (smtp3-g21.free.fr [212.27.42.3]) by
+ bhuna.collabora.co.uk (Postfix) with ESMTP id C730C170861F for
+ <marco.barisione@collabora.co.uk>; Fri, 17 May 2013 14:14:53 +0100 (BST)
+Received: from fennas.vuntz.net (unknown [88.185.152.219]) by
+ smtp3-g21.free.fr (Postfix) with ESMTP id A70B7A62F3 for
+ <marco.barisione@collabora.co.uk>; Fri, 17 May 2013 15:14:45 +0200 (CEST)
+Received: by fennas.vuntz.net (Postfix, from userid 1000) id 4EEAD158D5C;
+ Fri, 17 May 2013 15:14:44 +0200 (CEST)
+Date: Fri, 17 May 2013 15:14:44 +0200
+From: Vincent Untz <vuntz@gnome.org>
+To: Marco Barisione <marco.barisione@collabora.co.uk>
+Subject: Re: Relicensing some Empathy code from GPL to LGPL
+Message-ID: <20130517131444.GU2971@vuntz.net>
+References: <1368795784.5620.13.camel@carbonara>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1368795784.5620.13.camel@carbonara>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-DSPAM-Result: Innocent
+X-DSPAM-Processed: Fri May 17 14:20:46 2013
+X-DSPAM-Confidence: 0.9904
+X-DSPAM-Probability: 0.0000
+X-DSPAM-Signature: 12,51962eae19127181415510
+X-Evolution-Source: 1205242379.4854.0@cordof
+
+Le vendredi 17 mai 2013, à 14:03 +0100, Marco Barisione a écrit :
+> Hi all,
+> 
+> I'm currently working on integrating IM account creation with
+> gnome-online-accounts. This would allow a Gnome user to create all types
+> of accounts directly in the “System Settings”.
+> To do so, I need to move all the account creation code to a separate git
+> submodule that can be used by gnome-online-accounts.
+> The problem is that gnome-online-accounts is under LGPL, while Empathy
+> contains some files under GPL and some files under LGPL.
+> 
+> I'm writing you because you contributed to some Empathy files under GPL
+> that we would like to use in gnome-online-accounts. Would you agree to
+> relicense your code from GPL to LGPL (version 2.1 or later)?
+
+Do you have the details of my code contributions? I might have to ask
+SUSE if that was done for work.
+
+But otherwise, sure, no problem.
+
+Vincent
+
+-- 
+Les gens heureux ne sont pas pressés.
+
+Message-ID: <1368798281.5620.22.camel@carbonara>
+Subject: Re: Relicensing some Empathy code from GPL to LGPL
+From: Marco Barisione <marco.barisione@collabora.co.uk>
+To: Vincent Untz <vuntz@gnome.org>
+Date: Fri, 17 May 2013 14:44:41 +0100
+In-Reply-To: <20130517131444.GU2971@vuntz.net>
+References: <1368795784.5620.13.camel@carbonara>
+         <20130517131444.GU2971@vuntz.net>
+Organization: Collabora Ltd.
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.6.3-1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-Evolution-Source: 1205242379.4854.0@cordof
+
+On Fri, 2013-05-17 at 15:14 +0200, Vincent Untz wrote:
+> Do you have the details of my code contributions? I might have to ask
+> SUSE if that was done for work.
+
+It's just the patch for this bug:
+https://bugzilla.gnome.org/show_bug.cgi?id=522862
+
+-- 
+Marco Barisione
+
+Received: from smtp3-g21.free.fr (smtp3-g21.free.fr [212.27.42.3]) by
+ bhuna.collabora.co.uk (Postfix) with ESMTP id 875D91708614 for
+ <marco.barisione@collabora.co.uk>; Fri, 17 May 2013 15:10:37 +0100 (BST)
+Received: from fennas.vuntz.net (unknown [88.185.152.219]) by
+ smtp3-g21.free.fr (Postfix) with ESMTP id 71815A62AD for
+ <marco.barisione@collabora.co.uk>; Fri, 17 May 2013 16:10:33 +0200 (CEST)
+Received: by fennas.vuntz.net (Postfix, from userid 1000) id 08488158D5C;
+ Fri, 17 May 2013 16:10:32 +0200 (CEST)
+Date: Fri, 17 May 2013 16:10:32 +0200
+From: Vincent Untz <vuntz@gnome.org>
+To: Marco Barisione <marco.barisione@collabora.co.uk>
+Subject: Re: Relicensing some Empathy code from GPL to LGPL
+Message-ID: <20130517141031.GW2971@vuntz.net>
+References: <1368795784.5620.13.camel@carbonara>
+         <20130517131444.GU2971@vuntz.net> <1368798281.5620.22.camel@carbonara>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1368798281.5620.22.camel@carbonara>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-DSPAM-Result: Innocent
+X-DSPAM-Processed: Fri May 17 15:29:44 2013
+X-DSPAM-Confidence: 0.9917
+X-DSPAM-Probability: 0.0000
+X-DSPAM-Signature: 12,51963ed819125606879423
+X-Evolution-Source: 1205242379.4854.0@cordof
+
+Le vendredi 17 mai 2013, 14:44 +0100, Marco Barisione a crit :
+> On Fri, 2013-05-17 at 15:14 +0200, Vincent Untz wrote:
+> > Do you have the details of my code contributions? I might have to ask
+> > SUSE if that was done for work.
+> 
+> It's just the patch for this bug:
+> https://bugzilla.gnome.org/show_bug.cgi?id=522862
+
+That's trivial code, and it was written during the night, so yeah, no
+need to annoy SUSE for that. Go ahead!
+
+Vicnent
+
+-- 
+Les gens heureux ne sont pas presss.
+
+X-Greylist: delayed 1542 seconds by postgrey-1.32 at bhuna; Fri, 17 May
+ 2013 18:47:18 BST
+Received: from smtprelay-b21.telenor.se (smtprelay-b21.telenor.se
+ [195.54.99.212]) (using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
+ (No client certificate requested) by bhuna.collabora.co.uk (Postfix) with
+ ESMTPS id C9B1316986FD for <marco.barisione@collabora.co.uk>; Fri, 17 May
+ 2013 18:47:18 +0100 (BST)
+Received: from ipb2.telenor.se (ipb2.telenor.se [195.54.127.165]) by
+ smtprelay-b21.telenor.se (Postfix) with ESMTP id 55E7714DAC for
+ <marco.barisione@collabora.co.uk>; Fri, 17 May 2013 19:21:34 +0200 (CEST)
+X-SENDER-IP: [85.225.139.89]
+X-LISTENER: [smtp.bredband.net]
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result:
+ AuhgACtmllFV4YtZPGdsb2JhbABagwiDa4Q6uVUEfhcDAQEBATg1gh8BAQUjMzMLGAkMBw4CAg8FGQwDBxoKiBmrR5F1jgSBLoI3MmEDlzcBlFE6
+X-IronPort-AV: E=Sophos;i="4.87,694,1363129200"; 
+ d="asc'?scan'208";a="550322390"
+Received: from c-598be155.447-1-64736c11.cust.bredbandsbolaget.se (HELO
+ amd64.fatal.se) ([85.225.139.89]) by ipb2.telenor.se with ESMTP; 17 May
+ 2013 19:21:34 +0200
+Received: from gem by amd64.fatal.se with local (Exim 4.80) (envelope-from
+ <gem@amd64.fatal.se>) id 1UdOJm-0007Kf-R5 for
+ marco.barisione@collabora.co.uk; Fri, 17 May 2013 19:19:46 +0200
+Date: Fri, 17 May 2013 19:19:46 +0200
+From: Andreas Henriksson <andreas@fatal.se>
+To: Marco Barisione <marco.barisione@collabora.co.uk>
+Subject: Re: Relicensing some Empathy code from GPL to LGPL
+Message-ID: <20130517171946.GA28153@amd64.fatal.se>
+References: <1368795784.5620.13.camel@carbonara>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="x+6KMIRAuhnl3hBn"
+Content-Disposition: inline
+In-Reply-To: <1368795784.5620.13.camel@carbonara>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-DSPAM-Result: Innocent
+X-DSPAM-Processed: Fri May 17 18:48:16 2013
+X-DSPAM-Confidence: 0.6152
+X-DSPAM-Probability: 0.0000
+X-DSPAM-Signature: 12,51966d6019124891196261
+X-Evolution-Source: 1205242379.4854.0@cordof
+
+
+--x+6KMIRAuhnl3hBn
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+Hello Marco!
+
+I'm not aware of having contributed anything significantly, so
+please treat anything associated with my name as something that
+I'm not going to claim any copyright on.
+
+You're free to relicense it however you wish and even consider
+it non-copyrightable or any copyright transfered to you or other
+project leaders.
+
+
+On Fri, May 17, 2013 at 02:03:04PM +0100, Marco Barisione wrote:
+> Hi all,
+>=20
+> I'm currently working on integrating IM account creation with
+> gnome-online-accounts. This would allow a Gnome user to create all types
+> of accounts directly in the =E2=80=9CSystem Settings=E2=80=9D.
+> To do so, I need to move all the account creation code to a separate git
+> submodule that can be used by gnome-online-accounts.
+> The problem is that gnome-online-accounts is under LGPL, while Empathy
+> contains some files under GPL and some files under LGPL.
+>=20
+> I'm writing you because you contributed to some Empathy files under GPL
+> that we would like to use in gnome-online-accounts. Would you agree to
+> relicense your code from GPL to LGPL (version 2.1 or later)?
+>=20
+> Thank you!
+>=20
+> --=20
+> Marco Barisione
+>=20
+
+--=20
+Andreas Henriksson
+
+--x+6KMIRAuhnl3hBn
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iEYEARECAAYFAlGWZrIACgkQcgQ2cL3l8e6IhQCeJ9v0KwG/SDiVPo5u05esf97N
+rMIAoNzXzjx5FWdbyBMHyDJK6H9kjfeH
+=4qwN
+-----END PGP SIGNATURE-----
+
+--x+6KMIRAuhnl3hBn--
+
+Received: from mail-oa0-f51.google.com (mail-oa0-f51.google.com
+ [209.85.219.51]) (using TLSv1 with cipher RC4-SHA (128/128 bits)) (No
+ client certificate requested) by bhuna.collabora.co.uk (Postfix) with
+ ESMTPS id CC8641708623 for <marco.barisione@collabora.co.uk>; Fri, 17 May
+ 2013 14:31:10 +0100 (BST)
+Received: by mail-oa0-f51.google.com with SMTP id f4so5140833oah.38 for
+ <marco.barisione@collabora.co.uk>; Fri, 17 May 2013 06:31:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com;
+ s=20120113;
+ h=x-received:mime-version:in-reply-to:references:from:date:message-id
+ :subject:to:cc:content-type;
+ bh=KKQ7aqzBDUHN8P0GuI3/OlxaMIKdsj0zEnMJQYIePds=;
+ b=vxUw8zZG8TuyxI8LVV9aBtbNfCjJYPM3mH8fH5LX1Cu54+Doh/LMiLpovPRNN5VugI
+ 5UCfjOMGxAIs9elOvkpu7s2rQkgfE34KxHcpb67dqm0iZjiY9+IleNZ3hGoX1QzhO4su
+ RQ2942CTg0g8O+0oL8Z7wGQjN40a9R3WxzYH7bHpwzUVnCSRY2qZSd9GZ+uGYRu7Nj1V
+ IBuDHAuaCQhK3gr7so3kjg2iTppsfZMsobBKTjIKd2P5q1Zp5tjPVQkzL8Cm/Xj9pe4y
+ N2OK5U24ztzjWXFmCY0JKrK2lLTW5mPy6rU1dE+Dzy7s15jCd0HK/ah2x5X4A0jWAMjz zYvQ==
+X-Received: by 10.60.56.234 with SMTP id d10mr148020oeq.29.1368797469651;
+ Fri, 17 May 2013 06:31:09 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.182.164.72 with HTTP; Fri, 17 May 2013 06:30:49 -0700 (PDT)
+In-Reply-To: <1368795784.5620.13.camel@carbonara>
+References: <1368795784.5620.13.camel@carbonara>
+From: Baptiste Mille-Mathias <baptiste.millemathias@gmail.com>
+Date: Fri, 17 May 2013 15:30:49 +0200
+Message-ID: <CAJ4DpxZjh75DrLi-=LvUb3Md8dAD4hmFV=v9-6Q5RDJatsXbrA@mail.gmail.com>
+Subject: Re: Relicensing some Empathy code from GPL to LGPL
+To: Marco Barisione <marco.barisione@collabora.co.uk>
+Cc: Chandni Verma <chandniverma2112@gmail.com>, Cyril Roelandt
+ <tipecaml@gmail.com>,  Dimitris Zenios <dimitris.zenios@gmail.com>,
+ Jonathan Tellier <jonathan.tellier@gmail.com>,  Marc Plano-Lesay
+ <marc.planolesay@gmail.com>, Vitaly Minko <vitaly.minko@gmail.com>, 
+ Frederic Peters <fpeters@0d.be>, Andreas Henriksson <andreas@fatal.se>,
+ Vincent Untz <vuntz@gnome.org>,  Baptiste Mille-Mathias
+ <baptistem@gnome.org>, Susana Pereira <susana.pereira@gmail.com>, 
+ =?UTF-8?Q?Steve_Fr=C3=A9cinaux?= <code@istique.net>
+Content-Type: multipart/alternative; boundary=089e0153863cf2baf004dce9fe18
+X-DSPAM-Result: Innocent
+X-DSPAM-Processed: Fri May 17 14:34:36 2013
+X-DSPAM-Confidence: 0.9913
+X-DSPAM-Probability: 0.0000
+X-DSPAM-Signature: 12,519631ec19121166520974
+X-Evolution-Source: 1205242379.4854.0@cordof
+
+
+--089e0153863cf2baf004dce9fe18
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+Hi Marco,
+
+whatever I wrote you can re-licence my code.
+
+Regards
+
+
+On Fri, May 17, 2013 at 3:03 PM, Marco Barisione <
+marco.barisione@collabora.co.uk> wrote:
+
+> Hi all,
+>
+> I'm currently working on integrating IM account creation with
+> gnome-online-accounts. This would allow a Gnome user to create all types
+> of accounts directly in the =E2=80=9CSystem Settings=E2=80=9D.
+> To do so, I need to move all the account creation code to a separate git
+> submodule that can be used by gnome-online-accounts.
+> The problem is that gnome-online-accounts is under LGPL, while Empathy
+> contains some files under GPL and some files under LGPL.
+>
+> I'm writing you because you contributed to some Empathy files under GPL
+> that we would like to use in gnome-online-accounts. Would you agree to
+> relicense your code from GPL to LGPL (version 2.1 or later)?
+>
+> Thank you!
+>
+> --
+> Marco Barisione
+>
+>
+
+
+--=20
+Baptiste Mille-Mathias
+Les gens heureux ne sont pas press=C3=A9s
+[w] http://damnpeople.fr
+
+--089e0153863cf2baf004dce9fe18
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div><div>Hi Marco,<br><br></div>whatever I wrote you can =
+re-licence my code.<br><br></div>Regards<br></div><div class=3D"gmail_extra=
+"><br><br><div class=3D"gmail_quote">On Fri, May 17, 2013 at 3:03 PM, Marco=
+ Barisione <span dir=3D"ltr">&lt;<a href=3D"mailto:marco.barisione@collabor=
+a.co.uk" target=3D"_blank">marco.barisione@collabora.co.uk</a>&gt;</span> w=
+rote:<br>
+
+<blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1p=
+x #ccc solid;padding-left:1ex">Hi all,<br>
+<br>
+I&#39;m currently working on integrating IM account creation with<br>
+gnome-online-accounts. This would allow a Gnome user to create all types<br=
+>
+of accounts directly in the =E2=80=9CSystem Settings=E2=80=9D.<br>
+To do so, I need to move all the account creation code to a separate git<br=
+>
+submodule that can be used by gnome-online-accounts.<br>
+The problem is that gnome-online-accounts is under LGPL, while Empathy<br>
+contains some files under GPL and some files under LGPL.<br>
+<br>
+I&#39;m writing you because you contributed to some Empathy files under GPL=
+<br>
+that we would like to use in gnome-online-accounts. Would you agree to<br>
+relicense your code from GPL to LGPL (version 2.1 or later)?<br>
+<br>
+Thank you!<br>
+<span class=3D"HOEnZb"><font color=3D"#888888"><br>
+--<br>
+Marco Barisione<br>
+<br>
+</font></span></blockquote></div><br><br clear=3D"all"><br>-- <br>Baptiste =
+Mille-Mathias<br>Les gens heureux ne sont pas press=C3=A9s<br>[w] <a href=
+=3D"http://damnpeople.fr" target=3D"_blank">http://damnpeople.fr</a>
+</div>
+
+--089e0153863cf2baf004dce9fe18--
+
+Received: from mail-wi0-f176.google.com (mail-wi0-f176.google.com
+ [209.85.212.176]) (using TLSv1 with cipher RC4-SHA (128/128 bits)) (No
+ client certificate requested) by bhuna.collabora.co.uk (Postfix) with
+ ESMTPS id A4AB81708639 for <marco.barisione@collabora.co.uk>; Fri, 17 May
+ 2013 14:59:48 +0100 (BST)
+Received: by mail-wi0-f176.google.com with SMTP id hr14so485432wib.9 for
+ <marco.barisione@collabora.co.uk>; Fri, 17 May 2013 06:59:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com;
+ s=20120113;
+ h=x-received:content-type:mime-version:content-transfer-encoding
+ :x-mailer:message-id:date:subject:from:in-reply-to:references:to:cc;
+ bh=8FzL3su1ZIjRxmDpp6gzKS47sMFXSHQsaBuVlQ8XLZU=;
+ b=U5BViHNCnfnNz3i+N2p8L2z0u1n3DuOHdxFJV3oZE3In6rOi0vUt/rhIpsqfbzrQ7q
+ B2F7wC7ERRWEezVpIp3tkkL2O+a2eiGWTmBtCLi6p1lnu9rDHS2/Paazzyj6cxsb32UC
+ oBVcFo0lnq7YFvo9rtQIhdp/zPdC/r62iWZVAb8vyyYDqCTtuauLEavHN/TDXHcVXPU8
+ zzXjG6AcOE2E7aJbxooBuNafDc19s4KHBM3Veuv49sVgr8bSvfygXOACi/jDXKtaKfOo
+ +kSA6SYiUg0lVNg3bi60Ubc2GQXN1d52Mx9RbYsKH7HUFuQZ3K9wuhmCc4Xpseg5WGPN ll+Q==
+X-Received: by 10.180.109.84 with SMTP id
+ hq20mr34435419wib.11.1368799187758; Fri, 17 May 2013 06:59:47 -0700 (PDT)
+Received: from [127.0.0.1] ([90.84.144.31]) by mx.google.com with ESMTPSA
+ id ge7sm9716160wib.6.2013.05.17.06.59.44 for <multiple recipients>
+ (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128); Fri, 17 May 2013
+ 06:59:46 -0700 (PDT)
+Content-Type: text/html; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: BlackBerry Email (10.1.0.1720)
+Message-ID: <20130517135944.4722816.5389.44@gmail.com>
+Date: Fri, 17 May 2013 15:59:44 +0200
+Subject: Re: Relicensing some Empathy code from GPL to LGPL
+From: Marc Plano-Lesay <marc.planolesay@gmail.com>
+In-Reply-To:  <CAJ4DpxZjh75DrLi-=LvUb3Md8dAD4hmFV=v9-6Q5RDJatsXbrA@mail.gmail.com>
+References: <1368795784.5620.13.camel@carbonara>
+         <CAJ4DpxZjh75DrLi-=LvUb3Md8dAD4hmFV=v9-6Q5RDJatsXbrA@mail.gmail.com>
+To: Baptiste Mille-Mathias <baptiste.millemathias@gmail.com>, Marco
+ Barisione <marco.barisione@collabora.co.uk>
+Cc: Chandni Verma <chandniverma2112@gmail.com>, Cyril Roelandt
+ <tipecaml@gmail.com>, Dimitris Zenios <dimitris.zenios@gmail.com>, Jonathan
+ Tellier <jonathan.tellier@gmail.com>, Vitaly Minko
+ <vitaly.minko@gmail.com>, Frederic Peters <fpeters@0d.be>, Andreas
+ Henriksson <andreas@fatal.se>, Vincent Untz <vuntz@gnome.org>, Baptiste
+ Mille-Mathias <baptistem@gnome.org>, Susana Pereira
+ <susana.pereira@gmail.com>, =?utf-8?q?Steve_Fr=C3=A9cinaux?=
+ <code@istique.net>
+X-DSPAM-Result: Innocent
+X-DSPAM-Processed: Fri May 17 15:13:31 2013
+X-DSPAM-Confidence: 0.9907
+X-DSPAM-Probability: 0.0000
+X-DSPAM-Signature: 12,51963b0b19121947941476
+X-Evolution-Source: 1205242379.4854.0@cordof
+
+<html><head></head><body data-blackberry-caret-color=3D"#00a8df" style=3D"b=
+ackground-color: rgb(255, 255, 255); line-height: initial;"><div id=3D"BB10=
+_response_div" style=3D"width: 100%; font-size: initial; font-family: Calib=
+ri, 'Slate Pro', sans-serif; text-align: initial; background-color: rgb(255=
+, 255, 255);"><font color=3D"#262626">Hi,</font></div><div style=3D"width: =
+100%; font-size: initial; font-family: Calibri, 'Slate Pro', sans-serif; te=
+xt-align: initial; background-color: rgb(255, 255, 255);"><font color=3D"#2=
+62626">There's no problem for me.</font></div><div style=3D"width: 100%; fo=
+nt-size: initial; font-family: Calibri, 'Slate Pro', sans-serif; text-align=
+: initial; background-color: rgb(255, 255, 255);"><font color=3D"#262626"><=
+br></font></div><div style=3D"width: 100%; font-size: initial; font-family:=
+ Calibri, 'Slate Pro', sans-serif; text-align: initial; background-color: r=
+gb(255, 255, 255);"><font color=3D"#262626">Regards,</font></div><div style=
+=3D"width: 100%; font-size: initial; font-family: Calibri, 'Slate Pro', san=
+s-serif; text-align: initial; background-color: rgb(255, 255, 255);"><font =
+color=3D"#262626">Marc Plano-Lesay</font></div>                            =
+                                                                           =
+                              <div id=3D"_signaturePlaceholder" style=3D"fo=
+nt-size: initial; font-family: Calibri, 'Slate Pro', sans-serif; color: rgb=
+(31, 73, 125); text-align: initial; background-color: rgb(255, 255, 255);">=
+</div>                                                                     =
+                                                                           =
+                                        <table width=3D"100%" style=3D"back=
+ground-color:white;border-spacing:0px;"> <tbody><tr><td id=3D"_persistentHe=
+aderContainer" colspan=3D"2" style=3D"font-size: initial; text-align: initi=
+al; background-color: rgb(255, 255, 255);">                                =
+              <div id=3D"_persistentHeader" style=3D"border-style: solid no=
+ne none; border-top-color: rgb(181, 196, 223); border-top-width: 1pt; paddi=
+ng: 3pt 0in 0in; font-family: Tahoma, 'BB Alpha Sans', 'Slate Pro'; font-si=
+ze: 10pt;">  <div><b>De: </b>Baptiste Mille-Mathias</div><div><b>Envoy=C3=
+=A9: </b>vendredi 17 mai 2013 15:31</div><div><b>=C3=80: </b>Marco Barision=
+e</div><div><b>Cc: </b>Chandni Verma; Cyril Roelandt; Dimitris Zenios; Jona=
+than Tellier; Marc Plano-Lesay; Vitaly Minko; Frederic Peters; Andreas Henr=
+iksson; Vincent Untz; Baptiste Mille-Mathias; Susana Pereira; Steve Fr=C3=
+=A9cinaux</div><div><b>Objet: </b>Re: Relicensing some Empathy code from GP=
+L to LGPL</div></div></td></tr></tbody></table><div id=3D"_persistentHeader=
+End" style=3D"border-style: solid none none; border-top-color: rgb(186, 188=
+, 209); border-top-width: 1pt; font-size: initial; text-align: initial; bac=
+kground-color: rgb(255, 255, 255);"></div><br><div id=3D"_originalContent" =
+style=3D""><div dir=3D"ltr"><div><div>Hi Marco,<br><br></div>whatever I wro=
+te you can re-licence my code.<br><br></div>Regards<br></div><div class=3D"=
+gmail_extra"><br><br><div class=3D"gmail_quote">On Fri, May 17, 2013 at 3:0=
+3 PM, Marco Barisione <span dir=3D"ltr">&lt;<a href=3D"mailto:marco.barisio=
+ne@collabora.co.uk" target=3D"_blank">marco.barisione@collabora.co.uk</a>&g=
+t;</span> wrote:<br>
+
+<blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1p=
+x #ccc solid;padding-left:1ex">Hi all,<br>
+<br>
+I'm currently working on integrating IM account creation with<br>
+gnome-online-accounts. This would allow a Gnome user to create all types<br>
+of accounts directly in the =E2=80=9CSystem Settings=E2=80=9D.<br>
+To do so, I need to move all the account creation code to a separate git<br>
+submodule that can be used by gnome-online-accounts.<br>
+The problem is that gnome-online-accounts is under LGPL, while Empathy<br>
+contains some files under GPL and some files under LGPL.<br>
+<br>
+I'm writing you because you contributed to some Empathy files under GPL<br>
+that we would like to use in gnome-online-accounts. Would you agree to<br>
+relicense your code from GPL to LGPL (version 2.1 or later)?<br>
+<br>
+Thank you!<br>
+<span class=3D"HOEnZb"><font color=3D"#888888"><br>
+--<br>
+Marco Barisione<br>
+<br>
+</font></span></blockquote></div><br><br clear=3D"all"><br>-- <br>Baptiste =
+Mille-Mathias<br>Les gens heureux ne sont pas press=C3=A9s<br>[w] <a href=
+=3D"http://damnpeople.fr" target=3D"_blank">http://damnpeople.fr</a>
+</div>
+<br><!--end of _originalContent --></div></body></html>
+
+Received: from mail-pa0-f53.google.com (mail-pa0-f53.google.com
+ [209.85.220.53]) (using TLSv1 with cipher RC4-SHA (128/128 bits)) (No
+ client certificate requested) by bhuna.collabora.co.uk (Postfix) with
+ ESMTPS id C1B431708652 for <marco.barisione@collabora.co.uk>; Fri, 17 May
+ 2013 15:05:31 +0100 (BST)
+Received: by mail-pa0-f53.google.com with SMTP id kq12so3566860pab.26 for
+ <marco.barisione@collabora.co.uk>; Fri, 17 May 2013 07:05:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com;
+ s=20120113;
+ h=mime-version:x-received:in-reply-to:references:date:message-id
+ :subject:from:to:cc:content-type;
+ bh=K+JhZV+B/IdtWlTZmgfYGHM20j19noSm3jciITxdFms=;
+ b=gpcpJpyxzMT3Aq8b9kLEqtRG549wq4cUFmieJ3tU3DyLkiXP8ZjXG2iGdicKvQPHRS
+ OQQv2ja6reR2RCXcpPK8O0fRYVZLsweZ5pJyx2NUtvc5UdV5U7/DVcyXHyzdybx/H2dA
+ LeM+Yk9Eg3hxLFhHFmTipS3sriHuAN3f8MDxG7iUonr0pdSGUM7OVazK19uVbU4kvXpn
+ PWUaz8iihoJWIG65Ewz6Cth6a+8L5h72XusJI01obqwUPccnNrEMb5F1xlocu1YukWqF
+ Udq9VGj4JJJ1JsZ31WuVmAuv+GPZM/ipaOyvscCHx0+SiV2hoej7ertwslQDybl8DCef Fbyw==
+MIME-Version: 1.0
+X-Received: by 10.66.19.234 with SMTP id
+ i10mr49262400pae.152.1368799530319; Fri, 17 May 2013 07:05:30 -0700 (PDT)
+Received: by 10.70.16.67 with HTTP; Fri, 17 May 2013 07:05:30 -0700 (PDT)
+In-Reply-To: <20130517135944.4722816.5389.44@gmail.com>
+References: <1368795784.5620.13.camel@carbonara>
+         <CAJ4DpxZjh75DrLi-=LvUb3Md8dAD4hmFV=v9-6Q5RDJatsXbrA@mail.gmail.com>
+         <20130517135944.4722816.5389.44@gmail.com>
+Date: Fri, 17 May 2013 10:05:30 -0400
+Message-ID: <CAFUYb-tVWjcUOcwZ0HwHA1mDY6sNZnYGuDc=fpGOSVearEDAbg@mail.gmail.com>
+Subject: Re: Relicensing some Empathy code from GPL to LGPL
+From: Jonathan Tellier <jonathan.tellier@gmail.com>
+To: Marc Plano-Lesay <marc.planolesay@gmail.com>
+Cc: Baptiste Mille-Mathias <baptiste.millemathias@gmail.com>,  Marco
+ Barisione <marco.barisione@collabora.co.uk>,  Chandni Verma
+ <chandniverma2112@gmail.com>, Cyril Roelandt <tipecaml@gmail.com>, 
+ Dimitris Zenios <dimitris.zenios@gmail.com>, Vitaly Minko
+ <vitaly.minko@gmail.com>,  Frederic Peters <fpeters@0d.be>, Andreas
+ Henriksson <andreas@fatal.se>, Vincent Untz <vuntz@gnome.org>,  Baptiste
+ Mille-Mathias <baptistem@gnome.org>, Susana Pereira
+ <susana.pereira@gmail.com>,  =?ISO-8859-1?Q?Steve_Fr=E9cinaux?=
+ <code@istique.net>
+Content-Type: multipart/alternative; boundary=bcaec520f501c6096204dcea79e1
+X-DSPAM-Result: Innocent
+X-DSPAM-Processed: Fri May 17 15:23:15 2013
+X-DSPAM-Confidence: 0.9923
+X-DSPAM-Probability: 0.0000
+X-DSPAM-Signature: 12,51963d5219127642219882
+X-Evolution-Source: 1205242379.4854.0@cordof
+
+
+--bcaec520f501c6096204dcea79e1
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
+
+Hi,
+That's fine with me.
+
+Regards,
+Jonathan
+
+
+On Fri, May 17, 2013 at 9:59 AM, Marc Plano-Lesay <marc.planolesay@gmail.co=
+m
+> wrote:
+
+> Hi,
+> There's no problem for me.
+>
+> Regards,
+> Marc Plano-Lesay
+>   *De: *Baptiste Mille-Mathias
+> *Envoy=E9: *vendredi 17 mai 2013 15:31
+> *=C0: *Marco Barisione
+> *Cc: *Chandni Verma; Cyril Roelandt; Dimitris Zenios; Jonathan Tellier;
+> Marc Plano-Lesay; Vitaly Minko; Frederic Peters; Andreas Henriksson;
+> Vincent Untz; Baptiste Mille-Mathias; Susana Pereira; Steve Fr=E9cinaux
+> *Objet: *Re: Relicensing some Empathy code from GPL to LGPL
+>
+> Hi Marco,
+>
+> whatever I wrote you can re-licence my code.
+>
+> Regards
+>
+>
+> On Fri, May 17, 2013 at 3:03 PM, Marco Barisione <
+> marco.barisione@collabora.co.uk> wrote:
+>
+>> Hi all,
+>>
+>> I'm currently working on integrating IM account creation with
+>> gnome-online-accounts. This would allow a Gnome user to create all types
+>> of accounts directly in the =93System Settings=94.
+>> To do so, I need to move all the account creation code to a separate git
+>> submodule that can be used by gnome-online-accounts.
+>> The problem is that gnome-online-accounts is under LGPL, while Empathy
+>> contains some files under GPL and some files under LGPL.
+>>
+>> I'm writing you because you contributed to some Empathy files under GPL
+>> that we would like to use in gnome-online-accounts. Would you agree to
+>> relicense your code from GPL to LGPL (version 2.1 or later)?
+>>
+>> Thank you!
+>>
+>> --
+>> Marco Barisione
+>>
+>>
+>
+>
+> --
+> Baptiste Mille-Mathias
+> Les gens heureux ne sont pas press=E9s
+> [w] http://damnpeople.fr
+>
+>
+
+--bcaec520f501c6096204dcea79e1
+Content-Type: text/html; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div><div><div>Hi,<br></div>That&#39;s fine with me.<br><b=
+r></div>Regards,<br></div>Jonathan<br></div><div class=3D"gmail_extra"><br>=
+<br><div class=3D"gmail_quote">On Fri, May 17, 2013 at 9:59 AM, Marc Plano-=
+Lesay <span dir=3D"ltr">&lt;<a href=3D"mailto:marc.planolesay@gmail.com" ta=
+rget=3D"_blank">marc.planolesay@gmail.com</a>&gt;</span> wrote:<br>
+<blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1p=
+x #ccc solid;padding-left:1ex"><div style=3D"line-height:initial"><div styl=
+e=3D"text-align:initial;font-size:initial;width:100%;font-family:Calibri,&#=
+39;Slate Pro&#39;,sans-serif">
+<font color=3D"#262626">Hi,</font></div><div style=3D"text-align:initial;fo=
+nt-size:initial;width:100%;font-family:Calibri,&#39;Slate Pro&#39;,sans-ser=
+if"><font color=3D"#262626">There&#39;s no problem for me.</font></div><div=
+ style=3D"text-align:initial;font-size:initial;width:100%;font-family:Calib=
+ri,&#39;Slate Pro&#39;,sans-serif">
+<font color=3D"#262626"><br></font></div><div style=3D"text-align:initial;f=
+ont-size:initial;width:100%;font-family:Calibri,&#39;Slate Pro&#39;,sans-se=
+rif"><font color=3D"#262626">Regards,</font></div><div style=3D"text-align:=
+initial;font-size:initial;width:100%;font-family:Calibri,&#39;Slate Pro&#39=
+;,sans-serif">
+<font color=3D"#262626">Marc Plano-Lesay</font></div>                      =
+                                                                           =
+                                    <div style=3D"text-align:initial;color:=
+rgb(31,73,125);font-size:initial;font-family:Calibri,&#39;Slate Pro&#39;,sa=
+ns-serif">
+</div>                                                                     =
+                                                                           =
+                                        <table style=3D"border-spacing:0px"=
+ width=3D"100%">
+ <tbody><tr><td colspan=3D"2" style=3D"text-align:initial;font-size:initial=
+">                                              <div style=3D"border-style:=
+solid none none;border-top-color:rgb(181,196,223);border-top-width:1pt;padd=
+ing:3pt 0in 0in;font-family:Tahoma,&#39;BB Alpha Sans&#39;,&#39;Slate Pro&#=
+39;;font-size:10pt">
+  <div><b>De: </b>Baptiste Mille-Mathias</div><div><b>Envoy=E9: </b>vendred=
+i 17 mai 2013 15:31</div><div><b>=C0: </b>Marco Barisione</div><div><b>Cc: =
+</b>Chandni Verma; Cyril Roelandt; Dimitris Zenios; Jonathan Tellier; Marc =
+Plano-Lesay; Vitaly Minko; Frederic Peters; Andreas Henriksson; Vincent Unt=
+z; Baptiste Mille-Mathias; Susana Pereira; Steve Fr=E9cinaux</div>
+<div><b>Objet: </b>Re: Relicensing some Empathy code from GPL to LGPL</div>=
+</div></td></tr></tbody></table><div><div class=3D"h5"><div style=3D"border=
+-top-color:rgb(186,188,209);text-align:initial;font-size:initial;border-sty=
+le:solid none none;border-top-width:1pt">
+</div><br><div><div dir=3D"ltr"><div><div>Hi Marco,<br><br></div>whatever I=
+ wrote you can re-licence my code.<br><br></div>Regards<br></div><div class=
+=3D"gmail_extra"><br><br><div class=3D"gmail_quote">On Fri, May 17, 2013 at=
+ 3:03 PM, Marco Barisione <span dir=3D"ltr">&lt;<a href=3D"mailto:marco.bar=
+isione@collabora.co.uk" target=3D"_blank">marco.barisione@collabora.co.uk</=
+a>&gt;</span> wrote:<br>
+
+
+<blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1p=
+x #ccc solid;padding-left:1ex">Hi all,<br>
+<br>
+I&#39;m currently working on integrating IM account creation with<br>
+gnome-online-accounts. This would allow a Gnome user to create all types<br=
+>
+of accounts directly in the =93System Settings=94.<br>
+To do so, I need to move all the account creation code to a separate git<br=
+>
+submodule that can be used by gnome-online-accounts.<br>
+The problem is that gnome-online-accounts is under LGPL, while Empathy<br>
+contains some files under GPL and some files under LGPL.<br>
+<br>
+I&#39;m writing you because you contributed to some Empathy files under GPL=
+<br>
+that we would like to use in gnome-online-accounts. Would you agree to<br>
+relicense your code from GPL to LGPL (version 2.1 or later)?<br>
+<br>
+Thank you!<br>
+<span><font color=3D"#888888"><br>
+--<br>
+Marco Barisione<br>
+<br>
+</font></span></blockquote></div><br><br clear=3D"all"><br>-- <br>Baptiste =
+Mille-Mathias<br>Les gens heureux ne sont pas press=E9s<br>[w] <a href=3D"h=
+ttp://damnpeople.fr" target=3D"_blank">http://damnpeople.fr</a>
+</div>
+<br></div></div></div></div>
+</blockquote></div><br></div>
+
+--bcaec520f501c6096204dcea79e1--
+
+Received: from mail-we0-f170.google.com (mail-we0-f170.google.com
+ [74.125.82.170]) (using TLSv1 with cipher RC4-SHA (128/128 bits)) (No
+ client certificate requested) by bhuna.collabora.co.uk (Postfix) with
+ ESMTPS id 3F66516985EF for <marco.barisione@collabora.co.uk>; Sat, 18 May
+ 2013 09:48:13 +0100 (BST)
+Received: by mail-we0-f170.google.com with SMTP id u54so4253689wes.1 for
+ <marco.barisione@collabora.co.uk>; Sat, 18 May 2013 01:48:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com;
+ s=20120113;
+ h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+ :cc:content-type; bh=6BwKYeFFjzca0GcyPQVAgH+l5ASHw+LRNKCf7C9qjRA=;
+ b=ZLfpwnbfGwmWTCSgIvxpLKwwjoBXhM2HtxJQt5zurpgK6ewAXr5UUasgZGlMnMOrf/
+ pt/d1nJjjWnMKenbI+52NRIxHb80qSLe5bEdkrHXwISDLRQPq8sbUaocQhNHx4MthEAw
+ GV2dp7ZKfeLPNlPRnK6fWufc1qLMAtQzi8oLo5gUnWA8vhejHOF242KLhfeGnjUmnT58
+ DJEY8F/laGLNIab1odQ9usADvNKnftzwRNiwZG3k2roLxU1iHYyTbpSgkCOLnyME6EN9
+ hY/TqpksVjlzYv5grbb/X2kzi+h7hDPF6LkWJzWJ1ZckvGH4fsyuOgT/10rtznWfzjph hlLw==
+MIME-Version: 1.0
+X-Received: by 10.180.9.238 with SMTP id d14mr1357980wib.18.1368866892811;
+ Sat, 18 May 2013 01:48:12 -0700 (PDT)
+Received: by 10.227.192.72 with HTTP; Sat, 18 May 2013 01:48:12 -0700 (PDT)
+In-Reply-To: <CAFUYb-tVWjcUOcwZ0HwHA1mDY6sNZnYGuDc=fpGOSVearEDAbg@mail.gmail.com>
+References: <1368795784.5620.13.camel@carbonara>
+         <CAJ4DpxZjh75DrLi-=LvUb3Md8dAD4hmFV=v9-6Q5RDJatsXbrA@mail.gmail.com>
+         <20130517135944.4722816.5389.44@gmail.com>
+         <CAFUYb-tVWjcUOcwZ0HwHA1mDY6sNZnYGuDc=fpGOSVearEDAbg@mail.gmail.com>
+Date: Sat, 18 May 2013 14:18:12 +0530
+Message-ID: <CADttZZrH0nhL0=gcgM7N-z43ntnbd+f4RqrSQp7s+GXuHkvnvw@mail.gmail.com>
+Subject: Re: Relicensing some Empathy code from GPL to LGPL
+From: Chandni Verma <chandniverma2112@gmail.com>
+To: Jonathan Tellier <jonathan.tellier@gmail.com>
+Cc: Marc Plano-Lesay <marc.planolesay@gmail.com>,  Baptiste Mille-Mathias
+ <baptiste.millemathias@gmail.com>,  Marco Barisione
+ <marco.barisione@collabora.co.uk>, Cyril Roelandt <tipecaml@gmail.com>, 
+ Dimitris Zenios <dimitris.zenios@gmail.com>, Vitaly Minko
+ <vitaly.minko@gmail.com>,  Frederic Peters <fpeters@0d.be>, Andreas
+ Henriksson <andreas@fatal.se>, Vincent Untz <vuntz@gnome.org>,  Baptiste
+ Mille-Mathias <baptistem@gnome.org>, Susana Pereira
+ <susana.pereira@gmail.com>,  =?ISO-8859-1?Q?Steve_Fr=E9cinaux?=
+ <code@istique.net>
+Content-Type: multipart/alternative; boundary=001a11c2b15ee413ce04dcfa280a
+X-DSPAM-Result: Innocent
+X-DSPAM-Processed: Sat May 18 09:48:16 2013
+X-DSPAM-Confidence: 0.9928
+X-DSPAM-Probability: 0.0000
+X-DSPAM-Signature: 12,5197405019121329410518
+X-Evolution-Source: 1205242379.4854.0@cordof
+
+
+--001a11c2b15ee413ce04dcfa280a
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
+
+Yes, feel free to re-licence my code to LGPL
+
+
+On 17 May 2013 19:35, Jonathan Tellier <jonathan.tellier@gmail.com> wrote:
+
+> Hi,
+> That's fine with me.
+>
+> Regards,
+> Jonathan
+>
+>
+> On Fri, May 17, 2013 at 9:59 AM, Marc Plano-Lesay <
+> marc.planolesay@gmail.com> wrote:
+>
+>> Hi,
+>> There's no problem for me.
+>>
+>> Regards,
+>> Marc Plano-Lesay
+>>    *De: *Baptiste Mille-Mathias
+>> *Envoy=E9: *vendredi 17 mai 2013 15:31
+>> *=C0: *Marco Barisione
+>> *Cc: *Chandni Verma; Cyril Roelandt; Dimitris Zenios; Jonathan Tellier;
+>> Marc Plano-Lesay; Vitaly Minko; Frederic Peters; Andreas Henriksson;
+>> Vincent Untz; Baptiste Mille-Mathias; Susana Pereira; Steve Fr=E9cinaux
+>> *Objet: *Re: Relicensing some Empathy code from GPL to LGPL
+>>
+>> Hi Marco,
+>>
+>> whatever I wrote you can re-licence my code.
+>>
+>> Regards
+>>
+>>
+>> On Fri, May 17, 2013 at 3:03 PM, Marco Barisione <
+>> marco.barisione@collabora.co.uk> wrote:
+>>
+>>> Hi all,
+>>>
+>>> I'm currently working on integrating IM account creation with
+>>> gnome-online-accounts. This would allow a Gnome user to create all type=
+s
+>>> of accounts directly in the =93System Settings=94.
+>>> To do so, I need to move all the account creation code to a separate gi=
+t
+>>> submodule that can be used by gnome-online-accounts.
+>>> The problem is that gnome-online-accounts is under LGPL, while Empathy
+>>> contains some files under GPL and some files under LGPL.
+>>>
+>>> I'm writing you because you contributed to some Empathy files under GPL
+>>> that we would like to use in gnome-online-accounts. Would you agree to
+>>> relicense your code from GPL to LGPL (version 2.1 or later)?
+>>>
+>>> Thank you!
+>>>
+>>> --
+>>> Marco Barisione
+>>>
+>>>
+>>
+>>
+>> --
+>> Baptiste Mille-Mathias
+>> Les gens heureux ne sont pas press=E9s
+>> [w] http://damnpeople.fr
+>>
+>>
+>
+
+
+--=20
+Chandni
+
+--001a11c2b15ee413ce04dcfa280a
+Content-Type: text/html; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Yes, feel free to re-licence my code to LGPL<br></div><div=
+ class=3D"gmail_extra"><br><br><div class=3D"gmail_quote">On 17 May 2013 19=
+:35, Jonathan Tellier <span dir=3D"ltr">&lt;<a href=3D"mailto:jonathan.tell=
+ier@gmail.com" target=3D"_blank">jonathan.tellier@gmail.com</a>&gt;</span> =
+wrote:<br>
+<blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1p=
+x #ccc solid;padding-left:1ex"><div dir=3D"ltr"><div><div><div>Hi,<br></div=
+>That&#39;s fine with me.<br><br></div>Regards,<br></div>Jonathan<br></div>=
+<div class=3D"HOEnZb">
+<div class=3D"h5"><div class=3D"gmail_extra"><br><br><div class=3D"gmail_qu=
+ote">On Fri, May 17, 2013 at 9:59 AM, Marc Plano-Lesay <span dir=3D"ltr">&l=
+t;<a href=3D"mailto:marc.planolesay@gmail.com" target=3D"_blank">marc.plano=
+lesay@gmail.com</a>&gt;</span> wrote:<br>
+
+<blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1p=
+x #ccc solid;padding-left:1ex"><div style=3D"line-height:initial"><div styl=
+e=3D"text-align:initial;font-size:initial;width:100%;font-family:Calibri,&#=
+39;Slate Pro&#39;,sans-serif">
+
+<font color=3D"#262626">Hi,</font></div><div style=3D"text-align:initial;fo=
+nt-size:initial;width:100%;font-family:Calibri,&#39;Slate Pro&#39;,sans-ser=
+if"><font color=3D"#262626">There&#39;s no problem for me.</font></div><div=
+ style=3D"text-align:initial;font-size:initial;width:100%;font-family:Calib=
+ri,&#39;Slate Pro&#39;,sans-serif">
+
+<font color=3D"#262626"><br></font></div><div style=3D"text-align:initial;f=
+ont-size:initial;width:100%;font-family:Calibri,&#39;Slate Pro&#39;,sans-se=
+rif"><font color=3D"#262626">Regards,</font></div><div style=3D"text-align:=
+initial;font-size:initial;width:100%;font-family:Calibri,&#39;Slate Pro&#39=
+;,sans-serif">
+
+<font color=3D"#262626">Marc Plano-Lesay</font></div>                      =
+                                                                           =
+                                    <div style=3D"text-align:initial;color:=
+rgb(31,73,125);font-size:initial;font-family:Calibri,&#39;Slate Pro&#39;,sa=
+ns-serif">
+
+</div>                                                                     =
+                                                                           =
+                                        <table style=3D"border-spacing:0px"=
+ width=3D"100%">
+
+ <tbody><tr><td colspan=3D"2" style=3D"text-align:initial;font-size:initial=
+">                                              <div style=3D"border-style:=
+solid none none;border-top-color:rgb(181,196,223);border-top-width:1pt;padd=
+ing:3pt 0in 0in;font-family:Tahoma,&#39;BB Alpha Sans&#39;,&#39;Slate Pro&#=
+39;;font-size:10pt">
+
+  <div><b>De: </b>Baptiste Mille-Mathias</div><div><b>Envoy=E9: </b>vendred=
+i 17 mai 2013 15:31</div><div><b>=C0: </b>Marco Barisione</div><div><b>Cc: =
+</b>Chandni Verma; Cyril Roelandt; Dimitris Zenios; Jonathan Tellier; Marc =
+Plano-Lesay; Vitaly Minko; Frederic Peters; Andreas Henriksson; Vincent Unt=
+z; Baptiste Mille-Mathias; Susana Pereira; Steve Fr=E9cinaux</div>
+
+<div><b>Objet: </b>Re: Relicensing some Empathy code from GPL to LGPL</div>=
+</div></td></tr></tbody></table><div><div><div style=3D"border-top-color:rg=
+b(186,188,209);text-align:initial;font-size:initial;border-style:solid none=
+ none;border-top-width:1pt">
+
+</div><br><div><div dir=3D"ltr"><div><div>Hi Marco,<br><br></div>whatever I=
+ wrote you can re-licence my code.<br><br></div>Regards<br></div><div class=
+=3D"gmail_extra"><br><br><div class=3D"gmail_quote">On Fri, May 17, 2013 at=
+ 3:03 PM, Marco Barisione <span dir=3D"ltr">&lt;<a href=3D"mailto:marco.bar=
+isione@collabora.co.uk" target=3D"_blank">marco.barisione@collabora.co.uk</=
+a>&gt;</span> wrote:<br>
+
+
+
+<blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1p=
+x #ccc solid;padding-left:1ex">Hi all,<br>
+<br>
+I&#39;m currently working on integrating IM account creation with<br>
+gnome-online-accounts. This would allow a Gnome user to create all types<br=
+>
+of accounts directly in the =93System Settings=94.<br>
+To do so, I need to move all the account creation code to a separate git<br=
+>
+submodule that can be used by gnome-online-accounts.<br>
+The problem is that gnome-online-accounts is under LGPL, while Empathy<br>
+contains some files under GPL and some files under LGPL.<br>
+<br>
+I&#39;m writing you because you contributed to some Empathy files under GPL=
+<br>
+that we would like to use in gnome-online-accounts. Would you agree to<br>
+relicense your code from GPL to LGPL (version 2.1 or later)?<br>
+<br>
+Thank you!<br>
+<span><font color=3D"#888888"><br>
+--<br>
+Marco Barisione<br>
+<br>
+</font></span></blockquote></div><br><br clear=3D"all"><br>-- <br>Baptiste =
+Mille-Mathias<br>Les gens heureux ne sont pas press=E9s<br>[w] <a href=3D"h=
+ttp://damnpeople.fr" target=3D"_blank">http://damnpeople.fr</a>
+</div>
+<br></div></div></div></div>
+</blockquote></div><br></div>
+</div></div></blockquote></div><br><br clear=3D"all"><br>-- <br>Chandni
+</div>
+
+--001a11c2b15ee413ce04dcfa280a--
+
+Received: from mail-lb0-f172.google.com (mail-lb0-f172.google.com
+ [209.85.217.172]) (using TLSv1 with cipher RC4-SHA (128/128 bits)) (No
+ client certificate requested) by bhuna.collabora.co.uk (Postfix) with
+ ESMTPS id 820591698704 for <marco.barisione@collabora.co.uk>; Mon, 20 May
+ 2013 14:47:01 +0100 (BST)
+Received: by mail-lb0-f172.google.com with SMTP id p10so1735952lbi.3 for
+ <marco.barisione@collabora.co.uk>; Mon, 20 May 2013 06:47:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com;
+ s=20120113;
+ h=mime-version:x-received:in-reply-to:references:date:message-id
+ :subject:from:to:cc:content-type;
+ bh=7vS2FVrTMxkQf+kfdiwSW3mutwSFmKvx96nohUKRPcc=;
+ b=VqvdJCd7cPfUIkgrYkXk9JNUKnRt70aqctsnBzLVjvgnNkfC0WQxvcFo8nLl8aLUxr
+ 3eA73jj4Mt/Qod88TDx0y4sMeQqWMcuV3+gt/4oookidzlwtN2SoZ+CE1nHpfPEaGkUM
+ SRfxKZ2keLhRCsekviBbKXjpl/fpRqV7SyXa359yoHsTERoX5VhNCNIme/SSmWbtMgbX
+ CHmniO4AllFScg+UaK5NT7XyqRTI1YxbQRQXF5NNcAuC0UcVbsc+3UQPWsirSxxHm/4v
+ NlbeyBzKvFinwJWHMb7hpc5HxPfrXKdK3OYrIAj/CUVtYE+VLGFZLTFcZnX1qa9zShl0 f+eQ==
+MIME-Version: 1.0
+X-Received: by 10.112.198.199 with SMTP id
+ je7mr9979095lbc.110.1369057620637; Mon, 20 May 2013 06:47:00 -0700 (PDT)
+Received: by 10.152.120.5 with HTTP; Mon, 20 May 2013 06:47:00 -0700 (PDT)
+In-Reply-To: <1368795784.5620.13.camel@carbonara>
+References: <1368795784.5620.13.camel@carbonara>
+Date: Mon, 20 May 2013 14:47:00 +0100
+Message-ID: <CAB0BngJwSj8FLfDWUC4X9xQ_ap2mFqm6ZF7uoY1em+KLNanSVA@mail.gmail.com>
+Subject: Re: Relicensing some Empathy code from GPL to LGPL
+From: Susana Pereira <susana.pereira@gmail.com>
+To: Marco Barisione <marco.barisione@collabora.co.uk>
+Cc: Chandni Verma <chandniverma2112@gmail.com>, Cyril Roelandt
+ <tipecaml@gmail.com>,  Dimitris Zenios <dimitris.zenios@gmail.com>,
+ Jonathan Tellier <jonathan.tellier@gmail.com>,  Marc Plano-Lesay
+ <marc.planolesay@gmail.com>, Vitaly Minko <vitaly.minko@gmail.com>, 
+ Frederic Peters <fpeters@0d.be>, Andreas Henriksson <andreas@fatal.se>,
+ Vincent Untz <vuntz@gnome.org>,  Baptiste Mille-Mathias
+ <baptistem@gnome.org>, =?ISO-8859-1?Q?Steve_Fr=E9cinaux?= <code@istique.net>
+Content-Type: multipart/alternative; boundary=001a11c2ae1827bd6104dd269181
+X-DSPAM-Result: Innocent
+X-DSPAM-Processed: Mon May 20 14:47:31 2013
+X-DSPAM-Confidence: 0.9913
+X-DSPAM-Probability: 0.0000
+X-DSPAM-Signature: 12,519a297319121258751312
+X-Evolution-Source: 1205242379.4854.0@cordof
+
+
+--001a11c2ae1827bd6104dd269181
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
+
+Hi Marco,
+
+Fine with me.
+
+Best regards,
+
+Susana Pereira
+
+
+On Fri, May 17, 2013 at 2:03 PM, Marco Barisione <
+marco.barisione@collabora.co.uk> wrote:
+
+> Hi all,
+>
+> I'm currently working on integrating IM account creation with
+> gnome-online-accounts. This would allow a Gnome user to create all types
+> of accounts directly in the =93System Settings=94.
+> To do so, I need to move all the account creation code to a separate git
+> submodule that can be used by gnome-online-accounts.
+> The problem is that gnome-online-accounts is under LGPL, while Empathy
+> contains some files under GPL and some files under LGPL.
+>
+> I'm writing you because you contributed to some Empathy files under GPL
+> that we would like to use in gnome-online-accounts. Would you agree to
+> relicense your code from GPL to LGPL (version 2.1 or later)?
+>
+> Thank you!
+>
+> --
+> Marco Barisione
+>
+>
+
+--001a11c2ae1827bd6104dd269181
+Content-Type: text/html; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div><div>Hi Marco,<br><br></div>Fine with me.<br><br></di=
+v><div>Best regards,<br></div><div><br></div>Susana Pereira<br></div><div c=
+lass=3D"gmail_extra"><br><br><div class=3D"gmail_quote">On Fri, May 17, 201=
+3 at 2:03 PM, Marco Barisione <span dir=3D"ltr">&lt;<a href=3D"mailto:marco=
+.barisione@collabora.co.uk" target=3D"_blank">marco.barisione@collabora.co.=
+uk</a>&gt;</span> wrote:<br>
+<blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1p=
+x #ccc solid;padding-left:1ex">Hi all,<br>
+<br>
+I&#39;m currently working on integrating IM account creation with<br>
+gnome-online-accounts. This would allow a Gnome user to create all types<br=
+>
+of accounts directly in the =93System Settings=94.<br>
+To do so, I need to move all the account creation code to a separate git<br=
+>
+submodule that can be used by gnome-online-accounts.<br>
+The problem is that gnome-online-accounts is under LGPL, while Empathy<br>
+contains some files under GPL and some files under LGPL.<br>
+<br>
+I&#39;m writing you because you contributed to some Empathy files under GPL=
+<br>
+that we would like to use in gnome-online-accounts. Would you agree to<br>
+relicense your code from GPL to LGPL (version 2.1 or later)?<br>
+<br>
+Thank you!<br>
+<span class=3D"HOEnZb"><font color=3D"#888888"><br>
+--<br>
+Marco Barisione<br>
+<br>
+</font></span></blockquote></div><br></div>
+
+--001a11c2ae1827bd6104dd269181--
+
+Received: from mail-wg0-f44.google.com (mail-wg0-f44.google.com
+ [74.125.82.44]) (using TLSv1 with cipher RC4-SHA (128/128 bits)) (No client
+ certificate requested) by bhuna.collabora.co.uk (Postfix) with ESMTPS id
+ 543AB1708659 for <marco.barisione@collabora.co.uk>; Fri, 31 May 2013
+ 22:56:38 +0100 (BST)
+Received: by mail-wg0-f44.google.com with SMTP id a12so1619225wgh.23 for
+ <marco.barisione@collabora.co.uk>; Fri, 31 May 2013 14:56:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com;
+ s=20120113;
+ h=message-id:date:from:user-agent:mime-version:to:subject:references
+ :in-reply-to:content-type:content-transfer-encoding;
+ bh=iAhoGkmGfG7oxpluc6aq1/6VeTwG4dQEfY727VwXdjE=;
+ b=cDUK8eSDG6N2/B0XRx2EU/vQvs+z6n1nFEdxlB8BmOLiaizFeObYbA2tTZiLhUi+rv
+ JJA2Tf3vPjYeTuic3D4kJwBAK+ni5eW/xJbmBP1IG1qJ2NPEM/iMcjzuV15WdWTdlx+M
+ w9VY1GlINix3Hprmwt1FSBBcyeuIguXZrm8+dY38kJCAq0FiuwrGEE4SDEy4BHOA+hHq
+ 7KjBZ+CNYMHMqL7DAosyy7y+fmkMjkKafx0j1iCGuSvCmhAUDBcyk2vJ9uil1BHqqpDY
+ 2SKvqlNGukutkpk12OsIbULUkESG+wyAAxU2fsLVP0PTTZiGX175wgLwnBT9zJFYerQw btxg==
+X-Received: by 10.180.149.171 with SMTP id
+ ub11mr4970991wib.40.1370037398098; Fri, 31 May 2013 14:56:38 -0700 (PDT)
+Received: from [192.168.0.10] (tal33-3-82-233-82-24.fbx.proxad.net.
+ [82.233.82.24]) by mx.google.com with ESMTPSA id
+ fx7sm6653903wic.11.2013.05.31.14.56.35 for
+ <marco.barisione@collabora.co.uk> (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA
+ bits=128/128); Fri, 31 May 2013 14:56:36 -0700 (PDT)
+Message-ID: <51A91888.8070702@gmail.com>
+Date: Fri, 31 May 2013 23:39:20 +0200
+From: Cyril Roelandt <tipecaml@gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.12) Gecko/20130116
+ Icedove/10.0.12
+MIME-Version: 1.0
+To: Marco Barisione <marco.barisione@collabora.co.uk>
+Subject: Re: Relicensing some Empathy code from GPL to LGPL
+References: <1368795784.5620.13.camel@carbonara>
+In-Reply-To: <1368795784.5620.13.camel@carbonara>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-DSPAM-Result: Innocent
+X-DSPAM-Processed: Fri May 31 22:56:39 2013
+X-DSPAM-Confidence: 0.9909
+X-DSPAM-Probability: 0.0000
+X-DSPAM-Signature: 12,51a91c9719121486025439
+X-Evolution-Source: 1205242379.4854.0@cordof
+
+On 05/17/2013 03:03 PM, Marco Barisione wrote:
+> Hi all,
+>
+
+Hello,
+
+> I'm currently working on integrating IM account creation with
+> gnome-online-accounts. This would allow a Gnome user to create all types
+> of accounts directly in the “System Settings”.
+> To do so, I need to move all the account creation code to a separate git
+> submodule that can be used by gnome-online-accounts.
+> The problem is that gnome-online-accounts is under LGPL, while Empathy
+> contains some files under GPL and some files under LGPL.
+>
+> I'm writing you because you contributed to some Empathy files under GPL
+> that we would like to use in gnome-online-accounts. Would you agree to
+> relicense your code from GPL to LGPL (version 2.1 or later)?
+>
+
+No problem. Sorry for the late answer.
+
+Cyril Roelandt.
+
+Received: from [127.0.0.1] (localhost [127.0.0.1]) (Authenticated sender:
+ bari) with ESMTPSA id 6AE1A16A8317
+Message-ID: <1375190367.24158.22.camel@carbonara>
+Subject: Relicensing some Empathy code from GPL to LGPL
+From: Marco Barisione <marco.barisione@collabora.co.uk>
+To: Lars-Peter Clausen <lars@metafoo.de>, Milo Casagrande
+ <milo@ubuntu.com>, Philip Withnall <philip@tecnocode.co.uk>, Raluca Elena
+ Podiuc <ralucaelena1985@gmail.com>
+Date: Tue, 30 Jul 2013 14:19:27 +0100
+Organization: Collabora Ltd.
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.8.2-1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Evolution-Source: 1205242379.4854.0@cordof
+
+Hi all,
+
+I'm currently working on integrating IM account creation with
+gnome-online-accounts. This would allow a Gnome user to create all types
+of accounts directly in “System Settings”.
+To do so, I need to move all the account creation code to a separate git
+submodule that can be used by gnome-online-accounts.
+The problem is that gnome-online-accounts is under LGPL, while Empathy
+contains some files under GPL and some files under LGPL.
+
+I'm writing you because you contributed to some Empathy files under GPL
+that we would like to use in gnome-online-accounts. Would you agree to
+relicense your code from GPL to LGPL (version 2.1 or later)?
+
+Thank you!
+
+-- 
+Marco Barisione
+
+Received: from fox.clues.ltd.uk (fox.clues.ltd.uk [217.151.102.250]) (using
+ TLSv1 with cipher AES256-SHA (256/256 bits)) (No client certificate
+ requested) by bhuna.collabora.co.uk (Postfix) with ESMTPS id DD85416A8319
+ for <marco.barisione@collabora.co.uk>; Tue, 30 Jul 2013 15:55:21 +0100 (BST)
+Received: from smtp-out-242.synserver.de ([212.40.185.242]) by
+ fox.clues.ltd.uk with esmtp (Exim 4.72) (envelope-from <lars@metafoo.de>)
+ id 1V4BKV-00022U-0M for marco.barisione@collabora.co.uk; Tue, 30 Jul 2013
+ 15:55:21 +0100
+Received: (qmail 26250 invoked by uid 0); 30 Jul 2013 13:23:53 -0000
+X-SynServer-TrustedSrc: 1
+X-SynServer-AuthUser: lars@metafoo.de
+X-SynServer-PPID: 26062
+Received: from p4fe61db0.dip0.t-ipconnect.de (HELO ?192.168.0.176?)
+ [79.230.29.176] by 217.119.54.81 with AES256-SHA encrypted SMTP; 30 Jul
+ 2013 13:23:53 -0000
+Message-ID: <51F7BEA5.6000703@metafoo.de>
+Date: Tue, 30 Jul 2013 15:24:53 +0200
+From: Lars-Peter Clausen <lars@metafoo.de>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130704
+ Icedove/17.0.7
+MIME-Version: 1.0
+To: Marco Barisione <marco.barisione@collabora.co.uk>
+CC: Milo Casagrande <milo@ubuntu.com>,  Philip Withnall
+ <philip@tecnocode.co.uk>, Raluca Elena Podiuc <ralucaelena1985@gmail.com>
+Subject: Re: Relicensing some Empathy code from GPL to LGPL
+References: <1375190367.24158.22.camel@carbonara>
+In-Reply-To: <1375190367.24158.22.camel@carbonara>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Evolution-Source: 1205242379.4854.0@cordof
+
+On 07/30/2013 03:19 PM, Marco Barisione wrote:
+> Hi all,
+> 
+> I'm currently working on integrating IM account creation with
+> gnome-online-accounts. This would allow a Gnome user to create all types
+> of accounts directly in “System Settings”.
+> To do so, I need to move all the account creation code to a separate git
+> submodule that can be used by gnome-online-accounts.
+> The problem is that gnome-online-accounts is under LGPL, while Empathy
+> contains some files under GPL and some files under LGPL.
+
+dejavu? Pretty sure I got a similar mail already a few years ago.
+
+> 
+> I'm writing you because you contributed to some Empathy files under GPL
+> that we would like to use in gnome-online-accounts. Would you agree to
+> relicense your code from GPL to LGPL (version 2.1 or later)?
+
+I agree.
+
+- Lars
+
+Received: from fox.clues.ltd.uk (fox.clues.ltd.uk [217.151.102.250]) (using
+ TLSv1 with cipher AES256-SHA (256/256 bits)) (No client certificate
+ requested) by bhuna.collabora.co.uk (Postfix) with ESMTPS id D17FB16A8319
+ for <marco.barisione@collabora.co.uk>; Tue, 30 Jul 2013 15:14:54 +0100 (BST)
+Received: from mail-wi0-x22c.google.com ([2a00:1450:400c:c05::22c]) by
+ fox.clues.ltd.uk with esmtps (TLS1.0:RSA_ARCFOUR_SHA1:16) (Exim 4.72)
+ (envelope-from <milo.casagrande@gmail.com>) id 1V4AhQ-0006ZY-21 for
+ marco.barisione@collabora.co.uk; Tue, 30 Jul 2013 15:14:54 +0100
+Received: by mail-wi0-f172.google.com with SMTP id hj13so2182400wib.5 for
+ <marco.barisione@collabora.co.uk>; Tue, 30 Jul 2013 07:14:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com;
+ s=20120113; h=mime-version:sender:in-reply-to:references:from:date
+ :x-google-sender-auth:message-id:subject:to:cc:content-type;
+ bh=CCPDSdcbySwnUDjkMoluka8I04l9G3NnpUqqbuGANjY=;
+ b=dv2Si3AwG9Pccor/vD3kenqlwdI/FTHUiRml04Ie/UM3tu0ypEQL/V21I/5Ivgm4lg
+ 1pWqFeHtGeG9Y+sJwoxghpsOruta2UIlSQcFX/uIvuArLZ2EhVns0Z11ipo+TyWmLIu5
+ xqUPFgyXkHQM4ZKY+BKKNcYlGnT0NYCSI5Inv0evnXTOICfy36r0QpxDBhFAznl8vaFa
+ PHC69qWv5AOSNCcg/hhzxbpHrwH34NFcC7MWUesuk/LrFUnvLAnlNFHIOJyFEjgW3edL
+ bqUN8ZCC8EcHcMiADVTfyjoD7KnEh5Oin044KsfVo4AbBf5aN0yS3Z+XhXVsz83VwHY1 hGLQ==
+X-Received: by 10.194.219.198 with SMTP id
+ pq6mr46879282wjc.58.1375193691430; Tue, 30 Jul 2013 07:14:51 -0700 (PDT)
+MIME-Version: 1.0
+Sender: milo.casagrande@gmail.com
+Received: by 10.216.217.9 with HTTP; Tue, 30 Jul 2013 07:14:31 -0700 (PDT)
+In-Reply-To: <1375190367.24158.22.camel@carbonara>
+References: <1375190367.24158.22.camel@carbonara>
+From: Milo Casagrande <milo@ubuntu.com>
+Date: Tue, 30 Jul 2013 16:14:31 +0200
+X-Google-Sender-Auth: rz2266Lwvp6tfsGeaGMFWpTSWQg
+Message-ID: <CAN8MeYeTncjAQ2EbMGtVvMxzPT9JfYHe6ndOQj=U2ot_=31=jQ@mail.gmail.com>
+Subject: Re: Relicensing some Empathy code from GPL to LGPL
+To: Marco Barisione <marco.barisione@collabora.co.uk>
+Cc: Lars-Peter Clausen <lars@metafoo.de>, Philip Withnall
+ <philip@tecnocode.co.uk>,  Raluca Elena Podiuc <ralucaelena1985@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+X-Evolution-Source: 1205242379.4854.0@cordof
+
+Hello Marco, all,
+
+On Tue, Jul 30, 2013 at 3:19 PM, Marco Barisione
+<marco.barisione@collabora.co.uk> wrote:
+>
+> I'm writing you because you contributed to some Empathy files under GPL
+> that we would like to use in gnome-online-accounts. Would you agree to
+> relicense your code from GPL to LGPL (version 2.1 or later)?
+
+I completely agree.
+Ciao!
+
+-- 
+Milo Casagrande <milo@ubuntu.com>
+
+Received: from node0007.antibodymx.net (node0007.antibodymx.net
+ [89.238.145.165]) (using TLSv1 with cipher AES256-SHA (256/256 bits)) (No
+ client certificate requested) by bhuna.collabora.co.uk (Postfix) with
+ ESMTPS id A3C4716A8319 for <marco.barisione@collabora.co.uk>; Tue, 30 Jul
+ 2013 15:45:26 +0100 (BST)
+Received: from mail-we0-x235.google.com ([2a00:1450:400c:c03::235]) by
+ node0007.antibodymx.net with esmtps (TLS1.0:RSA_ARCFOUR_SHA1:16) (Exim
+ 4.72) (envelope-from <philip.withnall@gmail.com>) id 1V4BAy-00066m-PM for
+ marco.barisione@collabora.co.uk; Tue, 30 Jul 2013 15:45:26 +0100
+Received: by mail-we0-f181.google.com with SMTP id p58so5270625wes.12 for
+ <marco.barisione@collabora.co.uk>; Tue, 30 Jul 2013 07:45:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com;
+ s=20120113;
+ h=sender:message-id:subject:from:reply-to:to:cc:date:in-reply-to
+ :references:content-type:x-mailer:mime-version :content-transfer-encoding;
+ bh=sWeCUAJcxKO0FZtuU0N5atLphcfAE64aly1Ay74u6jA=;
+ b=tKJuLCzo6MHkLH29lX9Lk3DQ/wqu4VXTc0dX3H+iD1Xz/g0r2iIeL4vrYXK81kyPVQ
+ egV/rDDQ5guwoKpR/xPwYmtpzgN5dS6h7IPJUGq3QxTWRxrE2P/c3NbxW7hBJgP9oXuk
+ nHIfd2Dtqo8NBSxvBnpJwCIqqVjWsGzudTl8hyGZsREgi9T47GnAyVmUsYpwTKxK6kzh
+ WNCstBQOrHGBfVVuukpuDffJZ++/EU20HyNRMgih0BUj1X1kmVcCrGFlN5ZJX1lZWZPd
+ Rxx/gEclKjKPPSUoN1pGLTK4IUXIbCXIlqNRXmuAUpHMJHIj+2sGOg81n0ehzTTjXmYV oLPw==
+X-Received: by 10.194.108.73 with SMTP id
+ hi9mr35353864wjb.85.1375194080611; Tue, 30 Jul 2013 07:21:20 -0700 (PDT)
+Received: from [10.200.137.177] (nat-pool-brq-u.redhat.com.
+ [209.132.186.35]) by mx.google.com with ESMTPSA id
+ o10sm28852906wiz.5.2013.07.30.07.21.18 for <multiple recipients>
+ (version=SSLv3 cipher=RC4-SHA bits=128/128); Tue, 30 Jul 2013 07:21:19
+ -0700 (PDT)
+Sender: Philip Withnall <philip.withnall@gmail.com>
+Message-ID: <51f7cbdf.6a56b40a.4cb0.ffffb79b@mx.google.com>
+Subject: Re: Relicensing some Empathy code from GPL to LGPL
+From: Philip Withnall <philip@tecnocode.co.uk>
+Reply-To: philip@tecnocode.co.uk
+To: Marco Barisione <marco.barisione@collabora.co.uk>
+Cc: Lars-Peter Clausen <lars@metafoo.de>, Milo Casagrande
+ <milo@ubuntu.com>, Raluca Elena Podiuc <ralucaelena1985@gmail.com>
+Date: Tue, 30 Jul 2013 16:21:17 +0200
+In-Reply-To: <1375190367.24158.22.camel@carbonara>
+References: <1375190367.24158.22.camel@carbonara>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.8.4 (3.8.4-1.fc19)
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-Evolution-Source: 1205242379.4854.0@cordof
+
+On Tue, 2013-07-30 at 14:19 +0100, Marco Barisione wrote:
+> I'm writing you because you contributed to some Empathy files under GPL
+> that we would like to use in gnome-online-accounts. Would you agree to
+> relicense your code from GPL to LGPL (version 2.1 or later)?
+
+I agree!
+
+Philip
+
+Received: from node0008.antibodymx.net (node0008.antibodymx.net
+ [89.238.145.166]) (using TLSv1 with cipher AES256-SHA (256/256 bits)) (No
+ client certificate requested) by bhuna.collabora.co.uk (Postfix) with
+ ESMTPS id 447FE17086F5 for <marco.barisione@collabora.co.uk>; Mon, 19 Aug
+ 2013 15:59:50 +0100 (BST)
+Received: from mail-pa0-x22d.google.com ([2607:f8b0:400e:c03::22d]) by
+ node0008.antibodymx.net with esmtps (TLS1.0:RSA_ARCFOUR_SHA1:16) (Exim
+ 4.72) (envelope-from <ralucaelena1985@gmail.com>) id 1VBQvs-00067l-AO for
+ marco.barisione@collabora.co.uk; Mon, 19 Aug 2013 15:59:50 +0100
+Received: by mail-pa0-f45.google.com with SMTP id bg4so4677268pad.4 for
+ <marco.barisione@collabora.co.uk>; Mon, 19 Aug 2013 07:59:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com;
+ s=20120113;
+ h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+ :cc:content-type; bh=RXd6D9OD0zKAq8jE8AOPRvPJFki5B9YbzqFMAk4orRw=;
+ b=Jb2QosLgLyVAtr7UVfMm/Fn9L9S21NwS5Q2E/UoE3CdOKLSt/dgUim8/I2FVIZ6onZ
+ 7vZIauvtnCQC2f5jwFbMdRk7XoGHUgOyBVuxONdMPia288jGcLI4xyKed9NonHv7jsd6
+ 0VMzaZl3WCJ271JRxpq5ItltKOY28tF0W2XBL7CLgXaJC+Dec7F9pz8mOz3Ya7BPsHIq
+ TENVVveYKgrwgf41NN5q96NFnf8K19ROvTynDJoFC5tVE0AW80RpsWNPykLJg1KydVGi
+ kLRen9/6CsFHxjOoZzS+F40ZH4AIjO68IiKlCoiq1entPgVfTuol6hjSMD062iVByX1h 06/Q==
+X-Received: by 10.66.25.133 with SMTP id c5mr13636565pag.4.1376924385957;
+ Mon, 19 Aug 2013 07:59:45 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.70.12.2 with HTTP; Mon, 19 Aug 2013 07:59:25 -0700 (PDT)
+In-Reply-To: <1375190367.24158.22.camel@carbonara>
+References: <1375190367.24158.22.camel@carbonara>
+From: Raluca-Elena Podiuc <ralucaelena1985@gmail.com>
+Date: Mon, 19 Aug 2013 17:59:25 +0300
+Message-ID: <CAFRSiR47+wGzARJHLLkf98+1ZDEJ_gHts1AsC8gCcO+U+Kny6g@mail.gmail.com>
+Subject: Re: Relicensing some Empathy code from GPL to LGPL
+To: Marco Barisione <marco.barisione@collabora.co.uk>
+Cc: Lars-Peter Clausen <lars@metafoo.de>, Milo Casagrande
+ <milo@ubuntu.com>,  Philip Withnall <philip@tecnocode.co.uk>
+Content-Type: multipart/alternative; boundary=bcaec52bed09e85bba04e44e309f
+X-Evolution-Source: 1205242379.4854.0@cordof
+
+
+--bcaec52bed09e85bba04e44e309f
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+Yeap,
+Totally OK by me!
+
+
+On Tue, Jul 30, 2013 at 4:19 PM, Marco Barisione <
+marco.barisione@collabora.co.uk> wrote:
+
+> Hi all,
+>
+> I'm currently working on integrating IM account creation with
+> gnome-online-accounts. This would allow a Gnome user to create all types
+> of accounts directly in =E2=80=9CSystem Settings=E2=80=9D.
+> To do so, I need to move all the account creation code to a separate git
+> submodule that can be used by gnome-online-accounts.
+> The problem is that gnome-online-accounts is under LGPL, while Empathy
+> contains some files under GPL and some files under LGPL.
+>
+> I'm writing you because you contributed to some Empathy files under GPL
+> that we would like to use in gnome-online-accounts. Would you agree to
+> relicense your code from GPL to LGPL (version 2.1 or later)?
+>
+> Thank you!
+>
+> --
+> Marco Barisione
+>
+>
+
+
+--=20
+Raluca-Elena
+
+--bcaec52bed09e85bba04e44e309f
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Yeap,=C2=A0<div>Totally OK by me!</div></div><div class=3D=
+"gmail_extra"><br><br><div class=3D"gmail_quote">On Tue, Jul 30, 2013 at 4:=
+19 PM, Marco Barisione <span dir=3D"ltr">&lt;<a href=3D"mailto:marco.barisi=
+one@collabora.co.uk" target=3D"_blank">marco.barisione@collabora.co.uk</a>&=
+gt;</span> wrote:<br>
+
+<blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1p=
+x #ccc solid;padding-left:1ex">Hi all,<br>
+<br>
+I&#39;m currently working on integrating IM account creation with<br>
+gnome-online-accounts. This would allow a Gnome user to create all types<br=
+>
+of accounts directly in =E2=80=9CSystem Settings=E2=80=9D.<br>
+To do so, I need to move all the account creation code to a separate git<br=
+>
+submodule that can be used by gnome-online-accounts.<br>
+The problem is that gnome-online-accounts is under LGPL, while Empathy<br>
+contains some files under GPL and some files under LGPL.<br>
+<br>
+I&#39;m writing you because you contributed to some Empathy files under GPL=
+<br>
+that we would like to use in gnome-online-accounts. Would you agree to<br>
+relicense your code from GPL to LGPL (version 2.1 or later)?<br>
+<br>
+Thank you!<br>
+<span class=3D"HOEnZb"><font color=3D"#888888"><br>
+--<br>
+Marco Barisione<br>
+<br>
+</font></span></blockquote></div><br><br clear=3D"all"><div><br></div>-- <b=
+r>Raluca-Elena
+</div>
+
+--bcaec52bed09e85bba04e44e309f--
+
+== Telepathy account widgets relicensing (Cheese contributors) ==
+
+Received: from [127.0.0.1] (localhost [127.0.0.1]) (Authenticated sender:
+ bari) with ESMTPSA id 8C8C01A88055
+Message-ID: <1375107920.24158.18.camel@carbonara>
+Subject: Relicensing some Cheese code to LGPL
+From: Marco Barisione <marco.barisione@collabora.co.uk>
+To: Bastien Nocera <hadess@hadess.net>, "Daniel G. Siegel"
+ <dgsiegel@gnome.org>,  Filippo Argiolas <filippo.argiolas@gmail.com>, Jaap
+ Haitsma <jaap@haitsma.org>, Ryan Zeigler <zeiglerr@gmail.com>
+Date: Mon, 29 Jul 2013 15:25:20 +0100
+Organization: Collabora Ltd.
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.8.2-1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Evolution-Source: 1205242379.4854.0@cordof
+
+Hi all,
+
+I'm currently working on integrating IM account creation with
+gnome-online-accounts. This would allow a Gnome user to create all types
+of accounts directly in “System Settings”.
+To do so, I need to move all the Empathy account creation code to a
+separate git submodule that can be used by gnome-online-accounts.
+The problem is that gnome-online-accounts is under LGPL, while Empathy
+contains some files under GPL and some files under LGPL.
+
+I'm writing you because you contributed to
+cheese-camera-device-monitor.c and that file was later copied into
+Empathy (it's used to set your avatar). Would you agree to relicense
+your code from GPL to LGPL (version 2.1 or later)?
+
+Thank you!
+
+-- 
+Marco Barisione
+
+Received: from backus.clues.ltd.uk (backus.clues.ltd.uk [85.158.43.50])
+ (using TLSv1 with cipher AES256-SHA (256/256 bits)) (No client certificate
+ requested) by bhuna.collabora.co.uk (Postfix) with ESMTPS id BFDAD16985AB
+ for <marco.barisione@collabora.co.uk>; Tue, 30 Jul 2013 08:20:38 +0100 (BST)
+Received: from slow1-d.mail.gandi.net ([217.70.178.86]) by
+ backus.clues.ltd.uk with esmtp (Exim 4.72) (envelope-from
+ <hadess@hadess.net>) id 1V44EV-00088M-3C for
+ marco.barisione@collabora.co.uk; Tue, 30 Jul 2013 08:20:38 +0100
+Received: from relay4-d.mail.gandi.net (relay4-d.mail.gandi.net
+ [217.70.183.196]) by slow1-d.mail.gandi.net (Postfix) with ESMTP id
+ 3878247A8B1 for <marco.barisione@collabora.co.uk>; Tue, 30 Jul 2013
+ 09:09:51 +0200 (CEST)
+Received: from mfilter16-d.gandi.net (mfilter16-d.gandi.net
+ [217.70.178.144]) by relay4-d.mail.gandi.net (Postfix) with ESMTP id
+ EFB11172055; Tue, 30 Jul 2013 09:09:10 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at mfilter16-d.gandi.net
+Received: from relay4-d.mail.gandi.net ([217.70.183.196]) by
+ mfilter16-d.gandi.net (mfilter16-d.gandi.net [10.0.15.180]) (amavisd-new,
+ port 10024) with ESMTP id EtS44xL8IlyD; Tue, 30 Jul 2013 09:09:08 +0200
+ (CEST)
+X-Originating-IP: 217.69.97.51
+Received: from [10.153.0.35] (gtsr.mendelu.cz [217.69.97.51])
+ (Authenticated sender: hadess@hadess.net) by relay4-d.mail.gandi.net
+ (Postfix) with ESMTPSA id 789DB17207C; Tue, 30 Jul 2013 09:09:04 +0200
+ (CEST)
+Message-ID: <1375168140.4538.1.camel@sirocco.hadess.net>
+Subject: Re: Relicensing some Cheese code to LGPL
+From: Bastien Nocera <hadess@hadess.net>
+To: Marco Barisione <marco.barisione@collabora.co.uk>
+Cc: "Daniel G. Siegel" <dgsiegel@gnome.org>, Filippo Argiolas
+ <filippo.argiolas@gmail.com>, Jaap Haitsma <jaap@haitsma.org>, Ryan Zeigler
+ <zeiglerr@gmail.com>, Debarshi Ray <rishi.is@lostca.se>
+Date: Tue, 30 Jul 2013 09:09:00 +0200
+In-Reply-To: <1375107920.24158.18.camel@carbonara>
+References: <1375107920.24158.18.camel@carbonara>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.8.3 (3.8.3-2.fc19) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+X-Evolution-Source: 1205242379.4854.0@cordof
+
+Em Mon, 2013-07-29 =C3=A0s 15:25 +0100, Marco Barisione escreveu:
+> Hi all,
+>=20
+> I'm currently working on integrating IM account creation with
+> gnome-online-accounts. This would allow a Gnome user to create all type=
+s
+> of accounts directly in =E2=80=9CSystem Settings=E2=80=9D.
+> To do so, I need to move all the Empathy account creation code to a
+> separate git submodule that can be used by gnome-online-accounts.
+> The problem is that gnome-online-accounts is under LGPL, while Empathy
+> contains some files under GPL and some files under LGPL.
+>=20
+> I'm writing you because you contributed to
+> cheese-camera-device-monitor.c and that file was later copied into
+> Empathy (it's used to set your avatar). Would you agree to relicense
+> your code from GPL to LGPL (version 2.1 or later)?
+
+Why are you moving this code to gnome-online-accounts instead of
+gnome-control-center? Code that pokes that webcams has absolutely
+nothing to do in gnome-online-accounts, and I hope Rishi tells you so as
+well.
+
+Received: from [127.0.0.1] (localhost [127.0.0.1]) (Authenticated sender:
+ bari) with ESMTPSA id E10C4169875A
+Message-ID: <1375169183.24158.20.camel@carbonara>
+Subject: Re: Relicensing some Cheese code to LGPL
+From: Marco Barisione <marco.barisione@collabora.co.uk>
+To: Bastien Nocera <hadess@hadess.net>
+Cc: "Daniel G. Siegel" <dgsiegel@gnome.org>, Filippo Argiolas
+ <filippo.argiolas@gmail.com>, Jaap Haitsma <jaap@haitsma.org>, Ryan Zeigler
+ <zeiglerr@gmail.com>, Debarshi Ray <rishi.is@lostca.se>
+Date: Tue, 30 Jul 2013 08:26:23 +0100
+In-Reply-To: <1375168140.4538.1.camel@sirocco.hadess.net>
+References: <1375107920.24158.18.camel@carbonara>
+         <1375168140.4538.1.camel@sirocco.hadess.net>
+Organization: Collabora Ltd.
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.8.2-1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-Evolution-Source: 1205242379.4854.0@cordof
+
+On Tue, 2013-07-30 at 09:09 +0200, Bastien Nocera wrote:
+> Why are you moving this code to gnome-online-accounts instead of
+> gnome-control-center? Code that pokes that webcams has absolutely
+> nothing to do in gnome-online-accounts, and I hope Rishi tells you so as
+> well.
+
+Because the UIs for the different GOA providers are in libgoabackend,
+not in g-c-c. Settings your own avatar is part of the configuration of
+IM accounts.
+
+-- 
+Marco Barisione
+
+Received: from rose.clues.ltd.uk (rose.clues.ltd.uk [93.190.169.34]) (using
+ TLSv1 with cipher AES256-SHA (256/256 bits)) (No client certificate
+ requested) by bhuna.collabora.co.uk (Postfix) with ESMTPS id 76A5E169875A
+ for <marco.barisione@collabora.co.uk>; Tue, 30 Jul 2013 09:55:19 +0100 (BST)
+Received: from slow1-d.mail.gandi.net ([217.70.178.86]) by
+ rose.clues.ltd.uk with esmtp (Exim 4.72) (envelope-from
+ <hadess@hadess.net>) id 1V45i3-0005Df-Vy for
+ marco.barisione@collabora.co.uk; Tue, 30 Jul 2013 09:55:19 +0100
+Received: from relay4-d.mail.gandi.net (relay4-d.mail.gandi.net
+ [217.70.183.196]) by slow1-d.mail.gandi.net (Postfix) with ESMTP id
+ 9CE8D47A25A for <marco.barisione@collabora.co.uk>; Tue, 30 Jul 2013
+ 10:54:13 +0200 (CEST)
+Received: from mfilter10-d.gandi.net (mfilter10-d.gandi.net
+ [217.70.178.139]) by relay4-d.mail.gandi.net (Postfix) with ESMTP id
+ 4E7A61720BF; Tue, 30 Jul 2013 10:53:33 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at mfilter10-d.gandi.net
+Received: from relay4-d.mail.gandi.net ([217.70.183.196]) by
+ mfilter10-d.gandi.net (mfilter10-d.gandi.net [10.0.15.180]) (amavisd-new,
+ port 10024) with ESMTP id W5ugtmTdrBTO; Tue, 30 Jul 2013 10:53:31 +0200
+ (CEST)
+X-Originating-IP: 209.132.186.34
+Received: from [10.34.129.183] (nat-pool-brq-t.redhat.com [209.132.186.34])
+ (Authenticated sender: hadess@hadess.net) by relay4-d.mail.gandi.net
+ (Postfix) with ESMTPSA id 71D30172091; Tue, 30 Jul 2013 10:53:29 +0200
+ (CEST)
+Message-ID: <1375174407.4538.3.camel@sirocco.hadess.net>
+Subject: Re: Relicensing some Cheese code to LGPL
+From: Bastien Nocera <hadess@hadess.net>
+To: Marco Barisione <marco.barisione@collabora.co.uk>
+Cc: "Daniel G. Siegel" <dgsiegel@gnome.org>, Filippo Argiolas
+ <filippo.argiolas@gmail.com>, Jaap Haitsma <jaap@haitsma.org>, Ryan Zeigler
+ <zeiglerr@gmail.com>, Debarshi Ray <rishi.is@lostca.se>
+Date: Tue, 30 Jul 2013 10:53:27 +0200
+In-Reply-To: <1375169183.24158.20.camel@carbonara>
+References: <1375107920.24158.18.camel@carbonara>
+         <1375168140.4538.1.camel@sirocco.hadess.net>
+         <1375169183.24158.20.camel@carbonara>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.8.3 (3.8.3-2.fc19) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+X-Evolution-Source: 1205242379.4854.0@cordof
+
+Em Tue, 2013-07-30 =C3=A0s 08:26 +0100, Marco Barisione escreveu:
+> On Tue, 2013-07-30 at 09:09 +0200, Bastien Nocera wrote:
+> > Why are you moving this code to gnome-online-accounts instead of
+> > gnome-control-center? Code that pokes that webcams has absolutely
+> > nothing to do in gnome-online-accounts, and I hope Rishi tells you so=
+ as
+> > well.
+>=20
+> Because the UIs for the different GOA providers are in libgoabackend,
+> not in g-c-c. Settings your own avatar is part of the configuration of
+> IM accounts.
+
+As mentioned on IRC, that code should be in shared library, so that we
+don't end up with 2 copies of that code in gnome-control-center (once
+directly in the User Accounts panel, once through GOA).
+
+Fine to relicense that code though.
+
+Received: from fox.clues.ltd.uk (fox.clues.ltd.uk [217.151.102.250]) (using
+ TLSv1 with cipher AES256-SHA (256/256 bits)) (No client certificate
+ requested) by bhuna.collabora.co.uk (Postfix) with ESMTPS id C76491A88055
+ for <marco.barisione@collabora.co.uk>; Mon, 29 Jul 2013 16:10:11 +0100 (BST)
+Received: from mail-ve0-x232.google.com ([2607:f8b0:400c:c01::232]) by
+ fox.clues.ltd.uk with esmtps (TLS1.0:RSA_ARCFOUR_SHA1:16) (Exim 4.72)
+ (envelope-from <jaap.haitsma@gmail.com>) id 1V3p5J-0007fi-4z for
+ marco.barisione@collabora.co.uk; Mon, 29 Jul 2013 16:10:11 +0100
+Received: by mail-ve0-f178.google.com with SMTP id ox1so2350935veb.37 for
+ <marco.barisione@collabora.co.uk>; Mon, 29 Jul 2013 08:10:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com;
+ s=20120113; h=mime-version:sender:in-reply-to:references:date
+ :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+ bh=VGg6jZy2QwKKfLp0CVJJkQBHhH77MOrUOlNiDCQmYbg=;
+ b=VY+LQ9DSwWOtG8MGUXVfTTeoxNE6f6cuNw6+67YdAhvAiVt4LnWV3PHrpd6qP9+ipn
+ wkNLRaeOw+7VqsA960CiUguOFrllah1r50AVGQsTsB28/6gyuz5b++qiqxjKxFHxWho0
+ jcMNOUSQWQKeKbgd2TDDUh1ed49aETJxYVywPVhzt7kiR67AncSkiGX351rE9dTiIBh2
+ kDqU+Sob3A6R8ijrxO0XCFrE+q2szd/FkPHgTvC6EoFKPbqVXSuDjF79wVknD6iT0bg3
+ F9+FPyYBnauEkW64pPuU7vLpJYeAOLgIZjJa1wKrx3NzD4rG2RlWu/BUSDX0trAXgKWw l0IQ==
+MIME-Version: 1.0
+X-Received: by 10.52.191.72 with SMTP id
+ gw8mr21680661vdc.114.1375110603368; Mon, 29 Jul 2013 08:10:03 -0700 (PDT)
+Sender: jaap.haitsma@gmail.com
+Received: by 10.58.100.241 with HTTP; Mon, 29 Jul 2013 08:10:03 -0700 (PDT)
+In-Reply-To: <1375107920.24158.18.camel@carbonara>
+References: <1375107920.24158.18.camel@carbonara>
+Date: Mon, 29 Jul 2013 11:10:03 -0400
+X-Google-Sender-Auth: -Wk8Ks06V_K0Mzu29VLMB5CXass
+Message-ID: <CAGt47YwDsmu4vvr7Gv_aoXLR5q6Sxvbn4Bj_P21TLCdXzHuoDA@mail.gmail.com>
+Subject: Re: Relicensing some Cheese code to LGPL
+From: "Jaap A. Haitsma" <jaap@haitsma.org>
+To: Marco Barisione <marco.barisione@collabora.co.uk>
+Cc: Bastien Nocera <hadess@hadess.net>, "Daniel G. Siegel"
+ <dgsiegel@gnome.org>,  Filippo Argiolas <filippo.argiolas@gmail.com>, Ryan
+ Zeigler <zeiglerr@gmail.com>
+Content-Type: multipart/alternative; boundary=047d7b5d61620a73aa04e2a7e326
+X-Evolution-Source: 1205242379.4854.0@cordof
+
+
+--047d7b5d61620a73aa04e2a7e326
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
+
+Sure no problem for me
+
+Jaap
+
+
+On Mon, Jul 29, 2013 at 10:25 AM, Marco Barisione <
+marco.barisione@collabora.co.uk> wrote:
+
+> Hi all,
+>
+> I'm currently working on integrating IM account creation with
+> gnome-online-accounts. This would allow a Gnome user to create all types
+> of accounts directly in =93System Settings=94.
+> To do so, I need to move all the Empathy account creation code to a
+> separate git submodule that can be used by gnome-online-accounts.
+> The problem is that gnome-online-accounts is under LGPL, while Empathy
+> contains some files under GPL and some files under LGPL.
+>
+> I'm writing you because you contributed to
+> cheese-camera-device-monitor.c and that file was later copied into
+> Empathy (it's used to set your avatar). Would you agree to relicense
+> your code from GPL to LGPL (version 2.1 or later)?
+>
+> Thank you!
+>
+> --
+> Marco Barisione
+>
+>
+
+--047d7b5d61620a73aa04e2a7e326
+Content-Type: text/html; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Sure no problem for me<div><br></div><div>Jaap</div></div>=
+<div class=3D"gmail_extra"><br><br><div class=3D"gmail_quote">On Mon, Jul 2=
+9, 2013 at 10:25 AM, Marco Barisione <span dir=3D"ltr">&lt;<a href=3D"mailt=
+o:marco.barisione@collabora.co.uk" target=3D"_blank">marco.barisione@collab=
+ora.co.uk</a>&gt;</span> wrote:<br>
+<blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1p=
+x #ccc solid;padding-left:1ex">Hi all,<br>
+<br>
+I&#39;m currently working on integrating IM account creation with<br>
+gnome-online-accounts. This would allow a Gnome user to create all types<br=
+>
+of accounts directly in =93System Settings=94.<br>
+To do so, I need to move all the Empathy account creation code to a<br>
+separate git submodule that can be used by gnome-online-accounts.<br>
+The problem is that gnome-online-accounts is under LGPL, while Empathy<br>
+contains some files under GPL and some files under LGPL.<br>
+<br>
+I&#39;m writing you because you contributed to<br>
+cheese-camera-device-monitor.c and that file was later copied into<br>
+Empathy (it&#39;s used to set your avatar). Would you agree to relicense<br=
+>
+your code from GPL to LGPL (version 2.1 or later)?<br>
+<br>
+Thank you!<br>
+<span class=3D"HOEnZb"><font color=3D"#888888"><br>
+--<br>
+Marco Barisione<br>
+<br>
+</font></span></blockquote></div><br></div>
+
+--047d7b5d61620a73aa04e2a7e326--
+
+Received: from fox.clues.ltd.uk (fox.clues.ltd.uk [217.151.102.250]) (using
+ TLSv1 with cipher AES256-SHA (256/256 bits)) (No client certificate
+ requested) by bhuna.collabora.co.uk (Postfix) with ESMTPS id 9E4D91A88055
+ for <marco.barisione@collabora.co.uk>; Mon, 29 Jul 2013 16:31:43 +0100 (BST)
+Received: from nopln.org ([212.103.74.197]) by fox.clues.ltd.uk with esmtps
+ (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32) (Exim 4.72) (envelope-from
+ <dgsiegel@gnome.org>) id 1V3pQC-0001Ls-3R for
+ marco.barisione@collabora.co.uk; Mon, 29 Jul 2013 16:31:42 +0100
+Received: from [10.204.33.93] (tmo-100-97.customers.d1-online.com
+ [80.187.100.97]) (using TLSv1 with cipher RC4-MD5 (128/128 bits)) (No
+ client certificate requested) by nopln.org ("nopln.org mail server") with
+ ESMTPSA id D1DD93FDB0; Mon, 29 Jul 2013 17:24:12 +0200 (CEST)
+User-Agent: K-9 Mail for Android
+In-Reply-To: <1375107920.24158.18.camel@carbonara>
+References: <1375107920.24158.18.camel@carbonara>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Subject: Re: Relicensing some Cheese code to LGPL
+From: "daniel g. siegel" <dgsiegel@gnome.org>
+Date: Mon, 29 Jul 2013 17:24:00 +0200
+To: Marco Barisione <marco.barisione@collabora.co.uk>,Bastien Nocera
+ <hadess@hadess.net>,Filippo Argiolas <filippo.argiolas@gmail.com>,Jaap
+ Haitsma <jaap@haitsma.org>,Ryan Zeigler <zeiglerr@gmail.com>
+Message-ID: <def23d24-276e-4f37-b298-f0801aa9b411@email.android.com>
+Content-Transfer-Encoding: quoted-printable
+X-Evolution-Source: 1205242379.4854.0@cordof
+
+sure, go ahead!
+
+daniel
+
+Marco Barisione <marco.barisione@collabora.co.uk> wrote:
+>Hi all,
+>
+>I'm currently working on integrating IM account creation with
+>gnome-online-accounts. This would allow a Gnome user to create all
+>types
+>of accounts directly in =E2=80=9CSystem Settings=E2=80=9D.
+>To do so, I need to move all the Empathy account creation code to a
+>separate git submodule that can be used by gnome-online-accounts.
+>The problem is that gnome-online-accounts is under LGPL, while Empathy
+>contains some files under GPL and some files under LGPL.
+>
+>I'm writing you because you contributed to
+>cheese-camera-device-monitor.c and that file was later copied into
+>Empathy (it's used to set your avatar). Would you agree to relicense
+>your code from GPL to LGPL (version 2.1 or later)?
+>
+>Thank you!
+
+
+--=20
+this mail was sent using 100% recycled electrons
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+daniel g. siegel <dgsiegel@gnome.org>
+http://www.dgsiegel.net
+gnupg key id: 0xDB8E409F
+encrypted email preferred
+
+Received: from fox.clues.ltd.uk (fox.clues.ltd.uk [217.151.102.250]) (using
+ TLSv1 with cipher AES256-SHA (256/256 bits)) (No client certificate
+ requested) by bhuna.collabora.co.uk (Postfix) with ESMTPS id 20ECC1A88055
+ for <marco.barisione@collabora.co.uk>; Mon, 29 Jul 2013 17:58:04 +0100 (BST)
+Received: from mail-wg0-x22e.google.com ([2a00:1450:400c:c00::22e]) by
+ fox.clues.ltd.uk with esmtps (TLS1.0:RSA_ARCFOUR_SHA1:16) (Exim 4.72)
+ (envelope-from <filippo.argiolas@gmail.com>) id 1V3qll-0000eE-7j for
+ marco.barisione@collabora.co.uk; Mon, 29 Jul 2013 17:58:03 +0100
+Received: by mail-wg0-f46.google.com with SMTP id k13so5095262wgh.25 for
+ <marco.barisione@collabora.co.uk>; Mon, 29 Jul 2013 09:58:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com;
+ s=20120113;
+ h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+ :cc:content-type; bh=t4nNyM8xFWXWFuFGcZFVTLS3z2Im9yEkY7SozkMa+Cg=;
+ b=0z8Yu6MGmCJyN2xAqb5zzJu9zzf74UcjnUNfUJmHtuDAxHcF9KwiNwxHHzsHNYc5ZP
+ +C8/rpxTEd9uIcnYrHo80cawP6zvchuuvqy40IpDA04koSfebBaDG/PFNVvjozUrB8IT
+ r/qCvol/HF/9Dz+OwUfleEljYoEE+ympwelmDEloMvrsfb8ERL3VgpFDZjEQaVlcTMkV
+ QWBQjubRiAdDCyLy13n2tU8zL9RKiGRpz5VwHKwDkW3w3UXoqqYm514qRq4ZQEOpCGCM
+ 35yBARUsU64sWL8cMzuxr/KIgVrzVm3lvk5nQ25aJLUqGZCOkv88EO7OK6+/0pdaJkR1 kOiQ==
+MIME-Version: 1.0
+X-Received: by 10.194.108.73 with SMTP id
+ hi9mr32623129wjb.85.1375115711876; Mon, 29 Jul 2013 09:35:11 -0700 (PDT)
+Received: by 10.216.139.202 with HTTP; Mon, 29 Jul 2013 09:35:11 -0700 (PDT)
+Received: by 10.216.139.202 with HTTP; Mon, 29 Jul 2013 09:35:11 -0700 (PDT)
+In-Reply-To: <1375107920.24158.18.camel@carbonara>
+References: <1375107920.24158.18.camel@carbonara>
+Date: Mon, 29 Jul 2013 18:35:11 +0200
+Message-ID: <CAOdrLGJN+fs3D19vCOzCnnNn=9aVoJBGYLt2Z0VyZawtHx5iCQ@mail.gmail.com>
+Subject: Re: Relicensing some Cheese code to LGPL
+From: Filippo Argiolas <filippo.argiolas@gmail.com>
+To: Marco Barisione <marco.barisione@collabora.co.uk>
+Cc: "daniel g. siegel" <dgsiegel@gnome.org>, Ryan Zeigler
+ <zeiglerr@gmail.com>,  Jaap Haitsma <jaap@haitsma.org>, Bastien Nocera <hadess@hadess.net>
+Content-Type: multipart/alternative; boundary=047d7bf10b2888145004e2a913c4
+X-Evolution-Source: 1205242379.4854.0@cordof
+
+
+--047d7bf10b2888145004e2a913c4
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+Sure, ok for me!
+
+Filippo
+ Il giorno 29/lug/2013 16:25, "Marco Barisione" <
+marco.barisione@collabora.co.uk> ha scritto:
+
+> Hi all,
+>
+> I'm currently working on integrating IM account creation with
+> gnome-online-accounts. This would allow a Gnome user to create all types
+> of accounts directly in =E2=80=9CSystem Settings=E2=80=9D.
+> To do so, I need to move all the Empathy account creation code to a
+> separate git submodule that can be used by gnome-online-accounts.
+> The problem is that gnome-online-accounts is under LGPL, while Empathy
+> contains some files under GPL and some files under LGPL.
+>
+> I'm writing you because you contributed to
+> cheese-camera-device-monitor.c and that file was later copied into
+> Empathy (it's used to set your avatar). Would you agree to relicense
+> your code from GPL to LGPL (version 2.1 or later)?
+>
+> Thank you!
+>
+> --
+> Marco Barisione
+>
+>
+
+--047d7bf10b2888145004e2a913c4
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<p dir=3D"ltr">Sure, ok for me! </p>
+<p dir=3D"ltr">Filippo<br>
+</p>
+<div class=3D"gmail_quote">Il giorno 29/lug/2013 16:25, &quot;Marco Barisio=
+ne&quot; &lt;<a href=3D"mailto:marco.barisione@collabora.co.uk">marco.baris=
+ione@collabora.co.uk</a>&gt; ha scritto:<br type=3D"attribution"><blockquot=
+e class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc sol=
+id;padding-left:1ex">
+Hi all,<br>
+<br>
+I&#39;m currently working on integrating IM account creation with<br>
+gnome-online-accounts. This would allow a Gnome user to create all types<br=
+>
+of accounts directly in =E2=80=9CSystem Settings=E2=80=9D.<br>
+To do so, I need to move all the Empathy account creation code to a<br>
+separate git submodule that can be used by gnome-online-accounts.<br>
+The problem is that gnome-online-accounts is under LGPL, while Empathy<br>
+contains some files under GPL and some files under LGPL.<br>
+<br>
+I&#39;m writing you because you contributed to<br>
+cheese-camera-device-monitor.c and that file was later copied into<br>
+Empathy (it&#39;s used to set your avatar). Would you agree to relicense<br=
+>
+your code from GPL to LGPL (version 2.1 or later)?<br>
+<br>
+Thank you!<br>
+<br>
+--<br>
+Marco Barisione<br>
+<br>
+</blockquote></div>
+
+--047d7bf10b2888145004e2a913c4--
+
+Received: from node0007.antibodymx.net (node0007.antibodymx.net
+ [89.238.145.165]) (using TLSv1 with cipher AES256-SHA (256/256 bits)) (No
+ client certificate requested) by bhuna.collabora.co.uk (Postfix) with
+ ESMTPS id 77C211E8800A for <marco.barisione@collabora.co.uk>; Tue, 30 Jul
+ 2013 02:26:41 +0100 (BST)
+Received: from mail-ob0-x232.google.com ([2607:f8b0:4003:c01::232]) by
+ node0007.antibodymx.net with esmtps (TLS1.0:RSA_ARCFOUR_SHA1:16) (Exim
+ 4.72) (envelope-from <zeiglerr@gmail.com>) id 1V3yhz-0007sk-Am for
+ marco.barisione@collabora.co.uk; Tue, 30 Jul 2013 02:26:41 +0100
+Received: by mail-ob0-f178.google.com with SMTP id ef5so3016902obb.23 for
+ <marco.barisione@collabora.co.uk>; Mon, 29 Jul 2013 18:26:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com;
+ s=20120113; h=message-id:mime-version:from:to:cc:subject:importance:date
+ :in-reply-to:references:content-type;
+ bh=8KrOJseHd9d/k2RiFIDeaLrm1751q5HidfWtfaQwtog=;
+ b=JrnawAEQx2qAN02UXIHlWyD9iyGNV/Iu6uG8ntzECX8A4OqD7EWdlL5a/F6SO6MhWn
+ qSPdTN5FZpCPtRwVuGRnUC/uQeXKeLkZEZNOPTAR3l1JAzHYIUCtoWfcDZo7tQiH1MRr
+ IMhlYejwW/cBJAdht2cIeLZxTHum2u+mB9XMCVfArGQvJgf9Zb8ibzGlUUbWe0G9W85H
+ Nlnor6/MJC75RmkHmtvPfRooQRWa+0PgXVmV4e2RYb7fIrt3quRjezQS4nr1p760fRAs
+ AD6o0j2Um7erUV56N+vAZGI6/NAYNKTXTI3Rd09fiec4EOzFOUiM9CWaPf6ShbdPqEkK G6Ew==
+X-Received: by 10.60.43.73 with SMTP id u9mr7489521oel.105.1375145767165;
+ Mon, 29 Jul 2013 17:56:07 -0700 (PDT)
+Received: from RyansVizio (cpe-24-27-120-87.tx.res.rr.com. [24.27.120.87])
+ by mx.google.com with ESMTPSA id fh1sm371068oeb.7.2013.07.29.17.56.05 for
+ <multiple recipients> (version=TLSv1 cipher=RC4-SHA bits=128/128); Mon, 29
+ Jul 2013 17:56:05 -0700 (PDT)
+Message-ID: <51f70f25.a1653c0a.2e60.1076@mx.google.com>
+MIME-Version: 1.0
+From: <zeiglerr@gmail.com>
+To: =?utf-8?Q?Marco_Barisione?= <marco.barisione@collabora.co.uk>, 
+ =?utf-8?Q?Filippo_Argiolas?= <filippo.argiolas@gmail.com>
+CC: =?utf-8?Q?daniel_g._siegel?= <dgsiegel@gnome.org>, 
+ =?utf-8?Q?Jaap_Haitsma?= <jaap@haitsma.org>,  =?utf-8?Q?Bastien_Nocera?=
+ <hadess@hadess.net>
+Subject: =?utf-8?Q?Re:_Relicensing_some_Cheese_code_to_LGPL?=
+Importance: Normal
+Date: Tue, 30 Jul 2013 00:55:51 +0000
+In-Reply-To: <CAOdrLGJN+fs3D19vCOzCnnNn=9aVoJBGYLt2Z0VyZawtHx5iCQ@mail.gmail.com>
+References: <1375107920.24158.18.camel@carbonara>
+        ,<CAOdrLGJN+fs3D19vCOzCnnNn=9aVoJBGYLt2Z0VyZawtHx5iCQ@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="_2E96FD07-E857-4598-B474-6713566EDF0B_"
+X-Evolution-Source: 1205242379.4854.0@cordof
+
+
+--_2E96FD07-E857-4598-B474-6713566EDF0B_
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="utf-8"
+
+R28gYWhlYWQuDQoNClJlZ2FyZHMsDQoNClJ5YW4gWmVpZ2xlcg0KDQoNCg0KRnJvbTogRmlsaXBw
+byBBcmdpb2xhcw0KU2VudDog4oCOTW9uZGF54oCOLCDigI5KdWx54oCOIOKAjjI54oCOLCDigI4y
+MDEzIOKAjjEx4oCOOuKAjjM14oCOIOKAjkFNDQpUbzogTWFyY28gQmFyaXNpb25lDQpDYzogZGFu
+aWVsIGcuIHNpZWdlbDsgUnlhbiBaZWlnbGVyOyBKYWFwIEhhaXRzbWE7IEJhc3RpZW4gTm9jZXJh
+DQoNCg0KU3VyZSwgb2sgZm9yIG1lISANCg0KRmlsaXBwbw0KDQoNCklsIGdpb3JubyAyOS9sdWcv
+MjAxMyAxNjoyNSwgIk1hcmNvIEJhcmlzaW9uZSIgPG1hcmNvLmJhcmlzaW9uZUBjb2xsYWJvcmEu
+Y28udWs+IGhhIHNjcml0dG86DQoNCkhpIGFsbCwNCg0KSSdtIGN1cnJlbnRseSB3b3JraW5nIG9u
+IGludGVncmF0aW5nIElNIGFjY291bnQgY3JlYXRpb24gd2l0aA0KZ25vbWUtb25saW5lLWFjY291
+bnRzLiBUaGlzIHdvdWxkIGFsbG93IGEgR25vbWUgdXNlciB0byBjcmVhdGUgYWxsIHR5cGVzDQpv
+ZiBhY2NvdW50cyBkaXJlY3RseSBpbiDigJxTeXN0ZW0gU2V0dGluZ3PigJ0uDQpUbyBkbyBzbywg
+SSBuZWVkIHRvIG1vdmUgYWxsIHRoZSBFbXBhdGh5IGFjY291bnQgY3JlYXRpb24gY29kZSB0byBh
+DQpzZXBhcmF0ZSBnaXQgc3VibW9kdWxlIHRoYXQgY2FuIGJlIHVzZWQgYnkgZ25vbWUtb25saW5l
+LWFjY291bnRzLg0KVGhlIHByb2JsZW0gaXMgdGhhdCBnbm9tZS1vbmxpbmUtYWNjb3VudHMgaXMg
+dW5kZXIgTEdQTCwgd2hpbGUgRW1wYXRoeQ0KY29udGFpbnMgc29tZSBmaWxlcyB1bmRlciBHUEwg
+YW5kIHNvbWUgZmlsZXMgdW5kZXIgTEdQTC4NCg0KSSdtIHdyaXRpbmcgeW91IGJlY2F1c2UgeW91
+IGNvbnRyaWJ1dGVkIHRvDQpjaGVlc2UtY2FtZXJhLWRldmljZS1tb25pdG9yLmMgYW5kIHRoYXQg
+ZmlsZSB3YXMgbGF0ZXIgY29waWVkIGludG8NCkVtcGF0aHkgKGl0J3MgdXNlZCB0byBzZXQgeW91
+ciBhdmF0YXIpLiBXb3VsZCB5b3UgYWdyZWUgdG8gcmVsaWNlbnNlDQp5b3VyIGNvZGUgZnJvbSBH
+UEwgdG8gTEdQTCAodmVyc2lvbiAyLjEgb3IgbGF0ZXIpPw0KDQpUaGFuayB5b3UhDQoNCi0tDQpN
+YXJjbyBCYXJpc2lvbmU=
+
+--_2E96FD07-E857-4598-B474-6713566EDF0B_
+Content-Transfer-Encoding: base64
+Content-Type: text/html; charset="utf-8"
+
+PGh0bWw+PGhlYWQ+PHN0eWxlIGRhdGEtZXh0ZXJuYWxzdHlsZT0idHJ1ZSI+PCEtLQpwLk1zb0xp
+c3RQYXJhZ3JhcGgsIGxpLk1zb0xpc3RQYXJhZ3JhcGgsIGRpdi5Nc29MaXN0UGFyYWdyYXBoIHsK
+bWFyZ2luLXRvcDowaW47Cm1hcmdpbi1yaWdodDowaW47Cm1hcmdpbi1ib3R0b206MGluOwptYXJn
+aW4tbGVmdDouNWluOwptYXJnaW4tYm90dG9tOi4wMDAxcHQ7Cn0KCnAuTXNvTGlzdFBhcmFncmFw
+aEN4U3BGaXJzdCwgbGkuTXNvTGlzdFBhcmFncmFwaEN4U3BGaXJzdCwgZGl2Lk1zb0xpc3RQYXJh
+Z3JhcGhDeFNwRmlyc3QsIHAuTXNvTGlzdFBhcmFncmFwaEN4U3BNaWRkbGUsIGxpLk1zb0xpc3RQ
+YXJhZ3JhcGhDeFNwTWlkZGxlLCBkaXYuTXNvTGlzdFBhcmFncmFwaEN4U3BNaWRkbGUsIHAuTXNv
+TGlzdFBhcmFncmFwaEN4U3BMYXN0LCBsaS5Nc29MaXN0UGFyYWdyYXBoQ3hTcExhc3QsIGRpdi5N
+c29MaXN0UGFyYWdyYXBoQ3hTcExhc3QgewptYXJnaW4tdG9wOjBpbjsKbWFyZ2luLXJpZ2h0OjBp
+bjsKbWFyZ2luLWJvdHRvbTowaW47Cm1hcmdpbi1sZWZ0Oi41aW47Cm1hcmdpbi1ib3R0b206LjAw
+MDFwdDsKbGluZS1oZWlnaHQ6MTE1JTsKfQotLT48L3N0eWxlPjwvaGVhZD48Ym9keT48ZGl2IGRh
+dGEtZXh0ZXJuYWxzdHlsZT0iZmFsc2UiIGRpcj0ibHRyIiBzdHlsZT0iZm9udC1mYW1pbHk6Q2Fs
+aWJyaSwnU2Vnb2UgVUknLE1laXJ5bywnTWljcm9zb2Z0IFlhSGVpIFVJJywnTWljcm9zb2Z0IEpo
+ZW5nSGVpIFVJJywnTWFsZ3VuIEdvdGhpYycsJ0tobWVyIFVJJywnTmlybWFsYSBVSScsVHVuZ2Es
+J0xhbyBVSScsRWJyaW1hLHNhbnMtc2VyaWY7Zm9udC1zaXplOjEycHQ7Ij48ZGl2PkdvIGFoZWFk
+LjwvZGl2PjxkaXY+UmVnYXJkcyw8L2Rpdj48ZGl2PlJ5YW4gWmVpZ2xlcjwvZGl2PjxkaXYgZGF0
+YS1zaWduYXR1cmVibG9jaz0idHJ1ZSI+Jm5ic3A7PC9kaXY+PGRpdiBzdHlsZT0icGFkZGluZy10
+b3A6IDVweDsgYm9yZGVyLXRvcC1jb2xvcjogcmdiKDIyOSwgMjI5LCAyMjkpOyBib3JkZXItdG9w
+LXdpZHRoOiAxcHg7IGJvcmRlci10b3Atc3R5bGU6IHNvbGlkOyI+PGRpdj48Zm9udCBmYWNlPSJD
+YWxpYnJpLCAnU2Vnb2UgVUknLCBNZWlyeW8sICdNaWNyb3NvZnQgWWFIZWkgVUknLCAnTWljcm9z
+b2Z0IEpoZW5nSGVpIFVJJywgJ01hbGd1biBHb3RoaWMnLCAnS2htZXIgVUknLCAnTmlybWFsYSBV
+SScsIFR1bmdhLCAnTGFvIFVJJywgRWJyaW1hLCBzYW5zLXNlcmlmIiBzdHlsZT0nbGluZS1oZWln
+aHQ6IDE1cHQ7IGxldHRlci1zcGFjaW5nOiAwLjAyZW07IGZvbnQtZmFtaWx5OiBDYWxpYnJpLCAi
+U2Vnb2UgVUkiLCBNZWlyeW8sICJNaWNyb3NvZnQgWWFIZWkgVUkiLCAiTWljcm9zb2Z0IEpoZW5n
+SGVpIFVJIiwgIk1hbGd1biBHb3RoaWMiLCAiS2htZXIgVUkiLCAiTmlybWFsYSBVSSIsIFR1bmdh
+LCAiTGFvIFVJIiwgRWJyaW1hLCBzYW5zLXNlcmlmOyBmb250LXNpemU6IDExcHQ7Jz48Yj5Gcm9t
+OjwvYj4mbmJzcDtGaWxpcHBvIEFyZ2lvbGFzPGJyPjxiPlNlbnQ6PC9iPiZuYnNwO+KAjk1vbmRh
+eeKAjiwg4oCOSnVseeKAjiDigI4yOeKAjiwg4oCOMjAxMyDigI4xMeKAjjrigI4zNeKAjiDigI5B
+TTxicj48Yj5Ubzo8L2I+Jm5ic3A7TWFyY28gQmFyaXNpb25lPGJyPjxiPkNjOjwvYj4mbmJzcDtk
+YW5pZWwgZy4gc2llZ2VsOyBSeWFuIFplaWdsZXI7IEphYXAgSGFpdHNtYTsgQmFzdGllbiBOb2Nl
+cmE8L2ZvbnQ+PC9kaXY+PC9kaXY+PGRpdj4mbmJzcDs8L2Rpdj48cCBkaXI9Imx0ciI+U3VyZSwg
+b2sgZm9yIG1lISA8L3A+CjxwIGRpcj0ibHRyIj5GaWxpcHBvPGJyPgo8L3A+CjxkaXYgY2xhc3M9
+ImdtYWlsX3F1b3RlIj5JbCBnaW9ybm8gMjkvbHVnLzIwMTMgMTY6MjUsICJNYXJjbyBCYXJpc2lv
+bmUiICZsdDs8YSB0aXRsZT0ibWFpbHRvOm1hcmNvLmJhcmlzaW9uZUBjb2xsYWJvcmEuY28udWsi
+IGhyZWY9Im1haWx0bzptYXJjby5iYXJpc2lvbmVAY29sbGFib3JhLmNvLnVrIiB0YXJnZXQ9Il9w
+YXJlbnQiPm1hcmNvLmJhcmlzaW9uZUBjb2xsYWJvcmEuY28udWs8L2E+Jmd0OyBoYSBzY3JpdHRv
+Ojxicj48YmxvY2txdW90ZSBjbGFzcz0iZ21haWxfcXVvdGUiIHN0eWxlPSJtYXJnaW46IDBweCAw
+cHggMHB4IDAuOGV4OyBwYWRkaW5nLWxlZnQ6IDFleDsgYm9yZGVyLWxlZnQtY29sb3I6IHJnYigy
+MDQsIDIwNCwgMjA0KTsgYm9yZGVyLWxlZnQtd2lkdGg6IDFweDsgYm9yZGVyLWxlZnQtc3R5bGU6
+IHNvbGlkOyI+CkhpIGFsbCw8YnI+Cjxicj4KSSdtIGN1cnJlbnRseSB3b3JraW5nIG9uIGludGVn
+cmF0aW5nIElNIGFjY291bnQgY3JlYXRpb24gd2l0aDxicj4KZ25vbWUtb25saW5lLWFjY291bnRz
+LiBUaGlzIHdvdWxkIGFsbG93IGEgR25vbWUgdXNlciB0byBjcmVhdGUgYWxsIHR5cGVzPGJyPgpv
+ZiBhY2NvdW50cyBkaXJlY3RseSBpbiDigJxTeXN0ZW0gU2V0dGluZ3PigJ0uPGJyPgpUbyBkbyBz
+bywgSSBuZWVkIHRvIG1vdmUgYWxsIHRoZSBFbXBhdGh5IGFjY291bnQgY3JlYXRpb24gY29kZSB0
+byBhPGJyPgpzZXBhcmF0ZSBnaXQgc3VibW9kdWxlIHRoYXQgY2FuIGJlIHVzZWQgYnkgZ25vbWUt
+b25saW5lLWFjY291bnRzLjxicj4KVGhlIHByb2JsZW0gaXMgdGhhdCBnbm9tZS1vbmxpbmUtYWNj
+b3VudHMgaXMgdW5kZXIgTEdQTCwgd2hpbGUgRW1wYXRoeTxicj4KY29udGFpbnMgc29tZSBmaWxl
+cyB1bmRlciBHUEwgYW5kIHNvbWUgZmlsZXMgdW5kZXIgTEdQTC48YnI+Cjxicj4KSSdtIHdyaXRp
+bmcgeW91IGJlY2F1c2UgeW91IGNvbnRyaWJ1dGVkIHRvPGJyPgpjaGVlc2UtY2FtZXJhLWRldmlj
+ZS1tb25pdG9yLmMgYW5kIHRoYXQgZmlsZSB3YXMgbGF0ZXIgY29waWVkIGludG88YnI+CkVtcGF0
+aHkgKGl0J3MgdXNlZCB0byBzZXQgeW91ciBhdmF0YXIpLiBXb3VsZCB5b3UgYWdyZWUgdG8gcmVs
+aWNlbnNlPGJyPgp5b3VyIGNvZGUgZnJvbSBHUEwgdG8gTEdQTCAodmVyc2lvbiAyLjEgb3IgbGF0
+ZXIpPzxicj4KPGJyPgpUaGFuayB5b3UhPGJyPgo8YnI+Ci0tPGJyPgpNYXJjbyBCYXJpc2lvbmU8
+YnI+Cjxicj4KPC9ibG9ja3F1b3RlPjwvZGl2Pgo8L2Rpdj48L2JvZHk+PC9odG1sPg==
+
+--_2E96FD07-E857-4598-B474-6713566EDF0B_--
