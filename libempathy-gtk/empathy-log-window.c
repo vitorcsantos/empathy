@@ -354,7 +354,9 @@ insert_or_change_row (EmpathyLogWindow *self,
 {
   char *str = gtk_tree_path_to_string (path);
   char *script, *text, *date, *stock_icon;
+  GString *escaped_text;
   char *icon = NULL;
+  gint i;
 
   gtk_tree_model_get (model, iter,
       COL_EVENTS_TEXT, &text,
@@ -375,16 +377,34 @@ insert_or_change_row (EmpathyLogWindow *self,
       gtk_icon_info_free (icon_info);
     }
 
+  escaped_text = g_string_new (NULL);
+
+  /* Only need to deal with «'» and «\».
+   *
+   * Note that these never appear in non-ascii utf8 characters, so just
+   * pretend like we have an ascii string...
+   */
+  for (i = 0; text && text[i]; i++)
+    {
+      gchar c = text[i];
+
+      if (c == '\'' || c == '\\')
+        g_string_append_c (escaped_text, '\\');
+
+      g_string_append_c (escaped_text, c);
+    }
+
   script = g_strdup_printf ("javascript:%s([%s], '%s', '%s', '%s');",
       method,
       g_strdelimit (str, ":", ','),
-      text,
+      escaped_text->str,
       icon != NULL ? icon : "",
       date);
 
   webkit_web_view_execute_script (WEBKIT_WEB_VIEW (self->priv->webview),
       script);
 
+  g_string_free (escaped_text, TRUE);
   g_free (str);
   g_free (text);
   g_free (date);
