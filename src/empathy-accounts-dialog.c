@@ -2384,6 +2384,7 @@ accounts_dialog_build_ui (EmpathyAccountsDialog *dialog)
 
   /* first row */
   priv->label_name = gtk_label_new (NULL);
+  gtk_label_set_ellipsize (GTK_LABEL (priv->label_name), PANGO_ELLIPSIZE_END);
   gtk_grid_attach (GTK_GRID (grid), priv->label_name, 1, 0, 1, 1);
 
   /* second row */
