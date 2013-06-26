@@ -49,7 +49,7 @@
 /* The primary text of the dialog shown to the user when he is about to lose
  * unsaved changes */
 #define PENDING_CHANGES_QUESTION_PRIMARY_TEXT \
-  _("There are unsaved modifications to your %s account.")
+  _("There are unsaved modifications to your %.50s account.")
 /* The primary text of the dialog shown to the user when he is about to lose
  * an unsaved new account */
 #define UNSAVED_NEW_ACCOUNT_QUESTION_PRIMARY_TEXT \
@@ -182,7 +182,7 @@ accounts_dialog_update_name_label (EmpathyAccountsDialog *dialog,
   gchar *text;
   EmpathyAccountsDialogPriv *priv = GET_PRIV (dialog);
 
-  text = g_markup_printf_escaped ("<b>%s</b>", display_name);
+  text = g_markup_printf_escaped ("<b>%.50s</b>", display_name);
   gtk_label_set_markup (GTK_LABEL (priv->label_name), text);
 
   g_free (text);
@@ -1249,7 +1249,7 @@ accounts_dialog_remove_account_iter (EmpathyAccountsDialog *dialog,
     }
 
   question_dialog_primary_text = g_strdup_printf (
-      _("Do you want to remove %s from your computer?"),
+      _("Do you want to remove %.50s from your computer?"),
       tp_account_get_display_name (account));
 
   accounts_dialog_show_question_dialog (dialog, question_dialog_primary_text,
