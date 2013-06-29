@@ -4295,7 +4295,7 @@ empathy_chat_get_contact_menu (EmpathyChat *chat)
 	if (individual == NULL)
 		return NULL;
 
-	menu = empathy_individual_menu_new (individual,
+	menu = empathy_individual_menu_new (individual, NULL,
 					 EMPATHY_INDIVIDUAL_FEATURE_CALL |
 					 EMPATHY_INDIVIDUAL_FEATURE_LOG |
 					 EMPATHY_INDIVIDUAL_FEATURE_INFO |

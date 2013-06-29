@@ -49,13 +49,15 @@
 #define GET_PRIV(obj) EMPATHY_GET_PRIV (obj, EmpathyIndividualMenu)
 
 typedef struct {
+  gchar *active_group; /* may be NULL */
   FolksIndividual *individual; /* owned */
   EmpathyIndividualFeatureFlags features;
   EmpathyIndividualStore *store; /* may be NULL */
 } EmpathyIndividualMenuPriv;
 
 enum {
-  PROP_INDIVIDUAL = 1,
+  PROP_ACTIVE_GROUP = 1,
+  PROP_INDIVIDUAL,
   PROP_FEATURES,
   PROP_STORE,
 };
@@ -1038,6 +1040,9 @@ get_property (GObject *object,
 
   switch (param_id)
     {
+      case PROP_ACTIVE_GROUP:
+        g_value_set_string (value, priv->active_group);
+        break;
       case PROP_INDIVIDUAL:
         g_value_set_object (value, priv->individual);
         break;
@@ -1065,6 +1070,10 @@ set_property (GObject *object,
 
   switch (param_id)
     {
+      case PROP_ACTIVE_GROUP:
+        g_assert (priv->active_group == NULL); /* construct only */
+        priv->active_group = g_value_dup_string (value);
+        break;
       case PROP_INDIVIDUAL:
         priv->individual = g_value_dup_object (value);
         break;
@@ -1092,6 +1101,16 @@ dispose (GObject *object)
 }
 
 static void
+finalize (GObject *object)
+{
+  EmpathyIndividualMenuPriv *priv = GET_PRIV (object);
+
+  g_free (priv->active_group);
+
+  G_OBJECT_CLASS (empathy_individual_menu_parent_class)->finalize (object);
+}
+
+static void
 empathy_individual_menu_class_init (EmpathyIndividualMenuClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
@@ -1100,6 +1119,19 @@ empathy_individual_menu_class_init (EmpathyIndividualMenuClass *klass)
   object_class->get_property = get_property;
   object_class->set_property = set_property;
   object_class->dispose = dispose;
+  object_class->finalize = finalize;
+
+  /**
+   * gchar *:active-group:
+   *
+   * The group the selected roster-contact widget belongs, or NULL.
+   */
+  g_object_class_install_property (object_class, PROP_ACTIVE_GROUP,
+      g_param_spec_string ("active-group",
+          "Active group",
+          "The group the selected roster-contact widget belongs, or NULL",
+          NULL,
+          G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY | G_PARAM_STATIC_STRINGS));
 
   /**
    * EmpathyIndividualMenu:individual:
@@ -1138,6 +1170,7 @@ empathy_individual_menu_class_init (EmpathyIndividualMenuClass *klass)
 
 GtkWidget *
 empathy_individual_menu_new (FolksIndividual *individual,
+    const gchar *active_group,
     EmpathyIndividualFeatureFlags features,
     EmpathyIndividualStore *store)
 {
@@ -1147,6 +1180,7 @@ empathy_individual_menu_new (FolksIndividual *individual,
   g_return_val_if_fail (features != EMPATHY_INDIVIDUAL_FEATURE_NONE, NULL);
 
   return g_object_new (EMPATHY_TYPE_INDIVIDUAL_MENU,
+      "active-group", active_group,
       "individual", individual,
       "features", features,
       "store", store,

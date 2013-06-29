@@ -72,6 +72,7 @@ typedef struct {
 GType empathy_individual_menu_get_type (void) G_GNUC_CONST;
 
 GtkWidget * empathy_individual_menu_new (FolksIndividual *individual,
+    const gchar *active_group,
     EmpathyIndividualFeatureFlags features,
     EmpathyIndividualStore *store);
 

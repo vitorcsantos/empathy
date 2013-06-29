@@ -1949,6 +1949,7 @@ menu_deactivate_cb (GtkMenuShell *menushell,
 
 static void
 popup_individual_menu_cb (EmpathyRosterView *view,
+    const gchar *active_group,
     FolksIndividual *individual,
     guint button,
     guint time,
@@ -1965,7 +1966,8 @@ popup_individual_menu_cb (EmpathyRosterView *view,
     EMPATHY_INDIVIDUAL_FEATURE_REMOVE |
     EMPATHY_INDIVIDUAL_FEATURE_FILE_TRANSFER;
 
-  menu = empathy_individual_menu_new (individual, features, NULL);
+  menu = empathy_individual_menu_new (individual, active_group,
+      features, NULL);
 
   /* menu is initially unowned but gtk_menu_attach_to_widget() takes its
    * floating ref. We can either wait for the view to release its ref

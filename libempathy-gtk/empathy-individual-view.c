@@ -2472,8 +2472,8 @@ empathy_individual_view_get_individual_menu (EmpathyIndividualView *view)
   if (!empathy_folks_individual_contains_contact (individual))
     goto out;
 
-  menu = empathy_individual_menu_new (individual, priv->individual_features,
-      priv->store);
+  menu = empathy_individual_menu_new (individual, NULL,
+      priv->individual_features, priv->store);
 
 out:
   g_object_unref (individual);
