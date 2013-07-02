@@ -625,7 +625,7 @@ compare_roster_contacts_by_alias (EmpathyRosterContact *a,
   alias_a = folks_alias_details_get_alias (FOLKS_ALIAS_DETAILS (ind_a));
   alias_b = folks_alias_details_get_alias (FOLKS_ALIAS_DETAILS (ind_b));
 
-  return g_ascii_strcasecmp (alias_a, alias_b);
+  return g_utf8_collate (alias_a, alias_b);
 }
 
 static gint
@@ -663,7 +663,7 @@ compare_group_names (const gchar *group_a,
   else if (!tp_strdiff (group_b, EMPATHY_ROSTER_MODEL_GROUP_UNGROUPED))
     return -1;
 
-  return g_ascii_strcasecmp (group_a, group_b);
+  return g_utf8_collate (group_a, group_b);
 }
 
 static gint
