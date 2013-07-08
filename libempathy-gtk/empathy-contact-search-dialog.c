@@ -69,7 +69,6 @@ struct _EmpathyContactSearchDialogPrivate
   GtkWidget *spinner;
   GtkWidget *add_button;
   GtkWidget *find_button;
-  GtkWidget *no_contact_found;
   GtkWidget *search_entry;
   /* GtkWidget *server_entry; */
   GtkWidget *message;
@@ -507,6 +506,24 @@ on_profile_button_clicked_cb (EmpathyCellRendererActivatable *cell,
 }
 
 static void
+append_message_page (EmpathyContactSearchDialog *self,
+    const gchar *message)
+{
+  EmpathyContactSearchDialogPrivate *priv = GET_PRIVATE (self);
+  GtkWidget *label;
+  gchar *tmp;
+
+  label = gtk_label_new (NULL);
+  tmp = g_strdup_printf ("<b><span size='xx-large'>%s</span></b>", message);
+  gtk_label_set_markup (GTK_LABEL (label), tmp);
+  g_free (tmp);
+
+  gtk_label_set_ellipsize (GTK_LABEL (label), PANGO_ELLIPSIZE_END);
+
+  gtk_notebook_append_page (GTK_NOTEBOOK (priv->notebook), label, NULL);
+}
+
+static void
 empathy_contact_search_dialog_init (EmpathyContactSearchDialog *self)
 {
   EmpathyContactSearchDialogPrivate *priv = GET_PRIVATE (self);
@@ -515,7 +532,6 @@ empathy_contact_search_dialog_init (EmpathyContactSearchDialog *self)
   GtkTreeViewColumn *col;
   GtkTreeSelection *selection;
   GtkSizeGroup *size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
-  gchar *tmp;
 
   /* Title */
   gtk_window_set_title (GTK_WINDOW (self), _("Search contacts"));
@@ -622,19 +638,10 @@ empathy_contact_search_dialog_init (EmpathyContactSearchDialog *self)
 
   gtk_container_add (GTK_CONTAINER (scrolled_window), priv->tree_view);
 
-  priv->no_contact_found = gtk_label_new (NULL);
-  tmp = g_strdup_printf ("<b><span size='xx-large'>%s</span></b>",
-      _("No contacts found"));
-  gtk_label_set_markup (GTK_LABEL (priv->no_contact_found), tmp);
-  g_free (tmp);
-
-  gtk_label_set_ellipsize (GTK_LABEL (priv->no_contact_found),
-      PANGO_ELLIPSIZE_END);
-
   gtk_notebook_append_page (GTK_NOTEBOOK (priv->notebook), scrolled_window,
       NULL);
-  gtk_notebook_append_page (GTK_NOTEBOOK (priv->notebook),
-      priv->no_contact_found, NULL);
+
+  append_message_page (self, _("No contacts found"));
 
   gtk_box_pack_start (GTK_BOX (vbox), priv->notebook, TRUE, TRUE, 3);
 
