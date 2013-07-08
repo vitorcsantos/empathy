@@ -337,6 +337,7 @@ on_searcher_created (GObject *source_object,
       G_CALLBACK (_on_search_state_changed_cb), self);
 
   gtk_widget_set_sensitive (priv->find_button, TRUE);
+  gtk_widget_set_sensitive (priv->search_entry, TRUE);
 }
 
 static void
@@ -385,6 +386,7 @@ _account_chooser_changed (EmpathyAccountChooser *chooser,
 
   /* gtk_widget_set_sensitive (priv->server_entry, can_set_server); */
   gtk_widget_set_sensitive (priv->find_button, FALSE);
+  gtk_widget_set_sensitive (priv->search_entry, FALSE);
 
   DEBUG ("New account is %s", tp_proxy_get_object_path (account));
 
