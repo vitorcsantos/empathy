@@ -531,7 +531,7 @@ append_message_page (EmpathyContactSearchDialog *self,
   gtk_label_set_markup (GTK_LABEL (label), tmp);
   g_free (tmp);
 
-  gtk_label_set_ellipsize (GTK_LABEL (label), PANGO_ELLIPSIZE_END);
+  gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
 
   gtk_notebook_append_page (GTK_NOTEBOOK (priv->notebook), label, NULL);
 }
