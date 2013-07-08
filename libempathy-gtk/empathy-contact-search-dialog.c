@@ -54,7 +54,8 @@ enum
 
 enum {
    PAGE_SEARCH_RESULTS,
-   PAGE_NO_MATCH
+   PAGE_NO_MATCH,
+   PAGE_NOT_SUPPORTED,
 };
 
 typedef struct _EmpathyContactSearchDialogPrivate EmpathyContactSearchDialogPrivate;
@@ -102,9 +103,15 @@ on_searcher_reset (GObject *source_object,
   if (error != NULL)
     {
       DEBUG ("Failed to reset the TpContactSearch: %s", error->message);
+      gtk_notebook_set_current_page (GTK_NOTEBOOK (priv->notebook),
+          PAGE_NOT_SUPPORTED);
+
       g_error_free (error);
       return;
     }
+
+  gtk_notebook_set_current_page (GTK_NOTEBOOK (priv->notebook),
+      PAGE_SEARCH_RESULTS);
 
   search = g_hash_table_new (g_str_hash, g_str_equal);
 
@@ -314,9 +321,15 @@ on_searcher_created (GObject *source_object,
   if (error != NULL)
     {
       DEBUG ("Failed to create a TpContactSearch: %s", error->message);
+      gtk_notebook_set_current_page (GTK_NOTEBOOK (priv->notebook),
+          PAGE_NOT_SUPPORTED);
+
       g_error_free (error);
       return;
     }
+
+  gtk_notebook_set_current_page (GTK_NOTEBOOK (priv->notebook),
+      PAGE_SEARCH_RESULTS);
 
   g_signal_connect (priv->searcher, "search-results-received",
       G_CALLBACK (_search_results_received), self);
@@ -642,6 +655,7 @@ empathy_contact_search_dialog_init (EmpathyContactSearchDialog *self)
       NULL);
 
   append_message_page (self, _("No contacts found"));
+  append_message_page (self, _("Contact search is not supported on this account"));
 
   gtk_box_pack_start (GTK_BOX (vbox), priv->notebook, TRUE, TRUE, 3);
 
