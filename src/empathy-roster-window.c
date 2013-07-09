@@ -1746,6 +1746,14 @@ account_disabled_cb (TpAccountManager *manager,
 }
 
 static void
+account_removed_cb (TpAccountManager *manager,
+    TpAccount *account,
+    EmpathyRosterWindow *self)
+{
+  set_notebook_page (self);
+}
+
+static void
 account_manager_prepared_cb (GObject *source_object,
     GAsyncResult *result,
     gpointer user_data)
@@ -1773,6 +1781,8 @@ account_manager_prepared_cb (GObject *source_object,
 
   g_signal_connect (manager, "account-validity-changed",
       G_CALLBACK (roster_window_account_validity_changed_cb), self);
+  tp_g_signal_connect_object (manager, "account-removed",
+      G_CALLBACK (account_removed_cb), self, 0);
   tp_g_signal_connect_object (manager, "account-disabled",
       G_CALLBACK (account_disabled_cb), self, 0);
   tp_g_signal_connect_object (manager, "account-enabled",
