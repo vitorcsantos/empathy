@@ -5,19 +5,21 @@
 # Michele Baldessari <michele@pupazzo.org>, 2003
 # Luca Ferretti <lferrett@gnome.org>, 2011.
 # Milo Casagrande <milo@ubuntu.com>, 2007-2010, 2011, 2012, 2013.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: empathy\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-17 22:04+0200\n"
-"PO-Revision-Date: 2013-06-17 22:38+0200\n"
+"POT-Creation-Date: 2013-07-17 09:16+0200\n"
+"PO-Revision-Date: 2013-07-17 09:15+0200\n"
 "Last-Translator: Milo Casagrande <milo@ubuntu.com>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8-bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"X-Generator: Gtranslator 2.91.6\n"
 
 #: ../data/empathy.desktop.in.in.h:1
 msgid "Empathy"
@@ -1781,7 +1783,7 @@ msgstr "Modifica contatti bloccati"
 
 #. Account and Identifier
 #: ../libempathy-gtk/empathy-contact-blocking-dialog.ui.h:1
-#: ../libempathy-gtk/empathy-contact-search-dialog.c:528
+#: ../libempathy-gtk/empathy-contact-search-dialog.c:559
 #: ../libempathy-gtk/empathy-individual-widget.c:1473
 #: ../src/empathy-chatrooms-window.ui.h:2
 #: ../src/empathy-new-chatroom-dialog.ui.h:6
@@ -1864,27 +1866,31 @@ msgid "parcel"
 msgstr "parcel"
 
 #. Title
-#: ../libempathy-gtk/empathy-contact-search-dialog.c:521
+#: ../libempathy-gtk/empathy-contact-search-dialog.c:552
 msgid "Search contacts"
 msgstr "Cerca contatti"
 
-#: ../libempathy-gtk/empathy-contact-search-dialog.c:551
+#: ../libempathy-gtk/empathy-contact-search-dialog.c:582
 msgid "Search: "
 msgstr "Cerca:"
 
-#: ../libempathy-gtk/empathy-contact-search-dialog.c:609
+#: ../libempathy-gtk/empathy-contact-search-dialog.c:640
 msgid "_Add Contact"
 msgstr "A_ggiungi contatto..."
 
-#: ../libempathy-gtk/empathy-contact-search-dialog.c:627
+#: ../libempathy-gtk/empathy-contact-search-dialog.c:659
 msgid "No contacts found"
 msgstr "Nessun contatto trovato"
 
-#: ../libempathy-gtk/empathy-contact-search-dialog.c:643
+#: ../libempathy-gtk/empathy-contact-search-dialog.c:660
+msgid "Contact search is not supported on this account"
+msgstr "La ricerca dei contatti non è supportata con questo account"
+
+#: ../libempathy-gtk/empathy-contact-search-dialog.c:666
 msgid "Your message introducing yourself:"
 msgstr "Un messaggio di presentazione:"
 
-#: ../libempathy-gtk/empathy-contact-search-dialog.c:651
+#: ../libempathy-gtk/empathy-contact-search-dialog.c:674
 msgid "Please let me see when you're online. Thanks!"
 msgstr "Vorrei poter vedere quando sei online! Grazie!"
 
@@ -2366,139 +2372,139 @@ msgstr ""
 "è possibile disabilitare questa funzionalità scegliendo <span style=\"italic"
 "\">Modifica → Account</span> dall'elenco dei contatti."
 
-#: ../libempathy-gtk/empathy-log-window.c:607
+#: ../libempathy-gtk/empathy-log-window.c:627
 msgid "History"
 msgstr "Cronologia"
 
-#: ../libempathy-gtk/empathy-log-window.c:662
+#: ../libempathy-gtk/empathy-log-window.c:682
 msgid "Show"
 msgstr "Mostra"
 
-#: ../libempathy-gtk/empathy-log-window.c:684
+#: ../libempathy-gtk/empathy-log-window.c:704
 msgid "Search"
 msgstr "Cerca"
 
-#: ../libempathy-gtk/empathy-log-window.c:1135
+#: ../libempathy-gtk/empathy-log-window.c:1155
 #, c-format
 msgid "Chat in %s"
 msgstr "Conversazione in %s"
 
-#: ../libempathy-gtk/empathy-log-window.c:1137
+#: ../libempathy-gtk/empathy-log-window.c:1157
 #, c-format
 msgid "Chat with %s"
 msgstr "Conversazione con %s"
 
 # (ndt) domenica 01 ottobre 2007
-#: ../libempathy-gtk/empathy-log-window.c:1187
-#: ../libempathy-gtk/empathy-log-window.c:1331
+#: ../libempathy-gtk/empathy-log-window.c:1207
+#: ../libempathy-gtk/empathy-log-window.c:1351
 msgctxt "A date with the time"
 msgid "%A, %e %B %Y %X"
 msgstr "%A %d %B %Y %X"
 
 #. Translators: this is an emote: '* Danielle waves'
-#: ../libempathy-gtk/empathy-log-window.c:1274
+#: ../libempathy-gtk/empathy-log-window.c:1294
 #, c-format
 msgid "<i>* %s %s</i>"
 msgstr "<i>* %s %s</i>"
 
 #. Translators: this is a message: 'Danielle: hello'
 #. * The string in bold is the sender's name
-#: ../libempathy-gtk/empathy-log-window.c:1280
+#: ../libempathy-gtk/empathy-log-window.c:1300
 #, c-format
 msgid "<b>%s:</b> %s"
 msgstr "<b>%s:</b> %s"
 
-#: ../libempathy-gtk/empathy-log-window.c:1355
+#: ../libempathy-gtk/empathy-log-window.c:1375
 #, c-format
 msgid "%s second"
 msgid_plural "%s seconds"
 msgstr[0] "%s secondo"
 msgstr[1] "%s secondi"
 
-#: ../libempathy-gtk/empathy-log-window.c:1362
+#: ../libempathy-gtk/empathy-log-window.c:1382
 #, c-format
 msgid "%s minute"
 msgid_plural "%s minutes"
 msgstr[0] "%s minuto"
 msgstr[1] "%s minuti"
 
-#: ../libempathy-gtk/empathy-log-window.c:1370
+#: ../libempathy-gtk/empathy-log-window.c:1390
 #, c-format
 msgid "Call took %s, ended at %s"
 msgstr "Durata della chiamata: %s. Terminata alle: %s"
 
-#: ../libempathy-gtk/empathy-log-window.c:1701
+#: ../libempathy-gtk/empathy-log-window.c:1721
 msgid "Today"
 msgstr "Oggi"
 
-#: ../libempathy-gtk/empathy-log-window.c:1705
+#: ../libempathy-gtk/empathy-log-window.c:1725
 msgid "Yesterday"
 msgstr "Ieri"
 
 # (ndt) domenica 01 ottobre 2007
 #. Translators: A date such as '23 May 2010' (strftime format)
-#: ../libempathy-gtk/empathy-log-window.c:1720
+#: ../libempathy-gtk/empathy-log-window.c:1740
 msgid "%e %B %Y"
 msgstr "%d %B %Y"
 
-#: ../libempathy-gtk/empathy-log-window.c:1824
-#: ../libempathy-gtk/empathy-log-window.c:3447
+#: ../libempathy-gtk/empathy-log-window.c:1844
+#: ../libempathy-gtk/empathy-log-window.c:3467
 msgid "Anytime"
 msgstr "Qualsiasi ora"
 
-#: ../libempathy-gtk/empathy-log-window.c:1923
-#: ../libempathy-gtk/empathy-log-window.c:2382
+#: ../libempathy-gtk/empathy-log-window.c:1943
+#: ../libempathy-gtk/empathy-log-window.c:2402
 msgid "Anyone"
 msgstr "Chiunque"
 
-#: ../libempathy-gtk/empathy-log-window.c:2695
+#: ../libempathy-gtk/empathy-log-window.c:2715
 msgid "Who"
 msgstr "Chi"
 
-#: ../libempathy-gtk/empathy-log-window.c:2904
+#: ../libempathy-gtk/empathy-log-window.c:2924
 msgid "When"
 msgstr "Quando"
 
-#: ../libempathy-gtk/empathy-log-window.c:3022
+#: ../libempathy-gtk/empathy-log-window.c:3042
 msgid "Anything"
 msgstr "Qualsiasi cosa"
 
-#: ../libempathy-gtk/empathy-log-window.c:3024
+#: ../libempathy-gtk/empathy-log-window.c:3044
 msgid "Text chats"
 msgstr "Testo conversazioni"
 
 # (ndt) è il titolo del dialogo
-#: ../libempathy-gtk/empathy-log-window.c:3025
+#: ../libempathy-gtk/empathy-log-window.c:3045
 #: ../src/empathy-preferences.ui.h:29
 msgid "Calls"
 msgstr "Chiamate"
 
-#: ../libempathy-gtk/empathy-log-window.c:3029
+#: ../libempathy-gtk/empathy-log-window.c:3049
 msgid "Incoming calls"
 msgstr "Chiamate in arrivo"
 
-#: ../libempathy-gtk/empathy-log-window.c:3030
+#: ../libempathy-gtk/empathy-log-window.c:3050
 msgid "Outgoing calls"
 msgstr "Chiamate in uscita"
 
-#: ../libempathy-gtk/empathy-log-window.c:3031
+#: ../libempathy-gtk/empathy-log-window.c:3051
 msgid "Missed calls"
 msgstr "Chiamate perse"
 
-#: ../libempathy-gtk/empathy-log-window.c:3051
+#: ../libempathy-gtk/empathy-log-window.c:3071
 msgid "What"
 msgstr "Cosa"
 
-#: ../libempathy-gtk/empathy-log-window.c:3740
+#: ../libempathy-gtk/empathy-log-window.c:3760
 msgid "Are you sure you want to delete all logs of previous conversations?"
 msgstr ""
 "Eliminare veramente tutte le registrazioni delle conversazioni precedenti?"
 
-#: ../libempathy-gtk/empathy-log-window.c:3744
+#: ../libempathy-gtk/empathy-log-window.c:3764
 msgid "Clear All"
 msgstr "Elimina tutto"
 
-#: ../libempathy-gtk/empathy-log-window.c:3751
+#: ../libempathy-gtk/empathy-log-window.c:3771
 msgid "Delete from:"
 msgstr "Elimina da:"
 
@@ -3170,8 +3176,8 @@ msgstr "Account Empathy"
 #. * unsaved changes
 #: ../src/empathy-accounts-dialog.c:52
 #, c-format
-msgid "There are unsaved modifications to your %s account."
-msgstr "Sono presenti delle modifiche non salvate per l'account %s."
+msgid "There are unsaved modifications to your %.50s account."
+msgstr "Sono presenti delle modifiche non salvate per l'account %.50s."
 
 #. The primary text of the dialog shown to the user when he is about to lose
 #. * an unsaved new account
@@ -3226,8 +3232,8 @@ msgstr "_Modifica parametri connessione..."
 
 #: ../src/empathy-accounts-dialog.c:1252
 #, c-format
-msgid "Do you want to remove %s from your computer?"
-msgstr "Rimuovere «%s» dal computer?"
+msgid "Do you want to remove %.50s from your computer?"
+msgstr "Rimuovere %.50s dal computer?"
 
 #: ../src/empathy-accounts-dialog.c:1256
 msgid "This will not remove your account on the server."
@@ -3270,7 +3276,7 @@ msgstr ""
 "effettuate verranno scartate. Procedere veramente?"
 
 #. Tweak the dialog
-#: ../src/empathy-accounts-dialog.c:2417
+#: ../src/empathy-accounts-dialog.c:2418
 msgid "Messaging and VoIP Accounts"
 msgstr "Account di messaggistica e VoIP"
 
@@ -4343,7 +4349,7 @@ msgstr "Mostrare i gruppi"
 msgid "Show account balances"
 msgstr "Mostrare i bilanci dell'account"
 
-#: ../src/empathy-preferences.ui.h:4 ../src/empathy-roster-window.c:2226
+#: ../src/empathy-preferences.ui.h:4 ../src/empathy-roster-window.c:2236
 msgid "Contact List"
 msgstr "Elenco contatti"
 
