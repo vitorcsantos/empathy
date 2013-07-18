@@ -1123,10 +1123,10 @@ event_manager_publish_state_changed_cb (TpContact *contact,
 }
 
 static void
-event_manager_presence_changed_cb (EmpathyContact *contact,
+check_presence (EmpathyEventManager *manager,
+    EmpathyContact *contact,
     TpConnectionPresenceType current,
-    TpConnectionPresenceType previous,
-    EmpathyEventManager *manager)
+    TpConnectionPresenceType previous)
 {
   EmpathyEventManagerPriv *priv = GET_PRIV (manager);
   TpAccount *account;
@@ -1184,6 +1184,15 @@ event_manager_presence_changed_cb (EmpathyContact *contact,
 
 out:
   g_object_unref (presence_mgr);
+}
+
+static void
+event_manager_presence_changed_cb (EmpathyContact *contact,
+    TpConnectionPresenceType current,
+    TpConnectionPresenceType previous,
+    EmpathyEventManager *manager)
+{
+  check_presence (manager, contact, current, previous);
 }
 
 static GObject *
@@ -1287,6 +1296,10 @@ contact_list_changed_cb (EmpathyConnectionAggregator *aggregator,
 
       tp_g_signal_connect_object (contact, "presence-changed",
           G_CALLBACK (event_manager_presence_changed_cb), self, 0);
+
+      check_presence (self, contact,
+          empathy_contact_get_presence (contact),
+          TP_CONNECTION_PRESENCE_TYPE_OFFLINE);
 
       tp_g_signal_connect_object (tp_contact, "notify::publish-state",
           G_CALLBACK (event_manager_publish_state_changed_cb), self, 0);
