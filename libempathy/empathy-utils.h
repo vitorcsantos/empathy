@@ -60,7 +60,6 @@ const gchar * empathy_presence_to_str (TpConnectionPresenceType presence);
 TpConnectionPresenceType empathy_presence_from_str (const gchar *str);
 gchar * empathy_file_lookup (const gchar *filename,
     const gchar *subdir);
-gboolean empathy_check_available_state (void);
 gint empathy_uint_compare (gconstpointer a,
     gconstpointer b);
 

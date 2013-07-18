@@ -23,6 +23,7 @@
 #include <glib/gi18n-lib.h>
 
 #include "empathy-gsettings.h"
+#include "empathy-presence-manager.h"
 #include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
@@ -159,6 +160,23 @@ empathy_sound_manager_dup_singleton (void)
 
   g_object_add_weak_pointer (G_OBJECT (manager), (gpointer *) &manager);
   return manager;
+}
+
+static gboolean
+empathy_check_available_state (void)
+{
+  TpConnectionPresenceType presence;
+  EmpathyPresenceManager *presence_mgr;
+
+  presence_mgr = empathy_presence_manager_dup_singleton ();
+  presence = empathy_presence_manager_get_state (presence_mgr);
+  g_object_unref (presence_mgr);
+
+  if (presence != TP_CONNECTION_PRESENCE_TYPE_AVAILABLE &&
+    presence != TP_CONNECTION_PRESENCE_TYPE_UNSET)
+    return FALSE;
+
+  return TRUE;
 }
 
 static gboolean

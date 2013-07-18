@@ -34,7 +34,6 @@
 #include <math.h>
 
 #include "empathy-client-factory.h"
-#include "empathy-presence-manager.h"
 #include "extensions.h"
 
 #include <math.h>
@@ -420,23 +419,6 @@ empathy_file_lookup (const gchar *filename, const gchar *subdir)
     }
 
   return path;
-}
-
-gboolean
-empathy_check_available_state (void)
-{
-  TpConnectionPresenceType presence;
-  EmpathyPresenceManager *presence_mgr;
-
-  presence_mgr = empathy_presence_manager_dup_singleton ();
-  presence = empathy_presence_manager_get_state (presence_mgr);
-  g_object_unref (presence_mgr);
-
-  if (presence != TP_CONNECTION_PRESENCE_TYPE_AVAILABLE &&
-    presence != TP_CONNECTION_PRESENCE_TYPE_UNSET)
-    return FALSE;
-
-  return TRUE;
 }
 
 gint
