@@ -194,6 +194,9 @@ object_chat_changed_cb (GoaObject *object,
   char *name = get_tp_account_name (account);
   gboolean enabled;
 
+  if (name == NULL)
+    return;
+
   enabled = (goa_object_peek_chat (object) != NULL);
 
   DEBUG ("%s %s", name, enabled ? "enabled" : "disabled");
@@ -288,6 +291,9 @@ _account_removed_cb (GoaClient *client,
 {
   GoaAccount *account = goa_object_peek_account (object);
   char *name = get_tp_account_name (account);
+
+  if (name == NULL)
+    return;
 
   if (self->priv->ready)
     g_signal_emit_by_name (self, "deleted", name);
