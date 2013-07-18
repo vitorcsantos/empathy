@@ -165,15 +165,37 @@ empathy_sound_manager_dup_singleton (void)
 static gboolean
 empathy_check_available_state (void)
 {
-  TpConnectionPresenceType presence;
-  EmpathyPresenceManager *presence_mgr;
+  TpConnectionPresenceType most_available_requested_presence;
+  TpAccountManager *am;
+  GList *accounts;
 
-  presence_mgr = empathy_presence_manager_dup_singleton ();
-  presence = empathy_presence_manager_get_state (presence_mgr);
-  g_object_unref (presence_mgr);
+  /* We cannot use tp_account_manager_get_most_available_presence() or
+   * empathy_presence_manager_get_state() because it is the requested presence
+   * that matters, not the current presence.
+   * See https://bugzilla.gnome.org/show_bug.cgi?id=704454 */
+  most_available_requested_presence = TP_CONNECTION_PRESENCE_TYPE_UNSET;
+  am = tp_account_manager_dup ();
+  accounts = tp_account_manager_dup_valid_accounts (am);
+  while (accounts != NULL)
+    {
+      TpAccount *account = accounts->data;
+      TpConnectionPresenceType requested_presence;
 
-  if (presence != TP_CONNECTION_PRESENCE_TYPE_AVAILABLE &&
-    presence != TP_CONNECTION_PRESENCE_TYPE_UNSET)
+      requested_presence = tp_account_get_requested_presence (account,
+          NULL, NULL);
+
+      if (tp_connection_presence_type_cmp_availability (requested_presence,
+              most_available_requested_presence) > 0)
+        most_available_requested_presence = requested_presence;
+
+      g_object_unref (account);
+      accounts = g_list_delete_link (accounts, accounts);
+    }
+
+  g_object_unref (am);
+
+  if (most_available_requested_presence != TP_CONNECTION_PRESENCE_TYPE_AVAILABLE &&
+    most_available_requested_presence != TP_CONNECTION_PRESENCE_TYPE_UNSET)
     return FALSE;
 
   return TRUE;
