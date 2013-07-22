@@ -331,6 +331,14 @@ roster_window_load_events_idle_cb (gpointer user_data)
 }
 
 static void
+hide_search_bar (EmpathyRosterWindow *roster_window)
+{
+  if (EMPATHY_IS_LIVE_SEARCH (roster_window->priv->search_bar) &&
+      gtk_widget_is_visible (roster_window->priv->search_bar))
+    gtk_widget_hide (roster_window->priv->search_bar);
+}
+
+static void
 individual_activated_cb (EmpathyRosterView *self,
     FolksIndividual *individual,
     gpointer user_data)
@@ -348,6 +356,9 @@ individual_activated_cb (EmpathyRosterView *self,
   empathy_chat_with_contact (contact, gtk_get_current_event_time ());
 
   g_object_unref (contact);
+
+  /* Hide the search-bar upon hitting "Enter" on an individual */
+  hide_search_bar (EMPATHY_ROSTER_WINDOW (user_data));
 }
 
 static void
@@ -357,6 +368,9 @@ event_activated_cb (EmpathyRosterView *self,
     gpointer user_data)
 {
   empathy_event_activate (event);
+
+  /* Hide the search-bar upon an event activation */
+  hide_search_bar (EMPATHY_ROSTER_WINDOW (user_data));
 }
 
 static void
