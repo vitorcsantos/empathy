@@ -1963,6 +1963,15 @@ menu_deactivate_cb (GtkMenuShell *menushell,
 }
 
 static void
+menu_item_activated_cb (GtkMenuShell *menushell,
+    gpointer user_data)
+{
+    EmpathyRosterWindow *roster_window = EMPATHY_ROSTER_WINDOW (user_data);
+
+    hide_search_bar (roster_window);
+}
+
+static void
 popup_individual_menu_cb (EmpathyRosterView *view,
     const gchar *active_group,
     FolksIndividual *individual,
@@ -1992,6 +2001,8 @@ popup_individual_menu_cb (EmpathyRosterView *view,
    * during the whole lifetime of Empathy. */
   g_signal_connect (menu, "deactivate", G_CALLBACK (menu_deactivate_cb),
       NULL);
+  g_signal_connect (menu, "menu-item-activated",
+      G_CALLBACK (menu_item_activated_cb), user_data);
 
   gtk_menu_attach_to_widget (GTK_MENU (menu), GTK_WIDGET (view), NULL);
   gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL, button, time);
