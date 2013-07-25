@@ -75,18 +75,25 @@ empathy_call_create_call_request (const gchar *contact,
     gboolean initial_audio,
     gboolean initial_video)
 {
-  return tp_asv_new (
+  GHashTable *asv = tp_asv_new (
     TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING,
       TP_IFACE_CHANNEL_TYPE_CALL,
     TP_PROP_CHANNEL_TARGET_HANDLE_TYPE, G_TYPE_UINT,
       TP_HANDLE_TYPE_CONTACT,
     TP_PROP_CHANNEL_TARGET_ID, G_TYPE_STRING,
       contact,
-    TP_PROP_CHANNEL_TYPE_CALL_INITIAL_AUDIO, G_TYPE_BOOLEAN,
-      initial_audio,
-    TP_PROP_CHANNEL_TYPE_CALL_INITIAL_VIDEO, G_TYPE_BOOLEAN,
-      initial_video,
     NULL);
+
+  /* Only add InitialAudio or InitialVideo if they are true: it should work
+   * with genuinely voice-only CMs. */
+  if (initial_audio)
+    tp_asv_set_boolean (asv, TP_PROP_CHANNEL_TYPE_CALL_INITIAL_AUDIO,
+                        initial_audio);
+  if (initial_video)
+    tp_asv_set_boolean (asv, TP_PROP_CHANNEL_TYPE_CALL_INITIAL_VIDEO,
+                        initial_video);
+
+  return asv;
 }
 
 static void
