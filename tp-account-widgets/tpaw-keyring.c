@@ -17,7 +17,7 @@
  */
 
 #include "config.h"
-#include "empathy-keyring.h"
+#include "tpaw-keyring.h"
 
 #include <glib/gi18n-lib.h>
 #include <libsecret/secret.h>
@@ -249,7 +249,7 @@ out:
 #endif
 
 void
-empathy_keyring_get_account_password_async (TpAccount *account,
+tpaw_keyring_get_account_password_async (TpAccount *account,
     GAsyncReadyCallback callback,
     gpointer user_data)
 {
@@ -260,7 +260,7 @@ empathy_keyring_get_account_password_async (TpAccount *account,
   g_return_if_fail (callback != NULL);
 
   simple = g_simple_async_result_new (G_OBJECT (account), callback,
-      user_data, empathy_keyring_get_account_password_async);
+      user_data, tpaw_keyring_get_account_password_async);
 
   account_id = tp_proxy_get_object_path (account) +
     strlen (TP_ACCOUNT_OBJECT_PATH_BASE);
@@ -289,7 +289,7 @@ empathy_keyring_get_account_password_async (TpAccount *account,
 }
 
 void
-empathy_keyring_get_room_password_async (TpAccount *account,
+tpaw_keyring_get_room_password_async (TpAccount *account,
     const gchar *id,
     GAsyncReadyCallback callback,
     gpointer user_data)
@@ -302,7 +302,7 @@ empathy_keyring_get_room_password_async (TpAccount *account,
   g_return_if_fail (callback != NULL);
 
   simple = g_simple_async_result_new (G_OBJECT (account), callback,
-      user_data, empathy_keyring_get_room_password_async);
+      user_data, tpaw_keyring_get_room_password_async);
 
   account_id = tp_proxy_get_object_path (account) +
     strlen (TP_ACCOUNT_OBJECT_PATH_BASE);
@@ -318,21 +318,21 @@ empathy_keyring_get_room_password_async (TpAccount *account,
 }
 
 const gchar *
-empathy_keyring_get_account_password_finish (TpAccount *account,
+tpaw_keyring_get_account_password_finish (TpAccount *account,
     GAsyncResult *result,
     GError **error)
 {
   empathy_implement_finish_return_pointer (account,
-      empathy_keyring_get_account_password_async);
+      tpaw_keyring_get_account_password_async);
 }
 
 const gchar *
-empathy_keyring_get_room_password_finish (TpAccount *account,
+tpaw_keyring_get_room_password_finish (TpAccount *account,
     GAsyncResult *result,
     GError **error)
 {
   empathy_implement_finish_return_pointer (account,
-      empathy_keyring_get_room_password_async);
+      tpaw_keyring_get_room_password_async);
 }
 
 /* set */
@@ -546,7 +546,7 @@ uoa_set_account_password (TpAccount *tp_account,
 #endif
 
 void
-empathy_keyring_set_account_password_async (TpAccount *account,
+tpaw_keyring_set_account_password_async (TpAccount *account,
     const gchar *password,
     gboolean remember,
     GAsyncReadyCallback callback,
@@ -560,7 +560,7 @@ empathy_keyring_set_account_password_async (TpAccount *account,
   g_return_if_fail (password != NULL);
 
   simple = g_simple_async_result_new (G_OBJECT (account), callback,
-      user_data, empathy_keyring_set_account_password_async);
+      user_data, tpaw_keyring_set_account_password_async);
 
   account_id = tp_proxy_get_object_path (account) +
     strlen (TP_ACCOUNT_OBJECT_PATH_BASE);
@@ -596,7 +596,7 @@ empathy_keyring_set_account_password_async (TpAccount *account,
 }
 
 void
-empathy_keyring_set_room_password_async (TpAccount *account,
+tpaw_keyring_set_room_password_async (TpAccount *account,
     const gchar *id,
     const gchar *password,
     GAsyncReadyCallback callback,
@@ -611,7 +611,7 @@ empathy_keyring_set_room_password_async (TpAccount *account,
   g_return_if_fail (password != NULL);
 
   simple = g_simple_async_result_new (G_OBJECT (account), callback,
-      user_data, empathy_keyring_set_room_password_async);
+      user_data, tpaw_keyring_set_room_password_async);
 
   account_id = tp_proxy_get_object_path (account) +
     strlen (TP_ACCOUNT_OBJECT_PATH_BASE);
@@ -631,19 +631,19 @@ empathy_keyring_set_room_password_async (TpAccount *account,
 }
 
 gboolean
-empathy_keyring_set_account_password_finish (TpAccount *account,
+tpaw_keyring_set_account_password_finish (TpAccount *account,
     GAsyncResult *result,
     GError **error)
 {
-  empathy_implement_finish_void (account, empathy_keyring_set_account_password_async);
+  empathy_implement_finish_void (account, tpaw_keyring_set_account_password_async);
 }
 
 gboolean
-empathy_keyring_set_room_password_finish (TpAccount *account,
+tpaw_keyring_set_room_password_finish (TpAccount *account,
     GAsyncResult *result,
     GError **error)
 {
-  empathy_implement_finish_void (account, empathy_keyring_set_room_password_async);
+  empathy_implement_finish_void (account, tpaw_keyring_set_room_password_async);
 }
 
 /* delete */
@@ -669,7 +669,7 @@ items_delete_cb (GObject *source,
 }
 
 void
-empathy_keyring_delete_account_password_async (TpAccount *account,
+tpaw_keyring_delete_account_password_async (TpAccount *account,
     GAsyncReadyCallback callback,
     gpointer user_data)
 {
@@ -679,7 +679,7 @@ empathy_keyring_delete_account_password_async (TpAccount *account,
   g_return_if_fail (TP_IS_ACCOUNT (account));
 
   simple = g_simple_async_result_new (G_OBJECT (account), callback,
-      user_data, empathy_keyring_delete_account_password_async);
+      user_data, tpaw_keyring_delete_account_password_async);
 
   account_id = tp_proxy_get_object_path (account) +
     strlen (TP_ACCOUNT_OBJECT_PATH_BASE);
@@ -710,9 +710,9 @@ empathy_keyring_delete_account_password_async (TpAccount *account,
 }
 
 gboolean
-empathy_keyring_delete_account_password_finish (TpAccount *account,
+tpaw_keyring_delete_account_password_finish (TpAccount *account,
     GAsyncResult *result,
     GError **error)
 {
-  empathy_implement_finish_void (account, empathy_keyring_delete_account_password_async);
+  empathy_implement_finish_void (account, tpaw_keyring_delete_account_password_async);
 }

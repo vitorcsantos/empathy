@@ -33,6 +33,7 @@
 #include "empathy-chat.h"
 
 #include <glib/gi18n-lib.h>
+#include <tp-account-widgets/tpaw-keyring.h>
 
 #include "empathy-client-factory.h"
 #include "empathy-gsettings.h"
@@ -40,7 +41,6 @@
 #include "empathy-individual-store-channel.h"
 #include "empathy-individual-view.h"
 #include "empathy-input-text-view.h"
-#include "empathy-keyring.h"
 #include "empathy-request-util.h"
 #include "empathy-search-bar.h"
 #include "empathy-smiley-manager.h"
@@ -3735,7 +3735,7 @@ remember_password_infobar_response_cb (GtkWidget *info_bar,
 
 	if (response_id == GTK_RESPONSE_OK) {
 		DEBUG ("Saving room password");
-		empathy_keyring_set_room_password_async (priv->account,
+		tpaw_keyring_set_room_password_async (priv->account,
 							 empathy_tp_chat_get_id (priv->tp_chat),
 							 data->password,
 							 NULL, NULL);
@@ -4071,7 +4071,7 @@ chat_room_got_password_cb (GObject *source,
 	const gchar *password;
 	GError *error = NULL;
 
-	password = empathy_keyring_get_room_password_finish (priv->account,
+	password = tpaw_keyring_get_room_password_finish (priv->account,
 	    result, &error);
 
 	if (error != NULL) {
@@ -4093,7 +4093,7 @@ chat_password_needed_changed_cb (EmpathyChat *self)
 	EmpathyChatPriv *priv = GET_PRIV (self);
 
 	if (tp_channel_password_needed (TP_CHANNEL (priv->tp_chat))) {
-		empathy_keyring_get_room_password_async (priv->account,
+		tpaw_keyring_get_room_password_async (priv->account,
 							 empathy_tp_chat_get_id (priv->tp_chat),
 							 chat_room_got_password_cb, self);
 	}

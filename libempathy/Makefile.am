@@ -41,7 +41,6 @@ libempathy_headers =				\
 	empathy-gsettings.h			\
 	empathy-presence-manager.h				\
 	empathy-individual-manager.h		\
-	empathy-keyring.h 			\
 	empathy-location.h			\
 	empathy-message.h			\
 	empathy-pkg-kit.h		\
@@ -72,7 +71,6 @@ libempathy_handwritten_source =				\
 	empathy-ft-handler.c				\
 	empathy-presence-manager.c					\
 	empathy-individual-manager.c			\
-	empathy-keyring.c				\
 	empathy-message.c				\
 	empathy-pkg-kit.c		\
 	empathy-request-util.c				\

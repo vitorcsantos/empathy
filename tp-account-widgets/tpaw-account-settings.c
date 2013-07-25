@@ -22,7 +22,7 @@
 #include "tpaw-account-settings.h"
 
 #include "tpaw-connection-managers.h"
-#include "empathy-keyring.h"
+#include "tpaw-keyring.h"
 #include "empathy-presence-manager.h"
 #include "empathy-utils.h"
 
@@ -436,7 +436,7 @@ tpaw_account_settings_get_password_cb (GObject *source,
   const gchar *password;
   GError *error = NULL;
 
-  password = empathy_keyring_get_account_password_finish (TP_ACCOUNT (source),
+  password = tpaw_keyring_get_account_password_finish (TP_ACCOUNT (source),
       result, &error);
 
   if (error != NULL)
@@ -555,7 +555,7 @@ tpaw_account_settings_check_readyness (TpawAccountSettings *self)
 
       /* Make this call but don't block on its readiness. We'll signal
        * if it's updated later with ::password-retrieved. */
-      empathy_keyring_get_account_password_async (priv->account,
+      tpaw_keyring_get_account_password_async (priv->account,
           tpaw_account_settings_get_password_cb, self);
     }
 
@@ -1251,7 +1251,7 @@ tpaw_account_settings_set_password_cb (GObject *source,
     gpointer user_data)
 {
   tpaw_account_settings_processed_password (source, result, user_data,
-      empathy_keyring_set_account_password_finish);
+      tpaw_keyring_set_account_password_finish);
 }
 
 static void
@@ -1260,7 +1260,7 @@ tpaw_account_settings_delete_password_cb (GObject *source,
     gpointer user_data)
 {
   tpaw_account_settings_processed_password (source, result, user_data,
-      empathy_keyring_delete_account_password_finish);
+      tpaw_keyring_delete_account_password_finish);
 }
 
 static void
@@ -1335,13 +1335,13 @@ tpaw_account_settings_account_updated (GObject *source,
           /* FIXME: we shouldn't save the password if we
            * can't (MaySaveResponse=False) but we don't have API to check that
            * at this point (fdo #35382). */
-          empathy_keyring_set_account_password_async (priv->account,
+          tpaw_keyring_set_account_password_async (priv->account,
               priv->password, priv->remember_password,
               tpaw_account_settings_set_password_cb, settings);
         }
       else
         {
-          empathy_keyring_delete_account_password_async (priv->account,
+          tpaw_keyring_delete_account_password_async (priv->account,
               tpaw_account_settings_delete_password_cb, settings);
         }
 
@@ -1384,7 +1384,7 @@ tpaw_account_settings_created_cb (GObject *source,
           /* FIXME: we shouldn't save the password if we
            * can't (MaySaveResponse=False) but we don't have API to check that
            * at this point (fdo #35382). */
-          empathy_keyring_set_account_password_async (priv->account,
+          tpaw_keyring_set_account_password_async (priv->account,
               priv->password, priv->remember_password,
               tpaw_account_settings_set_password_cb,
               settings);

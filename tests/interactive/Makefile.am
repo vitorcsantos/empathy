@@ -1,5 +1,6 @@
 AM_CPPFLAGS =						\
 	$(ERROR_CFLAGS)					\
+	-I$(top_srcdir)/tp-account-widgets		\
 	-I$(top_srcdir)/libempathy                     	\
 	-I$(top_srcdir)/libempathy-gtk                 	\
 	-DPKGDATADIR=\""$(pkgdatadir)"\"		\

@@ -28,8 +28,8 @@
 #include <libaccounts-glib/ag-account-service.h>
 #include <libaccounts-glib/ag-manager.h>
 #include <libaccounts-glib/ag-service.h>
+#include <tp-account-widgets/tpaw-keyring.h>
 
-#include "empathy-keyring.h"
 #include "empathy-pkg-kit.h"
 #include "empathy-uoa-utils.h"
 #endif
@@ -318,7 +318,7 @@ uoa_set_account_password_cb (GObject *source,
   UoaMigrationData *data = user_data;
   GError *error = NULL;
 
-  if (!empathy_keyring_set_account_password_finish (data->new_account, result,
+  if (!tpaw_keyring_set_account_password_finish (data->new_account, result,
           &error))
     {
       DEBUG ("Error setting old account's password on the new one: %s\n",
@@ -338,7 +338,7 @@ uoa_get_account_password_cb (GObject *source,
   const gchar *password;
   GError *error = NULL;
 
-  password = empathy_keyring_get_account_password_finish (data->old_account,
+  password = tpaw_keyring_get_account_password_finish (data->old_account,
       result, &error);
   if (password == NULL)
     {
@@ -349,7 +349,7 @@ uoa_get_account_password_cb (GObject *source,
     }
   else
     {
-      empathy_keyring_set_account_password_async (data->new_account, password,
+      tpaw_keyring_set_account_password_async (data->new_account, password,
           TRUE, uoa_set_account_password_cb, data);
     }
 }
@@ -380,7 +380,7 @@ uoa_account_created_cb (GObject *source,
           tp_account_get_path_suffix (data->old_account));
 
       /* Migrate password as well */
-      empathy_keyring_get_account_password_async (data->old_account,
+      tpaw_keyring_get_account_password_async (data->old_account,
           uoa_get_account_password_cb, data);
     }
 }

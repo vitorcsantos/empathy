@@ -21,7 +21,8 @@
 #include "config.h"
 #include "empathy-auth-factory.h"
 
-#include "empathy-keyring.h"
+#include <tp-account-widgets/tpaw-keyring.h>
+
 #include "empathy-sasl-mechanisms.h"
 #include "empathy-server-sasl-handler.h"
 #include "empathy-server-tls-handler.h"
@@ -431,7 +432,7 @@ get_password_cb (GObject *source,
 {
   ObserveChannelsData *data = user_data;
 
-  if (empathy_keyring_get_account_password_finish (TP_ACCOUNT (source), result, NULL) == NULL)
+  if (tpaw_keyring_get_account_password_finish (TP_ACCOUNT (source), result, NULL) == NULL)
     {
       /* We don't actually mind if this fails, just let the approver
        * go ahead and take the channel. */
@@ -584,7 +585,7 @@ observe_channels (TpBaseClient *client,
           return;
         }
 
-      empathy_keyring_get_account_password_async (data->account,
+      tpaw_keyring_get_account_password_async (data->account,
           get_password_cb, data);
       tp_observe_channels_context_delay (context);
       return;

@@ -30,7 +30,8 @@
 #include <libsignon-glib/signon-identity.h>
 #include <libsignon-glib/signon-auth-session.h>
 
-#include "empathy-keyring.h"
+#include <tp-account-widgets/tpaw-keyring.h>
+
 #include "empathy-utils.h"
 #include "empathy-uoa-utils.h"
 #include "empathy-sasl-mechanisms.h"
@@ -293,7 +294,7 @@ set_account_password_cb (GObject *source,
   AuthContext *new_ctx;
   GError *error = NULL;
 
-  if (!empathy_keyring_set_account_password_finish (tp_account, result, &error))
+  if (!tpaw_keyring_set_account_password_finish (tp_account, result, &error))
     {
       DEBUG ("Failed to set empty password on UOA account: %s", error->message);
       auth_context_done (ctx);
@@ -360,7 +361,7 @@ empathy_uoa_auth_handler_start (EmpathyUoaAuthHandler *self,
        * To ask user to type his password SSO needs a SignonIdentity bound to
        * our account. Let's store an empty password. */
       DEBUG ("Couldn't create a signon session");
-      empathy_keyring_set_account_password_async (tp_account, "", FALSE,
+      tpaw_keyring_set_account_password_async (tp_account, "", FALSE,
           set_account_password_cb, ctx);
     }
   else
