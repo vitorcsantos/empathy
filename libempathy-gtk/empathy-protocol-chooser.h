@@ -26,6 +26,7 @@
 #include <gtk/gtk.h>
 #include <telepathy-glib/telepathy-glib.h>
 #include <tp-account-widgets/tpaw-account-settings.h>
+#include <tp-account-widgets/tpaw-protocol.h>
 
 G_BEGIN_DECLS
 
@@ -64,10 +65,8 @@ typedef gboolean (*EmpathyProtocolChooserFilterFunc) (TpConnectionManager *cm,
 
 GType empathy_protocol_chooser_get_type (void) G_GNUC_CONST;
 GtkWidget * empathy_protocol_chooser_new (void);
-TpConnectionManager *empathy_protocol_chooser_dup_selected (
-    EmpathyProtocolChooser *protocol_chooser,
-    TpProtocol **protocol,
-    gchar **service);
+TpawProtocol *empathy_protocol_chooser_dup_selected (
+    EmpathyProtocolChooser *protocol_chooser);
 
 void empathy_protocol_chooser_set_visible (
     EmpathyProtocolChooser *protocol_chooser,

@@ -58,259 +58,60 @@ typedef struct
   GtkListStore *store;
 
   gboolean dispose_run;
-  TpawConnectionManagers *cms;
 
   EmpathyProtocolChooserFilterFunc filter_func;
   gpointer filter_user_data;
-
-  GHashTable *protocols;
 } EmpathyProtocolChooserPriv;
 
 enum
 {
   COL_ICON,
   COL_LABEL,
-  COL_CM,
-  COL_PROTOCOL_NAME,
-  COL_SERVICE,
+  COL_PROTOCOL,
   COL_COUNT
 };
 
 G_DEFINE_TYPE (EmpathyProtocolChooser, empathy_protocol_chooser,
     GTK_TYPE_COMBO_BOX);
 
-static gint
-protocol_chooser_sort_protocol_value (const gchar *protocol_name)
-{
-  guint i;
-  const gchar *names[] = {
-    "jabber",
-    "local-xmpp",
-    "gtalk",
-    NULL
-  };
-
-  for (i = 0 ; names[i]; i++)
-    {
-      if (strcmp (protocol_name, names[i]) == 0)
-        return i;
-    }
-
-  return i;
-}
-
-static gint
-protocol_chooser_sort_func (GtkTreeModel *model,
-    GtkTreeIter  *iter_a,
-    GtkTreeIter  *iter_b,
-    gpointer      user_data)
-{
-  gchar *protocol_a;
-  gchar *protocol_b;
-  gint cmp = 0;
-
-  gtk_tree_model_get (model, iter_a,
-      COL_PROTOCOL_NAME, &protocol_a,
-      -1);
-  gtk_tree_model_get (model, iter_b,
-      COL_PROTOCOL_NAME, &protocol_b,
-      -1);
-
-  cmp = protocol_chooser_sort_protocol_value (protocol_a);
-  cmp -= protocol_chooser_sort_protocol_value (protocol_b);
-  if (cmp == 0)
-    {
-      cmp = strcmp (protocol_a, protocol_b);
-      /* only happens for jabber where there is one entry for gtalk and one for
-       * non-gtalk */
-      if (cmp == 0)
-        {
-          gchar *service;
-
-          gtk_tree_model_get (model, iter_a,
-            COL_SERVICE, &service,
-            -1);
-
-          if (service != NULL)
-            cmp = 1;
-          else
-            cmp = -1;
-
-          g_free (service);
-        }
-    }
-
-  g_free (protocol_a);
-  g_free (protocol_b);
-  return cmp;
-}
-
 static void
-protocol_choosers_add_cm (EmpathyProtocolChooser *chooser,
-    TpConnectionManager *cm)
+protocol_chooser_add_protocol (EmpathyProtocolChooser *chooser,
+    TpawProtocol *protocol)
 {
   EmpathyProtocolChooserPriv *priv = GET_PRIV (chooser);
-  GList *protocols, *l;
-  const gchar *cm_name;
+  GdkPixbuf *pixbuf;
 
-  cm_name = tp_connection_manager_get_name (cm);
+  pixbuf = tpaw_pixbuf_from_icon_name (tpaw_protocol_get_icon_name (protocol),
+      GTK_ICON_SIZE_BUTTON);
 
-  protocols = tp_connection_manager_dup_protocols (cm);
+  gtk_list_store_insert_with_values (priv->store,
+      NULL, -1,
+      COL_ICON, pixbuf,
+      COL_LABEL, tpaw_protocol_get_display_name (protocol),
+      COL_PROTOCOL, protocol,
+      -1);
 
-  for (l = protocols; l != NULL; l = g_list_next (l))
-    {
-      TpProtocol *protocol = l->data;
-      gchar *icon_name;
-      const gchar *display_name;
-      const gchar *saved_cm_name;
-      const gchar *proto_name;
-      GdkPixbuf *pixbuf;
-
-      proto_name = tp_protocol_get_name (protocol);
-      saved_cm_name = g_hash_table_lookup (priv->protocols, proto_name);
-
-      if (!tp_strdiff (cm_name, "haze") && saved_cm_name != NULL &&
-          tp_strdiff (saved_cm_name, "haze"))
-        /* the CM we're adding is a haze implementation of something we already
-         * have; drop it.
-         */
-        continue;
-
-      if (!tp_strdiff (cm_name, "haze") &&
-          !tp_strdiff (proto_name, "facebook"))
-        /* Facebook now supports XMPP so drop the purple facebook plugin; user
-         * should use Gabble */
-        continue;
-
-      if (!tp_strdiff (cm_name, "haze") &&
-          !tp_strdiff (proto_name, "sip"))
-        /* Haze's SIP implementation is pretty useless (bgo #629736) */
-        continue;
-
-      if (!tp_strdiff (cm_name, "butterfly"))
-        /* Butterfly isn't supported any more */
-        continue;
-
-      if (tp_strdiff (cm_name, "haze") && !tp_strdiff (saved_cm_name, "haze"))
-        {
-          GtkTreeIter titer;
-          gboolean valid;
-          TpConnectionManager *haze_cm;
-
-          /* let's this CM replace the haze implementation */
-          valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (priv->store),
-              &titer);
-
-          while (valid)
-            {
-              gchar *haze_proto_name = NULL;
-
-              gtk_tree_model_get (GTK_TREE_MODEL (priv->store), &titer,
-                  COL_PROTOCOL_NAME, &haze_proto_name,
-                  COL_CM, &haze_cm, -1);
-
-              if (haze_cm == NULL)
-                continue;
-
-              if (!tp_strdiff (tp_connection_manager_get_name (haze_cm), "haze")
-                  && !tp_strdiff (haze_proto_name, proto_name))
-                {
-                  gtk_list_store_remove (priv->store, &titer);
-                  g_object_unref (haze_cm);
-                  g_free (haze_proto_name);
-                  break;
-                }
-
-              g_object_unref (haze_cm);
-              g_free (haze_proto_name);
-              valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (priv->store),
-                  &titer);
-            }
-        }
-
-      g_hash_table_insert (priv->protocols,
-          g_strdup (proto_name), g_strdup (cm_name));
-
-      icon_name = tpaw_protocol_icon_name (proto_name);
-      pixbuf = tpaw_pixbuf_from_icon_name (icon_name, GTK_ICON_SIZE_BUTTON);
-
-      display_name = tpaw_protocol_name_to_display_name (proto_name);
-
-      gtk_list_store_insert_with_values (priv->store,
-          NULL, 0,
-          COL_ICON, pixbuf,
-          COL_LABEL, display_name,
-          COL_CM, cm,
-          COL_PROTOCOL_NAME, proto_name,
-          -1);
-
-      g_clear_object (&pixbuf);
-
-      if (!tp_strdiff (proto_name, "jabber") &&
-          !tp_strdiff (cm_name, "gabble"))
-        {
-          display_name = tpaw_service_name_to_display_name ("google-talk");
-          pixbuf = tpaw_pixbuf_from_icon_name ("im-google-talk",
-                  GTK_ICON_SIZE_BUTTON);
-
-          gtk_list_store_insert_with_values (priv->store,
-             NULL, 0,
-             COL_ICON, pixbuf,
-             COL_LABEL, display_name,
-             COL_CM, cm,
-             COL_PROTOCOL_NAME, proto_name,
-             COL_SERVICE, "google-talk",
-             -1);
-
-          g_clear_object (&pixbuf);
-
-          display_name = tpaw_service_name_to_display_name ("facebook");
-          pixbuf = tpaw_pixbuf_from_icon_name ("im-facebook",
-                  GTK_ICON_SIZE_BUTTON);
-
-          gtk_list_store_insert_with_values (priv->store,
-             NULL, 0,
-             COL_ICON, pixbuf,
-             COL_LABEL, display_name,
-             COL_CM, cm,
-             COL_PROTOCOL_NAME, proto_name,
-             COL_SERVICE, "facebook",
-             -1);
-
-          g_clear_object (&pixbuf);
-        }
-
-      g_free (icon_name);
-    }
-
-  g_list_free_full (protocols, g_object_unref);
+  g_clear_object (&pixbuf);
 }
 
 static void
-protocol_chooser_add_cms_list (EmpathyProtocolChooser *protocol_chooser,
-    GList *cms)
-{
-  GList *l;
-
-  for (l = cms; l != NULL; l = l->next)
-    protocol_choosers_add_cm (protocol_chooser, l->data);
-
-  gtk_combo_box_set_active (GTK_COMBO_BOX (protocol_chooser), 0);
-}
-
-static void
-protocol_chooser_cms_prepare_cb (GObject *source,
+protocol_chooser_get_protocols_cb (GObject *source,
     GAsyncResult *result,
     gpointer user_data)
 {
-  TpawConnectionManagers *cms = TPAW_CONNECTION_MANAGERS (source);
   EmpathyProtocolChooser *protocol_chooser = user_data;
+  GList *protocols = NULL;
+  GList *l;
 
-  if (!tpaw_connection_managers_prepare_finish (cms, result, NULL))
+  if (!tpaw_protocol_get_all_finish(&protocols, result, NULL))
     return;
 
-  protocol_chooser_add_cms_list (protocol_chooser,
-      tpaw_connection_managers_get_cms (cms));
+  for (l = protocols; l != NULL; l = l->next)
+    protocol_chooser_add_protocol (protocol_chooser, l->data);
+
+  gtk_combo_box_set_active (GTK_COMBO_BOX (protocol_chooser), 0);
+
+  g_list_free_full (protocols, g_object_unref);
 }
 
 static void
@@ -327,18 +128,7 @@ protocol_chooser_constructed (GObject *object)
   priv->store = gtk_list_store_new (COL_COUNT,
           GDK_TYPE_PIXBUF,  /* Icon */
           G_TYPE_STRING,    /* Label     */
-          G_TYPE_OBJECT,    /* CM */
-          G_TYPE_STRING,    /* protocol name  */
-          G_TYPE_STRING);   /* service */
-
-  /* Set the protocol sort function */
-  gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (priv->store),
-      COL_PROTOCOL_NAME,
-      protocol_chooser_sort_func,
-      NULL, NULL);
-  gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (priv->store),
-      COL_PROTOCOL_NAME,
-      GTK_SORT_ASCENDING);
+          G_TYPE_OBJECT);   /* protocol */
 
   gtk_combo_box_set_model (GTK_COMBO_BOX (object),
       GTK_TREE_MODEL (priv->store));
@@ -355,8 +145,7 @@ protocol_chooser_constructed (GObject *object)
       "text", COL_LABEL,
       NULL);
 
-  tpaw_connection_managers_prepare_async (priv->cms,
-      protocol_chooser_cms_prepare_cb, protocol_chooser);
+  tpaw_protocol_get_all_async (protocol_chooser_get_protocols_cb, protocol_chooser);
 
   if (G_OBJECT_CLASS (empathy_protocol_chooser_parent_class)->constructed)
     G_OBJECT_CLASS
@@ -371,26 +160,7 @@ empathy_protocol_chooser_init (EmpathyProtocolChooser *protocol_chooser)
         EMPATHY_TYPE_PROTOCOL_CHOOSER, EmpathyProtocolChooserPriv);
 
   priv->dispose_run = FALSE;
-  priv->cms = tpaw_connection_managers_dup_singleton ();
-  priv->protocols = g_hash_table_new_full (g_str_hash, g_str_equal,
-      g_free, g_free);
-
   protocol_chooser->priv = priv;
-}
-
-static void
-protocol_chooser_finalize (GObject *object)
-{
-  EmpathyProtocolChooser *protocol_chooser = EMPATHY_PROTOCOL_CHOOSER (object);
-  EmpathyProtocolChooserPriv *priv = GET_PRIV (protocol_chooser);
-
-  if (priv->protocols)
-    {
-      g_hash_table_unref (priv->protocols);
-      priv->protocols = NULL;
-    }
-
-  (G_OBJECT_CLASS (empathy_protocol_chooser_parent_class)->finalize) (object);
 }
 
 static void
@@ -410,12 +180,6 @@ protocol_chooser_dispose (GObject *object)
       priv->store = NULL;
     }
 
-  if (priv->cms)
-    {
-      g_object_unref (priv->cms);
-      priv->cms = NULL;
-    }
-
   (G_OBJECT_CLASS (empathy_protocol_chooser_parent_class)->dispose) (object);
 }
 
@@ -426,7 +190,6 @@ empathy_protocol_chooser_class_init (EmpathyProtocolChooserClass *klass)
 
   object_class->constructed = protocol_chooser_constructed;
   object_class->dispose = protocol_chooser_dispose;
-  object_class->finalize = protocol_chooser_finalize;
 
   g_type_class_add_private (object_class, sizeof (EmpathyProtocolChooserPriv));
 }
@@ -438,57 +201,46 @@ protocol_chooser_filter_visible_func (GtkTreeModel *model,
 {
   EmpathyProtocolChooser *protocol_chooser = user_data;
   EmpathyProtocolChooserPriv *priv = GET_PRIV (protocol_chooser);
-  TpConnectionManager *cm = NULL;
-  gchar *protocol_name = NULL;
+  TpawProtocol *protocol;
+  TpProtocol *tp_protocol;
   gboolean visible = FALSE;
-  gchar *service;
 
   gtk_tree_model_get (model, iter,
-      COL_CM, &cm,
-      COL_PROTOCOL_NAME, &protocol_name,
-      COL_SERVICE, &service,
+      COL_PROTOCOL, &protocol,
       -1);
 
-  if (cm != NULL && protocol_name != NULL)
+  tp_protocol = tp_connection_manager_get_protocol_object (
+      tpaw_protocol_get_cm (protocol),
+      tpaw_protocol_get_protocol_name (protocol));
+
+  if (tp_protocol != NULL)
     {
-      TpProtocol *protocol;
-
-      protocol = tp_connection_manager_get_protocol_object (cm, protocol_name);
-
-      if (protocol != NULL)
-        {
-          visible = priv->filter_func (cm, protocol, service,
-              priv->filter_user_data);
-        }
+      visible = priv->filter_func (tpaw_protocol_get_cm (protocol),
+          tp_protocol, tpaw_protocol_get_service_name (protocol),
+          priv->filter_user_data);
     }
 
-  if (cm != NULL)
-    g_object_unref (cm);
-
-  g_free (service);
   return visible;
 }
 
 /* public methods */
 
 /**
- * empathy_protocol_chooser_get_selected_protocol:
+ * empathy_protocol_chooser_dup_selected:
  * @protocol_chooser: an #EmpathyProtocolChooser
  *
- * Returns a pointer to the selected #TpConnectionManagerProtocol in
+ * Returns a pointer to the selected #TpawProtocol in
  * @protocol_chooser.
  *
- * Return value: a pointer to the selected #TpConnectionManagerProtocol
+ * Return value: a pointer to the selected #TpawProtocol
  */
-TpConnectionManager *
+TpawProtocol *
 empathy_protocol_chooser_dup_selected (
-    EmpathyProtocolChooser *protocol_chooser,
-    TpProtocol **protocol,
-    gchar **service)
+    EmpathyProtocolChooser *protocol_chooser)
 {
   GtkTreeIter iter;
-  TpConnectionManager *cm = NULL;
   GtkTreeModel *cur_model;
+  TpawProtocol *protocol = NULL;
 
   g_return_val_if_fail (EMPATHY_IS_PROTOCOL_CHOOSER (protocol_chooser), NULL);
 
@@ -500,40 +252,11 @@ empathy_protocol_chooser_dup_selected (
   if (gtk_combo_box_get_active_iter (GTK_COMBO_BOX (protocol_chooser), &iter))
     {
       gtk_tree_model_get (GTK_TREE_MODEL (cur_model), &iter,
-          COL_CM, &cm,
+          COL_PROTOCOL, &protocol,
           -1);
-
-      if (protocol != NULL)
-        {
-          gchar *protocol_name = NULL;
-
-          gtk_tree_model_get (GTK_TREE_MODEL (cur_model), &iter,
-              COL_PROTOCOL_NAME, &protocol_name,
-              -1);
-
-          *protocol = tp_connection_manager_get_protocol_object (cm,
-              protocol_name);
-
-          g_free (protocol_name);
-
-          if (*protocol == NULL)
-            {
-              /* For some reason the CM doesn't know about this protocol
-               * any more */
-              g_object_unref (cm);
-              return NULL;
-            }
-        }
-
-      if (service != NULL)
-        {
-          gtk_tree_model_get (GTK_TREE_MODEL (cur_model), &iter,
-              COL_SERVICE, service,
-              -1);
-        }
     }
 
-  return cm;
+  return protocol;
 }
 
 /**
@@ -581,81 +304,16 @@ empathy_protocol_chooser_set_visible (EmpathyProtocolChooser *protocol_chooser,
 TpawAccountSettings *
 empathy_protocol_chooser_create_account_settings (EmpathyProtocolChooser *self)
 {
-  TpawAccountSettings *settings = NULL;
-  gchar *str;
-  const gchar *display_name;
-  TpConnectionManager *cm;
-  TpProtocol *proto;
-  gchar *service = NULL;
+  TpawProtocol *protocol;
+  TpawAccountSettings *settings;
 
-  cm = empathy_protocol_chooser_dup_selected (self, &proto, &service);
-  if (cm == NULL || proto == NULL)
-    goto out;
+  protocol = empathy_protocol_chooser_dup_selected (self);
+  if (protocol == NULL)
+    return NULL;
 
-  if (service != NULL)
-    display_name = tpaw_service_name_to_display_name (service);
-  else
-    display_name = tpaw_protocol_name_to_display_name (
-        tp_protocol_get_name (proto));
+  settings = tpaw_protocol_create_account_settings (protocol);
 
-  /* Create account */
-  /* To translator: %s is the name of the protocol, such as "Google Talk" or
-   * "Yahoo!"
-   */
-  str = g_strdup_printf (_("New %s account"), display_name);
+  tp_clear_object (&protocol);
 
-  settings = tpaw_account_settings_new (tp_connection_manager_get_name (cm),
-      tp_protocol_get_name (proto), service, str);
-
-  g_free (str);
-
-  if (!tp_strdiff (service, "google-talk"))
-    {
-      const gchar *fallback_servers[] = {
-          "talkx.l.google.com",
-          "talkx.l.google.com:443,oldssl",
-          "talkx.l.google.com:80",
-          NULL};
-
-      const gchar *extra_certificate_identities[] = {
-          "talk.google.com",
-          NULL};
-
-      tpaw_account_settings_set_icon_name_async (settings, "im-google-talk",
-          NULL, NULL);
-      tpaw_account_settings_set (settings, "server",
-          g_variant_new_string (extra_certificate_identities[0]));
-      tpaw_account_settings_set (settings, "require-encryption",
-          g_variant_new_boolean (TRUE));
-      tpaw_account_settings_set (settings, "fallback-servers",
-          g_variant_new_strv (fallback_servers, -1));
-
-      if (tpaw_account_settings_have_tp_param (settings,
-              "extra-certificate-identities"))
-        {
-          tpaw_account_settings_set (settings,
-              "extra-certificate-identities",
-              g_variant_new_strv (extra_certificate_identities, -1));
-        }
-    }
-  else if (!tp_strdiff (service, "facebook"))
-    {
-      const gchar *fallback_servers[] = {
-          "chat.facebook.com:443",
-          NULL };
-
-      tpaw_account_settings_set_icon_name_async (settings, "im-facebook",
-          NULL, NULL);
-      tpaw_account_settings_set (settings, "require-encryption",
-          g_variant_new_boolean (TRUE));
-      tpaw_account_settings_set (settings, "server",
-          g_variant_new_string ("chat.facebook.com"));
-      tpaw_account_settings_set (settings, "fallback-servers",
-          g_variant_new_strv (fallback_servers, -1));
-    }
-
-out:
-  tp_clear_object (&cm);
-  g_free (service);
   return settings;
 }
