@@ -42,6 +42,7 @@ libtp_account_widgets_sources =            	\
 	tpaw-irc-server.c			\
 	tpaw-live-search.c			\
 	tpaw-pixbuf-utils.c			\
+	tpaw-protocol.c				\
 	tpaw-string-parser.c			\
 	tpaw-time.c				\
 	tpaw-user-info.c			\
@@ -72,6 +73,7 @@ libtp_account_widgets_headers =			\
 	tpaw-irc-server.h			\
 	tpaw-live-search.h			\
 	tpaw-pixbuf-utils.h			\
+	tpaw-protocol.h				\
 	tpaw-string-parser.h			\
 	tpaw-time.h				\
 	tpaw-user-info.h			\
