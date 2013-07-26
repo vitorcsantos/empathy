@@ -63,6 +63,19 @@ libtp_account_widgets_la_SOURCES =			\
 	$(libtp_account_widgets_headers)		\
 	$(NULL)
 
+# these are sources that depend on Ubuntu Online Accounts
+uoa_sources = \
+	tpaw-uoa-utils.c \
+	tpaw-uoa-utils.h \
+	$(NULL)
+
+if HAVE_UOA
+libtp_account_widgets_la_SOURCES += $(uoa_sources)
+EXTRA_DIST =
+else
+EXTRA_DIST = $(uoa_sources)
+endif
+
 # do not distribute generated files
 nodist_libtp_account_widgets_la_SOURCES = \
 	$(BUILT_SOURCES)
@@ -70,6 +83,7 @@ nodist_libtp_account_widgets_la_SOURCES = \
 check_c_sources = \
     $(libtp_account_widgets_sources) \
     $(libtp_account_widgets_headers) \
+    $(uoa_sources) \
     $(NULL)
 include $(top_srcdir)/tools/check-coding-style.mk
 check-local: check-coding-style
@@ -103,7 +117,7 @@ tpaw-account-widgets-resources.c: tpaw-account-widgets.gresource.xml $(account_w
 tpaw-account-widgets-resources.h: tpaw-account-widgets.gresource.xml $(account_widgets_resource_files)
 	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate-header $<
 
-EXTRA_DIST =					\
+EXTRA_DIST +=					\
 	tpaw-account-widgets.gresource.xml	\
 	$(account_widgets_dtd_files)		\
 	$(account_widgets_ui_files)		\

@@ -93,8 +93,6 @@ goa_sources = \
 uoa_sources = \
 	empathy-uoa-auth-handler.c \
 	empathy-uoa-auth-handler.h \
-	empathy-uoa-utils.c \
-	empathy-uoa-utils.h \
 	$(NULL)
 
 pkglib_LTLIBRARIES = libempathy.la

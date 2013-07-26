@@ -31,9 +31,9 @@
 #include <libsignon-glib/signon-auth-session.h>
 
 #include <tp-account-widgets/tpaw-keyring.h>
+#include <tp-account-widgets/tpaw-uoa-utils.h>
 
 #include "empathy-utils.h"
-#include "empathy-uoa-utils.h"
 #include "empathy-sasl-mechanisms.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_SASL

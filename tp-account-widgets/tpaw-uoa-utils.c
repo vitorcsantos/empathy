@@ -1,5 +1,5 @@
 /*
- * empathy-uoa-utils.c - Source for UOA utilities
+ * tpaw-uoa-utils.c - Source for UOA utilities
  * Copyright (C) 2012 Collabora Ltd.
  * @author Xavier Claessens <xavier.claessens@collabora.co.uk>
  *
@@ -19,7 +19,7 @@
  */
 
 #include "config.h"
-#include "empathy-uoa-utils.h"
+#include "tpaw-uoa-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_ACCOUNT
 #include "empathy-debug.h"
@@ -27,7 +27,7 @@
 static AgManager *singleton = NULL;
 
 void
-empathy_uoa_manager_set_default (AgManager *manager)
+tpaw_uoa_manager_set_default (AgManager *manager)
 {
   if (singleton != NULL)
     return;
@@ -37,12 +37,12 @@ empathy_uoa_manager_set_default (AgManager *manager)
 }
 
 AgManager *
-empathy_uoa_manager_dup (void)
+tpaw_uoa_manager_dup (void)
 {
   if (singleton != NULL)
     return g_object_ref (singleton);
 
-  singleton = ag_manager_new_for_service_type (EMPATHY_UOA_SERVICE_TYPE);
+  singleton = ag_manager_new_for_service_type (TPAW_UOA_SERVICE_TYPE);
   g_object_add_weak_pointer ((GObject *) singleton, (gpointer) &singleton);
 
   return singleton;

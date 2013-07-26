@@ -1,5 +1,5 @@
 /*
- * empathy-utils.h - Header for UOA utilities
+ * tpaw-utils.h - Header for UOA utilities
  * Copyright (C) 2012 Collabora Ltd.
  * @author Xavier Claessens <xavier.claessens@collabora.co.uk>
  *
@@ -18,18 +18,18 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef __EMPATHY_UOA_UTILS_H__
-#define __EMPATHY_UOA_UTILS_H__
+#ifndef __TPAW_UOA_UTILS_H__
+#define __TPAW_UOA_UTILS_H__
 
 #include <libaccounts-glib/ag-manager.h>
 
-#define EMPATHY_UOA_SERVICE_TYPE "IM"
+#define TPAW_UOA_SERVICE_TYPE "IM"
 
 G_BEGIN_DECLS
 
-void empathy_uoa_manager_set_default (AgManager *manager);
-AgManager *empathy_uoa_manager_dup (void);
+void tpaw_uoa_manager_set_default (AgManager *manager);
+AgManager *tpaw_uoa_manager_dup (void);
 
 G_END_DECLS
 
-#endif /* #ifndef __EMPATHY_UOA_UTILS_H__*/
+#endif /* #ifndef __TPAW_UOA_UTILS_H__*/

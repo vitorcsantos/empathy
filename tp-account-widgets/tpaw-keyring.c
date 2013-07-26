@@ -29,7 +29,7 @@
 #include <libaccounts-glib/ag-manager.h>
 #include <libaccounts-glib/ag-service.h>
 #include <libsignon-glib/signon-identity.h>
-#include "empathy-uoa-utils.h"
+#include "tpaw-uoa-utils.h"
 #endif
 
 #include "empathy-utils.h"
@@ -114,11 +114,11 @@ uoa_password_common (TpAccount *tp_account,
       goto error;
     }
 
-  manager = empathy_uoa_manager_dup ();
+  manager = tpaw_uoa_manager_dup ();
   account = ag_manager_get_account (manager, account_id);
 
   /* Assuming there is only one IM service */
-  l = ag_account_list_services_by_type (account, EMPATHY_UOA_SERVICE_TYPE);
+  l = ag_account_list_services_by_type (account, TPAW_UOA_SERVICE_TYPE);
   if (l == NULL)
     {
       g_simple_async_result_set_error (result,
