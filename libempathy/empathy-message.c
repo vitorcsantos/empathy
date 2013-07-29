@@ -26,9 +26,9 @@
 #include "empathy-message.h"
 
 #include <glib/gi18n-lib.h>
+#include <tp-account-widgets/tpaw-time.h>
 
 #include "empathy-client-factory.h"
-#include "empathy-time.h"
 #include "empathy-utils.h"
 #include "empathy-enum-types.h"
 
@@ -196,7 +196,7 @@ empathy_message_init (EmpathyMessage *message)
 		EMPATHY_TYPE_MESSAGE, EmpathyMessagePriv);
 
 	message->priv = priv;
-	priv->timestamp = empathy_time_get_current ();
+	priv->timestamp = tpaw_time_get_current ();
 }
 
 static void
@@ -314,7 +314,7 @@ message_set_property (GObject      *object,
 	case PROP_TIMESTAMP:
 		priv->timestamp = g_value_get_int64 (value);
 		if (priv->timestamp <= 0)
-			priv->timestamp = empathy_time_get_current ();
+			priv->timestamp = tpaw_time_get_current ();
 		break;
 	case PROP_ORIGINAL_TIMESTAMP:
 		priv->original_timestamp = g_value_get_int64 (value);

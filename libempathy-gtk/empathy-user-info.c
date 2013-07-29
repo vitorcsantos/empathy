@@ -21,11 +21,11 @@
 #include "empathy-user-info.h"
 
 #include <glib/gi18n-lib.h>
+#include <tp-account-widgets/tpaw-time.h>
 
 #include "empathy-avatar-chooser.h"
 #include "empathy-calendar-button.h"
 #include "empathy-contactinfo-utils.h"
-#include "empathy-time.h"
 #include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_CONTACT
@@ -93,7 +93,7 @@ bday_changed_cb (EmpathyCalendarButton *button,
     {
       gchar tmp[255];
 
-      g_date_strftime (tmp, sizeof (tmp), EMPATHY_DATE_FORMAT_DISPLAY_SHORT,
+      g_date_strftime (tmp, sizeof (tmp), TPAW_DATE_FORMAT_DISPLAY_SHORT,
           date);
       strv[0] = tmp;
     }

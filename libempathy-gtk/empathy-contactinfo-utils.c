@@ -24,10 +24,10 @@
 #include "empathy-contactinfo-utils.h"
 
 #include <glib/gi18n-lib.h>
+#include <tp-account-widgets/tpaw-time.h>
 
 #include "empathy-request-util.h"
 #include "empathy-string-parser.h"
-#include "empathy-time.h"
 #include "empathy-ui-utils.h"
 
 static gchar *
@@ -45,7 +45,7 @@ format_idle_time (GStrv values)
   if (duration <= 0)
     return NULL;
 
-  return empathy_duration_to_string (duration);
+  return tpaw_duration_to_string (duration);
 }
 
 static gchar *

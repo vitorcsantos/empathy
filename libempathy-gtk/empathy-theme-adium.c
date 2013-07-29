@@ -23,13 +23,13 @@
 #include "empathy-theme-adium.h"
 
 #include <glib/gi18n-lib.h>
+#include <tp-account-widgets/tpaw-time.h>
 #include <tp-account-widgets/tpaw-utils.h>
 
 #include "empathy-gsettings.h"
 #include "empathy-images.h"
 #include "empathy-plist.h"
 #include "empathy-smiley-manager.h"
-#include "empathy-time.h"
 #include "empathy-ui-utils.h"
 #include "empathy-utils.h"
 #include "empathy-webkit-utils.h"
@@ -648,20 +648,20 @@ theme_adium_add_html (EmpathyThemeAdium *self,
 
           strftime_format = nsdate_to_strftime (self->priv->data, format);
           if (is_backlog)
-            dup_replace = empathy_time_to_string_local (timestamp,
+            dup_replace = tpaw_time_to_string_local (timestamp,
               strftime_format ? strftime_format :
-              EMPATHY_TIME_DATE_FORMAT_DISPLAY_SHORT);
+              TPAW_TIME_DATE_FORMAT_DISPLAY_SHORT);
           else
-            dup_replace = empathy_time_to_string_local (timestamp,
+            dup_replace = tpaw_time_to_string_local (timestamp,
               strftime_format ? strftime_format :
-              EMPATHY_TIME_FORMAT_DISPLAY_SHORT);
+              TPAW_TIME_FORMAT_DISPLAY_SHORT);
 
           replace = dup_replace;
         }
       else if (theme_adium_match (&cur, "%shortTime%"))
         {
-          dup_replace = empathy_time_to_string_local (timestamp,
-            EMPATHY_TIME_FORMAT_DISPLAY_SHORT);
+          dup_replace = tpaw_time_to_string_local (timestamp,
+            TPAW_TIME_FORMAT_DISPLAY_SHORT);
           replace = dup_replace;
         }
       else if (theme_adium_match (&cur, "%service%"))
@@ -746,7 +746,7 @@ theme_adium_append_event_escaped (EmpathyThemeAdium *self,
 {
   theme_adium_add_html (self, "appendMessage",
       self->priv->data->status_html, escaped, NULL, NULL, NULL,
-      NULL, "event", empathy_time_get_current (), FALSE, FALSE, direction);
+      NULL, "event", tpaw_time_get_current (), FALSE, FALSE, direction);
 
   /* There is no last contact */
   if (self->priv->last_contact)
@@ -1206,7 +1206,7 @@ empathy_theme_adium_edit_message (EmpathyThemeAdium *self,
     }
 
   /* set a tooltip */
-  timestamp = empathy_time_to_string_local (
+  timestamp = tpaw_time_to_string_local (
     empathy_message_get_timestamp (message),
     "%H:%M:%S");
   tooltip = g_strdup_printf (_("Message edited at %s"), timestamp);

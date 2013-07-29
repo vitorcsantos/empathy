@@ -24,6 +24,7 @@
 
 #include <glib/gi18n-lib.h>
 #include <tp-account-widgets/tpaw-builder.h>
+#include <tp-account-widgets/tpaw-time.h>
 
 #ifdef HAVE_LIBCHAMPLAIN
 #include <champlain/champlain.h>
@@ -35,7 +36,6 @@
 #include "empathy-groups-widget.h"
 #include "empathy-gtk-enum-types.h"
 #include "empathy-location.h"
-#include "empathy-time.h"
 #include "empathy-ui-utils.h"
 #include "empathy-utils.h"
 
@@ -594,7 +594,7 @@ location_update (EmpathyIndividualWidget *self)
 
       stamp = g_value_get_int64 (value);
 
-      user_date = empathy_time_to_string_relative (stamp);
+      user_date = tpaw_time_to_string_relative (stamp);
 
       tmp = g_strdup_printf ("<b>%s</b>", _("Location"));
       /* translators: format is "Location, $date" */
@@ -647,7 +647,7 @@ location_update (EmpathyIndividualWidget *self)
           gint64 time_;
 
           time_ = g_value_get_int64 (value);
-          svalue = empathy_time_to_string_utc (time_, _("%B %e, %Y at %R UTC"));
+          svalue = tpaw_time_to_string_utc (time_, _("%B %e, %Y at %R UTC"));
         }
 
       if (svalue != NULL)

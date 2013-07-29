@@ -23,10 +23,10 @@
 #include "empathy-location-manager.h"
 
 #include <geoclue/geoclue-master.h>
+#include <tp-account-widgets/tpaw-time.h>
 
 #include "empathy-gsettings.h"
 #include "empathy-location.h"
-#include "empathy-time.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_LOCATION
 #include "empathy-debug.h"
@@ -244,7 +244,7 @@ update_timestamp (EmpathyLocationManager *self)
 {
   gint64 timestamp;
 
-  timestamp = empathy_time_get_current ();
+  timestamp = tpaw_time_get_current ();
   tp_asv_set_int64 (self->priv->location, EMPATHY_LOCATION_TIMESTAMP,
       timestamp);
 

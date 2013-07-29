@@ -17,8 +17,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef __EMPATHY_TIME_H__
-#define __EMPATHY_TIME_H__
+#ifndef __TPAW_TIME_H__
+#define __TPAW_TIME_H__
 
 #ifndef __USE_XOPEN
 #define __USE_XOPEN
@@ -30,19 +30,19 @@ G_BEGIN_DECLS
 
 /* FIXME: ideally we should only display the hour and minutes but
  * there is no localized format for that (bgo #668323) */
-#define EMPATHY_TIME_FORMAT_DISPLAY_SHORT "%X"
-#define EMPATHY_DATE_FORMAT_DISPLAY_SHORT "%a %d %b %Y"
-#define EMPATHY_TIME_DATE_FORMAT_DISPLAY_SHORT "%a %d %b %Y, %X"
+#define TPAW_TIME_FORMAT_DISPLAY_SHORT "%X"
+#define TPAW_DATE_FORMAT_DISPLAY_SHORT "%a %d %b %Y"
+#define TPAW_TIME_DATE_FORMAT_DISPLAY_SHORT "%a %d %b %Y, %X"
 
-gint64  empathy_time_get_current     (void);
-gchar  *empathy_time_to_string_utc   (gint64 t,
+gint64  tpaw_time_get_current     (void);
+gchar  *tpaw_time_to_string_utc   (gint64 t,
     const gchar *format);
-gchar  *empathy_time_to_string_local (gint64 t,
+gchar  *tpaw_time_to_string_local (gint64 t,
     const gchar *format);
-gchar  *empathy_time_to_string_relative (gint64 t);
-gchar *empathy_duration_to_string (guint seconds);
+gchar  *tpaw_time_to_string_relative (gint64 t);
+gchar *tpaw_duration_to_string (guint seconds);
 
 G_END_DECLS
 
-#endif /* __EMPATHY_TIME_H__ */
+#endif /* __TPAW_TIME_H__ */
 

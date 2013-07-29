@@ -49,7 +49,6 @@ libempathy_headers =				\
 	empathy-server-sasl-handler.h		\
 	empathy-server-tls-handler.h		\
 	empathy-status-presets.h		\
-	empathy-time.h				\
 	empathy-tls-verifier.h			\
 	empathy-tp-chat.h			\
 	empathy-types.h				\
@@ -78,7 +77,6 @@ libempathy_handwritten_source =				\
 	empathy-server-sasl-handler.c			\
 	empathy-server-tls-handler.c			\
 	empathy-status-presets.c			\
-	empathy-time.c					\
 	empathy-tls-verifier.c				\
 	empathy-tp-chat.c				\
 	empathy-utils.c

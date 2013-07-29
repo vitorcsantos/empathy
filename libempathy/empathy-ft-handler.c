@@ -25,8 +25,8 @@
 #include "empathy-ft-handler.h"
 
 #include <glib/gi18n-lib.h>
+#include <tp-account-widgets/tpaw-time.h>
 
-#include "empathy-time.h"
 #include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_FT
@@ -643,7 +643,7 @@ update_remaining_time_and_speed (EmpathyFTHandler *handler,
   last_transferred_bytes = priv->transferred_bytes;
   priv->transferred_bytes = transferred_bytes;
 
-  current_time = empathy_time_get_current ();
+  current_time = tpaw_time_get_current ();
   elapsed_time = current_time - priv->last_update_time;
 
   if (elapsed_time >= 1)
@@ -672,7 +672,7 @@ ft_transfer_transferred_bytes_cb (TpFileTransferChannel *channel,
 
   if (priv->transferred_bytes == 0)
     {
-      priv->last_update_time = empathy_time_get_current ();
+      priv->last_update_time = tpaw_time_get_current ();
       g_signal_emit (handler, signals[TRANSFER_STARTED], 0, channel);
     }
 

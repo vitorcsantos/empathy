@@ -20,14 +20,14 @@
  */
 
 #include "config.h"
-#include "empathy-time.h"
+#include "tpaw-time.h"
 
 #include <glib/gi18n-lib.h>
 
-/* Note: EmpathyTime is always in UTC. */
+/* Note: TpawTime is always in UTC. */
 
 gint64
-empathy_time_get_current (void)
+tpaw_time_get_current (void)
 {
   GDateTime *now;
   gint64 result;
@@ -42,7 +42,7 @@ empathy_time_get_current (void)
 /* Converts the UTC timestamp to a string, also in UTC.
  * Returns NULL on failure. */
 gchar *
-empathy_time_to_string_utc (gint64 t,
+tpaw_time_to_string_utc (gint64 t,
     const gchar *format)
 {
   GDateTime *d;
@@ -60,7 +60,7 @@ empathy_time_to_string_utc (gint64 t,
 /* Converts the UTC timestamp to a string, in local time.
  * Returns NULL on failure. */
 gchar *
-empathy_time_to_string_local (gint64 t,
+tpaw_time_to_string_local (gint64 t,
     const gchar *format)
 {
   GDateTime *d, *local;
@@ -79,7 +79,7 @@ empathy_time_to_string_local (gint64 t,
 }
 
 gchar *
-empathy_duration_to_string (guint seconds)
+tpaw_duration_to_string (guint seconds)
 {
   if (seconds < 60)
     {
@@ -119,7 +119,7 @@ empathy_duration_to_string (guint seconds)
 }
 
 gchar  *
-empathy_time_to_string_relative (gint64 t)
+tpaw_time_to_string_relative (gint64 t)
 {
   GDateTime *now, *then;
   gint   seconds;
@@ -133,7 +133,7 @@ empathy_time_to_string_relative (gint64 t)
   seconds = delta / G_TIME_SPAN_SECOND;
 
   if (seconds > 0)
-    result = empathy_duration_to_string (seconds);
+    result = tpaw_duration_to_string (seconds);
   else
     result = g_strdup (_("in the future"));
 
