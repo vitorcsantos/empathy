@@ -1,4 +1,4 @@
-/* This file is a copy of cheese-camera-device-monitor.c from Empathy. We
+/* This file is a copy of cheese-camera-device-monitor.c from Tpaw. We
  * just renamespaced it to avoid conflicts when linking on libcheese. */
 /*
  * Copyright © 2007,2008 Jaap Haitsma <jaap@haitsma.org>
@@ -6,20 +6,19 @@
  * Copyright © 2008 Ryan Zeigler <zeiglerr@gmail.com>
  * Copyright © 2010 Filippo Argiolas <filippo.argiolas@gmail.com>
  *
- * Licensed under the GNU General Public License Version 2
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
+ * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 #ifdef HAVE_CONFIG_H
   #include "config.h"
@@ -50,31 +49,31 @@
  * @short_description: Simple object to enumerate v4l devices
  * @include: cheese/cheese-camera-device-monitor.h
  *
- * #EmpathyCameraDeviceMonitor provides a basic interface for
+ * #TpawCameraDeviceMonitor provides a basic interface for
  * video4linux device enumeration and hotplugging.
  *
  * It uses either GUdev or some platform specific code to list video
  * devices.  It is also capable (right now in linux only, with the
  * udev backend) to monitor device plugging and emit a
- * EmpathyCameraDeviceMonitor::added or
- * EmpathyCameraDeviceMonitor::removed signal when an event happens.
+ * TpawCameraDeviceMonitor::added or
+ * TpawCameraDeviceMonitor::removed signal when an event happens.
  */
 
-G_DEFINE_TYPE (EmpathyCameraDeviceMonitor, empathy_camera_device_monitor, G_TYPE_OBJECT)
+G_DEFINE_TYPE (TpawCameraDeviceMonitor, tpaw_camera_device_monitor, G_TYPE_OBJECT)
 
-#define EMPATHY_CAMERA_DEVICE_MONITOR_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o),                               \
-                                                                                  EMPATHY_TYPE_CAMERA_DEVICE_MONITOR, \
-                                                                                  EmpathyCameraDeviceMonitorPrivate))
+#define TPAW_CAMERA_DEVICE_MONITOR_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o),                               \
+                                                                                  TPAW_TYPE_CAMERA_DEVICE_MONITOR, \
+                                                                                  TpawCameraDeviceMonitorPrivate))
 
-#define EMPATHY_CAMERA_DEVICE_MONITOR_ERROR empathy_camera_device_monitor_error_quark ()
+#define TPAW_CAMERA_DEVICE_MONITOR_ERROR tpaw_camera_device_monitor_error_quark ()
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include "empathy-debug.h"
 
-enum EmpathyCameraDeviceMonitorError
+enum TpawCameraDeviceMonitorError
 {
-  EMPATHY_CAMERA_DEVICE_MONITOR_ERROR_UNKNOWN,
-  EMPATHY_CAMERA_DEVICE_MONITOR_ERROR_ELEMENT_NOT_FOUND
+  TPAW_CAMERA_DEVICE_MONITOR_ERROR_UNKNOWN,
+  TPAW_CAMERA_DEVICE_MONITOR_ERROR_ELEMENT_NOT_FOUND
 };
 
 typedef struct
@@ -84,7 +83,7 @@ typedef struct
 #else
   guint filler;
 #endif /* HAVE_UDEV */
-} EmpathyCameraDeviceMonitorPrivate;
+} TpawCameraDeviceMonitorPrivate;
 
 enum
 {
@@ -97,15 +96,15 @@ static guint monitor_signals[LAST_SIGNAL];
 
 #if 0
 GQuark
-empathy_camera_device_monitor_error_quark (void)
+tpaw_camera_device_monitor_error_quark (void)
 {
-  return g_quark_from_static_string ("empathy-camera-error-quark");
+  return g_quark_from_static_string ("tpaw-camera-error-quark");
 }
 #endif
 
 #ifdef HAVE_UDEV
 static void
-empathy_camera_device_monitor_added (EmpathyCameraDeviceMonitor *monitor,
+tpaw_camera_device_monitor_added (TpawCameraDeviceMonitor *monitor,
                                     GUdevDevice               *udevice)
 {
   const char *device_file;
@@ -191,7 +190,7 @@ empathy_camera_device_monitor_added (EmpathyCameraDeviceMonitor *monitor,
 }
 
 static void
-empathy_camera_device_monitor_removed (EmpathyCameraDeviceMonitor *monitor,
+tpaw_camera_device_monitor_removed (TpawCameraDeviceMonitor *monitor,
                                       GUdevDevice               *udevice)
 {
   g_signal_emit (monitor, monitor_signals[REMOVED], 0,
@@ -199,20 +198,20 @@ empathy_camera_device_monitor_removed (EmpathyCameraDeviceMonitor *monitor,
 }
 
 static void
-empathy_camera_device_monitor_uevent_cb (GUdevClient               *client,
+tpaw_camera_device_monitor_uevent_cb (GUdevClient               *client,
                                         const gchar               *action,
                                         GUdevDevice               *udevice,
-                                        EmpathyCameraDeviceMonitor *monitor)
+                                        TpawCameraDeviceMonitor *monitor)
 {
   if (g_str_equal (action, "remove"))
-    empathy_camera_device_monitor_removed (monitor, udevice);
+    tpaw_camera_device_monitor_removed (monitor, udevice);
   else if (g_str_equal (action, "add"))
-    empathy_camera_device_monitor_added (monitor, udevice);
+    tpaw_camera_device_monitor_added (monitor, udevice);
 }
 
 /**
- * empathy_camera_device_monitor_coldplug:
- * @monitor: a #EmpathyCameraDeviceMonitor object.
+ * tpaw_camera_device_monitor_coldplug:
+ * @monitor: a #TpawCameraDeviceMonitor object.
  *
  * Will actively look for plugged in cameras and emit
  * ::added for those new cameras.
@@ -220,9 +219,9 @@ empathy_camera_device_monitor_uevent_cb (GUdevClient               *client,
  * to those signals before they are emitted.
  */
 void
-empathy_camera_device_monitor_coldplug (EmpathyCameraDeviceMonitor *monitor)
+tpaw_camera_device_monitor_coldplug (TpawCameraDeviceMonitor *monitor)
 {
-  EmpathyCameraDeviceMonitorPrivate *priv = EMPATHY_CAMERA_DEVICE_MONITOR_GET_PRIVATE (monitor);
+  TpawCameraDeviceMonitorPrivate *priv = TPAW_CAMERA_DEVICE_MONITOR_GET_PRIVATE (monitor);
   GList                            *devices, *l;
   gint                              i = 0;
 
@@ -236,7 +235,7 @@ empathy_camera_device_monitor_coldplug (EmpathyCameraDeviceMonitor *monitor)
   /* Initialize camera structures */
   for (l = devices; l != NULL; l = l->next)
   {
-    empathy_camera_device_monitor_added (monitor, l->data);
+    tpaw_camera_device_monitor_added (monitor, l->data);
     g_object_unref (l->data);
     i++;
   }
@@ -247,10 +246,10 @@ empathy_camera_device_monitor_coldplug (EmpathyCameraDeviceMonitor *monitor)
 
 #else /* HAVE_UDEV */
 void
-empathy_camera_device_monitor_coldplug (EmpathyCameraDeviceMonitor *monitor)
+tpaw_camera_device_monitor_coldplug (TpawCameraDeviceMonitor *monitor)
 {
   #if 0
-  EmpathyCameraDeviceMonitorPrivate *priv = EMPATHY_CAMERA_DEVICE_MONITOR_GET_PRIVATE (monitor);
+  TpawCameraDeviceMonitorPrivate *priv = TPAW_CAMERA_DEVICE_MONITOR_GET_PRIVATE (monitor);
   struct v4l2_capability            v2cap;
   struct video_capability           v1cap;
   int                               fd, ok;
@@ -308,7 +307,7 @@ empathy_camera_device_monitor_coldplug (EmpathyCameraDeviceMonitor *monitor)
   /* Initialize camera structures */
   for (l = devices; l != NULL; l = l->next)
   {
-    empathy_camera_device_monitor_added (monitor, l->data);
+    tpaw_camera_device_monitor_added (monitor, l->data);
     g_object_unref (l->data);
   }
   g_list_free (devices);
@@ -318,11 +317,11 @@ empathy_camera_device_monitor_coldplug (EmpathyCameraDeviceMonitor *monitor)
 #endif /* HAVE_UDEV */
 
 static void
-empathy_camera_device_monitor_finalize (GObject *object)
+tpaw_camera_device_monitor_finalize (GObject *object)
 {
 #ifdef HAVE_UDEV
-  EmpathyCameraDeviceMonitor *monitor = EMPATHY_CAMERA_DEVICE_MONITOR (object);
-  EmpathyCameraDeviceMonitorPrivate *priv = EMPATHY_CAMERA_DEVICE_MONITOR_GET_PRIVATE (monitor);
+  TpawCameraDeviceMonitor *monitor = TPAW_CAMERA_DEVICE_MONITOR (object);
+  TpawCameraDeviceMonitorPrivate *priv = TPAW_CAMERA_DEVICE_MONITOR_GET_PRIVATE (monitor);
 
   if (priv->client != NULL)
   {
@@ -330,18 +329,18 @@ empathy_camera_device_monitor_finalize (GObject *object)
     priv->client = NULL;
   }
 #endif /* HAVE_UDEV */
-  G_OBJECT_CLASS (empathy_camera_device_monitor_parent_class)->finalize (object);
+  G_OBJECT_CLASS (tpaw_camera_device_monitor_parent_class)->finalize (object);
 }
 
 static void
-empathy_camera_device_monitor_class_init (EmpathyCameraDeviceMonitorClass *klass)
+tpaw_camera_device_monitor_class_init (TpawCameraDeviceMonitorClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize = empathy_camera_device_monitor_finalize;
+  object_class->finalize = tpaw_camera_device_monitor_finalize;
 
   /**
-   * EmpathyCameraDeviceMonitor::added:
+   * TpawCameraDeviceMonitor::added:
    * @device: A private object representing the newly added camera.
    * @id: Device unique identifier.
    * @device: Device file name  (e.g. /dev/video2).
@@ -349,17 +348,17 @@ empathy_camera_device_monitor_class_init (EmpathyCameraDeviceMonitorClass *klass
    * @api_version: Supported video4linux API: 1 for v4l, 2 for v4l2.
    *
    * The ::added signal is emitted when a camera is added, or on start-up
-   * after #empathy_camera_device_monitor_colplug is called.
+   * after #tpaw_camera_device_monitor_colplug is called.
    **/
   monitor_signals[ADDED] = g_signal_new ("added", G_OBJECT_CLASS_TYPE (klass),
                                          G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
-                                         G_STRUCT_OFFSET (EmpathyCameraDeviceMonitorClass, added),
+                                         G_STRUCT_OFFSET (TpawCameraDeviceMonitorClass, added),
                                          NULL, NULL,
                                          g_cclosure_marshal_generic,
                                          G_TYPE_NONE, 4, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_INT);
 
   /**
-   * EmpathyCameraDeviceMonitor::removed:
+   * TpawCameraDeviceMonitor::removed:
    * @device: A private object representing the newly added camera
    * @id: Device unique identifier.
    *
@@ -368,38 +367,38 @@ empathy_camera_device_monitor_class_init (EmpathyCameraDeviceMonitorClass *klass
    **/
   monitor_signals[REMOVED] = g_signal_new ("removed", G_OBJECT_CLASS_TYPE (klass),
                                            G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
-                                           G_STRUCT_OFFSET (EmpathyCameraDeviceMonitorClass, removed),
+                                           G_STRUCT_OFFSET (TpawCameraDeviceMonitorClass, removed),
                                            NULL, NULL,
                                            g_cclosure_marshal_generic,
                                            G_TYPE_NONE, 1, G_TYPE_STRING);
 
-  g_type_class_add_private (klass, sizeof (EmpathyCameraDeviceMonitorPrivate));
+  g_type_class_add_private (klass, sizeof (TpawCameraDeviceMonitorPrivate));
 }
 
 static void
-empathy_camera_device_monitor_init (EmpathyCameraDeviceMonitor *monitor)
+tpaw_camera_device_monitor_init (TpawCameraDeviceMonitor *monitor)
 {
 #ifdef HAVE_UDEV
-  EmpathyCameraDeviceMonitorPrivate *priv         = EMPATHY_CAMERA_DEVICE_MONITOR_GET_PRIVATE (monitor);
+  TpawCameraDeviceMonitorPrivate *priv         = TPAW_CAMERA_DEVICE_MONITOR_GET_PRIVATE (monitor);
   const gchar *const                subsystems[] = {"video4linux", NULL};
 
   priv->client = g_udev_client_new (subsystems);
   g_signal_connect (G_OBJECT (priv->client), "uevent",
-                    G_CALLBACK (empathy_camera_device_monitor_uevent_cb), monitor);
+                    G_CALLBACK (tpaw_camera_device_monitor_uevent_cb), monitor);
 #endif /* HAVE_UDEV */
 }
 
 /**
- * empathy_camera_device_monitor_new:
+ * tpaw_camera_device_monitor_new:
  *
- * Returns a new #EmpathyCameraDeviceMonitor object.
+ * Returns a new #TpawCameraDeviceMonitor object.
  *
- * Return value: a new #EmpathyCameraDeviceMonitor object.
+ * Return value: a new #TpawCameraDeviceMonitor object.
  **/
-EmpathyCameraDeviceMonitor *
-empathy_camera_device_monitor_new (void)
+TpawCameraDeviceMonitor *
+tpaw_camera_device_monitor_new (void)
 {
-  return g_object_new (EMPATHY_TYPE_CAMERA_DEVICE_MONITOR, NULL);
+  return g_object_new (TPAW_TYPE_CAMERA_DEVICE_MONITOR, NULL);
 }
 
 /*

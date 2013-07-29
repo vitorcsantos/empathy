@@ -21,14 +21,14 @@
 #include "config.h"
 #include "empathy-camera-monitor.h"
 
-#include "cheese-camera-device-monitor.h"
+#include <tp-account-widgets/cheese-camera-device-monitor.h>
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include "empathy-debug.h"
 
 struct _EmpathyCameraMonitorPrivate
 {
-  EmpathyCameraDeviceMonitor *empathy_monitor;
+  TpawCameraDeviceMonitor *empathy_monitor;
   GQueue *cameras;
   gint num_cameras;
 };
@@ -103,7 +103,7 @@ empathy_camera_monitor_free_camera_foreach (gpointer data,
 }
 
 static void
-on_camera_added (EmpathyCameraDeviceMonitor *device,
+on_camera_added (TpawCameraDeviceMonitor *device,
     gchar *id,
     gchar *filename,
     gchar *product_name,
@@ -128,7 +128,7 @@ on_camera_added (EmpathyCameraDeviceMonitor *device,
 }
 
 static void
-on_camera_removed (EmpathyCameraDeviceMonitor *device,
+on_camera_removed (TpawCameraDeviceMonitor *device,
     gchar *id,
     EmpathyCameraMonitor *self)
 {
@@ -205,7 +205,7 @@ empathy_camera_monitor_constructed (GObject *object)
 
   G_OBJECT_CLASS (empathy_camera_monitor_parent_class)->constructed (object);
 
-  empathy_camera_device_monitor_coldplug (self->priv->empathy_monitor);
+  tpaw_camera_device_monitor_coldplug (self->priv->empathy_monitor);
 }
 
 static void
@@ -247,7 +247,7 @@ empathy_camera_monitor_init (EmpathyCameraMonitor *self)
 
   self->priv->cameras = g_queue_new ();
 
-  self->priv->empathy_monitor = empathy_camera_device_monitor_new ();
+  self->priv->empathy_monitor = tpaw_camera_device_monitor_new ();
 
   g_signal_connect (self->priv->empathy_monitor, "added",
       G_CALLBACK (on_camera_added), self);

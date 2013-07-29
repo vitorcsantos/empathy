@@ -104,7 +104,7 @@ libempathy_la_LDFLAGS = \
 
 libempathy_la_SOURCES = \
 	$(libempathy_handwritten_source) \
-	cheese-camera-device-monitor.c cheese-camera-device-monitor.h
+	$(NULL)
 
 libempathy_la_LIBADD =		\
 	$(top_builddir)/extensions/libemp-extensions.la \

@@ -7,8 +7,13 @@ AM_CPPFLAGS =                                           \
 	-DG_LOG_DOMAIN=\"empathy\"			\
 	-DGCR_API_SUBJECT_TO_CHANGE			\
 	$(EMPATHY_CFLAGS)				\
+	$(UDEV_CFLAGS)					\
 	$(WARN_CFLAGS)					\
 	$(DISABLE_DEPRECATED)
+
+libtp_account_widgets_LIBADD =				\
+	$(UDEV_LIBS)					\
+	$(NULL)
 
 BUILT_SOURCES = 					\
 	tpaw-account-widgets-resources.c		\
@@ -62,6 +67,11 @@ libtp_account_widgets_headers =			\
 	totem-subtitle-encoding.h		\
 	$(NULL)
 
+nocheck_sources = \
+	cheese-camera-device-monitor.c		\
+	cheese-camera-device-monitor.h		\
+	$(NULL)
+
 pkglib_LTLIBRARIES = libtp-account-widgets.la
 
 # libtp-account-widgets's API is not stable and will never be, so use -release to make the
@@ -74,6 +84,7 @@ libtp_account_widgets_la_LDFLAGS = \
 libtp_account_widgets_la_SOURCES =			\
 	$(libtp_account_widgets_sources)		\
 	$(libtp_account_widgets_headers)		\
+	$(nocheck_sources)				\
 	$(NULL)
 
 # these are sources that depend on Ubuntu Online Accounts
