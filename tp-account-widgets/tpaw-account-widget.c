@@ -2010,9 +2010,13 @@ do_constructed (GObject *obj)
       account_manager_ready_cb, self);
 
   /* handle apply and cancel button */
-  self->priv->hbox_buttons = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 3);
-
-  gtk_box_set_homogeneous (GTK_BOX (self->priv->hbox_buttons), TRUE);
+  self->priv->hbox_buttons = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
+  gtk_button_box_set_layout (GTK_BUTTON_BOX (self->priv->hbox_buttons),
+      GTK_BUTTONBOX_END);
+  /* Hard code the default spacing as we cannot easily get this property
+   * as the widget is not in a GtkDialog yet (and it could end up packed
+   * in a non-GtkDialog window anyway */
+  gtk_box_set_spacing (GTK_BOX (self->priv->hbox_buttons), 6);
 
   self->priv->cancel_button = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
 
