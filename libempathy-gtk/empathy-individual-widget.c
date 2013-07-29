@@ -24,6 +24,7 @@
 
 #include <glib/gi18n-lib.h>
 #include <tp-account-widgets/tpaw-builder.h>
+#include <tp-account-widgets/tpaw-contactinfo-utils.h>
 #include <tp-account-widgets/tpaw-time.h>
 
 #ifdef HAVE_LIBCHAMPLAIN
@@ -32,7 +33,6 @@
 #endif
 
 #include "empathy-avatar-image.h"
-#include "empathy-contactinfo-utils.h"
 #include "empathy-groups-widget.h"
 #include "empathy-gtk-enum-types.h"
 #include "empathy-location.h"
@@ -296,13 +296,13 @@ details_update_show (EmpathyIndividualWidget *self,
   TpAccount *account;
 
   info = tp_contact_dup_contact_info (contact);
-  info = g_list_sort (info, (GCompareFunc) empathy_contact_info_field_cmp);
+  info = g_list_sort (info, (GCompareFunc) tpaw_contact_info_field_cmp);
   for (l = info; l != NULL; l = l->next)
     {
       TpContactInfoField *field = l->data;
       gchar *title;
       const gchar *value;
-      EmpathyContactInfoFormatFunc format;
+      TpawContactInfoFormatFunc format;
       GtkWidget *title_widget, *value_widget;
 
       if (field->field_value == NULL || field->field_value[0] == NULL)
@@ -310,7 +310,7 @@ details_update_show (EmpathyIndividualWidget *self,
 
       value = field->field_value[0];
 
-      if (!empathy_contact_info_lookup_field (field->field_name,
+      if (!tpaw_contact_info_lookup_field (field->field_name,
           NULL, &format))
         {
           DEBUG ("Unhandled ContactInfo field: %s", field->field_name);
@@ -322,7 +322,7 @@ details_update_show (EmpathyIndividualWidget *self,
         continue;
 
       /* Add Title */
-      title = empathy_contact_info_field_label (field->field_name,
+      title = tpaw_contact_info_field_label (field->field_name,
           field->parameters, TRUE);
       title_widget = gtk_label_new (title);
 

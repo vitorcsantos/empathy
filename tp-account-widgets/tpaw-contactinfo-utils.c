@@ -21,7 +21,7 @@
  */
 
 #include "config.h"
-#include "empathy-contactinfo-utils.h"
+#include "tpaw-contactinfo-utils.h"
 
 #include <stdlib.h>
 #include <glib/gi18n-lib.h>
@@ -70,7 +70,7 @@ typedef struct
 {
   const gchar *field_name;
   const gchar *title;
-  EmpathyContactInfoFormatFunc format;
+  TpawContactInfoFormatFunc format;
 } InfoFieldData;
 
 /* keep this syncronised with info_field_data below */
@@ -132,7 +132,7 @@ static InfoParameterData info_parameter_data[] =
 };
 
 const char **
-empathy_contact_info_get_field_names (guint *nnames)
+tpaw_contact_info_get_field_names (guint *nnames)
 {
   if (nnames != NULL)
     *nnames = G_N_ELEMENTS (info_field_names) - 1;
@@ -141,9 +141,9 @@ empathy_contact_info_get_field_names (guint *nnames)
 }
 
 gboolean
-empathy_contact_info_lookup_field (const gchar *field_name,
+tpaw_contact_info_lookup_field (const gchar *field_name,
     const gchar **title,
-    EmpathyContactInfoFormatFunc *format)
+    TpawContactInfoFormatFunc *format)
 {
   guint i;
 
@@ -204,7 +204,7 @@ build_parameters_string (GStrv parameters)
 }
 
 char *
-empathy_contact_info_field_label (const char *field_name,
+tpaw_contact_info_field_label (const char *field_name,
     GStrv parameters,
     gboolean show_parameters)
 {
@@ -212,7 +212,7 @@ empathy_contact_info_field_label (const char *field_name,
   const char *title;
   char *join = NULL;
 
-  if (!empathy_contact_info_lookup_field (field_name, &title, NULL))
+  if (!tpaw_contact_info_lookup_field (field_name, &title, NULL))
     return NULL;
 
   if (show_parameters)
@@ -250,14 +250,14 @@ contact_info_field_name_cmp (const gchar *name1,
 }
 
 gint
-empathy_contact_info_field_cmp (TpContactInfoField *field1,
+tpaw_contact_info_field_cmp (TpContactInfoField *field1,
     TpContactInfoField *field2)
 {
   return contact_info_field_name_cmp (field1->field_name, field2->field_name);
 }
 
 gint
-empathy_contact_info_field_spec_cmp (TpContactInfoFieldSpec *spec1,
+tpaw_contact_info_field_spec_cmp (TpContactInfoFieldSpec *spec1,
     TpContactInfoFieldSpec *spec2)
 {
     return contact_info_field_name_cmp (spec1->name, spec2->name);

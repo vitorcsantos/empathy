@@ -18,28 +18,28 @@
  * Authors: Danielle Madeley <danielle.madeley@collabora.co.uk>
  */
 
-#ifndef __EMPATHY_CONTACTINFO_UTILS_H__
-#define __EMPATHY_CONTACTINFO_UTILS_H__
+#ifndef __TPAW_CONTACTINFO_UTILS_H__
+#define __TPAW_CONTACTINFO_UTILS_H__
 
 #include <gtk/gtk.h>
 #include <telepathy-glib/telepathy-glib.h>
 
 G_BEGIN_DECLS
 
-typedef gchar * (* EmpathyContactInfoFormatFunc) (GStrv);
+typedef gchar * (* TpawContactInfoFormatFunc) (GStrv);
 
-const char **empathy_contact_info_get_field_names (guint *nnames);
-gboolean empathy_contact_info_lookup_field (const gchar *field_name,
-    const gchar **title, EmpathyContactInfoFormatFunc *linkify);
-char *empathy_contact_info_field_label (const char *field_name,
+const char **tpaw_contact_info_get_field_names (guint *nnames);
+gboolean tpaw_contact_info_lookup_field (const gchar *field_name,
+    const gchar **title, TpawContactInfoFormatFunc *linkify);
+char *tpaw_contact_info_field_label (const char *field_name,
     GStrv parameters,
     gboolean show_parameters);
 
-gint empathy_contact_info_field_cmp (TpContactInfoField *field1,
+gint tpaw_contact_info_field_cmp (TpContactInfoField *field1,
     TpContactInfoField *field2);
-gint empathy_contact_info_field_spec_cmp (TpContactInfoFieldSpec *spec1,
+gint tpaw_contact_info_field_spec_cmp (TpContactInfoFieldSpec *spec1,
     TpContactInfoFieldSpec *spec2);
 
 G_END_DECLS
 
-#endif /*  __EMPATHY_UTILS_H__ */
+#endif /*  __TPAW_UTILS_H__ */

@@ -22,10 +22,10 @@
 
 #include <glib/gi18n-lib.h>
 #include <tp-account-widgets/tpaw-time.h>
+#include <tp-account-widgets/tpaw-contactinfo-utils.h>
 
 #include "empathy-avatar-chooser.h"
 #include "empathy-calendar-button.h"
-#include "empathy-contactinfo-utils.h"
 #include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_CONTACT
@@ -178,7 +178,7 @@ fill_contact_info_grid (EmpathyUserInfo *self)
   GList *specs, *l;
   guint n_rows = 0;
   GList *info;
-  const char **field_names = empathy_contact_info_get_field_names (NULL);
+  const char **field_names = tpaw_contact_info_get_field_names (NULL);
   guint i;
 
   g_assert (self->priv->details_to_set == NULL);
@@ -237,7 +237,7 @@ fill_contact_info_grid (EmpathyUserInfo *self)
 
   /* Add widgets for supported fields */
   self->priv->details_to_set = g_list_sort (self->priv->details_to_set,
-      (GCompareFunc) empathy_contact_info_field_spec_cmp);
+      (GCompareFunc) tpaw_contact_info_field_spec_cmp);
 
   for (l = self->priv->details_to_set; l != NULL; l= g_list_next (l))
     {
@@ -247,7 +247,7 @@ fill_contact_info_grid (EmpathyUserInfo *self)
       gboolean has_field;
       char *title;
 
-      has_field = empathy_contact_info_lookup_field (field->field_name,
+      has_field = tpaw_contact_info_lookup_field (field->field_name,
           NULL, NULL);
       if (!has_field)
         {
@@ -271,7 +271,7 @@ fill_contact_info_grid (EmpathyUserInfo *self)
         }
 
       /* Add Title */
-      title = empathy_contact_info_field_label (field->field_name,
+      title = tpaw_contact_info_field_label (field->field_name,
           field->parameters,
           (spec->flags & TP_CONTACT_INFO_FIELD_FLAG_PARAMETERS_EXACT));
       label = gtk_label_new (title);
