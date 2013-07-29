@@ -1302,7 +1302,7 @@ notify_presence_cb (gpointer folks_object,
     }
 
   if (message != NULL)
-    markup_text = empathy_add_link_markup (message);
+    markup_text = tpaw_add_link_markup (message);
   gtk_label_set_markup (GTK_LABEL (status_label), markup_text);
   g_free (markup_text);
 

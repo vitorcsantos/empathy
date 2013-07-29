@@ -1680,7 +1680,7 @@ chat_subject_changed_cb (EmpathyChat *chat)
 			gchar *markup_topic;
 			gchar *markup_text;
 
-			markup_topic = empathy_add_link_markup (priv->subject);
+			markup_topic = tpaw_add_link_markup (priv->subject);
 			markup_text = g_strdup_printf ("<span weight=\"bold\">%s</span> %s",
 				_("Topic:"), markup_topic);
 

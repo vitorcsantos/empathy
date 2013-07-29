@@ -24,11 +24,11 @@
 
 #include <glib/gi18n-lib.h>
 #include <tp-account-widgets/tpaw-builder.h>
+#include <tp-account-widgets/tpaw-string-parser.h>
 
 #include "empathy-avatar-image.h"
 #include "empathy-client-factory.h"
 #include "empathy-groups-widget.h"
-#include "empathy-string-parser.h"
 #include "empathy-ui-utils.h"
 #include "empathy-utils.h"
 
@@ -359,7 +359,7 @@ contact_widget_presence_notify_cb (EmpathyContactWidget *self)
 
   status = empathy_contact_get_status (self->priv->contact);
   if (status != NULL)
-    markup_text = empathy_add_link_markup (status);
+    markup_text = tpaw_add_link_markup (status);
   gtk_label_set_markup (GTK_LABEL (self->priv->label_status), markup_text);
   g_free (markup_text);
 

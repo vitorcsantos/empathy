@@ -24,6 +24,7 @@
 #include <glib/gi18n-lib.h>
 
 #include "empathy-smiley-manager.h"
+#include "empathy-string-parser.h"
 #include "empathy-theme-adium.h"
 #include "empathy-ui-utils.h"
 
@@ -32,8 +33,8 @@
 static void
 empathy_webkit_match_newline (const gchar *text,
     gssize len,
-    EmpathyStringReplace replace_func,
-    EmpathyStringParser *sub_parsers,
+    TpawStringReplace replace_func,
+    TpawStringParser *sub_parsers,
     gpointer user_data)
 {
   GString *string = user_data;
@@ -48,14 +49,14 @@ empathy_webkit_match_newline (const gchar *text,
     {
       if (text[i] == '\n')
         {
-          empathy_string_parser_substr (text + prev, i - prev,
+          tpaw_string_parser_substr (text + prev, i - prev,
               sub_parsers, user_data);
           g_string_append (string, "<br/>");
           prev = i + 1;
         }
     }
 
-  empathy_string_parser_substr (text + prev, i - prev,
+  tpaw_string_parser_substr (text + prev, i - prev,
               sub_parsers, user_data);
 }
 
@@ -74,22 +75,22 @@ empathy_webkit_replace_smiley (const gchar *text,
       hit->path, (int)len, text, (int)len, text);
 }
 
-static EmpathyStringParser string_parsers[] = {
-  { empathy_string_match_link, empathy_string_replace_link },
+static TpawStringParser string_parsers[] = {
+  { tpaw_string_match_link, tpaw_string_replace_link },
   { empathy_webkit_match_newline, NULL },
-  { empathy_string_match_all, empathy_string_replace_escaped },
+  { tpaw_string_match_all, tpaw_string_replace_escaped },
   { NULL, NULL}
 };
 
-static EmpathyStringParser string_parsers_with_smiley[] = {
-  { empathy_string_match_link, empathy_string_replace_link },
+static TpawStringParser string_parsers_with_smiley[] = {
+  { tpaw_string_match_link, tpaw_string_replace_link },
   { empathy_string_match_smiley, empathy_webkit_replace_smiley },
   { empathy_webkit_match_newline, NULL },
-  { empathy_string_match_all, empathy_string_replace_escaped },
+  { tpaw_string_match_all, tpaw_string_replace_escaped },
   { NULL, NULL }
 };
 
-EmpathyStringParser *
+TpawStringParser *
 empathy_webkit_get_string_parser (gboolean smileys)
 {
   if (smileys)

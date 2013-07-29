@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <telepathy-glib/telepathy-glib.h>
+#include <tp-account-widgets/tpaw-string-parser.h>
 
 #include "empathy-string-parser.h"
 #include "test-helper.h"
@@ -95,11 +96,11 @@ test_parsers (void)
 
       NULL, NULL
     };
-  EmpathyStringParser parsers[] =
+  TpawStringParser parsers[] =
     {
-      {empathy_string_match_link, test_replace_match},
+      {tpaw_string_match_link, test_replace_match},
       {empathy_string_match_smiley, test_replace_match},
-      {empathy_string_match_all, empathy_string_replace_escaped},
+      {tpaw_string_match_all, tpaw_string_replace_escaped},
       {NULL, NULL}
     };
   guint i;
@@ -111,7 +112,7 @@ test_parsers (void)
       gboolean ok;
 
       string = g_string_new (NULL);
-      empathy_string_parser_substr (tests[i], -1, parsers, string);
+      tpaw_string_parser_substr (tests[i], -1, parsers, string);
 
       ok = !tp_strdiff (tests[i + 1], string->str);
       DEBUG ("'%s' => '%s': %s", tests[i], string->str, ok ? "OK" : "FAILED");

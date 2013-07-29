@@ -1266,7 +1266,7 @@ log_window_append_chat_message (TplEvent *event,
   GtkTreeIter iter, parent;
   gchar *pretty_date, *alias, *body;
   GDateTime *date;
-  EmpathyStringParser *parsers;
+  TpawStringParser *parsers;
   GString *msg;
 
   date = g_date_time_new_from_unix_local (
@@ -1285,7 +1285,7 @@ log_window_append_chat_message (TplEvent *event,
         EMPATHY_PREFS_CHAT_SHOW_SMILEYS));
   msg = g_string_new ("");
 
-  empathy_string_parser_substr (empathy_message_get_body (message), -1,
+  tpaw_string_parser_substr (empathy_message_get_body (message), -1,
       parsers, msg);
 
   if (tpl_text_event_get_message_type (TPL_TEXT_EVENT (event))

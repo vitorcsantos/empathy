@@ -249,7 +249,7 @@ theme_adium_parse_body (EmpathyThemeAdium *self,
   const gchar *text,
   const gchar *token)
 {
-  EmpathyStringParser *parsers;
+  TpawStringParser *parsers;
   GString *string;
 
   /* Check if we have to parse smileys */
@@ -269,7 +269,7 @@ theme_adium_parse_body (EmpathyThemeAdium *self,
       "<span id=\"message-token-%s\">",
       token);
 
-  empathy_string_parser_substr (text, -1, parsers, string);
+  tpaw_string_parser_substr (text, -1, parsers, string);
 
   if (!tp_str_empty (token))
     g_string_append (string, "</span>");

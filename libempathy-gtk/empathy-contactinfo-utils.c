@@ -25,14 +25,14 @@
 
 #include <glib/gi18n-lib.h>
 #include <tp-account-widgets/tpaw-time.h>
+#include <tp-account-widgets/tpaw-string-parser.h>
 
-#include "empathy-string-parser.h"
 #include "empathy-ui-utils.h"
 
 static gchar *
 linkify_first_value (GStrv values)
 {
-  return empathy_add_link_markup (values[0]);
+  return tpaw_add_link_markup (values[0]);
 }
 
 static gchar *
