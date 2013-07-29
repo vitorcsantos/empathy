@@ -102,7 +102,7 @@ empathy_local_xmpp_assistant_widget_constructed (GObject *object)
       NULL, _("People nearby"));
 
   account_widget = tpaw_account_widget_new_for_protocol (
-      self->priv->settings, TRUE);
+      self->priv->settings, NULL, TRUE);
   tpaw_account_widget_hide_buttons (account_widget);
 
   g_signal_connect (account_widget, "handle-apply",

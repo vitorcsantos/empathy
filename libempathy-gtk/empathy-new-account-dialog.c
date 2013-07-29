@@ -75,7 +75,8 @@ protocol_changed_cb (GtkComboBox *chooser,
       g_object_unref (self->priv->settings);
     }
 
-  account_widget = tpaw_account_widget_new_for_protocol (settings, TRUE);
+  account_widget = tpaw_account_widget_new_for_protocol (settings,
+      NULL, TRUE);
 
   if (self->priv->current_account_widget != NULL)
     {

@@ -70,11 +70,15 @@ struct _TpawAccountWidgetPriv {
   GtkWidget *entry_password;
   GtkWidget *spinbutton_port;
   GtkWidget *radiobutton_reuse;
-  GtkWidget *hbox_buttons;
+  GtkWidget *action_area;
 
   gboolean simple;
 
   gboolean contains_pending_changes;
+
+  /* Whether the action area was provided or it's an internal one we
+   * created ourselves */
+  gboolean external_action_area;
 
   /* An TpawAccountWidget can be used to either create an account or
    * modify it. When we are creating an account, this member is set to TRUE */
@@ -113,6 +117,7 @@ enum {
   PROP_SIMPLE,
   PROP_CREATING_ACCOUNT,
   PROP_OTHER_ACCOUNTS_EXIST,
+  PROP_ACTION_AREA,
 };
 
 enum {
@@ -1690,6 +1695,14 @@ do_set_property (GObject *object,
       tpaw_account_widget_set_other_accounts_exist (
           TPAW_ACCOUNT_WIDGET (object), g_value_get_boolean (value));
       break;
+    case PROP_ACTION_AREA:
+      self->priv->action_area = g_value_get_object (value);
+      if (self->priv->action_area != NULL)
+        {
+          g_object_ref_sink (self->priv->action_area);
+          self->priv->external_action_area = TRUE;
+        }
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
     }
@@ -1720,6 +1733,9 @@ do_get_property (GObject *object,
       break;
     case PROP_OTHER_ACCOUNTS_EXIST:
       g_value_set_boolean (value, self->priv->other_accounts_exist);
+      break;
+    case PROP_ACTION_AREA:
+      g_value_set_object (value, self->priv->action_area);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -2009,14 +2025,24 @@ do_constructed (GObject *obj)
   tp_proxy_prepare_async (self->priv->account_manager, NULL,
       account_manager_ready_cb, self);
 
-  /* handle apply and cancel button */
-  self->priv->hbox_buttons = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
-  gtk_button_box_set_layout (GTK_BUTTON_BOX (self->priv->hbox_buttons),
-      GTK_BUTTONBOX_END);
-  /* Hard code the default spacing as we cannot easily get this property
-   * as the widget is not in a GtkDialog yet (and it could end up packed
-   * in a non-GtkDialog window anyway */
-  gtk_box_set_spacing (GTK_BOX (self->priv->hbox_buttons), 6);
+  if (!self->priv->external_action_area)
+    {
+      g_assert (self->priv->action_area == NULL);
+      self->priv->action_area = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
+      gtk_button_box_set_layout (GTK_BUTTON_BOX (self->priv->action_area),
+          GTK_BUTTONBOX_END);
+      /* Hard code the default spacing as we cannot easily get this property
+       * as the widget is not in a GtkDialog yet (and it could end up packed
+       * in a non-GtkDialog window anyway */
+      gtk_box_set_spacing (GTK_BOX (self->priv->action_area), 6);
+      /* If the action area is set by the user of this class then we keep a
+       * reference, so we do the same here */
+      g_object_ref_sink (self->priv->action_area);
+    }
+  else
+    {
+      g_assert (self->priv->action_area != NULL);
+    }
 
   self->priv->cancel_button = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
 
@@ -2029,13 +2055,14 @@ do_constructed (GObject *obj)
       "most-available-presence-changed",
       G_CALLBACK (presence_changed_cb), obj, 0);
 
-  gtk_box_pack_end (GTK_BOX (self->priv->hbox_buttons),
-      self->priv->apply_button, TRUE, TRUE, 3);
-  gtk_box_pack_end (GTK_BOX (self->priv->hbox_buttons),
+  gtk_box_pack_end (GTK_BOX (self->priv->action_area),
       self->priv->cancel_button, TRUE, TRUE, 3);
+  gtk_box_pack_end (GTK_BOX (self->priv->action_area),
+      self->priv->apply_button, TRUE, TRUE, 3);
 
-  gtk_box_pack_end (GTK_BOX (self), self->priv->hbox_buttons, FALSE,
-      FALSE, 3);
+  if (!self->priv->external_action_area)
+    gtk_box_pack_end (GTK_BOX (self), self->priv->action_area, FALSE,
+        FALSE, 3);
 
   g_signal_connect (self->priv->cancel_button, "clicked",
       G_CALLBACK (account_widget_cancel_clicked_cb),
@@ -2043,7 +2070,7 @@ do_constructed (GObject *obj)
   g_signal_connect (self->priv->apply_button, "clicked",
       G_CALLBACK (account_widget_apply_clicked_cb),
       self);
-  gtk_widget_show_all (self->priv->hbox_buttons);
+  gtk_widget_show_all (self->priv->action_area);
 
   if (self->priv->creating_account)
     /* When creating an account, the user might have nothing to enter.
@@ -2079,6 +2106,7 @@ do_dispose (GObject *obj)
 
   g_clear_object (&self->priv->settings);
   g_clear_object (&self->priv->account_manager);
+  g_clear_object (&self->priv->action_area);
 
   if (G_OBJECT_CLASS (tpaw_account_widget_parent_class)->dispose != NULL)
     G_OBJECT_CLASS (tpaw_account_widget_parent_class)->dispose (obj);
@@ -2141,6 +2169,14 @@ tpaw_account_widget_class_init (TpawAccountWidgetClass *klass)
       FALSE,
       G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS | G_PARAM_CONSTRUCT_ONLY);
   g_object_class_install_property (oclass, PROP_OTHER_ACCOUNTS_EXIST,
+                  param_spec);
+
+  param_spec = g_param_spec_object ("action-area",
+      "action-area",
+      "The widget where to pack the action buttons (or NULL)",
+      GTK_TYPE_BOX,
+      G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS | G_PARAM_CONSTRUCT_ONLY);
+  g_object_class_install_property (oclass, PROP_ACTION_AREA,
                   param_spec);
 
   signals[HANDLE_APPLY] =
@@ -2213,6 +2249,7 @@ tpaw_account_widget_handle_params (TpawAccountWidget *self,
 
 TpawAccountWidget *
 tpaw_account_widget_new_for_protocol (TpawAccountSettings *settings,
+    GtkBox *action_area,
     gboolean simple)
 {
   g_return_val_if_fail (TPAW_IS_ACCOUNT_SETTINGS (settings), NULL);
@@ -2223,6 +2260,7 @@ tpaw_account_widget_new_for_protocol (TpawAccountSettings *settings,
         "simple", simple,
         "creating-account",
           tpaw_account_settings_get_account (settings) == NULL,
+        "action-area", action_area,
         NULL);
 }
 
@@ -2330,5 +2368,5 @@ tpaw_account_widget_get_settings (TpawAccountWidget *self)
 void
 tpaw_account_widget_hide_buttons (TpawAccountWidget *self)
 {
-  gtk_widget_hide (self->priv->hbox_buttons);
+  gtk_widget_hide (self->priv->action_area);
 }

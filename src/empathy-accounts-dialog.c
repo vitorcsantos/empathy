@@ -594,7 +594,7 @@ account_dialog_create_edit_params_dialog (EmpathyAccountsDialog *dialog)
   gtk_window_set_resizable (GTK_WINDOW (subdialog), FALSE);
 
   priv->setting_widget = (TpawAccountWidget *)
-    tpaw_account_widget_new_for_protocol (settings, FALSE);
+    tpaw_account_widget_new_for_protocol (settings, NULL, FALSE);
 
   g_object_add_weak_pointer (G_OBJECT (priv->setting_widget),
       (gpointer *) &priv->setting_widget);
