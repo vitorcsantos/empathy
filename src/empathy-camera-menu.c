@@ -22,7 +22,8 @@
 #include "config.h"
 #include "empathy-camera-menu.h"
 
-#include "empathy-camera-monitor.h"
+#include <tp-account-widgets/tpaw-camera-monitor.h>
+
 #include "empathy-gsettings.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_VOIP
@@ -51,7 +52,7 @@ struct _EmpathyCameraMenuPrivate
   /* Queue of GtkRadioActions. */
   GQueue *cameras;
 
-  EmpathyCameraMonitor *camera_monitor;
+  TpawCameraMonitor *camera_monitor;
 
   GSettings *settings;
 };
@@ -200,7 +201,7 @@ empathy_camera_menu_update (EmpathyCameraMenu *self)
 
 static void
 empathy_camera_menu_add_camera (EmpathyCameraMenu *self,
-    EmpathyCamera *camera)
+    TpawCamera *camera)
 {
   GtkRadioAction *action;
   GSList *group;
@@ -219,8 +220,8 @@ empathy_camera_menu_add_camera (EmpathyCameraMenu *self,
 }
 
 static void
-empathy_camera_menu_camera_added_cb (EmpathyCameraMonitor *monitor,
-    EmpathyCamera *camera,
+empathy_camera_menu_camera_added_cb (TpawCameraMonitor *monitor,
+    TpawCamera *camera,
     EmpathyCameraMenu *self)
 {
   empathy_camera_menu_add_camera (self, camera);
@@ -228,8 +229,8 @@ empathy_camera_menu_camera_added_cb (EmpathyCameraMonitor *monitor,
 }
 
 static void
-empathy_camera_menu_camera_removed_cb (EmpathyCameraMonitor *monitor,
-    EmpathyCamera *camera,
+empathy_camera_menu_camera_removed_cb (TpawCameraMonitor *monitor,
+    TpawCamera *camera,
     EmpathyCameraMenu *self)
 {
   GList *l;
@@ -303,11 +304,11 @@ empathy_camera_menu_get_cameras (EmpathyCameraMenu *self)
 {
   const GList *cameras;
 
-  cameras = empathy_camera_monitor_get_cameras (self->priv->camera_monitor);
+  cameras = tpaw_camera_monitor_get_cameras (self->priv->camera_monitor);
 
   for (; cameras != NULL; cameras = g_list_next (cameras))
     {
-      EmpathyCamera *camera = cameras->data;
+      TpawCamera *camera = cameras->data;
 
       empathy_camera_menu_add_camera (self, camera);
     }
@@ -346,7 +347,7 @@ empathy_camera_menu_constructed (GObject *obj)
       self->priv->anchor_action);
   g_object_unref (self->priv->anchor_action);
 
-  self->priv->camera_monitor = empathy_camera_monitor_new ();
+  self->priv->camera_monitor = tpaw_camera_monitor_new ();
 
   tp_g_signal_connect_object (self->priv->camera_monitor, "added",
       G_CALLBACK (empathy_camera_menu_camera_added_cb), self, 0);

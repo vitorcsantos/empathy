@@ -24,10 +24,10 @@
 #include "empathy-individual-menu.h"
 
 #include <glib/gi18n-lib.h>
+#include <tp-account-widgets/tpaw-camera-monitor.h>
 
 #include "empathy-account-selector-dialog.h"
 #include "empathy-call-utils.h"
-#include "empathy-camera-monitor.h"
 #include "empathy-chatroom-manager.h"
 #include "empathy-gtk-enum-types.h"
 #include "empathy-images.h"
@@ -1411,7 +1411,7 @@ empathy_individual_video_call_menu_item_new (FolksIndividual *individual)
 {
   GtkWidget *item;
   GtkWidget *image;
-  EmpathyCameraMonitor *monitor;
+  TpawCameraMonitor *monitor;
 
   g_return_val_if_fail (FOLKS_IS_INDIVIDUAL (individual), NULL);
 
@@ -1428,7 +1428,7 @@ empathy_individual_video_call_menu_item_new (FolksIndividual *individual)
   /* Only follow available cameras if the contact can do Video calls */
   if (gtk_widget_get_sensitive (item))
     {
-      monitor = empathy_camera_monitor_dup_singleton ();
+      monitor = tpaw_camera_monitor_dup_singleton ();
       g_object_set_data_full (G_OBJECT (item),
           "monitor", monitor, g_object_unref);
       g_object_bind_property (monitor, "available", item, "sensitive",

@@ -26,13 +26,13 @@
 #include <farstream/fs-element-added-notifier.h>
 #include <farstream/fs-utils.h>
 #include <tp-account-widgets/tpaw-builder.h>
+#include <tp-account-widgets/tpaw-camera-monitor.h>
 
 #include "empathy-about-dialog.h"
 #include "empathy-audio-sink.h"
 #include "empathy-call-utils.h"
 #include "empathy-call-window-fullscreen.h"
 #include "empathy-camera-menu.h"
-#include "empathy-camera-monitor.h"
 #include "empathy-dialpad-widget.h"
 #include "empathy-geometry.h"
 #include "empathy-gsettings.h"
@@ -122,7 +122,7 @@ struct _EmpathyCallWindowPriv
 
   EmpathyContact *contact;
 
-  EmpathyCameraMonitor *camera_monitor;
+  TpawCameraMonitor *camera_monitor;
 
   CallState call_state;
   gboolean outgoing;
@@ -562,17 +562,17 @@ empathy_call_window_swap_camera_cb (GtkAction *action,
 
   DEBUG ("Swapping the camera");
 
-  cameras = empathy_camera_monitor_get_cameras (self->priv->camera_monitor);
+  cameras = tpaw_camera_monitor_get_cameras (self->priv->camera_monitor);
   current_cam = empathy_video_src_dup_device (
       EMPATHY_GST_VIDEO_SRC (self->priv->video_input));
 
   for (l = cameras; l != NULL; l = l->next)
     {
-      EmpathyCamera *camera = l->data;
+      TpawCamera *camera = l->data;
 
       if (!tp_strdiff (camera->device, current_cam))
         {
-          EmpathyCamera *next;
+          TpawCamera *next;
 
           if (l->next != NULL)
             next = l->next->data;
@@ -593,22 +593,22 @@ empathy_call_window_swap_camera_cb (GtkAction *action,
 }
 
 static void
-empathy_call_window_camera_added_cb (EmpathyCameraMonitor *monitor,
-    EmpathyCamera *camera,
+empathy_call_window_camera_added_cb (TpawCameraMonitor *monitor,
+    TpawCamera *camera,
     EmpathyCallWindow *self)
 {
-  const GList *cameras = empathy_camera_monitor_get_cameras (monitor);
+  const GList *cameras = tpaw_camera_monitor_get_cameras (monitor);
 
   gtk_action_set_visible (self->priv->menu_swap_camera,
       g_list_length ((GList *) cameras) >= 2);
 }
 
 static void
-empathy_call_window_camera_removed_cb (EmpathyCameraMonitor *monitor,
-    EmpathyCamera *camera,
+empathy_call_window_camera_removed_cb (TpawCameraMonitor *monitor,
+    TpawCamera *camera,
     EmpathyCallWindow *self)
 {
-  const GList *cameras = empathy_camera_monitor_get_cameras (monitor);
+  const GList *cameras = tpaw_camera_monitor_get_cameras (monitor);
 
   gtk_action_set_visible (self->priv->menu_swap_camera,
       g_list_length ((GList *) cameras) >= 2);
@@ -1681,7 +1681,7 @@ empathy_call_window_init (EmpathyCallWindow *self)
   empathy_set_css_provider (GTK_WIDGET (self));
   gtk_action_set_sensitive (priv->menu_fullscreen, FALSE);
 
-  priv->camera_monitor = empathy_camera_monitor_dup_singleton ();
+  priv->camera_monitor = tpaw_camera_monitor_dup_singleton ();
 
   g_object_bind_property (priv->camera_monitor, "available",
       priv->camera_button, "sensitive",
@@ -3272,7 +3272,7 @@ empathy_call_window_state_changed_cb (EmpathyCallHandler *handler,
 
   can_send_video = priv->video_input != NULL &&
     empathy_contact_can_voip_video (priv->contact) &&
-    empathy_camera_monitor_get_available (priv->camera_monitor);
+    tpaw_camera_monitor_get_available (priv->camera_monitor);
 
   g_object_get (priv->handler, "call-channel", &call, NULL);
 

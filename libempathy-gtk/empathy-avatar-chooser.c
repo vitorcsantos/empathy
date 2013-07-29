@@ -24,12 +24,12 @@
 #include "empathy-avatar-chooser.h"
 
 #include <glib/gi18n-lib.h>
+#include <tp-account-widgets/tpaw-camera-monitor.h>
 
 #ifdef HAVE_CHEESE
 #include <cheese-avatar-chooser.h>
 #endif /* HAVE_CHEESE */
 
-#include "empathy-camera-monitor.h"
 #include "empathy-gsettings.h"
 #include "empathy-images.h"
 #include "empathy-ui-utils.h"
@@ -1011,7 +1011,7 @@ avatar_chooser_clicked_cb (GtkWidget *button,
   GtkFileFilter *filter;
 #ifdef HAVE_CHEESE
   GtkWidget *picture_button;
-  EmpathyCameraMonitor *monitor;
+  TpawCameraMonitor *monitor;
 #endif
 
   if (self->priv->chooser_dialog != NULL)
@@ -1032,7 +1032,7 @@ avatar_chooser_clicked_cb (GtkWidget *button,
       _("Take a picture..."), EMPATHY_AVATAR_CHOOSER_RESPONSE_WEBCAM);
 
   /* Button is sensitive only if there is one camera connected */
-  monitor = empathy_camera_monitor_dup_singleton ();
+  monitor = tpaw_camera_monitor_dup_singleton ();
 
   g_object_set_data_full (G_OBJECT (picture_button),
       "monitor", monitor, g_object_unref);

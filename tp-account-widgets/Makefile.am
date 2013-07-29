@@ -28,6 +28,7 @@ libtp_account_widgets_sources =            	\
 	tpaw-account-widget-sip.c		\
 	tpaw-builder.c				\
 	tpaw-calendar-button.c			\
+	tpaw-camera-monitor.c			\
 	tpaw-connection-managers.c		\
 	tpaw-contactinfo-utils.c		\
 	tpaw-keyring.c				\
@@ -51,6 +52,7 @@ libtp_account_widgets_headers =			\
 	tpaw-account-widget-sip.h		\
 	tpaw-builder.h				\
 	tpaw-calendar-button.h			\
+	tpaw-camera-monitor.h			\
 	tpaw-connection-managers.h		\
 	tpaw-contactinfo-utils.h		\
 	tpaw-keyring.h				\

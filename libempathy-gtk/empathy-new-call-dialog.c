@@ -22,9 +22,9 @@
 #include "empathy-new-call-dialog.h"
 
 #include <glib/gi18n-lib.h>
+#include <tp-account-widgets/tpaw-camera-monitor.h>
 
 #include "empathy-call-utils.h"
-#include "empathy-camera-monitor.h"
 #include "empathy-contact-chooser.h"
 #include "empathy-images.h"
 #include "empathy-ui-utils.h"
@@ -43,7 +43,7 @@ struct _EmpathyNewCallDialogPriv {
   GtkWidget *button_audio;
   GtkWidget *button_video;
 
-  EmpathyCameraMonitor *monitor;
+  TpawCameraMonitor *monitor;
 };
 
 /* Re-use the accept and ok Gtk response so we are sure they won't be used
@@ -182,7 +182,7 @@ empathy_new_call_dialog_init (EmpathyNewCallDialog *self)
   self->priv = G_TYPE_INSTANCE_GET_PRIVATE (self,
       EMPATHY_TYPE_NEW_CALL_DIALOG, EmpathyNewCallDialogPriv);
 
-  self->priv->monitor = empathy_camera_monitor_dup_singleton ();
+  self->priv->monitor = tpaw_camera_monitor_dup_singleton ();
 
   content = gtk_dialog_get_content_area (GTK_DIALOG (self));
 

@@ -28,11 +28,11 @@
 #include <glib/gi18n-lib.h>
 #include <telepathy-glib/proxy-subclass.h>
 #include <tp-account-widgets/tpaw-builder.h>
+#include <tp-account-widgets/tpaw-camera-monitor.h>
 
 #include "action-chain-internal.h"
 #include "empathy-account-chooser.h"
 #include "empathy-call-utils.h"
-#include "empathy-camera-monitor.h"
 #include "empathy-geometry.h"
 #include "empathy-gsettings.h"
 #include "empathy-images.h"
@@ -90,7 +90,7 @@ struct _EmpathyLogWindowPriv
   EmpathyContact *selected_contact;
   EmpathyContact *events_contact;
 
-  EmpathyCameraMonitor *camera_monitor;
+  TpawCameraMonitor *camera_monitor;
   GBinding *button_video_binding;
 
   /* Used to cancel logger calls when no longer needed */
@@ -617,7 +617,7 @@ empathy_log_window_init (EmpathyLogWindow *self)
 
   self->priv->chain = _tpl_action_chain_new_async (NULL, NULL, NULL);
 
-  self->priv->camera_monitor = empathy_camera_monitor_dup_singleton ();
+  self->priv->camera_monitor = tpaw_camera_monitor_dup_singleton ();
 
   self->priv->log_manager = tpl_log_manager_dup_singleton ();
 

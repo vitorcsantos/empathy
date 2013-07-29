@@ -13,7 +13,6 @@ AM_CPPFLAGS =                                           \
 	$(GEOCODE_CFLAGS)				\
 	$(NETWORK_MANAGER_CFLAGS)			\
 	$(CONNMAN_CFLAGS)				\
-	$(UDEV_CFLAGS)					\
 	$(GOA_CFLAGS)					\
 	$(UOA_CFLAGS)					\
 	$(WARN_CFLAGS)					\
@@ -28,7 +27,6 @@ BUILT_SOURCES = 					\
 libempathy_headers =				\
 	action-chain-internal.h			\
 	empathy-auth-factory.h			\
-	empathy-camera-monitor.h		\
 	empathy-chatroom-manager.h		\
 	empathy-chatroom.h			\
 	empathy-client-factory.h \
@@ -58,7 +56,6 @@ libempathy_handwritten_source =				\
 	$(libempathy_headers)				\
 	action-chain.c					\
 	empathy-auth-factory.c				\
-	empathy-camera-monitor.c			\
 	empathy-chatroom-manager.c			\
 	empathy-chatroom.c				\
 	empathy-client-factory.c \
