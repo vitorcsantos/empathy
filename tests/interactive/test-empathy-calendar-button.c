@@ -21,10 +21,10 @@
 
 #include "config.h"
 
-#include "empathy-calendar-button.h"
+#include <tp-account-widgets/tpaw-calendar-button.h>
 
 static void
-date_changed_cb (EmpathyCalendarButton *button,
+date_changed_cb (TpawCalendarButton *button,
     GDate *date,
     gpointer user_data)
 {
@@ -55,10 +55,10 @@ main (int argc,
   g_signal_connect_swapped (win, "destroy",
       G_CALLBACK (gtk_main_quit), NULL);
 
-  button = empathy_calendar_button_new ();
+  button = tpaw_calendar_button_new ();
 
   date = g_date_new_dmy (30, 11, 1984);
-  empathy_calendar_button_set_date (EMPATHY_CALENDAR_BUTTON (button), date);
+  tpaw_calendar_button_set_date (TPAW_CALENDAR_BUTTON (button), date);
   g_date_free (date);
 
   g_signal_connect (button, "date-changed",

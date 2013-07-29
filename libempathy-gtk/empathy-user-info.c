@@ -21,11 +21,11 @@
 #include "empathy-user-info.h"
 
 #include <glib/gi18n-lib.h>
-#include <tp-account-widgets/tpaw-time.h>
+#include <tp-account-widgets/tpaw-calendar-button.h>
 #include <tp-account-widgets/tpaw-contactinfo-utils.h>
+#include <tp-account-widgets/tpaw-time.h>
 
 #include "empathy-avatar-chooser.h"
-#include "empathy-calendar-button.h"
 #include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_CONTACT
@@ -77,7 +77,7 @@ contact_info_changed_cb (GtkEntry *entry,
 }
 
 static void
-bday_changed_cb (EmpathyCalendarButton *button,
+bday_changed_cb (TpawCalendarButton *button,
     GDate *date,
     EmpathyUserInfo *self)
 {
@@ -283,7 +283,7 @@ fill_contact_info_grid (EmpathyUserInfo *self)
       /* Add Value */
       if (!tp_strdiff (field->field_name, "bday"))
         {
-          w = empathy_calendar_button_new ();
+          w = tpaw_calendar_button_new ();
 
           if (field->field_value[0])
             {
@@ -292,7 +292,7 @@ fill_contact_info_grid (EmpathyUserInfo *self)
               g_date_set_parse (&date, field->field_value[0]);
               if (g_date_valid (&date))
                 {
-                  empathy_calendar_button_set_date (EMPATHY_CALENDAR_BUTTON (w),
+                  tpaw_calendar_button_set_date (TPAW_CALENDAR_BUTTON (w),
                       &date);
                 }
             }

@@ -1,5 +1,5 @@
 /*
- * empathy-calendar-button.c - Source for EmpathyCalendarButton
+ * tpaw-calendar-button.c - Source for TpawCalendarButton
  * Copyright (C) 2012 Collabora Ltd.
  *
  * This library is free software; you can redistribute it and/or
@@ -18,14 +18,14 @@
  */
 
 #include "config.h"
-#include "empathy-calendar-button.h"
+#include "tpaw-calendar-button.h"
 
 #include <glib/gi18n-lib.h>
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER_THING
 #include "empathy-debug.h"
 
-G_DEFINE_TYPE (EmpathyCalendarButton, empathy_calendar_button, GTK_TYPE_BOX)
+G_DEFINE_TYPE (TpawCalendarButton, tpaw_calendar_button, GTK_TYPE_BOX)
 
 /* signal enum */
 enum {
@@ -35,7 +35,7 @@ enum {
 
 static guint signals[LAST_SIGNAL] = {0};
 
-struct _EmpathyCalendarButtonPriv {
+struct _TpawCalendarButtonPriv {
   GDate *date;
 
   GtkWidget *button_date;
@@ -45,17 +45,17 @@ struct _EmpathyCalendarButtonPriv {
 };
 
 static void
-empathy_calendar_button_finalize (GObject *object)
+tpaw_calendar_button_finalize (GObject *object)
 {
-  EmpathyCalendarButton *self = (EmpathyCalendarButton *) object;
+  TpawCalendarButton *self = (TpawCalendarButton *) object;
 
   tp_clear_pointer (&self->priv->date, g_date_free);
 
-  G_OBJECT_CLASS (empathy_calendar_button_parent_class)->finalize (object);
+  G_OBJECT_CLASS (tpaw_calendar_button_parent_class)->finalize (object);
 }
 
 static void
-update_label (EmpathyCalendarButton *self)
+update_label (TpawCalendarButton *self)
 {
   if (self->priv->date == NULL)
     {
@@ -72,11 +72,11 @@ update_label (EmpathyCalendarButton *self)
 }
 
 static void
-empathy_calendar_button_constructed (GObject *object)
+tpaw_calendar_button_constructed (GObject *object)
 {
-  EmpathyCalendarButton *self = (EmpathyCalendarButton *) object;
+  TpawCalendarButton *self = (TpawCalendarButton *) object;
 
-  G_OBJECT_CLASS (empathy_calendar_button_parent_class)->constructed (
+  G_OBJECT_CLASS (tpaw_calendar_button_parent_class)->constructed (
       object);
 
   update_label (self);
@@ -85,7 +85,7 @@ empathy_calendar_button_constructed (GObject *object)
 static void
 dialog_response (GtkDialog *dialog,
     gint response,
-    EmpathyCalendarButton *self)
+    TpawCalendarButton *self)
 {
   GDate *date;
   guint year, month, day;
@@ -97,7 +97,7 @@ dialog_response (GtkDialog *dialog,
       &year, &month, &day);
   date = g_date_new_dmy (day, month + 1, year);
 
-  empathy_calendar_button_set_date (self, date);
+  tpaw_calendar_button_set_date (self, date);
 
   g_date_free (date);
 
@@ -107,7 +107,7 @@ out:
 
 static gboolean
 dialog_destroy (GtkWidget *widget,
-    EmpathyCalendarButton *self)
+    TpawCalendarButton *self)
 {
   self->priv->dialog = NULL;
   self->priv->calendar = NULL;
@@ -116,7 +116,7 @@ dialog_destroy (GtkWidget *widget,
 }
 
 static void
-update_calendar (EmpathyCalendarButton *self)
+update_calendar (TpawCalendarButton *self)
 {
   if (self->priv->calendar == NULL)
     return;
@@ -136,8 +136,8 @@ update_calendar (EmpathyCalendarButton *self)
 }
 
 static void
-empathy_calendar_button_date_clicked (GtkButton *button,
-    EmpathyCalendarButton *self)
+tpaw_calendar_button_date_clicked (GtkButton *button,
+    TpawCalendarButton *self)
 {
   if (self->priv->dialog == NULL)
     {
@@ -174,20 +174,20 @@ empathy_calendar_button_date_clicked (GtkButton *button,
 }
 
 static void
-empathy_calendar_button_clear_clicked (GtkButton *button,
-    EmpathyCalendarButton *self)
+tpaw_calendar_button_clear_clicked (GtkButton *button,
+    TpawCalendarButton *self)
 {
-  empathy_calendar_button_set_date (self, NULL);
+  tpaw_calendar_button_set_date (self, NULL);
 }
 
 static void
-empathy_calendar_button_init (EmpathyCalendarButton *self)
+tpaw_calendar_button_init (TpawCalendarButton *self)
 {
   GtkWidget *image;
   GtkStyleContext *context;
 
   self->priv = G_TYPE_INSTANCE_GET_PRIVATE (self,
-      EMPATHY_TYPE_CALENDAR_BUTTON, EmpathyCalendarButtonPriv);
+      TPAW_TYPE_CALENDAR_BUTTON, TpawCalendarButtonPriv);
 
   context = gtk_widget_get_style_context (GTK_WIDGET (self));
   gtk_style_context_add_class (context, GTK_STYLE_CLASS_LINKED);
@@ -196,7 +196,7 @@ empathy_calendar_button_init (EmpathyCalendarButton *self)
   self->priv->button_date = gtk_button_new ();
 
   g_signal_connect (self->priv->button_date, "clicked",
-      G_CALLBACK (empathy_calendar_button_date_clicked), self);
+      G_CALLBACK (tpaw_calendar_button_date_clicked), self);
 
   gtk_button_set_alignment (GTK_BUTTON (self->priv->button_date), 0, 0.5);
 
@@ -212,7 +212,7 @@ empathy_calendar_button_init (EmpathyCalendarButton *self)
   gtk_widget_show (image);
 
   g_signal_connect (self->priv->button_clear, "clicked",
-      G_CALLBACK (empathy_calendar_button_clear_clicked), self);
+      G_CALLBACK (tpaw_calendar_button_clear_clicked), self);
 
   gtk_box_pack_start (GTK_BOX (self), self->priv->button_clear,
       FALSE, FALSE, 0);
@@ -220,14 +220,14 @@ empathy_calendar_button_init (EmpathyCalendarButton *self)
 }
 
 static void
-empathy_calendar_button_class_init (EmpathyCalendarButtonClass *klass)
+tpaw_calendar_button_class_init (TpawCalendarButtonClass *klass)
 {
   GObjectClass *oclass = G_OBJECT_CLASS (klass);
 
-  g_type_class_add_private (klass, sizeof (EmpathyCalendarButtonPriv));
+  g_type_class_add_private (klass, sizeof (TpawCalendarButtonPriv));
 
-  oclass->finalize = empathy_calendar_button_finalize;
-  oclass->constructed = empathy_calendar_button_constructed;
+  oclass->finalize = tpaw_calendar_button_finalize;
+  oclass->constructed = tpaw_calendar_button_constructed;
 
   signals[DATE_CHANGED] = g_signal_new ("date-changed",
       G_TYPE_FROM_CLASS (klass),
@@ -238,21 +238,21 @@ empathy_calendar_button_class_init (EmpathyCalendarButtonClass *klass)
 }
 
 GtkWidget *
-empathy_calendar_button_new (void)
+tpaw_calendar_button_new (void)
 {
-  return g_object_new (EMPATHY_TYPE_CALENDAR_BUTTON,
+  return g_object_new (TPAW_TYPE_CALENDAR_BUTTON,
       "orientation", GTK_ORIENTATION_HORIZONTAL,
       NULL);
 }
 
 GDate *
-empathy_calendar_button_get_date (EmpathyCalendarButton *self)
+tpaw_calendar_button_get_date (TpawCalendarButton *self)
 {
   return self->priv->date;
 }
 
 void
-empathy_calendar_button_set_date (EmpathyCalendarButton *self,
+tpaw_calendar_button_set_date (TpawCalendarButton *self,
     GDate *date)
 {
   if (date == self->priv->date)
