@@ -40,10 +40,6 @@ gint empathy_contact_info_field_cmp (TpContactInfoField *field1,
 gint empathy_contact_info_field_spec_cmp (TpContactInfoFieldSpec *spec1,
     TpContactInfoFieldSpec *spec2);
 
-GtkWidget * empathy_contact_info_create_channel_list_label (TpAccount *account,
-    GList *info,
-    guint row);
-
 G_END_DECLS
 
 #endif /*  __EMPATHY_UTILS_H__ */
