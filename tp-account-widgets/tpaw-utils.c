@@ -272,3 +272,43 @@ tpaw_get_toplevel_window (GtkWidget *widget)
 
   return NULL;
 }
+
+/** tpaw_make_absolute_url_len:
+ * @url: an url
+ * @len: a length
+ *
+ * Same as #tpaw_make_absolute_url but for a limited string length
+ */
+gchar *
+tpaw_make_absolute_url_len (const gchar *url,
+    guint len)
+{
+  g_return_val_if_fail (url != NULL, NULL);
+
+  if (g_str_has_prefix (url, "help:") ||
+      g_str_has_prefix (url, "mailto:") ||
+      strstr (url, ":/"))
+    return g_strndup (url, len);
+
+  if (strstr (url, "@"))
+    return g_strdup_printf ("mailto:%.*s", len, url);
+
+  return g_strdup_printf ("http://%.*s", len, url);
+}
+
+/** tpaw_make_absolute_url:
+ * @url: an url
+ *
+ * The URL opening code can't handle schemeless strings, so we try to be
+ * smart and add http if there is no scheme or doesn't look like a mail
+ * address. This should work in most cases, and let us click on strings
+ * like "www.gnome.org".
+ *
+ * Returns: a newly allocated url with proper mailto: or http:// prefix, use
+ * g_free when your are done with it
+ */
+gchar *
+tpaw_make_absolute_url (const gchar *url)
+{
+  return tpaw_make_absolute_url_len (url, strlen (url));
+}

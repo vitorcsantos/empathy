@@ -98,10 +98,6 @@ void empathy_move_to_window_desktop (GtkWindow *window,
     guint32 timestamp);
 
 /* URL */
-gchar * empathy_make_absolute_url (const gchar *url);
-
-gchar * empathy_make_absolute_url_len (const gchar *url,
-    guint len);
 void empathy_url_show (GtkWidget *parent,
     const char *url);
 

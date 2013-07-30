@@ -58,6 +58,11 @@ void tpaw_window_present_with_time (GtkWindow *window,
     guint32 timestamp);
 GtkWindow * tpaw_get_toplevel_window (GtkWidget *widget);
 
+/* URL */
+gchar * tpaw_make_absolute_url (const gchar *url);
+gchar * tpaw_make_absolute_url_len (const gchar *url,
+    guint len);
+
 /* Copied from wocky/wocky-utils.h */
 
 #define tpaw_implement_finish_void(source, tag) \

@@ -21,6 +21,8 @@
 #include "config.h"
 #include "tpaw-string-parser.h"
 
+#include <tp-account-widgets/tpaw-utils.h>
+
 #include "empathy-ui-utils.h"
 
 #define SCHEMES           "([a-zA-Z\\+]+)"
@@ -134,7 +136,7 @@ tpaw_string_replace_link (const gchar *text,
 	gchar *title;
 	gchar *markup;
 
-	real_url = empathy_make_absolute_url_len (text, len);
+	real_url = tpaw_make_absolute_url_len (text, len);
 
 	/* Need to copy manually, because g_markup_printf_escaped does not work
 	 * with string precision pitfalls. */

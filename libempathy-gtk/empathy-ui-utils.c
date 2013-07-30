@@ -37,6 +37,7 @@
 #include <glib/gi18n-lib.h>
 #include <gio/gdesktopappinfo.h>
 #include <tp-account-widgets/tpaw-live-search.h>
+#include <tp-account-widgets/tpaw-utils.h>
 
 #include "empathy-ft-factory.h"
 #include "empathy-images.h"
@@ -810,46 +811,6 @@ empathy_filename_from_icon_name (const gchar *icon_name,
   return ret;
 }
 
-/** empathy_make_absolute_url_len:
- * @url: an url
- * @len: a length
- *
- * Same as #empathy_make_absolute_url but for a limited string length
- */
-gchar *
-empathy_make_absolute_url_len (const gchar *url,
-    guint len)
-{
-  g_return_val_if_fail (url != NULL, NULL);
-
-  if (g_str_has_prefix (url, "help:") ||
-      g_str_has_prefix (url, "mailto:") ||
-      strstr (url, ":/"))
-    return g_strndup (url, len);
-
-  if (strstr (url, "@"))
-    return g_strdup_printf ("mailto:%.*s", len, url);
-
-  return g_strdup_printf ("http://%.*s", len, url);
-}
-
-/** empathy_make_absolute_url:
- * @url: an url
- *
- * The URL opening code can't handle schemeless strings, so we try to be
- * smart and add http if there is no scheme or doesn't look like a mail
- * address. This should work in most cases, and let us click on strings
- * like "www.gnome.org".
- *
- * Returns: a newly allocated url with proper mailto: or http:// prefix, use
- * g_free when your are done with it
- */
-gchar *
-empathy_make_absolute_url (const gchar *url)
-{
-  return empathy_make_absolute_url_len (url, strlen (url));
-}
-
 void
 empathy_url_show (GtkWidget *parent,
       const char *url)
@@ -860,7 +821,7 @@ empathy_url_show (GtkWidget *parent,
   g_return_if_fail (parent == NULL || GTK_IS_WIDGET (parent));
   g_return_if_fail (url != NULL);
 
-  real_url = empathy_make_absolute_url (url);
+  real_url = tpaw_make_absolute_url (url);
 
   gtk_show_uri (parent ? gtk_widget_get_screen (parent) : NULL, real_url,
       gtk_get_current_event_time (), &error);
