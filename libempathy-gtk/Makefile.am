@@ -29,7 +29,6 @@ BUILT_SOURCES = 					\
 libempathy_gtk_handwritten_source =            	\
 	empathy-account-chooser.c		\
 	empathy-account-selector-dialog.c		\
-	empathy-avatar-chooser.c		\
 	empathy-avatar-image.c			\
 	empathy-bad-password-dialog.c 		\
 	empathy-base-password-dialog.c 		\
@@ -91,7 +90,6 @@ libempathy_gtk_handwritten_source =            	\
 libempathy_gtk_headers =			\
 	empathy-account-chooser.h		\
 	empathy-account-selector-dialog.h		\
-	empathy-avatar-chooser.h		\
 	empathy-avatar-image.h			\
 	empathy-bad-password-dialog.h 		\
 	empathy-base-password-dialog.h 		\

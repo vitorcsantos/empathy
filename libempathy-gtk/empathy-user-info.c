@@ -21,11 +21,11 @@
 #include "empathy-user-info.h"
 
 #include <glib/gi18n-lib.h>
+#include <tp-account-widgets/tpaw-avatar-chooser.h>
 #include <tp-account-widgets/tpaw-calendar-button.h>
 #include <tp-account-widgets/tpaw-contactinfo-utils.h>
 #include <tp-account-widgets/tpaw-time.h>
 
-#include "empathy-avatar-chooser.h"
 #include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_CONTACT
@@ -487,7 +487,7 @@ empathy_user_info_constructed (GObject *object)
       G_CALLBACK (nickname_notify_cb), self, 0);
 
   /* Set up avatar chooser */
-  self->priv->avatar_chooser = empathy_avatar_chooser_new (self->priv->account);
+  self->priv->avatar_chooser = tpaw_avatar_chooser_new (self->priv->account);
   gtk_grid_attach (grid, self->priv->avatar_chooser,
       2, 0, 1, 3);
   gtk_widget_show (self->priv->avatar_chooser);
@@ -639,11 +639,11 @@ avatar_chooser_apply_cb (GObject *source,
     GAsyncResult *result,
     gpointer user_data)
 {
-  EmpathyAvatarChooser *avatar_chooser = (EmpathyAvatarChooser *) source;
+  TpawAvatarChooser *avatar_chooser = (TpawAvatarChooser *) source;
   GSimpleAsyncResult *my_result = user_data;
   GError *error = NULL;
 
-  if (!empathy_avatar_chooser_apply_finish (avatar_chooser, result, &error))
+  if (!tpaw_avatar_chooser_apply_finish (avatar_chooser, result, &error))
     g_simple_async_result_take_error (my_result, error);
 
   apply_complete_one (my_result);
@@ -716,8 +716,8 @@ empathy_user_info_apply_async (EmpathyUserInfo *self,
       empathy_user_info_apply_async);
 
   /* Apply avatar */
-  empathy_avatar_chooser_apply_async (
-      (EmpathyAvatarChooser *) self->priv->avatar_chooser,
+  tpaw_avatar_chooser_apply_async (
+      (TpawAvatarChooser *) self->priv->avatar_chooser,
       avatar_chooser_apply_cb, g_object_ref (result));
   count++;
 

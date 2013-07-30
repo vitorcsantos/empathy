@@ -8,11 +8,13 @@ AM_CPPFLAGS =                                           \
 	-DGCR_API_SUBJECT_TO_CHANGE			\
 	$(EMPATHY_CFLAGS)				\
 	$(UDEV_CFLAGS)					\
+	$(CHEESE_CFLAGS)				\
 	$(WARN_CFLAGS)					\
 	$(DISABLE_DEPRECATED)
 
 libtp_account_widgets_LIBADD =				\
 	$(UDEV_LIBS)					\
+	$(CHEESE_LIBS)				\
 	$(NULL)
 
 BUILT_SOURCES = 					\
@@ -26,6 +28,7 @@ libtp_account_widgets_sources =            	\
 	tpaw-account-widget-irc.c		\
 	tpaw-account-widget-private.h		\
 	tpaw-account-widget-sip.c		\
+	tpaw-avatar-chooser.c			\
 	tpaw-builder.c				\
 	tpaw-calendar-button.c			\
 	tpaw-camera-monitor.c			\
@@ -50,6 +53,7 @@ libtp_account_widgets_headers =			\
 	tpaw-account-widget.h			\
 	tpaw-account-widget-irc.h		\
 	tpaw-account-widget-sip.h		\
+	tpaw-avatar-chooser.h			\
 	tpaw-builder.h				\
 	tpaw-calendar-button.h			\
 	tpaw-camera-monitor.h			\

@@ -3,25 +3,25 @@
  * Copyright (C) 2007-2008 Collabora Ltd.
  *
  * This library is free software; you can redistribute it and/or
- * modify it under the terms of version 2 of the GNU General Public
- * License as published by the Free Software Foundation.
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * General Public License for more details.
+ * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU General Public
- * License along with this library; if not, write to the
- * Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
- * Boston, MA  02110-1301  USA
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * Authors: Based on Novell's e-image-chooser.
  *          Xavier Claessens <xclaesse@gmail.com>
  */
 
 #include "config.h"
-#include "empathy-avatar-chooser.h"
+#include "tpaw-avatar-chooser.h"
 
 #include <glib/gi18n-lib.h>
 #include <tp-account-widgets/tpaw-camera-monitor.h>
@@ -39,17 +39,17 @@
 #include "empathy-debug.h"
 
 /**
- * SECTION:empathy-avatar-chooser
- * @title: EmpathyAvatarChooser
+ * SECTION:tpaw-avatar-chooser
+ * @title: TpawAvatarChooser
  * @short_description: A widget used to change avatar
- * @include: libempathy-gtk/empathy-avatar-chooser.h
+ * @include: tp-account-widgets/tpaw-avatar-chooser.h
  *
- * #EmpathyAvatarChooser is a widget which extends #GtkButton to
+ * #TpawAvatarChooser is a widget which extends #GtkButton to
  * provide a way of changing avatar.
  */
 
 /**
- * EmpathyAvatarChooser:
+ * TpawAvatarChooser:
  * @parent: parent object
  *
  * Widget which extends #GtkButton to provide a way of changing avatar.
@@ -64,13 +64,13 @@
  * A custom GtkResponseType used when the user presses the
  * "Camera Picture" button. Any positive value would be sufficient.
  */
-#define EMPATHY_AVATAR_CHOOSER_RESPONSE_WEBCAM   10
+#define TPAW_AVATAR_CHOOSER_RESPONSE_WEBCAM   10
 #endif
-#define EMPATHY_AVATAR_CHOOSER_RESPONSE_NO_IMAGE GTK_RESPONSE_NO
-#define EMPATHY_AVATAR_CHOOSER_RESPONSE_CANCEL   GTK_RESPONSE_CANCEL
-#define EMPATHY_AVATAR_CHOOSER_RESPONSE_FILE     GTK_RESPONSE_OK
+#define TPAW_AVATAR_CHOOSER_RESPONSE_NO_IMAGE GTK_RESPONSE_NO
+#define TPAW_AVATAR_CHOOSER_RESPONSE_CANCEL   GTK_RESPONSE_CANCEL
+#define TPAW_AVATAR_CHOOSER_RESPONSE_FILE     GTK_RESPONSE_OK
 
-struct _EmpathyAvatarChooserPrivate
+struct _TpawAvatarChooserPrivate
 {
   TpAccount *account;
 
@@ -88,7 +88,7 @@ enum
   PROP_ACCOUNT
 };
 
-G_DEFINE_TYPE (EmpathyAvatarChooser, empathy_avatar_chooser, GTK_TYPE_BUTTON);
+G_DEFINE_TYPE (TpawAvatarChooser, tpaw_avatar_chooser, GTK_TYPE_BUTTON);
 
 /*
  * Drag and drop stuff
@@ -105,12 +105,12 @@ static const GtkTargetEntry drop_types[] =
   { URI_LIST_TYPE, 0, DND_TARGET_TYPE_URI_LIST },
 };
 
-static void avatar_chooser_set_image (EmpathyAvatarChooser *self,
+static void avatar_chooser_set_image (TpawAvatarChooser *self,
     GArray *avatar,
     gchar *mime_type,
     GdkPixbuf *pixbuf,
     gboolean maybe_convert);
-static void avatar_chooser_clear_image (EmpathyAvatarChooser *self);
+static void avatar_chooser_clear_image (TpawAvatarChooser *self);
 
 static void
 get_avatar_cb (GObject *source,
@@ -118,7 +118,7 @@ get_avatar_cb (GObject *source,
     gpointer user_data)
 {
   TpWeakRef *wr = user_data;
-  EmpathyAvatarChooser *self = tp_weak_ref_dup_object (wr);
+  TpawAvatarChooser *self = tp_weak_ref_dup_object (wr);
   const GArray *avatar;
   GdkPixbuf *pixbuf;
   gchar *mime_type;
@@ -167,7 +167,7 @@ avatar_changed_cb (TpAccount *account,
     gpointer user_data,
     GObject *weak_object)
 {
-  EmpathyAvatarChooser *self = (EmpathyAvatarChooser *) weak_object;
+  TpawAvatarChooser *self = (TpawAvatarChooser *) weak_object;
 
   tp_account_get_avatar_async (self->priv->account,
       get_avatar_cb, tp_weak_ref_new (self, NULL, NULL));
@@ -176,9 +176,9 @@ avatar_changed_cb (TpAccount *account,
 static void
 avatar_chooser_constructed (GObject *object)
 {
-  EmpathyAvatarChooser *self = (EmpathyAvatarChooser *) object;
+  TpawAvatarChooser *self = (TpawAvatarChooser *) object;
 
-  G_OBJECT_CLASS (empathy_avatar_chooser_parent_class)->constructed (object);
+  G_OBJECT_CLASS (tpaw_avatar_chooser_parent_class)->constructed (object);
 
   tp_account_get_avatar_async (self->priv->account,
       get_avatar_cb, tp_weak_ref_new (self, NULL, NULL));
@@ -196,7 +196,7 @@ avatar_chooser_get_property (GObject *object,
     GValue *value,
     GParamSpec *pspec)
 {
-  EmpathyAvatarChooser *self = (EmpathyAvatarChooser *) object;
+  TpawAvatarChooser *self = (TpawAvatarChooser *) object;
 
   switch (param_id)
     {
@@ -215,7 +215,7 @@ avatar_chooser_set_property (GObject *object,
     const GValue *value,
     GParamSpec *pspec)
 {
-  EmpathyAvatarChooser *self = EMPATHY_AVATAR_CHOOSER (object);
+  TpawAvatarChooser *self = TPAW_AVATAR_CHOOSER (object);
 
   switch (param_id)
     {
@@ -232,18 +232,18 @@ avatar_chooser_set_property (GObject *object,
 static void
 avatar_chooser_dispose (GObject *object)
 {
-  EmpathyAvatarChooser *self = (EmpathyAvatarChooser *) object;
+  TpawAvatarChooser *self = (TpawAvatarChooser *) object;
 
   tp_clear_object (&self->priv->account);
   tp_clear_pointer (&self->priv->avatar, g_array_unref);
   tp_clear_pointer (&self->priv->mime_type, g_free);
   tp_clear_object (&self->priv->gsettings_ui);
 
-  G_OBJECT_CLASS (empathy_avatar_chooser_parent_class)->dispose (object);
+  G_OBJECT_CLASS (tpaw_avatar_chooser_parent_class)->dispose (object);
 }
 
 static void
-empathy_avatar_chooser_class_init (EmpathyAvatarChooserClass *klass)
+tpaw_avatar_chooser_class_init (TpawAvatarChooserClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GParamSpec *param_spec;
@@ -254,10 +254,10 @@ empathy_avatar_chooser_class_init (EmpathyAvatarChooserClass *klass)
   object_class->set_property = avatar_chooser_set_property;
 
   /**
-   * EmpathyAvatarChooser:account:
+   * TpawAvatarChooser:account:
    *
    * The #TpAccount whose avatar should be shown and modified by
-   * the #EmpathyAvatarChooser instance.
+   * the #TpawAvatarChooser instance.
    */
   param_spec = g_param_spec_object ("account",
             "TpAccount",
@@ -271,7 +271,7 @@ empathy_avatar_chooser_class_init (EmpathyAvatarChooserClass *klass)
            PROP_ACCOUNT,
            param_spec);
 
-  g_type_class_add_private (object_class, sizeof (EmpathyAvatarChooserPrivate));
+  g_type_class_add_private (object_class, sizeof (TpawAvatarChooserPrivate));
 }
 
 static gboolean
@@ -280,7 +280,7 @@ avatar_chooser_drag_motion_cb (GtkWidget *widget,
     gint x,
     gint y,
     guint time_,
-    EmpathyAvatarChooser *self)
+    TpawAvatarChooser *self)
 {
   GList *p;
 
@@ -311,7 +311,7 @@ avatar_chooser_drag_drop_cb (GtkWidget *widget,
     gint x,
     gint y,
     guint time_,
-    EmpathyAvatarChooser *self)
+    TpawAvatarChooser *self)
 {
   GList *p;
 
@@ -341,7 +341,7 @@ avatar_chooser_drag_drop_cb (GtkWidget *widget,
 }
 
 static void
-avatar_chooser_clear_image (EmpathyAvatarChooser *self)
+avatar_chooser_clear_image (TpawAvatarChooser *self)
 {
   GtkWidget *image;
 
@@ -448,7 +448,7 @@ avatar_chooser_need_mime_type_conversion (const gchar *current_mime_type,
 }
 
 static void
-avatar_chooser_error_show (EmpathyAvatarChooser *self,
+avatar_chooser_error_show (TpawAvatarChooser *self,
     const gchar *primary_text,
     const gchar *secondary_text)
 {
@@ -478,7 +478,7 @@ avatar_chooser_error_show (EmpathyAvatarChooser *self,
 }
 
 static TpAvatarRequirements *
-get_requirements (EmpathyAvatarChooser *self)
+get_requirements (TpawAvatarChooser *self)
 {
   TpConnection *connection;
 
@@ -489,7 +489,7 @@ get_requirements (EmpathyAvatarChooser *self)
 
 
 static gboolean
-avatar_chooser_maybe_convert_and_scale (EmpathyAvatarChooser *self,
+avatar_chooser_maybe_convert_and_scale (TpawAvatarChooser *self,
     GdkPixbuf *pixbuf,
     GArray *avatar,
     gchar *mime_type,
@@ -685,7 +685,7 @@ avatar_chooser_maybe_convert_and_scale (EmpathyAvatarChooser *self,
 
 /* Take ownership of @pixbuf */
 static void
-avatar_chooser_set_image (EmpathyAvatarChooser *self,
+avatar_chooser_set_image (TpawAvatarChooser *self,
     GArray *avatar,
     gchar *mime_type,
     GdkPixbuf *pixbuf,
@@ -736,7 +736,7 @@ avatar_chooser_set_image (EmpathyAvatarChooser *self,
 
 /* takes ownership of @data */
 static void
-avatar_chooser_set_image_from_data (EmpathyAvatarChooser *self,
+avatar_chooser_set_image_from_data (TpawAvatarChooser *self,
     gchar *data,
     gsize size)
 {
@@ -776,7 +776,7 @@ avatar_chooser_drag_data_received_cb (GtkWidget          *widget,
     GtkSelectionData *selection_data,
     guint info,
     guint time_,
-    EmpathyAvatarChooser *self)
+    TpawAvatarChooser *self)
 {
   gchar *target_type;
   gboolean handled = FALSE;
@@ -825,7 +825,7 @@ avatar_chooser_drag_data_received_cb (GtkWidget          *widget,
 
 static void
 avatar_chooser_update_preview_cb (GtkFileChooser *file_chooser,
-    EmpathyAvatarChooser *self)
+    TpawAvatarChooser *self)
 {
   gchar *filename;
 
@@ -864,7 +864,7 @@ avatar_chooser_update_preview_cb (GtkFileChooser *file_chooser,
 }
 
 static void
-avatar_chooser_set_image_from_file (EmpathyAvatarChooser *self,
+avatar_chooser_set_image_from_file (TpawAvatarChooser *self,
     const gchar *filename)
 {
   gchar *image_data = NULL;
@@ -886,7 +886,7 @@ avatar_chooser_set_image_from_file (EmpathyAvatarChooser *self,
 
 #ifdef HAVE_CHEESE
 static void
-avatar_chooser_set_avatar_from_pixbuf (EmpathyAvatarChooser *self,
+avatar_chooser_set_avatar_from_pixbuf (TpawAvatarChooser *self,
                GdkPixbuf *pb)
 {
   gsize size;
@@ -923,7 +923,7 @@ destroy_chooser (GtkWidget *self)
 static void
 webcam_response_cb (GtkDialog *dialog,
         int response,
-        EmpathyAvatarChooser *self)
+        TpawAvatarChooser *self)
 {
   if (response == GTK_RESPONSE_ACCEPT)
     {
@@ -942,7 +942,7 @@ webcam_response_cb (GtkDialog *dialog,
 
 static void
 choose_avatar_from_webcam (GtkWidget *widget,
-    EmpathyAvatarChooser *self)
+    TpawAvatarChooser *self)
 {
   GtkWidget *window;
 
@@ -960,11 +960,11 @@ choose_avatar_from_webcam (GtkWidget *widget,
 static void
 avatar_chooser_response_cb (GtkWidget *widget,
     gint response,
-    EmpathyAvatarChooser *self)
+    TpawAvatarChooser *self)
 {
   self->priv->chooser_dialog = NULL;
 
-  if (response == EMPATHY_AVATAR_CHOOSER_RESPONSE_FILE)
+  if (response == TPAW_AVATAR_CHOOSER_RESPONSE_FILE)
     {
       gchar *filename;
       gchar *path;
@@ -983,13 +983,13 @@ avatar_chooser_response_cb (GtkWidget *widget,
           g_free (path);
         }
     }
-  else if (response == EMPATHY_AVATAR_CHOOSER_RESPONSE_NO_IMAGE)
+  else if (response == TPAW_AVATAR_CHOOSER_RESPONSE_NO_IMAGE)
     {
       /* This corresponds to "No Image", not to "Cancel" */
       avatar_chooser_clear_image (self);
     }
   #ifdef HAVE_CHEESE
-  else if (response == EMPATHY_AVATAR_CHOOSER_RESPONSE_WEBCAM)
+  else if (response == TPAW_AVATAR_CHOOSER_RESPONSE_WEBCAM)
     {
       /* This corresponds to "Camera Picture" */
       choose_avatar_from_webcam (widget, self);
@@ -1001,7 +1001,7 @@ avatar_chooser_response_cb (GtkWidget *widget,
 
 static void
 avatar_chooser_clicked_cb (GtkWidget *button,
-    EmpathyAvatarChooser *self)
+    TpawAvatarChooser *self)
 {
   GtkFileChooser *chooser_dialog;
   GtkWidget *image;
@@ -1029,7 +1029,7 @@ avatar_chooser_clicked_cb (GtkWidget *button,
 #ifdef HAVE_CHEESE
   picture_button = gtk_dialog_add_button (
       GTK_DIALOG (self->priv->chooser_dialog),
-      _("Take a picture..."), EMPATHY_AVATAR_CHOOSER_RESPONSE_WEBCAM);
+      _("Take a picture..."), TPAW_AVATAR_CHOOSER_RESPONSE_WEBCAM);
 
   /* Button is sensitive only if there is one camera connected */
   monitor = tpaw_camera_monitor_dup_singleton ();
@@ -1042,9 +1042,9 @@ avatar_chooser_clicked_cb (GtkWidget *button,
 #endif
 
   gtk_dialog_add_buttons (GTK_DIALOG (self->priv->chooser_dialog),
-      _("No Image"), EMPATHY_AVATAR_CHOOSER_RESPONSE_NO_IMAGE,
-      GTK_STOCK_CANCEL, EMPATHY_AVATAR_CHOOSER_RESPONSE_CANCEL,
-      GTK_STOCK_OPEN, EMPATHY_AVATAR_CHOOSER_RESPONSE_FILE,
+      _("No Image"), TPAW_AVATAR_CHOOSER_RESPONSE_NO_IMAGE,
+      GTK_STOCK_CANCEL, TPAW_AVATAR_CHOOSER_RESPONSE_CANCEL,
+      GTK_STOCK_OPEN, TPAW_AVATAR_CHOOSER_RESPONSE_FILE,
       NULL);
 
   chooser_dialog = self->priv->chooser_dialog;
@@ -1109,7 +1109,7 @@ avatar_chooser_clicked_cb (GtkWidget *button,
 
   /* Setup response */
   gtk_dialog_set_default_response (GTK_DIALOG (chooser_dialog),
-      EMPATHY_AVATAR_CHOOSER_RESPONSE_FILE);
+      TPAW_AVATAR_CHOOSER_RESPONSE_FILE);
 
   g_signal_connect (chooser_dialog, "response",
       G_CALLBACK (avatar_chooser_response_cb),
@@ -1121,10 +1121,10 @@ avatar_chooser_clicked_cb (GtkWidget *button,
 }
 
 static void
-empathy_avatar_chooser_init (EmpathyAvatarChooser *self)
+tpaw_avatar_chooser_init (TpawAvatarChooser *self)
 {
   self->priv = G_TYPE_INSTANCE_GET_PRIVATE (self,
-    EMPATHY_TYPE_AVATAR_CHOOSER, EmpathyAvatarChooserPrivate);
+    TPAW_TYPE_AVATAR_CHOOSER, TpawAvatarChooserPrivate);
 
   gtk_drag_dest_set (GTK_WIDGET (self),
       GTK_DEST_DEFAULT_ALL,
@@ -1151,19 +1151,19 @@ empathy_avatar_chooser_init (EmpathyAvatarChooser *self)
 }
 
 /**
- * empathy_avatar_chooser_new:
+ * tpaw_avatar_chooser_new:
  * @account: a #TpAccount
  *
- * Creates a new #EmpathyAvatarChooser.
+ * Creates a new #TpawAvatarChooser.
  *
- * Return value: a new #EmpathyAvatarChooser
+ * Return value: a new #TpawAvatarChooser
  */
 GtkWidget *
-empathy_avatar_chooser_new (TpAccount *account)
+tpaw_avatar_chooser_new (TpAccount *account)
 {
   g_return_val_if_fail (TP_IS_ACCOUNT (account), NULL);
 
-  return g_object_new (EMPATHY_TYPE_AVATAR_CHOOSER,
+  return g_object_new (TPAW_TYPE_AVATAR_CHOOSER,
       "account", account,
       NULL);
 }
@@ -1184,16 +1184,16 @@ set_avatar_cb (GObject *source,
 }
 
 void
-empathy_avatar_chooser_apply_async (EmpathyAvatarChooser *self,
+tpaw_avatar_chooser_apply_async (TpawAvatarChooser *self,
     GAsyncReadyCallback callback,
     gpointer user_data)
 {
   GSimpleAsyncResult *result;
 
-  g_return_if_fail (EMPATHY_IS_AVATAR_CHOOSER (self));
+  g_return_if_fail (TPAW_IS_AVATAR_CHOOSER (self));
 
   result = g_simple_async_result_new ((GObject *) self, callback, user_data,
-      empathy_avatar_chooser_apply_async);
+      tpaw_avatar_chooser_apply_async);
 
   if (!self->priv->changed)
     {
@@ -1214,9 +1214,9 @@ empathy_avatar_chooser_apply_async (EmpathyAvatarChooser *self,
 }
 
 gboolean
-empathy_avatar_chooser_apply_finish (EmpathyAvatarChooser *self,
+tpaw_avatar_chooser_apply_finish (TpawAvatarChooser *self,
     GAsyncResult *result,
     GError **error)
 {
-  empathy_implement_finish_void (self, empathy_avatar_chooser_apply_async);
+  empathy_implement_finish_void (self, tpaw_avatar_chooser_apply_async);
 }
