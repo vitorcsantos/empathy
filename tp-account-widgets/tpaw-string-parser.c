@@ -21,6 +21,7 @@
 #include "config.h"
 #include "tpaw-string-parser.h"
 
+#include <string.h>
 #include <tp-account-widgets/tpaw-utils.h>
 
 #include "empathy-ui-utils.h"
