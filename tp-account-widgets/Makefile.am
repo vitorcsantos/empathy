@@ -44,6 +44,7 @@ libtp_account_widgets_sources =            	\
 	tpaw-live-search.c			\
 	tpaw-string-parser.c			\
 	tpaw-time.c				\
+	tpaw-user-info.c			\
 	tpaw-utils.c				\
 	totem-subtitle-encoding.c		\
 	$(NULL)
@@ -71,6 +72,7 @@ libtp_account_widgets_headers =			\
 	tpaw-live-search.h			\
 	tpaw-string-parser.h			\
 	tpaw-time.h				\
+	tpaw-user-info.h			\
 	tpaw-utils.h				\
 	totem-subtitle-encoding.h		\
 	$(NULL)

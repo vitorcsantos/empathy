@@ -1,5 +1,5 @@
 /*
- * empathy-user-info.c - Source for EmpathyUserInfo
+ * tpaw-user-info.c - Source for TpawUserInfo
  *
  * Copyright (C) 2012 - Collabora Ltd.
  *
@@ -18,7 +18,7 @@
  */
 
 #include "config.h"
-#include "empathy-user-info.h"
+#include "tpaw-user-info.h"
 
 #include <glib/gi18n-lib.h>
 #include <tp-account-widgets/tpaw-avatar-chooser.h>
@@ -31,9 +31,9 @@
 #define DEBUG_FLAG EMPATHY_DEBUG_CONTACT
 #include "empathy-debug.h"
 
-G_DEFINE_TYPE (EmpathyUserInfo, empathy_user_info, GTK_TYPE_GRID)
+G_DEFINE_TYPE (TpawUserInfo, tpaw_user_info, GTK_TYPE_GRID)
 
-struct _EmpathyUserInfoPrivate
+struct _TpawUserInfoPrivate
 {
   TpAccount *account;
 
@@ -59,7 +59,7 @@ enum
 
 static void
 contact_info_changed_cb (GtkEntry *entry,
-    EmpathyUserInfo *self)
+    TpawUserInfo *self)
 {
   const gchar *strv[] = { NULL, NULL };
   TpContactInfoField *field;
@@ -79,7 +79,7 @@ contact_info_changed_cb (GtkEntry *entry,
 static void
 bday_changed_cb (TpawCalendarButton *button,
     GDate *date,
-    EmpathyUserInfo *self)
+    TpawUserInfo *self)
 {
   const gchar *strv[] = { NULL, NULL };
   TpContactInfoField *field;
@@ -171,7 +171,7 @@ add_row (GtkGrid *grid,
 }
 
 static guint
-fill_contact_info_grid (EmpathyUserInfo *self)
+fill_contact_info_grid (TpawUserInfo *self)
 {
   TpConnection *connection;
   TpContact *contact;
@@ -251,7 +251,7 @@ fill_contact_info_grid (EmpathyUserInfo *self)
           NULL, NULL);
       if (!has_field)
         {
-          /* Empathy doesn't display this field so we can't change it.
+          /* We don't display this field so we can't change it.
            * But we put it in the details_to_set list so it won't be erased
            * when calling SetContactInfo (bgo #630427) */
           DEBUG ("Unhandled ContactInfo field spec: %s", field->field_name);
@@ -335,7 +335,7 @@ request_contact_info_cb (GObject *object,
     GAsyncResult *res,
     gpointer user_data)
 {
-  EmpathyUserInfo *self = user_data;
+  TpawUserInfo *self = user_data;
   TpContact *contact = TP_CONTACT (object);
   guint n_rows;
   GError *error = NULL;
@@ -360,7 +360,7 @@ request_contact_info_cb (GObject *object,
 }
 
 static void
-reload_contact_info (EmpathyUserInfo *self)
+reload_contact_info (TpawUserInfo *self)
 {
   TpConnection *connection;
   TpContact *contact = NULL;
@@ -426,7 +426,7 @@ reload_contact_info (EmpathyUserInfo *self)
 }
 
 static void
-connection_notify_cb (EmpathyUserInfo *self)
+connection_notify_cb (TpawUserInfo *self)
 {
   TpConnection *connection = tp_account_get_connection (self->priv->account);
 
@@ -442,7 +442,7 @@ connection_notify_cb (EmpathyUserInfo *self)
 static void
 identifier_notify_cb (TpAccount *account,
     GParamSpec *param_spec,
-    EmpathyUserInfo *self)
+    TpawUserInfo *self)
 {
   gtk_label_set_label (GTK_LABEL (self->priv->identifier_label),
       tp_account_get_normalized_name (self->priv->account));
@@ -451,20 +451,20 @@ identifier_notify_cb (TpAccount *account,
 static void
 nickname_notify_cb (TpAccount *account,
     GParamSpec *param_spec,
-    EmpathyUserInfo *self)
+    TpawUserInfo *self)
 {
   gtk_entry_set_text (GTK_ENTRY (self->priv->nickname_entry),
       tp_account_get_nickname (self->priv->account));
 }
 
 static void
-empathy_user_info_constructed (GObject *object)
+tpaw_user_info_constructed (GObject *object)
 {
-  EmpathyUserInfo *self = (EmpathyUserInfo *) object;
+  TpawUserInfo *self = (TpawUserInfo *) object;
   GtkGrid *grid = (GtkGrid *) self;
   GtkWidget *title;
 
-  G_OBJECT_CLASS (empathy_user_info_parent_class)->constructed (object);
+  G_OBJECT_CLASS (tpaw_user_info_parent_class)->constructed (object);
 
   gtk_grid_set_column_spacing (grid, 6);
   gtk_grid_set_row_spacing (grid, 6);
@@ -513,9 +513,9 @@ empathy_user_info_constructed (GObject *object)
 }
 
 static void
-empathy_user_info_dispose (GObject *object)
+tpaw_user_info_dispose (GObject *object)
 {
-  EmpathyUserInfo *self = (EmpathyUserInfo *) object;
+  TpawUserInfo *self = (TpawUserInfo *) object;
 
   if (self->priv->account != NULL)
     {
@@ -531,16 +531,16 @@ empathy_user_info_dispose (GObject *object)
     g_cancellable_cancel (self->priv->details_cancellable);
   g_clear_object (&self->priv->details_cancellable);
 
-  G_OBJECT_CLASS (empathy_user_info_parent_class)->dispose (object);
+  G_OBJECT_CLASS (tpaw_user_info_parent_class)->dispose (object);
 }
 
 static void
-empathy_user_info_get_property (GObject *object,
+tpaw_user_info_get_property (GObject *object,
     guint property_id,
     GValue *value,
     GParamSpec *pspec)
 {
-  EmpathyUserInfo *self = (EmpathyUserInfo *) object;
+  TpawUserInfo *self = (TpawUserInfo *) object;
 
   switch (property_id)
     {
@@ -554,12 +554,12 @@ empathy_user_info_get_property (GObject *object,
 }
 
 static void
-empathy_user_info_set_property (GObject *object,
+tpaw_user_info_set_property (GObject *object,
     guint property_id,
     const GValue *value,
     GParamSpec *pspec)
 {
-  EmpathyUserInfo *self = (EmpathyUserInfo *) object;
+  TpawUserInfo *self = (TpawUserInfo *) object;
 
   switch (property_id)
     {
@@ -574,24 +574,24 @@ empathy_user_info_set_property (GObject *object,
 }
 
 static void
-empathy_user_info_init (EmpathyUserInfo *self)
+tpaw_user_info_init (TpawUserInfo *self)
 {
   self->priv = G_TYPE_INSTANCE_GET_PRIVATE (self,
-      EMPATHY_TYPE_USER_INFO, EmpathyUserInfoPrivate);
+      TPAW_TYPE_USER_INFO, TpawUserInfoPrivate);
 }
 
 static void
-empathy_user_info_class_init (EmpathyUserInfoClass *klass)
+tpaw_user_info_class_init (TpawUserInfoClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GParamSpec *param_spec;
 
-  object_class->constructed = empathy_user_info_constructed;
-  object_class->dispose = empathy_user_info_dispose;
-  object_class->get_property = empathy_user_info_get_property;
-  object_class->set_property = empathy_user_info_set_property;
+  object_class->constructed = tpaw_user_info_constructed;
+  object_class->dispose = tpaw_user_info_dispose;
+  object_class->get_property = tpaw_user_info_get_property;
+  object_class->set_property = tpaw_user_info_set_property;
 
-  g_type_class_add_private (object_class, sizeof (EmpathyUserInfoPrivate));
+  g_type_class_add_private (object_class, sizeof (TpawUserInfoPrivate));
 
   param_spec = g_param_spec_object ("account",
       "account",
@@ -602,19 +602,19 @@ empathy_user_info_class_init (EmpathyUserInfoClass *klass)
 }
 
 GtkWidget *
-empathy_user_info_new (TpAccount *account)
+tpaw_user_info_new (TpAccount *account)
 {
   g_return_val_if_fail (TP_IS_ACCOUNT (account), NULL);
 
-  return g_object_new (EMPATHY_TYPE_USER_INFO,
+  return g_object_new (TPAW_TYPE_USER_INFO,
       "account", account,
       NULL);
 }
 
 void
-empathy_user_info_discard (EmpathyUserInfo *self)
+tpaw_user_info_discard (TpawUserInfo *self)
 {
-  g_return_if_fail (EMPATHY_IS_USER_INFO (self));
+  g_return_if_fail (TPAW_IS_USER_INFO (self));
 
   reload_contact_info (self);
   gtk_entry_set_text ((GtkEntry *) self->priv->nickname_entry,
@@ -701,7 +701,7 @@ field_value_is_empty (TpContactInfoField *field)
 }
 
 void
-empathy_user_info_apply_async (EmpathyUserInfo *self,
+tpaw_user_info_apply_async (TpawUserInfo *self,
     GAsyncReadyCallback callback,
     gpointer user_data)
 {
@@ -710,10 +710,10 @@ empathy_user_info_apply_async (EmpathyUserInfo *self,
   guint count = 0;
   GList *l, *next;
 
-  g_return_if_fail (EMPATHY_IS_USER_INFO (self));
+  g_return_if_fail (TPAW_IS_USER_INFO (self));
 
   result = g_simple_async_result_new ((GObject *) self, callback, user_data,
-      empathy_user_info_apply_async);
+      tpaw_user_info_apply_async);
 
   /* Apply avatar */
   tpaw_avatar_chooser_apply_async (
@@ -768,9 +768,9 @@ empathy_user_info_apply_async (EmpathyUserInfo *self,
 }
 
 gboolean
-empathy_user_info_apply_finish (EmpathyUserInfo *self,
+tpaw_user_info_apply_finish (TpawUserInfo *self,
     GAsyncResult *result,
     GError **error)
 {
-  empathy_implement_finish_void (self, empathy_user_info_apply_async);
+  empathy_implement_finish_void (self, tpaw_user_info_apply_async);
 }

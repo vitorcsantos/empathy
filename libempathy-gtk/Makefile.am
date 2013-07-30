@@ -81,7 +81,6 @@ libempathy_gtk_handwritten_source =            	\
 	empathy-theme-manager.c			\
 	empathy-tls-dialog.c			\
 	empathy-ui-utils.c			\
-	empathy-user-info.c			\
 	empathy-plist.c				\
 	empathy-theme-adium.c			\
 	empathy-webkit-utils.c			\
@@ -143,7 +142,6 @@ libempathy_gtk_headers =			\
 	empathy-theme-manager.h			\
 	empathy-tls-dialog.h			\
 	empathy-ui-utils.h			\
-	empathy-user-info.h			\
 	empathy-plist.h				\
 	empathy-theme-adium.h			\
 	empathy-webkit-utils.h			\

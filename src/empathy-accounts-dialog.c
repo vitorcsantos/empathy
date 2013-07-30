@@ -30,6 +30,7 @@
 #include <glib/gi18n-lib.h>
 #include <tp-account-widgets/tpaw-account-widget.h>
 #include <tp-account-widgets/tpaw-builder.h>
+#include <tp-account-widgets/tpaw-user-info.h>
 #include <tp-account-widgets/tpaw-utils.h>
 
 #include "empathy-accounts-common.h"
@@ -39,7 +40,6 @@
 #include "empathy-new-account-dialog.h"
 #include "empathy-pkg-kit.h"
 #include "empathy-ui-utils.h"
-#include "empathy-user-info.h"
 #include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_ACCOUNT
@@ -701,7 +701,7 @@ account_dialog_create_dialog_content (EmpathyAccountsDialog *dialog,
   gtk_widget_show (priv->dialog_content);
 
   alig = gtk_alignment_new (0.5, 0, 1, 1);
-  priv->user_info = empathy_user_info_new (account);
+  priv->user_info = tpaw_user_info_new (account);
   gtk_container_add (GTK_CONTAINER (alig), priv->user_info);
   gtk_box_pack_start (GTK_BOX (priv->dialog_content), alig, TRUE, TRUE, 0);
   gtk_widget_show (alig);
@@ -925,7 +925,7 @@ accounts_dialog_update_settings (EmpathyAccountsDialog *dialog,
 
   if (priv->user_info != NULL)
     {
-      empathy_user_info_apply_async ((EmpathyUserInfo *) priv->user_info,
+      tpaw_user_info_apply_async ((TpawUserInfo *) priv->user_info,
           NULL, NULL);
       priv->user_info = NULL;
     }
@@ -2431,7 +2431,7 @@ do_dispose (GObject *obj)
 
   if (priv->user_info != NULL)
     {
-      empathy_user_info_apply_async ((EmpathyUserInfo *) priv->user_info,
+      tpaw_user_info_apply_async ((TpawUserInfo *) priv->user_info,
           NULL, NULL);
       priv->user_info = NULL;
     }
