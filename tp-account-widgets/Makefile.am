@@ -47,7 +47,6 @@ libtp_account_widgets_sources =            	\
 	tpaw-time.c				\
 	tpaw-user-info.c			\
 	tpaw-utils.c				\
-	totem-subtitle-encoding.c		\
 	$(NULL)
 
 libtp_account_widgets_headers =			\
@@ -78,12 +77,13 @@ libtp_account_widgets_headers =			\
 	tpaw-time.h				\
 	tpaw-user-info.h			\
 	tpaw-utils.h				\
-	totem-subtitle-encoding.h		\
 	$(NULL)
 
 nocheck_sources = \
 	cheese-camera-device-monitor.c		\
 	cheese-camera-device-monitor.h		\
+	totem-subtitle-encoding.c		\
+	totem-subtitle-encoding.h		\
 	$(NULL)
 
 pkglib_LTLIBRARIES = libtp-account-widgets.la
