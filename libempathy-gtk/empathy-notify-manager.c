@@ -21,6 +21,7 @@
 #include "empathy-notify-manager.h"
 
 #include <libnotify/notify.h>
+#include <tp-account-widgets/tpaw-pixbuf-utils.h>
 
 #include "empathy-gsettings.h"
 #include "empathy-ui-utils.h"
@@ -174,7 +175,7 @@ empathy_notify_manager_get_pixbuf_for_notification (EmpathyNotifyManager *self,
     pixbuf = empathy_pixbuf_avatar_from_contact_scaled (contact, 48, 48);
 
   if (pixbuf == NULL)
-    pixbuf = empathy_pixbuf_from_icon_name_sized (icon_name, 48);
+    pixbuf = tpaw_pixbuf_from_icon_name_sized (icon_name, 48);
 
   return pixbuf;
 }

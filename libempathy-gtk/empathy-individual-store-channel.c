@@ -26,6 +26,8 @@
 #include "config.h"
 #include "empathy-individual-store-channel.h"
 
+#include <tp-account-widgets/tpaw-pixbuf-utils.h>
+
 #include "empathy-utils.h"
 #include "empathy-ui-utils.h"
 #include "empathy-images.h"
@@ -159,7 +161,7 @@ individual_store_channel_contact_chat_state_changed (TpTextChannel *channel,
   if (state == TP_CHANNEL_CHAT_STATE_COMPOSING)
     {
       gchar *icon_filename =
-          empathy_filename_from_icon_name (EMPATHY_IMAGE_TYPING,
+          tpaw_filename_from_icon_name (EMPATHY_IMAGE_TYPING,
             GTK_ICON_SIZE_MENU);
 
       pixbuf = gdk_pixbuf_new_from_file (icon_filename, NULL);

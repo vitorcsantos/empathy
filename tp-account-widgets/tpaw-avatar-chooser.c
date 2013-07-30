@@ -27,6 +27,7 @@
 #include <tp-account-widgets/tpaw-camera-monitor.h>
 #include <tp-account-widgets/tpaw-gsettings.h>
 #include <tp-account-widgets/tpaw-images.h>
+#include <tp-account-widgets/tpaw-pixbuf-utils.h>
 #include <tp-account-widgets/tpaw-utils.h>
 
 #ifdef HAVE_CHEESE
@@ -145,7 +146,7 @@ get_avatar_cb (GObject *source,
       goto out;
     }
 
-  pixbuf = empathy_pixbuf_from_data_and_mime ((gchar *) avatar->data,
+  pixbuf = tpaw_pixbuf_from_data_and_mime ((gchar *) avatar->data,
       avatar->len, &mime_type);
   if (pixbuf == NULL)
     {
@@ -725,7 +726,7 @@ avatar_chooser_set_image (TpawAvatarChooser *self,
 
   self->priv->changed = TRUE;
 
-  pixbuf_view = empathy_pixbuf_scale_down_if_necessary (pixbuf,
+  pixbuf_view = tpaw_pixbuf_scale_down_if_necessary (pixbuf,
       AVATAR_SIZE_VIEW);
   image = gtk_image_new_from_pixbuf (pixbuf_view);
 
@@ -751,7 +752,7 @@ avatar_chooser_set_image_from_data (TpawAvatarChooser *self,
       return;
     }
 
-  pixbuf = empathy_pixbuf_from_data_and_mime (data, size, &mime_type);
+  pixbuf = tpaw_pixbuf_from_data_and_mime (data, size, &mime_type);
   if (pixbuf == NULL)
     {
       g_free (data);
@@ -844,7 +845,7 @@ avatar_chooser_update_preview_cb (GtkFileChooser *file_chooser,
 
       if (pixbuf != NULL)
         {
-          scaled_pixbuf = empathy_pixbuf_scale_down_if_necessary (pixbuf,
+          scaled_pixbuf = tpaw_pixbuf_scale_down_if_necessary (pixbuf,
               AVATAR_SIZE_SAVE);
 
           gtk_image_set_from_pixbuf (GTK_IMAGE (image), scaled_pixbuf);

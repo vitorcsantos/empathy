@@ -31,6 +31,7 @@
 #include <tp-account-widgets/tpaw-account-widget.h>
 #include <tp-account-widgets/tpaw-builder.h>
 #include <tp-account-widgets/tpaw-user-info.h>
+#include <tp-account-widgets/tpaw-pixbuf-utils.h>
 #include <tp-account-widgets/tpaw-utils.h>
 
 #include "empathy-accounts-common.h"
@@ -1023,7 +1024,7 @@ ensure_icon (EmpathyAccountsDialog *self,
   pixbuf = g_hash_table_lookup (priv->icons_cache, icon_name);
   if (pixbuf == NULL)
     {
-      pixbuf = empathy_pixbuf_from_icon_name (icon_name, GTK_ICON_SIZE_BUTTON);
+      pixbuf = tpaw_pixbuf_from_icon_name (icon_name, GTK_ICON_SIZE_BUTTON);
 
       if (pixbuf == NULL)
         return NULL;

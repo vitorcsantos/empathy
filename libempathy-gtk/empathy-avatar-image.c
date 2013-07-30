@@ -26,6 +26,7 @@
 
 #include <glib/gi18n-lib.h>
 #include <gdk/gdkx.h>
+#include <tp-account-widgets/tpaw-pixbuf-utils.h>
 
 #include "empathy-ui-utils.h"
 #include "empathy-utils.h"
@@ -211,7 +212,7 @@ avatar_image_button_press_event (GtkWidget *widget, GdkEventButton *event)
 		return TRUE;
 	}
 
-	pixbuf = empathy_pixbuf_scale_down_if_necessary (priv->pixbuf, MAX_LARGE);
+	pixbuf = tpaw_pixbuf_scale_down_if_necessary (priv->pixbuf, MAX_LARGE);
 	popup_width = gdk_pixbuf_get_width (pixbuf);
 	popup_height = gdk_pixbuf_get_height (pixbuf);
 
@@ -302,7 +303,7 @@ empathy_avatar_image_set (EmpathyAvatarImage *avatar_image,
 	}
 
 	if (avatar) {
-		priv->pixbuf = empathy_pixbuf_from_data ((gchar *) avatar->data,
+		priv->pixbuf = tpaw_pixbuf_from_data ((gchar *) avatar->data,
 				avatar->len);
 	}
 
@@ -311,7 +312,7 @@ empathy_avatar_image_set (EmpathyAvatarImage *avatar_image,
 		return;
 	}
 
-	scaled_pixbuf = empathy_pixbuf_scale_down_if_necessary (priv->pixbuf, MAX_SMALL);
+	scaled_pixbuf = tpaw_pixbuf_scale_down_if_necessary (priv->pixbuf, MAX_SMALL);
 	gtk_image_set_from_pixbuf (GTK_IMAGE (priv->image), scaled_pixbuf);
 
 	if (scaled_pixbuf != priv->pixbuf) {

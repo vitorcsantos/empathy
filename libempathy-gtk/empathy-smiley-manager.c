@@ -23,6 +23,7 @@
 #include "config.h"
 #include "empathy-smiley-manager.h"
 
+#include <tp-account-widgets/tpaw-pixbuf-utils.h>
 #include <tp-account-widgets/tpaw-utils.h>
 
 #include "empathy-ui-utils.h"
@@ -247,12 +248,12 @@ empathy_smiley_manager_add (EmpathySmileyManager *manager,
 	g_return_if_fail (!TPAW_STR_EMPTY (icon_name));
 	g_return_if_fail (!TPAW_STR_EMPTY (first_str));
 
-	pixbuf = empathy_pixbuf_from_icon_name (icon_name, GTK_ICON_SIZE_MENU);
+	pixbuf = tpaw_pixbuf_from_icon_name (icon_name, GTK_ICON_SIZE_MENU);
 	if (pixbuf) {
 		gchar *path;
 
 		va_start (var_args, first_str);
-		path = empathy_filename_from_icon_name (icon_name, GTK_ICON_SIZE_MENU);
+		path = tpaw_filename_from_icon_name (icon_name, GTK_ICON_SIZE_MENU);
 		smiley_manager_add_valist (manager, pixbuf, path, first_str, var_args);
 		va_end (var_args);
 		g_object_unref (pixbuf);

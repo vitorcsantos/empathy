@@ -28,6 +28,7 @@
 #include <tp-account-widgets/tpaw-builder.h>
 #include <tp-account-widgets/tpaw-camera-monitor.h>
 #include <tp-account-widgets/tpaw-images.h>
+#include <tp-account-widgets/tpaw-pixbuf-utils.h>
 #include <tp-account-widgets/tpaw-utils.h>
 
 #include "empathy-about-dialog.h"
@@ -1893,7 +1894,7 @@ init_contact_avatar_with_size (EmpathyContact *contact,
 
   if (pixbuf_avatar == NULL)
     {
-      pixbuf_avatar = empathy_pixbuf_from_icon_name_sized (
+      pixbuf_avatar = tpaw_pixbuf_from_icon_name_sized (
           TPAW_IMAGE_AVATAR_DEFAULT, size);
     }
 

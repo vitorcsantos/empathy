@@ -60,11 +60,6 @@ const gchar * empathy_icon_name_for_presence (
 const gchar * empathy_icon_name_for_contact (EmpathyContact *contact);
 const gchar * empathy_icon_name_for_individual (FolksIndividual *individual);
 const gchar * empathy_protocol_name_for_contact (EmpathyContact *contact);
-GdkPixbuf * empathy_pixbuf_from_data (gchar *data,
-    gsize data_size);
-GdkPixbuf * empathy_pixbuf_from_data_and_mime (gchar *data,
-    gsize data_size,
-    gchar **mime_type);
 void empathy_pixbuf_avatar_from_individual_scaled_async (
     FolksIndividual *individual,
     gint width,
@@ -85,14 +80,6 @@ GdkPixbuf * empathy_pixbuf_contact_status_icon_with_icon_name (
     EmpathyContact *contact,
     const gchar *icon_name,
     gboolean show_protocol);
-GdkPixbuf * empathy_pixbuf_scale_down_if_necessary (GdkPixbuf *pixbuf,
-    gint max_size);
-GdkPixbuf * empathy_pixbuf_from_icon_name (const gchar *icon_name,
-    GtkIconSize icon_size);
-GdkPixbuf * empathy_pixbuf_from_icon_name_sized (const gchar *icon_name,
-    gint size);
-gchar * empathy_filename_from_icon_name (const gchar *icon_name,
-    GtkIconSize icon_size);
 
 void empathy_move_to_window_desktop (GtkWindow *window,
     guint32 timestamp);

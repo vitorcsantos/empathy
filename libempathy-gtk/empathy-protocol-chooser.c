@@ -25,6 +25,7 @@
 
 #include <glib/gi18n-lib.h>
 #include <tp-account-widgets/tpaw-connection-managers.h>
+#include <tp-account-widgets/tpaw-pixbuf-utils.h>
 #include <tp-account-widgets/tpaw-utils.h>
 
 #include "empathy-ui-utils.h"
@@ -231,7 +232,7 @@ protocol_choosers_add_cm (EmpathyProtocolChooser *chooser,
           g_strdup (proto_name), g_strdup (cm_name));
 
       icon_name = tpaw_protocol_icon_name (proto_name);
-      pixbuf = empathy_pixbuf_from_icon_name (icon_name, GTK_ICON_SIZE_BUTTON);
+      pixbuf = tpaw_pixbuf_from_icon_name (icon_name, GTK_ICON_SIZE_BUTTON);
 
       display_name = tpaw_protocol_name_to_display_name (proto_name);
 
@@ -249,7 +250,7 @@ protocol_choosers_add_cm (EmpathyProtocolChooser *chooser,
           !tp_strdiff (cm_name, "gabble"))
         {
           display_name = tpaw_service_name_to_display_name ("google-talk");
-          pixbuf = empathy_pixbuf_from_icon_name ("im-google-talk",
+          pixbuf = tpaw_pixbuf_from_icon_name ("im-google-talk",
                   GTK_ICON_SIZE_BUTTON);
 
           gtk_list_store_insert_with_values (priv->store,
@@ -264,7 +265,7 @@ protocol_choosers_add_cm (EmpathyProtocolChooser *chooser,
           g_clear_object (&pixbuf);
 
           display_name = tpaw_service_name_to_display_name ("facebook");
-          pixbuf = empathy_pixbuf_from_icon_name ("im-facebook",
+          pixbuf = tpaw_pixbuf_from_icon_name ("im-facebook",
                   GTK_ICON_SIZE_BUTTON);
 
           gtk_list_store_insert_with_values (priv->store,

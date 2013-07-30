@@ -25,8 +25,7 @@
 #include "empathy-account-chooser.h"
 
 #include <glib/gi18n-lib.h>
-
-#include "empathy-ui-utils.h"
+#include <tp-account-widgets/tpaw-pixbuf-utils.h>
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include "empathy-debug.h"
@@ -840,7 +839,7 @@ account_chooser_filter_ready_cb (gboolean is_enabled,
   store = GTK_LIST_STORE (gtk_combo_box_get_model (combobox));
 
   icon_name = tp_account_get_icon_name (account);
-  pixbuf = empathy_pixbuf_from_icon_name (icon_name,
+  pixbuf = tpaw_pixbuf_from_icon_name (icon_name,
     GTK_ICON_SIZE_BUTTON);
 
   gtk_list_store_set (store, iter,

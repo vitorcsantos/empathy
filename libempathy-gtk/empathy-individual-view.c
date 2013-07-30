@@ -28,6 +28,7 @@
 #include "empathy-individual-view.h"
 
 #include <glib/gi18n-lib.h>
+#include <tp-account-widgets/tpaw-pixbuf-utils.h>
 #include <tp-account-widgets/tpaw-utils.h>
 
 #include "empathy-cell-renderer-activatable.h"
@@ -1161,12 +1162,12 @@ individual_view_group_icon_cell_data_func (GtkTreeViewColumn *tree_column,
 
   if (!tp_strdiff (name, EMPATHY_INDIVIDUAL_STORE_FAVORITE))
     {
-      pixbuf = empathy_pixbuf_from_icon_name ("emblem-favorite",
+      pixbuf = tpaw_pixbuf_from_icon_name ("emblem-favorite",
           GTK_ICON_SIZE_MENU);
     }
   else if (!tp_strdiff (name, EMPATHY_INDIVIDUAL_STORE_PEOPLE_NEARBY))
     {
-      pixbuf = empathy_pixbuf_from_icon_name ("im-local-xmpp",
+      pixbuf = tpaw_pixbuf_from_icon_name ("im-local-xmpp",
           GTK_ICON_SIZE_MENU);
     }
 

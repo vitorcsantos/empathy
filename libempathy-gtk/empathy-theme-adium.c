@@ -25,6 +25,7 @@
 #include <glib/gi18n-lib.h>
 #include <tp-account-widgets/tpaw-images.h>
 #include <tp-account-widgets/tpaw-time.h>
+#include <tp-account-widgets/tpaw-pixbuf-utils.h>
 #include <tp-account-widgets/tpaw-utils.h>
 
 #include "empathy-gsettings.h"
@@ -954,7 +955,7 @@ theme_adium_add_message (EmpathyThemeAdium *self,
         {
           if (!self->priv->data->default_avatar_filename)
             self->priv->data->default_avatar_filename =
-              empathy_filename_from_icon_name (TPAW_IMAGE_AVATAR_DEFAULT,
+              tpaw_filename_from_icon_name (TPAW_IMAGE_AVATAR_DEFAULT,
                        GTK_ICON_SIZE_DIALOG);
 
           avatar_filename = self->priv->data->default_avatar_filename;

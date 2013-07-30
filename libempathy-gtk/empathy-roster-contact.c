@@ -3,6 +3,7 @@
 
 #include <glib/gi18n-lib.h>
 #include <tp-account-widgets/tpaw-images.h>
+#include <tp-account-widgets/tpaw-pixbuf-utils.h>
 
 #include "empathy-ui-utils.h"
 #include "empathy-utils.h"
@@ -124,7 +125,7 @@ avatar_loaded_cb (GObject *source,
 
   if (pixbuf == NULL)
     {
-      pixbuf = empathy_pixbuf_from_icon_name_sized (
+      pixbuf = tpaw_pixbuf_from_icon_name_sized (
           TPAW_IMAGE_AVATAR_DEFAULT, AVATAR_SIZE);
     }
 
