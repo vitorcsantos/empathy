@@ -26,12 +26,12 @@
 #include <glib/gi18n-lib.h>
 #include <tp-account-widgets/tpaw-camera-monitor.h>
 #include <tp-account-widgets/tpaw-gsettings.h>
+#include <tp-account-widgets/tpaw-images.h>
 
 #ifdef HAVE_CHEESE
 #include <cheese-avatar-chooser.h>
 #endif /* HAVE_CHEESE */
 
-#include "empathy-images.h"
 #include "empathy-ui-utils.h"
 #include "empathy-utils.h"
 
@@ -349,7 +349,7 @@ avatar_chooser_clear_image (EmpathyAvatarChooser *self)
   tp_clear_pointer (&self->priv->mime_type, g_free);
   self->priv->changed = TRUE;
 
-  image = gtk_image_new_from_icon_name (EMPATHY_IMAGE_AVATAR_DEFAULT,
+  image = gtk_image_new_from_icon_name (TPAW_IMAGE_AVATAR_DEFAULT,
     GTK_ICON_SIZE_DIALOG);
   gtk_button_set_image (GTK_BUTTON (self), image);
 }

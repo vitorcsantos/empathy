@@ -2,8 +2,8 @@
 #include "empathy-roster-contact.h"
 
 #include <glib/gi18n-lib.h>
+#include <tp-account-widgets/tpaw-images.h>
 
-#include "empathy-images.h"
 #include "empathy-ui-utils.h"
 #include "empathy-utils.h"
 
@@ -125,7 +125,7 @@ avatar_loaded_cb (GObject *source,
   if (pixbuf == NULL)
     {
       pixbuf = empathy_pixbuf_from_icon_name_sized (
-          EMPATHY_IMAGE_AVATAR_DEFAULT, AVATAR_SIZE);
+          TPAW_IMAGE_AVATAR_DEFAULT, AVATAR_SIZE);
     }
 
   gtk_image_set_from_pixbuf (GTK_IMAGE (self->priv->avatar), pixbuf);

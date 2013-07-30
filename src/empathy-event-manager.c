@@ -23,6 +23,7 @@
 #include "empathy-event-manager.h"
 
 #include <glib/gi18n.h>
+#include <tp-account-widgets/tpaw-images.h>
 
 #include "empathy-call-utils.h"
 #include "empathy-connection-aggregator.h"
@@ -1165,7 +1166,7 @@ check_presence (EmpathyEventManager *manager,
             {
               event_manager_add (manager, NULL, contact,
                   EMPATHY_EVENT_TYPE_PRESENCE_OFFLINE,
-                  EMPATHY_IMAGE_AVATAR_DEFAULT,
+                  TPAW_IMAGE_AVATAR_DEFAULT,
                   empathy_contact_get_alias (contact), _("Disconnected"),
                   NULL, NULL, NULL);
             }
@@ -1186,7 +1187,7 @@ check_presence (EmpathyEventManager *manager,
             {
               event_manager_add (manager, NULL, contact,
                   EMPATHY_EVENT_TYPE_PRESENCE_ONLINE,
-                  EMPATHY_IMAGE_AVATAR_DEFAULT,
+                  TPAW_IMAGE_AVATAR_DEFAULT,
                   empathy_contact_get_alias (contact), _("Connected"),
                   NULL, NULL, NULL);
             }

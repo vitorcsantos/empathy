@@ -45,7 +45,6 @@ G_BEGIN_DECLS
 #define EMPATHY_IMAGE_VIDEO_CALL          "camera-web"
 #define EMPATHY_IMAGE_LOG                 "document-open-recent"
 #define EMPATHY_IMAGE_DOCUMENT_SEND       "document-send"
-#define EMPATHY_IMAGE_AVATAR_DEFAULT      "avatar-default-symbolic"
 /* FIXME: need a better icon! */
 #define EMPATHY_IMAGE_EDIT_MESSAGE        "format-text-direction-ltr"
 #define EMPATHY_IMAGE_MIC                 "audio-input-microphone-symbolic"

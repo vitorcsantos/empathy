@@ -28,6 +28,7 @@
 #include <glib/gi18n-lib.h>
 #include <telepathy-glib/proxy-subclass.h>
 #include <tp-account-widgets/tpaw-builder.h>
+#include <tp-account-widgets/tpaw-images.h>
 #include <tp-account-widgets/tpaw-camera-monitor.h>
 
 #include "action-chain-internal.h"
@@ -1875,7 +1876,7 @@ add_event_to_store (EmpathyLogWindow *self,
   gtk_list_store_insert_with_values (store, NULL, -1,
       COL_WHO_TYPE, COL_TYPE_NORMAL,
       COL_WHO_ICON, room ? EMPATHY_IMAGE_GROUP_MESSAGE
-                         : EMPATHY_IMAGE_AVATAR_DEFAULT,
+                         : TPAW_IMAGE_AVATAR_DEFAULT,
       COL_WHO_NAME, name,
       COL_WHO_NAME_SORT_KEY, sort_key,
       COL_WHO_ID, tpl_entity_get_identifier (entity),
