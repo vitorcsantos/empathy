@@ -25,12 +25,12 @@
 
 #include <glib/gi18n-lib.h>
 #include <tp-account-widgets/tpaw-camera-monitor.h>
+#include <tp-account-widgets/tpaw-gsettings.h>
 
 #ifdef HAVE_CHEESE
 #include <cheese-avatar-chooser.h>
 #endif /* HAVE_CHEESE */
 
-#include "empathy-gsettings.h"
 #include "empathy-images.h"
 #include "empathy-ui-utils.h"
 #include "empathy-utils.h"
@@ -977,7 +977,7 @@ avatar_chooser_response_cb (GtkWidget *widget,
       if (path != NULL)
         {
           g_settings_set_string (self->priv->gsettings_ui,
-                     EMPATHY_PREFS_UI_AVATAR_DIRECTORY,
+                     TPAW_PREFS_UI_AVATAR_DIRECTORY,
                      path);
 
           g_free (path);
@@ -1052,7 +1052,7 @@ avatar_chooser_clicked_cb (GtkWidget *button,
 
   /* Get special dirs */
   saved_dir = g_settings_get_string (self->priv->gsettings_ui,
-             EMPATHY_PREFS_UI_AVATAR_DIRECTORY);
+             TPAW_PREFS_UI_AVATAR_DIRECTORY);
 
   if (saved_dir != NULL &&
       !g_file_test (saved_dir, G_FILE_TEST_IS_DIR))
@@ -1132,7 +1132,7 @@ empathy_avatar_chooser_init (EmpathyAvatarChooser *self)
       G_N_ELEMENTS (drop_types),
       GDK_ACTION_COPY);
 
-  self->priv->gsettings_ui = g_settings_new (EMPATHY_PREFS_UI_SCHEMA);
+  self->priv->gsettings_ui = g_settings_new (TPAW_PREFS_UI_SCHEMA);
 
   g_signal_connect (self, "drag-motion",
       G_CALLBACK (avatar_chooser_drag_motion_cb),

@@ -55,6 +55,7 @@ libtp_account_widgets_headers =			\
 	tpaw-camera-monitor.h			\
 	tpaw-connection-managers.h		\
 	tpaw-contactinfo-utils.h		\
+	tpaw-gsettings.h			\
 	tpaw-keyring.h				\
 	tpaw-irc-network-chooser-dialog.h	\
 	tpaw-irc-network-chooser.h		\

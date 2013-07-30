@@ -73,7 +73,6 @@ G_BEGIN_DECLS
 #define EMPATHY_PREFS_UI_SEPARATE_CHAT_WINDOWS     "separate-chat-windows"
 #define EMPATHY_PREFS_UI_EVENTS_NOTIFY_AREA        "events-notify-area"
 #define EMPATHY_PREFS_UI_MAIN_WINDOW_HIDDEN        "main-window-hidden"
-#define EMPATHY_PREFS_UI_AVATAR_DIRECTORY          "avatar-directory"
 #define EMPATHY_PREFS_UI_SHOW_BALANCES             "show-balance-in-roster"
 #define EMPATHY_PREFS_UI_CHAT_WINDOW_PANED_POS     "chat-window-paned-pos"
 #define EMPATHY_PREFS_UI_SHOW_OFFLINE              "show-offline"
