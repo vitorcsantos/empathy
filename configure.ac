@@ -102,6 +102,10 @@ ac_configure_args=$prev_ac_configure_args
 export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:"$ac_top_build_prefix"telepathy-account-widgets/
 PKG_CHECK_MODULES(TPAW, telepathy-account-widgets)
 
+EMPATHY_UOA_PROVIDER=`pkg-config --variable=uoa_provider telepathy-account-widgets`
+AC_DEFINE_UNQUOTED(EMPATHY_UOA_PROVIDER, "$EMPATHY_UOA_PROVIDER",
+   [Name of provider for accounts imported from libaccounts])
+
 # egg-list-box
 prev_top_build_prefix=$ac_top_build_prefix
 prev_ac_configure_args=$ac_configure_args
@@ -288,10 +292,6 @@ fi
 
 AC_DEFINE(EMPATHY_GOA_PROVIDER, "org.gnome.OnlineAccounts",
    [Name of provider for accounts imported from GOA])
-
-AC_DEFINE(EMPATHY_UOA_PROVIDER,
-    "im.telepathy.Account.Storage.UOA",
-   [Name of provider for accounts imported from libaccounts])
 
 # -----------------------------------------------------------
 # Enable debug
