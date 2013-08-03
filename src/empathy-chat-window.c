@@ -1144,18 +1144,27 @@ chat_window_conv_activate_cb (GtkAction *action,
   else
     {
       TpChannel *channel = NULL;
+      TpContact *self_contact = NULL;
       TpHandle  self_handle = 0;
 
       channel = (TpChannel *) (empathy_chat_get_tp_chat (
           self->priv->current_chat));
-      self_handle = tp_contact_get_handle (tp_channel_group_get_self_contact (
-          channel));
-      /* There is sometimes a lag between the members-changed signal
-         emitted on tp-chat and invalidated signal being emitted on the channel.
-         Leave Chat menu-item should be sensitive only till our self-handle is
-         a part of channel-members */
-      gtk_action_set_visible (self->priv->menu_conv_leave_chat,
-          self_handle != 0);
+      self_contact = tp_channel_group_get_self_contact (channel);
+      if (self_contact == NULL)
+      {
+        /* The channel may not be a group */
+        gtk_action_set_visible (self->priv->menu_conv_leave_chat, FALSE);
+      }
+      else
+      {
+        self_handle = tp_contact_get_handle (self_contact);
+        /* There is sometimes a lag between the members-changed signal
+           emitted on tp-chat and invalidated signal being emitted on the channel.
+           Leave Chat menu-item should be sensitive only till our self-handle is
+           a part of channel-members */
+        gtk_action_set_visible (self->priv->menu_conv_leave_chat,
+            self_handle != 0);
+      }
 
       /* Join Chat is insensitive for a connected chat */
       gtk_action_set_visible (self->priv->menu_conv_join_chat, FALSE);
