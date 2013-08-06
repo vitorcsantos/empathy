@@ -720,6 +720,7 @@ remove_dialog_show (const gchar *message,
       /* gtk_dialog_add_button() doesn't allow us to pass a string with a
        * mnemonic so we have to create the button manually. */
       button = gtk_button_new_with_mnemonic (button_text);
+      g_free (button_text);
 
       gtk_dialog_add_action_widget (GTK_DIALOG (dialog), button,
           REMOVE_DIALOG_RESPONSE_REMOVE_FROM_GROUP);
