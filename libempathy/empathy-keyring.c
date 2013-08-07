@@ -656,7 +656,8 @@ items_delete_cb (GObject *source,
   GSimpleAsyncResult *simple = G_SIMPLE_ASYNC_RESULT (user_data);
   GError *error = NULL;
 
-  if (!secret_password_clear_finish (result, &error))
+  secret_password_clear_finish (result, &error);
+  if (error != NULL)
     {
       g_simple_async_result_set_error (simple, TP_ERROR,
               TP_ERROR_DOES_NOT_EXIST, "%s", error->message);
