@@ -132,7 +132,7 @@ empathy_call_factory_class_init (EmpathyCallFactoryClass *klass)
       NULL, NULL,
       g_cclosure_marshal_generic,
       G_TYPE_NONE,
-      1, EMPATHY_TYPE_CALL_HANDLER);
+      2, EMPATHY_TYPE_CALL_HANDLER, G_TYPE_UINT64);
 
   signals[INCOMING_CALL] =
     g_signal_new ("incoming-call",
@@ -215,7 +215,7 @@ handle_channels (TpBaseClient *client,
       handler = empathy_call_handler_new_for_channel (call, contact);
 
       g_signal_emit (self, signals[NEW_CALL_HANDLER], 0,
-          handler);
+          handler, user_action_time);
 
       g_object_unref (handler);
       g_object_unref (contact);

@@ -127,16 +127,22 @@ call_window_inhibit_cb (EmpathyCallWindow *window,
 static void
 new_call_handler_cb (EmpathyCallFactory *factory,
     EmpathyCallHandler *handler,
+    gint64 user_action_time,
     gpointer user_data)
 {
   EmpathyCallWindow *window;
   EmpathyContact *contact;
+  guint32 x11_time;
+  gboolean present;
 
   DEBUG ("Show the call window");
 
   contact = empathy_call_handler_get_contact (handler);
 
   window = g_hash_table_lookup (call_windows, contact);
+
+  present = tp_user_action_time_should_present (user_action_time,
+      &x11_time);
 
   if (window != NULL)
     {
@@ -154,6 +160,9 @@ new_call_handler_cb (EmpathyCallFactory *factory,
           G_CALLBACK (call_window_inhibit_cb), NULL);
 
       gtk_widget_show (GTK_WIDGET (window));
+
+      if (present)
+        empathy_window_present_with_time (GTK_WINDOW (window), x11_time);
     }
 }
 
