@@ -127,7 +127,6 @@ call_window_inhibit_cb (EmpathyCallWindow *window,
 static void
 new_call_handler_cb (EmpathyCallFactory *factory,
     EmpathyCallHandler *handler,
-    gboolean outgoing,
     gpointer user_data)
 {
   EmpathyCallWindow *window;
