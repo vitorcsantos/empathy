@@ -63,7 +63,9 @@ GType empathy_call_window_get_type (void);
 
 EmpathyCallWindow *empathy_call_window_new (EmpathyCallHandler *handler);
 void empathy_call_window_new_handler (EmpathyCallWindow *window,
-  EmpathyCallHandler *handler);
+  EmpathyCallHandler *handler,
+  gboolean present,
+  guint32 x11_time);
 void empathy_call_window_start_ringing (EmpathyCallWindow *self,
   TpCallChannel *channel,
   TpChannelDispatchOperation *dispatch_operation,

@@ -2455,11 +2455,14 @@ empathy_call_window_new (EmpathyCallHandler *handler)
 
 void
 empathy_call_window_new_handler (EmpathyCallWindow *self,
-    EmpathyCallHandler *handler)
+    EmpathyCallHandler *handler,
+    gboolean present,
+    guint32 x11_time)
 {
   g_return_if_fail (EMPATHY_IS_CALL_HANDLER (handler));
 
-  empathy_window_present (GTK_WINDOW (self));
+  if (present)
+    empathy_window_present_with_time (GTK_WINDOW (self), x11_time);
 
   if (self->priv->call_state == DISCONNECTED)
     {
