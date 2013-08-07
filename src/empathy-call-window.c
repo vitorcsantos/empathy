@@ -2454,7 +2454,7 @@ empathy_call_window_new (EmpathyCallHandler *handler)
 }
 
 void
-empathy_call_window_present (EmpathyCallWindow *self,
+empathy_call_window_new_handler (EmpathyCallWindow *self,
     EmpathyCallHandler *handler)
 {
   g_return_if_fail (EMPATHY_IS_CALL_HANDLER (handler));

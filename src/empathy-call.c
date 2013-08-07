@@ -146,7 +146,7 @@ new_call_handler_cb (EmpathyCallFactory *factory,
 
   if (window != NULL)
     {
-      empathy_call_window_present (window, handler);
+      empathy_call_window_new_handler (window, handler);
     }
   else
     {
