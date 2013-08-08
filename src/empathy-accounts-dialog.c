@@ -176,19 +176,6 @@ static gboolean accounts_dialog_has_pending_change (
     EmpathyAccountsDialog *dialog, TpAccount **account);
 
 static void
-accounts_dialog_update_name_label (EmpathyAccountsDialog *dialog,
-    const gchar *display_name)
-{
-  gchar *text;
-  EmpathyAccountsDialogPriv *priv = GET_PRIV (dialog);
-
-  text = g_markup_printf_escaped ("<b>%.50s</b>", display_name);
-  gtk_label_set_markup (GTK_LABEL (priv->label_name), text);
-
-  g_free (text);
-}
-
-static void
 accounts_dialog_status_infobar_set_message (EmpathyAccountsDialog *dialog,
     const gchar *message)
 {
@@ -337,6 +324,8 @@ accounts_dialog_update_status_infobar (EmpathyAccountsDialog *dialog,
 
   if (account != NULL)
     {
+      gchar *text;
+
       status = tp_account_get_connection_status (account, &reason);
       presence = tp_account_get_current_presence (account, NULL, &status_message);
       account_enabled = tp_account_is_enabled (account);
@@ -356,6 +345,11 @@ accounts_dialog_update_status_infobar (EmpathyAccountsDialog *dialog,
         presence = TP_CONNECTION_PRESENCE_TYPE_OFFLINE;
 
       display_switch = account_can_be_enabled (account);
+
+      text = g_markup_printf_escaped ("<b>%.50s</b>",
+          tp_account_get_display_name (account));
+      gtk_label_set_markup (GTK_LABEL (priv->label_name), text);
+      g_free (text);
     }
   else
     {
@@ -737,9 +731,6 @@ account_dialog_create_dialog_content (EmpathyAccountsDialog *dialog,
       empathy_protocol_name_to_display_name
       (empathy_account_settings_get_protocol (settings)));
   gtk_widget_show (priv->image_type);
-
-  accounts_dialog_update_name_label (dialog,
-      empathy_account_settings_get_display_name (settings));
 
   accounts_dialog_update_status_infobar (dialog, account);
 }
@@ -1784,35 +1775,21 @@ accounts_dialog_presence_changed_cb (TpAccount *account,
 static void
 accounts_dialog_account_display_name_changed_cb (TpAccount *account,
   GParamSpec *pspec,
-  gpointer user_data)
+  EmpathyAccountsDialog *dialog)
 {
-  const gchar *display_name;
-  GtkTreeIter iter;
-  GtkTreeModel *model;
-  EmpathyAccountSettings *settings;
-  TpAccount *selected_account;
-  EmpathyAccountsDialog *dialog = EMPATHY_ACCOUNTS_DIALOG (user_data);
   EmpathyAccountsDialogPriv *priv = GET_PRIV (dialog);
+  GtkTreeModel *model;
+  GtkTreeIter iter;
 
-  display_name = tp_account_get_display_name (account);
   model = gtk_tree_view_get_model (GTK_TREE_VIEW (priv->treeview));
-  settings = accounts_dialog_model_get_selected_settings (dialog);
-  if (settings == NULL)
-    return;
-
-  selected_account = empathy_account_settings_get_account (settings);
-
   if (accounts_dialog_get_account_iter (dialog, account, &iter))
     {
       gtk_list_store_set (GTK_LIST_STORE (model), &iter,
-          COL_NAME, display_name,
+          COL_NAME, tp_account_get_display_name (account),
           -1);
     }
 
-  if (selected_account == account)
-    accounts_dialog_update_name_label (dialog, display_name);
-
-  g_object_unref (settings);
+  accounts_dialog_update_status_infobar (dialog, account);
 }
 
 static void
