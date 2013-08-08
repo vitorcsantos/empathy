@@ -1115,15 +1115,12 @@ empathy_account_settings_set_display_name_async (
       return;
     }
 
+  g_free (priv->display_name);
+  priv->display_name = g_strdup (name);
+
   if (priv->account == NULL)
     {
-      if (priv->display_name != NULL)
-        g_free (priv->display_name);
-
-      priv->display_name = g_strdup (name);
-
       g_simple_async_result_complete_in_idle (result);
-
       return;
     }
 
