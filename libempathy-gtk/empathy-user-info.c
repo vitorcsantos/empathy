@@ -38,6 +38,7 @@ struct _EmpathyUserInfoPrivate
   TpAccount *account;
 
   GtkWidget *avatar_chooser;
+  GtkWidget *identifier_label;
   GtkWidget *nickname_entry;
   GtkWidget *details_label;
   GtkWidget *details_spinner;
@@ -439,12 +440,29 @@ connection_notify_cb (EmpathyUserInfo *self)
 }
 
 static void
+identifier_notify_cb (TpAccount *account,
+    GParamSpec *param_spec,
+    EmpathyUserInfo *self)
+{
+  gtk_label_set_label (GTK_LABEL (self->priv->identifier_label),
+      tp_account_get_normalized_name (self->priv->account));
+}
+
+static void
+nickname_notify_cb (TpAccount *account,
+    GParamSpec *param_spec,
+    EmpathyUserInfo *self)
+{
+  gtk_entry_set_text (GTK_ENTRY (self->priv->nickname_entry),
+      tp_account_get_nickname (self->priv->account));
+}
+
+static void
 empathy_user_info_constructed (GObject *object)
 {
   EmpathyUserInfo *self = (EmpathyUserInfo *) object;
   GtkGrid *grid = (GtkGrid *) self;
   GtkWidget *title;
-  GtkWidget *value;
 
   G_OBJECT_CLASS (empathy_user_info_parent_class)->constructed (object);
 
@@ -453,8 +471,11 @@ empathy_user_info_constructed (GObject *object)
 
   /* Setup id label */
   title = gtk_label_new (_("Identifier"));
-  value = gtk_label_new (tp_account_get_normalized_name (self->priv->account));
-  add_row (grid, title, value, FALSE);
+  self->priv->identifier_label = gtk_label_new (
+      tp_account_get_normalized_name (self->priv->account));
+  add_row (grid, title, self->priv->identifier_label, FALSE);
+  g_signal_connect_object (self->priv->account, "notify::normalized-name",
+      G_CALLBACK (identifier_notify_cb), self, 0);
 
   /* Setup nickname entry */
   title = gtk_label_new (_("Alias"));
@@ -462,6 +483,8 @@ empathy_user_info_constructed (GObject *object)
   gtk_entry_set_text (GTK_ENTRY (self->priv->nickname_entry),
       tp_account_get_nickname (self->priv->account));
   add_row (grid, title, self->priv->nickname_entry, FALSE);
+  g_signal_connect_object (self->priv->account, "notify::nickname",
+      G_CALLBACK (nickname_notify_cb), self, 0);
 
   /* Set up avatar chooser */
   self->priv->avatar_chooser = empathy_avatar_chooser_new (self->priv->account);
