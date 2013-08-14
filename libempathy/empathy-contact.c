@@ -1617,7 +1617,6 @@ geocode_cb (GObject *source,
   GeocodeLocation *loc;
   GHashTable *new_location;
   GHashTable *resolved = NULL;
-  gdouble latitude, longitude;
 
   if (priv->location == NULL)
     goto out;
@@ -1635,14 +1634,14 @@ geocode_cb (GObject *source,
   loc = res->data;
 
   new_location = tp_asv_new (
-      EMPATHY_LOCATION_LAT, G_TYPE_DOUBLE, loc->latitude,
-      EMPATHY_LOCATION_LON, G_TYPE_DOUBLE, loc->longitude,
+      EMPATHY_LOCATION_LAT, G_TYPE_DOUBLE, geocode_location_get_latitude (loc),
+      EMPATHY_LOCATION_LON, G_TYPE_DOUBLE, geocode_location_get_longitude (loc),
       NULL);
 
-  DEBUG ("\t - Latitude: %f", loc->latitude);
-  DEBUG ("\t - Longitude: %f", loc->longitude);
+  DEBUG ("\t - Latitude: %f", geocode_location_get_latitude (loc));
+  DEBUG ("\t - Longitude: %f", geocode_location_get_longitude (loc));
 
-  g_list_free_full (res, (GDestroyNotify) geocode_location_free);
+  g_list_free_full (res, g_object_unref);
 
   /* Copy remaning fields. LAT and LON were not defined so we won't overwrite
    * the values we just set. */
