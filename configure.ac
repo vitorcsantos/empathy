@@ -441,7 +441,7 @@ AC_ARG_ENABLE(geocode,
 if test "x$enable_geocode" != "xno"; then
    PKG_CHECK_MODULES(GEOCODE,
    [
-      geocode-glib >= $GEOCODE_GLIB_REQUIRED
+      geocode-glib-1.0 >= $GEOCODE_GLIB_REQUIRED
    ], have_geocode="yes", have_geocode="no")
 
    if test "x$have_geocode" = "xyes"; then
