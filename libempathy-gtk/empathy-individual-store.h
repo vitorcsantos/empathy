@@ -145,6 +145,11 @@ void individual_store_remove_individual_and_disconnect (
 
 /* protected */
 
+GList *empathy_individual_store_find_contact (EmpathyIndividualStore *self,
+    FolksIndividual *individual);
+
+void empathy_individual_store_free_iters (GList *iters);
+
 void empathy_individual_store_disconnect_individual (
     EmpathyIndividualStore *self,
     FolksIndividual *individual);

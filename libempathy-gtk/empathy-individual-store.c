@@ -199,8 +199,9 @@ individual_store_get_group (EmpathyIndividualStore *self,
     }
 }
 
-static GList *
-individual_store_find_contact (EmpathyIndividualStore *self,
+GList *
+/* (transfer full) free with empathy_individual_store_free_iters() */
+empathy_individual_store_find_contact (EmpathyIndividualStore *self,
     FolksIndividual *individual)
 {
   GQueue *row_refs_queue;
@@ -222,8 +223,8 @@ individual_store_find_contact (EmpathyIndividualStore *self,
   return iters_list;
 }
 
-static void
-free_iters (GList *iters)
+void
+empathy_individual_store_free_iters (GList *iters)
 {
   g_list_foreach (iters, (GFunc) gtk_tree_iter_free, NULL);
   g_list_free (iters);
@@ -386,7 +387,7 @@ individual_store_contact_set_active (EmpathyIndividualStore *self,
 
   model = GTK_TREE_MODEL (self);
 
-  iters = individual_store_find_contact (self, individual);
+  iters = empathy_individual_store_find_contact (self, individual);
   for (l = iters; l; l = l->next)
     {
       GtkTreePath *path;
@@ -403,7 +404,7 @@ individual_store_contact_set_active (EmpathyIndividualStore *self,
         }
     }
 
-  free_iters (iters);
+  empathy_individual_store_free_iters (iters);
 }
 
 static void individual_store_contact_active_free (ShowActiveData *data);
@@ -521,7 +522,7 @@ individual_avatar_pixbuf_received_cb (FolksIndividual *individual,
     {
       GList *iters, *l;
 
-      iters = individual_store_find_contact (data->store, individual);
+      iters = empathy_individual_store_find_contact (data->store, individual);
       for (l = iters; l; l = l->next)
         {
           gtk_tree_store_set (GTK_TREE_STORE (data->store), l->data,
@@ -529,7 +530,7 @@ individual_avatar_pixbuf_received_cb (FolksIndividual *individual,
               -1);
         }
 
-      free_iters (iters);
+      empathy_individual_store_free_iters (iters);
     }
 
   /* Free things */
@@ -566,7 +567,7 @@ individual_store_contact_update (EmpathyIndividualStore *self,
 
   model = GTK_TREE_MODEL (self);
 
-  iters = individual_store_find_contact (self, individual);
+  iters = empathy_individual_store_find_contact (self, individual);
   if (!iters)
     {
       in_list = FALSE;
@@ -694,7 +695,7 @@ individual_store_contact_update (EmpathyIndividualStore *self,
    * timeout removes the user from the contact list, really we
    * should remove the first timeout.
    */
-  free_iters (iters);
+  empathy_individual_store_free_iters (iters);
 }
 
 static void
