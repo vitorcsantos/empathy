@@ -26,6 +26,7 @@
 #include <geocode-glib/geocode-glib.h>
 #endif
 
+#include "empathy-location.h"
 #include "empathy-utils.h"
 #include "empathy-enum-types.h"
 
