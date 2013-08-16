@@ -129,6 +129,8 @@ empathy_password_dialog_constructed (GObject *object)
       G_CALLBACK (password_dialog_handler_invalidated_cb),
       object, 0);
 
+  gtk_window_set_title (GTK_WINDOW (self), _("Password Required"));
+
   text = g_strdup_printf (_("Enter your password for account\n<b>%s</b>"),
       tp_account_get_display_name (base->account));
   gtk_message_dialog_set_markup (GTK_MESSAGE_DIALOG (self), text);
