@@ -915,8 +915,19 @@ approve_call_channel (EmpathyEventManager *self,
 
   priv->ringing++;
   if (priv->ringing == 1)
-    empathy_sound_manager_start_playing (priv->sound_mgr, NULL,
-        EMPATHY_SOUND_PHONE_INCOMING, MS_BETWEEN_RING);
+    {
+      TpAccountManager *am = tp_account_manager_dup ();
+      TpConnectionPresenceType presence;
+
+      presence = tp_account_manager_get_most_available_presence (am,
+          NULL, NULL);
+
+      if (presence != TP_CONNECTION_PRESENCE_TYPE_BUSY)
+        empathy_sound_manager_start_playing (priv->sound_mgr, NULL,
+            EMPATHY_SOUND_PHONE_INCOMING, MS_BETWEEN_RING);
+
+      g_object_unref (am);
+    }
 }
 
 static void
@@ -1363,7 +1374,7 @@ empathy_event_manager_init (EmpathyEventManager *manager)
   g_ptr_array_unref (contacts);
   g_ptr_array_unref (empty);
 
-   am = tp_account_manager_dup ();
+  am = tp_account_manager_dup ();
 
   priv->approver = tp_simple_approver_new_with_am (am, "Empathy.EventManager",
       FALSE, approve_channels, manager, NULL);
