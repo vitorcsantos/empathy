@@ -56,7 +56,9 @@ static const gchar * empathy_preferences_tabs[] =
 struct _EmpathyPreferencesPriv {
 	GtkWidget *notebook;
 
+	GtkWidget *label_general_behavior;
 	GtkWidget *checkbutton_events_notif_area;
+	GtkWidget *checkbutton_autoconnect;
 
 	GtkWidget *treeview_sounds;
 	GtkWidget *treeview_spell_checker;
@@ -1034,9 +1036,11 @@ empathy_preferences_init (EmpathyPreferences *preferences)
 		"combobox_chat_theme_variant", &priv->combobox_chat_theme_variant,
 		"hbox_chat_theme_variant", &priv->hbox_chat_theme_variant,
 		"sw_chat_theme_preview", &priv->sw_chat_theme_preview,
-		"checkbutton_events_notif_area", &priv->checkbutton_events_notif_area,
 		"treeview_sounds", &priv->treeview_sounds,
 		"treeview_spell_checker", &priv->treeview_spell_checker,
+		"label_general_behavior", &priv->label_general_behavior,
+		"checkbutton_events_notif_area", &priv->checkbutton_events_notif_area,
+		"checkbutton_autoconnect", &priv->checkbutton_autoconnect,
 		NULL);
 	g_free (filename);
 
@@ -1127,12 +1131,19 @@ empathy_preferences_new (GtkWindow *parent,
 
 	/* when running in Gnome Shell we must hide these options since they
 	 * are meaningless in that context:
+	 * - General->Behavior label
 	 * - 'Display incoming events in the notification area' (General->Behavior)
+	 * - 'Automatically connect at startup' (General->Behavior)
 	 * - 'Notifications' tab
 	 */
 	priv = GET_PRIV (self);
 	if (shell_running) {
+		/* Behavior */
+		gtk_widget_hide (priv->label_general_behavior);
 		gtk_widget_hide (priv->checkbutton_events_notif_area);
+		gtk_widget_hide (priv->checkbutton_autoconnect);
+
+		/* Notifications tab */
 		notif_page = gtk_notebook_get_nth_page (GTK_NOTEBOOK (priv->notebook),
 		                                        EMPATHY_PREFERENCES_TAB_NOTIFICATIONS);
 		gtk_widget_hide (notif_page);
