@@ -596,14 +596,21 @@ empathy_call_window_swap_camera_cb (GtkAction *action,
 }
 
 static void
+empathy_call_window_update_swap_camera (EmpathyCallWindow *self)
+{
+  const GList *cameras = tpaw_camera_monitor_get_cameras (
+      self->priv->camera_monitor);
+
+  gtk_action_set_visible (self->priv->menu_swap_camera,
+      g_list_length ((GList *) cameras) >= 2);
+}
+
+static void
 empathy_call_window_camera_added_cb (TpawCameraMonitor *monitor,
     TpawCamera *camera,
     EmpathyCallWindow *self)
 {
-  const GList *cameras = tpaw_camera_monitor_get_cameras (monitor);
-
-  gtk_action_set_visible (self->priv->menu_swap_camera,
-      g_list_length ((GList *) cameras) >= 2);
+  empathy_call_window_update_swap_camera (self);
 }
 
 static void
@@ -611,10 +618,7 @@ empathy_call_window_camera_removed_cb (TpawCameraMonitor *monitor,
     TpawCamera *camera,
     EmpathyCallWindow *self)
 {
-  const GList *cameras = tpaw_camera_monitor_get_cameras (monitor);
-
-  gtk_action_set_visible (self->priv->menu_swap_camera,
-      g_list_length ((GList *) cameras) >= 2);
+  empathy_call_window_update_swap_camera (self);
 }
 
 static void
@@ -1685,6 +1689,7 @@ empathy_call_window_init (EmpathyCallWindow *self)
   gtk_action_set_sensitive (priv->menu_fullscreen, FALSE);
 
   priv->camera_monitor = tpaw_camera_monitor_dup_singleton ();
+  empathy_call_window_update_swap_camera (self);
 
   g_object_bind_property (priv->camera_monitor, "available",
       priv->camera_button, "sensitive",
