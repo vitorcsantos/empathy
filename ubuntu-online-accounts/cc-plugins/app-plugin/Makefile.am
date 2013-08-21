@@ -4,6 +4,7 @@ INCLUDES =					\
 	-I$(top_builddir)			\
 	-I$(top_srcdir)				\
 	-DLOCALEDIR=\""$(datadir)/locale"\"	\
+	$(TPAW_CFLAGS)				\
 	$(UOA_CFLAGS)				\
 	$(WARN_CFLAGS)				\
 	$(ERROR_CFLAGS)				\

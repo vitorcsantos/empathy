@@ -502,7 +502,7 @@ uoa_plugin_installed (AgManager *manager,
   protocol = tp_account_get_protocol_name (account);
   ag_account = ag_manager_create_account (manager, protocol);
 
-  l = ag_account_list_services_by_type (ag_account, EMPATHY_UOA_SERVICE_TYPE);
+  l = ag_account_list_services_by_type (ag_account, TPAW_UOA_SERVICE_TYPE);
   if (l == NULL)
     {
       const gchar *packages[2];
@@ -537,7 +537,7 @@ migrate_accounts_to_uoa (SanityCtx *ctx)
 
   DEBUG ("Start migrating accounts to UOA");
 
-  manager = empathy_uoa_manager_dup ();
+  manager = tpaw_uoa_manager_dup ();
 
   accounts = tp_account_manager_dup_valid_accounts (ctx->am);
   for (l = accounts; l != NULL; l = g_list_next (l))
