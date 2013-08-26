@@ -333,7 +333,7 @@ roster_window_load_events_idle_cb (gpointer user_data)
 static void
 hide_search_bar (EmpathyRosterWindow *roster_window)
 {
-  if (EMPATHY_IS_LIVE_SEARCH (roster_window->priv->search_bar) &&
+  if (TPAW_IS_LIVE_SEARCH (roster_window->priv->search_bar) &&
       gtk_widget_is_visible (roster_window->priv->search_bar))
     gtk_widget_hide (roster_window->priv->search_bar);
 }
