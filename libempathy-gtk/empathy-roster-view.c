@@ -738,8 +738,8 @@ compare_contact_group (EmpathyRosterContact *contact,
 }
 
 static gint
-roster_view_sort (gconstpointer a,
-    gconstpointer b,
+roster_view_sort (GtkWidget *a,
+    GtkWidget *b,
     gpointer user_data)
 {
   EmpathyRosterView *self = user_data;
