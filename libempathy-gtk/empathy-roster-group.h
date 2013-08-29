@@ -12,14 +12,17 @@ typedef struct _EmpathyRosterGroupPriv EmpathyRosterGroupPriv;
 struct _EmpathyRosterGroupClass
 {
   /*<private>*/
-  GtkExpanderClass parent_class;
+  GtkListBoxRowClass parent_class;
 };
 
 struct _EmpathyRosterGroup
 {
   /*<private>*/
-  GtkExpander parent;
+  GtkListBoxRow parent;
   EmpathyRosterGroupPriv *priv;
+
+  /*<public>*/
+  GtkExpander *expander;
 };
 
 GType empathy_roster_group_get_type (void);

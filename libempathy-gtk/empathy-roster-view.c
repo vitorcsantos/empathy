@@ -211,7 +211,7 @@ group_expanded_cb (EmpathyRosterGroup *group,
   g_list_free (widgets);
 
   empathy_contact_group_set_expanded (empathy_roster_group_get_name (group),
-      gtk_expander_get_expanded (GTK_EXPANDER (group)));
+      gtk_expander_get_expanded (group->expander));
 }
 
 static EmpathyRosterGroup *
@@ -238,7 +238,7 @@ ensure_roster_group (EmpathyRosterView *self,
   else
     roster_group = empathy_roster_group_new (group, NULL);
 
-  gtk_expander_set_expanded (GTK_EXPANDER (roster_group),
+  gtk_expander_set_expanded (EMPATHY_ROSTER_GROUP (roster_group)->expander,
       empathy_contact_group_get_expanded (group));
 
   g_signal_connect (roster_group, "notify::expanded",
@@ -900,7 +900,7 @@ filter_contact (EmpathyRosterView *self,
         {
           /* When searching, always display even if the group is closed */
           if (!is_searching (self) &&
-              !gtk_expander_get_expanded (GTK_EXPANDER (group)))
+              !gtk_expander_get_expanded (group->expander))
             displayed = FALSE;
         }
     }
