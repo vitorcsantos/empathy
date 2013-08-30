@@ -713,7 +713,7 @@ account_dialog_create_dialog_content (EmpathyAccountsDialog *dialog,
   gtk_box_pack_end (GTK_BOX (priv->dialog_content), bbox, FALSE, TRUE, 0);
   gtk_widget_show (bbox);
 
-  button = gtk_button_new_with_mnemonic (_("_Edit Connection Parameters..."));
+  button = gtk_button_new_with_mnemonic (_("_Edit Connection Parameters…"));
   gtk_box_pack_start (GTK_BOX (bbox), button, FALSE, TRUE, 0);
   gtk_widget_show (button);
   g_signal_connect_swapped (button, "clicked",

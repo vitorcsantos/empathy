@@ -744,7 +744,7 @@ roster_window_error_display (EmpathyRosterWindow *self,
        tp_account_get_detailed_error (account, NULL)))
     {
       roster_window_error_add_stock_button (GTK_INFO_BAR (info_bar),
-          GTK_STOCK_REFRESH, _("Update software..."),
+          GTK_STOCK_REFRESH, _("Update software…"),
           ERROR_RESPONSE_RETRY);
     }
   else
