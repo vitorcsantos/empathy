@@ -253,11 +253,26 @@ EXTRA_DIST =					\
 	$(ui_DATA)
 
 if HAVE_GEOCLUE
+geoclue-interface.c: geoclue-interface.h
+geoclue-interface.h: Makefile.am
+	gdbus-codegen						\
+		--interface-prefix org.freedesktop.GeoClue2.	\
+		--c-namespace GClue				\
+		--generate-c-code geoclue-interface		\
+		$(GEOCLUE_XML_FILE)
+
+BUILT_SOURCES += \
+	geoclue-interface.h \
+	geoclue-interface.c
+
 libempathy_gtk_handwritten_source +=		\
-	empathy-location-manager.c
+	empathy-location-manager.c \
+	empathy-geoclue-helper.c
 
 libempathy_gtk_headers +=			\
-	empathy-location-manager.h
+	empathy-location-manager.h \
+	empathy-geoclue-helper.h
+
 else
 EXTRA_DIST +=					\
 	empathy-location-manager.c		\

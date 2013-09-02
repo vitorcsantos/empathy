@@ -69,7 +69,7 @@ GOA_REQUIRED=3.5.1
 
 # Optional deps
 ENCHANT_REQUIRED=1.2.0
-GEOCLUE_REQUIRED=0.12
+GEOCLUE_REQUIRED=1.99.2
 GEOCODE_GLIB_REQUIRED=0.99.1
 ISO_CODES_REQUIRED=0.35
 NAUTILUS_SENDTO_REQUIRED=2.90.0
@@ -425,11 +425,18 @@ AC_ARG_ENABLE(location,
 if test "x$enable_location" != "xno"; then
    PKG_CHECK_MODULES(GEOCLUE,
    [
-      geoclue >= $GEOCLUE_REQUIRED
+      geoclue-2.0 >= $GEOCLUE_REQUIRED
    ], have_geoclue="yes", have_geoclue="no")
 
    if test "x$have_geoclue" = "xyes"; then
-      AC_DEFINE(HAVE_GEOCLUE, 1, [Define if you have geoclue])
+      GEOCLUE_XML_FILE=`pkg-config --variable=dbus_interface geoclue-2.0`
+      if test "x$GEOCLUE_XML_FILE" = "x"; then
+        echo "Can't find dbus_interface variable in geoclue-2.0.pc"
+        have_geoclue="no"
+      else
+        AC_DEFINE(HAVE_GEOCLUE, 1, [Define if you have geoclue-2])
+        AC_SUBST(GEOCLUE_XML_FILE)
+      fi
    fi
 else
    have_geoclue="no"
