@@ -732,6 +732,9 @@ theme_adium_add_html (EmpathyThemeAdium *self,
   bytes = g_resources_lookup_data ("/org/gnome/Empathy/Chat/empathy-chat.js",
       G_RESOURCE_LOOKUP_FLAGS_NONE,
       NULL);
+  if (bytes == NULL)
+    return;
+
   js = (const gchar *) g_bytes_get_data (bytes, NULL);
   g_string_prepend (string, js);
   g_bytes_unref (bytes);
