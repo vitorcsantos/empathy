@@ -190,12 +190,6 @@ preferences_setup_widgets (EmpathyPreferences *preferences,
 
 	BIND_ACTIVE (loc, LOCATION_PUBLISH,
 		     "checkbutton_location_publish");
-	BIND_ACTIVE (loc, LOCATION_RESOURCE_NETWORK,
-		     "checkbutton_location_resource_network");
-	BIND_ACTIVE (loc, LOCATION_RESOURCE_CELL,
-		     "checkbutton_location_resource_cell");
-	BIND_ACTIVE (loc, LOCATION_RESOURCE_GPS,
-		     "checkbutton_location_resource_gps");
 	BIND_ACTIVE (loc, LOCATION_REDUCE_ACCURACY,
 		     "checkbutton_location_reduce_accuracy");
 
