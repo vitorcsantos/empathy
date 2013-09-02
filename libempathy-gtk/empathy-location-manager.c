@@ -22,11 +22,11 @@
 #include "config.h"
 #include "empathy-location-manager.h"
 
-#include <geoclue/geoclue-master.h>
 #include <tp-account-widgets/tpaw-time.h>
 
 #include "empathy-gsettings.h"
 #include "empathy-location.h"
+#include "empathy-geoclue-helper.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_LOCATION
 #include "empathy-debug.h"
@@ -35,8 +35,16 @@
 #define TIMEOUT 10
 static EmpathyLocationManager *location_manager = NULL;
 
+typedef enum
+{
+  GEOCLUE_NONE = 0,
+  GEOCLUE_STARTING,
+  GEOCLUE_STARTED,
+  GEOCLUE_FAILED,
+} GeoclueStatus;
+
 struct _EmpathyLocationManagerPrivate {
-    gboolean geoclue_is_setup;
+    GeoclueStatus geoclue_status;
     /* Contains the location to be sent to accounts.  Geoclue is used
      * to populate it.  This HashTable uses Telepathy's style (string,
      * GValue). Keys are defined in empathy-location.h
@@ -45,13 +53,9 @@ struct _EmpathyLocationManagerPrivate {
 
     GSettings *gsettings_loc;
 
-    GeoclueResourceFlags resources;
-    GeoclueMasterClient *gc_client;
-    GeocluePosition *gc_position;
-    GeoclueAddress *gc_address;
-
     gboolean reduce_accuracy;
     TpAccountManager *account_manager;
+    EmpathyGeoclueHelper *geoclue;
 
     /* The idle id for publish_on_idle func */
     guint timeout_id;
@@ -91,9 +95,6 @@ location_manager_dispose (GObject *object)
 
   tp_clear_object (&self->priv->account_manager);
   tp_clear_object (&self->priv->gsettings_loc);
-  tp_clear_object (&self->priv->gc_client);
-  tp_clear_object (&self->priv->gc_position);
-  tp_clear_object (&self->priv->gc_address);
   tp_clear_pointer (&self->priv->location, g_hash_table_unref);
 
   if (dispose != NULL)
@@ -240,331 +241,103 @@ new_connection_cb (TpAccount *account,
 }
 
 static void
-update_timestamp (EmpathyLocationManager *self)
+update_location (EmpathyLocationManager *self,
+    GClueLocation *proxy)
 {
+  gdouble latitude, longitude, accuracy;
+  const gchar *desc;
   gint64 timestamp;
+
+  latitude = gclue_location_get_latitude (proxy);
+  longitude = gclue_location_get_longitude (proxy);
+  accuracy = gclue_location_get_accuracy (proxy);
+  desc = gclue_location_get_description (proxy);
+
+  DEBUG ("Location updated: (%f %f) accuracy: %f (%s)",
+      latitude, longitude, accuracy, desc);
+
+  if (self->priv->reduce_accuracy)
+    {
+      /* Truncate at 1 decimal place */
+      latitude = ((int) (latitude * 10)) / 10.0;
+      longitude = ((int) (longitude * 10)) / 10.0;
+    }
+  else
+    {
+      /* Include the description only if we are not asked to reduce the
+       * accuracy as it can contains a pretty specific description of the
+       * location. */
+      tp_asv_set_string (self->priv->location, EMPATHY_LOCATION_DESCRIPTION,
+          desc);
+    }
+
+  tp_asv_set_double (self->priv->location, EMPATHY_LOCATION_LAT, latitude);
+  tp_asv_set_double (self->priv->location, EMPATHY_LOCATION_LON, longitude);
+  tp_asv_set_double (self->priv->location, EMPATHY_LOCATION_ACCURACY, accuracy);
 
   timestamp = tpaw_time_get_current ();
   tp_asv_set_int64 (self->priv->location, EMPATHY_LOCATION_TIMESTAMP,
       timestamp);
 
-  DEBUG ("\t - Timestamp: %" G_GINT64_FORMAT, timestamp);
-}
-
-static void
-address_changed_cb (GeoclueAddress *address,
-                    int timestamp,
-                    GHashTable *details,
-                    GeoclueAccuracy *accuracy,
-                    gpointer user_data)
-{
-  EmpathyLocationManager *self = user_data;
-  GeoclueAccuracyLevel level;
-  GHashTableIter iter;
-  gpointer key, value;
-
-  geoclue_accuracy_get_details (accuracy, &level, NULL, NULL);
-  DEBUG ("New address (accuracy level %d):", level);
-  /* FIXME: Publish accuracy level also considering the position's */
-
-  g_hash_table_remove (self->priv->location, EMPATHY_LOCATION_STREET);
-  g_hash_table_remove (self->priv->location, EMPATHY_LOCATION_AREA);
-  g_hash_table_remove (self->priv->location, EMPATHY_LOCATION_REGION);
-  g_hash_table_remove (self->priv->location, EMPATHY_LOCATION_COUNTRY);
-  g_hash_table_remove (self->priv->location, EMPATHY_LOCATION_COUNTRY_CODE);
-  g_hash_table_remove (self->priv->location, EMPATHY_LOCATION_POSTAL_CODE);
-
-  if (g_hash_table_size (details) == 0)
-    {
-      DEBUG ("\t - (Empty)");
-      return;
-    }
-
-  g_hash_table_iter_init (&iter, details);
-  while (g_hash_table_iter_next (&iter, &key, &value))
-    {
-      /* Discard street information if reduced accuracy is on */
-      if (self->priv->reduce_accuracy &&
-          !tp_strdiff (key, EMPATHY_LOCATION_STREET))
-        continue;
-
-      tp_asv_set_string (self->priv->location, key, value);
-
-      DEBUG ("\t - %s: %s", (gchar *) key, (gchar *) value);
-    }
-
-  update_timestamp (self);
   if (self->priv->timeout_id == 0)
     self->priv->timeout_id = g_timeout_add_seconds (TIMEOUT, publish_on_idle,
         self);
 }
 
 static void
-initial_address_cb (GeoclueAddress *address,
-                    int timestamp,
-                    GHashTable *details,
-                    GeoclueAccuracy *accuracy,
-                    GError *error,
-                    gpointer self)
+location_changed_cb (EmpathyGeoclueHelper *geoclue,
+    GClueLocation *location,
+    EmpathyLocationManager *self)
 {
-  if (error)
+  update_location (self, location);
+}
+
+static void
+geoclue_new_cb (GObject *source,
+    GAsyncResult *result,
+    gpointer user_data)
+{
+  EmpathyLocationManager *self = EMPATHY_LOCATION_MANAGER (user_data);
+  GError *error = NULL;
+  GClueLocation *location;
+
+  self->priv->geoclue = empathy_geoclue_helper_new_started_finish (result,
+      &error);
+
+  if (self->priv->geoclue == NULL)
     {
-      DEBUG ("Error: %s", error->message);
+      DEBUG ("Failed to create Geoclue client: %s", error->message);
       g_error_free (error);
-    }
-  else
-    {
-      address_changed_cb (address, timestamp, details, accuracy, self);
-    }
-}
-
-static void
-position_changed_cb (GeocluePosition *position,
-                     GeocluePositionFields fields,
-                     int timestamp,
-                     double latitude,
-                     double longitude,
-                     double altitude,
-                     GeoclueAccuracy *accuracy,
-                     gpointer user_data)
-{
-  EmpathyLocationManager *self = user_data;
-  GeoclueAccuracyLevel level;
-  gdouble mean, horizontal, vertical;
-
-  geoclue_accuracy_get_details (accuracy, &level, &horizontal, &vertical);
-  DEBUG ("New position (accuracy level %d)", level);
-  if (level == GEOCLUE_ACCURACY_LEVEL_NONE)
-    return;
-
-  if (fields & GEOCLUE_POSITION_FIELDS_LONGITUDE)
-    {
-
-      if (self->priv->reduce_accuracy)
-        /* Truncate at 1 decimal place */
-        longitude = ((int) (longitude * 10)) / 10.0;
-
-      tp_asv_set_double (self->priv->location, EMPATHY_LOCATION_LON, longitude);
-
-      DEBUG ("\t - Longitude: %f", longitude);
-    }
-  else
-    {
-      g_hash_table_remove (self->priv->location, EMPATHY_LOCATION_LON);
-    }
-
-  if (fields & GEOCLUE_POSITION_FIELDS_LATITUDE)
-    {
-      if (self->priv->reduce_accuracy)
-        /* Truncate at 1 decimal place */
-        latitude = ((int) (latitude * 10)) / 10.0;
-
-      tp_asv_set_double (self->priv->location, EMPATHY_LOCATION_LAT, latitude);
-
-      DEBUG ("\t - Latitude: %f", latitude);
-    }
-  else
-    {
-      g_hash_table_remove (self->priv->location, EMPATHY_LOCATION_LAT);
-    }
-
-  if (fields & GEOCLUE_POSITION_FIELDS_ALTITUDE)
-    {
-      tp_asv_set_double (self->priv->location, EMPATHY_LOCATION_ALT, altitude);
-
-      DEBUG ("\t - Altitude: %f", altitude);
-    }
-  else
-    {
-      g_hash_table_remove (self->priv->location, EMPATHY_LOCATION_ALT);
-    }
-
-  if (level == GEOCLUE_ACCURACY_LEVEL_DETAILED)
-    {
-      mean = (horizontal + vertical) / 2.0;
-      tp_asv_set_double (self->priv->location, EMPATHY_LOCATION_ACCURACY, mean);
-
-      DEBUG ("\t - Accuracy: %f", mean);
-    }
-  else
-    {
-      g_hash_table_remove (self->priv->location, EMPATHY_LOCATION_ACCURACY);
-    }
-
-  update_timestamp (self);
-  if (self->priv->timeout_id == 0)
-    self->priv->timeout_id = g_timeout_add_seconds (TIMEOUT, publish_on_idle,
-        self);
-}
-
-static void
-initial_position_cb (GeocluePosition *position,
-                     GeocluePositionFields fields,
-                     int timestamp,
-                     double latitude,
-                     double longitude,
-                     double altitude,
-                     GeoclueAccuracy *accuracy,
-                     GError *error,
-                     gpointer self)
-{
-  if (error)
-    {
-      DEBUG ("Error: %s", error->message);
-      g_error_free (error);
-    }
-  else
-    {
-      position_changed_cb (position, fields, timestamp, latitude, longitude,
-          altitude, accuracy, self);
-    }
-}
-
-static void
-set_requirements (EmpathyLocationManager *self,
-    GeoclueSetRequirementsCallback callback)
-{
-  geoclue_master_client_set_requirements_async (self->priv->gc_client,
-      GEOCLUE_ACCURACY_LEVEL_COUNTRY, 0, FALSE, self->priv->resources,
-      callback, self);
-}
-
-static void
-update_resources_set_requirements_cb (GeoclueMasterClient *client,
-    GError *error,
-    gpointer userdata)
-{
-  EmpathyLocationManager *self = userdata;
-
-  if (error != NULL)
-    {
-      DEBUG ("set_requirements failed: %s", error->message);
-      g_error_free (error);
+      self->priv->geoclue_status = GEOCLUE_FAILED;
       return;
     }
 
-  geoclue_address_get_address_async (self->priv->gc_address,
-      initial_address_cb, self);
-  geoclue_position_get_position_async (self->priv->gc_position,
-      initial_position_cb, self);
-}
+  self->priv->geoclue_status = GEOCLUE_STARTED;
 
-static void
-update_resources (EmpathyLocationManager *self)
-{
-  DEBUG ("Updating resources %d", self->priv->resources);
+  g_signal_connect_object (self->priv->geoclue, "location-changed",
+      G_CALLBACK (location_changed_cb), self, 0);
 
-  if (!self->priv->geoclue_is_setup)
-    return;
-
-  /* As per Geoclue bug #15126, using NONE results in no address
-   * being found as geoclue-manual report an empty address with
-   * accuracy = NONE */
-  set_requirements (self, update_resources_set_requirements_cb);
-}
-
-static void
-create_address_cb (GeoclueMasterClient *client,
-    GeoclueAddress *address,
-    GError *error,
-    gpointer userdata)
-{
-  EmpathyLocationManager *self = userdata;
-
-  if (error != NULL)
-    {
-      DEBUG ("Failed to create GeoclueAddress: %s", error->message);
-      g_error_free (error);
-      return;
-    }
-
-  self->priv->gc_address = address;
-
-  g_signal_connect (G_OBJECT (self->priv->gc_address), "address-changed",
-      G_CALLBACK (address_changed_cb), self);
-
-  self->priv->geoclue_is_setup = TRUE;
-}
-
-static void
-create_position_cb (GeoclueMasterClient *client,
-    GeocluePosition *position,
-    GError *error,
-    gpointer userdata)
-{
-  EmpathyLocationManager *self = userdata;
-
-  if (error != NULL)
-    {
-      DEBUG ("Failed to create GeocluePosition: %s", error->message);
-      g_error_free (error);
-      return;
-    }
-
-  self->priv->gc_position = position;
-
-  g_signal_connect (G_OBJECT (self->priv->gc_position), "position-changed",
-      G_CALLBACK (position_changed_cb), self);
-
-  /* Get updated when the address changes */
-  geoclue_master_client_create_address_async (self->priv->gc_client,
-      create_address_cb, self);
-}
-
-static void
-create_client_set_requirements_cb (GeoclueMasterClient *client,
-    GError *error,
-    gpointer userdata)
-{
-  EmpathyLocationManager *self = userdata;
-
-  if (error != NULL)
-    {
-      DEBUG ("set_requirements failed: %s", error->message);
-      g_error_free (error);
-      return;
-    }
-
-  /* Get updated when the position is changes */
-  geoclue_master_client_create_position_async (self->priv->gc_client,
-      create_position_cb, self);
-}
-
-static void
-create_client_cb (GeoclueMaster *master,
-    GeoclueMasterClient *client,
-    char *object_path,
-    GError *error,
-    gpointer userdata)
-{
-  EmpathyLocationManager *self = userdata;
-
-  if (error != NULL)
-    {
-      DEBUG ("Failed to create GeoclueMasterClient: %s", error->message);
-      g_error_free (error);
-      return;
-    }
-
-  /* @client seems be (transfer full) looking at the geoclue code; yeah for
-   * undocumented API... */
-  self->priv->gc_client = client;
-
-  set_requirements (self, create_client_set_requirements_cb);
+  location = empathy_geoclue_helper_get_location (self->priv->geoclue);
+  if (location != NULL)
+    update_location (self, location);
 }
 
 static void
 setup_geoclue (EmpathyLocationManager *self)
 {
-  GeoclueMaster *master;
-
-  DEBUG ("Setting up Geoclue");
-  master = geoclue_master_get_default ();
-
-  geoclue_master_create_client_async (master, create_client_cb, self);
-
-  g_object_unref (master);
- }
+  switch (self->priv->geoclue_status)
+    {
+      case GEOCLUE_NONE:
+        g_assert (self->priv->geoclue == NULL);
+        self->priv->geoclue_status = GEOCLUE_STARTING;
+        empathy_geoclue_helper_new_started_async (0, geoclue_new_cb, self);
+        break;
+      case GEOCLUE_STARTED:
+      case GEOCLUE_STARTING:
+      case GEOCLUE_FAILED:
+      return;
+    }
+}
 
 static void
 publish_cb (GSettings *gsettings_loc,
@@ -577,16 +350,7 @@ publish_cb (GSettings *gsettings_loc,
 
   if (g_settings_get_boolean (gsettings_loc, key))
     {
-      if (!self->priv->geoclue_is_setup)
-        setup_geoclue (self);
-      /* if still not setup than the init failed */
-      if (!self->priv->geoclue_is_setup)
-        return;
-
-      geoclue_address_get_address_async (self->priv->gc_address,
-          initial_address_cb, self);
-      geoclue_position_get_position_async (self->priv->gc_position,
-          initial_position_cb, self);
+      setup_geoclue (self);
     }
   else
     {
@@ -595,54 +359,10 @@ publish_cb (GSettings *gsettings_loc,
        */
       g_hash_table_remove_all (self->priv->location);
       publish_to_all_connections (self, TRUE);
+
+      g_clear_object (&self->priv->geoclue);
+      self->priv->geoclue_status = GEOCLUE_NONE;
     }
-
-}
-
-static void
-resource_cb (GSettings *gsettings_loc,
-             const gchar *key,
-             gpointer user_data)
-{
-  EmpathyLocationManager *self = EMPATHY_LOCATION_MANAGER (user_data);
-  GeoclueResourceFlags resource = 0;
-
-  DEBUG ("%s changed", key);
-
-  if (!tp_strdiff (key, EMPATHY_PREFS_LOCATION_RESOURCE_NETWORK))
-    resource = GEOCLUE_RESOURCE_NETWORK;
-  if (!tp_strdiff (key, EMPATHY_PREFS_LOCATION_RESOURCE_CELL))
-    resource = GEOCLUE_RESOURCE_CELL;
-  if (!tp_strdiff (key, EMPATHY_PREFS_LOCATION_RESOURCE_GPS))
-    resource = GEOCLUE_RESOURCE_GPS;
-
-  if (g_settings_get_boolean (gsettings_loc, key))
-    self->priv->resources |= resource;
-  else
-    self->priv->resources &= ~resource;
-
-  if (self->priv->geoclue_is_setup)
-    update_resources (self);
-}
-
-static void
-accuracy_cb (GSettings *gsettings_loc,
-             const gchar *key,
-             gpointer user_data)
-{
-  EmpathyLocationManager *self = EMPATHY_LOCATION_MANAGER (user_data);
-
-  DEBUG ("%s changed", key);
-
-  self->priv->reduce_accuracy = g_settings_get_boolean (gsettings_loc, key);
-
-  if (!self->priv->geoclue_is_setup)
-    return;
-
-  geoclue_address_get_address_async (self->priv->gc_address,
-      initial_address_cb, self);
-  geoclue_position_get_position_async (self->priv->gc_position,
-      initial_position_cb, self);
 }
 
 static void
@@ -680,7 +400,6 @@ empathy_location_manager_init (EmpathyLocationManager *self)
       EMPATHY_TYPE_LOCATION_MANAGER, EmpathyLocationManagerPrivate);
 
   self->priv = priv;
-  priv->geoclue_is_setup = FALSE;
   priv->location = tp_asv_new (NULL, NULL);
   priv->gsettings_loc = g_settings_new (EMPATHY_PREFS_LOCATION_SCHEMA);
 
@@ -694,25 +413,7 @@ empathy_location_manager_init (EmpathyLocationManager *self)
   g_signal_connect (priv->gsettings_loc,
       "changed::" EMPATHY_PREFS_LOCATION_PUBLISH,
       G_CALLBACK (publish_cb), self);
-  g_signal_connect (priv->gsettings_loc,
-      "changed::" EMPATHY_PREFS_LOCATION_RESOURCE_NETWORK,
-      G_CALLBACK (resource_cb), self);
-  g_signal_connect (priv->gsettings_loc,
-      "changed::" EMPATHY_PREFS_LOCATION_RESOURCE_CELL,
-      G_CALLBACK (resource_cb), self);
-  g_signal_connect (priv->gsettings_loc,
-      "changed::" EMPATHY_PREFS_LOCATION_RESOURCE_GPS,
-      G_CALLBACK (resource_cb), self);
-  g_signal_connect (priv->gsettings_loc,
-      "changed::" EMPATHY_PREFS_LOCATION_REDUCE_ACCURACY,
-      G_CALLBACK (accuracy_cb), self);
 
-  resource_cb (priv->gsettings_loc, EMPATHY_PREFS_LOCATION_RESOURCE_NETWORK,
-      self);
-  resource_cb (priv->gsettings_loc, EMPATHY_PREFS_LOCATION_RESOURCE_CELL, self);
-  resource_cb (priv->gsettings_loc, EMPATHY_PREFS_LOCATION_RESOURCE_GPS, self);
-  accuracy_cb (priv->gsettings_loc, EMPATHY_PREFS_LOCATION_REDUCE_ACCURACY,
-      self);
   publish_cb (priv->gsettings_loc, EMPATHY_PREFS_LOCATION_PUBLISH, self);
 }
 
