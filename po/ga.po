@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: empathy.master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-29 15:32-0600\n"
-"PO-Revision-Date: 2013-08-29 15:45-0600\n"
+"POT-Creation-Date: 2013-08-31 13:12-0600\n"
+"PO-Revision-Date: 2013-08-31 13:30-0600\n"
 "Last-Translator: Seán de Búrca <leftmostcat@gmail.com>\n"
 "Language-Team: Irish <gaeilge-gnulinux@lists.sourceforge.net>\n"
 "Language: ga\n"
@@ -87,7 +87,7 @@ msgstr ""
 #: ../data/org.gnome.Empathy.gschema.xml.h:12
 #: ../src/empathy-preferences.ui.h:1
 msgid "Show offline contacts"
-msgstr ""
+msgstr "Taispeáin teagmhálacha as líne"
 
 #: ../data/org.gnome.Empathy.gschema.xml.h:13
 msgid "Whether to show contacts that are offline in the contact list."
@@ -511,14 +511,14 @@ msgstr ""
 
 #. Translators: this is an outgoing call, e.g. 'Called Alice'
 #: ../libempathy/empathy-message.c:406
-#, fuzzy, c-format
+#, c-format
 msgid "Called %s"
-msgstr "Glaoch"
+msgstr "Chuir glaoch ar %s"
 
 #: ../libempathy/empathy-message.c:409
 #, c-format
 msgid "Call from %s"
-msgstr ""
+msgstr "Glaoch ó %s"
 
 #: ../libempathy/empathy-utils.c:179
 msgid "Available"
@@ -548,21 +548,21 @@ msgstr "Anaithnid"
 
 #: ../libempathy/empathy-utils.c:231
 msgid "No reason specified"
-msgstr ""
+msgstr "Cúis gan sonrú"
 
 #: ../libempathy/empathy-utils.c:233 ../libempathy/empathy-utils.c:289
 msgid "Status is set to offline"
-msgstr ""
+msgstr "Socraítear stádas ar As Líne"
 
 #: ../libempathy/empathy-utils.c:235 ../libempathy/empathy-utils.c:269
 #: ../libempathy-gtk/empathy-call-utils.c:41
 #: ../libempathy-gtk/empathy-new-message-dialog.c:70
 msgid "Network error"
-msgstr ""
+msgstr "Earráid líonra"
 
 #: ../libempathy/empathy-utils.c:237 ../libempathy/empathy-utils.c:271
 msgid "Authentication failed"
-msgstr ""
+msgstr "Theip ar fhíordheimhniú"
 
 #: ../libempathy/empathy-utils.c:239 ../libempathy/empathy-utils.c:273
 msgid "Encryption error"
@@ -570,7 +570,7 @@ msgstr ""
 
 #: ../libempathy/empathy-utils.c:241
 msgid "Name in use"
-msgstr ""
+msgstr "Ainm in úsáid"
 
 #: ../libempathy/empathy-utils.c:243 ../libempathy/empathy-utils.c:275
 msgid "Certificate not provided"
@@ -622,7 +622,7 @@ msgstr ""
 
 #: ../libempathy/empathy-utils.c:299
 msgid "Connection has been lost"
-msgstr ""
+msgstr "Cailleadh an ceangal"
 
 #: ../libempathy/empathy-utils.c:301
 msgid "This account is already connected to the server"
@@ -1001,13 +1001,12 @@ msgstr ""
 
 #: ../libempathy-gtk/empathy-chat.c:4001
 #: ../src/empathy-new-chatroom-dialog.c:787
-#, fuzzy
 msgid "Join"
-msgstr "C_eangail"
+msgstr "Ceangail"
 
 #: ../libempathy-gtk/empathy-chat.c:4193 ../src/empathy-event-manager.c:1192
 msgid "Connected"
-msgstr ""
+msgstr "Ceangailte"
 
 #: ../libempathy-gtk/empathy-chat.c:4248
 msgid "Conversation"
@@ -1054,36 +1053,32 @@ msgid "Account:"
 msgstr "Cuntas:"
 
 #: ../libempathy-gtk/empathy-contact-blocking-dialog.ui.h:2
-#, fuzzy
 msgid "Blocked Contacts"
-msgstr "_Teagmhálacha As Líne"
+msgstr "Teagmhálacha Bactha"
 
 #: ../libempathy-gtk/empathy-contact-blocking-dialog.ui.h:3
 #: ../libempathy-gtk/empathy-status-preset-dialog.ui.h:1
 #: ../src/empathy-accounts-dialog.ui.h:2
 #: ../src/empathy-chatrooms-window.ui.h:3
-#, fuzzy
 msgid "Remove"
-msgstr "gtk-remove"
+msgstr "Bain"
 
 #. Title
 #: ../libempathy-gtk/empathy-contact-search-dialog.c:552
-#, fuzzy
 msgid "Search contacts"
-msgstr "Roghnaigh teagmháil..."
+msgstr "Cuardaigh teagmhálacha"
 
 #: ../libempathy-gtk/empathy-contact-search-dialog.c:582
 msgid "Search: "
 msgstr "Cuardaigh: "
 
 #: ../libempathy-gtk/empathy-contact-search-dialog.c:640
-#, fuzzy
 msgid "_Add Contact"
-msgstr "_Cuir Teagmháil Leis..."
+msgstr "Cuir Teagmháil _Leis"
 
 #: ../libempathy-gtk/empathy-contact-search-dialog.c:659
 msgid "No contacts found"
-msgstr ""
+msgstr "Teagmháil gan aimsiú"
 
 #: ../libempathy-gtk/empathy-contact-search-dialog.c:660
 msgid "Contact search is not supported on this account"
@@ -1114,19 +1109,17 @@ msgstr "Cuntas"
 
 #. Identifier to connect to Instant Messaging network
 #: ../libempathy-gtk/empathy-contact-widget.ui.h:3
-#, fuzzy
 msgid "Identifier"
-msgstr "Aitheantóir:"
+msgstr "Aitheantóir"
 
 #: ../libempathy-gtk/empathy-contact-widget.ui.h:4
-#, fuzzy
 msgid "Alias"
-msgstr "Ailias:"
+msgstr "Ailias"
 
 #: ../libempathy-gtk/empathy-contact-widget.ui.h:5
 #: ../libempathy-gtk/empathy-individual-widget.ui.h:3
 msgid "Contact Details"
-msgstr ""
+msgstr "Mionsonraí Teagmhálacha"
 
 #: ../libempathy-gtk/empathy-contact-widget.ui.h:6
 #: ../libempathy-gtk/empathy-individual-widget.ui.h:4
@@ -1140,21 +1133,19 @@ msgstr "<b>Suíomh</b> ag (dáta)\t"
 
 #: ../libempathy-gtk/empathy-contact-widget.ui.h:8
 msgid "Client Information"
-msgstr ""
+msgstr "Eolas Cliaint"
 
 #: ../libempathy-gtk/empathy-contact-widget.ui.h:9
-#, fuzzy
 msgid "OS"
-msgstr "OS:"
+msgstr "OS"
 
 #: ../libempathy-gtk/empathy-contact-widget.ui.h:10
 msgid "Version"
 msgstr "Leagan"
 
 #: ../libempathy-gtk/empathy-contact-widget.ui.h:11
-#, fuzzy
 msgid "Client"
-msgstr "Cliant:"
+msgstr "Cliant"
 
 #: ../libempathy-gtk/empathy-groups-widget.c:318
 msgid "Groups"
@@ -1187,7 +1178,7 @@ msgstr "Teagmháil Nua"
 #: ../libempathy-gtk/empathy-subscription-dialog.c:120
 #, c-format
 msgid "Block %s?"
-msgstr ""
+msgstr "Bac %s?"
 
 #: ../libempathy-gtk/empathy-individual-dialogs.c:238
 #: ../libempathy-gtk/empathy-subscription-dialog.c:124
@@ -1235,9 +1226,8 @@ msgstr "Cuir Eolas Teagmhála in Eagar"
 
 #. Translators: the heading at the top of the Information dialogue
 #: ../libempathy-gtk/empathy-individual-information-dialog.c:283
-#, fuzzy
 msgid "Linked Contacts"
-msgstr "_Teagmhálacha As Líne"
+msgstr "Teagmhálacha Nasctha"
 
 #: ../libempathy-gtk/empathy-individual-information-dialog.c:322
 msgid "gnome-contacts not installed"
@@ -1267,15 +1257,15 @@ msgstr "Glaoch"
 
 #: ../libempathy-gtk/empathy-individual-menu.c:425
 msgid "Mobile"
-msgstr ""
+msgstr "Fón Póca"
 
 #: ../libempathy-gtk/empathy-individual-menu.c:427
 msgid "Work"
-msgstr ""
+msgstr "Obair"
 
 #: ../libempathy-gtk/empathy-individual-menu.c:429
 msgid "HOME"
-msgstr ""
+msgstr "BAILE"
 
 #: ../libempathy-gtk/empathy-individual-menu.c:672
 msgid "_Block Contact"
@@ -1288,7 +1278,7 @@ msgstr ""
 
 #: ../libempathy-gtk/empathy-individual-menu.c:748
 msgid "Delete and _Block"
-msgstr ""
+msgstr "Scrios agus _Bac"
 
 #: ../libempathy-gtk/empathy-individual-menu.c:836
 #, c-format
@@ -1304,7 +1294,7 @@ msgstr ""
 
 #: ../libempathy-gtk/empathy-individual-menu.c:856
 msgid "Removing contact"
-msgstr ""
+msgstr "Teagmháil á baint"
 
 #: ../libempathy-gtk/empathy-individual-menu.c:932
 #: ../libempathy-gtk/empathy-individual-view.c:2442
@@ -1371,6 +1361,7 @@ msgid "_Invite to Chat Room"
 msgstr "_Tabhair Cuireadh Seomra Comhrá"
 
 #: ../libempathy-gtk/empathy-individual-menu.c:2035
+#: ../src/empathy-roster-window.ui.h:4
 msgid "_Add Contact…"
 msgstr "Cuir Teagmháil _Leis…"
 
@@ -1384,9 +1375,8 @@ msgid "Removing group"
 msgstr ""
 
 #: ../libempathy-gtk/empathy-individual-view.c:2433
-#, fuzzy
 msgid "Re_name"
-msgstr "Fíorainm:"
+msgstr "Athai_nmnigh"
 
 #: ../libempathy-gtk/empathy-individual-widget.c:360
 msgid "Channels:"
@@ -1398,15 +1388,15 @@ msgstr ""
 
 #: ../libempathy-gtk/empathy-individual-widget.c:513
 msgid "Country:"
-msgstr ""
+msgstr "Tír:"
 
 #: ../libempathy-gtk/empathy-individual-widget.c:515
 msgid "State:"
-msgstr ""
+msgstr "Stát:"
 
 #: ../libempathy-gtk/empathy-individual-widget.c:517
 msgid "City:"
-msgstr ""
+msgstr "Cathair:"
 
 #: ../libempathy-gtk/empathy-individual-widget.c:519
 msgid "Area:"
@@ -1414,11 +1404,11 @@ msgstr ""
 
 #: ../libempathy-gtk/empathy-individual-widget.c:521
 msgid "Postal Code:"
-msgstr ""
+msgstr "Cód Poist:"
 
 #: ../libempathy-gtk/empathy-individual-widget.c:523
 msgid "Street:"
-msgstr ""
+msgstr "Sráid:"
 
 #: ../libempathy-gtk/empathy-individual-widget.c:525
 msgid "Building:"
@@ -1434,15 +1424,15 @@ msgstr ""
 
 #: ../libempathy-gtk/empathy-individual-widget.c:531
 msgid "Text:"
-msgstr ""
+msgstr "Téacs:"
 
 #: ../libempathy-gtk/empathy-individual-widget.c:533
 msgid "Description:"
-msgstr ""
+msgstr "Cur Síos:"
 
 #: ../libempathy-gtk/empathy-individual-widget.c:535
 msgid "URI:"
-msgstr ""
+msgstr "URI:"
 
 #: ../libempathy-gtk/empathy-individual-widget.c:537
 msgid "Accuracy Level:"
@@ -1564,12 +1554,12 @@ msgstr "Cuardaigh"
 #: ../libempathy-gtk/empathy-log-window.c:1158
 #, c-format
 msgid "Chat in %s"
-msgstr ""
+msgstr "Déan comhrá i %s"
 
 #: ../libempathy-gtk/empathy-log-window.c:1160
 #, c-format
 msgid "Chat with %s"
-msgstr ""
+msgstr "Déan comhrá le %s"
 
 #: ../libempathy-gtk/empathy-log-window.c:1210
 #: ../libempathy-gtk/empathy-log-window.c:1354
@@ -1656,9 +1646,8 @@ msgstr ""
 
 #: ../libempathy-gtk/empathy-log-window.c:3048
 #: ../src/empathy-preferences.ui.h:29
-#, fuzzy
 msgid "Calls"
-msgstr "Glaoch"
+msgstr "Glaonna"
 
 #: ../libempathy-gtk/empathy-log-window.c:3052
 msgid "Incoming calls"
@@ -1681,13 +1670,12 @@ msgid "Are you sure you want to delete all logs of previous conversations?"
 msgstr ""
 
 #: ../libempathy-gtk/empathy-log-window.c:3767
-#, fuzzy
 msgid "Clear All"
-msgstr "G_lan"
+msgstr "Glan Uile"
 
 #: ../libempathy-gtk/empathy-log-window.c:3774
 msgid "Delete from:"
-msgstr ""
+msgstr "Scrios ó:"
 
 #: ../libempathy-gtk/empathy-log-window.ui.h:1
 msgid "_File"
@@ -1699,8 +1687,8 @@ msgid "_Edit"
 msgstr "_Eagar"
 
 #: ../libempathy-gtk/empathy-log-window.ui.h:3
-msgid "Delete All History..."
-msgstr ""
+msgid "Delete All History…"
+msgstr "Scrios Stair ar Fad…"
 
 #: ../libempathy-gtk/empathy-log-window.ui.h:4
 msgid "Profile"
@@ -1721,8 +1709,8 @@ msgid "page 2"
 msgstr "leathanach 2"
 
 #: ../libempathy-gtk/empathy-log-window.ui.h:9
-msgid "<span size=\"x-large\">Loading...</span>"
-msgstr ""
+msgid "<span size=\"x-large\">Loading…</span>"
+msgstr "<span size=\"x-large\">Á luchtú…</span>"
 
 #: ../libempathy-gtk/empathy-new-account-dialog.c:130
 msgid "What kind of chat account do you have?"
@@ -1753,9 +1741,8 @@ msgid "New Call"
 msgstr "Glaoch Nua"
 
 #: ../libempathy-gtk/empathy-new-message-dialog.c:72
-#, fuzzy
 msgid "The contact is offline"
-msgstr "Roghnaigh teagmháil..."
+msgstr "Tá an teagmháil as líne"
 
 #: ../libempathy-gtk/empathy-new-message-dialog.c:74
 msgid "The specified contact is either invalid or unknown"
@@ -1840,13 +1827,12 @@ msgstr ""
 
 #: ../libempathy-gtk/empathy-presence-chooser.c:387
 msgid "Set status"
-msgstr ""
+msgstr "Socraigh stádas"
 
 #. Custom messages
 #: ../libempathy-gtk/empathy-presence-chooser.c:1095
-#, fuzzy
 msgid "Custom messages…"
-msgstr "Teachtaireachtaí saincheaptha..."
+msgstr "Teachtaireachtaí saincheaptha…"
 
 #: ../libempathy-gtk/empathy-search-bar.c:239
 msgid "_Match case"
@@ -2211,7 +2197,7 @@ msgid "Edit Connection Parameters"
 msgstr ""
 
 #: ../src/empathy-accounts-dialog.c:716
-msgid "_Edit Connection Parameters..."
+msgid "_Edit Connection Parameters…"
 msgstr ""
 
 #: ../src/empathy-accounts-dialog.c:1246
@@ -2237,9 +2223,8 @@ msgstr "Cumasaithe"
 
 #. Menu item: Rename
 #: ../src/empathy-accounts-dialog.c:1669
-#, fuzzy
 msgid "Rename"
-msgstr "Fíorainm:"
+msgstr "Athainmnigh"
 
 #: ../src/empathy-accounts-dialog.c:2071
 msgid "_Skip"
@@ -2262,7 +2247,7 @@ msgstr ""
 
 #: ../src/empathy-accounts-dialog.ui.h:1
 msgid "Add…"
-msgstr ""
+msgstr "Cuir Leis…"
 
 #: ../src/empathy-accounts-dialog.ui.h:3
 msgid "_Import…"
@@ -2405,9 +2390,8 @@ msgid "Mute"
 msgstr ""
 
 #: ../src/empathy-call-window.c:2964
-#, fuzzy
 msgid "Duration"
-msgstr "Suíomh"
+msgstr "Fad"
 
 #. Translators: 'status - minutes:seconds' the caller has been connected
 #: ../src/empathy-call-window.c:2967
@@ -2757,14 +2741,12 @@ msgid "Invite _Participant…"
 msgstr "Tabhair Cuireadh do _Rannpháirtí…"
 
 #: ../src/empathy-chat-window.ui.h:8
-#, fuzzy
 msgid "_Join Chat"
-msgstr "C_eangail"
+msgstr "C_eangail le Comhrá"
 
 #: ../src/empathy-chat-window.ui.h:9
-#, fuzzy
 msgid "Le_ave Chat"
-msgstr "_Comhrá"
+msgstr "_Fág Comhrá"
 
 #: ../src/empathy-chat-window.ui.h:10
 msgid "C_ontact"
@@ -3425,9 +3407,8 @@ msgid "_GPS"
 msgstr "_GPS"
 
 #: ../src/empathy-preferences.ui.h:36
-#, fuzzy
 msgid "_Cellphone"
-msgstr "Meigeafón"
+msgstr "_Fón Póca"
 
 #: ../src/empathy-preferences.ui.h:37
 msgid "_Network (IP, Wi-Fi)"
@@ -3501,12 +3482,11 @@ msgid "%s account requires authorisation"
 msgstr ""
 
 #: ../src/empathy-roster-window.c:700
-#, fuzzy
 msgid "Online Accounts"
-msgstr "Cuir Cuntas Leis"
+msgstr "Cuntais ar Líne"
 
 #: ../src/empathy-roster-window.c:747
-msgid "Update software..."
+msgid "Update software…"
 msgstr ""
 
 #: ../src/empathy-roster-window.c:753
@@ -3550,29 +3530,30 @@ msgid "You haven't added any contact yet"
 msgstr ""
 
 #: ../src/empathy-roster-window.c:1695
-#, fuzzy
 msgid "No online contacts"
-msgstr "_Teagmhálacha as Líne"
+msgstr "Gan teagmháil ar líne"
 
 #: ../src/empathy-roster-window-menubar.ui.h:1
-msgid "_New Conversation..."
-msgstr "_Comhrá Nua..."
+#: ../src/empathy-status-icon.ui.h:2
+msgid "_New Conversation…"
+msgstr "_Comhrá Nua…"
 
 #: ../src/empathy-roster-window-menubar.ui.h:2
-msgid "New _Call..."
-msgstr "_Glaoch Nua..."
+#: ../src/empathy-status-icon.ui.h:3
+msgid "New _Call…"
+msgstr "_Glaoch Nua…"
 
 #: ../src/empathy-roster-window-menubar.ui.h:3
 msgid "Contacts"
 msgstr "Teagmhálacha"
 
 #: ../src/empathy-roster-window-menubar.ui.h:4
-msgid "_Add Contacts..."
-msgstr "Cuir Teagmhálacha _Leis..."
+msgid "_Add Contacts…"
+msgstr "Cuir Teagmhálacha _Leis…"
 
 #: ../src/empathy-roster-window-menubar.ui.h:5
-msgid "_Search for Contacts..."
-msgstr "Cuar_daigh ar Theagmhálacha..."
+msgid "_Search for Contacts…"
+msgstr "Cuar_daigh Teagmhálacha…"
 
 #: ../src/empathy-roster-window-menubar.ui.h:6
 msgid "_Blocked Contacts"
@@ -3583,8 +3564,8 @@ msgid "_Rooms"
 msgstr "_Seomraí"
 
 #: ../src/empathy-roster-window-menubar.ui.h:8
-msgid "_Join..."
-msgstr "C_eangail..."
+msgid "_Join…"
+msgstr "C_eangail…"
 
 #: ../src/empathy-roster-window-menubar.ui.h:9
 msgid "Join _Favorites"
@@ -3631,18 +3612,6 @@ msgstr "Téigh _ar Líne"
 msgid "Show _Offline Contacts"
 msgstr "Taispeáin _Teagmhálacha as Líne"
 
-#: ../src/empathy-roster-window.ui.h:4
-msgid "_Add Contact..."
-msgstr "Cuir Teagmháil _Leis..."
-
-#: ../src/empathy-status-icon.ui.h:2
-msgid "_New Conversation…"
-msgstr "_Comhrá Nua…"
-
-#: ../src/empathy-status-icon.ui.h:3
-msgid "New _Call…"
-msgstr "_Glaoch Nua…"
-
 #: ../src/empathy-status-icon.ui.h:4
 msgid "Status"
 msgstr "Stádas"
@@ -3654,7 +3623,7 @@ msgstr "Críochnaithe"
 
 #: ../ubuntu-online-accounts/cc-plugins/account-plugins/empathy-accounts-plugin-widget.c:214
 msgid "Please enter your account details"
-msgstr ""
+msgstr "Iontráil mionsonraí do chuntais, le do thoil"
 
 #: ../ubuntu-online-accounts/cc-plugins/app-plugin/empathy-app-plugin-widget.c:160
 #, fuzzy, c-format
