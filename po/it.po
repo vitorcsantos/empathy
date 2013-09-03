@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: empathy\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-24 18:50+0200\n"
-"PO-Revision-Date: 2013-08-24 18:50+0200\n"
+"POT-Creation-Date: 2013-09-03 18:17+0200\n"
+"PO-Revision-Date: 2013-09-03 18:16+0200\n"
 "Last-Translator: Milo Casagrande <milo@ubuntu.com>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "Language: it\n"
@@ -491,47 +491,11 @@ msgstr ""
 "agli altri contatti."
 
 #: ../data/org.gnome.Empathy.gschema.xml.h:92
-msgid "Empathy can use the network to guess the location"
-msgstr ""
-"Indica se il programma può utilizzare la rete per ipotizzare la posizione "
-"geografica"
-
-#: ../data/org.gnome.Empathy.gschema.xml.h:93
-msgid "Whether Empathy can use the network to guess the location."
-msgstr ""
-"Indica se il programma può usare o meno la rete per ipotizzare la posizione "
-"geografica."
-
-#: ../data/org.gnome.Empathy.gschema.xml.h:94
-msgid "Empathy can use the cellular network to guess the location"
-msgstr ""
-"Indica se il programma può utilizzare la rete dei telefoni cellulari per "
-"ipotizzare la posizione geografica"
-
-#: ../data/org.gnome.Empathy.gschema.xml.h:95
-msgid "Whether Empathy can use the cellular network to guess the location."
-msgstr ""
-"Indica se il programma può usare o meno la rete dei telefoni cellulari per "
-"ipotizzare la posizione geografica."
-
-#: ../data/org.gnome.Empathy.gschema.xml.h:96
-msgid "Empathy can use the GPS to guess the location"
-msgstr ""
-"Indica se il programma può utilizzare il GPS per ipotizzare la posizione "
-"geografica"
-
-#: ../data/org.gnome.Empathy.gschema.xml.h:97
-msgid "Whether Empathy can use the GPS to guess the location."
-msgstr ""
-"Indica se il programma può usare o meno il GPS per ipotizzare la posizione "
-"geografica."
-
-#: ../data/org.gnome.Empathy.gschema.xml.h:98
 msgid "Empathy should reduce the location's accuracy"
 msgstr ""
 "Indica se il programma deve ridurre la precisione della posizione geografica"
 
-#: ../data/org.gnome.Empathy.gschema.xml.h:99
+#: ../data/org.gnome.Empathy.gschema.xml.h:93
 msgid ""
 "Whether Empathy should reduce the location's accuracy for privacy reasons."
 msgstr ""
@@ -1466,6 +1430,7 @@ msgid "_Invite to Chat Room"
 msgstr "_Invita nella stanza"
 
 #: ../libempathy-gtk/empathy-individual-menu.c:2035
+#: ../src/empathy-roster-window.ui.h:4
 msgid "_Add Contact…"
 msgstr "A_ggiungi contatto..."
 
@@ -1588,7 +1553,7 @@ msgstr "Altitudine:"
 # (ndt) nome della scheda
 #: ../libempathy-gtk/empathy-individual-widget.c:649
 #: ../libempathy-gtk/empathy-individual-widget.c:664
-#: ../src/empathy-preferences.ui.h:39
+#: ../src/empathy-preferences.ui.h:35
 msgid "Location"
 msgstr "Posizione geografica"
 
@@ -1798,7 +1763,7 @@ msgid "_Edit"
 msgstr "_Modifica"
 
 #: ../libempathy-gtk/empathy-log-window.ui.h:3
-msgid "Delete All History..."
+msgid "Delete All History…"
 msgstr "Elimina cronologia..."
 
 #: ../libempathy-gtk/empathy-log-window.ui.h:4
@@ -1820,7 +1785,7 @@ msgid "page 2"
 msgstr "page 2"
 
 #: ../libempathy-gtk/empathy-log-window.ui.h:9
-msgid "<span size=\"x-large\">Loading...</span>"
+msgid "<span size=\"x-large\">Loading…</span>"
 msgstr "<span size=\"x-large\">Caricamento...</span>"
 
 #: ../libempathy-gtk/empathy-new-account-dialog.c:130
@@ -2042,12 +2007,12 @@ msgid "_Accept"
 msgstr "Acce_tta"
 
 # (ndt) quello che c'è dopo è un timestamp, che ovviamente non è localizzabile...
-#: ../libempathy-gtk/empathy-theme-adium.c:1214
+#: ../libempathy-gtk/empathy-theme-adium.c:1217
 #, c-format
 msgid "Message edited at %s"
 msgstr "Messaggio modificato alle %s"
 
-#: ../libempathy-gtk/empathy-theme-adium.c:1916
+#: ../libempathy-gtk/empathy-theme-adium.c:1919
 msgid "Normal"
 msgstr "Normale"
 
@@ -2330,7 +2295,7 @@ msgid "Edit Connection Parameters"
 msgstr "Modifica parametri connessione"
 
 #: ../src/empathy-accounts-dialog.c:716
-msgid "_Edit Connection Parameters..."
+msgid "_Edit Connection Parameters…"
 msgstr "_Modifica parametri connessione..."
 
 #: ../src/empathy-accounts-dialog.c:1246
@@ -3407,51 +3372,51 @@ msgstr "Account connesso"
 msgid "Account disconnected"
 msgstr "Account disconnesso"
 
-#: ../src/empathy-preferences.c:380
+#: ../src/empathy-preferences.c:374
 msgid "Language"
 msgstr "Lingua"
 
 #. translators: Contact name for the chat theme preview
-#: ../src/empathy-preferences.c:631
+#: ../src/empathy-preferences.c:625
 msgid "Juliet"
 msgstr "Giulietta"
 
 #. translators: Contact name for the chat theme preview
-#: ../src/empathy-preferences.c:638
+#: ../src/empathy-preferences.c:632
 msgid "Romeo"
 msgstr "Romeo"
 
 #. translators: Quote from Romeo & Julier, for chat theme preview
-#: ../src/empathy-preferences.c:644
+#: ../src/empathy-preferences.c:638
 msgid "O Romeo, Romeo, wherefore art thou Romeo?"
 msgstr "O Romeo, Romeo, perché sei tu Romeo?"
 
 #. translators: Quote from Romeo & Julier, for chat theme preview
-#: ../src/empathy-preferences.c:648
+#: ../src/empathy-preferences.c:642
 msgid "Deny thy father and refuse thy name;"
 msgstr "Rinnega tuo padre e rifiuta il tuo nome;"
 
 #. translators: Quote from Romeo & Julier, for chat theme preview
-#: ../src/empathy-preferences.c:651
+#: ../src/empathy-preferences.c:645
 msgid "Or if thou wilt not, be but sworn my love"
 msgstr "o, se non vuoi, legati solo in giuramento all'amor mio"
 
 #. translators: Quote from Romeo & Julier, for chat theme preview
-#: ../src/empathy-preferences.c:654
+#: ../src/empathy-preferences.c:648
 msgid "And I'll no longer be a Capulet."
 msgstr "e io non sarò più una Capuleti."
 
 #. translators: Quote from Romeo & Julier, for chat theme preview
-#: ../src/empathy-preferences.c:657
+#: ../src/empathy-preferences.c:651
 msgid "Shall I hear more, or shall I speak at this?"
 msgstr "Starò ancora ad ascoltare, o rispondo a questo che ha detto?"
 
 #. translators: Quote from Romeo & Julier, for chat theme preview
-#: ../src/empathy-preferences.c:660
+#: ../src/empathy-preferences.c:654
 msgid "Juliet has disconnected"
 msgstr "L'utente Giulietta si è disconnesso"
 
-#: ../src/empathy-preferences.c:1026
+#: ../src/empathy-preferences.c:1020
 msgid "Preferences"
 msgstr "Preferenze"
 
@@ -3600,24 +3565,7 @@ msgstr "_Ridurre la precisione della posizione geografica"
 msgid "Privacy"
 msgstr "Privacy"
 
-#: ../src/empathy-preferences.ui.h:35
-msgid "_GPS"
-msgstr "_GPS"
-
 #: ../src/empathy-preferences.ui.h:36
-msgid "_Cellphone"
-msgstr "C_ellulare"
-
-#: ../src/empathy-preferences.ui.h:37
-msgid "_Network (IP, Wi-Fi)"
-msgstr "_Rete (IP, WiFi)"
-
-# (ndt) nome di una sezione
-#: ../src/empathy-preferences.ui.h:38
-msgid "Location sources:"
-msgstr "Sorgenti per la posizione:"
-
-#: ../src/empathy-preferences.ui.h:40
 msgid ""
 "The list of languages reflects only the languages for which you have a "
 "dictionary installed."
@@ -3625,25 +3573,25 @@ msgstr ""
 "L'elenco dei dizionari mostra solo le lingue di cui si ha un dizionario "
 "installato."
 
-#: ../src/empathy-preferences.ui.h:41
+#: ../src/empathy-preferences.ui.h:37
 msgid "Enable spell checking for languages:"
 msgstr "Abilitare il controllo ortografico per le lingue:"
 
 # (ndt) titolo scheda
-#: ../src/empathy-preferences.ui.h:42
+#: ../src/empathy-preferences.ui.h:38
 msgid "Spell Checking"
 msgstr "Controllo ortografico"
 
-#: ../src/empathy-preferences.ui.h:43
+#: ../src/empathy-preferences.ui.h:39
 msgid "Chat Th_eme:"
 msgstr "T_ema delle conversazioni:"
 
-#: ../src/empathy-preferences.ui.h:44
+#: ../src/empathy-preferences.ui.h:40
 msgid "Variant:"
 msgstr "Variante:"
 
 # (ndt) titolo scheda
-#: ../src/empathy-preferences.ui.h:45
+#: ../src/empathy-preferences.ui.h:41
 msgid "Themes"
 msgstr "Temi"
 
@@ -3692,7 +3640,7 @@ msgid "Online Accounts"
 msgstr "Account online"
 
 #: ../src/empathy-roster-window.c:747
-msgid "Update software..."
+msgid "Update software…"
 msgstr "Aggiorna software..."
 
 # (ndt) suggerimento
@@ -3741,24 +3689,25 @@ msgid "No online contacts"
 msgstr "Nessun contatto collegato"
 
 #: ../src/empathy-roster-window-menubar.ui.h:1
-msgid "_New Conversation..."
-msgstr "Nu_ova conversazione..."
+#: ../src/empathy-status-icon.ui.h:2
+msgid "_New Conversation…"
+msgstr "_Nuova conversazione..."
 
-# (ndt) è il titolo del dialogo
 #: ../src/empathy-roster-window-menubar.ui.h:2
-msgid "New _Call..."
-msgstr "N_uova chiamata..."
+#: ../src/empathy-status-icon.ui.h:3
+msgid "New _Call…"
+msgstr "Nuova c_hiamata..."
 
 #: ../src/empathy-roster-window-menubar.ui.h:3
 msgid "Contacts"
 msgstr "Contatti"
 
 #: ../src/empathy-roster-window-menubar.ui.h:4
-msgid "_Add Contacts..."
+msgid "_Add Contacts…"
 msgstr "A_ggiungi contatti..."
 
 #: ../src/empathy-roster-window-menubar.ui.h:5
-msgid "_Search for Contacts..."
+msgid "_Search for Contacts…"
 msgstr "_Cerca contatti..."
 
 #: ../src/empathy-roster-window-menubar.ui.h:6
@@ -3772,7 +3721,7 @@ msgstr "St_anze"
 
 # (ndt) pulsante
 #: ../src/empathy-roster-window-menubar.ui.h:8
-msgid "_Join..."
+msgid "_Join…"
 msgstr "_Entra..."
 
 # (ndt) voce di menù, stanze
@@ -3821,18 +3770,6 @@ msgstr "C_ollegati"
 #: ../src/empathy-roster-window.ui.h:3
 msgid "Show _Offline Contacts"
 msgstr "Mostra contatti _fuori rete"
-
-#: ../src/empathy-roster-window.ui.h:4
-msgid "_Add Contact..."
-msgstr "A_ggiungi contatto..."
-
-#: ../src/empathy-status-icon.ui.h:2
-msgid "_New Conversation…"
-msgstr "_Nuova conversazione..."
-
-#: ../src/empathy-status-icon.ui.h:3
-msgid "New _Call…"
-msgstr "Nuova c_hiamata..."
 
 #: ../src/empathy-status-icon.ui.h:4
 msgid "Status"
