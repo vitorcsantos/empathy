@@ -29,9 +29,9 @@
 #include <libaccounts-glib/ag-manager.h>
 #include <libaccounts-glib/ag-service.h>
 #include <tp-account-widgets/tpaw-keyring.h>
+#include <tp-account-widgets/tpaw-uoa-utils.h>
 
 #include "empathy-pkg-kit.h"
-#include "empathy-uoa-utils.h"
 #endif
 
 #include "empathy-gsettings.h"
@@ -501,7 +501,7 @@ uoa_plugin_installed (AgManager *manager,
   protocol = tp_account_get_protocol_name (account);
   ag_account = ag_manager_create_account (manager, protocol);
 
-  l = ag_account_list_services_by_type (ag_account, EMPATHY_UOA_SERVICE_TYPE);
+  l = ag_account_list_services_by_type (ag_account, TPAW_UOA_SERVICE_TYPE);
   if (l == NULL)
     {
       const gchar *packages[2];

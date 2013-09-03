@@ -340,7 +340,7 @@ empathy_uoa_auth_handler_start (EmpathyUoaAuthHandler *self,
 
   account = ag_manager_get_account (self->priv->manager, id);
   if (account != NULL)
-    l = ag_account_list_services_by_type (account, EMPATHY_UOA_SERVICE_TYPE);
+    l = ag_account_list_services_by_type (account, TPAW_UOA_SERVICE_TYPE);
   if (l == NULL)
     {
       DEBUG ("Couldn't find IM service for AgAccountId %u", id);
