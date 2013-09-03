@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: empathy.master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-31 13:12-0600\n"
-"PO-Revision-Date: 2013-08-31 13:30-0600\n"
+"POT-Creation-Date: 2013-09-03 12:00-0600\n"
+"PO-Revision-Date: 2013-09-03 13:02-0600\n"
 "Last-Translator: Seán de Búrca <leftmostcat@gmail.com>\n"
 "Language-Team: Irish <gaeilge-gnulinux@lists.sourceforge.net>\n"
 "Language: ga\n"
@@ -36,7 +36,7 @@ msgstr ""
 
 #: ../data/empathy.desktop.in.in.h:5
 msgid "chat;talk;im;message;irc;voip;gtalk;facebook;jabber;"
-msgstr ""
+msgstr "comhrá;caint;im;teachtaireacht;irc;voip;gtalk;facebook;jabber;"
 
 #: ../data/org.gnome.Empathy.gschema.xml.h:1
 msgid "Connection managers should be used"
@@ -145,9 +145,8 @@ msgid "The stored position (in pixels) of the chat window side pane."
 msgstr ""
 
 #: ../data/org.gnome.Empathy.gschema.xml.h:26
-#, fuzzy
 msgid "Show contact groups"
-msgstr "Taispeáin liosta teagmhálacha i seomraí"
+msgstr "Taispeáin grúpaí teagmhálacha"
 
 #: ../data/org.gnome.Empathy.gschema.xml.h:27
 #, fuzzy
@@ -428,34 +427,10 @@ msgid "Whether Empathy can publish the user's location to their contacts."
 msgstr ""
 
 #: ../data/org.gnome.Empathy.gschema.xml.h:92
-msgid "Empathy can use the network to guess the location"
-msgstr ""
-
-#: ../data/org.gnome.Empathy.gschema.xml.h:93
-msgid "Whether Empathy can use the network to guess the location."
-msgstr ""
-
-#: ../data/org.gnome.Empathy.gschema.xml.h:94
-msgid "Empathy can use the cellular network to guess the location"
-msgstr ""
-
-#: ../data/org.gnome.Empathy.gschema.xml.h:95
-msgid "Whether Empathy can use the cellular network to guess the location."
-msgstr ""
-
-#: ../data/org.gnome.Empathy.gschema.xml.h:96
-msgid "Empathy can use the GPS to guess the location"
-msgstr ""
-
-#: ../data/org.gnome.Empathy.gschema.xml.h:97
-msgid "Whether Empathy can use the GPS to guess the location."
-msgstr ""
-
-#: ../data/org.gnome.Empathy.gschema.xml.h:98
 msgid "Empathy should reduce the location's accuracy"
 msgstr ""
 
-#: ../data/org.gnome.Empathy.gschema.xml.h:99
+#: ../data/org.gnome.Empathy.gschema.xml.h:93
 msgid ""
 "Whether Empathy should reduce the location's accuracy for privacy reasons."
 msgstr ""
@@ -582,7 +557,7 @@ msgstr ""
 
 #: ../libempathy/empathy-utils.c:247 ../libempathy/empathy-utils.c:279
 msgid "Certificate expired"
-msgstr ""
+msgstr "Chuaigh an teastas as feidhm"
 
 #: ../libempathy/empathy-utils.c:249 ../libempathy/empathy-utils.c:281
 msgid "Certificate not activated"
@@ -602,7 +577,7 @@ msgstr ""
 
 #: ../libempathy/empathy-utils.c:257
 msgid "Certificate error"
-msgstr ""
+msgstr "Earráid teastais"
 
 #: ../libempathy/empathy-utils.c:291
 msgid "Encryption is not available"
@@ -610,7 +585,7 @@ msgstr ""
 
 #: ../libempathy/empathy-utils.c:293
 msgid "Certificate is invalid"
-msgstr ""
+msgstr "Tá an teastas neamhbhailí"
 
 #: ../libempathy/empathy-utils.c:295
 msgid "Connection has been refused"
@@ -675,12 +650,12 @@ msgstr ""
 #: ../libempathy-gtk/empathy-bad-password-dialog.c:128
 #, c-format
 msgid "Authentication failed for account <b>%s</b>"
-msgstr ""
+msgstr "Theip ar fhíordheimniú don chuntas <b>%s</b>"
 
 #: ../libempathy-gtk/empathy-bad-password-dialog.c:140
 #: ../libempathy-gtk/empathy-chat.c:3846
 msgid "Retry"
-msgstr ""
+msgstr "Atriail"
 
 #: ../libempathy-gtk/empathy-base-password-dialog.c:225
 #: ../libempathy-gtk/empathy-password-dialog.c:134
@@ -689,11 +664,13 @@ msgid ""
 "Enter your password for account\n"
 "<b>%s</b>"
 msgstr ""
+"Iontráil focal faire do chuntais\n"
+"<b>%s</b>"
 
 #. remember password ticky box
 #: ../libempathy-gtk/empathy-base-password-dialog.c:262
 msgid "Remember password"
-msgstr ""
+msgstr "Meabhraigh an focal faire"
 
 #: ../libempathy-gtk/empathy-call-utils.c:36
 #: ../libempathy-gtk/empathy-call-utils.c:54
@@ -733,9 +710,8 @@ msgid "You are not allowed to change the topic"
 msgstr ""
 
 #: ../libempathy-gtk/empathy-chat.c:973
-#, fuzzy
 msgid "Invalid contact ID"
-msgstr "CA Teagmhála:"
+msgstr "CA teagmhála neamhbhailí"
 
 #: ../libempathy-gtk/empathy-chat.c:1060
 msgid "/clear: clear all messages from the current conversation"
@@ -838,15 +814,15 @@ msgstr "as líne"
 
 #: ../libempathy-gtk/empathy-chat.c:1606
 msgid "invalid contact"
-msgstr ""
+msgstr "teagmháil neamhbhailí"
 
 #: ../libempathy-gtk/empathy-chat.c:1609
 msgid "permission denied"
-msgstr ""
+msgstr "cead diúltaithe"
 
 #: ../libempathy-gtk/empathy-chat.c:1612
 msgid "too long message"
-msgstr ""
+msgstr "teachtaireacht ró-fhada"
 
 #: ../libempathy-gtk/empathy-chat.c:1615
 msgid "not implemented"
@@ -858,7 +834,7 @@ msgstr "anaithnid"
 
 #: ../libempathy-gtk/empathy-chat.c:1686 ../src/empathy-chat-window.c:971
 msgid "Topic:"
-msgstr ""
+msgstr "Ábhar:"
 
 #: ../libempathy-gtk/empathy-chat.c:1701
 #, c-format
@@ -877,7 +853,7 @@ msgstr ""
 
 #: ../libempathy-gtk/empathy-chat.c:2224
 msgid "(No Suggestions)"
-msgstr ""
+msgstr "(Gan Mholtaí)"
 
 #. translators: %s is the selected word
 #: ../libempathy-gtk/empathy-chat.c:2292
@@ -982,17 +958,16 @@ msgid "Would you like to store this password?"
 msgstr ""
 
 #: ../libempathy-gtk/empathy-chat.c:3792
-#, fuzzy
 msgid "Remember"
-msgstr "Baill"
+msgstr "Meabhraigh"
 
 #: ../libempathy-gtk/empathy-chat.c:3802
 msgid "Not now"
-msgstr ""
+msgstr "Ná meabhraigh anois"
 
 #: ../libempathy-gtk/empathy-chat.c:3850
 msgid "Wrong password; please try again:"
-msgstr ""
+msgstr "Focal faire mícheart; bain triail eile as, le do thoil:"
 
 #. Add message
 #: ../libempathy-gtk/empathy-chat.c:3974
@@ -1033,7 +1008,7 @@ msgstr ""
 
 #: ../libempathy-gtk/empathy-contact-blocking-dialog.c:268
 msgid "Permission Denied"
-msgstr ""
+msgstr "Cead Diúltaithe"
 
 #: ../libempathy-gtk/empathy-contact-blocking-dialog.c:272
 msgid "Could not block contact"
@@ -1041,7 +1016,7 @@ msgstr ""
 
 #: ../libempathy-gtk/empathy-contact-blocking-dialog.c:611
 msgid "Edit Blocked Contacts"
-msgstr ""
+msgstr "Cuir Teagmhálacha Bactha in Eagar"
 
 #. Account and Identifier
 #: ../libempathy-gtk/empathy-contact-blocking-dialog.ui.h:1
@@ -1095,12 +1070,12 @@ msgstr ""
 #: ../libempathy-gtk/empathy-contact-widget.c:158
 #: ../libempathy-gtk/empathy-individual-widget.c:954
 msgid "Save Avatar"
-msgstr ""
+msgstr "Sábháil Abhatár"
 
 #: ../libempathy-gtk/empathy-contact-widget.c:214
 #: ../libempathy-gtk/empathy-individual-widget.c:1012
 msgid "Unable to save avatar"
-msgstr ""
+msgstr "Ní féidir an t-abhatár a shábháil"
 
 #: ../libempathy-gtk/empathy-contact-widget.ui.h:1
 #: ../src/empathy-import-widget.c:318
@@ -1274,7 +1249,7 @@ msgstr "_Bac Teagmháil"
 #: ../libempathy-gtk/empathy-individual-menu.c:727
 #, c-format
 msgid "Remove from _Group '%s'"
-msgstr ""
+msgstr "Bain ó _Ghrúpa '%s'"
 
 #: ../libempathy-gtk/empathy-individual-menu.c:748
 msgid "Delete and _Block"
@@ -1283,7 +1258,7 @@ msgstr "Scrios agus _Bac"
 #: ../libempathy-gtk/empathy-individual-menu.c:836
 #, c-format
 msgid "Do you really want to remove the contact '%s'?"
-msgstr ""
+msgstr "An bhfuil tú cinnte gur mian leat an teagmháil '%s' a bhaint?"
 
 #: ../libempathy-gtk/empathy-individual-menu.c:845
 #, c-format
@@ -1291,6 +1266,9 @@ msgid ""
 "Do you really want to remove the linked contact '%s'? Note that this will "
 "remove all the contacts which make up this linked contact."
 msgstr ""
+"An bhfuil tú cinnte gur mian leat an teagmháil nasctha '%s' a bhaint? "
+"Tabhair faoi deara go mbainfear gach teagmháil a dhéanann an teagmháil "
+"nasctha seo."
 
 #: ../libempathy-gtk/empathy-individual-menu.c:856
 msgid "Removing contact"
@@ -1372,7 +1350,7 @@ msgstr ""
 
 #: ../libempathy-gtk/empathy-individual-view.c:2365
 msgid "Removing group"
-msgstr ""
+msgstr "Grúpa á bhaint"
 
 #: ../libempathy-gtk/empathy-individual-view.c:2433
 msgid "Re_name"
@@ -1380,11 +1358,11 @@ msgstr "Athai_nmnigh"
 
 #: ../libempathy-gtk/empathy-individual-widget.c:360
 msgid "Channels:"
-msgstr ""
+msgstr "Cainéil:"
 
 #: ../libempathy-gtk/empathy-individual-widget.c:511
 msgid "Country ISO Code:"
-msgstr ""
+msgstr "Cód ISO na Tíre:"
 
 #: ../libempathy-gtk/empathy-individual-widget.c:513
 msgid "Country:"
@@ -1400,7 +1378,7 @@ msgstr "Cathair:"
 
 #: ../libempathy-gtk/empathy-individual-widget.c:519
 msgid "Area:"
-msgstr ""
+msgstr "Ceantar:"
 
 #: ../libempathy-gtk/empathy-individual-widget.c:521
 msgid "Postal Code:"
@@ -1412,15 +1390,15 @@ msgstr "Sráid:"
 
 #: ../libempathy-gtk/empathy-individual-widget.c:525
 msgid "Building:"
-msgstr ""
+msgstr "Foirgneamh:"
 
 #: ../libempathy-gtk/empathy-individual-widget.c:527
 msgid "Floor:"
-msgstr ""
+msgstr "Urlár:"
 
 #: ../libempathy-gtk/empathy-individual-widget.c:529
 msgid "Room:"
-msgstr ""
+msgstr "Seomra:"
 
 #: ../libempathy-gtk/empathy-individual-widget.c:531
 msgid "Text:"
@@ -1436,51 +1414,51 @@ msgstr "URI:"
 
 #: ../libempathy-gtk/empathy-individual-widget.c:537
 msgid "Accuracy Level:"
-msgstr ""
+msgstr "Leibhéal Cruinnis:"
 
 #: ../libempathy-gtk/empathy-individual-widget.c:539
 msgid "Error:"
-msgstr ""
+msgstr "Earráid:"
 
 #: ../libempathy-gtk/empathy-individual-widget.c:541
 msgid "Vertical Error (meters):"
-msgstr ""
+msgstr "Earráid Ingearach (méadair):"
 
 #: ../libempathy-gtk/empathy-individual-widget.c:543
 msgid "Horizontal Error (meters):"
-msgstr ""
+msgstr "Earráid Cothrománach (méadair):"
 
 #: ../libempathy-gtk/empathy-individual-widget.c:545
 msgid "Speed:"
-msgstr ""
+msgstr "Luas:"
 
 #: ../libempathy-gtk/empathy-individual-widget.c:547
 msgid "Bearing:"
-msgstr ""
+msgstr "Treo:"
 
 #: ../libempathy-gtk/empathy-individual-widget.c:549
 msgid "Climb Speed:"
-msgstr ""
+msgstr "Luas Ardaithe:"
 
 #: ../libempathy-gtk/empathy-individual-widget.c:551
 msgid "Last Updated on:"
-msgstr ""
+msgstr "Nuashonraithe:"
 
 #: ../libempathy-gtk/empathy-individual-widget.c:553
 msgid "Longitude:"
-msgstr ""
+msgstr "Domhanfhad:"
 
 #: ../libempathy-gtk/empathy-individual-widget.c:555
 msgid "Latitude:"
-msgstr ""
+msgstr "Domhanleithead:"
 
 #: ../libempathy-gtk/empathy-individual-widget.c:557
 msgid "Altitude:"
-msgstr ""
+msgstr "Airde:"
 
 #: ../libempathy-gtk/empathy-individual-widget.c:649
 #: ../libempathy-gtk/empathy-individual-widget.c:664
-#: ../src/empathy-preferences.ui.h:39
+#: ../src/empathy-preferences.ui.h:35
 msgid "Location"
 msgstr "Suíomh"
 
@@ -1508,11 +1486,11 @@ msgstr "Aitheantóir:"
 #, c-format
 msgid "Linked contact containing %u contact"
 msgid_plural "Linked contacts containing %u contacts"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
+msgstr[0] "Teagmháil nasctha ina bhfuil %u teagmháil"
+msgstr[1] "Teagmhálacha nasctha ina bhfuil %u theagmháil"
+msgstr[2] "Teagmhálacha nasctha ina bhfuil %u theagmháil"
+msgstr[3] "Teagmhálacha nasctha ina bhfuil %u dteagmháil"
+msgstr[4] "Teagmhálacha nasctha ina bhfuil %u teagmháil"
 
 #: ../libempathy-gtk/empathy-individual-widget.ui.h:1
 msgid "<b>Location</b> at (date)"
@@ -1531,7 +1509,7 @@ msgstr ""
 
 #: ../libempathy-gtk/empathy-local-xmpp-assistant-widget.c:102
 msgid "People nearby"
-msgstr ""
+msgstr "Daoine in aice láithreach"
 
 #: ../libempathy-gtk/empathy-local-xmpp-assistant-widget.c:117
 msgid ""
@@ -1603,7 +1581,7 @@ msgstr[4] "%s nóiméad"
 #: ../libempathy-gtk/empathy-log-window.c:1393
 #, c-format
 msgid "Call took %s, ended at %s"
-msgstr ""
+msgstr "Bhain an glaoch %s as, chríochnaigh sé ag %s"
 
 #: ../libempathy-gtk/empathy-log-window.c:1724
 msgid "Today"
@@ -1621,12 +1599,12 @@ msgstr "%e %B %Y"
 #: ../libempathy-gtk/empathy-log-window.c:1847
 #: ../libempathy-gtk/empathy-log-window.c:3470
 msgid "Anytime"
-msgstr ""
+msgstr "Am ar bith"
 
 #: ../libempathy-gtk/empathy-log-window.c:1946
 #: ../libempathy-gtk/empathy-log-window.c:2405
 msgid "Anyone"
-msgstr ""
+msgstr "Duine ar bith"
 
 #: ../libempathy-gtk/empathy-log-window.c:2718
 msgid "Who"
@@ -1638,11 +1616,11 @@ msgstr "Cathain"
 
 #: ../libempathy-gtk/empathy-log-window.c:3045
 msgid "Anything"
-msgstr ""
+msgstr "Rud ar bith"
 
 #: ../libempathy-gtk/empathy-log-window.c:3047
 msgid "Text chats"
-msgstr ""
+msgstr "Comhráite téacs"
 
 #: ../libempathy-gtk/empathy-log-window.c:3048
 #: ../src/empathy-preferences.ui.h:29
@@ -1651,15 +1629,15 @@ msgstr "Glaonna"
 
 #: ../libempathy-gtk/empathy-log-window.c:3052
 msgid "Incoming calls"
-msgstr ""
+msgstr "Glaonna isteach"
 
 #: ../libempathy-gtk/empathy-log-window.c:3053
 msgid "Outgoing calls"
-msgstr ""
+msgstr "Glaonna amach"
 
 #: ../libempathy-gtk/empathy-log-window.c:3054
 msgid "Missed calls"
-msgstr ""
+msgstr "Glaonna imithe"
 
 #: ../libempathy-gtk/empathy-log-window.c:3074
 msgid "What"
@@ -1668,6 +1646,8 @@ msgstr "Cad"
 #: ../libempathy-gtk/empathy-log-window.c:3763
 msgid "Are you sure you want to delete all logs of previous conversations?"
 msgstr ""
+"An bhfuil tú cinnte gur mhaith leat gach loga comhráithe roimhe seo a "
+"scriosadh?"
 
 #: ../libempathy-gtk/empathy-log-window.c:3767
 msgid "Clear All"
@@ -1714,7 +1694,7 @@ msgstr "<span size=\"x-large\">Á luchtú…</span>"
 
 #: ../libempathy-gtk/empathy-new-account-dialog.c:130
 msgid "What kind of chat account do you have?"
-msgstr ""
+msgstr "Cén cineál chuntas comhrá atá agat?"
 
 #: ../libempathy-gtk/empathy-new-account-dialog.c:152
 msgid "Add new account"
@@ -1723,7 +1703,7 @@ msgstr "Cuir cuntas nua leis"
 #: ../libempathy-gtk/empathy-new-call-dialog.c:189
 #: ../libempathy-gtk/empathy-new-message-dialog.c:279
 msgid "Enter a contact identifier or phone number:"
-msgstr ""
+msgstr "Iontráil aitheantas nó uimhir theileafóin teagmhála:"
 
 #. add video button
 #: ../libempathy-gtk/empathy-new-call-dialog.c:212
@@ -1778,7 +1758,7 @@ msgstr ""
 
 #: ../libempathy-gtk/empathy-new-message-dialog.c:94
 msgid "Permission denied"
-msgstr ""
+msgstr "Cead diúltaithe"
 
 #: ../libempathy-gtk/empathy-new-message-dialog.c:100
 msgid "There was an error starting the conversation"
@@ -1824,6 +1804,9 @@ msgid ""
 "<b>Current message: %s</b>\n"
 "<small><i>Press Enter to set the new message or Esc to cancel.</i></small>"
 msgstr ""
+"<b>Teachtaireacht reatha: %s</b>\n"
+"<small><i>Brúigh Enter chun an teachtaireacht nua a shocrú nó Esc chun cealú."
+"</i></small>"
 
 #: ../libempathy-gtk/empathy-presence-chooser.c:387
 msgid "Set status"
@@ -1840,15 +1823,15 @@ msgstr ""
 
 #: ../libempathy-gtk/empathy-search-bar.ui.h:1
 msgid "Find:"
-msgstr ""
+msgstr "Aimsigh:"
 
 #: ../libempathy-gtk/empathy-search-bar.ui.h:2
 msgid "_Previous"
-msgstr ""
+msgstr "_Siar"
 
 #: ../libempathy-gtk/empathy-search-bar.ui.h:3
 msgid "_Next"
-msgstr ""
+msgstr "Ar _Aghaidh"
 
 #: ../libempathy-gtk/empathy-search-bar.ui.h:4
 msgid "Mat_ch case"
@@ -1915,24 +1898,22 @@ msgstr ""
 #: ../libempathy-gtk/empathy-subscription-dialog.c:280
 #: ../src/empathy-event-manager.c:723
 msgid "_Decline"
-msgstr ""
+msgstr "_Diúltaigh"
 
 #: ../libempathy-gtk/empathy-subscription-dialog.c:281
-#, fuzzy
 msgid "_Accept"
-msgstr "_Cuntais"
+msgstr "_Glac Leis"
 
-#: ../libempathy-gtk/empathy-theme-adium.c:1214
+#: ../libempathy-gtk/empathy-theme-adium.c:1217
 #, fuzzy, c-format
 msgid "Message edited at %s"
 msgstr ""
 "\n"
 "Teachtaireacht: %s"
 
-#: ../libempathy-gtk/empathy-theme-adium.c:1916
-#, fuzzy
+#: ../libempathy-gtk/empathy-theme-adium.c:1919
 msgid "Normal"
-msgstr "_Gnáthmhéid"
+msgstr "Gnáth"
 
 #: ../libempathy-gtk/empathy-tls-dialog.c:147
 msgid "The identity provided by the chat server cannot be verified."
@@ -1990,9 +1971,8 @@ msgid "Certificate hostname: %s"
 msgstr ""
 
 #: ../libempathy-gtk/empathy-tls-dialog.c:278
-#, fuzzy
 msgid "C_ontinue"
-msgstr "Comhthéacs"
+msgstr "Ar _Aghaidh"
 
 #: ../libempathy-gtk/empathy-tls-dialog.c:284
 msgid "Untrusted connection"
@@ -2032,7 +2012,7 @@ msgstr ""
 #: ../libempathy-gtk/empathy-ui-utils.c:937
 #, c-format
 msgid "Incoming file from %s"
-msgstr ""
+msgstr "Comhad isteach ó %s"
 
 #. Copy Link Address menu item
 #: ../libempathy-gtk/empathy-webkit-utils.c:285
@@ -2047,7 +2027,7 @@ msgstr "_Oscail Nasc"
 #. Inspector
 #: ../libempathy-gtk/empathy-webkit-utils.c:306
 msgid "Inspect HTML"
-msgstr ""
+msgstr "Scrúdaigh HTML"
 
 #: ../libempathy-gtk/empathy-roster-model.h:27
 #, fuzzy
@@ -2056,7 +2036,7 @@ msgstr "Teagmháil"
 
 #: ../libempathy-gtk/empathy-roster-model.h:28
 msgid "People Nearby"
-msgstr ""
+msgstr "Daoine in Aice Láithreach"
 
 #: ../libempathy-gtk/empathy-roster-model.h:29
 msgid "Ungrouped"
@@ -2067,15 +2047,15 @@ msgstr "Gan Grúpa"
 #: ../libempathy-gtk/empathy-roster-contact.c:202
 #, c-format
 msgid "Server cannot find contact: %s"
-msgstr ""
+msgstr "Ní féidir leis an bhfreastalaí an teagmháil a aimsiú: %s"
 
 #: ../nautilus-sendto-plugin/empathy-nautilus-sendto.c:223
 msgid "No error message"
-msgstr ""
+msgstr "Gan teachtaireacht earráide"
 
 #: ../nautilus-sendto-plugin/empathy-nautilus-sendto.c:296
 msgid "Instant Message (Empathy)"
-msgstr ""
+msgstr "Teachtaireacht Mheandarach (Empathy)"
 
 #: ../src/empathy-about-dialog.c:77
 msgid ""
@@ -2136,14 +2116,12 @@ msgid "<account-id>"
 msgstr "Cuntas"
 
 #: ../src/empathy-accounts.c:186
-#, fuzzy
 msgid "- Empathy Accounts"
-msgstr "Iompórtáil Cuntais"
+msgstr "- Cuntais Empathy"
 
 #: ../src/empathy-accounts.c:239
-#, fuzzy
 msgid "Empathy Accounts"
-msgstr "Iompórtáil Cuntais"
+msgstr "Cuntais Empathy"
 
 #. The primary text of the dialog shown to the user when he is about to lose
 #. * unsaved changes
@@ -2160,26 +2138,25 @@ msgstr ""
 
 #: ../src/empathy-accounts-dialog.c:385 ../src/empathy-call-window.c:1266
 msgid "Connecting…"
-msgstr ""
+msgstr "Ag Ceangal…"
 
 #: ../src/empathy-accounts-dialog.c:426
-#, fuzzy, c-format
+#, c-format
 msgid "Offline — %s"
-msgstr "As Líne"
+msgstr "As Líne — %s"
 
 #: ../src/empathy-accounts-dialog.c:438
 #, c-format
 msgid "Disconnected — %s"
-msgstr ""
+msgstr "Dícheangailte — %s"
 
 #: ../src/empathy-accounts-dialog.c:449
 msgid "Offline — No Network Connection"
-msgstr ""
+msgstr "As Líne — Gan Cheangal Líonra"
 
 #: ../src/empathy-accounts-dialog.c:456
-#, fuzzy
 msgid "Unknown Status"
-msgstr "Cúis anaithnid"
+msgstr "Stádas Anaithnid"
 
 #: ../src/empathy-accounts-dialog.c:473
 msgid ""
@@ -2190,7 +2167,7 @@ msgstr ""
 
 #: ../src/empathy-accounts-dialog.c:483
 msgid "Offline — Account Disabled"
-msgstr ""
+msgstr "As Líne — Díchumasaíodh an Cuntas"
 
 #: ../src/empathy-accounts-dialog.c:589
 msgid "Edit Connection Parameters"
@@ -2217,9 +2194,8 @@ msgstr ""
 
 #. Menu item: to enabled/disable the account
 #: ../src/empathy-accounts-dialog.c:1646
-#, fuzzy
 msgid "_Enabled"
-msgstr "Cumasaithe"
+msgstr "_Cumasaithe"
 
 #. Menu item: Rename
 #: ../src/empathy-accounts-dialog.c:1669
@@ -2228,7 +2204,7 @@ msgstr "Athainmnigh"
 
 #: ../src/empathy-accounts-dialog.c:2071
 msgid "_Skip"
-msgstr ""
+msgstr "_Ná Bac Leis"
 
 #: ../src/empathy-accounts-dialog.c:2075
 msgid "_Connect"
@@ -2243,7 +2219,7 @@ msgstr ""
 #. Tweak the dialog
 #: ../src/empathy-accounts-dialog.c:2398
 msgid "Messaging and VoIP Accounts"
-msgstr ""
+msgstr "Cuntais Teachtaireachtaí agus VoIP"
 
 #: ../src/empathy-accounts-dialog.ui.h:1
 msgid "Add…"
@@ -2254,9 +2230,8 @@ msgid "_Import…"
 msgstr "_Iompórtáil…"
 
 #: ../src/empathy-accounts-dialog.ui.h:4
-#, fuzzy
 msgid "Loading account information"
-msgstr "Cuir Eolas Teagmhála in Eagar"
+msgstr "Eolas cuntais á luchtú"
 
 #: ../src/empathy-accounts-dialog.ui.h:5
 msgid ""
@@ -2383,11 +2358,11 @@ msgstr "Anaithnid"
 
 #: ../src/empathy-call-window.c:2958
 msgid "On hold"
-msgstr ""
+msgstr "Ar feitheamh"
 
 #: ../src/empathy-call-window.c:2962
 msgid "Mute"
-msgstr ""
+msgstr "Gan fuaim"
 
 #: ../src/empathy-call-window.c:2964
 msgid "Duration"
@@ -2401,7 +2376,7 @@ msgstr "%s — %d:%02dn"
 
 #: ../src/empathy-call-window.c:3063
 msgid "Technical Details"
-msgstr ""
+msgstr "Mionsonraí Teicniúla"
 
 #: ../src/empathy-call-window.c:3102
 #, c-format
@@ -2473,7 +2448,7 @@ msgstr ""
 
 #: ../src/empathy-call-window.c:3243
 msgid "Top Up"
-msgstr ""
+msgstr "Faigh Breis"
 
 #: ../src/empathy-call-window.ui.h:1
 msgid "_Call"
@@ -2540,9 +2515,8 @@ msgid "Hang up current call"
 msgstr ""
 
 #: ../src/empathy-call-window.ui.h:18
-#, fuzzy
 msgid "Video call"
-msgstr "Glaoch Fí_se"
+msgstr "Glaoch físe"
 
 #: ../src/empathy-call-window.ui.h:19
 msgid "Start a video call"
@@ -2589,9 +2563,8 @@ msgid "Audio"
 msgstr "Fuaim"
 
 #: ../src/empathy-chat.c:101
-#, fuzzy
 msgid "- Empathy Chat Client"
-msgstr "- Cliant IM Empathy"
+msgstr "- Cliant Comhrá Empathy"
 
 #: ../src/empathy-chatrooms-window.c:244
 msgid "Name"
@@ -2603,7 +2576,7 @@ msgstr "Seomra"
 
 #: ../src/empathy-chatrooms-window.c:270
 msgid "Auto-Connect"
-msgstr ""
+msgstr "Uathcheangail"
 
 #: ../src/empathy-chatrooms-window.ui.h:1
 msgid "Manage Favorite Rooms"
@@ -2611,7 +2584,7 @@ msgstr ""
 
 #: ../src/empathy-chat-window.c:279
 msgid "Close this window?"
-msgstr ""
+msgstr "Dún an fhuinneog seo?"
 
 #: ../src/empathy-chat-window.c:285
 #, c-format
@@ -2698,14 +2671,14 @@ msgid "SMS:"
 msgstr "SMS:"
 
 #: ../src/empathy-chat-window.c:954
-#, fuzzy, c-format
+#, c-format
 msgid "Sending %d message"
 msgid_plural "Sending %d messages"
-msgstr[0] "Seol agus faigh teachtaireachtaí"
-msgstr[1] "Seol agus faigh teachtaireachtaí"
-msgstr[2] "Seol agus faigh teachtaireachtaí"
-msgstr[3] "Seol agus faigh teachtaireachtaí"
-msgstr[4] "Seol agus faigh teachtaireachtaí"
+msgstr[0] "%d teachtaireacht á sheoladh"
+msgstr[1] "%d theachtaireacht á seoladh"
+msgstr[2] "%d theachtaireacht á seoladh"
+msgstr[3] "%d dteachtaireacht á seoladh"
+msgstr[4] "%d teachtaireacht á seoladh"
 
 #: ../src/empathy-chat-window.c:974
 msgid "Typing a message."
@@ -2782,7 +2755,7 @@ msgstr "Díchean_gail Cluaisín"
 
 #: ../src/empathy-debugger.c:77
 msgid "Show a particular service"
-msgstr ""
+msgstr "Taispeáin seirbhís áirithe"
 
 #: ../src/empathy-debugger.c:82
 msgid "- Empathy Debugger"
@@ -2798,11 +2771,11 @@ msgstr "Sábháil"
 
 #: ../src/empathy-debug-window.c:1650
 msgid "Pastebin link"
-msgstr ""
+msgstr "Nasc pastebin"
 
 #: ../src/empathy-debug-window.c:1659
 msgid "Pastebin response"
-msgstr ""
+msgstr "Freagra pastebin"
 
 #: ../src/empathy-debug-window.c:1666
 msgid "Data too large for a single paste. Please save logs to file."
@@ -2814,7 +2787,7 @@ msgstr "Fuinneog Dífhabhtaithe"
 
 #: ../src/empathy-debug-window.c:1908
 msgid "Send to pastebin"
-msgstr ""
+msgstr "Seol chuig pastebin"
 
 #: ../src/empathy-debug-window.c:1952
 msgid "Pause"
@@ -2897,15 +2870,15 @@ msgstr ""
 
 #: ../src/empathy-event-manager.c:535
 msgid "_Reject"
-msgstr ""
+msgstr "_Diúltaigh"
 
 #: ../src/empathy-event-manager.c:543 ../src/empathy-event-manager.c:551
 msgid "_Answer"
-msgstr ""
+msgstr "_Freagair"
 
 #: ../src/empathy-event-manager.c:551
 msgid "_Answer with video"
-msgstr ""
+msgstr "_Freagair le fís"
 
 #: ../src/empathy-event-manager.c:706
 msgid "Room invitation"
@@ -2973,24 +2946,24 @@ msgstr "Anaithnid"
 #: ../src/empathy-ft-manager.c:268
 #, c-format
 msgid "%s of %s at %s/s"
-msgstr ""
+msgstr "%s as %s ag %s/s"
 
 #: ../src/empathy-ft-manager.c:269
 #, c-format
 msgid "%s of %s"
-msgstr ""
+msgstr "%s as %s"
 
 #. translators: first %s is filename, second %s is the contact name
 #: ../src/empathy-ft-manager.c:300
 #, c-format
 msgid "Receiving \"%s\" from %s"
-msgstr ""
+msgstr "\"%s\" á fháil ó %s"
 
 #. translators: first %s is filename, second %s is the contact name
 #: ../src/empathy-ft-manager.c:303
 #, c-format
 msgid "Sending \"%s\" to %s"
-msgstr ""
+msgstr "\"%s\" á sheoladh chuig %s"
 
 #. translators: first %s is filename, second %s
 #. * is the contact name
@@ -3178,17 +3151,17 @@ msgstr ""
 
 #: ../src/empathy-notifications-approver.c:201
 msgid "Answer with video"
-msgstr ""
+msgstr "Freagair le fís"
 
 #: ../src/empathy-notifications-approver.c:209
 #: ../src/empathy-notifications-approver.c:219
 msgid "Decline"
-msgstr ""
+msgstr "Diúltaigh"
 
 #: ../src/empathy-notifications-approver.c:213
 #: ../src/empathy-notifications-approver.c:224
 msgid "Accept"
-msgstr ""
+msgstr "Glac leis"
 
 #. translators: the 'Provide' button is displayed in a notification
 #. * bubble when Empathy is asking for an account password; clicking on it
@@ -3226,58 +3199,57 @@ msgstr ""
 msgid "Account disconnected"
 msgstr ""
 
-#: ../src/empathy-preferences.c:380
+#: ../src/empathy-preferences.c:374
 msgid "Language"
 msgstr "Teanga"
 
 #. translators: Contact name for the chat theme preview
-#: ../src/empathy-preferences.c:631
+#: ../src/empathy-preferences.c:625
 msgid "Juliet"
-msgstr ""
+msgstr "Juliet"
 
 #. translators: Contact name for the chat theme preview
-#: ../src/empathy-preferences.c:638
+#: ../src/empathy-preferences.c:632
 msgid "Romeo"
-msgstr ""
+msgstr "Romeo"
 
 #. translators: Quote from Romeo & Julier, for chat theme preview
-#: ../src/empathy-preferences.c:644
+#: ../src/empathy-preferences.c:638
 msgid "O Romeo, Romeo, wherefore art thou Romeo?"
 msgstr ""
 
 #. translators: Quote from Romeo & Julier, for chat theme preview
-#: ../src/empathy-preferences.c:648
+#: ../src/empathy-preferences.c:642
 msgid "Deny thy father and refuse thy name;"
 msgstr ""
 
 #. translators: Quote from Romeo & Julier, for chat theme preview
-#: ../src/empathy-preferences.c:651
+#: ../src/empathy-preferences.c:645
 msgid "Or if thou wilt not, be but sworn my love"
 msgstr ""
 
 #. translators: Quote from Romeo & Julier, for chat theme preview
-#: ../src/empathy-preferences.c:654
+#: ../src/empathy-preferences.c:648
 msgid "And I'll no longer be a Capulet."
 msgstr ""
 
 #. translators: Quote from Romeo & Julier, for chat theme preview
-#: ../src/empathy-preferences.c:657
+#: ../src/empathy-preferences.c:651
 msgid "Shall I hear more, or shall I speak at this?"
 msgstr ""
 
 #. translators: Quote from Romeo & Julier, for chat theme preview
-#: ../src/empathy-preferences.c:660
+#: ../src/empathy-preferences.c:654
 msgid "Juliet has disconnected"
 msgstr ""
 
-#: ../src/empathy-preferences.c:1026
+#: ../src/empathy-preferences.c:1020
 msgid "Preferences"
 msgstr "Sainroghanna"
 
 #: ../src/empathy-preferences.ui.h:2
-#, fuzzy
 msgid "Show groups"
-msgstr "Taispeáin liosta teagmhálacha i seomraí"
+msgstr "Taispeáin grúpaí"
 
 #: ../src/empathy-preferences.ui.h:3
 #, fuzzy
@@ -3294,11 +3266,11 @@ msgstr ""
 
 #: ../src/empathy-preferences.ui.h:6
 msgid "new ta_bs"
-msgstr ""
+msgstr "_cluaisíní nua"
 
 #: ../src/empathy-preferences.ui.h:7
 msgid "new _windows"
-msgstr ""
+msgstr "_fuinneoga nua"
 
 #: ../src/empathy-preferences.ui.h:8
 msgid "Show _smileys as images"
@@ -3402,46 +3374,29 @@ msgstr ""
 msgid "Privacy"
 msgstr "Príobháideachas"
 
-#: ../src/empathy-preferences.ui.h:35
-msgid "_GPS"
-msgstr "_GPS"
-
 #: ../src/empathy-preferences.ui.h:36
-msgid "_Cellphone"
-msgstr "_Fón Póca"
-
-#: ../src/empathy-preferences.ui.h:37
-msgid "_Network (IP, Wi-Fi)"
-msgstr "_Líonra (IP, Wi-Fi)"
-
-#: ../src/empathy-preferences.ui.h:38
-#, fuzzy
-msgid "Location sources:"
-msgstr "Suíomh"
-
-#: ../src/empathy-preferences.ui.h:40
 msgid ""
 "The list of languages reflects only the languages for which you have a "
 "dictionary installed."
 msgstr ""
 
-#: ../src/empathy-preferences.ui.h:41
+#: ../src/empathy-preferences.ui.h:37
 msgid "Enable spell checking for languages:"
 msgstr "Cumasaigh litriú do theangacha:"
 
-#: ../src/empathy-preferences.ui.h:42
+#: ../src/empathy-preferences.ui.h:38
 msgid "Spell Checking"
 msgstr "Litriú"
 
-#: ../src/empathy-preferences.ui.h:43
+#: ../src/empathy-preferences.ui.h:39
 msgid "Chat Th_eme:"
-msgstr ""
+msgstr "_Téama Comhrá:"
 
-#: ../src/empathy-preferences.ui.h:44
+#: ../src/empathy-preferences.ui.h:40
 msgid "Variant:"
 msgstr ""
 
-#: ../src/empathy-preferences.ui.h:45
+#: ../src/empathy-preferences.ui.h:41
 msgid "Themes"
 msgstr "Téamaí"
 
@@ -3452,16 +3407,18 @@ msgstr "Focal faire:"
 
 #: ../src/empathy-roster-window.c:236
 msgid "Disconnect"
-msgstr ""
+msgstr "Dícheangail"
 
 #: ../src/empathy-roster-window.c:493
 msgid "You need to set up an account to see contacts here."
-msgstr ""
+msgstr "Is gá cuntas a shocrú chun teagmhálacha a fheiceáil anseo."
 
 #: ../src/empathy-roster-window.c:569
 #, c-format
 msgid "Sorry, %s accounts can’t be used until your %s software is updated."
 msgstr ""
+"Tá brón orm, ach ní féidir cuntais %s a úsáid go dtí nuashonrú do bhogearraí "
+"%s."
 
 #: ../src/empathy-roster-window.c:670
 msgid "Windows Live"
@@ -3487,47 +3444,46 @@ msgstr "Cuntais ar Líne"
 
 #: ../src/empathy-roster-window.c:747
 msgid "Update software…"
-msgstr ""
+msgstr "Nuashonraigh bogearraí…"
 
 #: ../src/empathy-roster-window.c:753
 msgid "Reconnect"
-msgstr ""
+msgstr "Athcheangail"
 
 #: ../src/empathy-roster-window.c:757
-#, fuzzy
 msgid "Edit Account"
-msgstr "Cuir Cuntas Leis"
+msgstr "Cuir Cuntas in Eagar"
 
 #: ../src/empathy-roster-window.c:762
 msgid "Close"
-msgstr ""
+msgstr "Dún"
 
 #: ../src/empathy-roster-window.c:904
-#, fuzzy
 msgid "Top up account"
-msgstr "Cuntas %s nua"
+msgstr "Faigh breis don chuntas"
 
 #: ../src/empathy-roster-window.c:1590
 msgid "You need to enable one of your accounts to see contacts here."
 msgstr ""
+"Is gá ceann de do chuntais a chumasú chun teagmhálacha a fheiceáil anseo."
 
 #. translators: argument is an account name
 #: ../src/empathy-roster-window.c:1598
 #, c-format
 msgid "You need to enable %s to see contacts here."
-msgstr ""
+msgstr "Is gá %s a chumasú chun teagmhálacha a fheiceáil anseo."
 
 #: ../src/empathy-roster-window.c:1676
 msgid "Change your presence to see contacts here"
-msgstr ""
+msgstr "Athraigh do láithreacht chun teagmhálacha a fheiceáil anseo"
 
 #: ../src/empathy-roster-window.c:1685
 msgid "No match found"
-msgstr ""
+msgstr "Níor aimsíodh aon rud"
 
 #: ../src/empathy-roster-window.c:1692
 msgid "You haven't added any contact yet"
-msgstr ""
+msgstr "Níor chuir tú aon teagmháil leis fós"
 
 #: ../src/empathy-roster-window.c:1695
 msgid "No online contacts"
@@ -3626,9 +3582,9 @@ msgid "Please enter your account details"
 msgstr "Iontráil mionsonraí do chuntais, le do thoil"
 
 #: ../ubuntu-online-accounts/cc-plugins/app-plugin/empathy-app-plugin-widget.c:160
-#, fuzzy, c-format
+#, c-format
 msgid "Edit %s account options"
-msgstr "Cuir Eolas Teagmhála in Eagar"
+msgstr "Cuir roghanna cuntais %s in eagar"
 
 #: ../ubuntu-online-accounts/empathy.application.in.h:1
 #, fuzzy
