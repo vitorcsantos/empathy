@@ -91,6 +91,7 @@ MC_PLUGINS_REQUIRED=5.13.1
 prev_top_build_prefix=$ac_top_build_prefix
 prev_ac_configure_args=$ac_configure_args
 ac_configure_args="$ac_configure_args --with-pkgdatadir=${datadir}/empathy"
+ac_configure_args="$ac_configure_args --with-gettext-package=empathy-tpaw"
 ifelse(empathy_released, 1, [],
     [
         ac_configure_args="$ac_configure_args --enable-unreleased-checks"
