@@ -8,7 +8,7 @@
 #include "empathy-ui-utils.h"
 #include "empathy-utils.h"
 
-G_DEFINE_TYPE (EmpathyRosterContact, empathy_roster_contact, GTK_TYPE_ALIGNMENT)
+G_DEFINE_TYPE (EmpathyRosterContact, empathy_roster_contact, GTK_TYPE_LIST_BOX_ROW)
 
 #define AVATAR_SIZE 48
 
@@ -391,11 +391,15 @@ empathy_roster_contact_class_init (
 static void
 empathy_roster_contact_init (EmpathyRosterContact *self)
 {
-  GtkWidget *main_box, *box, *first_line_box;
+  GtkWidget *alig, *main_box, *box, *first_line_box;
   GtkStyleContext *context;
 
   self->priv = G_TYPE_INSTANCE_GET_PRIVATE (self,
       EMPATHY_TYPE_ROSTER_CONTACT, EmpathyRosterContactPriv);
+
+  alig = gtk_alignment_new (0.5, 0.5, 1, 1);
+  gtk_widget_show (alig);
+  gtk_alignment_set_padding (GTK_ALIGNMENT (alig), 4, 4, 4, 12);
 
   main_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 8);
 
@@ -454,7 +458,8 @@ empathy_roster_contact_init (EmpathyRosterContact *self)
       FALSE, FALSE, 0);
   gtk_widget_show (self->priv->presence_icon);
 
-  gtk_container_add (GTK_CONTAINER (self), main_box);
+  gtk_container_add (GTK_CONTAINER (self), alig);
+  gtk_container_add (GTK_CONTAINER (alig), main_box);
   gtk_widget_show (main_box);
 }
 
@@ -467,10 +472,6 @@ empathy_roster_contact_new (FolksIndividual *individual,
   return g_object_new (EMPATHY_TYPE_ROSTER_CONTACT,
       "individual", individual,
       "group", group,
-      "bottom-padding", 4,
-      "top-padding", 4,
-      "left-padding", 4,
-      "right-padding", 12,
       NULL);
 }
 
