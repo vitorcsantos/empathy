@@ -2137,22 +2137,22 @@ view_drag_motion_cb (GtkWidget *widget,
     {
       /* Check if contact supports FT */
       FolksIndividual *individual;
-      GtkWidget *child;
+      GtkListBoxRow *row;
 
       individual = empathy_roster_view_get_individual_at_y (self->priv->view,
-          y, &child);
+          y, &row);
       if (individual == NULL)
         goto no_hl;
 
       if (!individual_supports_ft (individual))
         goto no_hl;
 
-      egg_list_box_drag_highlight_widget (EGG_LIST_BOX (widget), child);
+      gtk_list_box_drag_highlight_row (GTK_LIST_BOX (widget), row);
       return FALSE;
     }
 
 no_hl:
-  egg_list_box_drag_unhighlight_widget (EGG_LIST_BOX (widget));
+  gtk_list_box_drag_unhighlight_row (GTK_LIST_BOX (widget));
   return FALSE;
 }
 
@@ -2366,8 +2366,7 @@ empathy_roster_window_init (EmpathyRosterWindow *self)
 
   gtk_widget_show (GTK_WIDGET (self->priv->view));
 
-  egg_list_box_add_to_scrolled (EGG_LIST_BOX (self->priv->view),
-      GTK_SCROLLED_WINDOW (sw));
+  gtk_container_add (GTK_CONTAINER (sw), GTK_WIDGET (self->priv->view));
 
   g_signal_connect (self->priv->view, "individual-activated",
       G_CALLBACK (individual_activated_cb), self);

@@ -102,8 +102,7 @@ create_view_box (EmpathyRosterModel *model,
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
       GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
 
-  egg_list_box_add_to_scrolled (EGG_LIST_BOX (view),
-      GTK_SCROLLED_WINDOW (scrolled));
+  gtk_container_add (GTK_CONTAINER (scrolled), view);
 
   gtk_box_pack_start (GTK_BOX (box), search, FALSE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (box), scrolled, TRUE, TRUE, 0);

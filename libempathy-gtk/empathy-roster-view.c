@@ -8,7 +8,7 @@
 #include "empathy-roster-group.h"
 #include "empathy-ui-utils.h"
 
-G_DEFINE_TYPE (EmpathyRosterView, empathy_roster_view, EGG_TYPE_LIST_BOX)
+G_DEFINE_TYPE (EmpathyRosterView, empathy_roster_view, GTK_TYPE_LIST_BOX)
 
 /* Flashing delay for icons (milliseconds). */
 #define FLASH_TIMEOUT 500
@@ -165,11 +165,11 @@ empathy_roster_view_set_property (GObject *object,
 }
 
 static void
-roster_contact_changed_cb (GtkWidget *child,
+roster_contact_changed_cb (GtkListBoxRow *child,
     GParamSpec *spec,
     EmpathyRosterView *self)
 {
-  egg_list_box_child_changed (EGG_LIST_BOX (self), child);
+  gtk_list_box_row_changed (child);
 }
 
 static GtkWidget *
@@ -205,7 +205,7 @@ group_expanded_cb (EmpathyRosterGroup *group,
   widgets = empathy_roster_group_get_widgets (group);
   for (l = widgets; l != NULL; l = g_list_next (l))
     {
-      egg_list_box_child_changed (EGG_LIST_BOX (self), l->data);
+      gtk_list_box_row_changed (l->data);
     }
 
   g_list_free (widgets);
@@ -317,7 +317,7 @@ update_group_widgets (EmpathyRosterView *self,
 
   if (count != old_count)
     {
-      egg_list_box_child_changed (EGG_LIST_BOX (self), GTK_WIDGET (group));
+      gtk_list_box_row_changed (GTK_LIST_BOX_ROW (group));
 
       check_if_empty (self);
     }
@@ -383,7 +383,7 @@ individual_favourite_change_cb (FolksIndividual *individual,
   if (contact == NULL)
     return;
 
-  egg_list_box_child_changed (EGG_LIST_BOX (self), contact);
+  gtk_list_box_row_changed (GTK_LIST_BOX_ROW (contact));
 }
 
 static void
@@ -738,8 +738,8 @@ compare_contact_group (EmpathyRosterContact *contact,
 }
 
 static gint
-roster_view_sort (GtkWidget *a,
-    GtkWidget *b,
+roster_view_sort (GtkListBoxRow *a,
+    GtkListBoxRow *b,
     gpointer user_data)
 {
   EmpathyRosterView *self = user_data;
@@ -761,23 +761,22 @@ roster_view_sort (GtkWidget *a,
 }
 
 static void
-update_separator (GtkWidget **separator,
-    GtkWidget *child,
-    GtkWidget *before,
+update_header (GtkListBoxRow *row,
+    GtkListBoxRow *before,
     gpointer user_data)
 {
   if (before == NULL)
     {
       /* No separator before the first row */
-      g_clear_object (separator);
+      gtk_list_box_row_set_header(row, NULL);
       return;
     }
 
-  if (*separator != NULL)
+  if (gtk_list_box_row_get_header(row) != NULL)
     return;
 
-  *separator = gtk_separator_new (GTK_ORIENTATION_HORIZONTAL);
-  g_object_ref_sink (*separator);
+  gtk_list_box_row_set_header (row,
+      gtk_separator_new (GTK_ORIENTATION_HORIZONTAL));
 }
 
 static gboolean
@@ -819,13 +818,13 @@ add_to_displayed (EmpathyRosterView *self,
   while (g_hash_table_iter_next (&iter, &k, NULL))
     {
       const gchar *group_name = k;
-      GtkWidget *group;
+      GtkListBoxRow *group;
 
       group = g_hash_table_lookup (self->priv->roster_groups, group_name);
       if (group == NULL)
         continue;
 
-      egg_list_box_child_changed (EGG_LIST_BOX (self), group);
+      gtk_list_box_row_changed (group);
     }
 }
 
@@ -943,7 +942,7 @@ filter_group (EmpathyRosterView *self,
 }
 
 static gboolean
-filter_list (GtkWidget *child,
+filter_list (GtkListBoxRow *child,
     gpointer user_data)
 {
   EmpathyRosterView *self = user_data;
@@ -1017,7 +1016,7 @@ groups_changed_cb (EmpathyRosterModel *model,
 {
   if (!self->priv->show_groups)
     {
-      egg_list_box_resort (EGG_LIST_BOX (self));
+      gtk_list_box_invalidate_sort (GTK_LIST_BOX (self));
       return;
     }
 
@@ -1055,15 +1054,14 @@ empathy_roster_view_constructed (GObject *object)
   tp_g_signal_connect_object (self->priv->model, "groups-changed",
       G_CALLBACK (groups_changed_cb), self, 0);
 
-  egg_list_box_set_sort_func (EGG_LIST_BOX (self),
+  gtk_list_box_set_sort_func (GTK_LIST_BOX (self),
       roster_view_sort, self, NULL);
 
-  egg_list_box_set_separator_funcs (EGG_LIST_BOX (self), update_separator,
-      self, NULL);
+  gtk_list_box_set_header_func (GTK_LIST_BOX (self), update_header, self, NULL);
 
-  egg_list_box_set_filter_func (EGG_LIST_BOX (self), filter_list, self, NULL);
+  gtk_list_box_set_filter_func (GTK_LIST_BOX (self), filter_list, self, NULL);
 
-  egg_list_box_set_activate_on_single_click (EGG_LIST_BOX (self), FALSE);
+  gtk_list_box_set_activate_on_single_click (GTK_LIST_BOX (self), FALSE);
 }
 
 static void
@@ -1120,18 +1118,18 @@ empathy_roster_view_finalize (GObject *object)
 }
 
 static void
-empathy_roster_view_child_activated (EggListBox *box,
-    GtkWidget *child)
+empathy_roster_view_row_activated (GtkListBox *box,
+    GtkListBoxRow *row)
 {
   EmpathyRosterView *self = EMPATHY_ROSTER_VIEW (box);
   EmpathyRosterContact *contact;
   FolksIndividual *individual;
   GList *l;
 
-  if (!EMPATHY_IS_ROSTER_CONTACT (child))
+  if (!EMPATHY_IS_ROSTER_CONTACT (row))
     return;
 
-  contact = EMPATHY_ROSTER_CONTACT (child);
+  contact = EMPATHY_ROSTER_CONTACT (row);
   individual = empathy_roster_contact_get_individual (contact);
 
   /* Activate the oldest event associated with this contact, if any */
@@ -1153,7 +1151,7 @@ empathy_roster_view_child_activated (EggListBox *box,
 
 static void
 fire_popup_individual_menu (EmpathyRosterView *self,
-    GtkWidget *child,
+    GtkListBoxRow *row,
     guint button,
     guint time)
 {
@@ -1161,10 +1159,10 @@ fire_popup_individual_menu (EmpathyRosterView *self,
   FolksIndividual *individual;
   const gchar *active_group;
 
-  if (!EMPATHY_IS_ROSTER_CONTACT (child))
+  if (!EMPATHY_IS_ROSTER_CONTACT (row))
     return;
 
-  contact = EMPATHY_ROSTER_CONTACT (child);
+  contact = EMPATHY_ROSTER_CONTACT (row);
   individual = empathy_roster_contact_get_individual (contact);
 
   active_group = empathy_roster_contact_get_group (contact);
@@ -1182,15 +1180,15 @@ empathy_roster_view_button_press_event (GtkWidget *widget,
 
   if (event->button == 3)
     {
-      GtkWidget *child;
+      GtkListBoxRow *row;
 
-      child = egg_list_box_get_child_at_y (EGG_LIST_BOX (self), event->y);
+      row = gtk_list_box_get_row_at_y (GTK_LIST_BOX (self), event->y);
 
-      if (child != NULL)
+      if (row != NULL)
         {
-          egg_list_box_select_child (EGG_LIST_BOX (self), child);
+          gtk_list_box_select_row (GTK_LIST_BOX (self), row);
 
-          fire_popup_individual_menu (self, child, event->button, event->time);
+          fire_popup_individual_menu (self, row, event->button, event->time);
         }
     }
 
@@ -1207,53 +1205,50 @@ empathy_roster_view_key_press_event (GtkWidget *widget,
 
   if (event->keyval == GDK_KEY_Menu)
     {
-      GtkWidget *child;
+      GtkListBoxRow *row;
 
-      child = egg_list_box_get_selected_child (EGG_LIST_BOX (self));
+      row = gtk_list_box_get_selected_row (GTK_LIST_BOX (self));
 
-      if (child != NULL)
-        fire_popup_individual_menu (self, child, 0, event->time);
+      if (row != NULL)
+        fire_popup_individual_menu (self, row, 0, event->time);
     }
 
   return chain_up (widget, event);
 }
 
 /**
- * @out_child: (out) (allow-none)
+ * @out_row: (out) (allow-none)
  */
 FolksIndividual *
 empathy_roster_view_get_individual_at_y (EmpathyRosterView *self,
     gint y,
-    GtkWidget **out_child)
+    GtkListBoxRow **out_row)
 {
-  GtkWidget *child;
+  GtkListBoxRow *row;
 
-  child = egg_list_box_get_child_at_y (EGG_LIST_BOX (self), y);
+  row = gtk_list_box_get_row_at_y (GTK_LIST_BOX (self), y);
 
-  if (out_child != NULL)
-    *out_child = child;
+  if (out_row != NULL)
+    *out_row = row;
 
-  if (!EMPATHY_IS_ROSTER_CONTACT (child))
+  if (!EMPATHY_IS_ROSTER_CONTACT (row))
     return NULL;
 
-  return empathy_roster_contact_get_individual (EMPATHY_ROSTER_CONTACT (child));
+  return empathy_roster_contact_get_individual (EMPATHY_ROSTER_CONTACT (row));
 }
 
-/**
- * @out_child: (out) (allow-none)
- */
 const gchar *
 empathy_roster_view_get_group_at_y (EmpathyRosterView *self,
     gint y)
 {
-  GtkWidget *child;
+  GtkListBoxRow *row;
 
-  child = egg_list_box_get_child_at_y (EGG_LIST_BOX (self), y);
+  row = gtk_list_box_get_row_at_y (GTK_LIST_BOX (self), y);
 
-  if (EMPATHY_IS_ROSTER_CONTACT (child))
-    return empathy_roster_contact_get_group (EMPATHY_ROSTER_CONTACT (child));
-  else if (EMPATHY_IS_ROSTER_GROUP (child))
-    return empathy_roster_group_get_name (EMPATHY_ROSTER_GROUP (child));
+  if (EMPATHY_IS_ROSTER_CONTACT (row))
+    return empathy_roster_contact_get_group (EMPATHY_ROSTER_CONTACT (row));
+  else if (EMPATHY_IS_ROSTER_GROUP (row))
+    return empathy_roster_group_get_name (EMPATHY_ROSTER_GROUP (row));
 
   return NULL;
 }
@@ -1268,9 +1263,9 @@ empathy_roster_view_query_tooltip (GtkWidget *widget,
   EmpathyRosterView *self = EMPATHY_ROSTER_VIEW (widget);
   FolksIndividual *individual;
   gboolean result;
-  GtkWidget *child;
+  GtkListBoxRow *row;
 
-  individual = empathy_roster_view_get_individual_at_y (self, y, &child);
+  individual = empathy_roster_view_get_individual_at_y (self, y, &row);
   if (individual == NULL)
     return FALSE;
 
@@ -1281,7 +1276,7 @@ empathy_roster_view_query_tooltip (GtkWidget *widget,
     {
       GtkAllocation allocation;
 
-      gtk_widget_get_allocation (child, &allocation);
+      gtk_widget_get_allocation (GTK_WIDGET (row), &allocation);
       gtk_tooltip_set_tip_area (tooltip, (GdkRectangle *) &allocation);
     }
 
@@ -1307,7 +1302,7 @@ empathy_roster_view_class_init (
     EmpathyRosterViewClass *klass)
 {
   GObjectClass *oclass = G_OBJECT_CLASS (klass);
-  EggListBoxClass *box_class = EGG_LIST_BOX_CLASS (klass);
+  GtkListBoxClass *box_class = GTK_LIST_BOX_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
   GtkContainerClass *container_class = GTK_CONTAINER_CLASS (klass);
   GParamSpec *spec;
@@ -1324,7 +1319,7 @@ empathy_roster_view_class_init (
 
   container_class->remove = empathy_roster_view_remove;
 
-  box_class->child_activated = empathy_roster_view_child_activated;
+  box_class->row_activated = empathy_roster_view_row_activated;
 
   spec = g_param_spec_object ("model", "Model",
       "EmpathyRosterModel",
@@ -1417,7 +1412,7 @@ empathy_roster_view_show_offline (EmpathyRosterView *self,
     return;
 
   self->priv->show_offline = show;
-  egg_list_box_refilter (EGG_LIST_BOX (self));
+  gtk_list_box_invalidate_filter (GTK_LIST_BOX (self));
 
   g_object_notify (G_OBJECT (self), "show-offline");
 }
@@ -1454,7 +1449,7 @@ select_first_contact (EmpathyRosterView *self)
       if (!EMPATHY_IS_ROSTER_CONTACT (child))
         continue;
 
-      egg_list_box_select_child (EGG_LIST_BOX (self), child);
+      gtk_list_box_select_row (GTK_LIST_BOX (self), GTK_LIST_BOX_ROW (child));
       break;
     }
 
@@ -1464,7 +1459,7 @@ select_first_contact (EmpathyRosterView *self)
 static gboolean
 search_timeout_cb (EmpathyRosterView *self)
 {
-  egg_list_box_refilter (EGG_LIST_BOX (self));
+  gtk_list_box_invalidate_filter (GTK_LIST_BOX (self));
 
   select_first_contact (self);
 
@@ -1488,14 +1483,14 @@ static void
 search_activate_cb (GtkWidget *search,
   EmpathyRosterView *self)
 {
-  EggListBox *box = EGG_LIST_BOX (self);
-  GtkWidget *child;
+  GtkListBox *box = GTK_LIST_BOX (self);
+  GtkListBoxRow *row;
 
-  child = egg_list_box_get_selected_child (box);
-  if (child == NULL)
+  row = gtk_list_box_get_selected_row (box);
+  if (row == NULL)
     return;
 
-  empathy_roster_view_child_activated (box, child);
+  empathy_roster_view_row_activated (box, row);
 }
 
 void
@@ -1582,12 +1577,12 @@ empathy_roster_view_remove_event (EmpathyRosterView *self,
 FolksIndividual *
 empathy_roster_view_get_selected_individual (EmpathyRosterView *self)
 {
-  GtkWidget *child;
+  GtkListBoxRow *row;
 
-  child = egg_list_box_get_selected_child (EGG_LIST_BOX (self));
+  row = gtk_list_box_get_selected_row (GTK_LIST_BOX (self));
 
-  if (!EMPATHY_IS_ROSTER_CONTACT (child))
+  if (!EMPATHY_IS_ROSTER_CONTACT (row))
     return NULL;
 
-  return empathy_roster_contact_get_individual (EMPATHY_ROSTER_CONTACT (child));
+  return empathy_roster_contact_get_individual (EMPATHY_ROSTER_CONTACT (row));
 }
