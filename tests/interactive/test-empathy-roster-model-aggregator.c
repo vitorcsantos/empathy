@@ -28,6 +28,7 @@ individual_activated_cb (EmpathyRosterView *self,
 
 static void
 popup_individual_menu_cb (EmpathyRosterView *self,
+    const gchar *group,
     FolksIndividual *individual,
     guint button,
     guint time,
@@ -35,8 +36,8 @@ popup_individual_menu_cb (EmpathyRosterView *self,
 {
   GtkWidget *menu, *item;
 
-  g_print ("'%s' popup menu\n",
-      folks_alias_details_get_alias (FOLKS_ALIAS_DETAILS (individual)));
+  g_print ("'%s' (group: %s) popup menu\n",
+      folks_alias_details_get_alias (FOLKS_ALIAS_DETAILS (individual)), group);
 
   menu = gtk_menu_new ();
 
