@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: empathy\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-20 22:47+0200\n"
-"PO-Revision-Date: 2013-08-20 22:48+0200\n"
+"POT-Creation-Date: 2013-09-04 02:20+0200\n"
+"PO-Revision-Date: 2013-09-04 02:21+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -477,34 +477,10 @@ msgid "Whether Empathy can publish the user's location to their contacts."
 msgstr "Określa, czy publikować położenie użytkownika jego kontaktom."
 
 #: ../data/org.gnome.Empathy.gschema.xml.h:92
-msgid "Empathy can use the network to guess the location"
-msgstr "Używanie sieci do odnajdowania położenia"
-
-#: ../data/org.gnome.Empathy.gschema.xml.h:93
-msgid "Whether Empathy can use the network to guess the location."
-msgstr "Określa, czy używać sieci do odnajdowania położenia."
-
-#: ../data/org.gnome.Empathy.gschema.xml.h:94
-msgid "Empathy can use the cellular network to guess the location"
-msgstr "Używanie sieci komórkowej do odnajdowania położenia"
-
-#: ../data/org.gnome.Empathy.gschema.xml.h:95
-msgid "Whether Empathy can use the cellular network to guess the location."
-msgstr "Określa, czy używać sieci komórkowej do odnajdowania położenia."
-
-#: ../data/org.gnome.Empathy.gschema.xml.h:96
-msgid "Empathy can use the GPS to guess the location"
-msgstr "Używanie urządzenia GPS do odnajdowania położenia"
-
-#: ../data/org.gnome.Empathy.gschema.xml.h:97
-msgid "Whether Empathy can use the GPS to guess the location."
-msgstr "Określa, czy używać urządzenia GPS do odnajdowania położenia."
-
-#: ../data/org.gnome.Empathy.gschema.xml.h:98
 msgid "Empathy should reduce the location's accuracy"
 msgstr "Zmniejszenie dokładności położenia"
 
-#: ../data/org.gnome.Empathy.gschema.xml.h:99
+#: ../data/org.gnome.Empathy.gschema.xml.h:93
 msgid ""
 "Whether Empathy should reduce the location's accuracy for privacy reasons."
 msgstr ""
@@ -1301,52 +1277,52 @@ msgstr ""
 #. Translators: this is used in the context menu for a contact. The first
 #. * parameter is a contact ID (e.g. foo@jabber.org) and the second is one
 #. * of the user's account IDs (e.g. me@hotmail.com).
-#: ../libempathy-gtk/empathy-individual-menu.c:170
+#: ../libempathy-gtk/empathy-individual-menu.c:178
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:346
+#: ../libempathy-gtk/empathy-individual-menu.c:356
 msgid "Select account to use to place the call"
 msgstr "Wybór konta do umieszczenia tej rozmowy głosowej"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:350
+#: ../libempathy-gtk/empathy-individual-menu.c:360
 #: ../libempathy-gtk/empathy-log-window.ui.h:6
 #: ../src/empathy-call-window.ui.h:20
 msgid "Call"
 msgstr "Rozmowa głosowa"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:415
+#: ../libempathy-gtk/empathy-individual-menu.c:425
 msgid "Mobile"
 msgstr "Komórka"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:417
+#: ../libempathy-gtk/empathy-individual-menu.c:427
 msgid "Work"
 msgstr "Praca"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:419
+#: ../libempathy-gtk/empathy-individual-menu.c:429
 msgid "HOME"
 msgstr "Dom"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:662
+#: ../libempathy-gtk/empathy-individual-menu.c:672
 msgid "_Block Contact"
 msgstr "Za_blokuj kontakt"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:717
+#: ../libempathy-gtk/empathy-individual-menu.c:727
 #, c-format
 msgid "Remove from _Group '%s'"
 msgstr "Usuń z g_rupy \"%s\""
 
-#: ../libempathy-gtk/empathy-individual-menu.c:738
+#: ../libempathy-gtk/empathy-individual-menu.c:748
 msgid "Delete and _Block"
 msgstr "Usuń i za_blokuj"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:826
+#: ../libempathy-gtk/empathy-individual-menu.c:836
 #, c-format
 msgid "Do you really want to remove the contact '%s'?"
 msgstr "Na pewno usunąć kontakt \"%s\"?"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:835
+#: ../libempathy-gtk/empathy-individual-menu.c:845
 #, c-format
 msgid ""
 "Do you really want to remove the linked contact '%s'? Note that this will "
@@ -1355,77 +1331,78 @@ msgstr ""
 "Na pewno usunąć metakontakt \"%s\"? Wszystkie kontakty tworzące metakontakt "
 "zostaną usunięte."
 
-#: ../libempathy-gtk/empathy-individual-menu.c:846
+#: ../libempathy-gtk/empathy-individual-menu.c:856
 msgid "Removing contact"
 msgstr "Usuwanie kontaktu"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:922
+#: ../libempathy-gtk/empathy-individual-menu.c:932
 #: ../libempathy-gtk/empathy-individual-view.c:2442
 msgid "_Remove"
 msgstr "_Usuń"
 
 #. add chat button
-#: ../libempathy-gtk/empathy-individual-menu.c:1317
+#: ../libempathy-gtk/empathy-individual-menu.c:1351
 #: ../libempathy-gtk/empathy-new-message-dialog.c:308
 msgid "_Chat"
 msgstr "_Rozmowa"
 
 #. add SMS button
-#: ../libempathy-gtk/empathy-individual-menu.c:1352
+#: ../libempathy-gtk/empathy-individual-menu.c:1390
 #: ../libempathy-gtk/empathy-new-message-dialog.c:302
 msgid "_SMS"
 msgstr "_SMS"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:1385
+#: ../libempathy-gtk/empathy-individual-menu.c:1427
 msgctxt "menu item"
 msgid "_Audio Call"
 msgstr "Rozmow_a głosowa"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:1418
+#: ../libempathy-gtk/empathy-individual-menu.c:1464
 msgctxt "menu item"
 msgid "_Video Call"
 msgstr "_Wideorozmowa"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:1459
+#: ../libempathy-gtk/empathy-individual-menu.c:1506
 #: ../src/empathy-roster-window-menubar.ui.h:11
 msgid "_Previous Conversations"
 msgstr "_Poprzednie rozmowy"
 
 # to jest w menu
-#: ../libempathy-gtk/empathy-individual-menu.c:1488
+#: ../libempathy-gtk/empathy-individual-menu.c:1538
 msgid "Send File"
 msgstr "Wyślij plik"
 
 # to jest w menu
-#: ../libempathy-gtk/empathy-individual-menu.c:1518
+#: ../libempathy-gtk/empathy-individual-menu.c:1572
 msgid "Share My Desktop"
 msgstr "Współdziel pulpit"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:1544
+#: ../libempathy-gtk/empathy-individual-menu.c:1599
 #: ../libempathy-gtk/empathy-individual-widget.c:1422
 msgid "Favorite"
 msgstr "Ulubione"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:1573
+#: ../libempathy-gtk/empathy-individual-menu.c:1628
 msgid "Infor_mation"
 msgstr "Infor_macje"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:1622
+#: ../libempathy-gtk/empathy-individual-menu.c:1677
 msgctxt "Edit individual (contextual menu)"
 msgid "_Edit"
 msgstr "_Modyfikuj"
 
 #. send invitation
-#: ../libempathy-gtk/empathy-individual-menu.c:1738
+#: ../libempathy-gtk/empathy-individual-menu.c:1793
 #: ../src/empathy-chat-window.c:1274
 msgid "Inviting you to this room"
 msgstr "Zapraszanie do tego pokoju"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:1784
+#: ../libempathy-gtk/empathy-individual-menu.c:1839
 msgid "_Invite to Chat Room"
 msgstr "_Zaproś do pokoju rozmowy"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:1980
+#: ../libempathy-gtk/empathy-individual-menu.c:2035
+#: ../src/empathy-roster-window.ui.h:4
 msgid "_Add Contact…"
 msgstr "_Dodaj kontakt…"
 
@@ -1544,7 +1521,7 @@ msgstr "Wysokość n.p.m.:"
 
 #: ../libempathy-gtk/empathy-individual-widget.c:649
 #: ../libempathy-gtk/empathy-individual-widget.c:664
-#: ../src/empathy-preferences.ui.h:39
+#: ../src/empathy-preferences.ui.h:35
 msgid "Location"
 msgstr "Położenie"
 
@@ -1750,8 +1727,8 @@ msgid "_Edit"
 msgstr "_Edycja"
 
 #: ../libempathy-gtk/empathy-log-window.ui.h:3
-msgid "Delete All History..."
-msgstr "Usuń całą historię..."
+msgid "Delete All History…"
+msgstr "Usuń całą historię…"
 
 #: ../libempathy-gtk/empathy-log-window.ui.h:4
 msgid "Profile"
@@ -1772,8 +1749,8 @@ msgid "page 2"
 msgstr "strona 2"
 
 #: ../libempathy-gtk/empathy-log-window.ui.h:9
-msgid "<span size=\"x-large\">Loading...</span>"
-msgstr "<span size=\"x-large\">Wczytywanie...</span>"
+msgid "<span size=\"x-large\">Loading…</span>"
+msgstr "<span size=\"x-large\">Wczytywanie…</span>"
 
 #: ../libempathy-gtk/empathy-new-account-dialog.c:130
 msgid "What kind of chat account do you have?"
@@ -1987,12 +1964,12 @@ msgstr "_Odmów"
 msgid "_Accept"
 msgstr "Z_aakceptuj"
 
-#: ../libempathy-gtk/empathy-theme-adium.c:1214
+#: ../libempathy-gtk/empathy-theme-adium.c:1217
 #, c-format
 msgid "Message edited at %s"
 msgstr "Zmodyfikowano wiadomość o %s"
 
-#: ../libempathy-gtk/empathy-theme-adium.c:1916
+#: ../libempathy-gtk/empathy-theme-adium.c:1919
 msgid "Normal"
 msgstr "Zwykły"
 
@@ -2273,8 +2250,8 @@ msgid "Edit Connection Parameters"
 msgstr "Modyfikacja parametrów połączenia"
 
 #: ../src/empathy-accounts-dialog.c:716
-msgid "_Edit Connection Parameters..."
-msgstr "_Modyfikuj parametry połączenia..."
+msgid "_Edit Connection Parameters…"
+msgstr "_Modyfikuj parametry połączenia…"
 
 #: ../src/empathy-accounts-dialog.c:1246
 #, c-format
@@ -3332,51 +3309,51 @@ msgstr "Połączono konto"
 msgid "Account disconnected"
 msgstr "Rozłączono konto"
 
-#: ../src/empathy-preferences.c:380
+#: ../src/empathy-preferences.c:374
 msgid "Language"
 msgstr "Język"
 
 #. translators: Contact name for the chat theme preview
-#: ../src/empathy-preferences.c:631
+#: ../src/empathy-preferences.c:625
 msgid "Juliet"
 msgstr "Julia"
 
 #. translators: Contact name for the chat theme preview
-#: ../src/empathy-preferences.c:638
+#: ../src/empathy-preferences.c:632
 msgid "Romeo"
 msgstr "Romeo"
 
 #. translators: Quote from Romeo & Julier, for chat theme preview
-#: ../src/empathy-preferences.c:644
+#: ../src/empathy-preferences.c:638
 msgid "O Romeo, Romeo, wherefore art thou Romeo?"
 msgstr "Romeo! Czemuż ty jesteś Romeo!"
 
 #. translators: Quote from Romeo & Julier, for chat theme preview
-#: ../src/empathy-preferences.c:648
+#: ../src/empathy-preferences.c:642
 msgid "Deny thy father and refuse thy name;"
 msgstr "Wyrzecz się swego rodu, rzuć tę nazwę!"
 
 #. translators: Quote from Romeo & Julier, for chat theme preview
-#: ../src/empathy-preferences.c:651
+#: ../src/empathy-preferences.c:645
 msgid "Or if thou wilt not, be but sworn my love"
 msgstr "Lub jeśli tego nie możesz uczynić,"
 
 #. translators: Quote from Romeo & Julier, for chat theme preview
-#: ../src/empathy-preferences.c:654
+#: ../src/empathy-preferences.c:648
 msgid "And I'll no longer be a Capulet."
 msgstr "To przysiąż wiernym być mojej miłości,"
 
 #. translators: Quote from Romeo & Julier, for chat theme preview
-#: ../src/empathy-preferences.c:657
+#: ../src/empathy-preferences.c:651
 msgid "Shall I hear more, or shall I speak at this?"
 msgstr "A ja przestanę być z krwi Kapuletów."
 
 #. translators: Quote from Romeo & Julier, for chat theme preview
-#: ../src/empathy-preferences.c:660
+#: ../src/empathy-preferences.c:654
 msgid "Juliet has disconnected"
 msgstr "Użytkownik Julia został rozłączony"
 
-#: ../src/empathy-preferences.c:1026
+#: ../src/empathy-preferences.c:1020
 msgid "Preferences"
 msgstr "Preferencje"
 
@@ -3388,7 +3365,7 @@ msgstr "Wyświetlanie grup"
 msgid "Show account balances"
 msgstr "Wyświetlanie salda konta"
 
-#: ../src/empathy-preferences.ui.h:4 ../src/empathy-roster-window.c:2239
+#: ../src/empathy-preferences.ui.h:4 ../src/empathy-roster-window.c:2264
 msgid "Contact List"
 msgstr "Lista kontaktów"
 
@@ -3511,45 +3488,29 @@ msgstr "_Zmniejszenie dokładności położenia"
 msgid "Privacy"
 msgstr "Prywatność"
 
-#: ../src/empathy-preferences.ui.h:35
-msgid "_GPS"
-msgstr "_GPS"
-
 #: ../src/empathy-preferences.ui.h:36
-msgid "_Cellphone"
-msgstr "_Telefon komórkowy"
-
-#: ../src/empathy-preferences.ui.h:37
-msgid "_Network (IP, Wi-Fi)"
-msgstr "_Sieć (IP, Wi-Fi)"
-
-#: ../src/empathy-preferences.ui.h:38
-msgid "Location sources:"
-msgstr "Źródła położenia:"
-
-#: ../src/empathy-preferences.ui.h:40
 msgid ""
 "The list of languages reflects only the languages for which you have a "
 "dictionary installed."
 msgstr "Lista języków odzwierciedla stan faktycznie zainstalowanych słowników."
 
-#: ../src/empathy-preferences.ui.h:41
+#: ../src/empathy-preferences.ui.h:37
 msgid "Enable spell checking for languages:"
 msgstr "Sprawdzanie pisowni dla języków:"
 
-#: ../src/empathy-preferences.ui.h:42
+#: ../src/empathy-preferences.ui.h:38
 msgid "Spell Checking"
 msgstr "Sprawdzanie pisowni"
 
-#: ../src/empathy-preferences.ui.h:43
+#: ../src/empathy-preferences.ui.h:39
 msgid "Chat Th_eme:"
 msgstr "Motyw _rozmowy:"
 
-#: ../src/empathy-preferences.ui.h:44
+#: ../src/empathy-preferences.ui.h:40
 msgid "Variant:"
 msgstr "Wariant:"
 
-#: ../src/empathy-preferences.ui.h:45
+#: ../src/empathy-preferences.ui.h:41
 msgid "Themes"
 msgstr "Motywy"
 
@@ -3561,104 +3522,106 @@ msgstr "Wprowadź hasło"
 msgid "Disconnect"
 msgstr "Rozłącz"
 
-#: ../src/empathy-roster-window.c:479
+#: ../src/empathy-roster-window.c:493
 msgid "You need to set up an account to see contacts here."
 msgstr "Należy ustawić konto, aby wyświetlić kontakty."
 
-#: ../src/empathy-roster-window.c:555
+#: ../src/empathy-roster-window.c:569
 #, c-format
 msgid "Sorry, %s accounts can’t be used until your %s software is updated."
 msgstr ""
 "Konta %s nie mogą być używane, dopóki oprogramowanie %s nie zostanie "
 "zaktualizowane."
 
-#: ../src/empathy-roster-window.c:656
+#: ../src/empathy-roster-window.c:670
 msgid "Windows Live"
 msgstr "Windows Live"
 
-#: ../src/empathy-roster-window.c:658
+#: ../src/empathy-roster-window.c:672
 msgid "Google Talk"
 msgstr "Google Talk"
 
-#: ../src/empathy-roster-window.c:660
+#: ../src/empathy-roster-window.c:674
 msgid "Facebook"
 msgstr "Facebook"
 
 #. translators: %s is an account name like 'Facebook' or 'Google Talk'
-#: ../src/empathy-roster-window.c:675
+#: ../src/empathy-roster-window.c:689
 #, c-format
 msgid "%s account requires authorisation"
 msgstr "Konto serwisu %s wymaga upoważnienia"
 
-#: ../src/empathy-roster-window.c:686
+#: ../src/empathy-roster-window.c:700
 msgid "Online Accounts"
 msgstr "Konta online"
 
-#: ../src/empathy-roster-window.c:733
-msgid "Update software..."
-msgstr "Zaktualizuj oprogramowanie..."
+#: ../src/empathy-roster-window.c:747
+msgid "Update software…"
+msgstr "Zaktualizuj oprogramowanie…"
 
-#: ../src/empathy-roster-window.c:739
+#: ../src/empathy-roster-window.c:753
 msgid "Reconnect"
 msgstr "Połącz ponownie"
 
-#: ../src/empathy-roster-window.c:743
+#: ../src/empathy-roster-window.c:757
 msgid "Edit Account"
 msgstr "Modyfikuj konto"
 
-#: ../src/empathy-roster-window.c:748
+#: ../src/empathy-roster-window.c:762
 msgid "Close"
 msgstr "Zamknij"
 
-#: ../src/empathy-roster-window.c:890
+#: ../src/empathy-roster-window.c:904
 msgid "Top up account"
 msgstr "Doładuj konto"
 
-#: ../src/empathy-roster-window.c:1576
+#: ../src/empathy-roster-window.c:1590
 msgid "You need to enable one of your accounts to see contacts here."
 msgstr "Należy włączyć jedno z kont, aby wyświetlić kontakty."
 
 #. translators: argument is an account name
-#: ../src/empathy-roster-window.c:1584
+#: ../src/empathy-roster-window.c:1598
 #, c-format
 msgid "You need to enable %s to see contacts here."
 msgstr "Należy włączyć konto %s, aby wyświetlić kontakty."
 
-#: ../src/empathy-roster-window.c:1662
+#: ../src/empathy-roster-window.c:1676
 msgid "Change your presence to see contacts here"
 msgstr "Należy zmienić stan, aby wyświetlić kontakty"
 
-#: ../src/empathy-roster-window.c:1671
+#: ../src/empathy-roster-window.c:1685
 msgid "No match found"
 msgstr "Nie odnaleziono wyników"
 
-#: ../src/empathy-roster-window.c:1678
+#: ../src/empathy-roster-window.c:1692
 msgid "You haven't added any contact yet"
 msgstr "Nie dodano jeszcze żadnych kontaktów"
 
-#: ../src/empathy-roster-window.c:1681
+#: ../src/empathy-roster-window.c:1695
 msgid "No online contacts"
 msgstr "Brak kontaktów w trybie online"
 
 #: ../src/empathy-roster-window-menubar.ui.h:1
-msgid "_New Conversation..."
-msgstr "_Nowa rozmowa..."
+#: ../src/empathy-status-icon.ui.h:2
+msgid "_New Conversation…"
+msgstr "_Nowa rozmowa…"
 
 #: ../src/empathy-roster-window-menubar.ui.h:2
-msgid "New _Call..."
-msgstr "Nowa _rozmowa głosowa..."
+#: ../src/empathy-status-icon.ui.h:3
+msgid "New _Call…"
+msgstr "Nowa _rozmowa głosowa…"
 
 #: ../src/empathy-roster-window-menubar.ui.h:3
 msgid "Contacts"
 msgstr "Kontakty"
 
 #: ../src/empathy-roster-window-menubar.ui.h:4
-msgid "_Add Contacts..."
-msgstr "_Dodaj kontakty..."
+msgid "_Add Contacts…"
+msgstr "_Dodaj kontakty…"
 
 #: ../src/empathy-roster-window-menubar.ui.h:5
-msgid "_Search for Contacts..."
-msgstr "_Wyszukaj kontakty..."
+msgid "_Search for Contacts…"
+msgstr "_Wyszukaj kontakty…"
 
 #: ../src/empathy-roster-window-menubar.ui.h:6
 msgid "_Blocked Contacts"
@@ -3669,8 +3632,8 @@ msgid "_Rooms"
 msgstr "_Pokoje"
 
 #: ../src/empathy-roster-window-menubar.ui.h:8
-msgid "_Join..."
-msgstr "_Dołącz..."
+msgid "_Join…"
+msgstr "_Dołącz…"
 
 #: ../src/empathy-roster-window-menubar.ui.h:9
 msgid "Join _Favorites"
@@ -3716,18 +3679,6 @@ msgstr "Przejdź do trybu _online"
 #: ../src/empathy-roster-window.ui.h:3
 msgid "Show _Offline Contacts"
 msgstr "Wyświetl kontakty w trybie _offline"
-
-#: ../src/empathy-roster-window.ui.h:4
-msgid "_Add Contact..."
-msgstr "_Dodaj kontakt..."
-
-#: ../src/empathy-status-icon.ui.h:2
-msgid "_New Conversation…"
-msgstr "_Nowa rozmowa…"
-
-#: ../src/empathy-status-icon.ui.h:3
-msgid "New _Call…"
-msgstr "Nowa _rozmowa głosowa…"
 
 #: ../src/empathy-status-icon.ui.h:4
 msgid "Status"
