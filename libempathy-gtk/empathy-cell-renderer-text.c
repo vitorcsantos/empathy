@@ -298,7 +298,7 @@ cell_renderer_text_update_text (EmpathyCellRendererText *cell,
 				gboolean                selected)
 {
 	EmpathyCellRendererTextPriv *priv;
-	const PangoFontDescription *font_desc;
+	PangoFontDescription *font_desc;
 	PangoAttrList              *attr_list;
 	PangoAttribute             *attr_color = NULL, *attr_size;
 	GtkStyleContext            *style;
@@ -330,8 +330,11 @@ cell_renderer_text_update_text (EmpathyCellRendererText *cell,
 
 	attr_list = pango_attr_list_new ();
 
-	font_desc = gtk_style_context_get_font (style, GTK_STATE_FLAG_NORMAL);
+	gtk_style_context_get (style, GTK_STATE_FLAG_NORMAL,
+		"font", &font_desc,
+		NULL);
 	font_size = pango_font_description_get_size (font_desc);
+	pango_font_description_free (font_desc);
 	attr_size = pango_attr_size_new (font_size / 1.2);
 	attr_size->start_index = strlen (priv->name) + 1;
 	attr_size->end_index = -1;
