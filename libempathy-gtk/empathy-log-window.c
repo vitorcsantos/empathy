@@ -377,7 +377,7 @@ insert_or_change_row (EmpathyLogWindow *self,
       if (icon_info != NULL)
         icon = g_strdup (gtk_icon_info_get_filename (icon_info));
 
-      gtk_icon_info_free (icon_info);
+      g_object_unref (icon_info);
     }
 
   escaped_text = g_string_new (NULL);

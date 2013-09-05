@@ -1248,7 +1248,7 @@ empathy_theme_adium_edit_message (EmpathyThemeAdium *self,
         }
 
       g_free (style);
-      gtk_icon_info_free (icon_info);
+      g_object_unref (icon_info);
     }
 
   goto finally;
