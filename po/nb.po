@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: empathy 3.9.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-22 15:26+0200\n"
-"PO-Revision-Date: 2013-08-22 15:26+0200\n"
+"POT-Creation-Date: 2013-09-08 19:24+0200\n"
+"PO-Revision-Date: 2013-09-08 19:25+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian bokmål <i18n-nb@lister.ping.uio.no>\n"
 "Language: no\n"
@@ -446,34 +446,10 @@ msgid "Whether Empathy can publish the user's location to their contacts."
 msgstr "Om Empathy kan publisere brukers plassering til kontakter."
 
 #: ../data/org.gnome.Empathy.gschema.xml.h:92
-msgid "Empathy can use the network to guess the location"
-msgstr "Empathy kan bruke nettverket til å gjette plassering"
-
-#: ../data/org.gnome.Empathy.gschema.xml.h:93
-msgid "Whether Empathy can use the network to guess the location."
-msgstr "Om Empathy kan bruke nettverket for å gjette plassering."
-
-#: ../data/org.gnome.Empathy.gschema.xml.h:94
-msgid "Empathy can use the cellular network to guess the location"
-msgstr "Empathy kan bruke mobilnettverk til å gjette plassering"
-
-#: ../data/org.gnome.Empathy.gschema.xml.h:95
-msgid "Whether Empathy can use the cellular network to guess the location."
-msgstr "Om Empathy kan bruke mobilnettverk for å gjette plassering."
-
-#: ../data/org.gnome.Empathy.gschema.xml.h:96
-msgid "Empathy can use the GPS to guess the location"
-msgstr "Empathy kan bruke GPS til å gjette plassering"
-
-#: ../data/org.gnome.Empathy.gschema.xml.h:97
-msgid "Whether Empathy can use the GPS to guess the location."
-msgstr "Om Empathy kan bruke GPS for å gjette plassering."
-
-#: ../data/org.gnome.Empathy.gschema.xml.h:98
 msgid "Empathy should reduce the location's accuracy"
 msgstr "Empathy skal redusere nøyaktighet for plasseringenseri"
 
-#: ../data/org.gnome.Empathy.gschema.xml.h:99
+#: ../data/org.gnome.Empathy.gschema.xml.h:93
 msgid ""
 "Whether Empathy should reduce the location's accuracy for privacy reasons."
 msgstr ""
@@ -887,7 +863,7 @@ msgstr "ikke implementert"
 msgid "unknown"
 msgstr "ukjent"
 
-#: ../libempathy-gtk/empathy-chat.c:1686 ../src/empathy-chat-window.c:971
+#: ../libempathy-gtk/empathy-chat.c:1686 ../src/empathy-chat-window.c:974
 msgid "Topic:"
 msgstr "Emne:"
 
@@ -1262,52 +1238,52 @@ msgstr "Vennligst installer gnome-contacts for tilgang til kontaktdetaljer."
 #. Translators: this is used in the context menu for a contact. The first
 #. * parameter is a contact ID (e.g. foo@jabber.org) and the second is one
 #. * of the user's account IDs (e.g. me@hotmail.com).
-#: ../libempathy-gtk/empathy-individual-menu.c:170
+#: ../libempathy-gtk/empathy-individual-menu.c:178
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:346
+#: ../libempathy-gtk/empathy-individual-menu.c:356
 msgid "Select account to use to place the call"
 msgstr "Velg en konto til bruk for samtalen"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:350
+#: ../libempathy-gtk/empathy-individual-menu.c:360
 #: ../libempathy-gtk/empathy-log-window.ui.h:6
 #: ../src/empathy-call-window.ui.h:20
 msgid "Call"
 msgstr "Ring"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:415
+#: ../libempathy-gtk/empathy-individual-menu.c:425
 msgid "Mobile"
 msgstr "Mobil"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:417
+#: ../libempathy-gtk/empathy-individual-menu.c:427
 msgid "Work"
 msgstr "Arbeid"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:419
+#: ../libempathy-gtk/empathy-individual-menu.c:429
 msgid "HOME"
 msgstr "Hjemme"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:662
+#: ../libempathy-gtk/empathy-individual-menu.c:672
 msgid "_Block Contact"
 msgstr "_Blokker kontakt"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:717
+#: ../libempathy-gtk/empathy-individual-menu.c:727
 #, c-format
 msgid "Remove from _Group '%s'"
 msgstr "Fjern fra _gruppe «%s»"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:738
+#: ../libempathy-gtk/empathy-individual-menu.c:748
 msgid "Delete and _Block"
 msgstr "Slett og _blokker"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:826
+#: ../libempathy-gtk/empathy-individual-menu.c:836
 #, c-format
 msgid "Do you really want to remove the contact '%s'?"
 msgstr "Vil du virkelig fjerne kontakten «%s»?"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:835
+#: ../libempathy-gtk/empathy-individual-menu.c:845
 #, c-format
 msgid ""
 "Do you really want to remove the linked contact '%s'? Note that this will "
@@ -1316,75 +1292,76 @@ msgstr ""
 "Vil du virkelig fjerne lenket kontakt «%s»? Merk at dette vil fjerne alle "
 "kontaktene den lenkede kontakten består av."
 
-#: ../libempathy-gtk/empathy-individual-menu.c:846
+#: ../libempathy-gtk/empathy-individual-menu.c:856
 msgid "Removing contact"
 msgstr "Fjerner kontakt"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:922
+#: ../libempathy-gtk/empathy-individual-menu.c:932
 #: ../libempathy-gtk/empathy-individual-view.c:2442
 msgid "_Remove"
 msgstr "Fje_rn"
 
 #. add chat button
-#: ../libempathy-gtk/empathy-individual-menu.c:1317
+#: ../libempathy-gtk/empathy-individual-menu.c:1351
 #: ../libempathy-gtk/empathy-new-message-dialog.c:308
 msgid "_Chat"
 msgstr "_Prat"
 
 #. add SMS button
-#: ../libempathy-gtk/empathy-individual-menu.c:1352
+#: ../libempathy-gtk/empathy-individual-menu.c:1390
 #: ../libempathy-gtk/empathy-new-message-dialog.c:302
 msgid "_SMS"
 msgstr "_SMS"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:1385
+#: ../libempathy-gtk/empathy-individual-menu.c:1427
 msgctxt "menu item"
 msgid "_Audio Call"
 msgstr "_Lydsamtale"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:1418
+#: ../libempathy-gtk/empathy-individual-menu.c:1464
 msgctxt "menu item"
 msgid "_Video Call"
 msgstr "_Videosamtale"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:1459
+#: ../libempathy-gtk/empathy-individual-menu.c:1506
 #: ../src/empathy-roster-window-menubar.ui.h:11
 msgid "_Previous Conversations"
 msgstr "_Tidligere samtaler"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:1488
+#: ../libempathy-gtk/empathy-individual-menu.c:1538
 msgid "Send File"
 msgstr "Send fil"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:1518
+#: ../libempathy-gtk/empathy-individual-menu.c:1572
 msgid "Share My Desktop"
 msgstr "Del mitt skrivebord"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:1544
+#: ../libempathy-gtk/empathy-individual-menu.c:1599
 #: ../libempathy-gtk/empathy-individual-widget.c:1422
 msgid "Favorite"
 msgstr "Favoritt"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:1573
+#: ../libempathy-gtk/empathy-individual-menu.c:1628
 msgid "Infor_mation"
 msgstr "Infor_masjon"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:1622
+#: ../libempathy-gtk/empathy-individual-menu.c:1677
 msgctxt "Edit individual (contextual menu)"
 msgid "_Edit"
 msgstr "R_ediger"
 
 #. send invitation
-#: ../libempathy-gtk/empathy-individual-menu.c:1738
-#: ../src/empathy-chat-window.c:1274
+#: ../libempathy-gtk/empathy-individual-menu.c:1793
+#: ../src/empathy-chat-window.c:1277
 msgid "Inviting you to this room"
 msgstr "Inviterer deg til dette rommet"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:1784
+#: ../libempathy-gtk/empathy-individual-menu.c:1839
 msgid "_Invite to Chat Room"
 msgstr "_Inviter til praterom"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:1980
+#: ../libempathy-gtk/empathy-individual-menu.c:2035
+#: ../src/empathy-roster-window.ui.h:4
 msgid "_Add Contact…"
 msgstr "_Legg til kontakt …"
 
@@ -1503,7 +1480,7 @@ msgstr "Høyde:"
 
 #: ../libempathy-gtk/empathy-individual-widget.c:649
 #: ../libempathy-gtk/empathy-individual-widget.c:664
-#: ../src/empathy-preferences.ui.h:39
+#: ../src/empathy-preferences.ui.h:35
 msgid "Location"
 msgstr "Sted"
 
@@ -1706,7 +1683,7 @@ msgid "_Edit"
 msgstr "_Rediger"
 
 #: ../libempathy-gtk/empathy-log-window.ui.h:3
-msgid "Delete All History..."
+msgid "Delete All History…"
 msgstr "Slett all historikk …"
 
 #: ../libempathy-gtk/empathy-log-window.ui.h:4
@@ -1714,7 +1691,7 @@ msgid "Profile"
 msgstr "Profil"
 
 #: ../libempathy-gtk/empathy-log-window.ui.h:5
-#: ../src/empathy-chat-window.c:1490 ../src/empathy-preferences.ui.h:11
+#: ../src/empathy-chat-window.c:1493 ../src/empathy-preferences.ui.h:11
 msgid "Chat"
 msgstr "Prat"
 
@@ -1728,7 +1705,7 @@ msgid "page 2"
 msgstr "side 2"
 
 #: ../libempathy-gtk/empathy-log-window.ui.h:9
-msgid "<span size=\"x-large\">Loading...</span>"
+msgid "<span size=\"x-large\">Loading…</span>"
 msgstr "<span size=\"x-large\">Laster …</span>"
 
 #: ../libempathy-gtk/empathy-new-account-dialog.c:130
@@ -1943,12 +1920,12 @@ msgstr "_Avslå"
 msgid "_Accept"
 msgstr "Godt_a"
 
-#: ../libempathy-gtk/empathy-theme-adium.c:1214
+#: ../libempathy-gtk/empathy-theme-adium.c:1217
 #, c-format
 msgid "Message edited at %s"
 msgstr "Melding redigert %s"
 
-#: ../libempathy-gtk/empathy-theme-adium.c:1916
+#: ../libempathy-gtk/empathy-theme-adium.c:1919
 msgid "Normal"
 msgstr "Normal"
 
@@ -2224,8 +2201,8 @@ msgid "Edit Connection Parameters"
 msgstr "Rediger parametere for tilkobling"
 
 #: ../src/empathy-accounts-dialog.c:716
-msgid "_Edit Connection Parameters..."
-msgstr "R_ediger parametere for tilkoblingen …"
+msgid "_Edit Connection Parameters…"
+msgstr "R_ediger parametere for tilkobling …"
 
 #: ../src/empathy-accounts-dialog.c:1246
 #, c-format
@@ -2700,46 +2677,46 @@ msgstr "Lukk vindu"
 msgid "Leave room"
 msgstr "Forlat rom"
 
-#: ../src/empathy-chat-window.c:669 ../src/empathy-chat-window.c:692
+#: ../src/empathy-chat-window.c:672 ../src/empathy-chat-window.c:695
 #, c-format
 msgid "%s (%d unread)"
 msgid_plural "%s (%d unread)"
 msgstr[0] "%s (%d ulest)"
 msgstr[1] "%s (%d uleste)"
 
-#: ../src/empathy-chat-window.c:684
+#: ../src/empathy-chat-window.c:687
 #, c-format
 msgid "%s (and %u other)"
 msgid_plural "%s (and %u others)"
 msgstr[0] "%s (og %u annen)"
 msgstr[1] "%s (og %u andre)"
 
-#: ../src/empathy-chat-window.c:700
+#: ../src/empathy-chat-window.c:703
 #, c-format
 msgid "%s (%d unread from others)"
 msgid_plural "%s (%d unread from others)"
 msgstr[0] "%s (%d ulest fra andre)"
 msgstr[1] "%s (%d uleste fra andre)"
 
-#: ../src/empathy-chat-window.c:709
+#: ../src/empathy-chat-window.c:712
 #, c-format
 msgid "%s (%d unread from all)"
 msgid_plural "%s (%d unread from all)"
 msgstr[0] "%s (%d ulest fra alle)"
 msgstr[1] "%s (%d uleste fra alle)"
 
-#: ../src/empathy-chat-window.c:946
+#: ../src/empathy-chat-window.c:949
 msgid "SMS:"
 msgstr "SMS:"
 
-#: ../src/empathy-chat-window.c:954
+#: ../src/empathy-chat-window.c:957
 #, c-format
 msgid "Sending %d message"
 msgid_plural "Sending %d messages"
 msgstr[0] "Sender %d melding"
 msgstr[1] "Sender %d meldinger"
 
-#: ../src/empathy-chat-window.c:974
+#: ../src/empathy-chat-window.c:977
 msgid "Typing a message."
 msgstr "Skriver en melding"
 
@@ -3276,51 +3253,51 @@ msgstr "Konto koblet til"
 msgid "Account disconnected"
 msgstr "Konto koblet fra"
 
-#: ../src/empathy-preferences.c:380
+#: ../src/empathy-preferences.c:374
 msgid "Language"
 msgstr "Språk"
 
 #. translators: Contact name for the chat theme preview
-#: ../src/empathy-preferences.c:631
+#: ../src/empathy-preferences.c:625
 msgid "Juliet"
 msgstr "Juliet"
 
 #. translators: Contact name for the chat theme preview
-#: ../src/empathy-preferences.c:638
+#: ../src/empathy-preferences.c:632
 msgid "Romeo"
 msgstr "Romeo"
 
 #. translators: Quote from Romeo & Julier, for chat theme preview
-#: ../src/empathy-preferences.c:644
+#: ../src/empathy-preferences.c:638
 msgid "O Romeo, Romeo, wherefore art thou Romeo?"
 msgstr "O Romeo, Romeo, wherefore art thou Romeo?"
 
 #. translators: Quote from Romeo & Julier, for chat theme preview
-#: ../src/empathy-preferences.c:648
+#: ../src/empathy-preferences.c:642
 msgid "Deny thy father and refuse thy name;"
 msgstr "Deny thy father and refuse thy name;"
 
 #. translators: Quote from Romeo & Julier, for chat theme preview
-#: ../src/empathy-preferences.c:651
+#: ../src/empathy-preferences.c:645
 msgid "Or if thou wilt not, be but sworn my love"
 msgstr "Or if thou wilt not, be but sworn my love"
 
 #. translators: Quote from Romeo & Julier, for chat theme preview
-#: ../src/empathy-preferences.c:654
+#: ../src/empathy-preferences.c:648
 msgid "And I'll no longer be a Capulet."
 msgstr "And I'll no longer be a Capulet."
 
 #. translators: Quote from Romeo & Julier, for chat theme preview
-#: ../src/empathy-preferences.c:657
+#: ../src/empathy-preferences.c:651
 msgid "Shall I hear more, or shall I speak at this?"
 msgstr "Shall I hear more, or shall I speak at this?"
 
 #. translators: Quote from Romeo & Julier, for chat theme preview
-#: ../src/empathy-preferences.c:660
+#: ../src/empathy-preferences.c:654
 msgid "Juliet has disconnected"
 msgstr "Juliet har koblet fra"
 
-#: ../src/empathy-preferences.c:1026
+#: ../src/empathy-preferences.c:1020
 msgid "Preferences"
 msgstr "Brukervalg"
 
@@ -3332,7 +3309,7 @@ msgstr "Vis grupper"
 msgid "Show account balances"
 msgstr "Vis saldo for konto"
 
-#: ../src/empathy-preferences.ui.h:4 ../src/empathy-roster-window.c:2239
+#: ../src/empathy-preferences.ui.h:4 ../src/empathy-roster-window.c:2264
 msgid "Contact List"
 msgstr "Kontaktliste"
 
@@ -3454,46 +3431,30 @@ msgstr "_Reduser nøyaktighet for plassering"
 msgid "Privacy"
 msgstr "Personvern"
 
-#: ../src/empathy-preferences.ui.h:35
-msgid "_GPS"
-msgstr "_GPS"
-
 #: ../src/empathy-preferences.ui.h:36
-msgid "_Cellphone"
-msgstr "_Mobiltelefon"
-
-#: ../src/empathy-preferences.ui.h:37
-msgid "_Network (IP, Wi-Fi)"
-msgstr "_Nettverk (IP, Wi-Fi)"
-
-#: ../src/empathy-preferences.ui.h:38
-msgid "Location sources:"
-msgstr "Kilder for steder:"
-
-#: ../src/empathy-preferences.ui.h:40
 msgid ""
 "The list of languages reflects only the languages for which you have a "
 "dictionary installed."
 msgstr ""
 "Listen med språk viser bare de språkene det er installert ordliste for."
 
-#: ../src/empathy-preferences.ui.h:41
+#: ../src/empathy-preferences.ui.h:37
 msgid "Enable spell checking for languages:"
 msgstr "Slå på stavekontroll for språk:"
 
-#: ../src/empathy-preferences.ui.h:42
+#: ../src/empathy-preferences.ui.h:38
 msgid "Spell Checking"
 msgstr "Stavekontroll"
 
-#: ../src/empathy-preferences.ui.h:43
+#: ../src/empathy-preferences.ui.h:39
 msgid "Chat Th_eme:"
 msgstr "Samtale_tema:"
 
-#: ../src/empathy-preferences.ui.h:44
+#: ../src/empathy-preferences.ui.h:40
 msgid "Variant:"
 msgstr "Variant:"
 
-#: ../src/empathy-preferences.ui.h:45
+#: ../src/empathy-preferences.ui.h:41
 msgid "Themes"
 msgstr "Temaer"
 
@@ -3505,89 +3466,91 @@ msgstr "Oppgi passord"
 msgid "Disconnect"
 msgstr "Koble fra"
 
-#: ../src/empathy-roster-window.c:479
+#: ../src/empathy-roster-window.c:493
 msgid "You need to set up an account to see contacts here."
 msgstr "Du må sette opp en konto for å se kontakter her."
 
-#: ../src/empathy-roster-window.c:555
+#: ../src/empathy-roster-window.c:569
 #, c-format
 msgid "Sorry, %s accounts can’t be used until your %s software is updated."
 msgstr "Beklager %s-kontoer kan ikke brukes før %s-programvaren er oppdatert."
 
-#: ../src/empathy-roster-window.c:656
+#: ../src/empathy-roster-window.c:670
 msgid "Windows Live"
 msgstr "Windows Live"
 
-#: ../src/empathy-roster-window.c:658
+#: ../src/empathy-roster-window.c:672
 msgid "Google Talk"
 msgstr "Google Talk"
 
-#: ../src/empathy-roster-window.c:660
+#: ../src/empathy-roster-window.c:674
 msgid "Facebook"
 msgstr "Facebook"
 
 #. translators: %s is an account name like 'Facebook' or 'Google Talk'
-#: ../src/empathy-roster-window.c:675
+#: ../src/empathy-roster-window.c:689
 #, c-format
 msgid "%s account requires authorisation"
 msgstr "%s-konto krever autorisering"
 
-#: ../src/empathy-roster-window.c:686
+#: ../src/empathy-roster-window.c:700
 msgid "Online Accounts"
 msgstr "Kontoer på nettet"
 
-#: ../src/empathy-roster-window.c:733
-msgid "Update software..."
+#: ../src/empathy-roster-window.c:747
+msgid "Update software…"
 msgstr "Oppdater programvare …"
 
-#: ../src/empathy-roster-window.c:739
+#: ../src/empathy-roster-window.c:753
 msgid "Reconnect"
 msgstr "Koble til på nytt"
 
-#: ../src/empathy-roster-window.c:743
+#: ../src/empathy-roster-window.c:757
 msgid "Edit Account"
 msgstr "Rediger konto"
 
-#: ../src/empathy-roster-window.c:748
+#: ../src/empathy-roster-window.c:762
 msgid "Close"
 msgstr "Lukk"
 
-#: ../src/empathy-roster-window.c:890
+#: ../src/empathy-roster-window.c:904
 msgid "Top up account"
 msgstr "Fyll opp konto"
 
-#: ../src/empathy-roster-window.c:1576
+#: ../src/empathy-roster-window.c:1590
 msgid "You need to enable one of your accounts to see contacts here."
 msgstr "Du må slå på en av kontoene for å se kontakter her."
 
 #. translators: argument is an account name
-#: ../src/empathy-roster-window.c:1584
+#: ../src/empathy-roster-window.c:1598
 #, c-format
 msgid "You need to enable %s to see contacts here."
 msgstr "Du må slå på %s for å se kontakter her."
 
-#: ../src/empathy-roster-window.c:1662
+#: ../src/empathy-roster-window.c:1676
 msgid "Change your presence to see contacts here"
 msgstr "Endre din tilstedeværelse for å se kontakter her"
 
-#: ../src/empathy-roster-window.c:1671
+#: ../src/empathy-roster-window.c:1685
 msgid "No match found"
 msgstr "Ingen treff funnet"
 
-#: ../src/empathy-roster-window.c:1678
+#: ../src/empathy-roster-window.c:1692
 msgid "You haven't added any contact yet"
 msgstr "Du har ikke lagt til kontakter ennå"
 
-#: ../src/empathy-roster-window.c:1681
+#: ../src/empathy-roster-window.c:1695
 msgid "No online contacts"
 msgstr "Ingen kontakter tilkoblet"
 
 #: ../src/empathy-roster-window-menubar.ui.h:1
-msgid "_New Conversation..."
+#: ../src/empathy-status-icon.ui.h:2
+msgid "_New Conversation…"
 msgstr "_Ny samtale …"
 
 #: ../src/empathy-roster-window-menubar.ui.h:2
-msgid "New _Call..."
+#: ../src/empathy-status-icon.ui.h:3
+msgid "New _Call…"
 msgstr "Ny _samtale …"
 
 #: ../src/empathy-roster-window-menubar.ui.h:3
@@ -3595,11 +3558,11 @@ msgid "Contacts"
 msgstr "Kontakter"
 
 #: ../src/empathy-roster-window-menubar.ui.h:4
-msgid "_Add Contacts..."
+msgid "_Add Contacts…"
 msgstr "_Legg til kontakter …"
 
 #: ../src/empathy-roster-window-menubar.ui.h:5
-msgid "_Search for Contacts..."
+msgid "_Search for Contacts…"
 msgstr "_Søk etter kontakter …"
 
 #: ../src/empathy-roster-window-menubar.ui.h:6
@@ -3611,7 +3574,7 @@ msgid "_Rooms"
 msgstr "_Rom"
 
 #: ../src/empathy-roster-window-menubar.ui.h:8
-msgid "_Join..."
+msgid "_Join…"
 msgstr "_Bli med …"
 
 #: ../src/empathy-roster-window-menubar.ui.h:9
@@ -3659,18 +3622,6 @@ msgstr "K_oble til"
 msgid "Show _Offline Contacts"
 msgstr "Vis frak_oblede kontakter"
 
-#: ../src/empathy-roster-window.ui.h:4
-msgid "_Add Contact..."
-msgstr "_Legg til kontakt …"
-
-#: ../src/empathy-status-icon.ui.h:2
-msgid "_New Conversation…"
-msgstr "_Ny samtale …"
-
-#: ../src/empathy-status-icon.ui.h:3
-msgid "New _Call…"
-msgstr "Ny _samtale …"
-
 #: ../src/empathy-status-icon.ui.h:4
 msgid "Status"
 msgstr "Status"
@@ -3692,571 +3643,3 @@ msgstr "Rediger kontoalternativer for %s"
 #: ../ubuntu-online-accounts/empathy.application.in.h:1
 msgid "Integrate your IM accounts"
 msgstr "Integrer dine lynmeldingskontoer"
-
-#~ msgid "Password not found"
-#~ msgstr "Passordet ble ikke funnet"
-
-#~ msgid "IM account password for %s (%s)"
-#~ msgstr "Passord for lynmeldingskonto for %s (%s)"
-
-#~ msgid "Password for chatroom '%s' on account %s (%s)"
-#~ msgstr "Passord for praterom «%s» på konto %s (%s)"
-
-#~ msgid "%d second ago"
-#~ msgid_plural "%d seconds ago"
-#~ msgstr[0] "%d sekund siden"
-#~ msgstr[1] "%d sekunder siden"
-
-#~ msgid "%d minute ago"
-#~ msgid_plural "%d minutes ago"
-#~ msgstr[0] "%d minutt siden"
-#~ msgstr[1] "%d minutter siden"
-
-#~ msgid "%d hour ago"
-#~ msgid_plural "%d hours ago"
-#~ msgstr[0] "%d time siden"
-#~ msgstr[1] "%d timer siden"
-
-#~ msgid "%d day ago"
-#~ msgid_plural "%d days ago"
-#~ msgstr[0] "%d dag siden"
-#~ msgstr[1] "%d dager siden"
-
-#~ msgid "%d week ago"
-#~ msgid_plural "%d weeks ago"
-#~ msgstr[0] "%d uke siden"
-#~ msgstr[1] "%d uker siden"
-
-#~ msgid "%d month ago"
-#~ msgid_plural "%d months ago"
-#~ msgstr[0] "%d måned siden"
-#~ msgstr[1] "%d måneder siden"
-
-#~ msgid "in the future"
-#~ msgstr "i fremtiden"
-
-#~ msgid "Yahoo! Japan"
-#~ msgstr "Yahoo! Japan"
-
-#~ msgid "Facebook Chat"
-#~ msgstr "Facebook-prat"
-
-#~ msgid "Pass_word"
-#~ msgstr "_Passord"
-
-#~ msgid "Screen _Name"
-#~ msgstr "Skjerm_navn"
-
-#~ msgid "<b>Example:</b> MyScreenName"
-#~ msgstr "<b>Eksempel:</b> MittSkjermNavn       "
-
-#~ msgid "_Port"
-#~ msgstr "_Port"
-
-#~ msgid "_Server"
-#~ msgstr "_Tjener"
-
-#~ msgid "Advanced"
-#~ msgstr "Avansert"
-
-#~ msgid "What is your AIM screen name?"
-#~ msgstr "Hva er ditt skjermnavn for AIM?"
-
-#~ msgid "What is your AIM password?"
-#~ msgstr "HVa er ditt AIM-passord?"
-
-#~ msgid "Remember Password"
-#~ msgstr "Husk passord"
-
-#~ msgid "Password"
-#~ msgstr "Passord"
-
-#~ msgid "Server"
-#~ msgstr "Tjener"
-
-#~ msgid "Port"
-#~ msgstr "Port"
-
-#~ msgid "%s"
-#~ msgstr "%s"
-
-#~ msgid "%s:"
-#~ msgstr "%s:"
-
-#~ msgid "Username:"
-#~ msgstr "Brukernavn:"
-
-#~ msgid "A_pply"
-#~ msgstr "_Bruk"
-
-#~ msgid "L_og in"
-#~ msgstr "L_ogg inn"
-
-#~ msgid "This account already exists on the server"
-#~ msgstr "Denne kontoen eksisterer allerede på tjeneren"
-
-#~ msgid "Create a new account on the server"
-#~ msgstr "Lag en ny konto på tjeneren"
-
-#~ msgid "%1$s on %2$s"
-#~ msgstr "%1$s av %2$s"
-
-#~ msgid "%s Account"
-#~ msgstr "%s-konto"
-
-#~ msgid "New account"
-#~ msgstr "Ny konto"
-
-#~ msgid "Login I_D"
-#~ msgstr "Innloggings-I_D"
-
-#~ msgid "<b>Example:</b> username"
-#~ msgstr "<b>Eksempel:</b> brukernavn"
-
-#~ msgid "What is your GroupWise User ID?"
-#~ msgstr "Hva er din bruker-ID for GroupWise?"
-
-#~ msgid "What is your GroupWise password?"
-#~ msgstr "Hva er ditt passord for GroupWise?"
-
-#~ msgid "ICQ _UIN"
-#~ msgstr "ICQ _UIN"
-
-#~ msgid "<b>Example:</b> 123456789"
-#~ msgstr "<b>Eksempel:</b> 123456789"
-
-#~ msgid "Ch_aracter set"
-#~ msgstr "Tegn_sett"
-
-#~ msgid "What is your ICQ UIN?"
-#~ msgstr "Hva er din UIN for ICQ?"
-
-#~ msgid "What is your ICQ password?"
-#~ msgstr "Hva er ditt passord for ICQ?"
-
-#~ msgid "Network"
-#~ msgstr "Nettverk"
-
-#~ msgid "Character set"
-#~ msgstr "Tegnsett"
-
-#~ msgid "Up"
-#~ msgstr "Opp"
-
-#~ msgid "Down"
-#~ msgstr "Ned"
-
-#~ msgid "Servers"
-#~ msgstr "Tjenere"
-
-#~ msgid ""
-#~ "Most IRC servers don't need a password, so if you're not sure, don't "
-#~ "enter a password."
-#~ msgstr ""
-#~ "De fleste IRC-tjenere krever ikke et passord, så ikke oppgi et passord "
-#~ "hvis du ikke er sikker."
-
-#~ msgid "Nickname"
-#~ msgstr "Kallenavn"
-
-#~ msgid "Quit message"
-#~ msgstr "Melding når programmet avsluttes"
-
-#~ msgid "Real name"
-#~ msgstr "Virkelig navn"
-
-#~ msgid "Username"
-#~ msgstr "Brukernavn"
-
-#~ msgid "Which IRC network?"
-#~ msgstr "Hvilket IRC-nettverk?"
-
-#~ msgid "What is your IRC nickname?"
-#~ msgstr "Hva er ditt kallenavn på IRC?"
-
-#~ msgid "What is your Facebook username?"
-#~ msgstr "Hva er ditt brukernavn for Facebook?"
-
-#~ msgid ""
-#~ "This is your username, not your normal Facebook login.\n"
-#~ "If you are facebook.com/<b>badger</b>, enter <b>badger</b>.\n"
-#~ "Use <a href=\"http://www.facebook.com/username/\">this page</a> to choose "
-#~ "a Facebook username if you don't have one."
-#~ msgstr ""
-#~ "Dette er brukernavnet ditt, ikke din vanlige pålogging for Facebook.\n"
-#~ "Hvis du er facebook.com/<b>badger</b>, oppgi <b>badger</b>.\n"
-#~ "Bruk <a href=\"http://www.facebook.com/username/\">denne siden</a> for å "
-#~ "velge et brukernavn på Facebook hvis du ikke har et."
-
-#~ msgid "What is your Facebook password?"
-#~ msgstr "Hva er ditt passord for Facebook?"
-
-#~ msgid "What is your Google ID?"
-#~ msgstr "Hva er din Google-ID?"
-
-#~ msgid "<b>Example:</b> user@gmail.com"
-#~ msgstr "<b>Eksempel:</b> bruker@gmail.com"
-
-#~ msgid "What is your Google password?"
-#~ msgstr "Hva er ditt passord for Google?"
-
-#~ msgid "<b>Example:</b> user@jabber.org"
-#~ msgstr "<b>Eksempel:</b> bruker@jabber.org"
-
-#~ msgid "I_gnore SSL certificate errors"
-#~ msgstr "I_gnorer feil med SSL-sertifikater"
-
-#~ msgid "Priori_ty"
-#~ msgstr "Priori_tet"
-
-#~ msgid "Reso_urce"
-#~ msgstr "Ress_urs"
-
-#~ msgid "Encr_yption required (TLS/SSL)"
-#~ msgstr "Kr_yptering kreves (TLS/SSL)"
-
-#~ msgid "Override server settings"
-#~ msgstr "Overstyr innstillinger for tjener"
-
-#~ msgid "Use old SS_L"
-#~ msgstr "Bruk gammel SS_L"
-
-#~ msgid "What is your Jabber ID?"
-#~ msgstr "Hva er din Jabber-ID?"
-
-#~ msgid "What is your desired Jabber ID?"
-#~ msgstr "Hvilken Jabber-ID ønsker du?"
-
-#~ msgid "What is your Jabber password?"
-#~ msgstr "Hva er ditt passord for Jabber?"
-
-#~ msgid "What is your desired Jabber password?"
-#~ msgstr "Hvilket passord ønsker du for Jabber?"
-
-#~ msgid "Nic_kname"
-#~ msgstr "_Kallenavn"
-
-#~ msgid "_Last Name"
-#~ msgstr "_Etternavn"
-
-#~ msgid "_First Name"
-#~ msgstr "_Fornavn"
-
-#~ msgid "_Published Name"
-#~ msgstr "_Publisert navn"
-
-#~ msgid "_Jabber ID"
-#~ msgstr "_Jabber-ID"
-
-#~ msgid "E-_mail address"
-#~ msgstr "E-_postadresse"
-
-#~ msgid "<b>Example:</b> user@hotmail.com"
-#~ msgstr "<b>Eksempel:</b> bruker@hotmail.com"
-
-#~ msgid "What is your Windows Live ID?"
-#~ msgstr "Hva er din ID på Windows Live?"
-
-#~ msgid "What is your Windows Live password?"
-#~ msgstr "Hva er ditt passord for Windows Live?"
-
-#~ msgid "Auto"
-#~ msgstr "Auto"
-
-#~ msgid "UDP"
-#~ msgstr "UDP"
-
-#~ msgid "TCP"
-#~ msgstr "TCP"
-
-#~ msgid "TLS"
-#~ msgstr "TLS"
-
-#~ msgid "Register"
-#~ msgstr "Register"
-
-#~ msgid "Options"
-#~ msgstr "Alternativer"
-
-#~ msgid "None"
-#~ msgstr "Ingen"
-
-#~ msgid "_Username"
-#~ msgstr "Br_ukernavn"
-
-#~ msgid "<b>Example:</b> user@my.sip.server"
-#~ msgstr "<b>Eksempel:</b> bruker@min.sip.server"
-
-#~ msgid "Use this account to call _landlines and mobile phones"
-#~ msgstr "Bruk denne kontoen til å ringe opp fasttelefoner og mobiltelefoner"
-
-#~ msgid "NAT Traversal Options"
-#~ msgstr "Alternativer for NAT"
-
-#~ msgid "Proxy Options"
-#~ msgstr "Alternativer for proxy"
-
-#~ msgid "Miscellaneous Options"
-#~ msgstr "Forskjellige alternativer"
-
-#~ msgid "STUN Server"
-#~ msgstr "STUN-tjener"
-
-#~ msgid "Discover the STUN server automatically"
-#~ msgstr "Søk opp STUN-tjener automatisk"
-
-#~ msgid "Discover Binding"
-#~ msgstr "Oppdag binding"
-
-#~ msgid "Keep-Alive Options"
-#~ msgstr "Alternativer for Keep-Alive"
-
-#~ msgid "Mechanism"
-#~ msgstr "Mekanisme"
-
-#~ msgid "Interval (seconds)"
-#~ msgstr "Intervall (sekunder)"
-
-#~ msgid "Authentication username"
-#~ msgstr "Brukernavn for autentisering"
-
-#~ msgid "Transport"
-#~ msgstr "Transport"
-
-#~ msgid "Loose Routing"
-#~ msgstr "Løs ruting"
-
-#~ msgid "Ignore TLS Errors"
-#~ msgstr "Overse TLS-feil"
-
-#~ msgid "Local IP Address"
-#~ msgstr "Lokal IP-adresse"
-
-#~ msgid "What is your SIP login ID?"
-#~ msgstr "Hva er din påloggings-ID for SIP?"
-
-#~ msgid "What is your SIP account password?"
-#~ msgstr "Hva er passordet for din SIP-konto?"
-
-#~ msgid "Pass_word:"
-#~ msgstr "_Passord:"
-
-#~ msgid "Yahoo! I_D:"
-#~ msgstr "Yahoo!-I_D:"
-
-#~ msgid "I_gnore conference and chat room invitations"
-#~ msgstr "I_gnorer invitasjoner til konferanser og praterom"
-
-#~ msgid "_Room List locale:"
-#~ msgstr "Locale for _romliste:"
-
-#~ msgid "Ch_aracter set:"
-#~ msgstr "Tegn_sett:"
-
-#~ msgid "_Port:"
-#~ msgstr "_Port:"
-
-#~ msgid "What is your Yahoo! ID?"
-#~ msgstr "Hva er din Yahoo!-ID?"
-
-#~ msgid "What is your Yahoo! password?"
-#~ msgstr "Hva er ditt passord for Yahoo!?"
-
-#~ msgid "Couldn't convert image"
-#~ msgstr "Kunne ikke konvertere bilde"
-
-#~ msgid "None of the accepted image formats are supported on your system"
-#~ msgstr "Ingen av de godkjente bildeformatene støttes av ditt system"
-
-#~ msgid "Couldn't save picture to file"
-#~ msgstr "Kunne ikke lagre bilde til fil"
-
-#~ msgid "Select Your Avatar Image"
-#~ msgstr "Velg personbilde"
-
-#~ msgid "Take a picture..."
-#~ msgstr "Ta et bilde …"
-
-#~ msgid "No Image"
-#~ msgstr "Ingen bilde"
-
-#~ msgid "Images"
-#~ msgstr "Bilder"
-
-#~ msgid "All Files"
-#~ msgstr "Alle filer"
-
-#~ msgid "Select..."
-#~ msgstr "Velg …"
-
-#~ msgid "_Select"
-#~ msgstr "_Velg"
-
-#~ msgid "Full name"
-#~ msgstr "Fullt navn"
-
-#~ msgid "Phone number"
-#~ msgstr "Telefonnummer"
-
-#~ msgid "E-mail address"
-#~ msgstr "E-postadresse"
-
-#~ msgid "Website"
-#~ msgstr "Nettsted"
-
-#~ msgid "Birthday"
-#~ msgstr "Fødselsdag"
-
-#~ msgid "Last seen:"
-#~ msgstr "Sist sett:"
-
-#~ msgid "Server:"
-#~ msgstr "Tjener:"
-
-#~ msgid "Connected from:"
-#~ msgstr "Tilkoblet fra:"
-
-#~ msgid "Away message:"
-#~ msgstr "Bortemelding:"
-
-#~ msgid "work"
-#~ msgstr "arbeid"
-
-#~ msgid "home"
-#~ msgstr "hjemme"
-
-#~ msgid "mobile"
-#~ msgstr "mobil"
-
-#~ msgid "voice"
-#~ msgstr "tale"
-
-#~ msgid "preferred"
-#~ msgstr "foretrukket"
-
-#~ msgid "postal"
-#~ msgstr "post"
-
-#~ msgid "parcel"
-#~ msgstr "pakke"
-
-#~ msgid "New Network"
-#~ msgstr "Nytt nettverk"
-
-#~ msgid "Choose an IRC network"
-#~ msgstr "Velg et IRC-nettverk"
-
-#~ msgid "Reset _Networks List"
-#~ msgstr "Nullstill _nettverksliste"
-
-#~ msgctxt "verb displayed on a button to select an IRC network"
-#~ msgid "Select"
-#~ msgstr "Velg"
-
-#~ msgid "new server"
-#~ msgstr "ny tjener"
-
-#~ msgid "SSL"
-#~ msgstr "SSL"
-
-#~ msgid "New %s account"
-#~ msgstr "Ny %s-konto"
-
-#~ msgid "Go online to edit your personal information."
-#~ msgstr "Rediger din personlige informasjon på nettet."
-
-#~ msgid "<b>Personal Details</b>"
-#~ msgstr "<b>Personlige detaljer</b>"
-
-#~ msgid "Current Locale"
-#~ msgstr "Aktivt locale"
-
-#~ msgid "Arabic"
-#~ msgstr "Arabisk"
-
-#~ msgid "Armenian"
-#~ msgstr "Armensk"
-
-#~ msgid "Baltic"
-#~ msgstr "Baltisk"
-
-#~ msgid "Celtic"
-#~ msgstr "Keltisk"
-
-#~ msgid "Central European"
-#~ msgstr "Sentraleuropeisk"
-
-#~ msgid "Chinese Simplified"
-#~ msgstr "Forenklet kinesisk"
-
-#~ msgid "Chinese Traditional"
-#~ msgstr "Tradisjonell kinesisk"
-
-#~ msgid "Croatian"
-#~ msgstr "Kroatisk"
-
-#~ msgid "Cyrillic"
-#~ msgstr "Kyrillisk"
-
-#~ msgid "Cyrillic/Russian"
-#~ msgstr "Kyrillisk/Russisk"
-
-#~ msgid "Cyrillic/Ukrainian"
-#~ msgstr "Kyrillisk/Ukrainsk"
-
-#~ msgid "Georgian"
-#~ msgstr "Georgisk"
-
-#~ msgid "Greek"
-#~ msgstr "Gresk"
-
-#~ msgid "Gujarati"
-#~ msgstr "Gujarati"
-
-#~ msgid "Gurmukhi"
-#~ msgstr "Gurmukhi"
-
-#~ msgid "Hebrew"
-#~ msgstr "Hebraisk"
-
-#~ msgid "Hebrew Visual"
-#~ msgstr "Visuell hebraisk"
-
-#~ msgid "Hindi"
-#~ msgstr "Hindi"
-
-#~ msgid "Icelandic"
-#~ msgstr "Islandsk"
-
-#~ msgid "Japanese"
-#~ msgstr "Japansk"
-
-#~ msgid "Korean"
-#~ msgstr "Koreansk"
-
-#~ msgid "Nordic"
-#~ msgstr "Nordisk"
-
-#~ msgid "Persian"
-#~ msgstr "Persisk"
-
-#~ msgid "Romanian"
-#~ msgstr "Rumensk"
-
-#~ msgid "South European"
-#~ msgstr "Sør-Europeisk"
-
-#~ msgid "Thai"
-#~ msgstr "Thai"
-
-#~ msgid "Turkish"
-#~ msgstr "Tyrkisk"
-
-#~ msgid "Unicode"
-#~ msgstr "Unicode"
-
-#~ msgid "Western"
-#~ msgstr "Vestlig"
-
-#~ msgid "Vietnamese"
-#~ msgstr "Vietnamesisk"
