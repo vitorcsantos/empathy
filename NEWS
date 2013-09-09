@@ -1,3 +1,18 @@
+NEW in 3.8.4 (09/09/2013)
+============
+
+This stable release fixes a bunch of bugs including various crashes.
+Upgrading is highly recommended.
+
+Bugs fixed:
+ - Fixed #696328, empathy-debugger crashed with SIGSEGV (Guillaume Desmottes)
+ - Fixed #692105, empathy-3.6.2-1.fc18: items_delete_cb: Process /usr/bin/empathy-accounts was killed by signal 11 (Emilio Pozuelo Monfort)
+ - Fixed #704469, Crash when deleting a non-chat GOA account (Marco Barisione)
+ - Fixed #702095, System crash when typing a long string in empathy (Xavier Claessens)
+ - Fixed #691085, Backslash escapes applied in the chat log (Ryan Lortie)
+ - Fixed #701914, Return value of tp_debug_client_get_messages_finish() is leaked (Guillaume Desmottes)
+ - Fixed #698742, Crash when joining an IRC channel (Xavier Claessens)
+
 NEW in 3.8.3 (24/05/2013)
 ============
 Bugs fixed:
