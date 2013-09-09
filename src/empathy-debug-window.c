@@ -376,7 +376,7 @@ debug_window_get_messages_cb (GObject *object,
   messages = tp_debug_client_get_messages_finish (debug, result, &error);
   if (messages == NULL)
     {
-      DEBUG ("Failed to get debug messsages: %s", error->message);
+      DEBUG ("Failed to get debug messages: %s", error->message);
       g_error_free (error);
 
       /* We want to set the window sensitivity to false only when proxy for the
