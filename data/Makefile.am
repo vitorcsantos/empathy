@@ -60,7 +60,11 @@ css_DATA = \
 	empathy.css \
 	$(NULL)
 
+appdatadir = $(datadir)/appdata
+appdata_files = empathy.appdata.xml
+
 EXTRA_DIST = 				\
+	$(appdata_files) \
 	$(convert_DATA)			\
 	$(desktop_in_files)		\
 	$(desktop_DATA)			\
