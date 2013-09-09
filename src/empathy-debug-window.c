@@ -2063,7 +2063,12 @@ am_prepared_cb (GObject *am,
       (GtkTreeCellDataFunc) debug_window_level_formatter, NULL, NULL);
 
   renderer = gtk_cell_renderer_text_new ();
-  g_object_set (renderer, "family", "Monospace", NULL);
+
+  g_object_set (renderer,
+      "family", "Monospace",
+      "ellipsize", PANGO_ELLIPSIZE_END,
+      NULL);
+
   gtk_tree_view_insert_column_with_data_func (GTK_TREE_VIEW (self->priv->view),
       -1, _("Message"), renderer,
       (GtkTreeCellDataFunc) debug_window_message_formatter, NULL, NULL);
