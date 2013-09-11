@@ -52,7 +52,7 @@ empathy_uoa_auth_handler_init (EmpathyUoaAuthHandler *self)
   self->priv = G_TYPE_INSTANCE_GET_PRIVATE (self,
       EMPATHY_TYPE_UOA_AUTH_HANDLER, EmpathyUoaAuthHandlerPriv);
 
-  self->priv->manager = empathy_uoa_manager_dup ();
+  self->priv->manager = tpaw_uoa_manager_dup ();
 }
 
 static void

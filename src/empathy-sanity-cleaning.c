@@ -536,7 +536,7 @@ migrate_accounts_to_uoa (SanityCtx *ctx)
 
   DEBUG ("Start migrating accounts to UOA");
 
-  manager = empathy_uoa_manager_dup ();
+  manager = tpaw_uoa_manager_dup ();
 
   accounts = tp_account_manager_dup_valid_accounts (ctx->am);
   for (l = accounts; l != NULL; l = g_list_next (l))
