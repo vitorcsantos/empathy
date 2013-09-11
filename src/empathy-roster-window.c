@@ -1354,10 +1354,11 @@ roster_window_favorite_chatroom_menu_removed_cb (
     EmpathyRosterWindow *self)
 {
   GList *chatrooms;
-  gint i;
+  guint i, n;
 
-  for (i = 0; i < g_menu_model_get_n_items (
-        G_MENU_MODEL (self->priv->rooms_section)); i++)
+  n = g_menu_model_get_n_items (G_MENU_MODEL (self->priv->rooms_section));
+
+  for (i = 0; i < n; i++)
     {
       const gchar *name;
 
