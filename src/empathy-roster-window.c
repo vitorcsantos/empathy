@@ -1347,16 +1347,22 @@ roster_window_favorite_chatroom_menu_removed_cb (
 
   for (i = 0; i < n; i++)
     {
-      const gchar *name;
+      gchar *name;
 
-      if (g_menu_model_get_item_attribute (
-            G_MENU_MODEL (self->priv->rooms_section), i, "room-name",
-            "s", &name)
-          && !tp_strdiff (name, empathy_chatroom_get_name (chatroom)))
+      if (!g_menu_model_get_item_attribute (
+            G_MENU_MODEL (self->priv->rooms_section), i,
+            "room-name", "s", &name))
+        continue;
+
+      if (tp_strdiff (name, empathy_chatroom_get_name (chatroom)))
         {
-          g_menu_remove (self->priv->rooms_section, i);
-          break;
+          g_free (name);
+          continue;
         }
+
+      g_menu_remove (self->priv->rooms_section, i);
+      g_free (name);
+      break;
     }
 
   chatrooms = empathy_chatroom_manager_get_chatrooms (
