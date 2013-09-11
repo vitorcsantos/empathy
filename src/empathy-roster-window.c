@@ -34,6 +34,7 @@
 #include "empathy-chat-manager.h"
 #include "empathy-chatroom-manager.h"
 #include "empathy-chatrooms-window.h"
+#include "empathy-client-factory.h"
 #include "empathy-contact-blocking-dialog.h"
 #include "empathy-contact-search-dialog.h"
 #include "empathy-event-manager.h"
@@ -1272,19 +1273,44 @@ roster_window_favorite_chatroom_join (EmpathyChatroom *chatroom)
 }
 
 static void
-roster_window_favorite_chatroom_menu_activate_cb (GAction *action,
+roster_window_join_chatroom_menu_activate_cb (GSimpleAction *action,
     GVariant *parameter,
-    EmpathyChatroom *chatroom)
+    gpointer user_data)
 {
-  roster_window_favorite_chatroom_join (chatroom);
-}
+  EmpathyRosterWindow *self = user_data;
+  const gchar *room, *path;
+  EmpathyClientFactory *factory;
+  TpAccount *account;
+  GError *error = NULL;
+  EmpathyChatroom *chatroom;
 
-static gchar *
-dup_join_action_name (EmpathyChatroom *chatroom,
-    gboolean prefix)
-{
-  return g_strconcat (prefix ? "win." : "", "join-",
-      empathy_chatroom_get_name (chatroom), NULL);
+  g_variant_get (parameter, "(&s&s)", &room, &path);
+
+  factory = empathy_client_factory_dup ();
+
+  account = tp_simple_client_factory_ensure_account (
+      TP_SIMPLE_CLIENT_FACTORY (factory), path, NULL, &error);
+  if (account == NULL)
+    {
+      DEBUG ("Failed to get account '%s': %s", path, error->message);
+      g_error_free (error);
+      goto out;
+    }
+
+  chatroom = empathy_chatroom_manager_find (self->priv->chatroom_manager,
+      account, room);
+  if (chatroom == NULL)
+    {
+      DEBUG ("Failed to get chatroom '%s' on '%s': %s",
+          room, path, error->message);
+      g_error_free (error);
+      goto out;
+    }
+
+  roster_window_favorite_chatroom_join (chatroom);
+
+out:
+  g_object_unref (factory);
 }
 
 static void
@@ -1292,35 +1318,25 @@ roster_window_favorite_chatroom_menu_add (EmpathyRosterWindow *self,
     EmpathyChatroom *chatroom)
 {
   GMenuItem *item;
-  const gchar *name, *account_name;
-  gchar *label, *action_name;
-  GAction *action;
+  const gchar *name, *account_name, *account_path;
+  TpAccount *account;
+  gchar *label;
+
+  account = empathy_chatroom_get_account (chatroom);
 
   name = empathy_chatroom_get_name (chatroom);
-  account_name = tp_account_get_display_name (
-      empathy_chatroom_get_account (chatroom));
+  account_name = tp_account_get_display_name (account);
+  account_path = tp_proxy_get_object_path (account);
 
   label = g_strdup_printf ("%s (%s)", name, account_name);
-  action_name = dup_join_action_name (chatroom, FALSE);
 
-  action = (GAction *) g_simple_action_new (action_name, NULL);
-  g_free (action_name);
-
-  g_signal_connect (action, "activate",
-      G_CALLBACK (roster_window_favorite_chatroom_menu_activate_cb),
-      chatroom);
-
-  g_action_map_add_action (G_ACTION_MAP (self), action);
-
-  action_name = dup_join_action_name (chatroom, TRUE);
-
-  item = g_menu_item_new (label, action_name);
+  item = g_menu_item_new (label, NULL);
+  g_menu_item_set_action_and_target (item, "win.join", "(ss)",
+      name, account_path);
   g_menu_item_set_attribute (item, "room-name", "s", name);
   g_menu_append_item (self->priv->rooms_section, item);
 
   g_free (label);
-  g_free (action_name);
-  g_object_unref (action);
 }
 
 static void
@@ -1338,12 +1354,7 @@ roster_window_favorite_chatroom_menu_removed_cb (
     EmpathyRosterWindow *self)
 {
   GList *chatrooms;
-  gchar *act;
   gint i;
-
-  act = dup_join_action_name (chatroom, TRUE);
-
-  g_action_map_remove_action (G_ACTION_MAP (self), act);
 
   for (i = 0; i < g_menu_model_get_n_items (
         G_MENU_MODEL (self->priv->rooms_section)); i++)
@@ -1855,6 +1866,7 @@ static GActionEntry menubar_entries[] = {
 
   { "room_join_new", roster_window_room_join_new_cb, NULL, NULL, NULL },
   { "room_join_favorites", roster_window_room_join_favorites_cb, NULL, NULL, NULL },
+  { "join", roster_window_join_chatroom_menu_activate_cb, "(ss)", NULL, NULL },
   { "room_manage_favorites", roster_window_room_manage_favorites_cb, NULL, NULL, NULL },
 
   { "help_contents", roster_window_help_contents_cb, NULL, NULL, NULL },
