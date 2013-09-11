@@ -1334,6 +1334,7 @@ roster_window_favorite_chatroom_menu_add (EmpathyRosterWindow *self,
   g_menu_item_set_action_and_target (item, "win.join", "(ss)",
       name, account_path);
   g_menu_item_set_attribute (item, "room-name", "s", name);
+  g_menu_item_set_attribute (item, "account-path", "s", account_path);
   g_menu_append_item (self->priv->rooms_section, item);
 
   g_free (label);
@@ -1355,26 +1356,44 @@ roster_window_favorite_chatroom_menu_removed_cb (
 {
   GList *chatrooms;
   guint i, n;
+  TpAccount *account;
+  const gchar *account_path;
+
+  account = empathy_chatroom_get_account (chatroom);
+  account_path = tp_proxy_get_object_path (account);
 
   n = g_menu_model_get_n_items (G_MENU_MODEL (self->priv->rooms_section));
 
   for (i = 0; i < n; i++)
     {
-      gchar *name;
+      gchar *tmp;
 
       if (!g_menu_model_get_item_attribute (
             G_MENU_MODEL (self->priv->rooms_section), i,
-            "room-name", "s", &name))
+            "room-name", "s", &tmp))
         continue;
 
-      if (tp_strdiff (name, empathy_chatroom_get_name (chatroom)))
+      if (tp_strdiff (tmp, empathy_chatroom_get_name (chatroom)))
         {
-          g_free (name);
+          g_free (tmp);
+          continue;
+        }
+
+      g_free (tmp);
+
+      if (!g_menu_model_get_item_attribute (
+            G_MENU_MODEL (self->priv->rooms_section), i,
+            "account-path", "s", &tmp))
+        continue;
+
+      if (tp_strdiff (tmp, account_path))
+        {
+          g_free (tmp);
           continue;
         }
 
       g_menu_remove (self->priv->rooms_section, i);
-      g_free (name);
+      g_free (tmp);
       break;
     }
 
