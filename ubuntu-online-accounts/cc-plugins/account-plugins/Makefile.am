@@ -5,6 +5,7 @@ INCLUDES =					\
 	-I$(top_srcdir)/libempathy		\
 	-I$(top_srcdir)/libempathy-gtk		\
 	-DLOCALEDIR=\""$(datadir)/locale"\"	\
+	$(TPAW_CFLAGS)				\
 	$(UOA_CFLAGS)				\
 	$(WARN_CFLAGS)				\
 	$(ERROR_CFLAGS)				\
@@ -23,6 +24,7 @@ libempathy_accounts_plugin_la_SOURCES = \
 	empathy-accounts-plugin-widget.h
 
 libempathy_accounts_plugin_la_LIBADD = \
+	$(TPAW_LIBS) \
 	$(UOA_LIBS) \
 	$(top_builddir)/libempathy/libempathy.la \
 	$(top_builddir)/libempathy-gtk/libempathy-gtk.la

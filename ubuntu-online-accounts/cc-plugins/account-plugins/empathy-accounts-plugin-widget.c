@@ -21,7 +21,7 @@
 
 #include "config.h"
 
-#include "tpaw-accounts-plugin-widget.h"
+#include "empathy-accounts-plugin-widget.h"
 
 #include <glib/gi18n-lib.h>
 
@@ -30,7 +30,7 @@
 #include <libaccounts-glib/ag-service.h>
 #include <libaccounts-glib/ag-account-service.h>
 
-#include "tpaw-account-widget.h"
+#include <tp-account-widgets/tpaw-account-widget.h>
 
 G_DEFINE_TYPE (EmpathyAccountsPluginWidget, empathy_accounts_plugin_widget, GTK_TYPE_BOX)
 
@@ -52,9 +52,9 @@ struct _EmpathyAccountsPluginWidgetPriv
 {
   AgAccount *account;
 
-  EmpathyAccountSettings *settings;
+  TpawAccountSettings *settings;
 
-  EmpathyAccountWidget *account_widget;
+  TpawAccountWidget *account_widget;
   GtkWidget *done_button;
 };
 
@@ -96,7 +96,7 @@ empathy_accounts_plugin_widget_set_property (GObject *object,
     }
 }
 
-static EmpathyAccountSettings *
+static TpawAccountSettings *
 create_account_settings (AgAccount *account)
 {
   AgService *service;
@@ -104,7 +104,7 @@ create_account_settings (AgAccount *account)
   AgAccountService *account_service;
   GVariant *v;
   gchar *manager = NULL, *protocol = NULL;
-  EmpathyAccountSettings *settings;
+  TpawAccountSettings *settings;
 
   g_assert (account->id == 0);
 
@@ -127,13 +127,13 @@ create_account_settings (AgAccount *account)
   g_return_val_if_fail (manager != NULL, NULL);
   g_return_val_if_fail (protocol != NULL, NULL);
 
-  settings = empathy_account_settings_new (manager, protocol, NULL,
+  settings = tpaw_account_settings_new (manager, protocol, NULL,
       ag_service_get_display_name (service));
 
-  empathy_account_settings_set_storage_provider (settings,
+  tpaw_account_settings_set_storage_provider (settings,
       EMPATHY_UOA_PROVIDER);
 
-  empathy_account_settings_set_icon_name_async (settings,
+  tpaw_account_settings_set_icon_name_async (settings,
     ag_service_get_icon_name (service), NULL, NULL);
 
   g_free (manager);
@@ -155,13 +155,13 @@ response_cb (GtkWidget *widget,
     }
   if (response == GTK_RESPONSE_OK)
     {
-      empathy_account_widget_apply_and_log_in (self->priv->account_widget);
+      tpaw_account_widget_apply_and_log_in (self->priv->account_widget);
 
       /* Rely on account_widget_close_cb to fire the 'done' signal */
     }
   else
     {
-      empathy_account_widget_discard_pending_changes (
+      tpaw_account_widget_discard_pending_changes (
           self->priv->account_widget);
 
       g_signal_emit (self, signals[SIG_DONE], 0);
@@ -222,7 +222,7 @@ create_top_bar (EmpathyAccountsPluginWidget *self)
 }
 
 static void
-account_widget_handle_apply_cb (EmpathyAccountWidget *widget,
+account_widget_handle_apply_cb (TpawAccountWidget *widget,
     gboolean valid,
     EmpathyAccountsPluginWidget *self)
 {
@@ -230,7 +230,7 @@ account_widget_handle_apply_cb (EmpathyAccountWidget *widget,
 }
 
 static void
-account_widget_close_cb (EmpathyAccountWidget *widget,
+account_widget_close_cb (TpawAccountWidget *widget,
     GtkResponseType response,
     EmpathyAccountsPluginWidget *self)
 {
@@ -251,10 +251,10 @@ add_account_widget (EmpathyAccountsPluginWidget *self)
   /* Use the simple widget only when creating the account */
   simple = (self->priv->account->id == 0);
 
-  self->priv->account_widget = empathy_account_widget_new_for_protocol (
-      self->priv->settings, simple);
+  self->priv->account_widget = tpaw_account_widget_new_for_protocol (
+      self->priv->settings, NULL, simple);
 
-  empathy_account_widget_hide_buttons (self->priv->account_widget);
+  tpaw_account_widget_hide_buttons (self->priv->account_widget);
 
   gtk_widget_set_valign (GTK_WIDGET (self->priv->account_widget),
       GTK_ALIGN_CENTER);
@@ -263,7 +263,7 @@ add_account_widget (EmpathyAccountsPluginWidget *self)
       GTK_WIDGET (self->priv->account_widget));
   gtk_widget_show (GTK_WIDGET (self->priv->account_widget));
 
-  if (!empathy_account_settings_is_valid (self->priv->settings))
+  if (!tpaw_account_settings_is_valid (self->priv->settings))
     {
       gtk_widget_set_sensitive (self->priv->done_button, FALSE);
     }
@@ -279,7 +279,7 @@ maybe_add_account_widget (EmpathyAccountsPluginWidget *self)
 {
   g_return_if_fail (self->priv->settings != NULL);
 
-  if (empathy_account_settings_is_ready (self->priv->settings))
+  if (tpaw_account_settings_is_ready (self->priv->settings))
     {
       add_account_widget (self);
     }
@@ -324,7 +324,7 @@ manager_prepared_cb (GObject *source,
       if (G_VALUE_HOLDS_UINT (value) &&
           g_value_get_uint (value) == self->priv->account->id)
         {
-          self->priv->settings = empathy_account_settings_new_for_account (
+          self->priv->settings = tpaw_account_settings_new_for_account (
               account);
           maybe_add_account_widget (self);
           break;
