@@ -81,7 +81,7 @@ dup_contact_from_individual (FolksIndividual *individual)
 }
 
 static gboolean
-filter_individual (GtkWidget *child,
+filter_individual (GtkListBoxRow *child,
     gpointer user_data)
 {
   FolksIndividual *individual;
@@ -121,10 +121,9 @@ get_contacts_widget (NstPlugin *plugin)
 
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
       GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
-  egg_list_box_set_filter_func (EGG_LIST_BOX (roster_view), filter_individual,
+  gtk_list_box_set_filter_func (GTK_LIST_BOX (roster_view), filter_individual,
       roster_view, NULL);
-  egg_list_box_add_to_scrolled (EGG_LIST_BOX (roster_view),
-      GTK_SCROLLED_WINDOW (scrolled));
+  gtk_container_add (GTK_CONTAINER (scrolled), roster_view);
 
   gtk_box_pack_start (GTK_BOX (box), scrolled, TRUE, TRUE, 0);
 
