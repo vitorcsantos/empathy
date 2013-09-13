@@ -276,7 +276,7 @@ empathy_roster_model_aggregator_constructed (GObject *object)
     chain_up (object);
 
   if (self->priv->aggregator == NULL)
-    self->priv->aggregator = folks_individual_aggregator_new ();
+    self->priv->aggregator = folks_individual_aggregator_dup ();
 
   g_assert (FOLKS_IS_INDIVIDUAL_AGGREGATOR (self->priv->aggregator));
 

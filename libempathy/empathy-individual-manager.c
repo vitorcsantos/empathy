@@ -583,7 +583,7 @@ empathy_individual_manager_init (EmpathyIndividualManager *self)
 
   priv->individuals_pop = g_sequence_new (g_object_unref);
 
-  priv->aggregator = folks_individual_aggregator_new ();
+  priv->aggregator = folks_individual_aggregator_dup ();
   tp_g_signal_connect_object (priv->aggregator, "individuals-changed-detailed",
       G_CALLBACK (aggregator_individuals_changed_cb), self, 0);
   tp_g_signal_connect_object (priv->aggregator, "notify::is-quiescent",
