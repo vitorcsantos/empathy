@@ -145,18 +145,24 @@ auth_context_done (AuthContext *ctx)
 }
 
 static void
-request_password_session_process_cb (SignonAuthSession *session,
-    GHashTable *session_data,
-    const GError *error,
+request_password_session_process_cb (GObject *source,
+    GAsyncResult *result,
     gpointer user_data)
 {
+  SignonAuthSession *session = (SignonAuthSession *) source;
   AuthContext *ctx = user_data;
+  GVariant *variant;
+  GError *error = NULL;
 
+  variant = signon_auth_session_process_finish (session, result, &error);
   if (error != NULL)
     {
       DEBUG ("Error processing the session to request user's attention: %s",
           error->message);
+      g_clear_error (&error);
     }
+
+  g_variant_unref (variant);
 
   auth_context_done (ctx);
 }
@@ -164,25 +170,23 @@ request_password_session_process_cb (SignonAuthSession *session,
 static void
 request_password (AuthContext *ctx)
 {
-  GHashTable *extra_params;
+  GVariantBuilder builder;
 
   DEBUG ("Invalid credentials, request user action");
 
   /* Inform SSO that the access token (or password) didn't work and it should
    * ask user to re-grant access (or retype password). */
-  extra_params = tp_asv_new (
-      SIGNON_SESSION_DATA_UI_POLICY, G_TYPE_INT,
-          SIGNON_POLICY_REQUEST_PASSWORD,
-      NULL);
+  g_variant_builder_init (&builder, G_VARIANT_TYPE_VARDICT);
+  g_variant_builder_add (&builder, "{sv}",
+      SIGNON_SESSION_DATA_UI_POLICY,
+      g_variant_new_int32 (SIGNON_POLICY_REQUEST_PASSWORD));
 
-  ag_auth_data_insert_parameters (ctx->auth_data, extra_params);
-
-  signon_auth_session_process (ctx->session,
-      ag_auth_data_get_parameters (ctx->auth_data),
+  signon_auth_session_process_async (ctx->session,
+      ag_auth_data_get_login_parameters (ctx->auth_data,
+          g_variant_builder_end (&builder)),
       ag_auth_data_get_mechanism (ctx->auth_data),
+      NULL,
       request_password_session_process_cb, ctx);
-
-  g_hash_table_unref (extra_params);
 }
 
 static void
@@ -209,25 +213,34 @@ auth_cb (GObject *source,
 }
 
 static void
-session_process_cb (SignonAuthSession *session,
-    GHashTable *session_data,
-    const GError *error,
+session_process_cb (GObject *source,
+    GAsyncResult *result,
     gpointer user_data)
 {
+  SignonAuthSession *session = (SignonAuthSession *) source;
   AuthContext *ctx = user_data;
+  GVariant *session_data;
   const gchar *access_token;
   const gchar *client_id;
+  const gchar *secret;
+  GVariant *params;
+  GError *error = NULL;
 
+  session_data = signon_auth_session_process_finish (session, result, &error);
   if (error != NULL)
     {
       DEBUG ("Error processing the session: %s", error->message);
       auth_context_done (ctx);
+      g_clear_error (&error);
       return;
     }
 
-  access_token = tp_asv_get_string (session_data, "AccessToken");
-  client_id = tp_asv_get_string (ag_auth_data_get_parameters (ctx->auth_data),
-      "ClientId");
+  params = g_variant_ref_sink (
+      ag_auth_data_get_login_parameters (ctx->auth_data, NULL));
+
+  g_variant_lookup (params, "ClientId", "&s", &client_id);
+  g_variant_lookup (session_data, "AccessToken", "&s", &access_token);
+  g_variant_lookup (session_data, "Secret", "&s", &secret);
 
   switch (empathy_sasl_channel_select_mechanism (ctx->channel))
     {
@@ -251,13 +264,15 @@ session_process_cb (SignonAuthSession *session,
 
       case EMPATHY_SASL_MECHANISM_PASSWORD:
         empathy_sasl_auth_password_async (ctx->channel,
-            tp_asv_get_string (session_data, "Secret"),
+            secret,
             auth_cb, ctx);
         break;
 
       default:
         g_assert_not_reached ();
     }
+
+  g_variant_unref (params);
 }
 
 static void
@@ -277,9 +292,10 @@ identity_query_info_cb (SignonIdentity *identity,
 
   ctx->username = g_strdup (signon_identity_info_get_username (info));
 
-  signon_auth_session_process (ctx->session,
-      ag_auth_data_get_parameters (ctx->auth_data),
+  signon_auth_session_process_async (ctx->session,
+      ag_auth_data_get_login_parameters (ctx->auth_data, NULL),
       ag_auth_data_get_mechanism (ctx->auth_data),
+      NULL,
       session_process_cb,
       ctx);
 }

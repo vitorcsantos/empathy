@@ -55,18 +55,20 @@ empathy_accounts_plugin_build_widget (ApPlugin *plugin)
 }
 
 static void
-store_delete_cb (AgAccount *account,
-    const GError *error,
+store_delete_cb (GObject *source,
+    GAsyncResult *res,
     gpointer user_data)
 {
+  AgAccount *account = (AgAccount *) source;
   GSimpleAsyncResult *result = user_data;
+  GError *error = NULL;
 
-  if (error != NULL)
+  if (!ag_account_store_finish (account, res, &error))
     {
       g_debug ("Failed to delete account with ID '%u': %s",
           account->id, error->message);
 
-      g_simple_async_result_set_from_error (result, error);
+      g_simple_async_result_take_error (result, error);
     }
 
   g_simple_async_result_complete (result);
@@ -87,7 +89,7 @@ empathy_accounts_plugin_delete_account (ApPlugin *plugin,
   account = ap_plugin_get_account (plugin);
 
   ag_account_delete (account);
-  ag_account_store (account, store_delete_cb, result);
+  ag_account_store_async (account, NULL, store_delete_cb, result);
 }
 
 static void
