@@ -20,11 +20,10 @@
 
 #include "config.h"
 
-#include <tp-account-widgets/tpaw-uoa-utils.h>
-
 #include "empathy-accounts-plugin.h"
 
-#include "empathy-client-factory.h"
+#include <libempathy/empathy-client-factory.h>
+#include <libempathy/empathy-uoa-utils.h>
 
 #include "empathy-accounts-plugin-widget.h"
 
@@ -44,7 +43,7 @@ empathy_accounts_plugin_build_widget (ApPlugin *plugin)
   GtkWidget *widget;
 
   account = ap_plugin_get_account (plugin);
-  tpaw_uoa_manager_set_default (ag_account_get_manager (account));
+  empathy_uoa_manager_set_default (ag_account_get_manager (account));
 
   widget = empathy_accounts_plugin_widget_new (account);
 
