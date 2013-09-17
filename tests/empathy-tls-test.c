@@ -1,5 +1,6 @@
 #include <gnutls/gnutls.h>
-#include <telepathy-glib/svc-tls.h>
+#include <telepathy-glib/telepathy-glib.h>
+#include <telepathy-glib/telepathy-glib-dbus.h>
 
 #include "empathy-tls-verifier.h"
 #include "mock-pkcs11.h"
