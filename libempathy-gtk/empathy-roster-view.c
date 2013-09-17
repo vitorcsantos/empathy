@@ -768,11 +768,11 @@ update_header (GtkListBoxRow *row,
   if (before == NULL)
     {
       /* No separator before the first row */
-      gtk_list_box_row_set_header(row, NULL);
+      gtk_list_box_row_set_header (row, NULL);
       return;
     }
 
-  if (gtk_list_box_row_get_header(row) != NULL)
+  if (gtk_list_box_row_get_header (row) != NULL)
     return;
 
   gtk_list_box_row_set_header (row,

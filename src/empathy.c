@@ -422,7 +422,7 @@ empathy_app_local_command_line (GApplication *app,
 
   if (!g_application_register (app, NULL, &error))
     {
-      g_warning("Impossible to register empathy: %s", error->message);
+      g_warning ("Impossible to register empathy: %s", error->message);
       g_clear_error (&error);
       *exit_status = EXIT_FAILURE;
       return retval;

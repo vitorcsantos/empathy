@@ -103,7 +103,7 @@ protocol_chooser_get_protocols_cb (GObject *source,
   GList *protocols = NULL;
   GList *l;
 
-  if (!tpaw_protocol_get_all_finish(&protocols, result, NULL))
+  if (!tpaw_protocol_get_all_finish (&protocols, result, NULL))
     return;
 
   for (l = protocols; l != NULL; l = l->next)

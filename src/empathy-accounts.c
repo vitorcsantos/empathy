@@ -209,7 +209,7 @@ local_cmdline (GApplication *app,
         }
       else
         {
-          g_warning("Impossible to register empathy-application: %s", error->message);
+          g_warning ("Impossible to register empathy-application: %s", error->message);
           g_clear_error (&error);
           *exit_status = EXIT_FAILURE;
         }
