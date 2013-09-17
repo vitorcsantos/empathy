@@ -1,3 +1,5 @@
+#include "config.h"
+
 #include "empathy-chatroom-manager.h"
 #include "test-helper.h"
 
