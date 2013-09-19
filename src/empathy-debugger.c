@@ -66,7 +66,7 @@ local_cmdline (GApplication *app,
   GError *error = NULL;
   GSimpleAction *action;
   gchar **argv;
-  gint argc;
+  gint argc = 0;
   gint i;
   gboolean retval = TRUE;
 
