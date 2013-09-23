@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: empathy 3.3.92\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-04 14:47+0800\n"
-"PO-Revision-Date: 2013-09-04 14:14+0800\n"
+"POT-Creation-Date: 2013-09-23 21:48+0800\n"
+"PO-Revision-Date: 2013-09-22 22:28+0800\n"
 "Last-Translator: Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>\n"
 "Language-Team: Chinese (traditional) <chinese-l10n@googlegroups.com>\n"
 "Language: zh_TW\n"
@@ -541,7 +541,7 @@ msgstr "網路錯誤"
 
 #: ../libempathy/empathy-utils.c:237 ../libempathy/empathy-utils.c:271
 msgid "Authentication failed"
-msgstr "驗證失敗"
+msgstr "核對失敗"
 
 #: ../libempathy/empathy-utils.c:239 ../libempathy/empathy-utils.c:273
 msgid "Encryption error"
@@ -654,7 +654,7 @@ msgstr "請按這裡放大"
 #: ../libempathy-gtk/empathy-bad-password-dialog.c:128
 #, c-format
 msgid "Authentication failed for account <b>%s</b>"
-msgstr "<b>%s</b> 帳號驗證失敗"
+msgstr "<b>%s</b> 帳號核對失敗"
 
 #: ../libempathy-gtk/empathy-bad-password-dialog.c:140
 #: ../libempathy-gtk/empathy-chat.c:3846
@@ -840,7 +840,7 @@ msgstr "未實作"
 msgid "unknown"
 msgstr "不明"
 
-#: ../libempathy-gtk/empathy-chat.c:1686 ../src/empathy-chat-window.c:971
+#: ../libempathy-gtk/empathy-chat.c:1686 ../src/empathy-chat-window.c:974
 msgid "Topic:"
 msgstr "主題："
 
@@ -1325,7 +1325,7 @@ msgstr "編輯(_E)"
 
 #. send invitation
 #: ../libempathy-gtk/empathy-individual-menu.c:1793
-#: ../src/empathy-chat-window.c:1274
+#: ../src/empathy-chat-window.c:1277
 msgid "Inviting you to this room"
 msgstr "邀請您到這個聊天室"
 
@@ -1660,7 +1660,7 @@ msgid "Profile"
 msgstr "個人檔案"
 
 #: ../libempathy-gtk/empathy-log-window.ui.h:5
-#: ../src/empathy-chat-window.c:1490 ../src/empathy-preferences.ui.h:11
+#: ../src/empathy-chat-window.c:1493 ../src/empathy-preferences.ui.h:11
 msgid "Chat"
 msgstr "聊天"
 
@@ -2030,11 +2030,11 @@ msgstr "未群組"
 msgid "Server cannot find contact: %s"
 msgstr "伺服器找不到聯絡人：%s"
 
-#: ../nautilus-sendto-plugin/empathy-nautilus-sendto.c:223
+#: ../nautilus-sendto-plugin/empathy-nautilus-sendto.c:222
 msgid "No error message"
 msgstr "沒有錯誤訊息"
 
-#: ../nautilus-sendto-plugin/empathy-nautilus-sendto.c:296
+#: ../nautilus-sendto-plugin/empathy-nautilus-sendto.c:295
 msgid "Instant Message (Empathy)"
 msgstr "即時通訊 (Empathy)"
 
@@ -2617,41 +2617,41 @@ msgstr "關閉視窗"
 msgid "Leave room"
 msgstr "離開聊天室"
 
-#: ../src/empathy-chat-window.c:669 ../src/empathy-chat-window.c:692
+#: ../src/empathy-chat-window.c:672 ../src/empathy-chat-window.c:695
 #, c-format
 msgid "%s (%d unread)"
 msgid_plural "%s (%d unread)"
 msgstr[0] "%s (%d 個未讀)"
 
-#: ../src/empathy-chat-window.c:684
+#: ../src/empathy-chat-window.c:687
 #, c-format
 msgid "%s (and %u other)"
 msgid_plural "%s (and %u others)"
 msgstr[0] "%s (與其他 %u 個)"
 
-#: ../src/empathy-chat-window.c:700
+#: ../src/empathy-chat-window.c:703
 #, c-format
 msgid "%s (%d unread from others)"
 msgid_plural "%s (%d unread from others)"
 msgstr[0] "%s (來自其他人的 %d 個未讀)"
 
-#: ../src/empathy-chat-window.c:709
+#: ../src/empathy-chat-window.c:712
 #, c-format
 msgid "%s (%d unread from all)"
 msgid_plural "%s (%d unread from all)"
 msgstr[0] "%s (來自所有人的 %d 個未讀)"
 
-#: ../src/empathy-chat-window.c:946
+#: ../src/empathy-chat-window.c:949
 msgid "SMS:"
 msgstr "SMS："
 
-#: ../src/empathy-chat-window.c:954
+#: ../src/empathy-chat-window.c:957
 #, c-format
 msgid "Sending %d message"
 msgid_plural "Sending %d messages"
 msgstr[0] "正在傳送 %d 個訊息"
 
-#: ../src/empathy-chat-window.c:974
+#: ../src/empathy-chat-window.c:977
 msgid "Typing a message."
 msgstr "正在輸入訊息。"
 
@@ -2775,7 +2775,7 @@ msgstr "偵錯"
 msgid "Info"
 msgstr "資訊"
 
-#: ../src/empathy-debug-window.c:1993 ../src/empathy-debug-window.c:2068
+#: ../src/empathy-debug-window.c:1993 ../src/empathy-debug-window.c:2073
 msgid "Message"
 msgstr "訊息"
 
@@ -2823,7 +2823,7 @@ msgstr "分類"
 msgid "Level"
 msgstr "等級"
 
-#: ../src/empathy-debug-window.c:2091
+#: ../src/empathy-debug-window.c:2096
 msgid ""
 "The selected connection manager does not support the remote debugging "
 "extension."
@@ -4748,7 +4748,7 @@ msgstr "整合您的即時通帳號"
 #~ "The username for SIP authentication, if different from the SIP URI\n"
 #~ "username."
 #~ msgstr ""
-#~ "SIP 驗證用的使用者名稱，如果和 SIP URI 不同時使用\n"
+#~ "SIP 核對用的使用者名稱，如果和 SIP URI 不同時使用\n"
 #~ "使用。"
 
 #~ msgid ""
