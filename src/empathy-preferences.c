@@ -219,12 +219,6 @@ preferences_setup_widgets (EmpathyPreferences *preferences,
 			"treeview_sounds");
 
 	BIND_SENSITIVE (loc, LOCATION_PUBLISH,
-			"checkbutton_location_resource_network");
-	BIND_SENSITIVE (loc, LOCATION_PUBLISH,
-			"checkbutton_location_resource_cell");
-	BIND_SENSITIVE (loc, LOCATION_PUBLISH,
-			"checkbutton_location_resource_gps");
-	BIND_SENSITIVE (loc, LOCATION_PUBLISH,
 			"checkbutton_location_reduce_accuracy");
 
 #undef BIND_SENSITIVE
