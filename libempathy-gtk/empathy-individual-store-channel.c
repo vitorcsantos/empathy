@@ -171,6 +171,9 @@ individual_store_channel_contact_chat_state_changed (TpTextChannel *channel,
     {
        pixbuf = empathy_individual_store_get_individual_status_icon (
            EMPATHY_INDIVIDUAL_STORE (self), individual);
+
+       /* Take a ref as the 'if' blocks creates a new pixbuf */
+       g_object_ref (pixbuf);
     }
 
   for (l = iters; l != NULL; l = l->next)
