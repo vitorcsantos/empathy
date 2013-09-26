@@ -1846,7 +1846,7 @@ am_prepared_cb (GObject *am,
   empathy_set_css_provider (GTK_WIDGET (object));
 
   gtk_window_set_title (GTK_WINDOW (object), _("Debug Window"));
-  gtk_window_set_default_size (GTK_WINDOW (object), 800, 400);
+  gtk_widget_set_size_request (GTK_WIDGET (object), 600, 300);
   empathy_geometry_bind (GTK_WINDOW (object), "debug-window");
 
   g_signal_connect (object, "key-press-event",
