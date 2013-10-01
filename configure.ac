@@ -235,51 +235,18 @@ PKG_CHECK_MODULES(EMPATHY,
 # -----------------------------------------------------------
 # GStreamer
 # -----------------------------------------------------------
-AC_ARG_ENABLE(gst-1.0,
-              AS_HELP_STRING([--enable-gst-1.0=@<:@no/yes/auto@:>@],
-                             [build with GStreamer 1.0]),
-                             enable_gst1=$enableval,
-                             enable_gst1=auto)
-
-# Try to use GStreamer 1.0 if available
-have_gst1="no"
-if test "x$enable_gst1" != "xno"; then
-  PKG_CHECK_MODULES(EMPATHY_CALL,
-  [
-     farstream-0.2
-     telepathy-farstream >= $TP_FS_REQUIRED
-     clutter-1.0 >= $CLUTTER_REQUIRED
-     clutter-gtk-1.0 >= $CLUTTER_GTK_REQUIRED
-     clutter-gst-2.0
-     gstreamer-1.0
-     gstreamer-audio-1.0
-     gstreamer-video-1.0
-     cogl-1.0
-  ], have_gst1="yes", have_gst1="no")
-
-  if test "x$have_gst1" = "xyes"; then
-    AC_DEFINE(HAVE_GST1, 1, [Build with GStreamer 1.0])
-  fi
-fi
-
-if test "x$enable_gst1" = "xyes" -a "x$have_gst1" != "xyes"; then
-   AC_MSG_ERROR([Could not find GStreamer 1.0 dependencies:
-
-$EMPATHY_CALL_PKG_ERRORS])
-fi
-
-if test "x$have_gst1" != "xyes"; then
-  PKG_CHECK_MODULES(EMPATHY_CALL,
-  [
-     farstream-0.1
-     telepathy-farstream >= $TP_FS_REQUIRED
-     clutter-1.0 >= $CLUTTER_REQUIRED
-     clutter-gtk-1.0 >= $CLUTTER_GTK_REQUIRED
-     clutter-gst-1.0 >= 1.5.2
-     gstreamer-0.10 >= $GSTREAMER_REQUIRED
-     gstreamer-interfaces-0.10
-  ])
-fi
+PKG_CHECK_MODULES(EMPATHY_CALL,
+[
+   farstream-0.2
+   telepathy-farstream >= $TP_FS_REQUIRED
+   clutter-1.0 >= $CLUTTER_REQUIRED
+   clutter-gtk-1.0 >= $CLUTTER_GTK_REQUIRED
+   clutter-gst-2.0
+   gstreamer-1.0
+   gstreamer-audio-1.0
+   gstreamer-video-1.0
+   cogl-1.0
+])
 
 AC_DEFINE(EMPATHY_GOA_PROVIDER, "org.gnome.OnlineAccounts",
    [Name of provider for accounts imported from GOA])
@@ -679,7 +646,6 @@ Configure summary:
 	Linker Flags................:  ${LDFLAGS}
 	Prefix......................:  ${prefix}
 	Coding style checks.........:  ${ENABLE_CODING_STYLE_CHECKS}
-	Use GStreamer 1.0...........:  ${have_gst1}
 
     Features:
 	Spell checking (enchant)....:  ${have_enchant}

@@ -23,11 +23,7 @@
 
 #include <tp-account-widgets/tpaw-utils.h>
 
-#ifdef HAVE_GST1
 #include <gst/audio/streamvolume.h>
-#else
-#include <gst/interfaces/streamvolume.h>
-#endif
 
 #include "empathy-audio-utils.h"
 #include "empathy-mic-monitor.h"
@@ -314,7 +310,6 @@ empathy_audio_src_init (EmpathyGstAudioSrc *obj)
   priv->volume_element = gst_element_factory_make ("volume", NULL);
   gst_bin_add (GST_BIN (obj), priv->volume_element);
 
-#ifndef HAVE_GST1
   {
     GstElement *capsfilter;
     GstCaps *caps;
@@ -336,9 +331,6 @@ empathy_audio_src_init (EmpathyGstAudioSrc *obj)
     gst_element_link (priv->src, capsfilter);
     gst_element_link (capsfilter, priv->volume_element);
   }
-#else
-  gst_element_link (priv->src, priv->volume_element);
-#endif
 
   src = gst_element_get_static_pad (priv->volume_element, "src");
 

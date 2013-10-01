@@ -21,11 +21,7 @@
 #include "config.h"
 #include "empathy-video-src.h"
 
-#ifdef HAVE_GST1
 #include <gst/video/colorbalance.h>
-#else
-#include <gst/interfaces/colorbalance.h>
-#endif
 
 #define DEBUG_FLAG EMPATHY_DEBUG_VOIP
 #include "empathy-debug.h"
@@ -112,7 +108,6 @@ error:
   return NULL;
 }
 
-#ifdef HAVE_GST1
 static GstPadProbeReturn
 empathy_video_src_drop_eos (GstPad *pad,
   GstPadProbeInfo *info,
@@ -123,13 +118,6 @@ empathy_video_src_drop_eos (GstPad *pad,
 
   return GST_PAD_PROBE_OK;
 }
-#else
-static gboolean
-empathy_video_src_drop_eos (GstPad *pad, GstEvent *event, gpointer user_data)
-{
-  return GST_EVENT_TYPE (event) != GST_EVENT_EOS;
-}
-#endif
 
 static void
 empathy_video_src_init (EmpathyGstVideoSrc *obj)
@@ -141,11 +129,7 @@ empathy_video_src_init (EmpathyGstVideoSrc *obj)
   gchar *str;
 
   /* allocate caps here, so we can update it by optional elements */
-#ifdef HAVE_GST1
   caps = gst_caps_new_simple ("video/x-raw",
-#else
-  caps = gst_caps_new_simple ("video/x-raw-yuv",
-#endif
     "width", G_TYPE_INT, 320,
     "height", G_TYPE_INT, 240,
     NULL);
@@ -162,12 +146,8 @@ empathy_video_src_init (EmpathyGstVideoSrc *obj)
    * source (triggering an EOS) */
   src = gst_element_get_static_pad (element, "src");
 
-#ifdef HAVE_GST1
   gst_pad_add_probe (src, GST_PAD_PROBE_TYPE_EVENT_DOWNSTREAM,
     empathy_video_src_drop_eos, NULL, NULL);
-#else
-  gst_pad_add_event_probe (src, G_CALLBACK (empathy_video_src_drop_eos), NULL);
-#endif
 
   gst_object_unref (src);
 
@@ -202,15 +182,9 @@ empathy_video_src_init (EmpathyGstVideoSrc *obj)
   DEBUG ("Current video src caps are : %s", str);
   g_free (str);
 
-#ifdef HAVE_GST1
   if ((element = empathy_gst_add_to_bin (GST_BIN (obj),
       element, "videoconvert")) == NULL)
     g_error ("Failed to add \"videoconvert\" (gst-plugins-base missing?)");
-#else
-  if ((element = empathy_gst_add_to_bin (GST_BIN (obj),
-      element, "ffmpegcolorspace")) == NULL)
-    g_error ("Failed to add \"ffmpegcolorspace\" (gst-plugins-base missing?)");
-#endif
 
   if ((element = empathy_gst_add_to_bin (GST_BIN (obj),
       element, "videoscale")) == NULL)

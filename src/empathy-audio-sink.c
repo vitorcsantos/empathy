@@ -21,11 +21,7 @@
 #include "config.h"
 #include "empathy-audio-sink.h"
 
-#ifdef HAVE_GST1
 #include <gst/audio/streamvolume.h>
-#else
-#include <gst/interfaces/streamvolume.h>
-#endif
 
 #include "empathy-audio-utils.h"
 
@@ -48,12 +44,7 @@ static GstStaticPadTemplate sink_template = GST_STATIC_PAD_TEMPLATE(
     "sink%d",
     GST_PAD_SINK,
     GST_PAD_REQUEST,
-#ifdef HAVE_GST1
     GST_STATIC_CAPS ( "audio/x-raw" )
-#else
-    GST_STATIC_CAPS ( GST_AUDIO_INT_PAD_TEMPLATE_CAPS " ; "
-        GST_AUDIO_FLOAT_PAD_TEMPLATE_CAPS)
-#endif
 );
 
 enum {
@@ -81,16 +72,10 @@ empathy_audio_sink_init (EmpathyGstAudioSink *self)
   g_mutex_init (&self->priv->volume_mutex);
 }
 
-#ifdef HAVE_GST1
 static GstPad * empathy_audio_sink_request_new_pad (GstElement *self,
   GstPadTemplate *templ,
   const gchar* name,
   const GstCaps *caps);
-#else
-static GstPad * empathy_audio_sink_request_new_pad (GstElement *self,
-  GstPadTemplate *templ,
-  const gchar* name);
-#endif
 
 static void empathy_audio_sink_release_pad (GstElement *self,
   GstPad *pad);
@@ -301,18 +286,11 @@ empathy_audio_sink_volume_idle_setup (gpointer user_data)
   return FALSE;
 }
 
-#ifdef HAVE_GST1
 static GstPad *
 empathy_audio_sink_request_new_pad (GstElement *element,
   GstPadTemplate *templ,
   const gchar* name,
   const GstCaps *caps)
-#else
-static GstPad *
-empathy_audio_sink_request_new_pad (GstElement *element,
-  GstPadTemplate *templ,
-  const gchar* name)
-#endif
 {
   EmpathyGstAudioSink *self = EMPATHY_GST_AUDIO_SINK (element);
   GstElement *bin, *resample, *audioconvert0, *audioconvert1;
