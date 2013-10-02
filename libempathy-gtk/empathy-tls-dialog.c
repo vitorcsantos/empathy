@@ -345,7 +345,7 @@ empathy_tls_dialog_class_init (EmpathyTLSDialogClass *klass)
 
   pspec = g_param_spec_uint ("reason", "The reason",
       "The reason why the certificate is being asked for confirmation.",
-      0, NUM_TP_TLS_CERTIFICATE_REJECT_REASONS - 1,
+      0, TP_NUM_TLS_CERTIFICATE_REJECT_REASONS - 1,
       TP_TLS_CERTIFICATE_REJECT_REASON_UNKNOWN,
       G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
   g_object_class_install_property (oclass, PROP_REASON, pspec);

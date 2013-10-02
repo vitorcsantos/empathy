@@ -325,7 +325,7 @@ empathy_contact_class_init (EmpathyContactClass *class)
         "Contact presence",
         "Presence of contact",
         TP_CONNECTION_PRESENCE_TYPE_UNSET,
-        NUM_TP_CONNECTION_PRESENCE_TYPES,
+        TP_NUM_CONNECTION_PRESENCE_TYPES,
         TP_CONNECTION_PRESENCE_TYPE_UNSET,
         G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 

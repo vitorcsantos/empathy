@@ -80,7 +80,7 @@ G_DEFINE_TYPE (EmpathyPresenceManager, empathy_presence_manager, G_TYPE_OBJECT);
 
 static EmpathyPresenceManager * singleton = NULL;
 
-static const gchar *presence_type_to_status[NUM_TP_CONNECTION_PRESENCE_TYPES] =
+static const gchar *presence_type_to_status[TP_NUM_CONNECTION_PRESENCE_TYPES] =
 {
   NULL,
   "offline",
@@ -349,7 +349,7 @@ empathy_presence_manager_class_init (EmpathyPresenceManagerClass *klass)
   g_object_class_install_property (object_class,
       PROP_STATE,
       g_param_spec_uint ("state", "state", "state",
-        0, NUM_TP_CONNECTION_PRESENCE_TYPES,
+        0, TP_NUM_CONNECTION_PRESENCE_TYPES,
         TP_CONNECTION_PRESENCE_TYPE_UNSET,
         G_PARAM_READWRITE));
 
@@ -519,7 +519,7 @@ empathy_presence_manager_do_set_presence (EmpathyPresenceManager *self,
 {
   const gchar *status;
 
-  g_assert (status_type > 0 && status_type < NUM_TP_CONNECTION_PRESENCE_TYPES);
+  g_assert (status_type > 0 && status_type < TP_NUM_CONNECTION_PRESENCE_TYPES);
 
   status = presence_type_to_status[status_type];
 
