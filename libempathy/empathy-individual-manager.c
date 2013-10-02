@@ -24,6 +24,7 @@
 #include "empathy-individual-manager.h"
 
 #include <tp-account-widgets/tpaw-utils.h>
+#include <telepathy-glib/telepathy-glib-dbus.h>
 
 #include "empathy-utils.h"
 

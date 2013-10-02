@@ -30,6 +30,7 @@
 #include <tp-account-widgets/tpaw-images.h>
 #include <tp-account-widgets/tpaw-pixbuf-utils.h>
 #include <tp-account-widgets/tpaw-utils.h>
+#include <telepathy-glib/telepathy-glib-dbus.h>
 
 #include "empathy-about-dialog.h"
 #include "empathy-audio-sink.h"

@@ -24,6 +24,8 @@
 #include "config.h"
 #include "empathy-ft-factory.h"
 
+#include <telepathy-glib/telepathy-glib-dbus.h>
+
 #include "empathy-request-util.h"
 #include "empathy-utils.h"
 

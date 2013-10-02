@@ -13,6 +13,7 @@
 #include "empathy-invite-participant-dialog.h"
 
 #include <glib/gi18n.h>
+#include <telepathy-glib/telepathy-glib-dbus.h>
 
 #include "empathy-contact-chooser.h"
 #include "empathy-utils.h"

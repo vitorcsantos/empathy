@@ -21,6 +21,7 @@
 #include "config.h"
 #include "empathy-auth-factory.h"
 
+#include <telepathy-glib/telepathy-glib-dbus.h>
 #include <tp-account-widgets/tpaw-keyring.h>
 
 #include "empathy-sasl-mechanisms.h"

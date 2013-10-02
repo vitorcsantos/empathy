@@ -21,6 +21,7 @@
 #include "empathy-server-sasl-handler.h"
 
 #include <tp-account-widgets/tpaw-keyring.h>
+#include <telepathy-glib/telepathy-glib-dbus.h>
 
 #include "empathy-sasl-mechanisms.h"
 #include "extensions.h"

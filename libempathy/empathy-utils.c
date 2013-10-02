@@ -32,6 +32,7 @@
 #include <glib/gi18n-lib.h>
 #include <dbus/dbus-protocol.h>
 #include <math.h>
+#include <telepathy-glib/telepathy-glib-dbus.h>
 
 #include "empathy-client-factory.h"
 #include "extensions.h"

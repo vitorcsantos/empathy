@@ -27,6 +27,7 @@
 #include <tp-account-widgets/tpaw-contactinfo-utils.h>
 #include <tp-account-widgets/tpaw-time.h>
 #include <tp-account-widgets/tpaw-utils.h>
+#include <telepathy-glib/telepathy-glib-dbus.h>
 
 #ifdef HAVE_LIBCHAMPLAIN
 #include <champlain/champlain.h>

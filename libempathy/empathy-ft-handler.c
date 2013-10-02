@@ -27,6 +27,7 @@
 #include <glib/gi18n-lib.h>
 #include <tp-account-widgets/tpaw-time.h>
 #include <tp-account-widgets/tpaw-utils.h>
+#include <telepathy-glib/telepathy-glib-dbus.h>
 
 #include "empathy-utils.h"
 

@@ -23,6 +23,7 @@
 
 #include <glib/gi18n-lib.h>
 #include <gtk/gtk.h>
+#include <telepathy-glib/telepathy-glib-dbus.h>
 
 #include "empathy-request-util.h"
 

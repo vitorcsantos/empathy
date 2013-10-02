@@ -22,6 +22,7 @@
 #include "empathy-tp-chat.h"
 
 #include <tp-account-widgets/tpaw-utils.h>
+#include <telepathy-glib/telepathy-glib-dbus.h>
 
 #include "empathy-request-util.h"
 #include "empathy-utils.h"

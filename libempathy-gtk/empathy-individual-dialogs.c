@@ -23,6 +23,7 @@
 #include "empathy-individual-dialogs.h"
 
 #include <glib/gi18n-lib.h>
+#include <telepathy-glib/telepathy-glib-dbus.h>
 
 #include "empathy-contact-widget.h"
 #include "empathy-individual-manager.h"

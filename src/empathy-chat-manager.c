@@ -21,6 +21,7 @@
 #include "empathy-chat-manager.h"
 
 #include <telepathy-glib/proxy-subclass.h>
+#include <telepathy-glib/telepathy-glib-dbus.h>
 
 #include "empathy-chatroom-manager.h"
 #include "empathy-chat-window.h"
