@@ -25,6 +25,7 @@
 
 #include <glib/gi18n-lib.h>
 #include <tp-account-widgets/tpaw-camera-monitor.h>
+#include <telepathy-glib/telepathy-glib-dbus.h>
 
 #include "empathy-account-selector-dialog.h"
 #include "empathy-call-utils.h"

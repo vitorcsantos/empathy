@@ -25,6 +25,7 @@
 #include <glib/gi18n.h>
 #include <libsoup/soup.h>
 #include <tp-account-widgets/tpaw-utils.h>
+#include <telepathy-glib/telepathy-glib-dbus.h>
 
 #include "empathy-geometry.h"
 #include "empathy-ui-utils.h"

@@ -28,6 +28,7 @@
 #include "empathy-accounts.h"
 
 #include <glib/gi18n.h>
+#include <telepathy-glib/telepathy-glib-dbus.h>
 
 #ifdef HAVE_CHEESE
 #include <cheese-gtk.h>

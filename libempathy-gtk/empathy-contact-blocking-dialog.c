@@ -27,6 +27,7 @@
 
 #include <glib/gi18n-lib.h>
 #include <tp-account-widgets/tpaw-builder.h>
+#include <telepathy-glib/telepathy-glib-dbus.h>
 
 #include "empathy-account-chooser.h"
 #include "empathy-ui-utils.h"

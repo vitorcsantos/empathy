@@ -22,6 +22,8 @@
 #include "config.h"
 #include "empathy-request-util.h"
 
+#include <telepathy-glib/telepathy-glib-dbus.h>
+
 #define DEBUG_FLAG EMPATHY_DEBUG_DISPATCHER
 #include "empathy-debug.h"
 

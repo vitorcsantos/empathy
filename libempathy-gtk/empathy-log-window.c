@@ -31,6 +31,7 @@
 #include <tp-account-widgets/tpaw-images.h>
 #include <tp-account-widgets/tpaw-camera-monitor.h>
 #include <tp-account-widgets/tpaw-utils.h>
+#include <telepathy-glib/telepathy-glib-dbus.h>
 
 #include "action-chain-internal.h"
 #include "empathy-account-chooser.h"

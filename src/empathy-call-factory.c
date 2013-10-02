@@ -21,6 +21,8 @@
 #include "config.h"
 #include "empathy-client-factory.h"
 
+#include <telepathy-glib/telepathy-glib-dbus.h>
+
 #include "empathy-call-factory.h"
 #include "empathy-call-handler.h"
 #include "empathy-request-util.h"

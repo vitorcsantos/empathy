@@ -21,6 +21,8 @@
 #include "config.h"
 #include "empathy-server-tls-handler.h"
 
+#include <telepathy-glib/telepathy-glib-dbus.h>
+
 #include "empathy-utils.h"
 #include "extensions.h"
 

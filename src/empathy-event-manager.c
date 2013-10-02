@@ -25,6 +25,7 @@
 #include <glib/gi18n.h>
 #include <tp-account-widgets/tpaw-images.h>
 #include <tp-account-widgets/tpaw-utils.h>
+#include <telepathy-glib/telepathy-glib-dbus.h>
 
 #include "empathy-call-utils.h"
 #include "empathy-connection-aggregator.h"
