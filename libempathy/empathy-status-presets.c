@@ -187,10 +187,10 @@ status_presets_file_save (void)
 	GList      *l;
 	gchar      *dir;
 	gchar      *file;
-	gint        count[NUM_TP_CONNECTION_PRESENCE_TYPES];
+	gint        count[TP_NUM_CONNECTION_PRESENCE_TYPES];
 	gint        i;
 
-	for (i = 0; i < NUM_TP_CONNECTION_PRESENCE_TYPES; i++) {
+	for (i = 0; i < TP_NUM_CONNECTION_PRESENCE_TYPES; i++) {
 		count[i] = 0;
 	}
 
