@@ -46,7 +46,6 @@ typedef struct {
 	gboolean                  is_backlog;
 	guint                     id;
 	gboolean                  incoming;
-	TpChannelTextMessageFlags flags;
 } EmpathyMessagePriv;
 
 static void empathy_message_finalize   (GObject            *object);
@@ -73,7 +72,6 @@ enum {
 	PROP_ORIGINAL_TIMESTAMP,
 	PROP_IS_BACKLOG,
 	PROP_INCOMING,
-	PROP_FLAGS,
 	PROP_TP_MESSAGE,
 };
 
@@ -168,15 +166,6 @@ empathy_message_class_init (EmpathyMessageClass *class)
 							       G_PARAM_CONSTRUCT_ONLY));
 
 	g_object_class_install_property (object_class,
-					 PROP_FLAGS,
-					 g_param_spec_uint ("flags",
-							       "Flags",
-							       "The TpChannelTextMessageFlags of this message",
-							       0, G_MAXUINT, 0,
-							       G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS |
-							       G_PARAM_CONSTRUCT_ONLY));
-
-	g_object_class_install_property (object_class,
 					 PROP_TP_MESSAGE,
 					 g_param_spec_object ("tp-message",
 							       "TpMessage",
@@ -265,9 +254,6 @@ message_get_property (GObject    *object,
 	case PROP_INCOMING:
 		g_value_set_boolean (value, priv->incoming);
 		break;
-	case PROP_FLAGS:
-		g_value_set_uint (value, priv->flags);
-		break;
 	case PROP_TP_MESSAGE:
 		g_value_set_object (value, priv->tp_message);
 		break;
@@ -324,9 +310,6 @@ message_set_property (GObject      *object,
 		break;
 	case PROP_INCOMING:
 		priv->incoming = g_value_get_boolean (value);
-		break;
-	case PROP_FLAGS:
-		priv->flags = g_value_get_uint (value);
 		break;
 	case PROP_TP_MESSAGE:
 		priv->tp_message = g_value_dup_object (value);
@@ -686,31 +669,19 @@ empathy_message_equal (EmpathyMessage *message1, EmpathyMessage *message2)
 	return FALSE;
 }
 
-TpChannelTextMessageFlags
-empathy_message_get_flags (EmpathyMessage *self)
-{
-	EmpathyMessagePriv *priv = GET_PRIV (self);
-
-	g_return_val_if_fail (EMPATHY_IS_MESSAGE (self), 0);
-
-	return priv->flags;
-}
-
 EmpathyMessage *
 empathy_message_new_from_tp_message (TpMessage *tp_msg,
 				     gboolean incoming)
 {
 	EmpathyMessage *message;
 	gchar *body;
-	TpChannelTextMessageFlags flags;
 	gint64 timestamp;
 	gint64 original_timestamp;
 	const GHashTable *part = tp_message_peek (tp_msg, 0);
-	gboolean is_backlog;
 
 	g_return_val_if_fail (TP_IS_MESSAGE (tp_msg), NULL);
 
-	body = tp_message_to_text (tp_msg, &flags);
+	body = tp_message_to_text (tp_msg, NULL);
 
 	timestamp = tp_message_get_sent_timestamp (tp_msg);
 	if (timestamp == 0)
@@ -719,9 +690,6 @@ empathy_message_new_from_tp_message (TpMessage *tp_msg,
 	original_timestamp = tp_asv_get_int64 (part,
 		"original-message-received", NULL);
 
-	is_backlog = (flags & TP_CHANNEL_TEXT_MESSAGE_FLAG_SCROLLBACK) ==
-		TP_CHANNEL_TEXT_MESSAGE_FLAG_SCROLLBACK;
-
 	message = g_object_new (EMPATHY_TYPE_MESSAGE,
 		"body", body,
 		"token", tp_message_get_token (tp_msg),
@@ -729,8 +697,7 @@ empathy_message_new_from_tp_message (TpMessage *tp_msg,
 		"type", tp_message_get_message_type (tp_msg),
 		"timestamp", timestamp,
 		"original-timestamp", original_timestamp,
-		"flags", flags,
-		"is-backlog", is_backlog,
+		"is-backlog", tp_message_is_scrollback (tp_msg),
 		"incoming", incoming,
 		"tp-message", tp_msg,
 		NULL);

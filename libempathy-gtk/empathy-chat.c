@@ -1434,7 +1434,6 @@ chat_should_highlight (EmpathyChat *chat,
 {
 	EmpathyChatPriv *priv = GET_PRIV (chat);
 	const gchar   *msg;
-	TpChannelTextMessageFlags flags;
 
 	g_return_val_if_fail (EMPATHY_IS_MESSAGE (message), FALSE);
 
@@ -1451,8 +1450,7 @@ chat_should_highlight (EmpathyChat *chat,
 		return FALSE;
 	}
 
-	flags = empathy_message_get_flags (message);
-	if (flags & TP_CHANNEL_TEXT_MESSAGE_FLAG_SCROLLBACK) {
+	if (empathy_message_is_backlog (message)) {
 		/* FIXME: Ideally we shouldn't highlight scrollback messages only if they
 		 * have already been received by the user before (and so are in the logs) */
 		return FALSE;
