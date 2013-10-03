@@ -1294,12 +1294,11 @@ notify_presence_cb (gpointer folks_object,
       goto out;
     }
 
-  /* FIXME: Default messages should be moved into libfolks (bgo#627403) */
   message = folks_presence_details_get_presence_message (
       FOLKS_PRESENCE_DETAILS (folks_object));
   if (TPAW_STR_EMPTY (message))
     {
-      message = empathy_presence_get_default_message (presence);
+      message = folks_presence_details_get_default_message_from_type (presence);
     }
 
   if (message != NULL)
