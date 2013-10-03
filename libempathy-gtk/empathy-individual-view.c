@@ -1970,7 +1970,7 @@ individual_view_constructed (GObject *object)
 
 static void
 individual_view_set_view_features (EmpathyIndividualView *view,
-    EmpathyIndividualFeatureFlags features)
+    EmpathyIndividualViewFeatureFlags features)
 {
   EmpathyIndividualViewPriv *priv = GET_PRIV (view);
   gboolean has_tooltip;
