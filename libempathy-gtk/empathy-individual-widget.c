@@ -1307,7 +1307,8 @@ notify_presence_cb (gpointer folks_object,
   g_free (markup_text);
 
   gtk_image_set_from_icon_name (GTK_IMAGE (state_image),
-      empathy_icon_name_for_presence (presence),
+      empathy_icon_name_for_presence (
+        empathy_folks_presence_type_to_tp (presence)),
       GTK_ICON_SIZE_BUTTON);
 
 out:
