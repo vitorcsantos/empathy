@@ -173,12 +173,6 @@ pixbuf_from_avatar_size_prepared_cb (GdkPixbufLoader *loader,
 
   if (data->preserve_aspect_ratio && (data->width > 0 || data->height > 0))
     {
-      if (width < data->width && height < data->height)
-        {
-          width = width;
-          height = height;
-        }
-
       if (data->width < 0)
         {
           width = width * (double) data->height / (gdouble) height;
