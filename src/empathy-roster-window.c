@@ -1726,7 +1726,7 @@ set_notebook_page (EmpathyRosterWindow *self)
         {
           if (g_settings_get_boolean (self->priv->gsettings_ui,
                 EMPATHY_PREFS_UI_SHOW_OFFLINE))
-            display_page_message (self, _("You haven't added any contact yet"),
+            display_page_message (self, _("You haven't added any contacts yet"),
                 PAGE_MESSAGE_FLAG_ADD_CONTACT);
           else
             display_page_message (self, _("No online contacts"),
