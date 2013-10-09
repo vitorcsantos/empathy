@@ -24,6 +24,7 @@
 #ifdef HAVE_GST1
 #include <gst/audio/streamvolume.h>
 #else
+#include <gst/audio/audio.h>
 #include <gst/interfaces/streamvolume.h>
 #endif
 
