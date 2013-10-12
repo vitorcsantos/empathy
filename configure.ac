@@ -80,6 +80,10 @@ LIBACCOUNTS_REQUIRED=1.4
 LIBSIGNON_REQUIRED=1.8
 MC_PLUGINS_REQUIRED=5.13.1
 
+COGL_REQUIRED=1.14
+AC_DEFINE(COGL_VERSION_MIN_REQUIRED, COGL_VERSION_1_14, [Ignore post 1.14 deprecations])
+AC_DEFINE(COGL_VERSION_MAX_ALLOWED, COGL_VERSION_1_14, [Ignore post 1.14 deprecations])
+
 # Use --enable-maintainer-mode to disable deprecated symbols,
 # disable single include and enable GSEAL. If this is not a released empathy,
 # maintainer mode is forced
@@ -254,7 +258,7 @@ if test "x$enable_gst1" != "xno"; then
      gstreamer-1.0
      gstreamer-audio-1.0
      gstreamer-video-1.0
-     cogl-1.0
+     cogl-1.0 >= $COGL_REQUIRED
   ], have_gst1="yes", have_gst1="no")
 
   if test "x$have_gst1" = "xyes"; then
