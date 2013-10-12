@@ -937,50 +937,6 @@ OUT:
 }
 
 static void
-debug_window_list_connection_names_cb (const gchar * const *names,
-    gsize n,
-    const gchar * const *cms,
-    const gchar * const *protocols,
-    const GError *error,
-    gpointer user_data,
-    GObject *weak_object)
-{
-  EmpathyDebugWindow *self = user_data;
-  guint i;
-  TpDBusDaemon *dbus;
-  GError *error2 = NULL;
-
-  if (error != NULL)
-    {
-      DEBUG ("list_connection_names failed: %s", error->message);
-      return;
-    }
-
-  dbus = tp_dbus_daemon_dup (&error2);
-
-  if (error2 != NULL)
-    {
-      DEBUG ("Failed to dup TpDBusDaemon.");
-      g_error_free (error2);
-      return;
-    }
-
-  for (i = 0; cms[i] != NULL; i++)
-    {
-      FillServiceChooserData *data = fill_service_chooser_data_new (
-          self, cms[i], SERVICE_TYPE_CM);
-
-      tp_cli_dbus_daemon_call_get_name_owner (dbus, -1,
-          names[i], debug_window_get_name_owner_cb,
-          data, NULL, NULL);
-
-      self->priv->services_detected ++;
-    }
-
-  g_object_unref (dbus);
-}
-
-static void
 debug_window_name_owner_changed_cb (TpDBusDaemon *proxy,
     const gchar *arg0,
     const gchar *arg1,
@@ -1146,6 +1102,11 @@ list_names_cb (TpDBusDaemon *bus_daemon,
           add_service (self, names[i],
               names[i] + strlen (TP_CLIENT_BUS_NAME_BASE), SERVICE_TYPE_CLIENT);
         }
+      else if (g_str_has_prefix (names[i], TP_CM_BUS_NAME_BASE))
+        {
+          add_service (self, names[i],
+              names[i] + strlen (TP_CM_BUS_NAME_BASE), SERVICE_TYPE_CM);
+        }
     }
 }
 
@@ -1168,10 +1129,6 @@ debug_window_fill_service_chooser (EmpathyDebugWindow *self)
   /* Keep a count of the services detected and added */
   self->priv->services_detected = 0;
   self->priv->name_owner_cb_count = 0;
-
-  /* Add CMs to list */
-  tp_list_connection_names (self->priv->dbus,
-      debug_window_list_connection_names_cb, self, NULL, NULL);
 
   /* add Mission Control */
   active_buffer= new_list_store_for_service ();
