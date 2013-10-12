@@ -41,6 +41,7 @@ typedef enum
 {
   SERVICE_TYPE_CM = 0,
   SERVICE_TYPE_CLIENT,
+  SERVICE_TYPE_MC,
 } ServiceType;
 
 enum
@@ -857,6 +858,33 @@ fill_service_chooser_data_free (FillServiceChooserData *data)
   g_slice_free (FillServiceChooserData, data);
 }
 
+static const gchar *
+service_type_to_string (ServiceType type)
+{
+  switch (type)
+    {
+      case SERVICE_TYPE_CM:
+        return "CM";
+      case SERVICE_TYPE_CLIENT:
+        return "Client";
+      case SERVICE_TYPE_MC:
+        return "MC";
+    }
+
+  return "other";
+}
+
+static gchar *
+service_dup_display_name (EmpathyDebugWindow *self,
+    ServiceType type,
+    const gchar *name)
+{
+  if (type == SERVICE_TYPE_CM)
+    return get_cm_display_name (self, name);
+  else
+    return g_strdup (name);
+}
+
 static void
 debug_window_get_name_owner_cb (TpDBusDaemon *proxy,
     const gchar *out,
@@ -882,13 +910,10 @@ debug_window_get_name_owner_cb (TpDBusDaemon *proxy,
       GtkListStore *active_buffer, *pause_buffer;
 
       DEBUG ("Adding %s to list: %s at unique name: %s",
-          data->type == SERVICE_TYPE_CM? "CM": "Client",
+          service_type_to_string (data->type),
           data->name, out);
 
-      if (data->type == SERVICE_TYPE_CM)
-        name = get_cm_display_name (self, data->name);
-      else
-        name = g_strdup (data->name);
+      name = service_dup_display_name (self, data->type, data->name);
 
       active_buffer = new_list_store_for_service ();
       pause_buffer = new_list_store_for_service ();
@@ -937,50 +962,6 @@ OUT:
 }
 
 static void
-debug_window_list_connection_names_cb (const gchar * const *names,
-    gsize n,
-    const gchar * const *cms,
-    const gchar * const *protocols,
-    const GError *error,
-    gpointer user_data,
-    GObject *weak_object)
-{
-  EmpathyDebugWindow *self = user_data;
-  guint i;
-  TpDBusDaemon *dbus;
-  GError *error2 = NULL;
-
-  if (error != NULL)
-    {
-      DEBUG ("list_connection_names failed: %s", error->message);
-      return;
-    }
-
-  dbus = tp_dbus_daemon_dup (&error2);
-
-  if (error2 != NULL)
-    {
-      DEBUG ("Failed to dup TpDBusDaemon.");
-      g_error_free (error2);
-      return;
-    }
-
-  for (i = 0; cms[i] != NULL; i++)
-    {
-      FillServiceChooserData *data = fill_service_chooser_data_new (
-          self, cms[i], SERVICE_TYPE_CM);
-
-      tp_cli_dbus_daemon_call_get_name_owner (dbus, -1,
-          names[i], debug_window_get_name_owner_cb,
-          data, NULL, NULL);
-
-      self->priv->services_detected ++;
-    }
-
-  g_object_unref (dbus);
-}
-
-static void
 debug_window_name_owner_changed_cb (TpDBusDaemon *proxy,
     const gchar *arg0,
     const gchar *arg1,
@@ -1012,10 +993,7 @@ debug_window_name_owner_changed_cb (TpDBusDaemon *proxy,
       GtkTreeIter *found_at_iter = NULL;
       gchar *display_name;
 
-      if (type == SERVICE_TYPE_CM)
-        display_name = get_cm_display_name (self, name);
-      else
-        display_name = g_strdup (name);
+      display_name = service_dup_display_name (self, type, name);
 
       /* A service joined */
       if (!debug_window_service_is_in_model (user_data, display_name,
@@ -1108,18 +1086,17 @@ debug_window_name_owner_changed_cb (TpDBusDaemon *proxy,
 }
 
 static void
-add_client (EmpathyDebugWindow *self,
-    const gchar *name)
+add_service (EmpathyDebugWindow *self,
+    const gchar *bus_name,
+    const gchar *display_name,
+    ServiceType type)
 {
-  const gchar *suffix;
   FillServiceChooserData *data;
 
-  suffix = name + strlen (TP_CLIENT_BUS_NAME_BASE);
-
-  data = fill_service_chooser_data_new (self, suffix, SERVICE_TYPE_CLIENT);
+  data = fill_service_chooser_data_new (self, display_name, type);
 
   tp_cli_dbus_daemon_call_get_name_owner (self->priv->dbus, -1,
-      name, debug_window_get_name_owner_cb, data, NULL, NULL);
+      bus_name, debug_window_get_name_owner_cb, data, NULL, NULL);
 
   self->priv->services_detected ++;
 }
@@ -1144,7 +1121,17 @@ list_names_cb (TpDBusDaemon *bus_daemon,
     {
       if (g_str_has_prefix (names[i], TP_CLIENT_BUS_NAME_BASE))
         {
-          add_client (self, names[i]);
+          add_service (self, names[i],
+              names[i] + strlen (TP_CLIENT_BUS_NAME_BASE), SERVICE_TYPE_CLIENT);
+        }
+      else if (g_str_has_prefix (names[i], TP_CM_BUS_NAME_BASE))
+        {
+          add_service (self, names[i],
+              names[i] + strlen (TP_CM_BUS_NAME_BASE), SERVICE_TYPE_CM);
+        }
+      else if (!tp_strdiff (names[i], TP_ACCOUNT_MANAGER_BUS_NAME))
+        {
+          add_service (self, names[i], "Mission-Control", SERVICE_TYPE_MC);
         }
     }
 }
@@ -1153,8 +1140,6 @@ static void
 debug_window_fill_service_chooser (EmpathyDebugWindow *self)
 {
   GError *error = NULL;
-  GtkTreeIter iter;
-  GtkListStore *active_buffer, *pause_buffer;
 
   self->priv->dbus = tp_dbus_daemon_dup (&error);
 
@@ -1169,26 +1154,6 @@ debug_window_fill_service_chooser (EmpathyDebugWindow *self)
   self->priv->services_detected = 0;
   self->priv->name_owner_cb_count = 0;
 
-  /* Add CMs to list */
-  tp_list_connection_names (self->priv->dbus,
-      debug_window_list_connection_names_cb, self, NULL, NULL);
-
-  /* add Mission Control */
-  active_buffer= new_list_store_for_service ();
-  pause_buffer = new_list_store_for_service ();
-
-  gtk_list_store_insert_with_values (self->priv->service_store, &iter, -1,
-      COL_NAME, "mission-control",
-      COL_UNIQUE_NAME, "org.freedesktop.Telepathy.MissionControl5",
-      COL_GONE, FALSE,
-      COL_ACTIVE_BUFFER, active_buffer,
-      COL_PAUSE_BUFFER, pause_buffer,
-      COL_PROXY, NULL,
-      -1);
-  g_object_unref (active_buffer);
-  g_object_unref (pause_buffer);
-
-  /* add clients */
   tp_dbus_daemon_list_names (self->priv->dbus, 2000,
       list_names_cb, NULL, NULL, G_OBJECT (self));
 
