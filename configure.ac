@@ -57,6 +57,10 @@ AC_DEFINE(TP_VERSION_MAX_ALLOWED, TP_VERSION_0_20, [Prevent post 0.20 APIs])
 AC_DEFINE(TP_SEAL_ENABLE, 1, [Prevent to use sealed variables])
 AC_DEFINE(TP_DISABLE_SINGLE_INCLUDE, 1, [Disable single include header])
 
+COGL_REQUIRED=1.14
+AC_DEFINE(COGL_VERSION_MIN_REQUIRED, COGL_VERSION_1_14, [Ignore post 1.14 deprecations])
+AC_DEFINE(COGL_VERSION_MAX_ALLOWED, COGL_VERSION_1_14, [Ignore post 1.14 deprecations])
+
 GSTREAMER_REQUIRED=0.10.32
 TP_FS_REQUIRED=0.6.0
 LIBSECRET_REQUIRED=0.5
@@ -245,7 +249,7 @@ PKG_CHECK_MODULES(EMPATHY_CALL,
    gstreamer-1.0
    gstreamer-audio-1.0
    gstreamer-video-1.0
-   cogl-1.0
+   cogl-1.0 >= $COGL_REQUIRED
 ])
 
 AC_DEFINE(EMPATHY_GOA_PROVIDER, "org.gnome.OnlineAccounts",
