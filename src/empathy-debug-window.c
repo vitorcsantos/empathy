@@ -857,6 +857,31 @@ fill_service_chooser_data_free (FillServiceChooserData *data)
   g_slice_free (FillServiceChooserData, data);
 }
 
+static const gchar *
+service_type_to_string (ServiceType type)
+{
+  switch (type)
+    {
+      case SERVICE_TYPE_CM:
+        return "CM";
+      case SERVICE_TYPE_CLIENT:
+        return "Client";
+    }
+
+  return "other";
+}
+
+static gchar *
+service_dup_display_name (EmpathyDebugWindow *self,
+    ServiceType type,
+    const gchar *name)
+{
+  if (type == SERVICE_TYPE_CM)
+    return get_cm_display_name (self, name);
+  else
+    return g_strdup (name);
+}
+
 static void
 debug_window_get_name_owner_cb (TpDBusDaemon *proxy,
     const gchar *out,
@@ -882,13 +907,10 @@ debug_window_get_name_owner_cb (TpDBusDaemon *proxy,
       GtkListStore *active_buffer, *pause_buffer;
 
       DEBUG ("Adding %s to list: %s at unique name: %s",
-          data->type == SERVICE_TYPE_CM? "CM": "Client",
+          service_type_to_string (data->type),
           data->name, out);
 
-      if (data->type == SERVICE_TYPE_CM)
-        name = get_cm_display_name (self, data->name);
-      else
-        name = g_strdup (data->name);
+      name = service_dup_display_name (self, data->type, data->name);
 
       active_buffer = new_list_store_for_service ();
       pause_buffer = new_list_store_for_service ();
@@ -968,10 +990,7 @@ debug_window_name_owner_changed_cb (TpDBusDaemon *proxy,
       GtkTreeIter *found_at_iter = NULL;
       gchar *display_name;
 
-      if (type == SERVICE_TYPE_CM)
-        display_name = get_cm_display_name (self, name);
-      else
-        display_name = g_strdup (name);
+      display_name = service_dup_display_name (self, type, name);
 
       /* A service joined */
       if (!debug_window_service_is_in_model (user_data, display_name,
