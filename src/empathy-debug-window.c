@@ -1108,18 +1108,17 @@ debug_window_name_owner_changed_cb (TpDBusDaemon *proxy,
 }
 
 static void
-add_client (EmpathyDebugWindow *self,
-    const gchar *name)
+add_service (EmpathyDebugWindow *self,
+    const gchar *bus_name,
+    const gchar *display_name,
+    ServiceType type)
 {
-  const gchar *suffix;
   FillServiceChooserData *data;
 
-  suffix = name + strlen (TP_CLIENT_BUS_NAME_BASE);
-
-  data = fill_service_chooser_data_new (self, suffix, SERVICE_TYPE_CLIENT);
+  data = fill_service_chooser_data_new (self, display_name, type);
 
   tp_cli_dbus_daemon_call_get_name_owner (self->priv->dbus, -1,
-      name, debug_window_get_name_owner_cb, data, NULL, NULL);
+      bus_name, debug_window_get_name_owner_cb, data, NULL, NULL);
 
   self->priv->services_detected ++;
 }
@@ -1144,7 +1143,8 @@ list_names_cb (TpDBusDaemon *bus_daemon,
     {
       if (g_str_has_prefix (names[i], TP_CLIENT_BUS_NAME_BASE))
         {
-          add_client (self, names[i]);
+          add_service (self, names[i],
+              names[i] + strlen (TP_CLIENT_BUS_NAME_BASE), SERVICE_TYPE_CLIENT);
         }
     }
 }
