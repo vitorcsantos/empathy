@@ -41,6 +41,7 @@ typedef enum
 {
   SERVICE_TYPE_CM = 0,
   SERVICE_TYPE_CLIENT,
+  SERVICE_TYPE_MC,
 } ServiceType;
 
 enum
@@ -866,6 +867,8 @@ service_type_to_string (ServiceType type)
         return "CM";
       case SERVICE_TYPE_CLIENT:
         return "Client";
+      case SERVICE_TYPE_MC:
+        return "MC";
     }
 
   return "other";
@@ -1126,6 +1129,10 @@ list_names_cb (TpDBusDaemon *bus_daemon,
           add_service (self, names[i],
               names[i] + strlen (TP_CM_BUS_NAME_BASE), SERVICE_TYPE_CM);
         }
+      else if (!tp_strdiff (names[i], TP_ACCOUNT_MANAGER_BUS_NAME))
+        {
+          add_service (self, names[i], "Mission-Control", SERVICE_TYPE_MC);
+        }
     }
 }
 
@@ -1133,8 +1140,6 @@ static void
 debug_window_fill_service_chooser (EmpathyDebugWindow *self)
 {
   GError *error = NULL;
-  GtkTreeIter iter;
-  GtkListStore *active_buffer, *pause_buffer;
 
   self->priv->dbus = tp_dbus_daemon_dup (&error);
 
@@ -1149,22 +1154,6 @@ debug_window_fill_service_chooser (EmpathyDebugWindow *self)
   self->priv->services_detected = 0;
   self->priv->name_owner_cb_count = 0;
 
-  /* add Mission Control */
-  active_buffer= new_list_store_for_service ();
-  pause_buffer = new_list_store_for_service ();
-
-  gtk_list_store_insert_with_values (self->priv->service_store, &iter, -1,
-      COL_NAME, "mission-control",
-      COL_UNIQUE_NAME, "org.freedesktop.Telepathy.MissionControl5",
-      COL_GONE, FALSE,
-      COL_ACTIVE_BUFFER, active_buffer,
-      COL_PAUSE_BUFFER, pause_buffer,
-      COL_PROXY, NULL,
-      -1);
-  g_object_unref (active_buffer);
-  g_object_unref (pause_buffer);
-
-  /* add clients */
   tp_dbus_daemon_list_names (self->priv->dbus, 2000,
       list_names_cb, NULL, NULL, G_OBJECT (self));
 
