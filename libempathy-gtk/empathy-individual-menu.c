@@ -458,13 +458,16 @@ add_phone_numbers (EmpathyIndividualMenu *self)
 
       if (type != NULL)
         {
-          tmp = g_strdup_printf ("Call %s (%s)",
+          /* translators: first argument is a phone number like +32123456 and
+           * the second one is something like 'home' or 'work'. */
+          tmp = g_strdup_printf (_("Call %s (%s)"),
               folks_phone_field_details_get_normalised (details),
               type);
         }
       else
         {
-          tmp = g_strdup_printf ("Call %s",
+          /* translators: argument is a phone number like +32123456 */
+          tmp = g_strdup_printf (_("Call %s"),
               folks_phone_field_details_get_normalised (details));
         }
 
