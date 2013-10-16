@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: empathy.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=empathy&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2013-10-16 09:02+0000\n"
-"PO-Revision-Date: 2013-10-16 11:05+0200\n"
+"POT-Creation-Date: 2013-10-16 08:55+0000\n"
+"PO-Revision-Date: 2013-10-16 11:00+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -49,11 +49,11 @@ msgid ""
 "text, make audio and video calls, or even transfer files, depending on what "
 "your contact’s chat application allows."
 msgstr ""
-"Empathy es la aplicación de mensajería instantánea del entorno de escritorio "
+"Empathy es la aplicación de mensajería instantánea del entorno de escritorio "
 "GNOME. Empathy se puede conectar a AIM, MSN, Jabber (incluyendo Facebook y "
-"GoogleTalk), IRC y a muchas otras redes de mensajería. Puede chatear con "
-"texto, hacer llamadas de sonido y vídeo e incluso transferir archivos, "
-"dependiendo de lo que la aplicación de chat de su contacto soporte."
+"GoogleTalk), IRC y a muchas otras redes de mensajería. Puede chatear con "
+"texto, hacer llamadas de sonido y vídeo e incluso transferir archivos, "
+"dependiendo de lo que la aplicación de chat de su contacto soporte."
 
 #: ../data/empathy.appdata.xml.in.h:2
 msgid ""
@@ -1053,7 +1053,7 @@ msgstr "Ahora %s se llama %s"
 #. * we get the new handler.
 #: ../libempathy-gtk/empathy-chat.c:3098 ../src/empathy-call-window.c:1525
 #: ../src/empathy-call-window.c:1575 ../src/empathy-call-window.c:2654
-#: ../src/empathy-call-window.c:2961 ../src/empathy-event-manager.c:1172
+#: ../src/empathy-call-window.c:2953 ../src/empathy-event-manager.c:1172
 msgid "Disconnected"
 msgstr "Desconectado"
 
@@ -1343,15 +1343,17 @@ msgstr "Casa"
 #. translators: first argument is a phone number like +32123456 and
 #. * the second one is something like 'home' or 'work'.
 #: ../libempathy-gtk/empathy-individual-menu.c:463
-#, c-format
+#, fuzzy, c-format
+#| msgid "%s (%s)"
 msgid "Call %s (%s)"
-msgstr "Llamar a %s (%s)"
+msgstr "%s (%s)"
 
 #. translators: argument is a phone number like +32123456
 #: ../libempathy-gtk/empathy-individual-menu.c:470
-#, c-format
+#, fuzzy, c-format
+#| msgid "Called %s"
 msgid "Call %s"
-msgstr "Llamar a %s"
+msgstr "Llamó %s"
 
 #: ../libempathy-gtk/empathy-individual-menu.c:676
 msgid "_Block Contact"
@@ -2480,29 +2482,29 @@ msgstr "La dirección IP del grupo multicast"
 msgid "Unknown"
 msgstr "Desconocido"
 
-#: ../src/empathy-call-window.c:2959
+#: ../src/empathy-call-window.c:2951
 msgid "On hold"
 msgstr "En espera"
 
-#: ../src/empathy-call-window.c:2963
+#: ../src/empathy-call-window.c:2955
 msgid "Mute"
 msgstr "Silenciar"
 
-#: ../src/empathy-call-window.c:2965
+#: ../src/empathy-call-window.c:2957
 msgid "Duration"
 msgstr "Duración"
 
 #. Translators: 'status - minutes:seconds' the caller has been connected
-#: ../src/empathy-call-window.c:2968
+#: ../src/empathy-call-window.c:2960
 #, c-format
 msgid "%s — %d:%02dm"
 msgstr "%s: %d:%02dm"
 
-#: ../src/empathy-call-window.c:3064
+#: ../src/empathy-call-window.c:3056
 msgid "Technical Details"
 msgstr "Detalles técnicos"
 
-#: ../src/empathy-call-window.c:3103
+#: ../src/empathy-call-window.c:3095
 #, c-format
 msgid ""
 "%s's software does not understand any of the audio formats supported by your "
@@ -2511,7 +2513,7 @@ msgstr ""
 "El software de «%s» no entiende ninguno de los formatos de vídeo soportados "
 "por su equipo"
 
-#: ../src/empathy-call-window.c:3108
+#: ../src/empathy-call-window.c:3100
 #, c-format
 msgid ""
 "%s's software does not understand any of the video formats supported by your "
@@ -2520,7 +2522,7 @@ msgstr ""
 "El software de «%s» no entiende ninguno de los formatos de vídeo soportados "
 "por su equipo"
 
-#: ../src/empathy-call-window.c:3114
+#: ../src/empathy-call-window.c:3106
 #, c-format
 msgid ""
 "Can't establish a connection to %s. One of you might be on a network that "
@@ -2529,25 +2531,25 @@ msgstr ""
 "No se puede establecer una conexión con %s. Uno de los dos puede estar en "
 "una red que no acepta conexiones directas."
 
-#: ../src/empathy-call-window.c:3120
+#: ../src/empathy-call-window.c:3112
 msgid "There was a failure on the network"
 msgstr "Hubo un fallo en la red"
 
-#: ../src/empathy-call-window.c:3124
+#: ../src/empathy-call-window.c:3116
 msgid ""
 "The audio formats necessary for this call are not installed on your computer"
 msgstr ""
 "No están instalados en su equipo los formatos de sonido necesarios para esta "
 "llamada"
 
-#: ../src/empathy-call-window.c:3127
+#: ../src/empathy-call-window.c:3119
 msgid ""
 "The video formats necessary for this call are not installed on your computer"
 msgstr ""
 "No están instalados en su equipo los formatos de vídeo necesarios para esta "
 "llamada"
 
-#: ../src/empathy-call-window.c:3139
+#: ../src/empathy-call-window.c:3131
 #, c-format
 msgid ""
 "Something unexpected happened in a Telepathy component. Please <a href=\"%s"
@@ -2558,32 +2560,32 @@ msgstr ""
 "\">Informe de este error</a> y añada los registros obtenidos de la ventana "
 "de «Depuración» en el menú de Ayuda."
 
-#: ../src/empathy-call-window.c:3148
+#: ../src/empathy-call-window.c:3140
 msgid "There was a failure in the call engine"
 msgstr "Hubo un fallo en el motor de llamadas"
 
-#: ../src/empathy-call-window.c:3151
+#: ../src/empathy-call-window.c:3143
 msgid "The end of the stream was reached"
 msgstr "Se llegó al final del flujo"
 
-#: ../src/empathy-call-window.c:3191
+#: ../src/empathy-call-window.c:3183
 msgid "Can't establish audio stream"
 msgstr "No se puede establecer el flujo de voz"
 
-#: ../src/empathy-call-window.c:3201
+#: ../src/empathy-call-window.c:3193
 msgid "Can't establish video stream"
 msgstr "No se puede establecer el flujo de vídeo"
 
-#: ../src/empathy-call-window.c:3238
+#: ../src/empathy-call-window.c:3230
 #, c-format
 msgid "Your current balance is %s."
 msgstr "su balance actual es %s."
 
-#: ../src/empathy-call-window.c:3242
+#: ../src/empathy-call-window.c:3234
 msgid "Sorry, you don’t have enough credit for that call."
 msgstr "No tiene crédito suficiente para hacer esta llamada."
 
-#: ../src/empathy-call-window.c:3244
+#: ../src/empathy-call-window.c:3236
 msgid "Top Up"
 msgstr "Recargar"
 
