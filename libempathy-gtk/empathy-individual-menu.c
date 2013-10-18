@@ -129,6 +129,8 @@ individual_menu_add_personas (EmpathyIndividualMenu *self,
       g_clear_object (&persona);
     }
 
+  g_clear_object (&iter);
+
   /* return early if these entries would add nothing beyond the "quick" items */
   if (persona_count <= 1)
     goto out;
@@ -337,11 +339,15 @@ static void
 call_phone_number (FolksPhoneFieldDetails *details,
     TpAccount *account)
 {
-  DEBUG ("Try to call %s", folks_phone_field_details_get_normalised (details));
+  gchar *number;
 
-  empathy_call_new_with_streams (
-      folks_phone_field_details_get_normalised (details),
+  number = folks_phone_field_details_get_normalised (details);
+  DEBUG ("Try to call %s", number);
+
+  empathy_call_new_with_streams (number,
       account, TRUE, FALSE, empathy_get_current_action_time ());
+
+  g_free (number);
 }
 
 static void
@@ -410,6 +416,7 @@ find_phone_type (FolksPhoneFieldDetails *details)
 {
   GeeCollection *types;
   GeeIterator *iter;
+  const gchar *retval = NULL;
 
   types = folks_abstract_field_details_get_parameter_values (
       FOLKS_ABSTRACT_FIELD_DETAILS (details), "type");
@@ -420,17 +427,24 @@ find_phone_type (FolksPhoneFieldDetails *details)
   iter = gee_iterable_iterator (GEE_ITERABLE (types));
   while (gee_iterator_next (iter))
     {
-      const gchar *type = gee_iterator_get (iter);
+      gchar *type = gee_iterator_get (iter);
 
       if (!tp_strdiff (type, "CELL"))
-        return _("Mobile");
+        retval = _("Mobile");
       else if (!tp_strdiff (type, "WORK"))
-        return _("Work");
+        retval = _("Work");
       else if (!tp_strdiff (type, "HOME"))
-        return _("HOME");
+        retval = _("HOME");
+
+      g_free (type);
+
+      if (retval != NULL)
+        break;
     }
 
-  return NULL;
+  g_object_unref (iter);
+
+  return retval;
 }
 
 static void
@@ -451,25 +465,25 @@ add_phone_numbers (EmpathyIndividualMenu *self)
     {
       FolksPhoneFieldDetails *details = gee_iterator_get (iter);
       GtkWidget *item, *image;
-      gchar *tmp;
+      gchar *tmp, *number;
       const gchar *type;
 
       type = find_phone_type (details);
+      number = folks_phone_field_details_get_normalised (details);
 
       if (type != NULL)
         {
           /* translators: first argument is a phone number like +32123456 and
            * the second one is something like 'home' or 'work'. */
-          tmp = g_strdup_printf (_("Call %s (%s)"),
-              folks_phone_field_details_get_normalised (details),
-              type);
+          tmp = g_strdup_printf (_("Call %s (%s)"), number, type);
         }
       else
         {
           /* translators: argument is a phone number like +32123456 */
-          tmp = g_strdup_printf (_("Call %s"),
-              folks_phone_field_details_get_normalised (details));
+          tmp = g_strdup_printf (_("Call %s"), number);
         }
+
+      g_free (number);
 
       item = gtk_image_menu_item_new_with_mnemonic (tmp);
       g_free (tmp);
@@ -487,6 +501,8 @@ add_phone_numbers (EmpathyIndividualMenu *self)
 
       gtk_menu_shell_append (GTK_MENU_SHELL (self), item);
       gtk_widget_show (item);
+
+      g_object_unref (details);
     }
 
   g_object_unref (iter);
@@ -510,17 +526,20 @@ get_contacts_supporting_blocking (FolksIndividual *individual)
       TpConnection *conn;
 
       if (!TPF_IS_PERSONA (persona))
-        continue;
+        goto while_next;
 
       contact = tpf_persona_get_contact (persona);
       if (contact == NULL)
-        continue;
+        goto while_next;
 
       conn = tp_contact_get_connection (contact);
 
       if (tp_proxy_has_interface_by_id (conn,
         TP_IFACE_QUARK_CONNECTION_INTERFACE_CONTACT_BLOCKING))
         result = g_list_prepend (result, contact);
+
+while_next:
+      g_clear_object (&persona);
     }
 
   g_clear_object (&iter);
