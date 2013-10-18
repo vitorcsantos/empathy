@@ -1784,6 +1784,7 @@ personas_changed_cb (FolksIndividual *individual,
 
       g_clear_object (&persona);
     }
+  g_clear_object (&iter);
 
   /*
    * What we display for various conditions:
@@ -1849,6 +1850,7 @@ personas_changed_cb (FolksIndividual *individual,
           add_persona (self, persona);
           g_clear_object (&persona);
         }
+      g_clear_object (&iter);
     }
   else if (was_showing_personas && !will_show_personas)
     {
@@ -1860,6 +1862,7 @@ personas_changed_cb (FolksIndividual *individual,
           remove_persona (self, persona);
           g_clear_object (&persona);
         }
+      g_clear_object (&iter);
 
       if (removed != NULL)
         {
@@ -1878,7 +1881,6 @@ personas_changed_cb (FolksIndividual *individual,
       /* Set up the Individual grid instead */
       individual_grid_set_up (self);
     }
-  g_clear_object (&iter);
 
   /* Hide the last separator and show the others */
   children = gtk_container_get_children (GTK_CONTAINER (priv->vbox_individual));
