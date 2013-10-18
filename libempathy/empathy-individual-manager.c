@@ -394,7 +394,7 @@ aggregator_individuals_changed_cb (FolksIndividualAggregator *aggregator,
 
       /* Make sure we handle each added individual only once. */
       if (ind == NULL || g_list_find (added_set, ind) != NULL)
-        continue;
+        goto while_next;
       added_set = g_list_prepend (added_set, ind);
 
       g_signal_connect (ind, "notify::personas",
@@ -406,6 +406,7 @@ aggregator_individuals_changed_cb (FolksIndividualAggregator *aggregator,
           added_filtered = g_list_prepend (added_filtered, ind);
         }
 
+while_next:
       g_clear_object (&ind);
     }
   g_clear_object (&iter);
@@ -829,19 +830,21 @@ empathy_individual_manager_set_blocked (EmpathyIndividualManager *self,
 
           tp_contact = tpf_persona_get_contact (persona);
           if (tp_contact == NULL)
-            continue;
+            goto while_next;
 
           conn = tp_contact_get_connection (tp_contact);
 
           if (!tp_proxy_has_interface_by_id (conn,
                 TP_IFACE_QUARK_CONNECTION_INTERFACE_CONTACT_BLOCKING))
-            continue;
+            goto while_next;
 
           if (blocked)
             tp_contact_block_async (tp_contact, abusive, NULL, NULL);
           else
             tp_contact_unblock_async (tp_contact, NULL, NULL);
         }
+
+while_next:
       g_clear_object (&persona);
     }
   g_clear_object (&iter);

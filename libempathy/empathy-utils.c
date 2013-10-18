@@ -560,7 +560,9 @@ empathy_dup_persona_store_for_connection (TpConnection *connection)
           account = tpf_persona_store_get_account (persona_store);
           conn_cur = tp_account_get_connection (account);
           if (conn_cur == connection)
-            result = persona_store;
+            result = g_object_ref (persona_store);
+
+          g_clear_object (&persona_store);
         }
       g_clear_object (&iter);
     }
