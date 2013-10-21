@@ -37,8 +37,6 @@
 #include "empathy-uoa-auth-handler.h"
 #endif /* HAVE_UOA */
 
-#include "extensions.h"
-
 #define DEBUG_FLAG EMPATHY_DEBUG_TLS
 #include "empathy-debug.h"
 
@@ -283,7 +281,7 @@ common_checks (EmpathyAuthFactory *self,
        * ServerTLSConnection channels. */
       if (observe
           || tp_channel_get_channel_type_id (channel) !=
-          EMP_IFACE_QUARK_CHANNEL_TYPE_SERVER_TLS_CONNECTION)
+          TP_IFACE_QUARK_CHANNEL_TYPE_SERVER_TLS_CONNECTION)
         {
           g_set_error (error, TP_ERROR, TP_ERROR_INVALID_ARGUMENT,
               "Can only %s ServerTLSConnection or ServerAuthentication channels, "
@@ -365,7 +363,7 @@ handle_channels (TpBaseClient *handler,
 
   /* create a handler */
   if (tp_channel_get_channel_type_id (channel) ==
-      EMP_IFACE_QUARK_CHANNEL_TYPE_SERVER_TLS_CONNECTION)
+      TP_IFACE_QUARK_CHANNEL_TYPE_SERVER_TLS_CONNECTION)
     {
       empathy_server_tls_handler_new_async (channel, server_tls_handler_ready_cb,
           data);
@@ -660,7 +658,7 @@ empathy_auth_factory_constructed (GObject *obj)
   tp_base_client_take_handler_filter (client, tp_asv_new (
           /* ChannelType */
           TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING,
-          EMP_IFACE_CHANNEL_TYPE_SERVER_TLS_CONNECTION,
+          TP_IFACE_CHANNEL_TYPE_SERVER_TLS_CONNECTION,
           /* AuthenticationMethod */
           TP_PROP_CHANNEL_TARGET_HANDLE_TYPE, G_TYPE_UINT,
           TP_HANDLE_TYPE_NONE, NULL));
