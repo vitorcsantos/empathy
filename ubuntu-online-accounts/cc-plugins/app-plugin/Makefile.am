@@ -1,6 +1,6 @@
 plugindir = $(ACCOUNTS_APP_PLUGIN_DIR)
 
-INCLUDES =					\
+AM_CPPFLAGS =					\
 	-I$(top_builddir)			\
 	-I$(top_srcdir)				\
 	-I$(top_srcdir)/libempathy		\

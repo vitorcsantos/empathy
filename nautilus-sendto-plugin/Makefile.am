@@ -1,6 +1,6 @@
 plugindir = $(libdir)/nautilus-sendto/plugins
 
-INCLUDES =					\
+AM_CPPFLAGS =					\
 	-I$(top_builddir)			\
 	-I$(top_srcdir)/libempathy		\
 	-I$(top_srcdir)/libempathy-gtk		\

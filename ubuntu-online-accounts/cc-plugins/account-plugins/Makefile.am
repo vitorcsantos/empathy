@@ -1,6 +1,6 @@
 plugindir = $(ACCOUNTS_PROVIDER_PLUGIN_DIR)
 
-INCLUDES =					\
+AM_CPPFLAGS =					\
 	-I$(top_builddir)			\
 	-I$(top_srcdir)/libempathy		\
 	-I$(top_srcdir)/libempathy-gtk		\
