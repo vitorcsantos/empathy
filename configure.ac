@@ -446,31 +446,6 @@ AC_SUBST(GEOCODE_CFLAGS)
 AC_SUBST(GEOCODE_LIBS)
 
 # -----------------------------------------------------------
-# nautilus-sendto
-# -----------------------------------------------------------
-AC_ARG_ENABLE(nautilus-sendto,
-              AS_HELP_STRING([--enable-nautilus-sendto=@<:@no/yes/auto@:>@],
-                             [build nautilus-sendto plugin]), ,
-                             enable_nautilus_sendto=auto)
-
-if test "x$enable_nautilus_sendto" != "xno"; then
-   PKG_CHECK_MODULES(NST,
-    [
-       nautilus-sendto >= $NAUTILUS_SENDTO_REQUIRED
-    ], have_nst="yes", have_nst="no")
-else
-   have_nst=no
-fi
-
-if test "x$enable_nautilus_sendto" = "xyes" -a "x$have_nst" != "xyes"; then
-   AC_MSG_ERROR([Could not find nautilus-sendto dependencies:
-
-$NST_PKG_ERRORS])
-fi
-
-AM_CONDITIONAL(HAVE_NST, test "x$have_nst" = "xyes")
-
-# -----------------------------------------------------------
 # goa-mc-plugin
 # -----------------------------------------------------------
 AC_ARG_ENABLE(goa,
@@ -624,7 +599,6 @@ AC_CONFIG_FILES([
    libempathy/Makefile
    libempathy-gtk/Makefile
    src/Makefile
-   nautilus-sendto-plugin/Makefile
    goa-mc-plugin/Makefile
    ubuntu-online-accounts/Makefile
    ubuntu-online-accounts/mc-plugin/Makefile
