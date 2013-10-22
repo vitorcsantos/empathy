@@ -415,7 +415,7 @@ empathy_account_manager_get_accounts_connected (gboolean *connecting)
 
   manager = tp_account_manager_dup ();
 
-  if (G_UNLIKELY (!tp_account_manager_is_prepared (manager,
+  if (G_UNLIKELY (!tp_proxy_is_prepared (manager,
           TP_ACCOUNT_MANAGER_FEATURE_CORE)))
     g_critical (G_STRLOC ": %s called before AccountManager ready", G_STRFUNC);
 

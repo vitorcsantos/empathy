@@ -190,7 +190,7 @@ empathy_notify_manager_notification_is_enabled  (EmpathyNotifyManager *self)
         EMPATHY_PREFS_NOTIFICATIONS_ENABLED))
     return FALSE;
 
-  if (!tp_account_manager_is_prepared (priv->account_manager,
+  if (!tp_proxy_is_prepared (priv->account_manager,
         TP_ACCOUNT_MANAGER_FEATURE_CORE))
     {
       DEBUG ("account manager is not ready yet; display the notification");
