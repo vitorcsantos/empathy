@@ -591,7 +591,7 @@ AM_CONDITIONAL(HAVE_UOA, test "x$have_uoa" = "xyes")
 
 if test "x$have_uoa" = "xyes" -o "x$have_goa" = "xyes"; then
    AC_MSG_CHECKING([Mission Control plugins dir])
-   MISSION_CONTROL_PLUGINS_DIR=${libdir}/mission-control-plugins.`pkg-config --variable=MCP_ABI_VERSION mission-control-plugins`
+   MISSION_CONTROL_PLUGINS_DIR=`pkg-config --define-variable=libdir='${libdir}' --variable=plugindir mission-control-plugins`
 
    AC_MSG_RESULT([$MISSION_CONTROL_PLUGINS_DIR])
    AC_SUBST(MISSION_CONTROL_PLUGINS_DIR)
