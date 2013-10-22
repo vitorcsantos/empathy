@@ -147,8 +147,7 @@ find_main_channel (GList *channels)
 
       channel_type = tp_channel_get_channel_type_id (channel);
 
-      if (channel_type == TP_IFACE_QUARK_CHANNEL_TYPE_STREAMED_MEDIA ||
-          channel_type == TP_IFACE_QUARK_CHANNEL_TYPE_CALL)
+      if (channel_type == TP_IFACE_QUARK_CHANNEL_TYPE_CALL)
         return channel;
     }
 
@@ -220,7 +219,7 @@ observe_channels (TpSimpleObserver *observer,
       GError err = { TP_ERROR, TP_ERROR_INVALID_ARGUMENT,
           "Unknown channel type" };
 
-      DEBUG ("Didn't find any Call or StreamedMedia channel; ignoring");
+      DEBUG ("Didn't find any Call channel; ignoring");
 
       tp_observe_channels_context_fail (context, &err);
       return;
@@ -324,14 +323,7 @@ empathy_call_observer_init (EmpathyCallObserver *self)
       "Empathy.CallObserver", FALSE,
       observe_channels, self, NULL);
 
-  /* Observe Call and StreamedMedia channels */
-  tp_base_client_take_observer_filter (self->priv->observer,
-      tp_asv_new (
-        TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING,
-          TP_IFACE_CHANNEL_TYPE_STREAMED_MEDIA,
-        TP_PROP_CHANNEL_TARGET_HANDLE_TYPE, G_TYPE_UINT,
-          TP_HANDLE_TYPE_CONTACT,
-        NULL));
+  /* Observe Call channels */
   tp_base_client_take_observer_filter (self->priv->observer,
       tp_asv_new (
         TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING,

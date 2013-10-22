@@ -881,8 +881,7 @@ maybe_refresh_logs (TpChannel *channel,
   if (!tp_strdiff (type, TP_IFACE_CHANNEL_TYPE_TEXT) &&
       !(event_mask & TPL_EVENT_MASK_TEXT))
     goto out;
-  if ((!tp_strdiff (type, TP_IFACE_CHANNEL_TYPE_STREAMED_MEDIA) ||
-       !tp_strdiff (type, TP_IFACE_CHANNEL_TYPE_CALL)) &&
+  if ((!tp_strdiff (type, TP_IFACE_CHANNEL_TYPE_CALL)) &&
       !(event_mask & TPL_EVENT_MASK_CALL))
     goto out;
 
@@ -1024,8 +1023,7 @@ observe_channels (TpSimpleObserver *observer,
           tp_g_signal_connect_object (channel, "invalidated",
               G_CALLBACK (on_channel_ended), self, 0);
         }
-      else if (!tp_strdiff (type, TP_IFACE_CHANNEL_TYPE_CALL) ||
-          !tp_strdiff (type, TP_IFACE_CHANNEL_TYPE_STREAMED_MEDIA))
+      else if (!tp_strdiff (type, TP_IFACE_CHANNEL_TYPE_CALL))
         {
           g_hash_table_insert (self->priv->channels,
               g_object_ref (channel), g_object_ref (account));
@@ -1060,11 +1058,6 @@ log_window_create_observer (EmpathyLogWindow *self)
       tp_asv_new (
           TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING,
             TP_IFACE_CHANNEL_TYPE_TEXT,
-          NULL));
-  tp_base_client_take_observer_filter (self->priv->observer,
-      tp_asv_new (
-          TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING,
-            TP_IFACE_CHANNEL_TYPE_STREAMED_MEDIA,
           NULL));
   tp_base_client_take_observer_filter (self->priv->observer,
       tp_asv_new (
