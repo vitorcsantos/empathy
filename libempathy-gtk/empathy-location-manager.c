@@ -22,6 +22,8 @@
 #include "config.h"
 #include "empathy-location-manager.h"
 
+#include <telepathy-glib/telepathy-glib-dbus.h>
+
 #include <tp-account-widgets/tpaw-time.h>
 
 #include "empathy-gsettings.h"
