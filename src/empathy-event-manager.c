@@ -612,8 +612,7 @@ event_manager_approval_done (EventManagerApproval *approval)
 
       channel_type = tp_channel_get_channel_type_id (approval->main_channel);
 
-      if (channel_type == TP_IFACE_QUARK_CHANNEL_TYPE_STREAMED_MEDIA ||
-          channel_type == TP_IFACE_QUARK_CHANNEL_TYPE_CALL)
+      if (channel_type == TP_IFACE_QUARK_CHANNEL_TYPE_CALL)
         {
           priv->ringing--;
           if (priv->ringing == 0)
