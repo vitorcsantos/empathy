@@ -303,8 +303,6 @@ account_reconnected (EmpathyChat *chat,
 				TP_USER_ACTION_TIME_NOT_USER_ACTION);
 			break;
 		case TP_HANDLE_TYPE_NONE:
-		case TP_HANDLE_TYPE_LIST:
-		case TP_HANDLE_TYPE_GROUP:
 		default:
 			g_assert_not_reached ();
 			break;
@@ -722,7 +720,7 @@ chat_command_msg_cb (GObject *source,
 	GError *error = NULL;
 	TpChannel *channel;
 
-	channel = tp_account_channel_request_ensure_and_observe_channel_finish (
+	channel = tp_account_channel_request_ensure_channel_finish (
 					TP_ACCOUNT_CHANNEL_REQUEST (source), result, &error);
 
 	if (channel == NULL) {
@@ -864,7 +862,7 @@ chat_command_msg_internal (EmpathyChat *chat,
 	data->chat = chat;
 	data->message = g_strdup (message);
 
-	tp_account_channel_request_ensure_and_observe_channel_async (req,
+	tp_account_channel_request_ensure_channel_async (req,
 		EMPATHY_CHAT_BUS_NAME, NULL, chat_command_msg_cb, data);
 
 	g_object_unref (req);
@@ -3639,7 +3637,7 @@ account_manager_prepared_cb (GObject *source_object,
 		return;
 	}
 
-	accounts = tp_account_manager_dup_valid_accounts (account_manager);
+	accounts = tp_account_manager_dup_usable_accounts (account_manager);
 
 	for (l = accounts; l != NULL; l = l->next) {
 		TpAccount *account = l->data;
