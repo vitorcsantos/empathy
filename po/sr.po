@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: empathy\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=empath"
 "y&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2013-10-14 17:11+0000\n"
-"PO-Revision-Date: 2013-10-15 19:32+0200\n"
+"POT-Creation-Date: 2013-10-22 18:02+0000\n"
+"PO-Revision-Date: 2013-10-24 11:28+0200\n"
 "Last-Translator: Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
 "Language-Team: Serbian <gnom@prevod.org>\n"
 "Language: sr\n"
@@ -47,6 +47,31 @@ msgstr ""
 #: ../data/empathy.desktop.in.in.h:5
 msgid "chat;talk;im;message;irc;voip;gtalk;facebook;jabber;"
 msgstr "ћаскање;разговор;бп;им;порука;ирц;воип;гразговор;фејсбук;џабер;"
+
+#: ../data/empathy.appdata.xml.in.h:1
+msgid ""
+"Empathy is the official instant messaging application of the GNOME desktop "
+"environment.  Empathy can connect to AIM, MSN, Jabber (including Facebook "
+"and Google Talk), IRC, and many other messaging networks. You can chat with "
+"text, make audio and video calls, or even transfer files, depending on what "
+"your contact’s chat application allows."
+msgstr ""
+"Интернет писмоноша је званични програм брзих порука за Гномово радно "
+"окружење.  Интернет писмоноша може да се повеже на АИМ, МСН, Џабер "
+"(укључујући Фејсбук и Гугл разговор), ИРЦ, и на многе друге мреже за слање "
+"порука. Можете да ћаскате помоћу текста, да обављате звучне и видео позиве, "
+"или чак да преносите датотеке, у зависности шта омогућава програм за ћаскање "
+"вашег контакта."
+
+#: ../data/empathy.appdata.xml.in.h:2
+msgid ""
+"Empathy provides integrated messaging for the GNOME desktop, so you’ll never "
+"miss a message.  You can respond to your contacts without even having to "
+"open Empathy!"
+msgstr ""
+"Интернет писмоноша обезбеђује интегрисано слање порука за Гномову радну "
+"површ, тако да никада нећете пропустити поруку.  Можете да одговорите вашем "
+"контакту а да не морате ни да отворите Интернет писмоношу!"
 
 #: ../data/org.gnome.Empathy.gschema.xml.h:1
 msgid "Connection managers should be used"
@@ -1261,67 +1286,65 @@ msgstr "Инсталирајте „gnome-contacts“ да приступите 
 #. Translators: this is used in the context menu for a contact. The first
 #. * parameter is a contact ID (e.g. foo@jabber.org) and the second is one
 #. * of the user's account IDs (e.g. me@hotmail.com).
-#: ../libempathy-gtk/empathy-individual-menu.c:179
+#: ../libempathy-gtk/empathy-individual-menu.c:181
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:357
+#: ../libempathy-gtk/empathy-individual-menu.c:363
 msgid "Select account to use to place the call"
 msgstr "Изаберите налог који ће бити коришћен за позив"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:361
+#: ../libempathy-gtk/empathy-individual-menu.c:367
 #: ../libempathy-gtk/empathy-log-window.ui.h:6
 #: ../src/empathy-call-window.ui.h:20
 msgid "Call"
 msgstr "Позив"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:426
+#: ../libempathy-gtk/empathy-individual-menu.c:433
 msgid "Mobile"
 msgstr "Мобилни"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:428
+#: ../libempathy-gtk/empathy-individual-menu.c:435
 msgid "Work"
 msgstr "Посао"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:430
+#: ../libempathy-gtk/empathy-individual-menu.c:437
 msgid "HOME"
 msgstr "КУЋА"
 
 #. translators: first argument is a phone number like +32123456 and
 #. * the second one is something like 'home' or 'work'.
-#: ../libempathy-gtk/empathy-individual-menu.c:463
+#: ../libempathy-gtk/empathy-individual-menu.c:478
 #, c-format
-#| msgid "%s (%s)"
 msgid "Call %s (%s)"
 msgstr "Позови %s (%s)"
 
 #. translators: argument is a phone number like +32123456
-#: ../libempathy-gtk/empathy-individual-menu.c:470
+#: ../libempathy-gtk/empathy-individual-menu.c:483
 #, c-format
-#| msgid "Called %s"
 msgid "Call %s"
 msgstr "Позови %s"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:676
+#: ../libempathy-gtk/empathy-individual-menu.c:695
 msgid "_Block Contact"
 msgstr "_Блокирај контакт"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:731
+#: ../libempathy-gtk/empathy-individual-menu.c:750
 #, c-format
 msgid "Remove from _Group '%s'"
 msgstr "Уклони из _групе „%s“"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:752
+#: ../libempathy-gtk/empathy-individual-menu.c:771
 msgid "Delete and _Block"
 msgstr "Избриши и _блокирај"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:840
+#: ../libempathy-gtk/empathy-individual-menu.c:859
 #, c-format
 msgid "Do you really want to remove the contact '%s'?"
 msgstr "Да ли сте сигурни да желите да уклоните пријатеља „%s“?"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:849
+#: ../libempathy-gtk/empathy-individual-menu.c:868
 #, c-format
 msgid ""
 "Do you really want to remove the linked contact '%s'? Note that this will "
@@ -1330,75 +1353,75 @@ msgstr ""
 "Да ли стварно желите да уклоните увезани контакт „%s“? Ово ће уклонити и све "
 "контакте који су везани за овај контакт."
 
-#: ../libempathy-gtk/empathy-individual-menu.c:860
+#: ../libempathy-gtk/empathy-individual-menu.c:879
 msgid "Removing contact"
 msgstr "Уклањам пријатеља"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:936
+#: ../libempathy-gtk/empathy-individual-menu.c:955
 #: ../libempathy-gtk/empathy-individual-view.c:2442
 msgid "_Remove"
 msgstr "_Уклони"
 
 #. add chat button
-#: ../libempathy-gtk/empathy-individual-menu.c:1355
+#: ../libempathy-gtk/empathy-individual-menu.c:1374
 #: ../libempathy-gtk/empathy-new-message-dialog.c:308
 msgid "_Chat"
 msgstr "Ћа_скање"
 
 #. add SMS button
-#: ../libempathy-gtk/empathy-individual-menu.c:1394
+#: ../libempathy-gtk/empathy-individual-menu.c:1413
 #: ../libempathy-gtk/empathy-new-message-dialog.c:302
 msgid "_SMS"
 msgstr "_СМС"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:1431
+#: ../libempathy-gtk/empathy-individual-menu.c:1450
 msgctxt "menu item"
 msgid "_Audio Call"
 msgstr "_Аудио позив"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:1468
+#: ../libempathy-gtk/empathy-individual-menu.c:1487
 msgctxt "menu item"
 msgid "_Video Call"
 msgstr "_Видео позив"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:1510
+#: ../libempathy-gtk/empathy-individual-menu.c:1529
 #: ../src/empathy-roster-window-menubar.ui.h:11
 msgid "_Previous Conversations"
 msgstr "_Претходни разговори"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:1542
+#: ../libempathy-gtk/empathy-individual-menu.c:1561
 msgid "Send File"
 msgstr "Пошаљи датотеку"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:1576
+#: ../libempathy-gtk/empathy-individual-menu.c:1595
 msgid "Share My Desktop"
 msgstr "Дели моју радну површ"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:1603
+#: ../libempathy-gtk/empathy-individual-menu.c:1622
 #: ../libempathy-gtk/empathy-individual-widget.c:1423
 msgid "Favorite"
 msgstr "Омиљени"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:1632
+#: ../libempathy-gtk/empathy-individual-menu.c:1651
 msgid "Infor_mation"
 msgstr "_Подаци"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:1681
+#: ../libempathy-gtk/empathy-individual-menu.c:1700
 msgctxt "Edit individual (contextual menu)"
 msgid "_Edit"
 msgstr "_Уреди"
 
 #. send invitation
-#: ../libempathy-gtk/empathy-individual-menu.c:1797
+#: ../libempathy-gtk/empathy-individual-menu.c:1816
 #: ../src/empathy-chat-window.c:1277
 msgid "Inviting you to this room"
 msgstr "Позивам вас у ову собу"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:1843
+#: ../libempathy-gtk/empathy-individual-menu.c:1862
 msgid "_Invite to Chat Room"
 msgstr "Позов_и у собу за ћаскање"
 
-#: ../libempathy-gtk/empathy-individual-menu.c:2039
+#: ../libempathy-gtk/empathy-individual-menu.c:2058
 #: ../src/empathy-roster-window.ui.h:4
 msgid "_Add Contact…"
 msgstr "Дод_ај пријатеља…"
