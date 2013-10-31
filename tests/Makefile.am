@@ -4,10 +4,6 @@ CLEANFILES=
 
 SUPPRESSIONS=tp-glib.supp dlopen.supp
 
-EXTRA_DIST = 		\
-	test.manager	\
-	test.profile
-
 AM_CPPFLAGS =						\
 	$(ERROR_CFLAGS)					\
 	-I$(top_srcdir)/libempathy                     	\
