@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 
 import os
-import re
 import urllib
 import csv
 import datetime
-import time
 from string import Template
 from optparse import OptionParser
+import dateutil.parser
 
 last_tag_pattern = 'EMPATHY_3_10*'
 upload_server = 'master.gnome.org'
@@ -172,9 +171,9 @@ class Project:
 		commit_str = self.exec_cmd('git show %s' % (self.last_tag))
 		for line in commit_str.splitlines():
 			if line.startswith('Date:'):
-				time_str = line[5:line.rfind('+')].strip()
-				t = time.strptime(time_str)
-				last_tag_date = time.strftime('%Y-%m-%d', t)
+				time_str = line[5:]
+				t = dateutil.parser.parse(time_str)
+				last_tag_date = t.strftime('%Y-%m-%d')
 				break
 
 		query = 'http://bugzilla.gnome.org/buglist.cgi?' \
