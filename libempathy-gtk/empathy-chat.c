@@ -46,7 +46,6 @@
 #include "empathy-input-text-view.h"
 #include "empathy-request-util.h"
 #include "empathy-search-bar.h"
-#include "empathy-smiley-manager.h"
 #include "empathy-spell.h"
 #include "empathy-string-parser.h"
 #include "empathy-theme-manager.h"
@@ -2095,6 +2094,13 @@ chat_input_has_focus_notify_cb (GtkWidget   *widget,
 	empathy_theme_adium_focus_toggled (chat->view, gtk_widget_has_focus (widget));
 }
 
+void
+empathy_chat_insert_smiley (GtkTextBuffer *buffer,
+				EmpathySmiley        *smiley)
+{
+	gtk_text_buffer_insert_at_cursor (buffer, smiley->str, -1);
+}
+
 static void
 chat_insert_smiley_activate_cb (EmpathySmileyManager *manager,
 				EmpathySmiley        *smiley,
@@ -2102,15 +2108,10 @@ chat_insert_smiley_activate_cb (EmpathySmileyManager *manager,
 {
 	EmpathyChat   *chat = EMPATHY_CHAT (user_data);
 	GtkTextBuffer *buffer;
-	GtkTextIter    iter;
 
 	buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (chat->input_text_view));
 
-	gtk_text_buffer_get_end_iter (buffer, &iter);
-	gtk_text_buffer_insert (buffer, &iter, smiley->str, -1);
-
-	gtk_text_buffer_get_end_iter (buffer, &iter);
-	gtk_text_buffer_insert (buffer, &iter, " ", -1);
+	empathy_chat_insert_smiley (buffer, smiley);
 }
 
 typedef struct {

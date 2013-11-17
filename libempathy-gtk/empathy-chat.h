@@ -33,6 +33,7 @@
 #include "empathy-contact.h"
 #include "empathy-theme-adium.h"
 #include "empathy-tp-chat.h"
+#include "empathy-smiley-manager.h"
 
 G_BEGIN_DECLS
 
@@ -98,6 +99,8 @@ guint              empathy_chat_get_n_messages_sending (EmpathyChat *self);
 gchar *            empathy_chat_dup_text             (EmpathyChat *self);
 void               empathy_chat_set_text             (EmpathyChat *self,
                                                       const gchar *text);
+void               empathy_chat_insert_smiley        (GtkTextBuffer *buffer,
+                                                      EmpathySmiley *smiley);
 
 G_END_DECLS
 

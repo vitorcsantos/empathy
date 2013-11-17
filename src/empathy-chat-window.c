@@ -42,7 +42,6 @@
 #include "empathy-invite-participant-dialog.h"
 #include "empathy-notify-manager.h"
 #include "empathy-request-util.h"
-#include "empathy-smiley-manager.h"
 #include "empathy-sound-manager.h"
 #include "empathy-ui-utils.h"
 #include "empathy-utils.h"
@@ -1075,13 +1074,11 @@ chat_window_insert_smiley_activate_cb (EmpathySmileyManager *manager,
   EmpathyChatWindow *self = user_data;
   EmpathyChat *chat;
   GtkTextBuffer *buffer;
-  GtkTextIter iter;
 
   chat = self->priv->current_chat;
-
   buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (chat->input_text_view));
-  gtk_text_buffer_get_end_iter (buffer, &iter);
-  gtk_text_buffer_insert (buffer, &iter, smiley->str, -1);
+
+  empathy_chat_insert_smiley (buffer, smiley);
 }
 
 static void
