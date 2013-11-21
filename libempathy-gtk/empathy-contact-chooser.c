@@ -232,7 +232,7 @@ get_contacts_cb (GObject *source,
     /* another request has been started */
     goto out;
 
-  individual =  empathy_create_individual_from_tp_contact (contact);
+  individual =  empathy_ensure_individual_from_tp_contact (contact);
   if (individual == NULL)
     goto out;
 

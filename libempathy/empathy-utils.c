@@ -946,26 +946,6 @@ create_individual_from_persona (FolksPersona *persona)
   return individual;
 }
 
-FolksIndividual *
-empathy_create_individual_from_tp_contact (TpContact *contact)
-{
-  TpfPersona *persona;
-  FolksIndividual *individual;
-
-  persona = tpf_persona_dup_for_contact (contact);
-  if (persona == NULL)
-    {
-      DEBUG ("Failed to get a persona for %s",
-          tp_contact_get_identifier (contact));
-      return NULL;
-    }
-
-  individual = create_individual_from_persona (FOLKS_PERSONA (persona));
-
-  g_object_unref (persona);
-  return individual;
-}
-
 /* Look for a FolksIndividual containing @contact as one of his persona
  * and create one if needed */
 FolksIndividual *

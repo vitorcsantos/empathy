@@ -102,9 +102,6 @@ void empathy_individual_can_audio_video_call (FolksIndividual *individual,
 gboolean empathy_client_types_contains_mobile_device (
     const GStrv types);
 
-FolksIndividual * empathy_create_individual_from_tp_contact (
-    TpContact *contact);
-
 FolksIndividual * empathy_ensure_individual_from_tp_contact (
     TpContact *contact);
 

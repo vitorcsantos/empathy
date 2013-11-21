@@ -164,7 +164,7 @@ individual_menu_add_personas (EmpathyIndividualMenu *self,
         goto while_finish;
 
       contact = empathy_contact_dup_from_tp_contact (tp_contact);
-      single_individual = empathy_create_individual_from_tp_contact (
+      single_individual = empathy_ensure_individual_from_tp_contact (
           tp_contact);
 
       /* Pretty hacky. Creating single_individual had a side effect to change
