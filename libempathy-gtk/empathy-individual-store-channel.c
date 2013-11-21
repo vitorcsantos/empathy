@@ -70,7 +70,7 @@ add_members (EmpathyIndividualStoreChannel *self,
       if (g_hash_table_lookup (self->priv->individuals, contact) != NULL)
         continue;
 
-      individual = empathy_create_individual_from_tp_contact (contact);
+      individual = empathy_ensure_individual_from_tp_contact (contact);
       if (individual == NULL)
         return;
 
