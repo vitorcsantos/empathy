@@ -196,9 +196,9 @@ add_roster_contact (EmpathyRosterView *self,
 }
 
 static void
-group_expanded_cb (EmpathyRosterGroup *group,
+group_expanded_cb (GtkWidget *expander,
     GParamSpec *spec,
-    EmpathyRosterView *self)
+    EmpathyRosterGroup *group)
 {
   GList *widgets, *l;
 
@@ -241,8 +241,8 @@ ensure_roster_group (EmpathyRosterView *self,
   gtk_expander_set_expanded (EMPATHY_ROSTER_GROUP (roster_group)->expander,
       empathy_contact_group_get_expanded (group));
 
-  g_signal_connect (roster_group, "notify::expanded",
-      G_CALLBACK (group_expanded_cb), self);
+  g_signal_connect (EMPATHY_ROSTER_GROUP (roster_group)->expander,
+      "notify::expanded", G_CALLBACK (group_expanded_cb), roster_group);
 
   gtk_widget_show (roster_group);
   gtk_container_add (GTK_CONTAINER (self), roster_group);
