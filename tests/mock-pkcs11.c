@@ -70,7 +70,7 @@ typedef struct {
 static void
 free_session (gpointer data)
 {
-  Session *sess = (Session*)data;
+  Session *sess = (Session *) data;
   g_list_free (sess->matches);
   g_free (sess);
 }
@@ -119,7 +119,7 @@ mock_C_Initialize (CK_VOID_PTR init_args)
   args = (CK_C_INITIALIZE_ARGS_PTR)init_args;
   if (args)
     {
-      g_return_val_if_fail(
+      g_return_val_if_fail (
           (args->CreateMutex == NULL && args->DestroyMutex == NULL &&
            args->LockMutex == NULL && args->UnlockMutex == NULL) ||
           (args->CreateMutex != NULL && args->DestroyMutex != NULL &&

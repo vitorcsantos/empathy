@@ -52,7 +52,8 @@ mock_tls_certificate_init (MockTLSCertificate *self)
 {
   self->state = TP_TLS_CERTIFICATE_STATE_PENDING;
   self->cert_type = g_strdup ("x509");
-  self->cert_data = g_ptr_array_new_with_free_func((GDestroyNotify) g_array_unref);
+  self->cert_data = g_ptr_array_new_with_free_func ((GDestroyNotify)
+      g_array_unref);
   self->rejections = g_ptr_array_new ();
 }
 
@@ -185,7 +186,7 @@ mock_tls_certificate_iface_init (gpointer g_iface,
         gpointer iface_data)
 {
   TpSvcAuthenticationTLSCertificateClass *klass =
-    (TpSvcAuthenticationTLSCertificateClass*)g_iface;
+    (TpSvcAuthenticationTLSCertificateClass *) g_iface;
 
   tp_svc_authentication_tls_certificate_implement_accept (klass,
       mock_tls_certificate_accept);
@@ -227,7 +228,7 @@ mock_tls_certificate_assert_rejected (MockTLSCertificate *self,
 }
 #endif
 
-static MockTLSCertificate*
+static MockTLSCertificate *
 mock_tls_certificate_new_and_register (TpDBusDaemon *dbus,
         const gchar *path,
         ...)
