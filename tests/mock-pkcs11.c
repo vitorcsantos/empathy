@@ -146,13 +146,13 @@ mock_C_Finalize (CK_VOID_PTR reserved)
 
   initialized = FALSE;
 
-  g_hash_table_destroy (the_certificates);
+  g_hash_table_unref (the_certificates);
   the_certificates = NULL;
 
-  g_hash_table_destroy (the_assertions);
+  g_hash_table_unref (the_assertions);
   the_assertions = NULL;
 
-  g_hash_table_destroy (the_sessions);
+  g_hash_table_unref (the_sessions);
   the_sessions = NULL;
 
   return CKR_OK;
