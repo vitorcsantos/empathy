@@ -65,6 +65,18 @@ empathy_parser_test_SOURCES = empathy-parser-test.c \
 empathy_live_search_test_SOURCES = empathy-live-search-test.c \
      test-helper.c test-helper.h
 
+check_c_sources = \
+    $(empathy_tls_test_SOURCES) \
+    $(empathy_irc_server_test_SOURCES) \
+    $(empathy_irc_network_test_SOURCES) \
+    $(empathy_irc_network_manager_test_SOURCES) \
+    $(empathy_chatroom_test_SOURCES) \
+    $(empathy_chatroom_manager_test_SOURCES) \
+    $(empathy_parser_test_SOURCES) \
+    $(empathy_live_search_test_SOURCES)
+include $(top_srcdir)/tools/check-coding-style.mk
+check-local: check-coding-style
+
 TESTS_ENVIRONMENT = EMPATHY_SRCDIR=@abs_top_srcdir@ \
 		    MC_PROFILE_DIR=@abs_top_srcdir@/tests \
 		    MC_MANAGER_DIR=@abs_top_srcdir@/tests

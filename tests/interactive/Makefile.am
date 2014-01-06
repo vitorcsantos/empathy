@@ -36,3 +36,17 @@ test_empathy_calendar_button_SOURCES = test-empathy-calendar-button.c
 test_empathy_roster_view_SOURCES = test-empathy-roster-view.c
 test_empathy_dual_roster_view_SOURCES = test-empathy-dual-roster-view.c
 test_empathy_roster_model_aggregator_SOURCES = test-empathy-roster-model-aggregator.c
+
+check_c_sources = \
+    $(empathy_logs_SOURCES) \
+    $(test_empathy_contact_blocking_dialog_SOURCES) \
+    $(test_empathy_presence_chooser_SOURCES) \
+    $(test_empathy_status_preset_dialog_SOURCES) \
+    $(test_empathy_protocol_chooser_SOURCES) \
+    $(test_empathy_account_chooser_SOURCES) \
+    $(test_empathy_calendar_button_SOURCES) \
+    $(test_empathy_roster_view_SOURCES) \
+    $(test_empathy_dual_roster_view_SOURCES) \
+    $(test_empathy_roster_model_aggregator_SOURCES)
+include $(top_srcdir)/tools/check-coding-style.mk
+check-local: check-coding-style
