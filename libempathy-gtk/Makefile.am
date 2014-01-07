@@ -16,7 +16,6 @@ AM_CPPFLAGS =                                           \
 	$(GEOCODE_CFLAGS)				\
 	$(MEEGO_CFLAGS)					\
 	$(CHEESE_CFLAGS)				\
-	$(EGGLISTBOX_CFLAGS)					\
 	$(WARN_CFLAGS)					\
 	$(DISABLE_DEPRECATED)
 
