@@ -267,30 +267,53 @@ empathy_smiley_manager_load (EmpathySmileyManager *manager)
 	g_return_if_fail (EMPATHY_IS_SMILEY_MANAGER (manager));
 
 	/* From fd.o icon-naming spec */
-	empathy_smiley_manager_add (manager, "face-angel",      "O:-)",  "O:)",  NULL);
-	empathy_smiley_manager_add (manager, "face-angry",      "X-(",   ":@",   NULL);
-	empathy_smiley_manager_add (manager, "face-cool",       "B-)",   "B-|",  NULL);
-	empathy_smiley_manager_add (manager, "face-crying",     ":'(",           NULL);
-	empathy_smiley_manager_add (manager, "face-devilish",   ">:-)",  ">:)",  NULL);
-	empathy_smiley_manager_add (manager, "face-embarrassed",":-[",   ":[",   ":-$", ":$", NULL);
-	empathy_smiley_manager_add (manager, "face-glasses",    "8-)",   NULL);
-	empathy_smiley_manager_add (manager, "face-kiss",       ":-*",   ":*",   NULL);
-	empathy_smiley_manager_add (manager, "face-laugh",      ":-))",  ":))",  NULL);
-	empathy_smiley_manager_add (manager, "face-monkey",     ":-(|)", ":(|)", NULL);
-	empathy_smiley_manager_add (manager, "face-plain",      ":-|",   ":|",   NULL);
-	empathy_smiley_manager_add (manager, "face-raspberry",  ":-P",   ":P",	 ":-p", ":p", NULL);
-	empathy_smiley_manager_add (manager, "face-sad",        ":-(",   ":(",   NULL);
-	empathy_smiley_manager_add (manager, "face-sick",       ":-&",   ":&",   NULL);
-	empathy_smiley_manager_add (manager, "face-smile",      ":-)",   ":)",   ":]",  "=)", NULL);
-	empathy_smiley_manager_add (manager, "face-smile-big",  ":-D",   ":D",   ":-d", ":d", NULL);
-	empathy_smiley_manager_add (manager, "face-smirk",      ":-!",   ":!",   NULL);
-	empathy_smiley_manager_add (manager, "face-surprise",   ":-O",   ":O",   ":-o", ":o", NULL);
-	empathy_smiley_manager_add (manager, "face-tired",      "|-)",   "|)",   NULL);
-	empathy_smiley_manager_add (manager, "face-uncertain",  ":-/",   ":/",   ":-\\", ":\\", NULL);
-	empathy_smiley_manager_add (manager, "face-wink",       ";-)",   ";)",   NULL);
-	empathy_smiley_manager_add (manager, "face-worried",    ":-S",   ":S",   ":-s", ":s", NULL);
 
-	empathy_smiley_manager_add (manager, "emblem-favorite", "<3", NULL);
+	/* U+1F47C BABY ANGEL */
+	empathy_smiley_manager_add (manager, "face-angel",      "👼",    "O:-)",  "O:)",  NULL);
+	/* U+1F620 ANGRY FACE */
+	empathy_smiley_manager_add (manager, "face-angry",      "😠",    "X-(",   ":@",   NULL);
+	/* U+1F60E SMILING FACE WITH SUNGLASSES */
+	empathy_smiley_manager_add (manager, "face-cool",       "😎",    "B-)",   "B-|",  NULL);
+	/* U+1F62D LOUDLY CRYING FACE */
+	empathy_smiley_manager_add (manager, "face-crying",     "😭",    ":'(",           NULL);
+	/* U+1F608 SMILING FACE WITH HORNS  */
+	empathy_smiley_manager_add (manager, "face-devilish",   "😈",    ">:-)",  ">:)",  NULL);
+	/* U+1F633 FLUSHED FACE */
+	empathy_smiley_manager_add (manager, "face-embarrassed","😳",    ":-[",   ":[",   ":-$", ":$", NULL);
+	/* no suitable character in unicode */
+	empathy_smiley_manager_add (manager, "face-glasses",    "8-)",   NULL);
+	/* U+1F618 FACE THROWING A KISS */
+	empathy_smiley_manager_add (manager, "face-kiss",       "😘",    ":-*",   ":*",   NULL);
+	/* U+1F604 SMILING FACE WITH OPEN MOUTH AND SMILING EYES" */
+	empathy_smiley_manager_add (manager, "face-laugh",      "😄",    ":-))",  ":))",  NULL);
+	/* U+1F435 MONKEY */
+	empathy_smiley_manager_add (manager, "face-monkey",     "🐵",    ":-(|)", ":(|)", NULL);
+	/* U+1F610 NEUTRAL FACE */
+	empathy_smiley_manager_add (manager, "face-plain",      "😐",    ":-|",   ":|",   NULL);
+	/* U+1F61B FACE WITH STUCK-OUT TONGUE */
+	empathy_smiley_manager_add (manager, "face-raspberry",  "😛",    ":-P",   ":P",	 ":-p", ":p", NULL);
+	/* U+1F626 FROWING FACE WITH OPEN MOUTH */
+	empathy_smiley_manager_add (manager, "face-sad",        "😦",    ":-(",   ":(",   NULL);
+	/* U+1F635 DIZZY FACE */
+	empathy_smiley_manager_add (manager, "face-sick",       "😵",    ":-&",   ":&",   NULL);
+	/* U+1F603 SMILING FACE WITH OPEN MOUTH */
+	empathy_smiley_manager_add (manager, "face-smile",      "😃",    ":-)",   ":)",   ":]",  "=)", NULL);
+	/* U+1F601 GRINNING FACE WITH SMILING EYES */
+	empathy_smiley_manager_add (manager, "face-smile-big",  "😁",    ":-D",   ":D",   ":-d", ":d", NULL);
+	/* U+1F60F SMIRKING FACE */
+	empathy_smiley_manager_add (manager, "face-smirk",      "😏",    ":-!",   ":!",   NULL);
+	/* U+1F632 ASTONISHED FACE */
+	empathy_smiley_manager_add (manager, "face-surprise",   "😲",    ":-O",   ":O",   ":-o", ":o", NULL);
+	/* U+1F62A SLEEPY FACE */
+	empathy_smiley_manager_add (manager, "face-tired",      "😪",    "|-)",   "|)",   NULL);
+	/* U+1F615 CONFUSED FACE */
+	empathy_smiley_manager_add (manager, "face-uncertain",  "😕",    ":-/",   ":/",   ":-\\", ":\\", NULL);
+	/* U+1F609 WINKING FACE */
+	empathy_smiley_manager_add (manager, "face-wink",       "😉",    ";-)",   ";)",   NULL);
+	/* U+1F61F WORRIED FACE */
+	empathy_smiley_manager_add (manager, "face-worried",    "😟",    ":-S",   ":S",   ":-s", ":s", NULL);
+	/* U+2764 HEAVY BLACK HEART */
+	empathy_smiley_manager_add (manager, "emblem-favorite", "❤",     "<3", NULL);
 }
 
 static EmpathySmileyHit *
