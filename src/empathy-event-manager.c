@@ -260,14 +260,14 @@ event_manager_add (EmpathyEventManager *manager,
 }
 
 static void
-handle_with_time_cb (GObject *source,
+handle_with_cb (GObject *source,
     GAsyncResult *result,
     gpointer user_data)
 {
   TpChannelDispatchOperation *cdo = TP_CHANNEL_DISPATCH_OPERATION (source);
   GError *error = NULL;
 
-  if (!tp_channel_dispatch_operation_handle_with_time_finish (cdo, result,
+  if (!tp_channel_dispatch_operation_handle_with_finish (cdo, result,
         &error))
     {
       DEBUG ("HandleWithTime failed: %s\n", error->message);
@@ -291,8 +291,8 @@ event_manager_approval_approve (EventManagerApproval *approval)
 
   g_assert (approval->operation != NULL);
 
-  tp_channel_dispatch_operation_handle_with_time_async (approval->operation,
-      NULL, timestamp, handle_with_time_cb, approval);
+  tp_channel_dispatch_operation_handle_with_async (approval->operation,
+      NULL, timestamp, handle_with_cb, approval);
 }
 
 static void
