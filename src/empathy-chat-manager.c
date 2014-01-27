@@ -237,36 +237,21 @@ process_tp_chat (EmpathyChatManager *self,
 }
 
 static void
-handle_channels (TpSimpleHandler *handler,
+handle_channel (TpSimpleHandler *handler,
     TpAccount *account,
     TpConnection *connection,
-    GList *channels,
+    TpChannel *channel,
     GList *requests_satisfied,
     gint64 user_action_time,
     TpHandleChannelContext *context,
     gpointer user_data)
 {
   EmpathyChatManager *self = (EmpathyChatManager *) user_data;
-  GList *l;
+  EmpathyTpChat *tp_chat = EMPATHY_TP_CHAT (channel);
 
-  for (l = channels; l != NULL; l = g_list_next (l))
-    {
-      EmpathyTpChat *tp_chat = l->data;
+  DEBUG ("Now handling channel %s", tp_proxy_get_object_path (tp_chat));
 
-      if (tp_proxy_get_invalidated (tp_chat) != NULL)
-        continue;
-
-      if (!EMPATHY_IS_TP_CHAT (tp_chat))
-        {
-          DEBUG ("Channel %s doesn't implement Messages; can't handle it",
-              tp_proxy_get_object_path (tp_chat));
-          continue;
-        }
-
-      DEBUG ("Now handling channel %s", tp_proxy_get_object_path (tp_chat));
-
-      process_tp_chat (self, tp_chat, account, user_action_time);
-    }
+  process_tp_chat (self, tp_chat, account, user_action_time);
 
   tp_handle_channel_context_accept (context);
 }
@@ -288,7 +273,7 @@ empathy_chat_manager_init (EmpathyChatManager *self)
 
   /* Text channels handler */
   priv->handler = tp_simple_handler_new_with_am (am, FALSE, FALSE,
-      EMPATHY_CHAT_BUS_NAME_SUFFIX, FALSE, handle_channels, self, NULL);
+      EMPATHY_CHAT_BUS_NAME_SUFFIX, FALSE, handle_channel, self, NULL);
 
   g_object_unref (am);
 

@@ -162,33 +162,20 @@ ft_handler_incoming_ready_cb (EmpathyFTHandler *handler,
 }
 
 static void
-handle_channels_cb (TpSimpleHandler *handler,
+handle_channel_cb (TpSimpleHandler *handler,
     TpAccount *account,
     TpConnection *connection,
-    GList *channels,
+    TpChannel *channel,
     GList *requests_satisfied,
     gint64 user_action_time,
     TpHandleChannelContext *context,
     gpointer user_data)
 {
   EmpathyFTFactory *self = user_data;
-  GList *l;
 
-  for (l = channels; l != NULL; l = g_list_next (l))
-    {
-      TpChannel *channel = l->data;
-
-      if (tp_proxy_get_invalidated (channel) != NULL)
-        continue;
-
-      if (!TP_IS_FILE_TRANSFER_CHANNEL (channel))
-        continue;
-
-      /* We handle only incoming FT */
-      empathy_ft_handler_new_incoming ((TpFileTransferChannel *) channel,
+  /* We handle only incoming FT */
+  empathy_ft_handler_new_incoming (TP_FILE_TRANSFER_CHANNEL (channel),
           ft_handler_incoming_ready_cb, self);
-    }
-
 
   tp_handle_channel_context_accept (context);
 }
@@ -205,7 +192,7 @@ empathy_ft_factory_init (EmpathyFTFactory *self)
   am = tp_account_manager_dup ();
 
   priv->handler = tp_simple_handler_new_with_am (am, FALSE, FALSE,
-      EMPATHY_FT_BUS_NAME_SUFFIX, FALSE, handle_channels_cb, self, NULL);
+      EMPATHY_FT_BUS_NAME_SUFFIX, FALSE, handle_channel_cb, self, NULL);
 
   tp_base_client_take_handler_filter (priv->handler, tp_asv_new (
         TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING,

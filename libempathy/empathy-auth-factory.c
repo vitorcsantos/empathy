@@ -302,31 +302,27 @@ common_checks (EmpathyAuthFactory *self,
 }
 
 static void
-handle_channels (TpBaseClient *handler,
+handle_channel (TpBaseClient *handler,
     TpAccount *account,
     TpConnection *connection,
-    GList *channels,
+    TpChannel *channel,
     GList *requests_satisfied,
     gint64 user_action_time,
     TpHandleChannelContext *context)
 {
-  TpChannel *channel;
   GError *error = NULL;
   EmpathyAuthFactory *self = EMPATHY_AUTH_FACTORY (handler);
   HandlerContextData *data;
 
   DEBUG ("Handle TLS or SASL carrier channels.");
 
-  if (!common_checks (self, channels->data, FALSE, &error))
+  if (!common_checks (self, channel, FALSE, &error))
     {
       DEBUG ("Failed checks: %s", error->message);
       tp_handle_channel_context_fail (context, error);
       g_clear_error (&error);
       return;
     }
-
-  /* The common checks above have checked this is fine. */
-  channel = channels->data;
 
   /* Only password authentication is supported from here */
   if (tp_channel_get_channel_type_id (channel) ==
@@ -707,7 +703,7 @@ empathy_auth_factory_class_init (EmpathyAuthFactoryClass *klass)
   oclass->constructed = empathy_auth_factory_constructed;
   oclass->dispose = empathy_auth_factory_dispose;
 
-  base_client_cls->handle_channels = handle_channels;
+  base_client_cls->handle_channel = handle_channel;
   base_client_cls->observe_channel = observe_channel;
 
   g_type_class_add_private (klass, sizeof (EmpathyAuthFactoryPriv));

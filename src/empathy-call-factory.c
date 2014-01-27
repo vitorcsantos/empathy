@@ -32,10 +32,10 @@
 
 G_DEFINE_TYPE(EmpathyCallFactory, empathy_call_factory, TP_TYPE_BASE_CLIENT)
 
-static void handle_channels (TpBaseClient *client,
+static void handle_channel (TpBaseClient *client,
     TpAccount *account,
     TpConnection *connection,
-    GList *channels,
+    TpChannel *channel,
     GList *requests_satisfied,
     gint64 user_action_time,
     TpHandleChannelContext *context);
@@ -124,7 +124,7 @@ empathy_call_factory_class_init (EmpathyCallFactoryClass *klass)
 
   object_class->constructor = empathy_call_factory_constructor;
 
-  base_clt_cls->handle_channels = handle_channels;
+  base_clt_cls->handle_channel = handle_channel;
   base_clt_cls->add_dispatch_operation = approve_channels;
 
   signals[NEW_CALL_HANDLER] =
@@ -177,47 +177,29 @@ empathy_call_factory_get (void)
 }
 
 static void
-handle_channels (TpBaseClient *client,
+handle_channel (TpBaseClient *client,
     TpAccount *account,
     TpConnection *connection,
-    GList *channels,
+    TpChannel *channel,
     GList *requests_satisfied,
     gint64 user_action_time,
     TpHandleChannelContext *context)
 {
   EmpathyCallFactory *self = EMPATHY_CALL_FACTORY (client);
-  GList *l;
+  TpCallChannel *call = TP_CALL_CHANNEL (channel);
+  TpContact *tp_contact;
+  EmpathyContact *contact;
+  EmpathyCallHandler *handler;
 
-  for (l = channels; l != NULL; l = g_list_next (l))
-    {
-      TpChannel *channel = l->data;
-      TpCallChannel *call;
-      TpContact *tp_contact;
-      EmpathyContact *contact;
-      EmpathyCallHandler *handler;
+  tp_contact = tp_channel_get_target_contact (channel);
+  contact = empathy_contact_dup_from_tp_contact (tp_contact);
+  handler = empathy_call_handler_new_for_channel (call, contact);
 
-      if (tp_proxy_get_invalidated (channel) != NULL)
-        continue;
+  g_signal_emit (self, signals[NEW_CALL_HANDLER], 0,
+      handler, user_action_time);
 
-      if (tp_channel_get_channel_type_id (channel) !=
-          TP_IFACE_QUARK_CHANNEL_TYPE_CALL1)
-        continue;
-
-      if (!TP_IS_CALL_CHANNEL (channel))
-        continue;
-
-      call = TP_CALL_CHANNEL (channel);
-
-      tp_contact = tp_channel_get_target_contact (channel);
-      contact = empathy_contact_dup_from_tp_contact (tp_contact);
-      handler = empathy_call_handler_new_for_channel (call, contact);
-
-      g_signal_emit (self, signals[NEW_CALL_HANDLER], 0,
-          handler, user_action_time);
-
-      g_object_unref (handler);
-      g_object_unref (contact);
-    }
+  g_object_unref (handler);
+  g_object_unref (contact);
 
   tp_handle_channel_context_accept (context);
 }
