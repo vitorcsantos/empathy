@@ -40,10 +40,10 @@ static void handle_channel (TpBaseClient *client,
     gint64 user_action_time,
     TpHandleChannelContext *context);
 
-static void approve_channels (TpBaseClient *client,
+static void approve_channel (TpBaseClient *client,
     TpAccount *account,
     TpConnection *connection,
-    GList *channels,
+    TpChannel *channel,
     TpChannelDispatchOperation *dispatch_operation,
     TpAddDispatchOperationContext *context);
 
@@ -125,7 +125,7 @@ empathy_call_factory_class_init (EmpathyCallFactoryClass *klass)
   object_class->constructor = empathy_call_factory_constructor;
 
   base_clt_cls->handle_channel = handle_channel;
-  base_clt_cls->add_dispatch_operation = approve_channels;
+  base_clt_cls->add_dispatch_operation = approve_channel;
 
   signals[NEW_CALL_HANDLER] =
     g_signal_new ("new-call-handler",
@@ -204,52 +204,21 @@ handle_channel (TpBaseClient *client,
   tp_handle_channel_context_accept (context);
 }
 
-static TpCallChannel *
-find_call_channel (GList *channels)
-{
-  GList *l;
-
-  for (l = channels; l != NULL; l = g_list_next (l))
-    {
-      TpChannel *channel = l->data;
-      GQuark channel_type;
-
-      if (tp_proxy_get_invalidated (channel) != NULL)
-        continue;
-
-      channel_type = tp_channel_get_channel_type_id (channel);
-
-      if (channel_type == TP_IFACE_QUARK_CHANNEL_TYPE_CALL1)
-        return TP_CALL_CHANNEL (channel);
-    }
-
-  return NULL;
-}
-
 static void
-approve_channels (TpBaseClient *client,
+approve_channel (TpBaseClient *client,
     TpAccount *account,
     TpConnection *connection,
-    GList *channels,
+    TpChannel *channel,
     TpChannelDispatchOperation *dispatch_operation,
     TpAddDispatchOperationContext *context)
 {
   EmpathyCallFactory *self = EMPATHY_CALL_FACTORY (client);
-  TpCallChannel *channel;
   guint handle;
   GError error = { TP_ERROR, TP_ERROR_INVALID_ARGUMENT, "" };
   gboolean handled = FALSE;
 
-  channel = find_call_channel (channels);
 
-  if (channel == NULL)
-    {
-      DEBUG ("Failed to find the main channel; ignoring");
-      error.message = "Unknown channel";
-      goto out;
-    }
-
-  handle = tp_channel_get_handle (TP_CHANNEL (channel), NULL);
+  handle = tp_channel_get_handle (channel, NULL);
 
   if (handle == 0)
     {

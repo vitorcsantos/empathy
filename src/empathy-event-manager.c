@@ -749,36 +749,6 @@ event_manager_auth_process_func (EventPriv *event)
   empathy_event_approve ((EmpathyEvent *) event);
 }
 
-/* If there is a file-transfer, media, or auth channel consider it as
- * the main one. */
-static TpChannel *
-find_main_channel (GList *channels)
-{
-  GList *l;
-  TpChannel *text = NULL;
-
-  for (l = channels; l != NULL; l = g_list_next (l))
-    {
-      TpChannel *channel = l->data;
-      GQuark channel_type;
-
-      if (tp_proxy_get_invalidated (channel) != NULL)
-        continue;
-
-      channel_type = tp_channel_get_channel_type_id (channel);
-
-      if (channel_type == TP_IFACE_QUARK_CHANNEL_TYPE_CALL1 ||
-          channel_type == TP_IFACE_QUARK_CHANNEL_TYPE_FILE_TRANSFER1 ||
-          channel_type == TP_IFACE_QUARK_CHANNEL_TYPE_SERVER_AUTHENTICATION1)
-        return channel;
-
-      else if (channel_type == TP_IFACE_QUARK_CHANNEL_TYPE_TEXT)
-        text = channel;
-    }
-
-  return text;
-}
-
 static void
 approve_text_channel (EmpathyEventManager *self,
     EventManagerApproval *approval,
@@ -961,31 +931,18 @@ approve_sasl_channel (EmpathyEventManager *self,
 }
 
 static void
-approve_channels (TpSimpleApprover *approver,
+approve_channel (TpSimpleApprover *approver,
     TpAccount *account,
     TpConnection *connection,
-    GList *channels,
+    TpChannel *channel,
     TpChannelDispatchOperation *dispatch_operation,
     TpAddDispatchOperationContext *context,
     gpointer user_data)
 {
   EmpathyEventManager *self = user_data;
   EmpathyEventManagerPriv *priv = GET_PRIV (self);
-  TpChannel *channel;
   EventManagerApproval *approval;
   GQuark channel_type;
-
-  channel = find_main_channel (channels);
-  if (channel == NULL)
-    {
-      GError error = { TP_ERROR, TP_ERROR_INVALID_ARGUMENT,
-          "Unknown channel type" };
-
-      DEBUG ("Failed to find the main channel; ignoring");
-
-      tp_add_dispatch_operation_context_fail (context, &error);
-      return;
-    }
 
   approval = event_manager_approval_new (self, dispatch_operation, channel);
   priv->approvals = g_slist_prepend (priv->approvals, approval);
@@ -1349,7 +1306,7 @@ empathy_event_manager_init (EmpathyEventManager *manager)
   am = tp_account_manager_dup ();
 
   priv->approver = tp_simple_approver_new_with_am (am, "Empathy.EventManager",
-      FALSE, approve_channels, manager, NULL);
+      FALSE, approve_channel, manager, NULL);
 
   /* Private text channels */
   tp_base_client_take_approver_filter (priv->approver,
@@ -1391,7 +1348,7 @@ empathy_event_manager_init (EmpathyEventManager *manager)
    * prepared with capabilities. I chose the former, obviously. :-) */
 
   priv->auth_approver = tp_simple_approver_new_with_am (am,
-      "Empathy.AuthEventManager", FALSE, approve_channels, manager,
+      "Empathy.AuthEventManager", FALSE, approve_channel, manager,
       NULL);
 
   /* SASL auth channels */
