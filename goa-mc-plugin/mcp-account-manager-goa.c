@@ -202,7 +202,8 @@ object_chat_changed_cb (GoaObject *object,
   DEBUG ("%s %s", name, enabled ? "enabled" : "disabled");
 
   if (self->priv->ready)
-    g_signal_emit_by_name (self, "toggled", name, enabled);
+    mcp_account_storage_emit_toggled (MCP_ACCOUNT_STORAGE (self),
+        name, enabled);
 }
 
 static void
@@ -220,7 +221,8 @@ _new_account (McpAccountManagerGoa *self,
       g_object_ref (object));
 
   if (self->priv->ready)
-    g_signal_emit_by_name (self, "created", account_name);
+    mcp_account_storage_emit_created (MCP_ACCOUNT_STORAGE (self),
+        account_name);
 
   tp_g_signal_connect_object (object, "notify::chat",
       G_CALLBACK (object_chat_changed_cb), self, 0);
@@ -296,7 +298,7 @@ _account_removed_cb (GoaClient *client,
     return;
 
   if (self->priv->ready)
-    g_signal_emit_by_name (self, "deleted", name);
+    mcp_account_storage_emit_deleted (MCP_ACCOUNT_STORAGE (self), name);
 
   g_hash_table_remove (self->priv->accounts, name);
 
