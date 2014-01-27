@@ -168,7 +168,7 @@ handle_channels_cb (TpSimpleHandler *handler,
     GList *channels,
     GList *requests_satisfied,
     gint64 user_action_time,
-    TpHandleChannelsContext *context,
+    TpHandleChannelContext *context,
     gpointer user_data)
 {
   EmpathyFTFactory *self = user_data;
@@ -190,7 +190,7 @@ handle_channels_cb (TpSimpleHandler *handler,
     }
 
 
-  tp_handle_channels_context_accept (context);
+  tp_handle_channel_context_accept (context);
 }
 
 static void

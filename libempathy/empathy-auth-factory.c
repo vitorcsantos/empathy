@@ -84,7 +84,7 @@ static guint signals[LAST_SIGNAL] = { 0, };
 static EmpathyAuthFactory *auth_factory_singleton = NULL;
 
 typedef struct {
-  TpHandleChannelsContext *context;
+  TpHandleChannelContext *context;
   EmpathyAuthFactory *self;
 } HandlerContextData;
 
@@ -99,7 +99,7 @@ handler_context_data_free (HandlerContextData *data)
 
 static HandlerContextData *
 handler_context_data_new (EmpathyAuthFactory *self,
-    TpHandleChannelsContext *context)
+    TpHandleChannelContext *context)
 {
   HandlerContextData *data;
 
@@ -127,13 +127,13 @@ server_tls_handler_ready_cb (GObject *source,
     {
       DEBUG ("Failed to create a server TLS handler; error %s",
           error->message);
-      tp_handle_channels_context_fail (data->context, error);
+      tp_handle_channel_context_fail (data->context, error);
 
       g_error_free (error);
     }
   else
     {
-      tp_handle_channels_context_accept (data->context);
+      tp_handle_channel_context_accept (data->context);
       g_signal_emit (data->self, signals[NEW_SERVER_TLS_HANDLER], 0,
           handler);
 
@@ -191,7 +191,7 @@ server_sasl_handler_ready_cb (GObject *source,
           error->message);
 
       if (data->context != NULL)
-        tp_handle_channels_context_fail (data->context, error);
+        tp_handle_channel_context_fail (data->context, error);
 
       g_error_free (error);
     }
@@ -202,7 +202,7 @@ server_sasl_handler_ready_cb (GObject *source,
       TpAccount *account;
 
       if (data->context != NULL)
-        tp_handle_channels_context_accept (data->context);
+        tp_handle_channel_context_accept (data->context);
 
       channel = empathy_server_sasl_handler_get_channel (handler);
       g_assert (channel != NULL);
@@ -308,7 +308,7 @@ handle_channels (TpBaseClient *handler,
     GList *channels,
     GList *requests_satisfied,
     gint64 user_action_time,
-    TpHandleChannelsContext *context)
+    TpHandleChannelContext *context)
 {
   TpChannel *channel;
   GError *error = NULL;
@@ -320,7 +320,7 @@ handle_channels (TpBaseClient *handler,
   if (!common_checks (self, channels->data, FALSE, &error))
     {
       DEBUG ("Failed checks: %s", error->message);
-      tp_handle_channels_context_fail (context, error);
+      tp_handle_channel_context_fail (context, error);
       g_clear_error (&error);
       return;
     }
@@ -337,13 +337,13 @@ handle_channels (TpBaseClient *handler,
       g_set_error_literal (&error, TP_ERROR, TP_ERROR_INVALID_ARGUMENT,
           "Only the X-TELEPATHY-PASSWORD SASL mechanism is supported");
       DEBUG ("%s", error->message);
-      tp_handle_channels_context_fail (context, error);
+      tp_handle_channel_context_fail (context, error);
       g_clear_error (&error);
       return;
     }
 
   data = handler_context_data_new (self, context);
-  tp_handle_channels_context_delay (context);
+  tp_handle_channel_context_delay (context);
 
   /* create a handler */
   if (tp_channel_get_channel_type_id (channel) ==

@@ -38,7 +38,7 @@ static void handle_channels (TpBaseClient *client,
     GList *channels,
     GList *requests_satisfied,
     gint64 user_action_time,
-    TpHandleChannelsContext *context);
+    TpHandleChannelContext *context);
 
 static void approve_channels (TpBaseClient *client,
     TpAccount *account,
@@ -183,7 +183,7 @@ handle_channels (TpBaseClient *client,
     GList *channels,
     GList *requests_satisfied,
     gint64 user_action_time,
-    TpHandleChannelsContext *context)
+    TpHandleChannelContext *context)
 {
   EmpathyCallFactory *self = EMPATHY_CALL_FACTORY (client);
   GList *l;
@@ -219,7 +219,7 @@ handle_channels (TpBaseClient *client,
       g_object_unref (contact);
     }
 
-  tp_handle_channels_context_accept (context);
+  tp_handle_channel_context_accept (context);
 }
 
 static TpCallChannel *

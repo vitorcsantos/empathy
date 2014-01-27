@@ -243,7 +243,7 @@ handle_channels (TpSimpleHandler *handler,
     GList *channels,
     GList *requests_satisfied,
     gint64 user_action_time,
-    TpHandleChannelsContext *context,
+    TpHandleChannelContext *context,
     gpointer user_data)
 {
   EmpathyChatManager *self = (EmpathyChatManager *) user_data;
@@ -268,7 +268,7 @@ handle_channels (TpSimpleHandler *handler,
       process_tp_chat (self, tp_chat, account, user_action_time);
     }
 
-  tp_handle_channels_context_accept (context);
+  tp_handle_channel_context_accept (context);
 }
 
 static void
