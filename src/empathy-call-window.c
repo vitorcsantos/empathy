@@ -1510,8 +1510,9 @@ empathy_call_window_incoming_call_response_cb (GtkDialog *dialog,
   switch (response_id)
     {
       case GTK_RESPONSE_ACCEPT:
-        tp_channel_dispatch_operation_handle_with_async (
-            self->priv->pending_cdo, EMPATHY_CALL_BUS_NAME, NULL, NULL);
+        tp_channel_dispatch_operation_handle_with_time_async (
+            self->priv->pending_cdo, EMPATHY_CALL_BUS_NAME,
+            empathy_get_current_action_time (), NULL, NULL);
 
         tp_clear_object (&self->priv->pending_cdo);
         tp_clear_object (&self->priv->pending_channel);
