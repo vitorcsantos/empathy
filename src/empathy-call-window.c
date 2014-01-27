@@ -1520,7 +1520,7 @@ empathy_call_window_incoming_call_response_cb (GtkDialog *dialog,
 
         break;
       case GTK_RESPONSE_CANCEL:
-        tp_channel_dispatch_operation_close_channels_async (
+        tp_channel_dispatch_operation_close_channel_async (
             self->priv->pending_cdo, NULL, NULL);
 
         empathy_call_window_status_message (self, _("Disconnected"));

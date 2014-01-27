@@ -184,7 +184,7 @@ claim_and_leave_cb (GObject *source,
   AutoRejectCtx *ctx = user_data;
   GError *error = NULL;
 
-  if (!tp_channel_dispatch_operation_leave_channels_finish (
+  if (!tp_channel_dispatch_operation_leave_channel_finish (
         TP_CHANNEL_DISPATCH_OPERATION (source), result, &error))
     {
       DEBUG ("Failed to reject call: %s", error->message);
@@ -233,7 +233,7 @@ observe_channels (TpSimpleObserver *observer,
       DEBUG ("Autorejecting incoming call since there are others in "
           "progress: %s", tp_proxy_get_object_path (channel));
 
-      tp_channel_dispatch_operation_leave_channels_async (dispatch_operation,
+      tp_channel_dispatch_operation_leave_channel_async (dispatch_operation,
           TP_CHANNEL_GROUP_CHANGE_REASON_BUSY, "Already in a call",
           claim_and_leave_cb, ctx);
 

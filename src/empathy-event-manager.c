@@ -411,7 +411,7 @@ reject_approval (EventManagerApproval *approval)
   else if (tp_channel_get_channel_type_id (approval->main_channel)
       == TP_IFACE_QUARK_CHANNEL_TYPE_SERVER_AUTHENTICATION1)
     {
-      tp_channel_dispatch_operation_close_channels_async (approval->operation,
+      tp_channel_dispatch_operation_close_channel_async (approval->operation,
           NULL, NULL);
     }
 }
