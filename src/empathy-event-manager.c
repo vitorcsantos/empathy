@@ -260,21 +260,6 @@ event_manager_add (EmpathyEventManager *manager,
 }
 
 static void
-handle_with_cb (GObject *source,
-    GAsyncResult *result,
-    gpointer user_data)
-{
-  TpChannelDispatchOperation *cdo = TP_CHANNEL_DISPATCH_OPERATION (source);
-  GError *error = NULL;
-
-  if (!tp_channel_dispatch_operation_handle_with_finish (cdo, result, &error))
-    {
-      DEBUG ("HandleWith failed: %s\n", error->message);
-      g_error_free (error);
-    }
-}
-
-static void
 handle_with_time_cb (GObject *source,
     GAsyncResult *result,
     gpointer user_data)
@@ -285,21 +270,7 @@ handle_with_time_cb (GObject *source,
   if (!tp_channel_dispatch_operation_handle_with_time_finish (cdo, result,
         &error))
     {
-      if (g_error_matches (error, TP_ERROR, TP_ERROR_NOT_IMPLEMENTED))
-        {
-          EventManagerApproval *approval = user_data;
-
-          DEBUG ("HandleWithTime() is not implemented, falling back to "
-              "HandleWith(). Please upgrade to telepathy-mission-control "
-              "5.5.0 or later");
-
-          tp_channel_dispatch_operation_handle_with_async (approval->operation,
-              NULL, handle_with_cb, approval);
-        }
-      else
-        {
-          DEBUG ("HandleWithTime failed: %s\n", error->message);
-        }
+      DEBUG ("HandleWithTime failed: %s\n", error->message);
       g_error_free (error);
     }
 }
