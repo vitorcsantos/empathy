@@ -379,7 +379,7 @@ handle_channels (TpBaseClient *handler,
 typedef struct
 {
   EmpathyAuthFactory *self;
-  TpObserveChannelsContext *context;
+  TpObserveChannelContext *context;
   TpChannelDispatchOperation *dispatch_operation;
   TpAccount *account;
   TpChannel *channel;
@@ -439,7 +439,7 @@ get_password_cb (GObject *source,
       DEBUG ("We don't have a password for account %s, letting the event "
           "manager approver take it", tp_proxy_get_object_path (source));
 
-      tp_observe_channels_context_accept (data->context);
+      tp_observe_channel_context_accept (data->context);
       observe_channels_data_free (data);
     }
   else
@@ -450,7 +450,7 @@ get_password_cb (GObject *source,
       tp_channel_dispatch_operation_claim_with_async (data->dispatch_operation,
           TP_BASE_CLIENT (data->self), password_claim_cb, data);
 
-      tp_observe_channels_context_accept (data->context);
+      tp_observe_channel_context_accept (data->context);
     }
 }
 
@@ -513,7 +513,7 @@ observe_channels (TpBaseClient *client,
     GList *channels,
     TpChannelDispatchOperation *dispatch_operation,
     GList *requests,
-    TpObserveChannelsContext *context)
+    TpObserveChannelContext *context)
 {
   EmpathyAuthFactory *self = EMPATHY_AUTH_FACTORY (client);
   TpChannel *channel;
@@ -525,7 +525,7 @@ observe_channels (TpBaseClient *client,
   if (!common_checks (self, channels, TRUE, &error))
     {
       DEBUG ("Failed checks: %s", error->message);
-      tp_observe_channels_context_fail (context, error);
+      tp_observe_channel_context_fail (context, error);
       g_clear_error (&error);
       return;
     }
@@ -549,7 +549,7 @@ observe_channels (TpBaseClient *client,
 
       tp_channel_dispatch_operation_claim_with_async (dispatch_operation,
           client, goa_claim_cb, data);
-      tp_observe_channels_context_accept (context);
+      tp_observe_channel_context_accept (context);
       return;
     }
 #endif /* HAVE_GOA */
@@ -563,7 +563,7 @@ observe_channels (TpBaseClient *client,
 
       tp_channel_dispatch_operation_claim_with_async (dispatch_operation,
           client, uoa_claim_cb, data);
-      tp_observe_channels_context_accept (context);
+      tp_observe_channel_context_accept (context);
       return;
     }
 #endif /* HAVE_UOA */
@@ -580,20 +580,20 @@ observe_channels (TpBaseClient *client,
           tp_channel_dispatch_operation_claim_with_async (dispatch_operation,
               client, password_claim_cb, data);
 
-          tp_observe_channels_context_accept (context);
+          tp_observe_channel_context_accept (context);
           return;
         }
 
       tpaw_keyring_get_account_password_async (data->account,
           get_password_cb, data);
-      tp_observe_channels_context_delay (context);
+      tp_observe_channel_context_delay (context);
       return;
     }
 
   /* Unknown auth */
   error = g_error_new_literal (TP_ERROR, TP_ERROR_INVALID_ARGUMENT,
       "Unknown auth mechanism");
-  tp_observe_channels_context_fail (context, error);
+  tp_observe_channel_context_fail (context, error);
   g_clear_error (&error);
 
   observe_channels_data_free (data);

@@ -46,7 +46,7 @@ static void observe_channels_cb (TpSimpleObserver *observer,
     GList *channels,
     TpChannelDispatchOperation *dispatch_operation,
     GList *requests,
-    TpObserveChannelsContext *context,
+    TpObserveChannelContext *context,
     gpointer user_data);
 
 #define GET_PRIV(obj) EMPATHY_GET_PRIV (obj, EmpathyChatroomManager)
@@ -867,7 +867,7 @@ observe_channels_cb (TpSimpleObserver *observer,
     GList *channels,
     TpChannelDispatchOperation *dispatch_operation,
     GList *requests,
-    TpObserveChannelsContext *context,
+    TpObserveChannelContext *context,
     gpointer user_data)
 {
   EmpathyChatroomManager *self = user_data;
@@ -903,5 +903,5 @@ observe_channels_cb (TpSimpleObserver *observer,
         self);
     }
 
-  tp_observe_channels_context_accept (context);
+  tp_observe_channel_context_accept (context);
 }

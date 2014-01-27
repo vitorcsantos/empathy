@@ -67,13 +67,13 @@ on_channel_closed (TpProxy *proxy,
 typedef struct
 {
   EmpathyCallObserver *self;
-  TpObserveChannelsContext *context;
+  TpObserveChannelContext *context;
   TpChannel *main_channel;
 } AutoRejectCtx;
 
 static AutoRejectCtx *
 auto_reject_ctx_new (EmpathyCallObserver *self,
-    TpObserveChannelsContext *context,
+    TpObserveChannelContext *context,
     TpChannel *main_channel)
 {
   AutoRejectCtx *ctx = g_slice_new (AutoRejectCtx);
@@ -206,7 +206,7 @@ observe_channels (TpSimpleObserver *observer,
     GList *channels,
     TpChannelDispatchOperation *dispatch_operation,
     GList *requests,
-    TpObserveChannelsContext *context,
+    TpObserveChannelContext *context,
     gpointer user_data)
 {
   EmpathyCallObserver *self = EMPATHY_CALL_OBSERVER (user_data);
@@ -221,7 +221,7 @@ observe_channels (TpSimpleObserver *observer,
 
       DEBUG ("Didn't find any Call channel; ignoring");
 
-      tp_observe_channels_context_fail (context, &err);
+      tp_observe_channel_context_fail (context, &err);
       return;
     }
 
@@ -237,7 +237,7 @@ observe_channels (TpSimpleObserver *observer,
           TP_CHANNEL_GROUP_CHANGE_REASON_BUSY, "Already in a call",
           claim_and_leave_cb, ctx);
 
-      tp_observe_channels_context_accept (context);
+      tp_observe_channel_context_accept (context);
       return;
     }
 
@@ -246,7 +246,7 @@ observe_channels (TpSimpleObserver *observer,
       DEBUG ("The channel has already been invalidated: %s",
           error->message);
 
-      tp_observe_channels_context_fail (context, error);
+      tp_observe_channel_context_fail (context, error);
       return;
     }
 
@@ -257,7 +257,7 @@ observe_channels (TpSimpleObserver *observer,
   self->priv->channels = g_list_prepend (self->priv->channels,
       g_object_ref (channel));
 
-  tp_observe_channels_context_accept (context);
+  tp_observe_channel_context_accept (context);
 }
 
 static GObject *

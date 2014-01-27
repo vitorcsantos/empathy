@@ -997,7 +997,7 @@ observe_channels (TpSimpleObserver *observer,
     GList *channels,
     TpChannelDispatchOperation *dispatch_operation,
     GList *requests,
-    TpObserveChannelsContext *context,
+    TpObserveChannelContext *context,
     gpointer user_data)
 {
   EmpathyLogWindow *self = user_data;
@@ -1037,7 +1037,7 @@ observe_channels (TpSimpleObserver *observer,
         }
     }
 
-  tp_observe_channels_context_accept (context);
+  tp_observe_channel_context_accept (context);
 }
 
 static void
