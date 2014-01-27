@@ -249,29 +249,13 @@ server_sasl_handler_ready_cb (GObject *source,
 
 static gboolean
 common_checks (EmpathyAuthFactory *self,
-    GList *channels,
+    TpChannel *channel,
     gboolean observe,
     GError **error)
 {
   EmpathyAuthFactoryPriv *priv = GET_PRIV (self);
-  TpChannel *channel;
   const GError *dbus_error;
   EmpathyServerSASLHandler *handler;
-
-  /* there can't be more than one ServerTLSConnection or
-   * ServerAuthentication channels at the same time, for the same
-   * connection/account.
-   */
-  if (g_list_length (channels) != 1)
-    {
-      g_set_error (error, TP_ERROR, TP_ERROR_INVALID_ARGUMENT,
-          "Can't %s more than one ServerTLSConnection or ServerAuthentication "
-          "channel for the same connection.", observe ? "observe" : "handle");
-
-      return FALSE;
-    }
-
-  channel = channels->data;
 
   if (tp_channel_get_channel_type_id (channel) !=
       TP_IFACE_QUARK_CHANNEL_TYPE_SERVER_AUTHENTICATION1)
@@ -333,7 +317,7 @@ handle_channels (TpBaseClient *handler,
 
   DEBUG ("Handle TLS or SASL carrier channels.");
 
-  if (!common_checks (self, channels, FALSE, &error))
+  if (!common_checks (self, channels->data, FALSE, &error))
     {
       DEBUG ("Failed checks: %s", error->message);
       tp_handle_channels_context_fail (context, error);
@@ -507,22 +491,21 @@ uoa_claim_cb (GObject *source,
 #endif /* HAVE_UOA */
 
 static void
-observe_channels (TpBaseClient *client,
+observe_channel (TpBaseClient *client,
     TpAccount *account,
     TpConnection *connection,
-    GList *channels,
+    TpChannel *channel,
     TpChannelDispatchOperation *dispatch_operation,
     GList *requests,
     TpObserveChannelContext *context)
 {
   EmpathyAuthFactory *self = EMPATHY_AUTH_FACTORY (client);
-  TpChannel *channel;
   GError *error = NULL;
   ObserveChannelsData *data;
 
   DEBUG ("New auth channel to observe");
 
-  if (!common_checks (self, channels, TRUE, &error))
+  if (!common_checks (self, channel, TRUE, &error))
     {
       DEBUG ("Failed checks: %s", error->message);
       tp_observe_channel_context_fail (context, error);
@@ -531,8 +514,6 @@ observe_channels (TpBaseClient *client,
     }
 
   /* The common checks above have checked this is fine. */
-  channel = channels->data;
-
   data = g_slice_new0 (ObserveChannelsData);
   data->self = self;
   data->context = g_object_ref (context);
@@ -727,7 +708,7 @@ empathy_auth_factory_class_init (EmpathyAuthFactoryClass *klass)
   oclass->dispose = empathy_auth_factory_dispose;
 
   base_client_cls->handle_channels = handle_channels;
-  base_client_cls->observe_channels = observe_channels;
+  base_client_cls->observe_channel = observe_channel;
 
   g_type_class_add_private (klass, sizeof (EmpathyAuthFactoryPriv));
 

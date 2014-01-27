@@ -132,28 +132,6 @@ display_reject_notification (EmpathyCallObserver *self,
   g_object_unref (emp_contact);
 }
 
-static TpChannel *
-find_main_channel (GList *channels)
-{
-  GList *l;
-
-  for (l = channels; l != NULL; l = g_list_next (l))
-    {
-      TpChannel *channel = l->data;
-      GQuark channel_type;
-
-      if (tp_proxy_get_invalidated (channel) != NULL)
-        continue;
-
-      channel_type = tp_channel_get_channel_type_id (channel);
-
-      if (channel_type == TP_IFACE_QUARK_CHANNEL_TYPE_CALL1)
-        return channel;
-    }
-
-  return NULL;
-}
-
 static gboolean
 has_ongoing_calls (EmpathyCallObserver *self)
 {
@@ -200,30 +178,17 @@ out:
 }
 
 static void
-observe_channels (TpSimpleObserver *observer,
+observe_channel (TpSimpleObserver *observer,
     TpAccount *account,
     TpConnection *connection,
-    GList *channels,
+    TpChannel *channel,
     TpChannelDispatchOperation *dispatch_operation,
     GList *requests,
     TpObserveChannelContext *context,
     gpointer user_data)
 {
   EmpathyCallObserver *self = EMPATHY_CALL_OBSERVER (user_data);
-  TpChannel *channel;
   const GError *error;
-
-  channel = find_main_channel (channels);
-  if (channel == NULL)
-    {
-      GError err = { TP_ERROR, TP_ERROR_INVALID_ARGUMENT,
-          "Unknown channel type" };
-
-      DEBUG ("Didn't find any Call channel; ignoring");
-
-      tp_observe_channel_context_fail (context, &err);
-      return;
-    }
 
   /* Autoreject if there are other ongoing calls */
   if (has_ongoing_calls (self))
@@ -320,8 +285,7 @@ empathy_call_observer_init (EmpathyCallObserver *self)
   am = tp_account_manager_dup ();
 
   self->priv->observer = tp_simple_observer_new_with_am (am, TRUE,
-      "Empathy.CallObserver", FALSE,
-      observe_channels, self, NULL);
+      "Empathy.CallObserver", FALSE, observe_channel, self, NULL);
 
   /* Observe Call channels */
   tp_base_client_take_observer_filter (self->priv->observer,

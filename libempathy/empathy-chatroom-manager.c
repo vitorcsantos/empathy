@@ -40,10 +40,10 @@
 
 static EmpathyChatroomManager *chatroom_manager_singleton = NULL;
 
-static void observe_channels_cb (TpSimpleObserver *observer,
+static void observe_channel_cb (TpSimpleObserver *observer,
     TpAccount *account,
     TpConnection *connection,
-    GList *channels,
+    TpChannel *channel,
     TpChannelDispatchOperation *dispatch_operation,
     GList *requests,
     TpObserveChannelContext *context,
@@ -586,7 +586,7 @@ empathy_chatroom_manager_constructor (GType type,
 
   /* Setup a room observer */
   priv->observer = tp_simple_observer_new_with_am (priv->account_manager, TRUE,
-      "Empathy.ChatroomManager", TRUE, observe_channels_cb, self, NULL);
+      "Empathy.ChatroomManager", TRUE, observe_channel_cb, self, NULL);
 
   tp_base_client_take_observer_filter (priv->observer, tp_asv_new (
       TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING,
@@ -861,47 +861,47 @@ chatroom_manager_chat_invalidated_cb (EmpathyTpChat *chat,
 }
 
 static void
-observe_channels_cb (TpSimpleObserver *observer,
+observe_channel_cb (TpSimpleObserver *observer,
     TpAccount *account,
     TpConnection *connection,
-    GList *channels,
+    TpChannel *channel,
     TpChannelDispatchOperation *dispatch_operation,
     GList *requests,
     TpObserveChannelContext *context,
     gpointer user_data)
 {
   EmpathyChatroomManager *self = user_data;
-  GList *l;
+  EmpathyTpChat *tp_chat;
+  const gchar *roomname;
+  EmpathyChatroom *chatroom;
 
-  for (l = channels; l != NULL; l = g_list_next (l))
+  if (tp_proxy_get_invalidated (channel) == NULL ||
+      !EMPATHY_IS_TP_CHAT (channel))
     {
-      EmpathyTpChat *tp_chat = l->data;
-      const gchar *roomname;
-      EmpathyChatroom *chatroom;
+      GError e = { TP_ERROR, TP_ERROR_INVALID_ARGUMENT,
+          "Not a text channel" };
 
-      if (tp_proxy_get_invalidated ((TpChannel *) tp_chat) != NULL)
-        continue;
-
-      if (!EMPATHY_IS_TP_CHAT (tp_chat))
-        continue;
-
-      roomname = empathy_tp_chat_get_id (tp_chat);
-      chatroom = empathy_chatroom_manager_find (self, account, roomname);
-
-      if (chatroom == NULL)
-        {
-          chatroom = empathy_chatroom_new_full (account, roomname, roomname,
-            FALSE);
-          empathy_chatroom_manager_add (self, chatroom);
-          g_object_unref (chatroom);
-        }
-
-      empathy_chatroom_set_tp_chat (chatroom, tp_chat);
-
-      g_signal_connect (tp_chat, "invalidated",
-        G_CALLBACK (chatroom_manager_chat_invalidated_cb),
-        self);
+      tp_observe_channel_context_fail (context, &e);
     }
+
+  tp_chat = EMPATHY_TP_CHAT (channel);
+
+  roomname = empathy_tp_chat_get_id (tp_chat);
+  chatroom = empathy_chatroom_manager_find (self, account, roomname);
+
+  if (chatroom == NULL)
+    {
+      chatroom = empathy_chatroom_new_full (account, roomname, roomname,
+        FALSE);
+      empathy_chatroom_manager_add (self, chatroom);
+      g_object_unref (chatroom);
+    }
+
+  empathy_chatroom_set_tp_chat (chatroom, tp_chat);
+
+  g_signal_connect (tp_chat, "invalidated",
+    G_CALLBACK (chatroom_manager_chat_invalidated_cb),
+    self);
 
   tp_observe_channel_context_accept (context);
 }

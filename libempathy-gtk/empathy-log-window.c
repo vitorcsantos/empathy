@@ -991,50 +991,43 @@ on_call_ended (TpChannel *channel,
 }
 
 static void
-observe_channels (TpSimpleObserver *observer,
+observe_channel (TpSimpleObserver *observer,
     TpAccount *account,
     TpConnection *connection,
-    GList *channels,
+    TpChannel *channel,
     TpChannelDispatchOperation *dispatch_operation,
     GList *requests,
     TpObserveChannelContext *context,
     gpointer user_data)
 {
   EmpathyLogWindow *self = user_data;
+  const gchar *type = tp_channel_get_channel_type (channel);
 
-  GList *l;
-
-  for (l = channels; l != NULL; l = g_list_next (l))
+  if (!tp_strdiff (type, TP_IFACE_CHANNEL_TYPE_TEXT))
     {
-      TpChannel *channel = l->data;
-      const gchar *type = tp_channel_get_channel_type (channel);
+      TpTextChannel *text_channel = TP_TEXT_CHANNEL (channel);
 
-      if (!tp_strdiff (type, TP_IFACE_CHANNEL_TYPE_TEXT))
-        {
-          TpTextChannel *text_channel = TP_TEXT_CHANNEL (channel);
+      g_hash_table_insert (self->priv->channels,
+          g_object_ref (channel), g_object_ref (account));
 
-          g_hash_table_insert (self->priv->channels,
-              g_object_ref (channel), g_object_ref (account));
+      tp_g_signal_connect_object (text_channel, "message-sent",
+          G_CALLBACK (on_msg_sent), self, 0);
+      tp_g_signal_connect_object (text_channel, "message-received",
+          G_CALLBACK (on_msg_received), self, 0);
+      tp_g_signal_connect_object (channel, "invalidated",
+          G_CALLBACK (on_channel_ended), self, 0);
+    }
+  else if (!tp_strdiff (type, TP_IFACE_CHANNEL_TYPE_CALL1))
+    {
+      g_hash_table_insert (self->priv->channels,
+          g_object_ref (channel), g_object_ref (account));
 
-          tp_g_signal_connect_object (text_channel, "message-sent",
-              G_CALLBACK (on_msg_sent), self, 0);
-          tp_g_signal_connect_object (text_channel, "message-received",
-              G_CALLBACK (on_msg_received), self, 0);
-          tp_g_signal_connect_object (channel, "invalidated",
-              G_CALLBACK (on_channel_ended), self, 0);
-        }
-      else if (!tp_strdiff (type, TP_IFACE_CHANNEL_TYPE_CALL1))
-        {
-          g_hash_table_insert (self->priv->channels,
-              g_object_ref (channel), g_object_ref (account));
-
-          tp_g_signal_connect_object (channel, "invalidated",
-              G_CALLBACK (on_call_ended), self, 0);
-        }
-      else
-        {
-          g_warning ("Unknown channel type: %s", type);
-        }
+      tp_g_signal_connect_object (channel, "invalidated",
+          G_CALLBACK (on_call_ended), self, 0);
+    }
+  else
+    {
+      g_warning ("Unknown channel type: %s", type);
     }
 
   tp_observe_channel_context_accept (context);
@@ -1048,8 +1041,7 @@ log_window_create_observer (EmpathyLogWindow *self)
   am = tp_account_manager_dup ();
 
   self->priv->observer = tp_simple_observer_new_with_am (am, TRUE, "LogWindow",
-      TRUE, observe_channels,
-      g_object_ref (self), g_object_unref);
+      TRUE, observe_channel, g_object_ref (self), g_object_unref);
 
   self->priv->channels = g_hash_table_new_full (g_direct_hash, g_direct_equal,
       g_object_unref, g_object_unref);
