@@ -925,7 +925,7 @@ hash_job_done (gpointer user_data)
   else
     {
       /* set the checksum in the request...
-       * im.telepathy1.Channel.Type.FileTransfer.ContentHash
+       * im.telepathy.v1.Channel.Type.FileTransfer.ContentHash
        */
       tp_asv_set_string (priv->request,
           TP_PROP_CHANNEL_TYPE_FILE_TRANSFER1_CONTENT_HASH,

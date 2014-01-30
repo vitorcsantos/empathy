@@ -1,23 +1,23 @@
-[im.telepathy1.Client]
-Interfaces=im.telepathy1.Client.Handler
+[im.telepathy.v1.Client]
+Interfaces=im.telepathy.v1.Client.Handler
 
-[im.telepathy1.Client.Handler.HandlerChannelFilter 0]
-im.telepathy1.Channel.ChannelType s=im.telepathy1.Channel.Type.Call1
-im.telepathy1.Channel.TargetHandleType u=1
+[im.telepathy.v1.Client.Handler.HandlerChannelFilter 0]
+im.telepathy.v1.Channel.ChannelType s=im.telepathy.v1.Channel.Type.Call1
+im.telepathy.v1.Channel.TargetHandleType u=1
 
-[im.telepathy1.Client.Handler.HandlerChannelFilter 1]
-im.telepathy1.Channel.ChannelType s=im.telepathy1.Channel.Type.Call1
-im.telepathy1.Channel.TargetHandleType u=1
-im.telepathy1.Channel.Type.Call1.InitialAudio b=true
+[im.telepathy.v1.Client.Handler.HandlerChannelFilter 1]
+im.telepathy.v1.Channel.ChannelType s=im.telepathy.v1.Channel.Type.Call1
+im.telepathy.v1.Channel.TargetHandleType u=1
+im.telepathy.v1.Channel.Type.Call1.InitialAudio b=true
 
-[im.telepathy1.Client.Handler.HandlerChannelFilter 2]
-im.telepathy1.Channel.ChannelType s=im.telepathy1.Channel.Type.Call1
-im.telepathy1.Channel.TargetHandleType u=1
-im.telepathy1.Channel.Type.Call1.InitialVideo b=true
+[im.telepathy.v1.Client.Handler.HandlerChannelFilter 2]
+im.telepathy.v1.Channel.ChannelType s=im.telepathy.v1.Channel.Type.Call1
+im.telepathy.v1.Channel.TargetHandleType u=1
+im.telepathy.v1.Channel.Type.Call1.InitialVideo b=true
 
-[im.telepathy1.Client.Handler.Capabilities]
-im.telepathy1.Channel.Type.Call1/audio=true
-im.telepathy1.Channel.Type.Call1/video=true
-im.telepathy1.Channel.Type.Call1/ice=true
-im.telepathy1.Channel.Type.Call1/gtalk-p2p=true
-im.telepathy1.Channel.Type.Call1/video/h264=true
+[im.telepathy.v1.Client.Handler.Capabilities]
+im.telepathy.v1.Channel.Type.Call1/audio=true
+im.telepathy.v1.Channel.Type.Call1/video=true
+im.telepathy.v1.Channel.Type.Call1/ice=true
+im.telepathy.v1.Channel.Type.Call1/gtalk-p2p=true
+im.telepathy.v1.Channel.Type.Call1/video/h264=true

@@ -3781,8 +3781,8 @@ log_window_delete_menu_clicked_cb (GtkMenuItem *menuitem,
     }
 
   logger = g_object_new (TP_TYPE_PROXY,
-      "bus-name", "im.telepathy1.Logger",
-      "object-path", "/im/telepathy1/Logger",
+      "bus-name", "im.telepathy.v1.Logger",
+      "object-path", "/im/telepathy/v1/Logger",
       "dbus-daemon", bus,
       NULL);
   g_object_unref (bus);

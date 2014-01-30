@@ -23,23 +23,23 @@ convert_DATA = \
 
 servicefiledir = $(datadir)/dbus-1/services
 servicefile_in_files = \
-	im.telepathy1.Client.Empathy.Chat.service.in \
-	im.telepathy1.Client.Empathy.Auth.service.in \
-	im.telepathy1.Client.Empathy.Call.service.in \
-	im.telepathy1.Client.Empathy.FileTransfer.service.in
+	im.telepathy.v1.Client.Empathy.Chat.service.in \
+	im.telepathy.v1.Client.Empathy.Auth.service.in \
+	im.telepathy.v1.Client.Empathy.Call.service.in \
+	im.telepathy.v1.Client.Empathy.FileTransfer.service.in
 
 servicefile_DATA = $(servicefile_in_files:.service.in=.service)
 
-im.telepathy1.Client.Empathy.Chat.service: im.telepathy1.Client.Empathy.Chat.service.in
+im.telepathy.v1.Client.Empathy.Chat.service: im.telepathy.v1.Client.Empathy.Chat.service.in
 	$(AM_V_GEN)sed -e "s|[@]libexecdir[@]|$(libexecdir)|" $< > $@
 
-im.telepathy1.Client.Empathy.Auth.service: im.telepathy1.Client.Empathy.Auth.service.in
+im.telepathy.v1.Client.Empathy.Auth.service: im.telepathy.v1.Client.Empathy.Auth.service.in
 	$(AM_V_GEN)sed -e "s|[@]libexecdir[@]|$(libexecdir)|" $< > $@
 
-im.telepathy1.Client.Empathy.Call.service: im.telepathy1.Client.Empathy.Call.service.in
+im.telepathy.v1.Client.Empathy.Call.service: im.telepathy.v1.Client.Empathy.Call.service.in
 	$(AM_V_GEN)sed -e "s|[@]libexecdir[@]|$(libexecdir)|" $< > $@
 
-im.telepathy1.Client.Empathy.FileTransfer.service: im.telepathy1.Client.Empathy.FileTransfer.service.in
+im.telepathy.v1.Client.Empathy.FileTransfer.service: im.telepathy.v1.Client.Empathy.FileTransfer.service.in
 	$(AM_V_GEN)sed -e "s|[@]bindir[@]|$(bindir)|" $< > $@
 
 clientfiledir = $(datarootdir)/telepathy-1/clients

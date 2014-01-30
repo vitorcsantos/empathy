@@ -99,7 +99,7 @@ empathy_call_factory_init (EmpathyCallFactory *obj)
       TP_TOKEN_CHANNEL_TYPE_CALL1_VIDEO,
       TP_TOKEN_CHANNEL_TYPE_CALL1_ICE,
       TP_TOKEN_CHANNEL_TYPE_CALL1_GTALK_P2P,
-      "im.telepathy1.Channel.Type.Call1/video/h264",
+      "im.telepathy.v1.Channel.Type.Call1/video/h264",
       NULL);
 }
 
