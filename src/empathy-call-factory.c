@@ -95,10 +95,10 @@ empathy_call_factory_init (EmpathyCallFactory *obj)
         NULL));
 
   tp_base_client_add_handler_capabilities_varargs (client,
-      "im.telepathy1.Channel.Type.Call1/audio",
-      "im.telepathy1.Channel.Type.Call1/video",
-      "im.telepathy1.Channel.Type.Call1/ice",
-      "im.telepathy1.Channel.Type.Call1/gtalk-p2p",
+      TP_TOKEN_CHANNEL_TYPE_CALL1_AUDIO,
+      TP_TOKEN_CHANNEL_TYPE_CALL1_VIDEO,
+      TP_TOKEN_CHANNEL_TYPE_CALL1_ICE,
+      TP_TOKEN_CHANNEL_TYPE_CALL1_GTALK_P2P,
       "im.telepathy1.Channel.Type.Call1/video/h264",
       NULL);
 }
