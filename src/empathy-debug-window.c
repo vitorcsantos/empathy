@@ -392,9 +392,6 @@ debug_window_get_messages_cb (GObject *object,
        * selected service is unable to fetch debug messages */
       if (!tp_strdiff (active_service_name, proxy_service_name))
         debug_window_set_toolbar_sensitivity (self, FALSE);
-
-      /* We created the proxy for GetMessages call. Now destroy it. */
-      tp_clear_object (&debug);
       return;
     }
 
@@ -415,6 +412,8 @@ debug_window_get_messages_cb (GObject *object,
       DEBUG ("Proxy for service: %s was successful in fetching debug"
           " messages. Saving it.", proxy_service_name);
 
+      /* The store will take its own ref on the proxy preventing it to be
+       * destroyed when leaving this callback. */
       gtk_list_store_set (self->priv->service_store, &iter,
           COL_PROXY, debug,
           -1);
@@ -498,6 +497,8 @@ create_proxy_to_get_messages (EmpathyDebugWindow *self,
 
   tp_debug_client_get_messages_async (TP_DEBUG_CLIENT (new_proxy),
       debug_window_get_messages_cb, self);
+
+  g_object_unref (new_proxy);
 
 finally:
   g_free (name);
