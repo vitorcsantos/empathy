@@ -348,6 +348,8 @@ proxy_invalidated_cb (TpProxy *proxy,
         gtk_list_store_set (self->priv->service_store, &iter,
             COL_PROXY, NULL,
             -1);
+
+      g_object_unref (stored_proxy);
     }
 
   /* Also, we refresh "All" selection's active buffer since it should not
