@@ -323,10 +323,15 @@ proxy_invalidated_cb (TpProxy *proxy,
     gpointer user_data)
 {
   EmpathyDebugWindow *self = (EmpathyDebugWindow *) user_data;
-  GtkTreeModel *service_store = GTK_TREE_MODEL (self->priv->service_store);
+  GtkTreeModel *service_store;
   TpProxy *stored_proxy;
   GtkTreeIter iter;
   gboolean valid_iter;
+
+  if (self->priv->service_store == NULL)
+    return;
+
+  service_store = GTK_TREE_MODEL (self->priv->service_store);
 
   /* Proxy has been invalidated so we find and set it to NULL
    * in service store */
