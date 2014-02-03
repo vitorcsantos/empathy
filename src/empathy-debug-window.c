@@ -417,8 +417,8 @@ debug_window_get_messages_cb (GObject *object,
   g_free (proxy_service_name);
 
   /* Connect to "invalidated" signal */
-  g_signal_connect (debug, "invalidated",
-      G_CALLBACK (proxy_invalidated_cb), self);
+  g_signal_connect_object (debug, "invalidated",
+      G_CALLBACK (proxy_invalidated_cb), self, 0);
 
  /* Connect to NewDebugMessage */
   tp_g_signal_connect_object (debug, "new-debug-message",
