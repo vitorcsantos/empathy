@@ -2137,6 +2137,35 @@ debug_window_finalize (GObject *object)
 }
 
 static void
+disable_all_debug_clients (EmpathyDebugWindow *self)
+{
+  GtkTreeIter iter;
+  gboolean valid_iter;
+  GtkTreeModel *model;
+
+  if (self->priv->service_store == NULL)
+    return;
+  model = GTK_TREE_MODEL (self->priv->service_store);
+
+  /* Skipping the first service store iter which is reserved for "All" */
+  gtk_tree_model_get_iter_first (model, &iter);
+  for (valid_iter = gtk_tree_model_iter_next (model, &iter);
+       valid_iter;
+       valid_iter = gtk_tree_model_iter_next (model, &iter))
+    {
+      TpDebugClient *debug;
+
+      gtk_tree_model_get (model, &iter,
+          COL_PROXY, &debug,
+          -1);
+
+      debug_window_set_enabled (debug, FALSE);
+
+      g_object_unref (debug);
+    }
+}
+
+static void
 debug_window_dispose (GObject *object)
 {
   EmpathyDebugWindow *self = EMPATHY_DEBUG_WINDOW (object);
@@ -2144,6 +2173,9 @@ debug_window_dispose (GObject *object)
   if (self->priv->name_owner_changed_signal != NULL)
     tp_proxy_signal_connection_disconnect (
         self->priv->name_owner_changed_signal);
+
+  /* Disable Debug on all proxies */
+  disable_all_debug_clients (self);
 
   g_clear_object (&self->priv->service_store);
   g_clear_object (&self->priv->dbus);
