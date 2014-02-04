@@ -51,7 +51,6 @@
 #include "empathy-theme-manager.h"
 #include "empathy-ui-utils.h"
 #include "empathy-utils.h"
-#include "extensions.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_CHAT
 #include "empathy-debug.h"
@@ -761,7 +760,7 @@ nick_command_supported (EmpathyChat *chat)
 
 	connection = tp_channel_get_connection (TP_CHANNEL (priv->tp_chat));
 	return tp_proxy_has_interface_by_id (connection,
-		EMP_IFACE_QUARK_CONNECTION_INTERFACE_RENAMING);
+		TP_IFACE_QUARK_CONNECTION_INTERFACE_RENAMING);
 }
 
 static gboolean
@@ -888,7 +887,7 @@ chat_command_msg (EmpathyChat *chat,
 }
 
 static void
-callback_for_request_rename (TpProxy *proxy,
+callback_for_request_rename (TpConnection *conn,
 		  const GError *error,
 		  gpointer user_data,
 		  GObject *weak_object)
@@ -903,11 +902,11 @@ chat_command_nick (EmpathyChat *chat,
 		   GStrv        strv)
 {
 	EmpathyChatPriv *priv = GET_PRIV (chat);
-	TpProxy *proxy;
+	TpConnection *conn;
 
-	proxy = TP_PROXY (tp_account_get_connection (priv->account));
+	conn = tp_account_get_connection (priv->account);
 
-	emp_cli_connection_interface_renaming_call_request_rename (proxy, -1,
+	tp_cli_connection_interface_renaming_call_request_rename (conn, -1,
 		strv[1], callback_for_request_rename, NULL, NULL, NULL);
 }
 
