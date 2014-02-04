@@ -417,11 +417,6 @@ empathy_server_sasl_handler_provide_password (
           priv->password = g_strdup (password);
           priv->save_password = TRUE;
         }
-      else if (tp_proxy_has_interface_by_id (priv->channel,
-            EMP_IFACE_QUARK_CHANNEL_INTERFACE_CREDENTIALS_STORAGE))
-        {
-          DEBUG ("Channel implements Ch.I.CredentialsStorage");
-        }
       else
         {
           DEBUG ("Asked to remember password, but doing so is not permitted");
@@ -432,15 +427,6 @@ empathy_server_sasl_handler_provide_password (
     {
       /* delete any password present, it shouldn't be there */
       tpaw_keyring_delete_account_password_async (priv->account, NULL, NULL);
-    }
-
-  /* Additionally, if we implement Ch.I.CredentialsStorage, inform that
-   * whether we want to remember the password */
-  if (tp_proxy_has_interface_by_id (priv->channel,
-        EMP_IFACE_QUARK_CHANNEL_INTERFACE_CREDENTIALS_STORAGE))
-    {
-      emp_cli_channel_interface_credentials_storage_call_store_credentials (
-          TP_PROXY (priv->channel), -1, remember, NULL, NULL, NULL, NULL);
     }
 }
 
@@ -501,25 +487,17 @@ empathy_server_sasl_handler_has_password (EmpathyServerSASLHandler *handler)
  * empathy_server_sasl_handler_can_save_response_somewhere:
  * @self:
  *
- * Returns: %TRUE if the response can be saved somewhere, either the keyring
- *   or via Ch.I.CredentialsStorage
+ * Returns: %TRUE if the response can be saved into the keyring
  */
 gboolean
 empathy_server_sasl_handler_can_save_response_somewhere (
     EmpathyServerSASLHandler *self)
 {
   EmpathyServerSASLHandlerPriv *priv;
-  gboolean may_save_response;
-  gboolean has_storage_iface;
 
   g_return_val_if_fail (EMPATHY_IS_SERVER_SASL_HANDLER (self), FALSE);
 
   priv = self->priv;
 
-  may_save_response = channel_has_may_save_response (priv->channel);
-
-  has_storage_iface = tp_proxy_has_interface_by_id (priv->channel,
-      EMP_IFACE_QUARK_CHANNEL_INTERFACE_CREDENTIALS_STORAGE);
-
-  return may_save_response || has_storage_iface;
+  return channel_has_may_save_response (priv->channel);
 }

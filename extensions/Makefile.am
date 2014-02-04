@@ -14,7 +14,6 @@ EXTRA_DIST = \
     misc.xml \
     Logger.xml \
     Connection_Interface_Renaming.xml \
-    Channel_Interface_Credentials_Storage.xml \
     Chat_Manager.xml \
     $(NULL)
 
