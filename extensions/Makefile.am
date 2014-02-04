@@ -13,7 +13,6 @@ EXTRA_DIST = \
     generic-types.xml \
     misc.xml \
     Logger.xml \
-    Connection_Interface_Renaming.xml \
     Chat_Manager.xml \
     $(NULL)
 
