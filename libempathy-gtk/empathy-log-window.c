@@ -3701,7 +3701,7 @@ empathy_account_chooser_filter_has_logs (TpAccount *account,
 }
 
 static void
-log_window_logger_clear_account_cb (TpProxy *proxy,
+log_window_logger_clear_account_cb (TpLogger *logger,
     const GError *error,
     gpointer user_data,
     GObject *weak_object)
@@ -3729,9 +3729,7 @@ log_window_delete_menu_clicked_cb (GtkMenuItem *menuitem,
   GtkWidget *dialog, *content_area, *hbox, *label;
   EmpathyAccountChooser *account_chooser;
   gint response_id;
-  TpDBusDaemon *bus;
-  TpProxy *logger;
-  GError *error = NULL;
+  TpLogger *logger;
 
   account_chooser = (EmpathyAccountChooser *) empathy_account_chooser_new ();
   empathy_account_chooser_set_has_all_option (account_chooser, TRUE);
@@ -3772,28 +3770,13 @@ log_window_delete_menu_clicked_cb (GtkMenuItem *menuitem,
   if (response_id != GTK_RESPONSE_APPLY)
     goto out;
 
-  bus = tp_dbus_daemon_dup (&error);
-  if (error != NULL)
-    {
-      g_warning ("Could not delete logs: %s", error->message);
-      g_error_free (error);
-      goto out;
-    }
-
-  logger = g_object_new (TP_TYPE_PROXY,
-      "bus-name", "im.telepathy.v1.Logger",
-      "object-path", "/im/telepathy/v1/Logger",
-      "dbus-daemon", bus,
-      NULL);
-  g_object_unref (bus);
-
-  tp_proxy_add_interface_by_id (logger, EMP_IFACE_QUARK_LOGGER);
+  logger = tp_logger_dup ();
 
   if (empathy_account_chooser_has_all_selected (account_chooser))
     {
       DEBUG ("Deleting logs for all the accounts");
 
-      emp_cli_logger_call_clear (logger, -1,
+      tp_cli_logger_call_clear (logger, -1,
           log_window_logger_clear_account_cb,
           self, NULL, G_OBJECT (self));
     }
@@ -3805,7 +3788,7 @@ log_window_delete_menu_clicked_cb (GtkMenuItem *menuitem,
 
       DEBUG ("Deleting logs for %s", tp_proxy_get_object_path (account));
 
-      emp_cli_logger_call_clear_account (logger, -1,
+      tp_cli_logger_call_clear_account (logger, -1,
           tp_proxy_get_object_path (account),
           log_window_logger_clear_account_cb,
           self, NULL, G_OBJECT (self));
