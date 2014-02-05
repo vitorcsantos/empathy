@@ -323,10 +323,15 @@ proxy_invalidated_cb (TpProxy *proxy,
     gpointer user_data)
 {
   EmpathyDebugWindow *self = (EmpathyDebugWindow *) user_data;
-  GtkTreeModel *service_store = GTK_TREE_MODEL (self->priv->service_store);
+  GtkTreeModel *service_store;
   TpProxy *stored_proxy;
   GtkTreeIter iter;
   gboolean valid_iter;
+
+  if (self->priv->service_store == NULL)
+    return;
+
+  service_store = GTK_TREE_MODEL (self->priv->service_store);
 
   /* Proxy has been invalidated so we find and set it to NULL
    * in service store */
@@ -343,6 +348,8 @@ proxy_invalidated_cb (TpProxy *proxy,
         gtk_list_store_set (self->priv->service_store, &iter,
             COL_PROXY, NULL,
             -1);
+
+      g_object_unref (stored_proxy);
     }
 
   /* Also, we refresh "All" selection's active buffer since it should not
@@ -385,9 +392,6 @@ debug_window_get_messages_cb (GObject *object,
        * selected service is unable to fetch debug messages */
       if (!tp_strdiff (active_service_name, proxy_service_name))
         debug_window_set_toolbar_sensitivity (self, FALSE);
-
-      /* We created the proxy for GetMessages call. Now destroy it. */
-      tp_clear_object (&debug);
       return;
     }
 
@@ -408,6 +412,8 @@ debug_window_get_messages_cb (GObject *object,
       DEBUG ("Proxy for service: %s was successful in fetching debug"
           " messages. Saving it.", proxy_service_name);
 
+      /* The store will take its own ref on the proxy preventing it to be
+       * destroyed when leaving this callback. */
       gtk_list_store_set (self->priv->service_store, &iter,
           COL_PROXY, debug,
           -1);
@@ -417,8 +423,8 @@ debug_window_get_messages_cb (GObject *object,
   g_free (proxy_service_name);
 
   /* Connect to "invalidated" signal */
-  g_signal_connect (debug, "invalidated",
-      G_CALLBACK (proxy_invalidated_cb), self);
+  g_signal_connect_object (debug, "invalidated",
+      G_CALLBACK (proxy_invalidated_cb), self, 0);
 
  /* Connect to NewDebugMessage */
   tp_g_signal_connect_object (debug, "new-debug-message",
@@ -491,6 +497,8 @@ create_proxy_to_get_messages (EmpathyDebugWindow *self,
 
   tp_debug_client_get_messages_async (TP_DEBUG_CLIENT (new_proxy),
       debug_window_get_messages_cb, self);
+
+  g_object_unref (new_proxy);
 
 finally:
   g_free (name);
@@ -2129,6 +2137,35 @@ debug_window_finalize (GObject *object)
 }
 
 static void
+disable_all_debug_clients (EmpathyDebugWindow *self)
+{
+  GtkTreeIter iter;
+  gboolean valid_iter;
+  GtkTreeModel *model;
+
+  if (self->priv->service_store == NULL)
+    return;
+  model = GTK_TREE_MODEL (self->priv->service_store);
+
+  /* Skipping the first service store iter which is reserved for "All" */
+  gtk_tree_model_get_iter_first (model, &iter);
+  for (valid_iter = gtk_tree_model_iter_next (model, &iter);
+       valid_iter;
+       valid_iter = gtk_tree_model_iter_next (model, &iter))
+    {
+      TpDebugClient *debug;
+
+      gtk_tree_model_get (model, &iter,
+          COL_PROXY, &debug,
+          -1);
+
+      debug_window_set_enabled (debug, FALSE);
+
+      g_object_unref (debug);
+    }
+}
+
+static void
 debug_window_dispose (GObject *object)
 {
   EmpathyDebugWindow *self = EMPATHY_DEBUG_WINDOW (object);
@@ -2136,6 +2173,9 @@ debug_window_dispose (GObject *object)
   if (self->priv->name_owner_changed_signal != NULL)
     tp_proxy_signal_connection_disconnect (
         self->priv->name_owner_changed_signal);
+
+  /* Disable Debug on all proxies */
+  disable_all_debug_clients (self);
 
   g_clear_object (&self->priv->service_store);
   g_clear_object (&self->priv->dbus);
