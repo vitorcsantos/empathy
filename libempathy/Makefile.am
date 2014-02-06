@@ -28,6 +28,7 @@ BUILT_SOURCES = 					\
 libempathy_headers =				\
 	action-chain-internal.h			\
 	empathy-auth-factory.h			\
+	empathy-bus-names.h			\
 	empathy-chatroom-manager.h		\
 	empathy-chatroom.h			\
 	empathy-client-factory.h \

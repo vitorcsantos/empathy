@@ -35,13 +35,12 @@
 #endif
 
 #include "empathy-accounts-common.h"
+#include "empathy-bus-names.h"
 #include "empathy-ui-utils.h"
 #include "empathy-utils.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_ACCOUNT
 #include "empathy-debug.h"
-
-#define EMPATHY_ACCOUNTS_DBUS_NAME "org.gnome.EmpathyAccounts"
 
 static gboolean only_if_needed = FALSE;
 static gboolean hidden = FALSE;
@@ -243,7 +242,7 @@ main (int argc, char *argv[])
   gdk_set_program_class ("Empathy");
   gtk_window_set_default_icon_name ("empathy");
 
-  app = gtk_application_new (EMPATHY_ACCOUNTS_DBUS_NAME, G_APPLICATION_FLAGS_NONE);
+  app = gtk_application_new (EMPATHY_ACCOUNTS_BUS_NAME, G_APPLICATION_FLAGS_NONE);
   app_class = G_OBJECT_GET_CLASS (app);
   G_APPLICATION_CLASS (app_class)->local_command_line = local_cmdline;
   G_APPLICATION_CLASS (app_class)->activate = app_activate;

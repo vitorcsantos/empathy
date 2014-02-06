@@ -32,6 +32,7 @@
 
 #include "empathy-accounts-common.h"
 #include "empathy-accounts-dialog.h"
+#include "empathy-bus-names.h"
 #include "empathy-chatroom-manager.h"
 #include "empathy-client-factory.h"
 #include "empathy-connection-aggregator.h"
@@ -49,8 +50,6 @@
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include "empathy-debug.h"
-
-#define EMPATHY_DBUS_NAME "org.gnome.Empathy"
 
 #define EMPATHY_TYPE_APP (empathy_app_get_type ())
 #define EMPATHY_APP(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), EMPATHY_TYPE_APP, EmpathyApp))
@@ -837,7 +836,7 @@ main (int argc, char *argv[])
   add_empathy_features ();
 
   app = g_object_new (EMPATHY_TYPE_APP,
-      "application-id", EMPATHY_DBUS_NAME,
+      "application-id", EMPATHY_BUS_NAME,
       NULL);
 
   retval = g_application_run (G_APPLICATION (app), argc, argv);

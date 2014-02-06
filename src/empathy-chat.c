@@ -25,6 +25,7 @@
 #include <glib/gi18n.h>
 #include <libnotify/notify.h>
 
+#include "empathy-bus-names.h"
 #include "empathy-chat-manager.h"
 #include "empathy-chat-resources.h"
 #include "empathy-presence-manager.h"
@@ -37,8 +38,6 @@
 
 /* Exit after $TIMEOUT seconds if not displaying any call window */
 #define TIMEOUT 60
-
-#define EMPATHY_CHAT_DBUS_NAME "org.gnome.Empathy.Chat"
 
 static GtkApplication *app = NULL;
 static gboolean activated = FALSE;
@@ -126,7 +125,7 @@ main (int argc,
   resource = empathy_chat_get_resource ();
   g_resources_register (resource);
 
-  app = gtk_application_new (EMPATHY_CHAT_DBUS_NAME, G_APPLICATION_FLAGS_NONE);
+  app = gtk_application_new (EMPATHY_CHAT_BUS_NAME, G_APPLICATION_FLAGS_NONE);
   g_signal_connect (app, "activate", G_CALLBACK (activate_cb), NULL);
 
 #ifdef ENABLE_DEBUG

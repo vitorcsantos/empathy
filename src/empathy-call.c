@@ -31,6 +31,7 @@
 #include <X11/Xlib.h>
 #endif
 
+#include "empathy-bus-names.h"
 #include "empathy-call-factory.h"
 #include "empathy-call-window.h"
 #include "empathy-ui-utils.h"
@@ -40,8 +41,6 @@
 
 /* Exit after $TIMEOUT seconds if not displaying any call window */
 #define TIMEOUT 60
-
-#define EMPATHY_CALL_DBUS_NAME "org.gnome.Empathy.Call"
 
 static GtkApplication *app = NULL;
 static gboolean activated = FALSE;
@@ -255,7 +254,7 @@ main (int argc,
   g_object_set (G_OBJECT (gtk_settings), "gtk-application-prefer-dark-theme",
       TRUE, NULL);
 
-  app = gtk_application_new (EMPATHY_CALL_DBUS_NAME, G_APPLICATION_FLAGS_NONE);
+  app = gtk_application_new (EMPATHY_CALL_BUS_NAME, G_APPLICATION_FLAGS_NONE);
   g_signal_connect (app, "activate", G_CALLBACK (activate_cb), NULL);
 
 #ifdef ENABLE_DEBUG
