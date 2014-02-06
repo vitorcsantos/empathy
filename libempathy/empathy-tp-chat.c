@@ -225,7 +225,7 @@ empathy_tp_chat_add (EmpathyTpChat *self,
       /* Although this is a MUC, it's anonymous, so CreateChannel is
        * valid. */
       tp_account_channel_request_create_and_observe_channel_async (req,
-          EMPATHY_CHAT_BUS_NAME, NULL, create_conference_cb, NULL);
+          EMPATHY_CHAT_TP_BUS_NAME, NULL, create_conference_cb, NULL);
 
       g_object_unref (req);
       g_hash_table_unref (props);

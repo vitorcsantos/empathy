@@ -290,7 +290,7 @@ empathy_chat_manager_init (EmpathyChatManager *self)
 
   /* Text channels handler */
   priv->handler = tp_simple_handler_new_with_am (am, FALSE, FALSE,
-      EMPATHY_CHAT_BUS_NAME_SUFFIX, FALSE, handle_channels, self, NULL);
+      EMPATHY_CHAT_TP_BUS_NAME_SUFFIX, FALSE, handle_channels, self, NULL);
 
   g_object_unref (am);
 
@@ -547,7 +547,7 @@ empathy_chat_manager_call_undo_closed_chat (void)
   proxy = g_object_new (TP_TYPE_PROXY,
       "dbus-daemon", dbus_daemon,
       "dbus-connection", tp_proxy_get_dbus_connection (TP_PROXY (dbus_daemon)),
-      "bus-name", EMPATHY_CHAT_BUS_NAME,
+      "bus-name", EMPATHY_CHAT_TP_BUS_NAME,
       "object-path", CHAT_MANAGER_PATH,
       NULL);
 

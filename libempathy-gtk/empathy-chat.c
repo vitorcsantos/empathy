@@ -864,7 +864,7 @@ chat_command_msg_internal (EmpathyChat *chat,
 	data->message = g_strdup (message);
 
 	tp_account_channel_request_ensure_and_observe_channel_async (req,
-		EMPATHY_CHAT_BUS_NAME, NULL, chat_command_msg_cb, data);
+		EMPATHY_CHAT_TP_BUS_NAME, NULL, chat_command_msg_cb, data);
 
 	g_object_unref (req);
 	g_hash_table_unref (request);
