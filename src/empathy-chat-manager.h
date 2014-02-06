@@ -22,6 +22,7 @@
 
 
 #include "empathy-chat.h"
+#include "chat-manager-interface.h"
 
 G_BEGIN_DECLS
 
@@ -30,12 +31,12 @@ typedef struct _EmpathyChatManagerClass EmpathyChatManagerClass;
 
 struct _EmpathyChatManagerClass
 {
-  GObjectClass parent_class;
+  EmpathyGenChatManagerSkeletonClass parent_class;
 };
 
 struct _EmpathyChatManager
 {
-  GObject parent;
+  EmpathyGenChatManagerSkeleton parent;
 };
 
 GType empathy_chat_manager_get_type (void);

@@ -23,12 +23,11 @@
 #include <telepathy-glib/proxy-subclass.h>
 #include <telepathy-glib/telepathy-glib-dbus.h>
 
+#include "empathy-bus-names.h"
 #include "empathy-chatroom-manager.h"
 #include "empathy-chat-window.h"
 #include "empathy-request-util.h"
 #include "empathy-ui-utils.h"
-#include "extensions.h"
-#include "chat-manager-interface.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include "empathy-debug.h"
@@ -43,12 +42,12 @@ enum {
 
 static guint signals[LAST_SIGNAL];
 
-static void svc_iface_init (gpointer, gpointer);
+static void chat_manager_iface_init (gpointer, gpointer);
 
 G_DEFINE_TYPE_WITH_CODE (EmpathyChatManager, empathy_chat_manager,
-    G_TYPE_OBJECT,
-    G_IMPLEMENT_INTERFACE (EMP_TYPE_SVC_CHAT_MANAGER,
-        svc_iface_init)
+    EMPATHY_GEN_TYPE_CHAT_MANAGER_SKELETON,
+    G_IMPLEMENT_INTERFACE (EMPATHY_GEN_TYPE_CHAT_MANAGER ,
+      chat_manager_iface_init)
     )
 
 /* private structure */
@@ -365,17 +364,25 @@ empathy_chat_manager_constructor (GType type,
 static void
 empathy_chat_manager_constructed (GObject *obj)
 {
-  TpDBusDaemon *dbus_daemon;
+  GDBusConnection *conn;
+  GError *error = NULL;
 
-  dbus_daemon = tp_dbus_daemon_dup (NULL);
-
-  if (dbus_daemon != NULL)
+  conn = g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, &error);
+  if (conn == NULL)
     {
-      tp_dbus_daemon_register_object (dbus_daemon,
-          CHAT_MANAGER_PATH, obj);
-
-      g_object_unref (dbus_daemon);
+      DEBUG ("Failed to get bus: %s", error->message);
+      g_error_free (error);
+      return;
     }
+
+  if (!g_dbus_interface_skeleton_export (G_DBUS_INTERFACE_SKELETON (obj), conn,
+      CHAT_MANAGER_PATH, &error))
+    {
+      DEBUG ("Failed to export chat manager: %s\n", error->message);
+      g_error_free (error);
+    }
+
+  g_object_unref (conn);
 }
 
 static void
@@ -513,27 +520,25 @@ empathy_chat_manager_get_num_closed_chats (EmpathyChatManager *self)
   return g_queue_get_length (priv->closed_queue);
 }
 
-static void
-empathy_chat_manager_dbus_undo_closed_chat (EmpSvcChatManager *manager,
-    gint64 timestamp,
-    DBusGMethodInvocation *context)
+static gboolean
+empathy_chat_manager_dbus_undo_closed_chat (EmpathyGenChatManager *manager,
+    GDBusMethodInvocation *invocation,
+    gint64 timestamp)
 {
   empathy_chat_manager_undo_closed_chat ((EmpathyChatManager *) manager,
       timestamp);
 
-  emp_svc_chat_manager_return_from_undo_closed_chat (context);
+  empathy_gen_chat_manager_complete_undo_closed_chat (manager, invocation);
+  return TRUE;
 }
 
 static void
-svc_iface_init (gpointer g_iface,
+chat_manager_iface_init (gpointer g_iface,
     gpointer iface_data)
 {
-  EmpSvcChatManagerClass *klass = (EmpSvcChatManagerClass *) g_iface;
+  EmpathyGenChatManagerIface *iface = (EmpathyGenChatManagerIface *) g_iface;
 
-#define IMPLEMENT(x) emp_svc_chat_manager_implement_##x (\
-    klass, empathy_chat_manager_dbus_##x)
-  IMPLEMENT(undo_closed_chat);
-#undef IMPLEMENT
+  iface->handle_undo_closed_chat = empathy_chat_manager_dbus_undo_closed_chat;
 }
 
 static void
@@ -586,7 +591,7 @@ empathy_chat_manager_call_undo_closed_chat (void)
   action_time = empathy_get_current_action_time ();
 
   empathy_gen_chat_manager_proxy_new_for_bus (G_BUS_TYPE_SESSION,
-      G_DBUS_PROXY_FLAGS_NONE, EMPATHY_CHAT_TP_BUS_NAME, CHAT_MANAGER_PATH,
+      G_DBUS_PROXY_FLAGS_NONE, EMPATHY_CHAT_BUS_NAME, CHAT_MANAGER_PATH,
       NULL, chat_mgr_proxy_cb,
       /* We can't use GINT_TO_POINTER as we won't be able to store a 64 bits
        * integer on a 32 bits plateform. Use a GVariant for its convenient
