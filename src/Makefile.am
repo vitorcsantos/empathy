@@ -203,8 +203,18 @@ dist_man_MANS =			\
 	empathy.1 \
 	empathy-accounts.1
 
+chat-manager-interface.c: chat-manager-interface.h
+chat-manager-interface.h: Makefile.am Chat_Manager.xml
+	gdbus-codegen \
+		--interface-prefix org.gnome.Empathy. \
+		--c-namespace EmpathyGen \
+		--generate-c-code chat-manager-interface \
+		Chat_Manager.xml
+
 BUILT_SOURCES = \
 	$(nodist_empathy_chat_SOURCES) \
+	chat-manager-interface.c \
+	chat-manager-interface.h \
 	$(NULL)
 
 CLEANFILES = $(BUILT_SOURCES)
