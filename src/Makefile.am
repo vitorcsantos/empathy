@@ -86,6 +86,7 @@ empathy_auth_client_SOURCES =						\
 	$(NULL)
 
 empathy_chat_SOURCES =						\
+	chat-manager-interface.c chat-manager-interface.h \
 	empathy-about-dialog.c empathy-about-dialog.h			\
 	empathy-chat-manager.c empathy-chat-manager.h		\
 	empathy-chat-window.c empathy-chat-window.h		\
@@ -154,6 +155,7 @@ empathy_handwritten_source = \
 
 empathy_SOURCES =							\
 	$(empathy_handwritten_source)					\
+	chat-manager-interface.c chat-manager-interface.h \
 	$(NULL)
 
 empathy_LDADD =								\
