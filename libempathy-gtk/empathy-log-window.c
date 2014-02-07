@@ -45,7 +45,6 @@
 #include "empathy-ui-utils.h"
 #include "empathy-utils.h"
 #include "empathy-webkit-utils.h"
-#include "extensions.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_OTHER
 #include "empathy-debug.h"

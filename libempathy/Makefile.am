@@ -2,7 +2,6 @@ include $(top_srcdir)/tools/flymake.mk
 
 AM_CPPFLAGS =                                           \
 	$(ERROR_CFLAGS)					\
-	-I$(top_srcdir)/extensions                      \
 	-I$(top_builddir)                               \
 	-DDATADIR=\""$(datadir)"\"              	\
 	-DLOCALEDIR=\""$(datadir)/locale"\"		\
@@ -106,7 +105,6 @@ libempathy_la_SOURCES = \
 	$(NULL)
 
 libempathy_la_LIBADD =		\
-	$(top_builddir)/extensions/libemp-extensions.la \
 	$(GCR_LIBS) \
 	$(EMPATHY_LIBS) \
 	$(TPAW_LIBS) \

@@ -6,7 +6,6 @@ CPPFLAGS_COMMON =					\
 	$(ERROR_CFLAGS)					\
 	-I$(top_srcdir)/libempathy-gtk			\
 	-I$(top_srcdir)/libempathy			\
-	-I$(top_srcdir)/extensions			\
 	-I$(top_builddir)/libempathy-gtk		\
 	-I$(top_builddir)/libempathy			\
 	-DG_LOG_DOMAIN=\"empathy\"			\
@@ -25,7 +24,6 @@ AM_CPPFLAGS =						\
 LDADD =								\
 	$(top_builddir)/libempathy-gtk/libempathy-gtk.la	\
 	$(top_builddir)/libempathy/libempathy.la		\
-	$(top_builddir)/extensions/libemp-extensions.la		\
 	$(GCR_LIBS) 						\
 	$(EMPATHY_LIBS)						\
 	$(TPAW_LIBS)						\
@@ -162,7 +160,6 @@ empathy_LDADD =								\
 	libempathy-accounts-common.la					\
         $(top_builddir)/libempathy-gtk/libempathy-gtk.la		\
         $(top_builddir)/libempathy/libempathy.la			\
-        $(top_builddir)/extensions/libemp-extensions.la			\
         $(EMPATHY_LIBS)							\
         $(LIBCHAMPLAIN_LIBS)						\
 	$(NULL)

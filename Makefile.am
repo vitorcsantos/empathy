@@ -1,4 +1,4 @@
-MY_SUBDIRS = tools extensions po data telepathy-account-widgets libempathy libempathy-gtk src help tests
+MY_SUBDIRS = tools po data telepathy-account-widgets libempathy libempathy-gtk src help tests
 GOA_SUBDIRS = goa-mc-plugin
 UOA_SUBDIRS = ubuntu-online-accounts
 

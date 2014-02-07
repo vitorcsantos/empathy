@@ -24,7 +24,6 @@
 #include <telepathy-glib/telepathy-glib-dbus.h>
 
 #include "empathy-sasl-mechanisms.h"
-#include "extensions.h"
 
 #define DEBUG_FLAG EMPATHY_DEBUG_SASL
 #include "empathy-debug.h"

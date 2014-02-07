@@ -35,7 +35,6 @@
 #include <telepathy-glib/telepathy-glib-dbus.h>
 
 #include "empathy-client-factory.h"
-#include "extensions.h"
 
 #include <math.h>
 
@@ -95,8 +94,6 @@ empathy_init (void)
 
   empathy_debug_set_flags (g_getenv ("EMPATHY_DEBUG"));
   tp_debug_divert_messages (g_getenv ("EMPATHY_LOGFILE"));
-
-  emp_cli_init ();
 
   initialized = TRUE;
 

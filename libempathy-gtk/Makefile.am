@@ -3,7 +3,6 @@ include $(top_srcdir)/tools/flymake.mk
 AM_CPPFLAGS =                                           \
 	$(ERROR_CFLAGS)					\
 	-I$(top_srcdir)/libempathy			\
-	-I$(top_srcdir)/extensions			\
 	-DDATADIR=\""$(datadir)"\"              	\
 	-DPKGDATADIR=\""$(pkgdatadir)"\"		\
 	-DGCR_API_SUBJECT_TO_CHANGE			\
