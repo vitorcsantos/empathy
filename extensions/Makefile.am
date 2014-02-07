@@ -14,7 +14,6 @@ EXTRA_DIST = \
     misc.xml \
     Logger.xml \
     Channel_Interface_Credentials_Storage.xml \
-    Chat_Manager.xml \
     $(NULL)
 
 noinst_LTLIBRARIES = libemp-extensions.la
