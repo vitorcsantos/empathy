@@ -160,7 +160,7 @@ empathy_call_factory_initialise (void)
 
   self = EMPATHY_CALL_FACTORY (g_object_new (EMPATHY_TYPE_CALL_FACTORY,
       "factory", factory,
-      "name", EMPATHY_CALL_BUS_NAME_SUFFIX,
+      "name", EMPATHY_CALL_TP_BUS_NAME_SUFFIX,
       NULL));
 
   g_object_unref (factory);

@@ -134,7 +134,7 @@ call_new_with_streams (const gchar *contact,
   g_hash_table_unref (call_request);
 
   tp_account_channel_request_create_channel_async (call_req,
-      EMPATHY_CALL_BUS_NAME, NULL, create_call_channel_cb, NULL);
+      EMPATHY_CALL_TP_BUS_NAME, NULL, create_call_channel_cb, NULL);
 
   g_object_unref (call_req);
 }

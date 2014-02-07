@@ -21,10 +21,9 @@
 
 #include <glib/gi18n.h>
 
+#include "empathy-bus-names.h"
 #include "empathy-debug-window.h"
 #include "empathy-ui-utils.h"
-
-#define EMPATHY_DEBUGGER_DBUS_NAME "org.gnome.Empathy.Debugger"
 
 static GtkWidget *window = NULL;
 static gchar *service = NULL;
@@ -134,7 +133,7 @@ main (int argc,
 
   textdomain (GETTEXT_PACKAGE);
 
-  app = gtk_application_new (EMPATHY_DEBUGGER_DBUS_NAME, G_APPLICATION_FLAGS_NONE);
+  app = gtk_application_new (EMPATHY_DEBUGGER_BUS_NAME, G_APPLICATION_FLAGS_NONE);
   app_class = G_APPLICATION_CLASS (G_OBJECT_GET_CLASS (app));
   app_class->local_command_line = local_cmdline;
   app_class->activate = app_activate;

@@ -319,7 +319,7 @@ empathy_audio_src_init (EmpathyGstAudioSrc *obj)
      * transferred and thus improving performance. When moving to GStreamer
      * 0.11/1.0, this should change so that we actually request what the encoder
      * wants downstream. */
-    caps = gst_caps_new_simple ("audio/x-raw-int",
+    caps = gst_caps_new_simple ("audio/x-raw",
         "channels", G_TYPE_INT, 1,
         "width", G_TYPE_INT, 16,
         "depth", G_TYPE_INT, 16,

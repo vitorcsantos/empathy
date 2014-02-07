@@ -77,8 +77,9 @@ create_text_channel (TpAccount *account,
   req = tp_account_channel_request_new (account, request, timestamp);
   tp_account_channel_request_set_delegate_to_preferred_handler (req, TRUE);
 
-  tp_account_channel_request_ensure_channel_async (req, EMPATHY_CHAT_BUS_NAME,
-      NULL, callback ? callback : ensure_text_channel_cb, user_data);
+  tp_account_channel_request_ensure_channel_async (req,
+      EMPATHY_CHAT_TP_BUS_NAME, NULL,
+      callback ? callback : ensure_text_channel_cb, user_data);
 
   g_hash_table_unref (request);
   g_object_unref (req);
