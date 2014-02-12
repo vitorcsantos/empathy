@@ -634,7 +634,6 @@ Configure summary:
 	Camera monitoring...........:  ${have_gudev}
 
     Extras:
-	Nautilus-sendto plugin......:  ${have_nst}
 	GOA MC plugin...............:  ${have_goa}
 	Ubuntu Online plugins.......:  ${have_uoa}
 "
