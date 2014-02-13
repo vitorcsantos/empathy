@@ -1696,16 +1696,16 @@ tp_caps_to_capabilities (TpCapabilities *caps)
   if (tp_capabilities_supports_file_transfer (caps))
     capabilities |= EMPATHY_CAPABILITIES_FT;
 
-  if (tp_capabilities_supports_stream_tubes (caps, TP_HANDLE_TYPE_CONTACT,
+  if (tp_capabilities_supports_stream_tubes (caps, TP_ENTITY_TYPE_CONTACT,
         "rfb"))
     capabilities |= EMPATHY_CAPABILITIES_RFB_STREAM_TUBE;
 
-  if (tp_capabilities_supports_audio_video_call (caps, TP_HANDLE_TYPE_CONTACT))
+  if (tp_capabilities_supports_audio_video_call (caps, TP_ENTITY_TYPE_CONTACT))
     {
       capabilities |= EMPATHY_CAPABILITIES_AUDIO;
       capabilities |= EMPATHY_CAPABILITIES_VIDEO;
     }
-  else if (tp_capabilities_supports_audio_call (caps, TP_HANDLE_TYPE_CONTACT))
+  else if (tp_capabilities_supports_audio_call (caps, TP_ENTITY_TYPE_CONTACT))
     {
       capabilities |= EMPATHY_CAPABILITIES_AUDIO;
     }

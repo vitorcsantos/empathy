@@ -79,8 +79,8 @@ empathy_call_create_call_request (const gchar *contact,
   GHashTable *asv = tp_asv_new (
     TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING,
       TP_IFACE_CHANNEL_TYPE_CALL1,
-    TP_PROP_CHANNEL_TARGET_HANDLE_TYPE, G_TYPE_UINT,
-      TP_HANDLE_TYPE_CONTACT,
+    TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, G_TYPE_UINT,
+      TP_ENTITY_TYPE_CONTACT,
     TP_PROP_CHANNEL_TARGET_ID, G_TYPE_STRING,
       contact,
     NULL);

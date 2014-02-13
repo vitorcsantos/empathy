@@ -91,7 +91,7 @@ struct _EmpathyChatPriv {
 	GCompletion       *completion;
 	guint              composing_stop_timeout_id;
 	guint              block_events_timeout_id;
-	TpHandleType       handle_type;
+	TpEntityType       handle_type;
 	gint               contacts_width;
 	gboolean           has_input_vscroll;
 
@@ -285,7 +285,7 @@ account_reconnected (EmpathyChat *chat,
 	* report the error if any but this is blocked by
 	* https://bugs.freedesktop.org/show_bug.cgi?id=13422 */
 	switch (priv->handle_type) {
-		case TP_HANDLE_TYPE_CONTACT:
+		case TP_ENTITY_TYPE_CONTACT:
 			if (priv->sms_channel)
 				empathy_sms_contact_id (
 					account, priv->id,
@@ -297,11 +297,11 @@ account_reconnected (EmpathyChat *chat,
 					TP_USER_ACTION_TIME_NOT_USER_ACTION,
 					NULL, NULL);
 			break;
-		case TP_HANDLE_TYPE_ROOM:
+		case TP_ENTITY_TYPE_ROOM:
 			empathy_join_muc (account, priv->id,
 				TP_USER_ACTION_TIME_NOT_USER_ACTION);
 			break;
-		case TP_HANDLE_TYPE_NONE:
+		case TP_ENTITY_TYPE_NONE:
 		default:
 			g_assert_not_reached ();
 			break;
@@ -325,7 +325,7 @@ chat_new_connection_cb (TpAccount   *account,
 		return;
 
 	if (priv->tp_chat != NULL || account != priv->account ||
-	    priv->handle_type == TP_HANDLE_TYPE_NONE ||
+	    priv->handle_type == TP_ENTITY_TYPE_NONE ||
 	    TPAW_STR_EMPTY (priv->id))
 		return;
 
@@ -848,7 +848,7 @@ chat_command_msg_internal (EmpathyChat *chat,
 
 	request = tp_asv_new (
 		TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING, TP_IFACE_CHANNEL_TYPE_TEXT,
-		TP_PROP_CHANNEL_TARGET_HANDLE_TYPE, G_TYPE_UINT, TP_HANDLE_TYPE_CONTACT,
+		TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, G_TYPE_UINT, TP_ENTITY_TYPE_CONTACT,
 		TP_PROP_CHANNEL_TARGET_ID, G_TYPE_STRING, contact_id,
 		NULL);
 
@@ -3061,7 +3061,7 @@ chat_remote_contact_changed_cb (EmpathyChat *chat)
 	priv->remote_contact = empathy_tp_chat_get_remote_contact (priv->tp_chat);
 	if (priv->remote_contact != NULL) {
 		g_object_ref (priv->remote_contact);
-		priv->handle_type = TP_HANDLE_TYPE_CONTACT;
+		priv->handle_type = TP_ENTITY_TYPE_CONTACT;
 	}
 	else if (priv->tp_chat != NULL) {
 		tp_channel_get_handle ((TpChannel *) priv->tp_chat, &priv->handle_type);
@@ -3457,7 +3457,7 @@ chat_constructed (GObject *object)
 	}
 
 	/* Add messages from last conversation */
-	if (priv->handle_type == TP_HANDLE_TYPE_ROOM)
+	if (priv->handle_type == TP_ENTITY_TYPE_ROOM)
 		target = tpl_entity_new_from_room_id (priv->id);
 	else
 		target = tpl_entity_new (priv->id, TPL_ENTITY_CONTACT, NULL, NULL);
@@ -3466,7 +3466,7 @@ chat_constructed (GObject *object)
 								 TPL_EVENT_MASK_TEXT, chat_log_filter, chat);
 	g_object_unref (target);
 
-	if (priv->handle_type != TP_HANDLE_TYPE_ROOM) {
+	if (priv->handle_type != TP_ENTITY_TYPE_ROOM) {
 		/* First display logs from the logger and then display pending messages */
 		chat_add_logs (chat);
 	}
@@ -4470,7 +4470,7 @@ empathy_chat_is_room (EmpathyChat *chat)
 
 	g_return_val_if_fail (EMPATHY_IS_CHAT (chat), FALSE);
 
-	return (priv->handle_type == TP_HANDLE_TYPE_ROOM);
+	return (priv->handle_type == TP_ENTITY_TYPE_ROOM);
 }
 
 gboolean

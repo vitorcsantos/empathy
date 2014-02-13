@@ -637,8 +637,8 @@ empathy_auth_factory_constructed (GObject *obj)
           TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING,
           TP_IFACE_CHANNEL_TYPE_SERVER_TLS_CONNECTION1,
           /* AuthenticationMethod */
-          TP_PROP_CHANNEL_TARGET_HANDLE_TYPE, G_TYPE_UINT,
-          TP_HANDLE_TYPE_NONE, NULL));
+          TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, G_TYPE_UINT,
+          TP_ENTITY_TYPE_NONE, NULL));
 
   tp_base_client_take_handler_filter (client, tp_asv_new (
           /* ChannelType */

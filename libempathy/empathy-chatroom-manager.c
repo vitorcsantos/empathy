@@ -591,8 +591,8 @@ empathy_chatroom_manager_constructor (GType type,
   tp_base_client_take_observer_filter (priv->observer, tp_asv_new (
       TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING,
         TP_IFACE_CHANNEL_TYPE_TEXT,
-      TP_PROP_CHANNEL_TARGET_HANDLE_TYPE, G_TYPE_UINT,
-        TP_HANDLE_TYPE_ROOM,
+      TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, G_TYPE_UINT,
+        TP_ENTITY_TYPE_ROOM,
       NULL));
 
   if (!tp_base_client_register (priv->observer, &error))

@@ -862,8 +862,8 @@ ft_handler_populate_outgoing_request (EmpathyFTHandler *handler)
   priv->request = tp_asv_new (
       TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING,
         TP_IFACE_CHANNEL_TYPE_FILE_TRANSFER1,
-      TP_PROP_CHANNEL_TARGET_HANDLE_TYPE, G_TYPE_UINT,
-        TP_HANDLE_TYPE_CONTACT,
+      TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, G_TYPE_UINT,
+        TP_ENTITY_TYPE_CONTACT,
       TP_PROP_CHANNEL_TARGET_HANDLE, G_TYPE_UINT,
         contact_handle,
       TP_PROP_CHANNEL_TYPE_FILE_TRANSFER1_CONTENT_TYPE, G_TYPE_STRING,
@@ -1115,8 +1115,8 @@ set_content_hash_type_from_classes (EmpathyFTHandler *handler,
       if (tp_strdiff (chan_type, TP_IFACE_CHANNEL_TYPE_FILE_TRANSFER1))
         continue;
 
-      if (tp_asv_get_uint32 (fixed, TP_PROP_CHANNEL_TARGET_HANDLE_TYPE, NULL) !=
-          TP_HANDLE_TYPE_CONTACT)
+      if (tp_asv_get_uint32 (fixed, TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, NULL) !=
+          TP_ENTITY_TYPE_CONTACT)
         continue;
 
       support_ft = TRUE;

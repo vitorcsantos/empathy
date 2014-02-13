@@ -53,7 +53,7 @@ ensure_text_channel_cb (GObject *source,
 
 static void
 create_text_channel (TpAccount *account,
-    TpHandleType target_handle_type,
+    TpEntityType target_entity_type,
     const gchar *target_id,
     gboolean sms_channel,
     gint64 timestamp,
@@ -66,7 +66,7 @@ create_text_channel (TpAccount *account,
   request = tp_asv_new (
       TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING,
         TP_IFACE_CHANNEL_TYPE_TEXT,
-      TP_PROP_CHANNEL_TARGET_HANDLE_TYPE, G_TYPE_UINT, target_handle_type,
+      TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, G_TYPE_UINT, target_entity_type,
       TP_PROP_CHANNEL_TARGET_ID, G_TYPE_STRING, target_id,
       NULL);
 
@@ -94,7 +94,7 @@ empathy_chat_with_contact_id (TpAccount *account,
     GAsyncReadyCallback callback,
     gpointer user_data)
 {
-  create_text_channel (account, TP_HANDLE_TYPE_CONTACT,
+  create_text_channel (account, TP_ENTITY_TYPE_CONTACT,
       contact_id, FALSE, timestamp, callback, user_data);
 }
 
@@ -103,7 +103,7 @@ empathy_join_muc (TpAccount *account,
     const gchar *room_name,
     gint64 timestamp)
 {
-  create_text_channel (account, TP_HANDLE_TYPE_ROOM,
+  create_text_channel (account, TP_ENTITY_TYPE_ROOM,
       room_name, FALSE, timestamp, NULL, NULL);
 }
 
@@ -116,6 +116,6 @@ empathy_sms_contact_id (TpAccount *account,
     GAsyncReadyCallback callback,
     gpointer user_data)
 {
-  create_text_channel (account, TP_HANDLE_TYPE_CONTACT,
+  create_text_channel (account, TP_ENTITY_TYPE_CONTACT,
       contact_id, TRUE, timestamp, callback, user_data);
 }
