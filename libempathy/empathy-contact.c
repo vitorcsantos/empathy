@@ -744,7 +744,7 @@ empathy_contact_from_tpl_contact (TpAccount *account,
       TpConnection *conn;
       const gchar *id;
 
-      is_user = (TPL_ENTITY_SELF == tpl_entity_get_entity_type (tpl_entity));
+      is_user = (TP_ENTITY_TYPE_SELF == tpl_entity_get_entity_type (tpl_entity));
 
       id = tpl_entity_get_identifier (tpl_entity);
 
@@ -1276,7 +1276,7 @@ contact_has_log (EmpathyContact *contact)
 
   manager = tpl_log_manager_dup_singleton ();
   entity = tpl_entity_new (empathy_contact_get_id (contact),
-      TPL_ENTITY_CONTACT, NULL, NULL);
+      TP_ENTITY_TYPE_CONTACT, NULL, NULL);
 
   have_log = tpl_log_manager_exists (manager,
       empathy_contact_get_account (contact), entity, TPL_EVENT_MASK_TEXT);

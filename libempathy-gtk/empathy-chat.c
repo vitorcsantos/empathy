@@ -3460,7 +3460,7 @@ chat_constructed (GObject *object)
 	if (priv->handle_type == TP_ENTITY_TYPE_ROOM)
 		target = tpl_entity_new_from_room_id (priv->id);
 	else
-		target = tpl_entity_new (priv->id, TPL_ENTITY_CONTACT, NULL, NULL);
+		target = tpl_entity_new (priv->id, TP_ENTITY_TYPE_CONTACT, NULL, NULL);
 
 	priv->log_walker = tpl_log_manager_walk_filtered_events (priv->log_manager, priv->account, target,
 								 TPL_EVENT_MASK_TEXT, chat_log_filter, chat);

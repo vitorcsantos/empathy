@@ -836,16 +836,16 @@ is_same_confroom (TplEvent *e1,
   if (receiver1 == NULL || receiver2 == NULL)
     return FALSE;
 
-  if (tpl_entity_get_entity_type (sender1) == TPL_ENTITY_ROOM)
+  if (tpl_entity_get_entity_type (sender1) == TP_ENTITY_TYPE_ROOM)
     room1 = sender1;
-  else if (tpl_entity_get_entity_type (receiver1) == TPL_ENTITY_ROOM)
+  else if (tpl_entity_get_entity_type (receiver1) == TP_ENTITY_TYPE_ROOM)
     room1 = receiver1;
   else
     return FALSE;
 
-  if (tpl_entity_get_entity_type (sender2) == TPL_ENTITY_ROOM)
+  if (tpl_entity_get_entity_type (sender2) == TP_ENTITY_TYPE_ROOM)
     room2 = sender2;
-  else if (tpl_entity_get_entity_type (receiver2) == TPL_ENTITY_ROOM)
+  else if (tpl_entity_get_entity_type (receiver2) == TP_ENTITY_TYPE_ROOM)
     room2 = receiver2;
   else
     return FALSE;
@@ -1068,7 +1068,7 @@ event_get_target (TplEvent *event)
   TplEntity *sender = tpl_event_get_sender (event);
   TplEntity *receiver = tpl_event_get_receiver (event);
 
-  if (tpl_entity_get_entity_type (sender) == TPL_ENTITY_SELF)
+  if (tpl_entity_get_entity_type (sender) == TP_ENTITY_TYPE_SELF)
     return receiver;
 
   return sender;
@@ -1138,17 +1138,17 @@ get_display_string_for_chat_message (EmpathyMessage *message,
   ent_receiver = tpl_event_get_receiver (event);
 
   /* If this is a MUC, we want to show "Chat in <room>". */
-  if (tpl_entity_get_entity_type (ent_sender) == TPL_ENTITY_ROOM ||
+  if (tpl_entity_get_entity_type (ent_sender) == TP_ENTITY_TYPE_ROOM ||
       (ent_receiver != NULL &&
-      tpl_entity_get_entity_type (ent_receiver) == TPL_ENTITY_ROOM))
+      tpl_entity_get_entity_type (ent_receiver) == TP_ENTITY_TYPE_ROOM))
     format = _("Chat in %s");
   else
     format = _("Chat with %s");
 
-  if (tpl_entity_get_entity_type (ent_sender) == TPL_ENTITY_ROOM)
+  if (tpl_entity_get_entity_type (ent_sender) == TP_ENTITY_TYPE_ROOM)
     target = sender;
   else if (ent_receiver != NULL &&
-      tpl_entity_get_entity_type (ent_receiver) == TPL_ENTITY_ROOM)
+      tpl_entity_get_entity_type (ent_receiver) == TP_ENTITY_TYPE_ROOM)
     target = receiver;
   else if (empathy_contact_is_user (sender))
     target = receiver;
@@ -1237,9 +1237,9 @@ get_icon_for_event (TplEvent *event)
 
       if (reason == TP_CALL_STATE_CHANGE_REASON_NO_ANSWER)
         icon = EMPATHY_IMAGE_CALL_MISSED;
-      else if (tpl_entity_get_entity_type (sender) == TPL_ENTITY_SELF)
+      else if (tpl_entity_get_entity_type (sender) == TP_ENTITY_TYPE_SELF)
         icon = EMPATHY_IMAGE_CALL_OUTGOING;
-      else if (tpl_entity_get_entity_type (receiver) == TPL_ENTITY_SELF)
+      else if (tpl_entity_get_entity_type (receiver) == TP_ENTITY_TYPE_SELF)
         icon = EMPATHY_IMAGE_CALL_INCOMING;
     }
 
@@ -1846,11 +1846,11 @@ add_event_to_store (EmpathyLogWindow *self,
     TplEntity *entity)
 {
   GtkListStore *store;
-  TplEntityType type = tpl_entity_get_entity_type (entity);
+  TpEntityType type = tpl_entity_get_entity_type (entity);
   EmpathyContact *contact;
   const gchar *name;
   gchar *sort_key;
-  gboolean room = type == TPL_ENTITY_ROOM;
+  gboolean room = type == TP_ENTITY_TYPE_ROOM;
 
   store = GTK_LIST_STORE (gtk_tree_view_get_model (
         GTK_TREE_VIEW (log_window->priv->treeview_who)));
@@ -2785,7 +2785,7 @@ log_window_chats_set_selected (EmpathyLogWindow *self)
 
       this_chat_id = tpl_entity_get_identifier (this_target);
       this_is_chatroom = tpl_entity_get_entity_type (this_target)
-          == TPL_ENTITY_ROOM;
+          == TP_ENTITY_TYPE_ROOM;
 
       if (this_account == self->priv->selected_account &&
           !tp_strdiff (this_chat_id, self->priv->selected_chat_id) &&
@@ -3239,12 +3239,12 @@ log_window_got_messages_for_date_cb (GObject *manager,
                     append = TRUE;
                 }
               else if (ctx->subtype & EVENT_CALL_OUTGOING
-                  && tpl_entity_get_entity_type (sender) == TPL_ENTITY_SELF)
+                  && tpl_entity_get_entity_type (sender) == TP_ENTITY_TYPE_SELF)
                 {
                   append = TRUE;
                 }
               else if (ctx->subtype & EVENT_CALL_INCOMING
-                  && tpl_entity_get_entity_type (receiver) == TPL_ENTITY_SELF)
+                  && tpl_entity_get_entity_type (receiver) == TP_ENTITY_TYPE_SELF)
                 {
                   append = TRUE;
                 }
