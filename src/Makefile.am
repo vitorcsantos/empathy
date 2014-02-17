@@ -199,7 +199,8 @@ EXTRA_DIST =			\
 	$(autostart_DATA)	\
 	$(ui_DATA)		\
 	empathy-chat.js		\
-	empathy-chat.gresource.xml
+	empathy-chat.gresource.xml \
+	Chat_Manager.xml
 
 dist_man_MANS =			\
 	empathy.1 \
