@@ -645,7 +645,7 @@ use_external_storage_provider (EmpathyAccountsDialog *self,
     }
   else if (!tp_strdiff (provider, EMPATHY_UOA_PROVIDER))
     {
-      empathy_launch_external_app ("gnome-credentials-panel.desktop",
+      empathy_launch_external_app ("unity-credentials-panel.desktop",
           NULL, NULL);
       return;
     }
@@ -2658,7 +2658,7 @@ am_prepare_cb (GObject *source,
         args = g_strdup_printf ("account-details=%u", g_value_get_uint (value));
     }
 
-  empathy_launch_external_app ("gnome-credentials-panel.desktop", args, NULL);
+  empathy_launch_external_app ("unity-credentials-panel.desktop", args, NULL);
 
   g_free (args);
 out:
