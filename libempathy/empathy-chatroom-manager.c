@@ -873,13 +873,14 @@ observe_channel_cb (TpSimpleObserver *observer,
   const gchar *roomname;
   EmpathyChatroom *chatroom;
 
-  if (tp_proxy_get_invalidated (channel) == NULL ||
+  if (tp_proxy_get_invalidated (channel) != NULL ||
       !EMPATHY_IS_TP_CHAT (channel))
     {
       GError e = { TP_ERROR, TP_ERROR_INVALID_ARGUMENT,
           "Not a text channel" };
 
       tp_observe_channel_context_fail (context, &e);
+      return;
     }
 
   tp_chat = EMPATHY_TP_CHAT (channel);
