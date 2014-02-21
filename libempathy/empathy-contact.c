@@ -71,7 +71,7 @@ static void update_geocode (EmpathyContact *contact);
 #endif
 
 static void empathy_contact_set_location (EmpathyContact *contact,
-    GHashTable *location);
+    GVariant *location);
 
 static void contact_set_client_types (EmpathyContact *contact,
     const gchar * const *types);
@@ -141,11 +141,17 @@ tp_contact_notify_cb (TpContact *tp_contact,
     g_object_notify (contact, "handle");
   else if (!tp_strdiff (param->name, "location"))
     {
-      GHashTable *location;
+      GVariant *location;
 
-      location = tp_contact_get_location (tp_contact);
-      /* This will start a geoclue search to find the address if needed */
-      empathy_contact_set_location (EMPATHY_CONTACT (contact), location);
+      location = tp_contact_dup_location (tp_contact);
+
+      if (location != NULL)
+        {
+          /* This will start a geoclue search to find the address if needed */
+          empathy_contact_set_location (EMPATHY_CONTACT (contact), location);
+
+          g_variant_unref (location);
+        }
     }
   else if (!tp_strdiff (param->name, "capabilities"))
     {
@@ -216,7 +222,7 @@ contact_constructed (GObject *object)
 {
   EmpathyContact *contact = (EmpathyContact *) object;
   EmpathyContactPriv *priv = GET_PRIV (contact);
-  GHashTable *location;
+  GVariant *location;
   TpContact *self_contact;
   const gchar * const *client_types;
 
@@ -225,9 +231,13 @@ contact_constructed (GObject *object)
 
   priv->presence = empathy_contact_get_presence (contact);
 
-  location = tp_contact_get_location (priv->tp_contact);
+  location = tp_contact_dup_location (priv->tp_contact);
   if (location != NULL)
-    empathy_contact_set_location (contact, location);
+    {
+      empathy_contact_set_location (contact, location);
+
+      g_variant_unref (location);
+    }
 
   client_types = tp_contact_get_client_types (priv->tp_contact);
   if (client_types != NULL)
@@ -1512,17 +1522,17 @@ empathy_contact_get_location (EmpathyContact *contact)
 /**
  * empathy_contact_set_location:
  * @contact: an #EmpathyContact
- * @location: a #GHashTable of the location
+ * @location: a #GVariant of type #G_VARIANT_TYPE_VARDICT of the location
  *
- * Sets the user's location based on the location #GHashTable passed.
- * It is composed of string keys and GValues.  Keys are
+ * Sets the user's location based on the @location passed.
+ * It is composed of string keys and GVariant.  Keys are
  * defined in empathy-location.h such as #EMPATHY_LOCATION_COUNTRY.
- * Example: a "city" key would have "Helsinki" as string GValue,
- *          a "latitude" would have 65.0 as double GValue.
+ * Example: a "city" key would have "Helsinki" as string GVariant,
+ *          a "latitude" would have 65.0 as double GVariant.
  */
 static void
 empathy_contact_set_location (EmpathyContact *contact,
-    GHashTable *location)
+    GVariant *location)
 {
   EmpathyContactPriv *priv;
 
@@ -1534,7 +1544,7 @@ empathy_contact_set_location (EmpathyContact *contact,
   if (priv->location != NULL)
     g_hash_table_unref (priv->location);
 
-  priv->location = g_hash_table_ref (location);
+  priv->location = tp_asv_from_vardict (location);
 #ifdef HAVE_GEOCODE
   update_geocode (contact);
 #endif
