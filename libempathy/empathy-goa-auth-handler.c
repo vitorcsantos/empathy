@@ -283,13 +283,13 @@ static void
 start_auth (AuthData *data)
 {
   EmpathyGoaAuthHandler *self = data->self;
-  const GValue *id_value;
+  GVariant *id_variant;
   const gchar *id;
   GList *goa_accounts, *l;
   gboolean found = FALSE;
 
-  id_value = tp_account_get_storage_identifier (data->account);
-  id = g_value_get_string (id_value);
+  id_variant = tp_account_dup_storage_identifier (data->account);
+  id = g_variant_get_string (id_variant, NULL);
 
   goa_accounts = goa_client_get_accounts (self->priv->client);
   for (l = goa_accounts; l != NULL && !found; l = l->next)
@@ -314,6 +314,7 @@ start_auth (AuthData *data)
       g_object_unref (goa_account);
     }
   g_list_free_full (goa_accounts, g_object_unref);
+  g_variant_unref (id_variant);
 
   if (!found)
     {

@@ -125,31 +125,29 @@ fix_xmpp_account_priority (TpAccountManager *am)
   for (l = accounts; l != NULL; l = g_list_next (l))
     {
       TpAccount *account = l->data;
-      GHashTable *params;
-      gint priority;
+      GVariant *params;
+      gint priority = 0;
 
       if (tp_strdiff (tp_account_get_protocol_name (account), "jabber"))
         continue;
 
-      params = (GHashTable *) tp_account_get_parameters (account);
+      params = tp_account_dup_parameters (account);
       if (params == NULL)
         continue;
 
-      priority = tp_asv_get_int32 (params, "priority", NULL);
+      g_variant_lookup (params, "priority", "i", &priority);
+      g_variant_unref (params);
+
       if (priority >= 0)
         continue;
 
       DEBUG ("Resetting XMPP priority of account '%s' to 0",
           tp_account_get_path_suffix (account));
 
-      params = tp_asv_new (
-          "priority", G_TYPE_INT, 0,
-          NULL);
+      params = g_variant_new_parsed ("{ priority: <%i> }", 0);
 
       tp_account_update_parameters_async (account, params, NULL,
           account_update_parameters_cb, NULL);
-
-      g_hash_table_unref (params);
     }
 
   g_list_free_full (accounts, g_object_unref);
@@ -164,32 +162,35 @@ set_facebook_account_fallback_server (TpAccountManager *am)
   for (l = accounts; l != NULL; l = g_list_next (l))
     {
       TpAccount *account = l->data;
-      GHashTable *params;
-      gchar *fallback_servers[] = {
+      GVariant *params, *servers;
+      const gchar * const fallback_servers[] = {
           "chat.facebook.com:443",
           NULL };
 
       if (tp_strdiff (tp_account_get_service (account), "facebook"))
         continue;
 
-      params = (GHashTable *) tp_account_get_parameters (account);
+      params = tp_account_dup_parameters (account);
       if (params == NULL)
         continue;
 
-      if (tp_asv_get_strv (params, "fallback-servers") != NULL)
-        continue;
+      servers = g_variant_lookup_value (params, "fallback-servers",
+          G_VARIANT_TYPE_STRING_ARRAY);
+      g_variant_unref (params);
+
+      if (servers != NULL)
+        {
+          g_variant_unref (servers);
+          continue;
+        }
 
       DEBUG ("Setting chat.facebook.com:443 as a fallback on account '%s'",
           tp_account_get_path_suffix (account));
 
-      params = tp_asv_new (
-          "fallback-servers", G_TYPE_STRV, fallback_servers,
-          NULL);
+      params = g_variant_new_strv (fallback_servers, -1);
 
       tp_account_update_parameters_async (account, params, NULL,
           account_update_parameters_cb, NULL);
-
-      g_hash_table_unref (params);
     }
 
   g_list_free_full (accounts, g_object_unref);

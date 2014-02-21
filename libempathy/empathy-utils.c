@@ -342,29 +342,33 @@ const gchar *
 empathy_account_get_error_message (TpAccount *account,
     gboolean *user_requested)
 {
-  const gchar *dbus_error;
+  gchar *dbus_error;
   const gchar *message;
-  const GHashTable *details = NULL;
+  GVariant *details = NULL;
   TpConnectionStatusReason reason;
 
-  dbus_error = tp_account_get_detailed_error (account, &details);
+  dbus_error = tp_account_dup_detailed_error (account, &details);
 
   if (user_requested != NULL)
     {
-      if (tp_asv_get_boolean (details, "user-requested", NULL))
-        *user_requested = TRUE;
-      else
+      if (!g_variant_lookup (details, "user-requested", "b", user_requested))
         *user_requested = FALSE;
     }
+  g_variant_unref (details);
 
   message = empathy_dbus_error_name_get_default_message (dbus_error);
   if (message != NULL)
-    return message;
+    {
+      g_free (dbus_error);
+      return message;
+    }
 
   tp_account_get_connection_status (account, &reason);
 
   DEBUG ("Don't understand error '%s'; fallback to the status reason (%u)",
     dbus_error, reason);
+
+  g_free (dbus_error);
 
   return empathy_status_reason_get_default_message (reason);
 }

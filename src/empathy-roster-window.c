@@ -714,6 +714,7 @@ roster_window_error_display (EmpathyRosterWindow *self,
   gboolean user_requested;
   GtkWidget *info_bar;
   gchar *str;
+  gchar *err;
 
   error_message =
     empathy_account_get_error_message (account, &user_requested);
@@ -741,8 +742,8 @@ roster_window_error_display (EmpathyRosterWindow *self,
 
   gtk_widget_set_tooltip_text (self->priv->errors_vbox, error_message);
 
-  if (!tp_strdiff (TP_ERROR_STR_SOFTWARE_UPGRADE_REQUIRED,
-       tp_account_get_detailed_error (account, NULL)))
+  err = tp_account_dup_detailed_error (account, NULL);
+  if (!tp_strdiff (TP_ERROR_STR_SOFTWARE_UPGRADE_REQUIRED, err))
     {
       roster_window_error_add_stock_button (GTK_INFO_BAR (info_bar),
           GTK_STOCK_REFRESH, _("Update software…"),
@@ -758,6 +759,7 @@ roster_window_error_display (EmpathyRosterWindow *self,
           GTK_STOCK_EDIT, _("Edit Account"),
           ERROR_RESPONSE_EDIT);
     }
+  g_free (err);
 
   roster_window_error_add_stock_button (GTK_INFO_BAR (info_bar),
       GTK_STOCK_CLOSE, _("Close"),

@@ -77,12 +77,18 @@ import_widget_account_id_in_list (GList *accounts,
   for (l = accounts; l; l = l->next)
     {
       TpAccount *account = l->data;
-      const GHashTable *parameters;
+      GVariant *parameters;
+      const gchar *acc;
 
-      parameters = tp_account_get_parameters (account);
+      parameters = tp_account_dup_parameters (account);
 
-      if (!tp_strdiff (tp_asv_get_string (parameters, "account"), account_id))
-        return TRUE;
+      if (g_variant_lookup (parameters, "account", "&s", &acc) &&
+          !tp_strdiff (acc, account_id))
+        {
+          g_variant_unref (parameters);
+          return TRUE;
+        }
+      g_variant_unref (parameters);
     }
 
   return FALSE;
@@ -185,7 +191,7 @@ import_widget_add_account (EmpathyImportWidget *self,
 {
   TpAccountManager *account_manager;
   gchar *display_name = NULL;
-  GHashTable *properties;
+  GVariant *properties, *settings;
   GValue *username;
 
   account_manager = tp_account_manager_dup ();
@@ -214,15 +220,15 @@ import_widget_add_account (EmpathyImportWidget *self,
 
   DEBUG ("display name: %s\n", display_name);
 
-  properties = tp_asv_new (NULL, NULL);
-  tp_asv_set_boolean (properties, TP_IFACE_ACCOUNT ".Enabled", data->enabled);
+  properties = g_variant_new_parsed ("{ %s: <%b> }",
+      TP_IFACE_ACCOUNT ".Enabled", data->enabled);
+  settings = tp_asv_to_vardict (data->settings);
 
   tp_account_manager_create_account_async (account_manager,
       (const gchar*) data->connection_manager, data->protocol, display_name,
-      data->settings, properties, import_widget_create_account_cb,
+      settings, properties, import_widget_create_account_cb,
       g_object_ref (self));
 
-  g_hash_table_unref (properties);
   g_free (display_name);
   g_object_unref (account_manager);
 }
