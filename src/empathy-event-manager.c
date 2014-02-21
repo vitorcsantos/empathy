@@ -1309,34 +1309,28 @@ empathy_event_manager_init (EmpathyEventManager *manager)
       FALSE, approve_channel, manager, NULL);
 
   /* Private text channels */
-  tp_base_client_take_approver_filter (priv->approver,
-      tp_asv_new (
-        TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING, TP_IFACE_CHANNEL_TYPE_TEXT,
-        TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, G_TYPE_UINT, TP_ENTITY_TYPE_CONTACT,
-        NULL));
+  tp_base_client_add_approver_filter (priv->approver,
+      g_variant_new_parsed ("{ %s: <%s>, %s: <%u> }",
+        TP_PROP_CHANNEL_CHANNEL_TYPE,  TP_IFACE_CHANNEL_TYPE_TEXT,
+        TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, (guint32) TP_ENTITY_TYPE_CONTACT));
 
   /* Muc text channels */
-  tp_base_client_take_approver_filter (priv->approver,
-      tp_asv_new (
-        TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING, TP_IFACE_CHANNEL_TYPE_TEXT,
-        TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, G_TYPE_UINT, TP_ENTITY_TYPE_ROOM,
-        NULL));
+  tp_base_client_add_approver_filter (priv->approver,
+      g_variant_new_parsed ("{ %s: <%s>, %s: <%u> }",
+        TP_PROP_CHANNEL_CHANNEL_TYPE, TP_IFACE_CHANNEL_TYPE_TEXT,
+        TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, (guint32) TP_ENTITY_TYPE_ROOM));
 
   /* File transfer */
-  tp_base_client_take_approver_filter (priv->approver,
-      tp_asv_new (
-        TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING,
-          TP_IFACE_CHANNEL_TYPE_FILE_TRANSFER1,
-        TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, G_TYPE_UINT, TP_ENTITY_TYPE_CONTACT,
-        NULL));
+  tp_base_client_add_approver_filter (priv->approver,
+      g_variant_new_parsed ("{ %s: <%s>, %s: <%u> }",
+        TP_PROP_CHANNEL_CHANNEL_TYPE, TP_IFACE_CHANNEL_TYPE_FILE_TRANSFER1,
+        TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, (guint32) TP_ENTITY_TYPE_CONTACT));
 
   /* Calls */
-  tp_base_client_take_approver_filter (priv->approver,
-      tp_asv_new (
-        TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING,
-          TP_IFACE_CHANNEL_TYPE_CALL1,
-        TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, G_TYPE_UINT, TP_ENTITY_TYPE_CONTACT,
-        NULL));
+  tp_base_client_add_approver_filter (priv->approver,
+      g_variant_new_parsed ("{ %s: <%s>, %s: <%u> }",
+        TP_PROP_CHANNEL_CHANNEL_TYPE, TP_IFACE_CHANNEL_TYPE_CALL1,
+        TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, (guint32) TP_ENTITY_TYPE_CONTACT));
 
   /* I don't feel good about doing this, and I'm sorry, but the
    * capabilities connection feature is added earlier because it's
@@ -1352,14 +1346,12 @@ empathy_event_manager_init (EmpathyEventManager *manager)
       NULL);
 
   /* SASL auth channels */
-  tp_base_client_take_approver_filter (priv->auth_approver,
-      tp_asv_new (
-        TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING,
+  tp_base_client_add_approver_filter (priv->auth_approver,
+      g_variant_new_parsed ("{ %s: <%s>, %s: <%s> }",
+        TP_PROP_CHANNEL_CHANNEL_TYPE,
           TP_IFACE_CHANNEL_TYPE_SERVER_AUTHENTICATION1,
         TP_PROP_CHANNEL_TYPE_SERVER_AUTHENTICATION1_AUTHENTICATION_METHOD,
-          G_TYPE_STRING,
-          TP_IFACE_CHANNEL_INTERFACE_SASL_AUTHENTICATION1,
-        NULL));
+          TP_IFACE_CHANNEL_INTERFACE_SASL_AUTHENTICATION1));
 
   if (!tp_base_client_register (priv->approver, &error))
     {

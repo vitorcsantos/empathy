@@ -196,31 +196,34 @@ empathy_tp_chat_add (EmpathyTpChat *self,
   else if (self->priv->can_upgrade_to_muc)
     {
       TpAccountChannelRequest *req;
-      GHashTable *props;
+      GVariantDict props;
       const char *object_path;
-      GPtrArray channels = { (gpointer *) &object_path, 1 };
+      GVariantBuilder channels;
       const char *invitees[2] = { NULL, };
       TpAccount *account;
 
       invitees[0] = empathy_contact_get_id (contact);
       object_path = tp_proxy_get_object_path (self);
 
-      props = tp_asv_new (
-          TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING,
-              TP_IFACE_CHANNEL_TYPE_TEXT,
-          TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, G_TYPE_UINT,
-              TP_ENTITY_TYPE_NONE,
+      g_variant_builder_init (&channels, G_VARIANT_TYPE ("ao"));
+      g_variant_builder_add (&channels, "o", object_path);
+
+      g_variant_dict_init (&props, NULL);
+      g_variant_dict_insert (&props, TP_PROP_CHANNEL_CHANNEL_TYPE, "s",
+          TP_IFACE_CHANNEL_TYPE_TEXT);
+      g_variant_dict_insert (&props, TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, "u",
+          TP_ENTITY_TYPE_NONE);
+      g_variant_dict_insert_value (&props,
           TP_PROP_CHANNEL_INTERFACE_CONFERENCE1_INITIAL_CHANNELS,
-              TP_ARRAY_TYPE_OBJECT_PATH_LIST, &channels,
+          g_variant_builder_end (&channels));
+      g_variant_dict_insert_value (&props,
           TP_PROP_CHANNEL_INTERFACE_CONFERENCE1_INITIAL_INVITEE_IDS,
-              G_TYPE_STRV, invitees,
-          /* FIXME: InvitationMessage ? */
-          NULL);
+          g_variant_new_strv (invitees, -1));
 
       account = empathy_tp_chat_get_account (self);
 
-      req = tp_account_channel_request_new (account, props,
-        TP_USER_ACTION_TIME_NOT_USER_ACTION);
+      req = tp_account_channel_request_new (account,
+          g_variant_dict_end (&props), TP_USER_ACTION_TIME_NOT_USER_ACTION);
 
       /* Although this is a MUC, it's anonymous, so CreateChannel is
        * valid. */
@@ -228,7 +231,6 @@ empathy_tp_chat_add (EmpathyTpChat *self,
           EMPATHY_CHAT_TP_BUS_NAME, NULL, create_conference_cb, NULL);
 
       g_object_unref (req);
-      g_hash_table_unref (props);
     }
   else
     {

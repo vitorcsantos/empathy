@@ -902,7 +902,7 @@ empathy_call_handler_start_call (EmpathyCallHandler *handler,
   EmpathyCallHandlerPriv *priv = GET_PRIV (handler);
   TpAccountChannelRequest *req;
   TpAccount *account;
-  GHashTable *request;
+  GVariant *request;
 
   if (priv->call != NULL)
     {
@@ -942,7 +942,6 @@ empathy_call_handler_start_call (EmpathyCallHandler *handler,
       empathy_call_handler_request_cb, handler);
 
   g_object_unref (req);
-  g_hash_table_unref (request);
 }
 
 /**

@@ -632,22 +632,18 @@ empathy_auth_factory_constructed (GObject *obj)
   tp_base_client_set_handler_bypass_approval (client, FALSE);
 
   /* Handle ServerTLSConnection and ServerAuthentication channels */
-  tp_base_client_take_handler_filter (client, tp_asv_new (
-          /* ChannelType */
-          TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING,
+  tp_base_client_add_handler_filter (client, g_variant_new_parsed (
+        "{ %s: <%s>, %s: <%u> }",
+        TP_PROP_CHANNEL_CHANNEL_TYPE,
           TP_IFACE_CHANNEL_TYPE_SERVER_TLS_CONNECTION1,
-          /* AuthenticationMethod */
-          TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, G_TYPE_UINT,
-          TP_ENTITY_TYPE_NONE, NULL));
+        TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, (guint32) TP_ENTITY_TYPE_NONE));
 
-  tp_base_client_take_handler_filter (client, tp_asv_new (
-          /* ChannelType */
-          TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING,
+  tp_base_client_add_handler_filter (client, g_variant_new_parsed (
+        "{ %s: <%s>, %s: <%s> }",
+        TP_PROP_CHANNEL_CHANNEL_TYPE,
           TP_IFACE_CHANNEL_TYPE_SERVER_AUTHENTICATION1,
-          /* AuthenticationMethod */
-          TP_PROP_CHANNEL_TYPE_SERVER_AUTHENTICATION1_AUTHENTICATION_METHOD,
-          G_TYPE_STRING, TP_IFACE_CHANNEL_INTERFACE_SASL_AUTHENTICATION1,
-          NULL));
+        TP_PROP_CHANNEL_TYPE_SERVER_AUTHENTICATION1_AUTHENTICATION_METHOD,
+          TP_IFACE_CHANNEL_INTERFACE_SASL_AUTHENTICATION1));
 
   /* We are also an observer so that we can see new auth channels
    * popping up and if we have the password already saved to one
@@ -656,14 +652,12 @@ empathy_auth_factory_constructed (GObject *obj)
    * sense. */
 
   /* Observe ServerAuthentication channels */
-  tp_base_client_take_observer_filter (client, tp_asv_new (
-          /* ChannelType */
-          TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING,
+  tp_base_client_add_observer_filter (client, g_variant_new_parsed (
+        "{ %s: <%s>, %s: <%s> }",
+        TP_PROP_CHANNEL_CHANNEL_TYPE,
           TP_IFACE_CHANNEL_TYPE_SERVER_AUTHENTICATION1,
-          /* AuthenticationMethod */
-          TP_PROP_CHANNEL_TYPE_SERVER_AUTHENTICATION1_AUTHENTICATION_METHOD,
-          G_TYPE_STRING, TP_IFACE_CHANNEL_INTERFACE_SASL_AUTHENTICATION1,
-          NULL));
+        TP_PROP_CHANNEL_TYPE_SERVER_AUTHENTICATION1_AUTHENTICATION_METHOD,
+          TP_IFACE_CHANNEL_INTERFACE_SASL_AUTHENTICATION1));
 
   tp_base_client_set_observer_delay_approvers (client, TRUE);
 }

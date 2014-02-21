@@ -1046,16 +1046,12 @@ log_window_create_observer (EmpathyLogWindow *self)
   self->priv->channels = g_hash_table_new_full (g_direct_hash, g_direct_equal,
       g_object_unref, g_object_unref);
 
-  tp_base_client_take_observer_filter (self->priv->observer,
-      tp_asv_new (
-          TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING,
-            TP_IFACE_CHANNEL_TYPE_TEXT,
-          NULL));
-  tp_base_client_take_observer_filter (self->priv->observer,
-      tp_asv_new (
-          TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING,
-            TP_IFACE_CHANNEL_TYPE_CALL1,
-          NULL));
+  tp_base_client_add_observer_filter (self->priv->observer,
+      g_variant_new_parsed ("{ %s: <%s> }",
+        TP_PROP_CHANNEL_CHANNEL_TYPE, TP_IFACE_CHANNEL_TYPE_TEXT));
+  tp_base_client_add_observer_filter (self->priv->observer,
+      g_variant_new_parsed ("{ %s: <%s> }",
+          TP_PROP_CHANNEL_CHANNEL_TYPE, TP_IFACE_CHANNEL_TYPE_CALL1));
 
   tp_base_client_register (self->priv->observer, NULL);
 

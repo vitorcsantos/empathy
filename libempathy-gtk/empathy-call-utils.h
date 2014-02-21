@@ -32,7 +32,7 @@ void empathy_call_new_with_streams (const gchar *contact,
     gboolean initial_video,
     gint64 timestamp);
 
-GHashTable * empathy_call_create_call_request (const gchar *contact,
+GVariant * empathy_call_create_call_request (const gchar *contact,
     gboolean initial_audio,
     gboolean initial_video);
 

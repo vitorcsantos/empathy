@@ -844,16 +844,17 @@ chat_command_msg_internal (EmpathyChat *chat,
 	EmpathyChatPriv *priv = GET_PRIV (chat);
 	ChatCommandMsgData *data;
 	TpAccountChannelRequest *req;
-	GHashTable *request;
+	GVariantDict dict;
 
-	request = tp_asv_new (
-		TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING, TP_IFACE_CHANNEL_TYPE_TEXT,
-		TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, G_TYPE_UINT, TP_ENTITY_TYPE_CONTACT,
-		TP_PROP_CHANNEL_TARGET_ID, G_TYPE_STRING, contact_id,
-		NULL);
+	g_variant_dict_init (&dict, NULL);
+	g_variant_dict_insert (&dict, TP_PROP_CHANNEL_CHANNEL_TYPE, "s",
+		TP_IFACE_CHANNEL_TYPE_TEXT);
+	g_variant_dict_insert (&dict, TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, "u",
+		 TP_ENTITY_TYPE_CONTACT);
+	g_variant_dict_insert (&dict, TP_PROP_CHANNEL_TARGET_ID, "s", contact_id);
 
-	req = tp_account_channel_request_new (priv->account, request,
-		empathy_get_current_action_time ());
+	req = tp_account_channel_request_new (priv->account,
+		g_variant_dict_end (&dict), empathy_get_current_action_time ());
 
 	/* FIXME: We should probably search in members alias. But this
 	 * is enough for IRC */
@@ -865,7 +866,6 @@ chat_command_msg_internal (EmpathyChat *chat,
 		EMPATHY_CHAT_TP_BUS_NAME, NULL, chat_command_msg_cb, data);
 
 	g_object_unref (req);
-	g_hash_table_unref (request);
 }
 
 static void

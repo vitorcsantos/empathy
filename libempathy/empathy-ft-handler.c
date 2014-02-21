@@ -123,7 +123,7 @@ typedef struct {
   gboolean use_hash;
 
   /* request for the new transfer */
-  GHashTable *request;
+  GVariantDict *request;
 
   /* transfer properties */
   EmpathyContact *contact;
@@ -273,11 +273,7 @@ do_dispose (GObject *object)
     priv->cancellable = NULL;
   }
 
-  if (priv->request != NULL)
-    {
-      g_hash_table_unref (priv->request);
-      priv->request = NULL;
-    }
+  g_clear_pointer (&priv->request, g_variant_dict_unref);
 
   G_OBJECT_CLASS (empathy_ft_handler_parent_class)->dispose (object);
 }
@@ -836,12 +832,16 @@ ft_handler_push_to_dispatcher (EmpathyFTHandler *handler)
   EmpathyFTHandlerPriv *priv = GET_PRIV (handler);
   TpAccountChannelRequest *req;
 
+  g_return_if_fail (priv->request != NULL);
+
   DEBUG ("Pushing request to the dispatcher");
 
   account = empathy_contact_get_account (priv->contact);
 
-  req = tp_account_channel_request_new (account, priv->request,
-      priv->user_action_time);
+  req = tp_account_channel_request_new (account,
+      g_variant_dict_end (priv->request), priv->user_action_time);
+
+  g_clear_pointer (&priv->request, g_variant_dict_unref);
 
   tp_account_channel_request_create_and_handle_channel_async (req, NULL,
       ft_handler_create_channel_cb, handler);
@@ -859,23 +859,24 @@ ft_handler_populate_outgoing_request (EmpathyFTHandler *handler)
   contact_handle = empathy_contact_get_handle (priv->contact);
   uri = g_file_get_uri (priv->gfile);
 
-  priv->request = tp_asv_new (
-      TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING,
-        TP_IFACE_CHANNEL_TYPE_FILE_TRANSFER1,
-      TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, G_TYPE_UINT,
-        TP_ENTITY_TYPE_CONTACT,
-      TP_PROP_CHANNEL_TARGET_HANDLE, G_TYPE_UINT,
-        contact_handle,
-      TP_PROP_CHANNEL_TYPE_FILE_TRANSFER1_CONTENT_TYPE, G_TYPE_STRING,
-        priv->content_type,
-      TP_PROP_CHANNEL_TYPE_FILE_TRANSFER1_FILENAME, G_TYPE_STRING,
-        priv->filename,
-      TP_PROP_CHANNEL_TYPE_FILE_TRANSFER1_SIZE, G_TYPE_UINT64,
-        priv->total_bytes,
-      TP_PROP_CHANNEL_TYPE_FILE_TRANSFER1_DATE, G_TYPE_UINT64,
-        priv->mtime,
-      TP_PROP_CHANNEL_TYPE_FILE_TRANSFER1_URI, G_TYPE_STRING, uri,
-      NULL);
+  priv->request = g_variant_dict_new (NULL);
+  g_variant_dict_insert (priv->request, TP_PROP_CHANNEL_CHANNEL_TYPE,
+      "s", TP_IFACE_CHANNEL_TYPE_FILE_TRANSFER1);
+  g_variant_dict_insert (priv->request, TP_PROP_CHANNEL_TARGET_ENTITY_TYPE,
+      "u", TP_ENTITY_TYPE_CONTACT);
+  g_variant_dict_insert (priv->request, TP_PROP_CHANNEL_TARGET_HANDLE,
+      "u", contact_handle);
+  g_variant_dict_insert (priv->request,
+      TP_PROP_CHANNEL_TYPE_FILE_TRANSFER1_CONTENT_TYPE,
+      "s", priv->content_type);
+  g_variant_dict_insert (priv->request,
+      TP_PROP_CHANNEL_TYPE_FILE_TRANSFER1_FILENAME, "s", priv->filename);
+  g_variant_dict_insert (priv->request,
+      TP_PROP_CHANNEL_TYPE_FILE_TRANSFER1_SIZE, "t", priv->total_bytes);
+  g_variant_dict_insert (priv->request,
+      TP_PROP_CHANNEL_TYPE_FILE_TRANSFER1_DATE, "t", priv->mtime);
+  g_variant_dict_insert (priv->request, TP_PROP_CHANNEL_TYPE_FILE_TRANSFER1_URI,
+    "s", uri);
 
   g_free (uri);
 }
@@ -927,8 +928,8 @@ hash_job_done (gpointer user_data)
       /* set the checksum in the request...
        * im.telepathy.v1.Channel.Type.FileTransfer.ContentHash
        */
-      tp_asv_set_string (priv->request,
-          TP_PROP_CHANNEL_TYPE_FILE_TRANSFER1_CONTENT_HASH,
+      g_variant_dict_insert (priv->request,
+          TP_PROP_CHANNEL_TYPE_FILE_TRANSFER1_CONTENT_HASH, "s",
           g_checksum_get_string (hash_data->checksum));
     }
 
@@ -1067,8 +1068,8 @@ ft_handler_read_async_cb (GObject *source,
   /* FIXME: MD5 is the only ContentHashType supported right now */
   hash_data->checksum = g_checksum_new (G_CHECKSUM_MD5);
 
-  tp_asv_set_uint32 (priv->request,
-      TP_PROP_CHANNEL_TYPE_FILE_TRANSFER1_CONTENT_HASH_TYPE,
+  g_variant_dict_insert (priv->request,
+      TP_PROP_CHANNEL_TYPE_FILE_TRANSFER1_CONTENT_HASH_TYPE, "s",
       TP_FILE_HASH_TYPE_MD5);
 
   g_signal_emit (handler, signals[HASHING_STARTED], 0);

@@ -60,28 +60,28 @@ create_text_channel (TpAccount *account,
     GAsyncReadyCallback callback,
     gpointer user_data)
 {
-  GHashTable *request;
+  GVariantDict dict;
   TpAccountChannelRequest *req;
 
-  request = tp_asv_new (
-      TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING,
-        TP_IFACE_CHANNEL_TYPE_TEXT,
-      TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, G_TYPE_UINT, target_entity_type,
-      TP_PROP_CHANNEL_TARGET_ID, G_TYPE_STRING, target_id,
-      NULL);
+  g_variant_dict_init (&dict, NULL);
+  g_variant_dict_insert (&dict, TP_PROP_CHANNEL_CHANNEL_TYPE, "s",
+      TP_IFACE_CHANNEL_TYPE_TEXT);
+  g_variant_dict_insert (&dict, TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, "u",
+      target_entity_type);
+  g_variant_dict_insert (&dict, TP_PROP_CHANNEL_TARGET_ID, "s", target_id);
 
   if (sms_channel)
-    tp_asv_set_boolean (request,
-        TP_PROP_CHANNEL_INTERFACE_SMS1_SMS_CHANNEL, TRUE);
+    g_variant_dict_insert (&dict,
+        TP_PROP_CHANNEL_INTERFACE_SMS1_SMS_CHANNEL, "b", TRUE);
 
-  req = tp_account_channel_request_new (account, request, timestamp);
+  req = tp_account_channel_request_new (account, g_variant_dict_end (&dict),
+      timestamp);
   tp_account_channel_request_set_delegate_to_preferred_handler (req, TRUE);
 
   tp_account_channel_request_ensure_channel_async (req,
       EMPATHY_CHAT_TP_BUS_NAME, NULL,
       callback ? callback : ensure_text_channel_cb, user_data);
 
-  g_hash_table_unref (request);
   g_object_unref (req);
 }
 

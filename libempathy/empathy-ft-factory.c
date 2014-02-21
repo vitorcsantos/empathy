@@ -194,14 +194,13 @@ empathy_ft_factory_init (EmpathyFTFactory *self)
   priv->handler = tp_simple_handler_new_with_am (am, FALSE, FALSE,
       EMPATHY_FT_TP_BUS_NAME_SUFFIX, FALSE, handle_channel_cb, self, NULL);
 
-  tp_base_client_take_handler_filter (priv->handler, tp_asv_new (
-        TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING,
-          TP_IFACE_CHANNEL_TYPE_FILE_TRANSFER1,
-        TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, G_TYPE_UINT, TP_ENTITY_TYPE_CONTACT,
+  tp_base_client_add_handler_filter (priv->handler, g_variant_new_parsed (
+        "{ %s: <%s>, %s: <%u>, %s: <%b> }",
+        TP_PROP_CHANNEL_CHANNEL_TYPE, TP_IFACE_CHANNEL_TYPE_FILE_TRANSFER1,
+        TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, (guint32) TP_ENTITY_TYPE_CONTACT,
         /* Only handle *incoming* channels as outgoing FT channels has to be
          * handled by the requester. */
-        TP_PROP_CHANNEL_REQUESTED, G_TYPE_BOOLEAN, FALSE,
-        NULL));
+        TP_PROP_CHANNEL_REQUESTED, FALSE));
 
   g_object_unref (am);
 }

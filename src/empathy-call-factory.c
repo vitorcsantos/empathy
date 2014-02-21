@@ -64,35 +64,27 @@ empathy_call_factory_init (EmpathyCallFactory *obj)
 {
   TpBaseClient *client = (TpBaseClient *) obj;
 
-  tp_base_client_take_approver_filter (client, tp_asv_new (
-        TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING,
-          TP_IFACE_CHANNEL_TYPE_CALL1,
-        TP_PROP_CHANNEL_TARGET_ENTITY_TYPE,
-          G_TYPE_UINT, TP_ENTITY_TYPE_CONTACT,
-        NULL));
+  tp_base_client_add_approver_filter (client,
+      g_variant_new_parsed ("{ %s: <%s>, %s: <%u> }",
+        TP_PROP_CHANNEL_CHANNEL_TYPE, TP_IFACE_CHANNEL_TYPE_CALL1,
+        TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, TP_ENTITY_TYPE_CONTACT));
 
-  tp_base_client_take_handler_filter (client, tp_asv_new (
-        TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING,
-          TP_IFACE_CHANNEL_TYPE_CALL1,
-        TP_PROP_CHANNEL_TARGET_ENTITY_TYPE,
-          G_TYPE_UINT, TP_ENTITY_TYPE_CONTACT,
-        NULL));
+  tp_base_client_add_handler_filter (client,
+      g_variant_new_parsed ("{ %s: <%s>, %s: <%u> }",
+        TP_PROP_CHANNEL_CHANNEL_TYPE, TP_IFACE_CHANNEL_TYPE_CALL1,
+        TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, TP_ENTITY_TYPE_CONTACT));
 
-  tp_base_client_take_handler_filter (client, tp_asv_new (
-        TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING,
-          TP_IFACE_CHANNEL_TYPE_CALL1,
-        TP_PROP_CHANNEL_TARGET_ENTITY_TYPE,
-          G_TYPE_UINT, TP_ENTITY_TYPE_CONTACT,
-        TP_PROP_CHANNEL_TYPE_CALL1_INITIAL_AUDIO, G_TYPE_BOOLEAN, TRUE,
-        NULL));
+  tp_base_client_add_handler_filter (client,
+      g_variant_new_parsed ("{ %s: <%s>, %s: <%u>, %s: <%b> }",
+        TP_PROP_CHANNEL_CHANNEL_TYPE, TP_IFACE_CHANNEL_TYPE_CALL1,
+        TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, TP_ENTITY_TYPE_CONTACT,
+        TP_PROP_CHANNEL_TYPE_CALL1_INITIAL_AUDIO, TRUE));
 
-  tp_base_client_take_handler_filter (client, tp_asv_new (
-        TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING,
-          TP_IFACE_CHANNEL_TYPE_CALL1,
-        TP_PROP_CHANNEL_TARGET_ENTITY_TYPE,
-          G_TYPE_UINT, TP_ENTITY_TYPE_CONTACT,
-        TP_PROP_CHANNEL_TYPE_CALL1_INITIAL_VIDEO, G_TYPE_BOOLEAN, TRUE,
-        NULL));
+  tp_base_client_add_handler_filter (client,
+      g_variant_new_parsed ("{ %s: <%s>, %s: <%u>, %s: <%b> }",
+        TP_PROP_CHANNEL_CHANNEL_TYPE, TP_IFACE_CHANNEL_TYPE_CALL1,
+        TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, TP_ENTITY_TYPE_CONTACT,
+        TP_PROP_CHANNEL_TYPE_CALL1_INITIAL_VIDEO, TRUE));
 
   tp_base_client_add_handler_capabilities_varargs (client,
       TP_TOKEN_CHANNEL_TYPE_CALL1_AUDIO,

@@ -71,30 +71,30 @@ show_call_error (GError *error)
   gtk_widget_show (dialog);
 }
 
-GHashTable *
+GVariant *
 empathy_call_create_call_request (const gchar *contact,
     gboolean initial_audio,
     gboolean initial_video)
 {
-  GHashTable *asv = tp_asv_new (
-    TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING,
-      TP_IFACE_CHANNEL_TYPE_CALL1,
-    TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, G_TYPE_UINT,
-      TP_ENTITY_TYPE_CONTACT,
-    TP_PROP_CHANNEL_TARGET_ID, G_TYPE_STRING,
-      contact,
-    NULL);
+  GVariantDict dict;
+
+  g_variant_dict_init (&dict, NULL);
+  g_variant_dict_insert (&dict, TP_PROP_CHANNEL_CHANNEL_TYPE, "s",
+      TP_IFACE_CHANNEL_TYPE_CALL1);
+  g_variant_dict_insert (&dict, TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, "u",
+      TP_ENTITY_TYPE_CONTACT);
+  g_variant_dict_insert (&dict, TP_PROP_CHANNEL_TARGET_ID, "s", contact);
 
   /* Only add InitialAudio or InitialVideo if they are true: it should work
    * with genuinely voice-only CMs. */
   if (initial_audio)
-    tp_asv_set_boolean (asv, TP_PROP_CHANNEL_TYPE_CALL1_INITIAL_AUDIO,
-                        initial_audio);
+    g_variant_dict_insert (&dict, TP_PROP_CHANNEL_TYPE_CALL1_INITIAL_AUDIO, "b",
+        initial_audio);
   if (initial_video)
-    tp_asv_set_boolean (asv, TP_PROP_CHANNEL_TYPE_CALL1_INITIAL_VIDEO,
-                        initial_video);
+    g_variant_dict_insert (&dict, TP_PROP_CHANNEL_TYPE_CALL1_INITIAL_VIDEO, "b",
+        initial_video);
 
-  return asv;
+  return g_variant_dict_end (&dict);
 }
 
 static void
@@ -121,7 +121,7 @@ call_new_with_streams (const gchar *contact,
     gboolean initial_video,
     gint64 timestamp)
 {
-  GHashTable *call_request;
+  GVariant *call_request;
   TpAccountChannelRequest *call_req;
 
   /* Call */
@@ -130,8 +130,6 @@ call_new_with_streams (const gchar *contact,
       initial_video);
 
   call_req = tp_account_channel_request_new (account, call_request, timestamp);
-
-  g_hash_table_unref (call_request);
 
   tp_account_channel_request_create_channel_async (call_req,
       EMPATHY_CALL_TP_BUS_NAME, NULL, create_call_channel_cb, NULL);
