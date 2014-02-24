@@ -61,15 +61,13 @@ empathy_share_my_desktop_share_with_contact (EmpathyContact *contact)
   request = tp_asv_new (
       TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING,
         TP_IFACE_CHANNEL_TYPE_STREAM_TUBE,
-      TP_PROP_CHANNEL_TARGET_HANDLE_TYPE, G_TYPE_UINT,
-        TP_HANDLE_TYPE_CONTACT,
-      TP_PROP_CHANNEL_TARGET_HANDLE, G_TYPE_UINT,
-        tp_contact_get_handle (tp_contact),
       TP_PROP_CHANNEL_TYPE_STREAM_TUBE_SERVICE, G_TYPE_STRING, "rfb",
       NULL);
 
   req = tp_account_channel_request_new (empathy_contact_get_account (contact),
       request, TP_USER_ACTION_TIME_CURRENT_TIME);
+
+  tp_account_channel_request_set_target_contact (req, tp_contact);
 
   tp_account_channel_request_create_channel_async (req, NULL, NULL,
       create_tube_channel_cb, NULL);
