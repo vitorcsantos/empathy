@@ -123,7 +123,7 @@ typedef struct {
   gboolean use_hash;
 
   /* request for the new transfer */
-  GHashTable *request;
+  TpAccountChannelRequest *request;
 
   /* transfer properties */
   EmpathyContact *contact;
@@ -273,11 +273,7 @@ do_dispose (GObject *object)
     priv->cancellable = NULL;
   }
 
-  if (priv->request != NULL)
-    {
-      g_hash_table_unref (priv->request);
-      priv->request = NULL;
-    }
+  g_clear_object (&priv->request);
 
   G_OBJECT_CLASS (empathy_ft_handler_parent_class)->dispose (object);
 }
@@ -832,50 +828,34 @@ ft_handler_create_channel_cb (GObject *source,
 static void
 ft_handler_push_to_dispatcher (EmpathyFTHandler *handler)
 {
-  TpAccount *account;
   EmpathyFTHandlerPriv *priv = GET_PRIV (handler);
-  TpAccountChannelRequest *req;
 
   DEBUG ("Pushing request to the dispatcher");
 
-  account = empathy_contact_get_account (priv->contact);
-
-  req = tp_account_channel_request_new (account, priv->request,
-      priv->user_action_time);
-
-  tp_account_channel_request_create_and_handle_channel_async (req, NULL,
-      ft_handler_create_channel_cb, handler);
-
-  g_object_unref (req);
+  tp_account_channel_request_create_and_handle_channel_async (priv->request,
+      NULL, ft_handler_create_channel_cb, handler);
 }
 
 static void
 ft_handler_populate_outgoing_request (EmpathyFTHandler *handler)
 {
-  guint contact_handle;
   EmpathyFTHandlerPriv *priv = GET_PRIV (handler);
   gchar *uri;
+  TpAccount *account;
 
-  contact_handle = empathy_contact_get_handle (priv->contact);
   uri = g_file_get_uri (priv->gfile);
+  account = empathy_contact_get_account (priv->contact);
 
-  priv->request = tp_asv_new (
-      TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING,
-        TP_IFACE_CHANNEL_TYPE_FILE_TRANSFER,
-      TP_PROP_CHANNEL_TARGET_HANDLE_TYPE, G_TYPE_UINT,
-        TP_HANDLE_TYPE_CONTACT,
-      TP_PROP_CHANNEL_TARGET_HANDLE, G_TYPE_UINT,
-        contact_handle,
-      TP_PROP_CHANNEL_TYPE_FILE_TRANSFER_CONTENT_TYPE, G_TYPE_STRING,
-        priv->content_type,
-      TP_PROP_CHANNEL_TYPE_FILE_TRANSFER_FILENAME, G_TYPE_STRING,
-        priv->filename,
-      TP_PROP_CHANNEL_TYPE_FILE_TRANSFER_SIZE, G_TYPE_UINT64,
-        priv->total_bytes,
-      TP_PROP_CHANNEL_TYPE_FILE_TRANSFER_DATE, G_TYPE_UINT64,
-        priv->mtime,
-      TP_PROP_CHANNEL_TYPE_FILE_TRANSFER_URI, G_TYPE_STRING, uri,
-      NULL);
+  priv->request = tp_account_channel_request_new_file_transfer (account,
+      priv->filename, priv->content_type, priv->total_bytes,
+      priv->user_action_time);
+
+  tp_account_channel_request_set_target_contact (priv->request,
+      empathy_contact_get_tp_contact (priv->contact));
+
+  tp_account_channel_request_set_file_transfer_timestamp (priv->request,
+      priv->mtime);
+  tp_account_channel_request_set_file_transfer_uri (priv->request, uri);
 
   g_free (uri);
 }
@@ -927,9 +907,9 @@ hash_job_done (gpointer user_data)
       /* set the checksum in the request...
        * org.freedesktop.Telepathy.Channel.Type.FileTransfer.ContentHash
        */
-      tp_asv_set_string (priv->request,
+      tp_account_channel_request_set_request_property (priv->request,
           TP_PROP_CHANNEL_TYPE_FILE_TRANSFER_CONTENT_HASH,
-          g_checksum_get_string (hash_data->checksum));
+          g_variant_new_string (g_checksum_get_string (hash_data->checksum)));
     }
 
 cleanup:
@@ -1067,9 +1047,9 @@ ft_handler_read_async_cb (GObject *source,
   /* FIXME: MD5 is the only ContentHashType supported right now */
   hash_data->checksum = g_checksum_new (G_CHECKSUM_MD5);
 
-  tp_asv_set_uint32 (priv->request,
+  tp_account_channel_request_set_request_property (priv->request,
       TP_PROP_CHANNEL_TYPE_FILE_TRANSFER_CONTENT_HASH_TYPE,
-      TP_FILE_HASH_TYPE_MD5);
+      g_variant_new_uint32 (TP_FILE_HASH_TYPE_MD5));
 
   g_signal_emit (handler, signals[HASHING_STARTED], 0);
 
