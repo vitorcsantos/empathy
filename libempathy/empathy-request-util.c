@@ -60,28 +60,21 @@ create_text_channel (TpAccount *account,
     GAsyncReadyCallback callback,
     gpointer user_data)
 {
-  GHashTable *request;
   TpAccountChannelRequest *req;
 
-  request = tp_asv_new (
-      TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING,
-        TP_IFACE_CHANNEL_TYPE_TEXT,
-      TP_PROP_CHANNEL_TARGET_HANDLE_TYPE, G_TYPE_UINT, target_handle_type,
-      TP_PROP_CHANNEL_TARGET_ID, G_TYPE_STRING, target_id,
-      NULL);
+  req = tp_account_channel_request_new_text (account, timestamp);
+  tp_account_channel_request_set_target_id (req, target_handle_type, target_id);
+  tp_account_channel_request_set_delegate_to_preferred_handler (req, TRUE);
 
   if (sms_channel)
-    tp_asv_set_boolean (request,
-        TP_PROP_CHANNEL_INTERFACE_SMS_SMS_CHANNEL, TRUE);
-
-  req = tp_account_channel_request_new (account, request, timestamp);
-  tp_account_channel_request_set_delegate_to_preferred_handler (req, TRUE);
+    tp_account_channel_request_set_request_property (req,
+        TP_PROP_CHANNEL_INTERFACE_SMS_SMS_CHANNEL,
+        g_variant_new_boolean (TRUE));
 
   tp_account_channel_request_ensure_channel_async (req,
       EMPATHY_CHAT_TP_BUS_NAME, NULL,
       callback ? callback : ensure_text_channel_cb, user_data);
 
-  g_hash_table_unref (request);
   g_object_unref (req);
 }
 
