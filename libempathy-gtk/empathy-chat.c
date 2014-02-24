@@ -846,16 +846,12 @@ chat_command_msg_internal (EmpathyChat *chat,
 	EmpathyChatPriv *priv = GET_PRIV (chat);
 	ChatCommandMsgData *data;
 	TpAccountChannelRequest *req;
-	GHashTable *request;
 
-	request = tp_asv_new (
-		TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING, TP_IFACE_CHANNEL_TYPE_TEXT,
-		TP_PROP_CHANNEL_TARGET_HANDLE_TYPE, G_TYPE_UINT, TP_HANDLE_TYPE_CONTACT,
-		TP_PROP_CHANNEL_TARGET_ID, G_TYPE_STRING, contact_id,
-		NULL);
-
-	req = tp_account_channel_request_new (priv->account, request,
+	req = tp_account_channel_request_new_text (priv->account,
 		empathy_get_current_action_time ());
+
+	tp_account_channel_request_set_target_id (req, TP_HANDLE_TYPE_CONTACT,
+		contact_id);
 
 	/* FIXME: We should probably search in members alias. But this
 	 * is enough for IRC */
@@ -867,7 +863,6 @@ chat_command_msg_internal (EmpathyChat *chat,
 		EMPATHY_CHAT_TP_BUS_NAME, NULL, chat_command_msg_cb, data);
 
 	g_object_unref (req);
-	g_hash_table_unref (request);
 }
 
 static void
