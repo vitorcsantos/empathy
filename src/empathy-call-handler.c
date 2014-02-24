@@ -933,8 +933,7 @@ empathy_call_handler_start_call (EmpathyCallHandler *handler,
 
   account = empathy_contact_get_account (priv->contact);
   request = empathy_call_create_call_request (
-      empathy_contact_get_id (priv->contact),
-      priv->initial_audio, priv->initial_video);
+      empathy_contact_get_id (priv->contact), priv->initial_video);
 
   req = tp_account_channel_request_new (account, request, timestamp);
 

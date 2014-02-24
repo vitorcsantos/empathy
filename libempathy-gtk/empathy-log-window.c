@@ -346,7 +346,7 @@ toolbutton_av_clicked (GtkToolButton *toolbutton,
   empathy_call_new_with_streams (
       empathy_contact_get_id (self->priv->selected_contact),
       empathy_contact_get_account (self->priv->selected_contact),
-      TRUE, video, gtk_get_current_event_time ());
+      video, gtk_get_current_event_time ());
 }
 
 static void

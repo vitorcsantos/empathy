@@ -345,7 +345,7 @@ call_phone_number (FolksPhoneFieldDetails *details,
   DEBUG ("Try to call %s", number);
 
   empathy_call_new_with_streams (number,
-      account, TRUE, FALSE, empathy_get_current_action_time ());
+      account, FALSE, empathy_get_current_action_time ());
 
   g_free (number);
 }
@@ -1432,8 +1432,7 @@ empathy_individual_audio_call_menu_item_activated (GtkMenuItem *item,
 
   empathy_call_new_with_streams (empathy_contact_get_id (contact),
       empathy_contact_get_account (contact),
-      TRUE, FALSE,
-      empathy_get_current_action_time ());
+      FALSE, empathy_get_current_action_time ());
 
   emit_menu_item_activated (item);
 }
@@ -1468,8 +1467,7 @@ empathy_individual_video_call_menu_item_activated (GtkMenuItem *item,
 
   empathy_call_new_with_streams (empathy_contact_get_id (contact),
       empathy_contact_get_account (contact),
-      TRUE, TRUE,
-      empathy_get_current_action_time ());
+      TRUE, empathy_get_current_action_time ());
 
   emit_menu_item_activated (item);
 }

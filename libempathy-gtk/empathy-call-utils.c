@@ -73,7 +73,6 @@ show_call_error (GError *error)
 
 GHashTable *
 empathy_call_create_call_request (const gchar *contact,
-    gboolean initial_audio,
     gboolean initial_video)
 {
   GHashTable *asv = tp_asv_new (
@@ -83,13 +82,12 @@ empathy_call_create_call_request (const gchar *contact,
       TP_HANDLE_TYPE_CONTACT,
     TP_PROP_CHANNEL_TARGET_ID, G_TYPE_STRING,
       contact,
+    TP_PROP_CHANNEL_TYPE_CALL_INITIAL_AUDIO, G_TYPE_BOOLEAN,
+      TRUE,
     NULL);
 
-  /* Only add InitialAudio or InitialVideo if they are true: it should work
+  /* Only add InitialVideo if it is true: it should work
    * with genuinely voice-only CMs. */
-  if (initial_audio)
-    tp_asv_set_boolean (asv, TP_PROP_CHANNEL_TYPE_CALL_INITIAL_AUDIO,
-                        initial_audio);
   if (initial_video)
     tp_asv_set_boolean (asv, TP_PROP_CHANNEL_TYPE_CALL_INITIAL_VIDEO,
                         initial_video);
@@ -116,7 +114,6 @@ create_call_channel_cb (GObject *source,
 void
 empathy_call_new_with_streams (const gchar *contact,
     TpAccount *account,
-    gboolean initial_audio,
     gboolean initial_video,
     gint64 timestamp)
 {
@@ -124,9 +121,7 @@ empathy_call_new_with_streams (const gchar *contact,
   TpAccountChannelRequest *call_req;
 
   /* Call */
-  call_request = empathy_call_create_call_request (contact,
-      initial_audio,
-      initial_video);
+  call_request = empathy_call_create_call_request (contact, initial_video);
 
   call_req = tp_account_channel_request_new (account, call_request, timestamp);
 

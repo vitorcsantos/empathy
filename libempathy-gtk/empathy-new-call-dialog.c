@@ -84,7 +84,7 @@ empathy_new_call_dialog_response (GtkDialog *dialog,
   g_assert (contact != NULL);
 
   empathy_call_new_with_streams (empathy_contact_get_id (contact),
-      empathy_contact_get_account (contact), TRUE,
+      empathy_contact_get_account (contact),
       response_id == RESPONSE_VIDEO, empathy_get_current_action_time ());
 
   g_object_unref (individual);
