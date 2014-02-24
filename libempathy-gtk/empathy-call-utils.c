@@ -113,9 +113,8 @@ create_call_channel_cb (GObject *source,
   show_call_error (error);
 }
 
-/* Try to request a Call channel and fallback to StreamedMedia if that fails */
-static void
-call_new_with_streams (const gchar *contact,
+void
+empathy_call_new_with_streams (const gchar *contact,
     TpAccount *account,
     gboolean initial_audio,
     gboolean initial_video,
@@ -137,17 +136,6 @@ call_new_with_streams (const gchar *contact,
       EMPATHY_CALL_TP_BUS_NAME, NULL, create_call_channel_cb, NULL);
 
   g_object_unref (call_req);
-}
-
-void
-empathy_call_new_with_streams (const gchar *contact,
-    TpAccount *account,
-    gboolean initial_audio,
-    gboolean initial_video,
-    gint64 timestamp)
-{
-  call_new_with_streams (contact, account, initial_audio, initial_video,
-      timestamp);
 }
 
 /* Copied from telepathy-yell call-channel.c */
