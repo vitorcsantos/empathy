@@ -196,31 +196,31 @@ empathy_tp_chat_add (EmpathyTpChat *self,
   else if (self->priv->can_upgrade_to_muc)
     {
       TpAccountChannelRequest *req;
-      GHashTable *props;
-      const char *object_path;
-      GPtrArray channels = { (gpointer *) &object_path, 1 };
+      const gchar *channels[2] = { NULL, };
       const char *invitees[2] = { NULL, };
       TpAccount *account;
 
       invitees[0] = empathy_contact_get_id (contact);
-      object_path = tp_proxy_get_object_path (self);
-
-      props = tp_asv_new (
-          TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING,
-              TP_IFACE_CHANNEL_TYPE_TEXT,
-          TP_PROP_CHANNEL_TARGET_HANDLE_TYPE, G_TYPE_UINT,
-              TP_HANDLE_TYPE_NONE,
-          TP_PROP_CHANNEL_INTERFACE_CONFERENCE_INITIAL_CHANNELS,
-              TP_ARRAY_TYPE_OBJECT_PATH_LIST, &channels,
-          TP_PROP_CHANNEL_INTERFACE_CONFERENCE_INITIAL_INVITEE_IDS,
-              G_TYPE_STRV, invitees,
-          /* FIXME: InvitationMessage ? */
-          NULL);
+      channels[0] = tp_proxy_get_object_path (self);
 
       account = empathy_tp_chat_get_account (self);
 
-      req = tp_account_channel_request_new (account, props,
+      req = tp_account_channel_request_new_text (account,
         TP_USER_ACTION_TIME_NOT_USER_ACTION);
+
+      tp_account_channel_request_set_request_property (req,
+          TP_PROP_CHANNEL_TARGET_HANDLE_TYPE,
+          g_variant_new_uint32 (TP_HANDLE_TYPE_NONE));
+
+      tp_account_channel_request_set_request_property (req,
+          TP_PROP_CHANNEL_INTERFACE_CONFERENCE_INITIAL_CHANNELS,
+          g_variant_new_objv (channels, -1));
+
+      tp_account_channel_request_set_request_property (req,
+          TP_PROP_CHANNEL_INTERFACE_CONFERENCE_INITIAL_INVITEE_IDS,
+          g_variant_new_strv (invitees, -1));
+
+      /* FIXME: InvitationMessage ? */
 
       /* Although this is a MUC, it's anonymous, so CreateChannel is
        * valid. */
@@ -228,7 +228,6 @@ empathy_tp_chat_add (EmpathyTpChat *self,
           EMPATHY_CHAT_TP_BUS_NAME, NULL, create_conference_cb, NULL);
 
       g_object_unref (req);
-      g_hash_table_unref (props);
     }
   else
     {
