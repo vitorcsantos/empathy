@@ -887,7 +887,6 @@ empathy_call_handler_start_call (EmpathyCallHandler *handler,
   EmpathyCallHandlerPriv *priv = GET_PRIV (handler);
   TpAccountChannelRequest *req;
   TpAccount *account;
-  GHashTable *request;
 
   if (priv->call != NULL)
     {
@@ -917,16 +916,14 @@ empathy_call_handler_start_call (EmpathyCallHandler *handler,
   g_assert (priv->contact != NULL);
 
   account = empathy_contact_get_account (priv->contact);
-  request = empathy_call_create_call_request (
-      empathy_contact_get_id (priv->contact), priv->initial_video);
 
-  req = tp_account_channel_request_new (account, request, timestamp);
+  req = empathy_call_create_call_request (account,
+      empathy_contact_get_id (priv->contact), priv->initial_video, timestamp);
 
   tp_account_channel_request_create_and_handle_channel_async (req, NULL,
       empathy_call_handler_request_cb, handler);
 
   g_object_unref (req);
-  g_hash_table_unref (request);
 }
 
 /**

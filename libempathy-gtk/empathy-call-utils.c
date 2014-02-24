@@ -71,30 +71,6 @@ show_call_error (GError *error)
   gtk_widget_show (dialog);
 }
 
-GHashTable *
-empathy_call_create_call_request (const gchar *contact,
-    gboolean initial_video)
-{
-  GHashTable *asv = tp_asv_new (
-    TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING,
-      TP_IFACE_CHANNEL_TYPE_CALL,
-    TP_PROP_CHANNEL_TARGET_HANDLE_TYPE, G_TYPE_UINT,
-      TP_HANDLE_TYPE_CONTACT,
-    TP_PROP_CHANNEL_TARGET_ID, G_TYPE_STRING,
-      contact,
-    TP_PROP_CHANNEL_TYPE_CALL_INITIAL_AUDIO, G_TYPE_BOOLEAN,
-      TRUE,
-    NULL);
-
-  /* Only add InitialVideo if it is true: it should work
-   * with genuinely voice-only CMs. */
-  if (initial_video)
-    tp_asv_set_boolean (asv, TP_PROP_CHANNEL_TYPE_CALL_INITIAL_VIDEO,
-                        initial_video);
-
-  return asv;
-}
-
 static void
 create_call_channel_cb (GObject *source,
     GAsyncResult *result,
@@ -111,21 +87,36 @@ create_call_channel_cb (GObject *source,
   show_call_error (error);
 }
 
+TpAccountChannelRequest *
+empathy_call_create_call_request (TpAccount *account,
+    const gchar *contact,
+    gboolean initial_video,
+    gint64 timestamp)
+{
+  TpAccountChannelRequest *call_req;
+
+  if (initial_video)
+    call_req = tp_account_channel_request_new_audio_video_call (account,
+        timestamp);
+  else
+    call_req = tp_account_channel_request_new_audio_call (account, timestamp);
+
+  tp_account_channel_request_set_target_id (call_req, TP_HANDLE_TYPE_CONTACT,
+      contact);
+
+  return call_req;
+}
+
 void
 empathy_call_new_with_streams (const gchar *contact,
     TpAccount *account,
     gboolean initial_video,
     gint64 timestamp)
 {
-  GHashTable *call_request;
   TpAccountChannelRequest *call_req;
 
-  /* Call */
-  call_request = empathy_call_create_call_request (contact, initial_video);
-
-  call_req = tp_account_channel_request_new (account, call_request, timestamp);
-
-  g_hash_table_unref (call_request);
+  call_req = empathy_call_create_call_request (account, contact, initial_video,
+      timestamp);
 
   tp_account_channel_request_create_channel_async (call_req,
       EMPATHY_CALL_TP_BUS_NAME, NULL, create_call_channel_cb, NULL);
