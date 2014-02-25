@@ -209,10 +209,6 @@ empathy_tp_chat_add (EmpathyTpChat *self,
         TP_USER_ACTION_TIME_NOT_USER_ACTION);
 
       tp_account_channel_request_set_request_property (req,
-          TP_PROP_CHANNEL_TARGET_HANDLE_TYPE,
-          g_variant_new_uint32 (TP_HANDLE_TYPE_NONE));
-
-      tp_account_channel_request_set_request_property (req,
           TP_PROP_CHANNEL_INTERFACE_CONFERENCE_INITIAL_CHANNELS,
           g_variant_new_objv (channels, -1));
 
