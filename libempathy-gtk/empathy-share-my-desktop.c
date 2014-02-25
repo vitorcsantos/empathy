@@ -45,7 +45,6 @@ void
 empathy_share_my_desktop_share_with_contact (EmpathyContact *contact)
 {
   TpAccountChannelRequest *req;
-  GHashTable *request;
   TpContact *tp_contact;
 
   tp_contact = empathy_contact_get_tp_contact (contact);
@@ -58,14 +57,9 @@ empathy_share_my_desktop_share_with_contact (EmpathyContact *contact)
       return;
     }
 
-  request = tp_asv_new (
-      TP_PROP_CHANNEL_CHANNEL_TYPE, G_TYPE_STRING,
-        TP_IFACE_CHANNEL_TYPE_STREAM_TUBE,
-      TP_PROP_CHANNEL_TYPE_STREAM_TUBE_SERVICE, G_TYPE_STRING, "rfb",
-      NULL);
-
-  req = tp_account_channel_request_new (empathy_contact_get_account (contact),
-      request, TP_USER_ACTION_TIME_CURRENT_TIME);
+  req = tp_account_channel_request_new_stream_tube (
+      empathy_contact_get_account (contact), "rfb",
+      TP_USER_ACTION_TIME_CURRENT_TIME);
 
   tp_account_channel_request_set_target_contact (req, tp_contact);
 
@@ -73,5 +67,4 @@ empathy_share_my_desktop_share_with_contact (EmpathyContact *contact)
       create_tube_channel_cb, NULL);
 
   g_object_unref (req);
-  g_hash_table_unref (request);
 }
