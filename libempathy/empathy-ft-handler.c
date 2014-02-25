@@ -907,9 +907,8 @@ hash_job_done (gpointer user_data)
       /* set the checksum in the request...
        * org.freedesktop.Telepathy.Channel.Type.FileTransfer.ContentHash
        */
-      tp_account_channel_request_set_request_property (priv->request,
-          TP_PROP_CHANNEL_TYPE_FILE_TRANSFER_CONTENT_HASH,
-          g_variant_new_string (g_checksum_get_string (hash_data->checksum)));
+      tp_account_channel_request_set_file_transfer_hash (priv->request,
+          TP_FILE_HASH_TYPE_MD5, g_checksum_get_string (hash_data->checksum));
     }
 
 cleanup:
@@ -1046,10 +1045,6 @@ ft_handler_read_async_cb (GObject *source,
   hash_data->handler = g_object_ref (handler);
   /* FIXME: MD5 is the only ContentHashType supported right now */
   hash_data->checksum = g_checksum_new (G_CHECKSUM_MD5);
-
-  tp_account_channel_request_set_request_property (priv->request,
-      TP_PROP_CHANNEL_TYPE_FILE_TRANSFER_CONTENT_HASH_TYPE,
-      g_variant_new_uint32 (TP_FILE_HASH_TYPE_MD5));
 
   g_signal_emit (handler, signals[HASHING_STARTED], 0);
 
