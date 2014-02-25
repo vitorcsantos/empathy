@@ -208,13 +208,10 @@ empathy_tp_chat_add (EmpathyTpChat *self,
       req = tp_account_channel_request_new_text (account,
         TP_USER_ACTION_TIME_NOT_USER_ACTION);
 
-      tp_account_channel_request_set_request_property (req,
-          TP_PROP_CHANNEL_INTERFACE_CONFERENCE_INITIAL_CHANNELS,
-          g_variant_new_objv (channels, -1));
+      tp_account_channel_request_set_conference_initial_channels (req,
+          channels);
 
-      tp_account_channel_request_set_request_property (req,
-          TP_PROP_CHANNEL_INTERFACE_CONFERENCE_INITIAL_INVITEE_IDS,
-          g_variant_new_strv (invitees, -1));
+      tp_account_channel_request_set_initial_invitee_ids (req, invitees);
 
       /* FIXME: InvitationMessage ? */
 
