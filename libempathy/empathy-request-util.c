@@ -67,9 +67,7 @@ create_text_channel (TpAccount *account,
   tp_account_channel_request_set_delegate_to_preferred_handler (req, TRUE);
 
   if (sms_channel)
-    tp_account_channel_request_set_request_property (req,
-        TP_PROP_CHANNEL_INTERFACE_SMS_SMS_CHANNEL,
-        g_variant_new_boolean (TRUE));
+    tp_account_channel_request_set_sms_channel (req, TRUE);
 
   tp_account_channel_request_ensure_channel_async (req,
       EMPATHY_CHAT_TP_BUS_NAME, NULL,
