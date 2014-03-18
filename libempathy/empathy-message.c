@@ -674,26 +674,28 @@ empathy_message_new_from_tp_message (TpMessage *tp_msg,
 				     gboolean incoming)
 {
 	EmpathyMessage *message;
-	gchar *body;
+	gchar *body, *token, *supersedes;
 	gint64 timestamp;
 	gint64 original_timestamp;
-	const GHashTable *part = tp_message_peek (tp_msg, 0);
+	GVariant *part = tp_message_dup_part (tp_msg, 0);
 
 	g_return_val_if_fail (TP_IS_MESSAGE (tp_msg), NULL);
 
 	body = tp_message_to_text (tp_msg);
+	token = tp_message_dup_token (tp_msg);
+	supersedes = tp_message_dup_supersedes (tp_msg);
 
 	timestamp = tp_message_get_sent_timestamp (tp_msg);
 	if (timestamp == 0)
 		timestamp = tp_message_get_received_timestamp (tp_msg);
 
-	original_timestamp = tp_asv_get_int64 (part,
+	original_timestamp = tp_vardict_get_int64 (part,
 		"original-message-received", NULL);
 
 	message = g_object_new (EMPATHY_TYPE_MESSAGE,
 		"body", body,
-		"token", tp_message_get_token (tp_msg),
-		"supersedes", tp_message_get_supersedes (tp_msg),
+		"token", token,
+		"supersedes", supersedes,
 		"type", tp_message_get_message_type (tp_msg),
 		"timestamp", timestamp,
 		"original-timestamp", original_timestamp,
@@ -703,5 +705,8 @@ empathy_message_new_from_tp_message (TpMessage *tp_msg,
 		NULL);
 
 	g_free (body);
+	g_free (token);
+	g_free (supersedes);
+	g_variant_unref (part);
 	return message;
 }
