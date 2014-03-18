@@ -38,18 +38,22 @@ static TpChannel *
 empathy_client_factory_create_channel (TpClientFactory *factory,
     TpConnection *conn,
     const gchar *path,
-    const GHashTable *properties,
+    GVariant *properties,
     GError **error)
 {
   const gchar *chan_type;
 
-  chan_type = tp_asv_get_string (properties, TP_PROP_CHANNEL_CHANNEL_TYPE);
+  chan_type = tp_vardict_get_string (properties, TP_PROP_CHANNEL_CHANNEL_TYPE);
 
   if (!tp_strdiff (chan_type, TP_IFACE_CHANNEL_TYPE_TEXT))
     {
-      return TP_CHANNEL (empathy_tp_chat_new (
-            TP_CLIENT_FACTORY (factory), conn, path,
-            properties));
+      GHashTable *asv = tp_asv_from_vardict (properties);
+      EmpathyTpChat *chat;
+
+      chat = empathy_tp_chat_new (TP_CLIENT_FACTORY (factory), conn, path, asv);
+
+      g_hash_table_unref (asv);
+      return TP_CHANNEL (chat);
     }
 
   return chainup->create_channel (factory, conn, path, properties, error);
