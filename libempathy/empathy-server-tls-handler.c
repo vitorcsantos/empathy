@@ -95,6 +95,7 @@ tls_handler_init_async (GAsyncInitable *initable,
     GAsyncReadyCallback callback,
     gpointer user_data)
 {
+  TpClientFactory *factory;
   GVariant *properties;
   const gchar *cert_object_path;
   const gchar *bus_name;
@@ -151,8 +152,10 @@ tls_handler_init_async (GAsyncInitable *initable,
   DEBUG ("Creating an TpTLSCertificate for path %s, bus name %s",
       cert_object_path, bus_name);
 
-  priv->certificate = tp_tls_certificate_new (TP_PROXY (priv->channel),
-      cert_object_path, &error);
+  factory = tp_proxy_get_factory (priv->channel);
+
+  priv->certificate = tp_client_factory_ensure_tls_certificate (factory,
+      TP_PROXY (priv->channel), cert_object_path, &error);
 
   g_variant_unref (properties);
 
