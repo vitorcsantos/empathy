@@ -632,13 +632,13 @@ empathy_auth_factory_constructed (GObject *obj)
   tp_base_client_set_handler_bypass_approval (client, FALSE);
 
   /* Handle ServerTLSConnection and ServerAuthentication channels */
-  tp_base_client_add_handler_filter (client, g_variant_new_parsed (
+  tp_base_client_add_handler_filter_variant (client, g_variant_new_parsed (
         "{ %s: <%s>, %s: <%u> }",
         TP_PROP_CHANNEL_CHANNEL_TYPE,
           TP_IFACE_CHANNEL_TYPE_SERVER_TLS_CONNECTION1,
         TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, (guint32) TP_ENTITY_TYPE_NONE));
 
-  tp_base_client_add_handler_filter (client, g_variant_new_parsed (
+  tp_base_client_add_handler_filter_variant (client, g_variant_new_parsed (
         "{ %s: <%s>, %s: <%s> }",
         TP_PROP_CHANNEL_CHANNEL_TYPE,
           TP_IFACE_CHANNEL_TYPE_SERVER_AUTHENTICATION1,
@@ -652,7 +652,7 @@ empathy_auth_factory_constructed (GObject *obj)
    * sense. */
 
   /* Observe ServerAuthentication channels */
-  tp_base_client_add_observer_filter (client, g_variant_new_parsed (
+  tp_base_client_add_observer_filter_variant (client, g_variant_new_parsed (
         "{ %s: <%s>, %s: <%s> }",
         TP_PROP_CHANNEL_CHANNEL_TYPE,
           TP_IFACE_CHANNEL_TYPE_SERVER_AUTHENTICATION1,
