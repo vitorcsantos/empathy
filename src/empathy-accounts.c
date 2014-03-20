@@ -236,6 +236,7 @@ main (int argc, char *argv[])
 
   empathy_init ();
 
+  textdomain (GETTEXT_PACKAGE);
   g_set_application_name (_("Empathy Accounts"));
 
   /* Make empathy and empathy-accounts appear as the same app in gnome-shell */
