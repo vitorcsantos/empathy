@@ -40,30 +40,10 @@
 
 #define INITIAL_COMMENT "Parameters of GOA Telepathy accounts"
 
-#ifdef MCP_API_VERSION_5_18
-
-# define RESTRICTIONS TpStorageRestrictionFlags
-# define WAS_CONST /* nothing */
-  /* Its historical value was based on the KEYRING priority which no longer
-   * exists. Using a large number is OK, because it uses unusual account names
-   * which are unlikely to collide. */
-# define PLUGIN_PRIORITY (10010)
-  /* McpAccountStorageSetResult enum is defined by MC */
-
-#else /* MC 5.16 or older */
-
-# define RESTRICTIONS guint
-# define WAS_CONST const
-# define PLUGIN_PRIORITY (MCP_ACCOUNT_STORAGE_PLUGIN_PRIO_KEYRING + 10)
-
-  /* we use this in helper functions */
-  typedef enum {
-      MCP_ACCOUNT_STORAGE_SET_RESULT_FAILED,
-      MCP_ACCOUNT_STORAGE_SET_RESULT_UNCHANGED,
-      MCP_ACCOUNT_STORAGE_SET_RESULT_CHANGED
-  } McpAccountStorageSetResult;
-
-#endif /* MC 5.16 or older */
+/* Its historical value was based on the KEYRING priority which no longer
+ * exists. Using a large number is OK, because it uses unusual account names
+ * which are unlikely to collide. */
+#define PLUGIN_PRIORITY (10010)
 
 static void account_storage_iface_init (McpAccountStorageIface *iface);
 
@@ -287,10 +267,8 @@ mcp_account_manager_goa_init (McpAccountManagerGoa *self)
   self->priv = G_TYPE_INSTANCE_GET_PRIVATE (self,
       MCP_TYPE_ACCOUNT_MANAGER_GOA, McpAccountManagerGoaPrivate);
 
-#ifdef MCP_API_VERSION_5_18
   /* the ready callback no longer exists, we may emit signals at any time */
   self->priv->ready = TRUE;
-#endif
 
   self->priv->accounts = g_hash_table_new_full (g_str_hash, g_str_equal,
       g_free, g_object_unref);
@@ -368,8 +346,8 @@ _goa_client_new_cb (GObject *obj,
 
 
 static GList *
-mcp_account_manager_goa_list (WAS_CONST McpAccountStorage *self,
-    WAS_CONST McpAccountManager *am)
+mcp_account_manager_goa_list (McpAccountStorage *self,
+    McpAccountManager *am)
 {
   McpAccountManagerGoaPrivate *priv = GET_PRIVATE (self);
   GList *accounts = NULL;
@@ -385,8 +363,6 @@ mcp_account_manager_goa_list (WAS_CONST McpAccountStorage *self,
   return accounts;
 }
 
-
-#ifdef MCP_API_VERSION_5_18
 
 static GVariant *
 get_item (McpAccountManagerGoa *self,
@@ -467,107 +443,8 @@ mcp_account_manager_goa_get_parameter (McpAccountStorage *storage,
   return ret;
 }
 
-#else /* MC 5.16 or older */
-
-static void
-get_enabled (WAS_CONST McpAccountStorage *self,
-    WAS_CONST McpAccountManager *am,
-    const gchar *acc,
-    GoaAccount *account)
-{
-  mcp_account_manager_set_value (am, acc, "Enabled",
-      goa_account_get_chat_disabled (account) == FALSE ? "true" : "false");
-}
-
 static gboolean
-mcp_account_manager_goa_get (WAS_CONST McpAccountStorage *self,
-    WAS_CONST McpAccountManager *am,
-    const gchar *acc,
-    const gchar *key)
-{
-  McpAccountManagerGoaPrivate *priv = GET_PRIVATE (self);
-  GoaObject *object;
-  GoaAccount *account;
-
-  DEBUG ("%s: %s, %s", G_STRFUNC, acc, key);
-
-  object = g_hash_table_lookup (priv->accounts, acc);
-
-  if (object == NULL)
-    return FALSE;
-
-  account = goa_object_peek_account (object);
-
-  if (account == NULL)
-    return FALSE;
-
-  if (key == NULL)
-    {
-      /* load all keys */
-      GHashTable *params = get_tp_parameters (account);
-      GHashTableIter iter;
-      gpointer k, value;
-      GStrv keys;
-      guint i;
-      gsize nkeys = 0;
-
-      /* Properties from GOA */
-      g_hash_table_iter_init (&iter, params);
-      while (g_hash_table_iter_next (&iter, &k, &value))
-        mcp_account_manager_set_value (am, acc, k, value);
-
-      g_hash_table_unref (params);
-
-      /* Stored properties */
-      keys = g_key_file_get_keys (priv->store, acc, &nkeys, NULL);
-
-      for (i = 0; i < nkeys; i++)
-        {
-          gchar *v = g_key_file_get_value (priv->store, acc, keys[i], NULL);
-
-          if (v != NULL)
-            {
-              mcp_account_manager_set_value (am, acc, keys[i], v);
-              g_free (v);
-            }
-        }
-
-      g_strfreev (keys);
-
-      /* Enabled */
-      get_enabled (self, am, acc, account);
-    }
-  else if (!tp_strdiff (key, "Enabled"))
-    {
-      get_enabled (self, am, acc, account);
-    }
-  else
-    {
-      /* get a specific key */
-      GHashTable *params = get_tp_parameters (account);
-      gchar *value;
-
-      value = g_hash_table_lookup (params, key);
-
-      if (value == NULL)
-        value = g_key_file_get_value (priv->store, acc, key, NULL);
-      else
-        value = g_strdup (value);
-
-      mcp_account_manager_set_value (am, acc, key, value);
-
-      g_hash_table_unref (params);
-      g_free (value);
-    }
-
-  return TRUE;
-}
-
-#endif /* MC 5.16 or older */
-
-
-static gboolean
-account_is_in_goa (WAS_CONST McpAccountStorage *self,
+account_is_in_goa (McpAccountStorage *self,
     const gchar *account)
 {
   McpAccountManagerGoaPrivate *priv = GET_PRIVATE (self);
@@ -600,8 +477,6 @@ mcp_account_manager_goa_set_enabled (McpAccountStorage *self,
   goa_account_set_chat_disabled (acc, !enabled);
   return MCP_ACCOUNT_STORAGE_SET_RESULT_CHANGED;
 }
-
-#ifdef MCP_API_VERSION_5_18
 
 static McpAccountStorageSetResult
 mcp_account_manager_goa_set_attribute (McpAccountStorage *storage,
@@ -728,47 +603,9 @@ out:
   return ret;
 }
 
-#else /* MC 5.16 or older */
-
 static gboolean
-mcp_account_manager_goa_set (const McpAccountStorage *self,
-    const McpAccountManager *am,
-    const gchar *account,
-    const gchar *key,
-    const gchar *val)
-{
-  McpAccountManagerGoaPrivate *priv = GET_PRIVATE (self);
-
-  if (!account_is_in_goa (self, account))
-    return FALSE;
-
-  DEBUG ("%s: (%s, %s, %s)", G_STRFUNC, account, key, val);
-
-  if (!tp_strdiff (key, "Enabled"))
-    {
-      if (mcp_account_manager_goa_set_enabled ((McpAccountStorage *) self,
-          account,
-          !tp_strdiff (val, "true")) != MCP_ACCOUNT_STORAGE_SET_RESULT_FAILED)
-        return TRUE;
-      else
-        return FALSE;
-    }
-
-  if (val != NULL)
-    g_key_file_set_value (priv->store, account, key, val);
-  else
-    g_key_file_remove_key (priv->store, account, key, NULL);
-
-  /* Pretend we save everything so MC won't save this in accounts.cfg */
-  return TRUE;
-}
-
-#endif /* MC 5.16 or older */
-
-
-static gboolean
-mcp_account_manager_goa_delete (WAS_CONST McpAccountStorage *self,
-    WAS_CONST McpAccountManager *am,
+mcp_account_manager_goa_delete (McpAccountStorage *self,
+    McpAccountManager *am,
     const gchar *account,
     const gchar *key)
 {
@@ -792,8 +629,6 @@ mcp_account_manager_goa_delete (WAS_CONST McpAccountStorage *self,
   return TRUE;
 }
 
-
-#ifdef MCP_API_VERSION_5_18
 static void
 mcp_account_manager_goa_delete_async (McpAccountStorage *self,
     McpAccountManager *am,
@@ -824,7 +659,6 @@ mcp_account_manager_goa_delete_finish (McpAccountStorage *self,
 {
   return g_task_propagate_boolean (G_TASK (res), error);
 }
-#endif /* MC >= 5.18 API */
 
 static gboolean
 commit (McpAccountManagerGoa *self)
@@ -859,7 +693,6 @@ commit (McpAccountManagerGoa *self)
   return TRUE;
 }
 
-#ifdef MCP_API_VERSION_5_18
 static gboolean
 mcp_account_manager_goa_commit (McpAccountStorage *self,
   McpAccountManager *am,
@@ -867,31 +700,9 @@ mcp_account_manager_goa_commit (McpAccountStorage *self,
 {
   return commit (MCP_ACCOUNT_MANAGER_GOA (self));
 }
-#else
-static gboolean
-mcp_account_manager_goa_commit (const McpAccountStorage *self,
-  const McpAccountManager *am)
-{
-  return commit (MCP_ACCOUNT_MANAGER_GOA (self));
-}
-#endif
 
-
-#ifndef MCP_API_VERSION_5_18
-/* removed in 5.18, MC should now be ready to receive signals at any time */
-static void
-mcp_account_manager_goa_ready (WAS_CONST McpAccountStorage *self,
-    WAS_CONST McpAccountManager *am)
-{
-  McpAccountManagerGoaPrivate *priv = GET_PRIVATE (self);
-
-  priv->ready = TRUE;
-}
-#endif
-
-
-static RESTRICTIONS
-mcp_account_manager_goa_get_restrictions (WAS_CONST McpAccountStorage *self,
+static TpStorageRestrictionFlags
+mcp_account_manager_goa_get_restrictions (McpAccountStorage *self,
     const gchar *account)
 {
   return TP_STORAGE_RESTRICTION_FLAG_CANNOT_SET_PARAMETERS |
@@ -900,7 +711,7 @@ mcp_account_manager_goa_get_restrictions (WAS_CONST McpAccountStorage *self,
 
 
 static void
-mcp_account_manager_goa_get_identifier (WAS_CONST McpAccountStorage *self,
+mcp_account_manager_goa_get_identifier (McpAccountStorage *self,
     const gchar *acc,
     GValue *identifier)
 {
@@ -933,20 +744,12 @@ account_storage_iface_init (McpAccountStorageIface *iface)
   IMPLEMENT (commit);
   IMPLEMENT (get_restrictions);
   IMPLEMENT (get_identifier);
-
-#ifdef MCP_API_VERSION_5_18
   IMPLEMENT (delete_async);
   IMPLEMENT (delete_finish);
   IMPLEMENT (get_attribute);
   IMPLEMENT (get_parameter);
   IMPLEMENT (set_attribute);
   IMPLEMENT (set_parameter);
-#else
-  IMPLEMENT (get);
-  IMPLEMENT (set);
-  IMPLEMENT (delete);
-  IMPLEMENT (ready);
-#endif
 
 #undef IMPLEMENT
 }
