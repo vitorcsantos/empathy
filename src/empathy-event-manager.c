@@ -1309,28 +1309,20 @@ empathy_event_manager_init (EmpathyEventManager *manager)
       FALSE, approve_channel, manager, NULL);
 
   /* Private text channels */
-  tp_base_client_add_approver_filter (priv->approver,
-      g_variant_new_parsed ("{ %s: <%s>, %s: <%u> }",
-        TP_PROP_CHANNEL_CHANNEL_TYPE,  TP_IFACE_CHANNEL_TYPE_TEXT,
-        TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, (guint32) TP_ENTITY_TYPE_CONTACT));
+  tp_base_client_take_approver_filter (priv->approver,
+      tp_channel_filter_new_for_text_chats ());
 
   /* Muc text channels */
-  tp_base_client_add_approver_filter (priv->approver,
-      g_variant_new_parsed ("{ %s: <%s>, %s: <%u> }",
-        TP_PROP_CHANNEL_CHANNEL_TYPE, TP_IFACE_CHANNEL_TYPE_TEXT,
-        TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, (guint32) TP_ENTITY_TYPE_ROOM));
+  tp_base_client_take_approver_filter (priv->approver,
+      tp_channel_filter_new_for_text_chatrooms ());
 
-  /* File transfer */
-  tp_base_client_add_approver_filter (priv->approver,
-      g_variant_new_parsed ("{ %s: <%s>, %s: <%u> }",
-        TP_PROP_CHANNEL_CHANNEL_TYPE, TP_IFACE_CHANNEL_TYPE_FILE_TRANSFER1,
-        TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, (guint32) TP_ENTITY_TYPE_CONTACT));
+  /* Private file transfer, any service type */
+  tp_base_client_take_approver_filter (priv->approver,
+      tp_channel_filter_new_for_file_transfers (NULL));
 
   /* Calls */
-  tp_base_client_add_approver_filter (priv->approver,
-      g_variant_new_parsed ("{ %s: <%s>, %s: <%u> }",
-        TP_PROP_CHANNEL_CHANNEL_TYPE, TP_IFACE_CHANNEL_TYPE_CALL1,
-        TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, (guint32) TP_ENTITY_TYPE_CONTACT));
+  tp_base_client_take_approver_filter (priv->approver,
+      tp_channel_filter_new_for_calls (TP_ENTITY_TYPE_CONTACT));
 
   /* I don't feel good about doing this, and I'm sorry, but the
    * capabilities connection feature is added earlier because it's
@@ -1346,7 +1338,7 @@ empathy_event_manager_init (EmpathyEventManager *manager)
       NULL);
 
   /* SASL auth channels */
-  tp_base_client_add_approver_filter (priv->auth_approver,
+  tp_base_client_add_approver_filter_variant (priv->auth_approver,
       g_variant_new_parsed ("{ %s: <%s>, %s: <%s> }",
         TP_PROP_CHANNEL_CHANNEL_TYPE,
           TP_IFACE_CHANNEL_TYPE_SERVER_AUTHENTICATION1,
