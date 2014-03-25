@@ -264,6 +264,7 @@ empathy_chat_manager_init (EmpathyChatManager *self)
   EmpathyChatManagerPriv *priv = GET_PRIV (self);
   TpAccountManager *am;
   GError *error = NULL;
+  TpChannelFilter *filter;
 
   priv->closed_queue = g_queue_new ();
   priv->messages = g_hash_table_new_full (g_str_hash, g_str_equal,
@@ -279,20 +280,18 @@ empathy_chat_manager_init (EmpathyChatManager *self)
 
   g_object_unref (am);
 
-  tp_base_client_add_handler_filter (priv->handler,
-      g_variant_new_parsed ("{ %s: <%s>, %s: <%u> }",
-        TP_PROP_CHANNEL_CHANNEL_TYPE, TP_IFACE_CHANNEL_TYPE_TEXT,
-        TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, TP_ENTITY_TYPE_CONTACT));
+  tp_base_client_take_handler_filter (priv->handler,
+      tp_channel_filter_new_for_text_chats ());
 
-  tp_base_client_add_handler_filter (priv->handler,
-      g_variant_new_parsed ("{ %s: <%s>, %s: <%u> }",
-        TP_PROP_CHANNEL_CHANNEL_TYPE, TP_IFACE_CHANNEL_TYPE_TEXT,
-        TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, TP_ENTITY_TYPE_ROOM));
+  tp_base_client_take_handler_filter (priv->handler,
+      tp_channel_filter_new_for_text_chatrooms ());
 
-  tp_base_client_add_handler_filter (priv->handler,
-      g_variant_new_parsed ("{ %s: <%s>, %s: <%u> }",
-        TP_PROP_CHANNEL_CHANNEL_TYPE, TP_IFACE_CHANNEL_TYPE_TEXT,
-        TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, TP_ENTITY_TYPE_NONE));
+  /* FIXME: we should have high-level API to match nameless chatrooms */
+  filter = tp_channel_filter_new_for_all_types ();
+  tp_channel_filter_require_property (filter, TP_PROP_CHANNEL_CHANNEL_TYPE,
+      g_variant_new_string (TP_IFACE_CHANNEL_TYPE_TEXT));
+  tp_channel_filter_require_no_target (filter);
+  tp_base_client_take_handler_filter (priv->handler, filter);
 
   if (!tp_base_client_register (priv->handler, &error))
     {
