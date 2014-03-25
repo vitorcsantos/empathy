@@ -1036,6 +1036,7 @@ static void
 log_window_create_observer (EmpathyLogWindow *self)
 {
   TpAccountManager *am;
+  TpChannelFilter *filter;
 
   am = tp_account_manager_dup ();
 
@@ -1045,12 +1046,18 @@ log_window_create_observer (EmpathyLogWindow *self)
   self->priv->channels = g_hash_table_new_full (g_direct_hash, g_direct_equal,
       g_object_unref, g_object_unref);
 
-  tp_base_client_add_observer_filter (self->priv->observer,
-      g_variant_new_parsed ("{ %s: <%s> }",
-        TP_PROP_CHANNEL_CHANNEL_TYPE, TP_IFACE_CHANNEL_TYPE_TEXT));
-  tp_base_client_add_observer_filter (self->priv->observer,
-      g_variant_new_parsed ("{ %s: <%s> }",
-          TP_PROP_CHANNEL_CHANNEL_TYPE, TP_IFACE_CHANNEL_TYPE_CALL1));
+  /* FIXME: either there should be an easier way to create channel filters for
+   * text and calls with an arbitrary entity type, or we should only watch
+   * for sensible entity types (NONE, CONTACT and ROOM) */
+  filter = tp_channel_filter_new_for_all_types ();
+  tp_channel_filter_require_property (filter, TP_PROP_CHANNEL_CHANNEL_TYPE,
+      g_variant_new_string (TP_IFACE_CHANNEL_TYPE_TEXT));
+  tp_base_client_take_observer_filter (self->priv->observer, filter);
+
+  filter = tp_channel_filter_new_for_all_types ();
+  tp_channel_filter_require_property (filter, TP_PROP_CHANNEL_CHANNEL_TYPE,
+      g_variant_new_string (TP_IFACE_CHANNEL_TYPE_CALL1));
+  tp_base_client_take_observer_filter (self->priv->observer, filter);
 
   tp_base_client_register (self->priv->observer, NULL);
 
