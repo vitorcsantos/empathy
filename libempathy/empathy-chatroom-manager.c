@@ -588,10 +588,8 @@ empathy_chatroom_manager_constructor (GType type,
   priv->observer = tp_simple_observer_new_with_am (priv->account_manager, TRUE,
       "Empathy.ChatroomManager", TRUE, observe_channel_cb, self, NULL);
 
-  tp_base_client_add_observer_filter (priv->observer, g_variant_new_parsed (
-        "{ %s: <%s>, %s: <%u> }",
-        TP_PROP_CHANNEL_CHANNEL_TYPE, TP_IFACE_CHANNEL_TYPE_TEXT,
-        TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, (guint32) TP_ENTITY_TYPE_ROOM));
+  tp_base_client_take_observer_filter (priv->observer,
+      tp_channel_filter_new_for_text_chatrooms ());
 
   if (!tp_base_client_register (priv->observer, &error))
     {
