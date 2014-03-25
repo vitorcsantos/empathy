@@ -55,8 +55,6 @@ G_DEFINE_TYPE_WITH_CODE (McpAccountManagerGoa,
 
 struct _McpAccountManagerGoaPrivate
 {
-  gboolean ready;
-
   GoaClient *client;
   GHashTable *accounts; /* alloc'ed string -> ref'ed GoaObject */
 
@@ -205,9 +203,8 @@ object_chat_changed_cb (GoaObject *object,
 
   DEBUG ("%s %s", name, enabled ? "enabled" : "disabled");
 
-  if (self->priv->ready)
-    mcp_account_storage_emit_toggled (MCP_ACCOUNT_STORAGE (self),
-        name, enabled);
+  mcp_account_storage_emit_toggled (MCP_ACCOUNT_STORAGE (self),
+      name, enabled);
 }
 
 static void
@@ -224,9 +221,8 @@ _new_account (McpAccountManagerGoa *self,
   g_hash_table_insert (self->priv->accounts, account_name,
       g_object_ref (object));
 
-  if (self->priv->ready)
-    mcp_account_storage_emit_created (MCP_ACCOUNT_STORAGE (self),
-        account_name);
+  mcp_account_storage_emit_created (MCP_ACCOUNT_STORAGE (self),
+      account_name);
 
   tp_g_signal_connect_object (object, "notify::chat",
       G_CALLBACK (object_chat_changed_cb), self, 0);
@@ -267,9 +263,6 @@ mcp_account_manager_goa_init (McpAccountManagerGoa *self)
   self->priv = G_TYPE_INSTANCE_GET_PRIVATE (self,
       MCP_TYPE_ACCOUNT_MANAGER_GOA, McpAccountManagerGoaPrivate);
 
-  /* the ready callback no longer exists, we may emit signals at any time */
-  self->priv->ready = TRUE;
-
   self->priv->accounts = g_hash_table_new_full (g_str_hash, g_str_equal,
       g_free, g_object_unref);
 
@@ -304,8 +297,7 @@ _account_removed_cb (GoaClient *client,
   if (name == NULL)
     return;
 
-  if (self->priv->ready)
-    mcp_account_storage_emit_deleted (MCP_ACCOUNT_STORAGE (self), name);
+  mcp_account_storage_emit_deleted (MCP_ACCOUNT_STORAGE (self), name);
 
   g_hash_table_remove (self->priv->accounts, name);
 
