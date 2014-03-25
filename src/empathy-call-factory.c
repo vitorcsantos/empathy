@@ -63,28 +63,26 @@ static void
 empathy_call_factory_init (EmpathyCallFactory *obj)
 {
   TpBaseClient *client = (TpBaseClient *) obj;
+  TpChannelFilter *filter;
 
-  tp_base_client_add_approver_filter (client,
-      g_variant_new_parsed ("{ %s: <%s>, %s: <%u> }",
-        TP_PROP_CHANNEL_CHANNEL_TYPE, TP_IFACE_CHANNEL_TYPE_CALL1,
-        TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, TP_ENTITY_TYPE_CONTACT));
+  tp_base_client_take_approver_filter (client,
+      tp_channel_filter_new_for_calls (TP_ENTITY_TYPE_CONTACT));
 
-  tp_base_client_add_handler_filter (client,
-      g_variant_new_parsed ("{ %s: <%s>, %s: <%u> }",
-        TP_PROP_CHANNEL_CHANNEL_TYPE, TP_IFACE_CHANNEL_TYPE_CALL1,
-        TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, TP_ENTITY_TYPE_CONTACT));
+  tp_base_client_take_handler_filter (client,
+      tp_channel_filter_new_for_calls (TP_ENTITY_TYPE_CONTACT));
 
-  tp_base_client_add_handler_filter (client,
-      g_variant_new_parsed ("{ %s: <%s>, %s: <%u>, %s: <%b> }",
-        TP_PROP_CHANNEL_CHANNEL_TYPE, TP_IFACE_CHANNEL_TYPE_CALL1,
-        TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, TP_ENTITY_TYPE_CONTACT,
-        TP_PROP_CHANNEL_TYPE_CALL1_INITIAL_AUDIO, TRUE));
-
-  tp_base_client_add_handler_filter (client,
-      g_variant_new_parsed ("{ %s: <%s>, %s: <%u>, %s: <%b> }",
-        TP_PROP_CHANNEL_CHANNEL_TYPE, TP_IFACE_CHANNEL_TYPE_CALL1,
-        TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, TP_ENTITY_TYPE_CONTACT,
-        TP_PROP_CHANNEL_TYPE_CALL1_INITIAL_VIDEO, TRUE));
+  /* FIXME: this is not how you advertise audio/video support in Call1 -
+   * hopefully we can get rid of it? */
+  filter = tp_channel_filter_new_for_calls (TP_ENTITY_TYPE_CONTACT);
+  tp_channel_filter_require_property (filter,
+      TP_PROP_CHANNEL_TYPE_CALL1_INITIAL_AUDIO,
+      g_variant_new_boolean (TRUE));
+  tp_base_client_take_handler_filter (client, filter);
+  filter = tp_channel_filter_new_for_calls (TP_ENTITY_TYPE_CONTACT);
+  tp_channel_filter_require_property (filter,
+      TP_PROP_CHANNEL_TYPE_CALL1_INITIAL_VIDEO,
+      g_variant_new_boolean (TRUE));
+  tp_base_client_take_handler_filter (client, filter);
 
   tp_base_client_add_handler_capabilities_varargs (client,
       TP_TOKEN_CHANNEL_TYPE_CALL1_AUDIO,
