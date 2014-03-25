@@ -209,7 +209,7 @@ chat-manager-interface.h: Makefile.am Chat_Manager.xml
 		--interface-prefix org.gnome.Empathy. \
 		--c-namespace EmpathyGen \
 		--generate-c-code chat-manager-interface \
-		Chat_Manager.xml
+		$(srcdir)/Chat_Manager.xml
 
 BUILT_SOURCES = \
 	$(nodist_empathy_chat_SOURCES) \
