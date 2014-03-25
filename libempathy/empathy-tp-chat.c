@@ -301,20 +301,20 @@ handle_delivery_report (EmpathyTpChat *self,
     TpMessage *message)
 {
   TpDeliveryStatus delivery_status;
-  const GHashTable *header;
+  GVariant *header;
   TpChannelTextSendError delivery_error;
   gboolean valid;
-  GPtrArray *echo;
+  GVariant *echo = NULL;
   const gchar *message_body = NULL;
   const gchar *delivery_dbus_error;
   const gchar *delivery_token = NULL;
 
-  header = tp_message_peek (message, 0);
+  header = tp_message_dup_part (message, 0);
   if (header == NULL)
     goto out;
 
-  delivery_token = tp_asv_get_string (header, "delivery-token");
-  delivery_status = tp_asv_get_uint32 (header, "delivery-status", &valid);
+  delivery_token = tp_vardict_get_string (header, "delivery-token");
+  delivery_status = tp_vardict_get_uint32 (header, "delivery-status", &valid);
 
   if (!valid)
     {
@@ -340,23 +340,24 @@ handle_delivery_report (EmpathyTpChat *self,
       goto out;
     }
 
-  delivery_error = tp_asv_get_uint32 (header, "delivery-error", &valid);
+  delivery_error = tp_vardict_get_uint32 (header, "delivery-error", &valid);
   if (!valid)
     delivery_error = TP_CHANNEL_TEXT_SEND_ERROR_UNKNOWN;
 
-  delivery_dbus_error = tp_asv_get_string (header, "delivery-dbus-error");
+  delivery_dbus_error = tp_vardict_get_string (header, "delivery-dbus-error");
 
   /* TODO: ideally we should use tp-glib API giving us the echoed message as a
    * TpMessage. (fdo #35884) */
-  echo = tp_asv_get_boxed (header, "delivery-echo",
-    TP_ARRAY_TYPE_MESSAGE_PART_LIST);
-  if (echo != NULL && echo->len >= 2)
-    {
-      const GHashTable *echo_body;
+  if (!g_variant_lookup (header, "delivery-echo", "&aa{sv}", &echo))
+    echo = NULL;
 
-      echo_body = g_ptr_array_index (echo, 1);
-      if (echo_body != NULL)
-        message_body = tp_asv_get_string (echo_body, "content");
+  if (echo != NULL && g_variant_n_children (echo) >= 2)
+    {
+      GVariant *echo_body;
+
+      echo_body = g_variant_get_child_value (echo, 1);
+      message_body = tp_vardict_get_string (echo_body, "content");
+      g_variant_unref (echo_body);
     }
 
   tp_chat_set_delivery_status (self, delivery_token,
@@ -365,6 +366,12 @@ handle_delivery_report (EmpathyTpChat *self,
       delivery_error, delivery_dbus_error);
 
 out:
+  if (echo != NULL)
+    g_variant_unref (echo);
+
+  if (header != NULL)
+    g_variant_unref (header);
+
   tp_text_channel_ack_message_async (TP_TEXT_CHANNEL (self),
     message, NULL, NULL);
 }
