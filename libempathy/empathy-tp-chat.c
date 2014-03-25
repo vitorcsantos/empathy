@@ -196,34 +196,24 @@ empathy_tp_chat_add (EmpathyTpChat *self,
   else if (self->priv->can_upgrade_to_muc)
     {
       TpAccountChannelRequest *req;
-      GVariantDict props;
-      const char *object_path;
-      GVariantBuilder channels;
+      const gchar *channels[2] = { NULL, };
       const char *invitees[2] = { NULL, };
       TpAccount *account;
 
       invitees[0] = empathy_contact_get_id (contact);
-      object_path = tp_proxy_get_object_path (self);
-
-      g_variant_builder_init (&channels, G_VARIANT_TYPE ("ao"));
-      g_variant_builder_add (&channels, "o", object_path);
-
-      g_variant_dict_init (&props, NULL);
-      g_variant_dict_insert (&props, TP_PROP_CHANNEL_CHANNEL_TYPE, "s",
-          TP_IFACE_CHANNEL_TYPE_TEXT);
-      g_variant_dict_insert (&props, TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, "u",
-          TP_ENTITY_TYPE_NONE);
-      g_variant_dict_insert_value (&props,
-          TP_PROP_CHANNEL_INTERFACE_CONFERENCE1_INITIAL_CHANNELS,
-          g_variant_builder_end (&channels));
-      g_variant_dict_insert_value (&props,
-          TP_PROP_CHANNEL_INTERFACE_CONFERENCE1_INITIAL_INVITEE_IDS,
-          g_variant_new_strv (invitees, -1));
+      channels[0] = tp_proxy_get_object_path (self);
 
       account = empathy_tp_chat_get_account (self);
 
-      req = tp_account_channel_request_new (account,
-          g_variant_dict_end (&props), TP_USER_ACTION_TIME_NOT_USER_ACTION);
+      req = tp_account_channel_request_new_text (account,
+        TP_USER_ACTION_TIME_NOT_USER_ACTION);
+
+      tp_account_channel_request_set_conference_initial_channels (req,
+          channels);
+
+      tp_account_channel_request_set_initial_invitee_ids (req, invitees);
+
+      /* FIXME: InvitationMessage ? */
 
       /* Although this is a MUC, it's anonymous, so CreateChannel is
        * valid. */

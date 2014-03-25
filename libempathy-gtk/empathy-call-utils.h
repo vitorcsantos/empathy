@@ -28,13 +28,13 @@ G_BEGIN_DECLS
 /* Calls */
 void empathy_call_new_with_streams (const gchar *contact,
     TpAccount *account,
-    gboolean initial_audio,
     gboolean initial_video,
     gint64 timestamp);
 
-GVariant * empathy_call_create_call_request (const gchar *contact,
-    gboolean initial_audio,
-    gboolean initial_video);
+TpAccountChannelRequest * empathy_call_create_call_request (TpAccount *account,
+    const gchar *contact,
+    gboolean initial_video,
+    gint64 timestamp);
 
 TpSendingState empathy_call_channel_get_video_state (TpCallChannel *self);
 void empathy_call_channel_send_video (TpCallChannel *self,

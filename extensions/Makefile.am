@@ -12,7 +12,6 @@ EXTRA_DIST = \
     all.xml \
     generic-types.xml \
     misc.xml \
-    Chat_Manager.xml \
     $(NULL)
 
 noinst_LTLIBRARIES = libemp-extensions.la

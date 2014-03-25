@@ -52,7 +52,6 @@ enum {
   PROP_CALL_CHANNEL = 1,
   PROP_GST_BUS,
   PROP_CONTACT,
-  PROP_INITIAL_AUDIO,
   PROP_INITIAL_VIDEO,
   PROP_SEND_AUDIO_CODEC,
   PROP_SEND_VIDEO_CODEC,
@@ -71,7 +70,6 @@ struct _EmpathyCallHandlerPriv {
 
   EmpathyContact *contact;
   TfChannel *tfchannel;
-  gboolean initial_audio;
   gboolean initial_video;
 
   FsCodec *send_audio_codec;
@@ -216,9 +214,6 @@ empathy_call_handler_set_property (GObject *object,
         tp_g_signal_connect_object (priv->call, "invalidated",
           G_CALLBACK (on_call_invalidated_cb), object, 0);
         break;
-      case PROP_INITIAL_AUDIO:
-        priv->initial_audio = g_value_get_boolean (value);
-        break;
       case PROP_INITIAL_VIDEO:
         priv->initial_video = g_value_get_boolean (value);
         break;
@@ -240,9 +235,6 @@ empathy_call_handler_get_property (GObject *object,
         break;
       case PROP_CALL_CHANNEL:
         g_value_set_object (value, priv->call);
-        break;
-      case PROP_INITIAL_AUDIO:
-        g_value_set_boolean (value, priv->initial_audio);
         break;
       case PROP_INITIAL_VIDEO:
         g_value_set_boolean (value, priv->initial_video);
@@ -301,13 +293,6 @@ empathy_call_handler_class_init (EmpathyCallHandlerClass *klass)
     TP_TYPE_CALL_CHANNEL,
     G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY | G_PARAM_STATIC_STRINGS);
   g_object_class_install_property (object_class, PROP_CALL_CHANNEL, param_spec);
-
-  param_spec = g_param_spec_boolean ("initial-audio",
-    "initial-audio", "Whether the call should start with audio",
-    TRUE,
-    G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY | G_PARAM_STATIC_STRINGS);
-  g_object_class_install_property (object_class, PROP_INITIAL_AUDIO,
-      param_spec);
 
   param_spec = g_param_spec_boolean ("initial-video",
     "initial-video", "Whether the call should start with video",
@@ -902,7 +887,6 @@ empathy_call_handler_start_call (EmpathyCallHandler *handler,
   EmpathyCallHandlerPriv *priv = GET_PRIV (handler);
   TpAccountChannelRequest *req;
   TpAccount *account;
-  GVariant *request;
 
   if (priv->call != NULL)
     {
@@ -932,11 +916,9 @@ empathy_call_handler_start_call (EmpathyCallHandler *handler,
   g_assert (priv->contact != NULL);
 
   account = empathy_contact_get_account (priv->contact);
-  request = empathy_call_create_call_request (
-      empathy_contact_get_id (priv->contact),
-      priv->initial_audio, priv->initial_video);
 
-  req = tp_account_channel_request_new (account, request, timestamp);
+  req = empathy_call_create_call_request (account,
+      empathy_contact_get_id (priv->contact), priv->initial_video, timestamp);
 
   tp_account_channel_request_create_and_handle_channel_async (req, NULL,
       empathy_call_handler_request_cb, handler);

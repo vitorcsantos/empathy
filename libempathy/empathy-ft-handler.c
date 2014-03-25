@@ -123,7 +123,7 @@ typedef struct {
   gboolean use_hash;
 
   /* request for the new transfer */
-  GVariantDict *request;
+  TpAccountChannelRequest *request;
 
   /* transfer properties */
   EmpathyContact *contact;
@@ -273,7 +273,7 @@ do_dispose (GObject *object)
     priv->cancellable = NULL;
   }
 
-  g_clear_pointer (&priv->request, g_variant_dict_unref);
+  g_clear_object (&priv->request);
 
   G_OBJECT_CLASS (empathy_ft_handler_parent_class)->dispose (object);
 }
@@ -828,55 +828,36 @@ ft_handler_create_channel_cb (GObject *source,
 static void
 ft_handler_push_to_dispatcher (EmpathyFTHandler *handler)
 {
-  TpAccount *account;
   EmpathyFTHandlerPriv *priv = GET_PRIV (handler);
-  TpAccountChannelRequest *req;
 
   g_return_if_fail (priv->request != NULL);
 
   DEBUG ("Pushing request to the dispatcher");
 
-  account = empathy_contact_get_account (priv->contact);
-
-  req = tp_account_channel_request_new (account,
-      g_variant_dict_end (priv->request), priv->user_action_time);
-
-  g_clear_pointer (&priv->request, g_variant_dict_unref);
-
-  tp_account_channel_request_create_and_handle_channel_async (req, NULL,
-      ft_handler_create_channel_cb, handler);
-
-  g_object_unref (req);
+  tp_account_channel_request_create_and_handle_channel_async (priv->request,
+      NULL, ft_handler_create_channel_cb, handler);
 }
 
 static void
 ft_handler_populate_outgoing_request (EmpathyFTHandler *handler)
 {
-  guint contact_handle;
   EmpathyFTHandlerPriv *priv = GET_PRIV (handler);
   gchar *uri;
+  TpAccount *account;
 
-  contact_handle = empathy_contact_get_handle (priv->contact);
   uri = g_file_get_uri (priv->gfile);
+  account = empathy_contact_get_account (priv->contact);
 
-  priv->request = g_variant_dict_new (NULL);
-  g_variant_dict_insert (priv->request, TP_PROP_CHANNEL_CHANNEL_TYPE,
-      "s", TP_IFACE_CHANNEL_TYPE_FILE_TRANSFER1);
-  g_variant_dict_insert (priv->request, TP_PROP_CHANNEL_TARGET_ENTITY_TYPE,
-      "u", TP_ENTITY_TYPE_CONTACT);
-  g_variant_dict_insert (priv->request, TP_PROP_CHANNEL_TARGET_HANDLE,
-      "u", contact_handle);
-  g_variant_dict_insert (priv->request,
-      TP_PROP_CHANNEL_TYPE_FILE_TRANSFER1_CONTENT_TYPE,
-      "s", priv->content_type);
-  g_variant_dict_insert (priv->request,
-      TP_PROP_CHANNEL_TYPE_FILE_TRANSFER1_FILENAME, "s", priv->filename);
-  g_variant_dict_insert (priv->request,
-      TP_PROP_CHANNEL_TYPE_FILE_TRANSFER1_SIZE, "t", priv->total_bytes);
-  g_variant_dict_insert (priv->request,
-      TP_PROP_CHANNEL_TYPE_FILE_TRANSFER1_DATE, "t", priv->mtime);
-  g_variant_dict_insert (priv->request, TP_PROP_CHANNEL_TYPE_FILE_TRANSFER1_URI,
-    "s", uri);
+  priv->request = tp_account_channel_request_new_file_transfer (account,
+      priv->filename, priv->content_type, priv->total_bytes,
+      priv->user_action_time);
+
+  tp_account_channel_request_set_target_contact (priv->request,
+      empathy_contact_get_tp_contact (priv->contact));
+
+  tp_account_channel_request_set_file_transfer_timestamp (priv->request,
+      priv->mtime);
+  tp_account_channel_request_set_file_transfer_uri (priv->request, uri);
 
   g_free (uri);
 }
@@ -928,9 +909,8 @@ hash_job_done (gpointer user_data)
       /* set the checksum in the request...
        * im.telepathy.v1.Channel.Type.FileTransfer.ContentHash
        */
-      g_variant_dict_insert (priv->request,
-          TP_PROP_CHANNEL_TYPE_FILE_TRANSFER1_CONTENT_HASH, "s",
-          g_checksum_get_string (hash_data->checksum));
+      tp_account_channel_request_set_file_transfer_hash (priv->request,
+          TP_FILE_HASH_TYPE_MD5, g_checksum_get_string (hash_data->checksum));
     }
 
 cleanup:
@@ -1067,10 +1047,6 @@ ft_handler_read_async_cb (GObject *source,
   hash_data->handler = g_object_ref (handler);
   /* FIXME: MD5 is the only ContentHashType supported right now */
   hash_data->checksum = g_checksum_new (G_CHECKSUM_MD5);
-
-  g_variant_dict_insert (priv->request,
-      TP_PROP_CHANNEL_TYPE_FILE_TRANSFER1_CONTENT_HASH_TYPE, "s",
-      TP_FILE_HASH_TYPE_MD5);
 
   g_signal_emit (handler, signals[HASHING_STARTED], 0);
 

@@ -60,23 +60,14 @@ create_text_channel (TpAccount *account,
     GAsyncReadyCallback callback,
     gpointer user_data)
 {
-  GVariantDict dict;
   TpAccountChannelRequest *req;
 
-  g_variant_dict_init (&dict, NULL);
-  g_variant_dict_insert (&dict, TP_PROP_CHANNEL_CHANNEL_TYPE, "s",
-      TP_IFACE_CHANNEL_TYPE_TEXT);
-  g_variant_dict_insert (&dict, TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, "u",
-      target_entity_type);
-  g_variant_dict_insert (&dict, TP_PROP_CHANNEL_TARGET_ID, "s", target_id);
+  req = tp_account_channel_request_new_text (account, timestamp);
+  tp_account_channel_request_set_target_id (req, target_entity_type, target_id);
+  tp_account_channel_request_set_delegate_to_preferred_handler (req, TRUE);
 
   if (sms_channel)
-    g_variant_dict_insert (&dict,
-        TP_PROP_CHANNEL_INTERFACE_SMS1_SMS_CHANNEL, "b", TRUE);
-
-  req = tp_account_channel_request_new (account, g_variant_dict_end (&dict),
-      timestamp);
-  tp_account_channel_request_set_delegate_to_preferred_handler (req, TRUE);
+    tp_account_channel_request_set_sms_channel (req, TRUE);
 
   tp_account_channel_request_ensure_channel_async (req,
       EMPATHY_CHAT_TP_BUS_NAME, NULL,

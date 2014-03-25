@@ -71,32 +71,6 @@ show_call_error (GError *error)
   gtk_widget_show (dialog);
 }
 
-GVariant *
-empathy_call_create_call_request (const gchar *contact,
-    gboolean initial_audio,
-    gboolean initial_video)
-{
-  GVariantDict dict;
-
-  g_variant_dict_init (&dict, NULL);
-  g_variant_dict_insert (&dict, TP_PROP_CHANNEL_CHANNEL_TYPE, "s",
-      TP_IFACE_CHANNEL_TYPE_CALL1);
-  g_variant_dict_insert (&dict, TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, "u",
-      TP_ENTITY_TYPE_CONTACT);
-  g_variant_dict_insert (&dict, TP_PROP_CHANNEL_TARGET_ID, "s", contact);
-
-  /* Only add InitialAudio or InitialVideo if they are true: it should work
-   * with genuinely voice-only CMs. */
-  if (initial_audio)
-    g_variant_dict_insert (&dict, TP_PROP_CHANNEL_TYPE_CALL1_INITIAL_AUDIO, "b",
-        initial_audio);
-  if (initial_video)
-    g_variant_dict_insert (&dict, TP_PROP_CHANNEL_TYPE_CALL1_INITIAL_VIDEO, "b",
-        initial_video);
-
-  return g_variant_dict_end (&dict);
-}
-
 static void
 create_call_channel_cb (GObject *source,
     GAsyncResult *result,
@@ -113,39 +87,41 @@ create_call_channel_cb (GObject *source,
   show_call_error (error);
 }
 
-/* Try to request a Call channel and fallback to StreamedMedia if that fails */
-static void
-call_new_with_streams (const gchar *contact,
-    TpAccount *account,
-    gboolean initial_audio,
+TpAccountChannelRequest *
+empathy_call_create_call_request (TpAccount *account,
+    const gchar *contact,
     gboolean initial_video,
     gint64 timestamp)
 {
-  GVariant *call_request;
   TpAccountChannelRequest *call_req;
 
-  /* Call */
-  call_request = empathy_call_create_call_request (contact,
-      initial_audio,
-      initial_video);
+  if (initial_video)
+    call_req = tp_account_channel_request_new_audio_video_call (account,
+        timestamp);
+  else
+    call_req = tp_account_channel_request_new_audio_call (account, timestamp);
 
-  call_req = tp_account_channel_request_new (account, call_request, timestamp);
+  tp_account_channel_request_set_target_id (call_req, TP_ENTITY_TYPE_CONTACT,
+      contact);
 
-  tp_account_channel_request_create_channel_async (call_req,
-      EMPATHY_CALL_TP_BUS_NAME, NULL, create_call_channel_cb, NULL);
-
-  g_object_unref (call_req);
+  return call_req;
 }
 
 void
 empathy_call_new_with_streams (const gchar *contact,
     TpAccount *account,
-    gboolean initial_audio,
     gboolean initial_video,
     gint64 timestamp)
 {
-  call_new_with_streams (contact, account, initial_audio, initial_video,
+  TpAccountChannelRequest *call_req;
+
+  call_req = empathy_call_create_call_request (account, contact, initial_video,
       timestamp);
+
+  tp_account_channel_request_create_channel_async (call_req,
+      EMPATHY_CALL_TP_BUS_NAME, NULL, create_call_channel_cb, NULL);
+
+  g_object_unref (call_req);
 }
 
 /* Copied from telepathy-yell call-channel.c */

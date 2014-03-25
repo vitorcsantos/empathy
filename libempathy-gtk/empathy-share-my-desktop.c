@@ -45,7 +45,6 @@ void
 empathy_share_my_desktop_share_with_contact (EmpathyContact *contact)
 {
   TpAccountChannelRequest *req;
-  GVariantDict request;
   TpContact *tp_contact;
 
   tp_contact = empathy_contact_get_tp_contact (contact);
@@ -58,18 +57,11 @@ empathy_share_my_desktop_share_with_contact (EmpathyContact *contact)
       return;
     }
 
-  g_variant_dict_init (&request, NULL);
-  g_variant_dict_insert (&request, TP_PROP_CHANNEL_CHANNEL_TYPE, "s",
-      TP_IFACE_CHANNEL_TYPE_STREAM_TUBE1);
-  g_variant_dict_insert (&request, TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, "u",
-        TP_ENTITY_TYPE_CONTACT);
-  g_variant_dict_insert (&request, TP_PROP_CHANNEL_TARGET_HANDLE, "u",
-        tp_contact_get_handle (tp_contact));
-  g_variant_dict_insert (&request, TP_PROP_CHANNEL_TYPE_STREAM_TUBE1_SERVICE,
-      "s", "rfb");
+  req = tp_account_channel_request_new_stream_tube (
+      empathy_contact_get_account (contact), "rfb",
+      TP_USER_ACTION_TIME_CURRENT_TIME);
 
-  req = tp_account_channel_request_new (empathy_contact_get_account (contact),
-      g_variant_dict_end (&request), TP_USER_ACTION_TIME_CURRENT_TIME);
+  tp_account_channel_request_set_target_contact (req, tp_contact);
 
   tp_account_channel_request_create_channel_async (req, NULL, NULL,
       create_tube_channel_cb, NULL);

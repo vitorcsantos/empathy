@@ -86,6 +86,7 @@ empathy_auth_client_SOURCES =						\
 	$(NULL)
 
 empathy_chat_SOURCES =						\
+	chat-manager-interface.c chat-manager-interface.h \
 	empathy-about-dialog.c empathy-about-dialog.h			\
 	empathy-chat-manager.c empathy-chat-manager.h		\
 	empathy-chat-window.c empathy-chat-window.h		\
@@ -154,6 +155,7 @@ empathy_handwritten_source = \
 
 empathy_SOURCES =							\
 	$(empathy_handwritten_source)					\
+	chat-manager-interface.c chat-manager-interface.h \
 	$(NULL)
 
 empathy_LDADD =								\
@@ -197,14 +199,25 @@ EXTRA_DIST =			\
 	$(autostart_DATA)	\
 	$(ui_DATA)		\
 	empathy-chat.js		\
-	empathy-chat.gresource.xml
+	empathy-chat.gresource.xml \
+	Chat_Manager.xml
 
 dist_man_MANS =			\
 	empathy.1 \
 	empathy-accounts.1
 
+chat-manager-interface.c: chat-manager-interface.h
+chat-manager-interface.h: Makefile.am Chat_Manager.xml
+	gdbus-codegen \
+		--interface-prefix org.gnome.Empathy. \
+		--c-namespace EmpathyGen \
+		--generate-c-code chat-manager-interface \
+		Chat_Manager.xml
+
 BUILT_SOURCES = \
 	$(nodist_empathy_chat_SOURCES) \
+	chat-manager-interface.c \
+	chat-manager-interface.h \
 	$(NULL)
 
 CLEANFILES = $(BUILT_SOURCES)

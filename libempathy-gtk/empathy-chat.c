@@ -844,17 +844,12 @@ chat_command_msg_internal (EmpathyChat *chat,
 	EmpathyChatPriv *priv = GET_PRIV (chat);
 	ChatCommandMsgData *data;
 	TpAccountChannelRequest *req;
-	GVariantDict dict;
 
-	g_variant_dict_init (&dict, NULL);
-	g_variant_dict_insert (&dict, TP_PROP_CHANNEL_CHANNEL_TYPE, "s",
-		TP_IFACE_CHANNEL_TYPE_TEXT);
-	g_variant_dict_insert (&dict, TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, "u",
-		 TP_ENTITY_TYPE_CONTACT);
-	g_variant_dict_insert (&dict, TP_PROP_CHANNEL_TARGET_ID, "s", contact_id);
+	req = tp_account_channel_request_new_text (priv->account,
+		empathy_get_current_action_time ());
 
-	req = tp_account_channel_request_new (priv->account,
-		g_variant_dict_end (&dict), empathy_get_current_action_time ());
+	tp_account_channel_request_set_target_id (req, TP_ENTITY_TYPE_CONTACT,
+		contact_id);
 
 	/* FIXME: We should probably search in members alias. But this
 	 * is enough for IRC */
