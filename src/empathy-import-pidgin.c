@@ -23,7 +23,6 @@
 #include "empathy-import-pidgin.h"
 
 #include <glib/gstdio.h>
-#include <dbus/dbus-protocol.h>
 #include <tp-account-widgets/tpaw-utils.h>
 
 #include "empathy-import-utils.h"
@@ -149,14 +148,14 @@ import_dialog_pidgin_parse_setting (EmpathyImportAccountData *data,
 
       i = (gint) g_ascii_strtod (content, NULL);
 
-      if (signature_i == DBUS_TYPE_INT16 ||
-          signature_i == DBUS_TYPE_INT32)
+      if (signature_i == (int) G_VARIANT_CLASS_INT16 ||
+          signature_i == (int) G_VARIANT_CLASS_INT32)
         {
           value = tp_g_value_slice_new (G_TYPE_INT);
           g_value_set_int (value, i);
         }
-      else if (signature_i == DBUS_TYPE_UINT16 ||
-          signature_i == DBUS_TYPE_UINT32)
+      else if (signature_i == (int) G_VARIANT_CLASS_UINT16 ||
+          signature_i == (int) G_VARIANT_CLASS_UINT32)
         {
           value = tp_g_value_slice_new (G_TYPE_UINT);
           g_value_set_uint (value, (guint) i);
