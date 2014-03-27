@@ -5,13 +5,13 @@ Interfaces=im.telepathy.v1.Client.Handler;im.telepathy.v1.Client.Observer
 DelayApprovers=true
 
 [im.telepathy.v1.Client.Handler.HandlerChannelFilter 0]
-im.telepathy.v1.Channel.ChannelType s=im.telepathy.v1.Channel.Type.ServerTLSConnection
+im.telepathy.v1.Channel.ChannelType s=im.telepathy.v1.Channel.Type.ServerTLSConnection1
 im.telepathy.v1.Channel.TargetEntityType u=0
 
 [im.telepathy.v1.Client.Handler.HandlerChannelFilter 1]
-im.telepathy.v1.Channel.ChannelType s=im.telepathy.v1.Channel.Type.ServerAuthentication
-im.telepathy.v1.Channel.Type.ServerAuthentication.AuthenticationMethod s=im.telepathy.v1.Channel.Interface.SASLAuthentication
+im.telepathy.v1.Channel.ChannelType s=im.telepathy.v1.Channel.Type.ServerAuthentication1
+im.telepathy.v1.Channel.Type.ServerAuthentication1.AuthenticationMethod s=im.telepathy.v1.Channel.Interface.SASLAuthentication1
 
 [im.telepathy.v1.Client.Observer.ObserverChannelFilter 0]
-im.telepathy.v1.Channel.ChannelType s=im.telepathy.v1.Channel.Type.ServerAuthentication
-im.telepathy.v1.Channel.Type.ServerAuthentication.AuthenticationMethod s=im.telepathy.v1.Channel.Interface.SASLAuthentication
+im.telepathy.v1.Channel.ChannelType s=im.telepathy.v1.Channel.Type.ServerAuthentication1
+im.telepathy.v1.Channel.Type.ServerAuthentication1.AuthenticationMethod s=im.telepathy.v1.Channel.Interface.SASLAuthentication1
