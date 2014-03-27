@@ -37,7 +37,7 @@
 
 struct _EmpathyPresenceManagerPrivate
 {
-  DBusGProxy *gs_proxy;
+  guint status_changed_id;
 
   gboolean ready;
 
@@ -150,12 +150,24 @@ ext_away_start (EmpathyPresenceManager *self)
 }
 
 static void
-session_status_changed_cb (DBusGProxy *gs_proxy,
-    SessionStatus status,
-    EmpathyPresenceManager *self)
+session_status_changed_cb (GDBusConnection *connection,
+    const gchar *sender_name,
+    const gchar *object_path,
+    const gchar *interface_name,
+    const gchar *signal_name,
+    GVariant *parameters,
+    gpointer user_data)
 {
+  EmpathyPresenceManager *self = EMPATHY_PRESENCE_MANAGER (user_data);
   gboolean is_idle;
+  guint32 status;
 
+  if (!g_variant_is_of_type (parameters, G_VARIANT_TYPE ("(u)")))
+    {
+      return;
+    }
+
+  g_variant_get (parameters, "(u)", &status);
   is_idle = (status == SESSION_STATUS_IDLE);
 
   DEBUG ("Session idle state changed, %s -> %s",
@@ -226,7 +238,13 @@ presence_manager_dispose (GObject *object)
 {
   EmpathyPresenceManager *self = (EmpathyPresenceManager *) object;
 
-  tp_clear_object (&self->priv->gs_proxy);
+  if (self->priv->status_changed_id != 0)
+    g_dbus_connection_signal_unsubscribe (
+        tp_proxy_get_dbus_connection (self->priv->manager),
+        self->priv->status_changed_id);
+
+  self->priv->status_changed_id = 0;
+
   tp_clear_object (&self->priv->manager);
 
   tp_clear_pointer (&self->priv->connect_times, g_hash_table_unref);
@@ -440,8 +458,6 @@ account_manager_ready_cb (GObject *source_object,
 static void
 empathy_presence_manager_init (EmpathyPresenceManager *self)
 {
-  TpDBusDaemon *dbus;
-
   self->priv = G_TYPE_INSTANCE_GET_PRIVATE (self,
       EMPATHY_TYPE_PRESENCE_MANAGER, EmpathyPresenceManagerPrivate);
 
@@ -456,28 +472,17 @@ empathy_presence_manager_init (EmpathyPresenceManager *self)
       "most-available-presence-changed",
       G_CALLBACK (most_available_presence_changed), self, 0);
 
-  dbus = tp_dbus_daemon_dup (NULL);
-
-  self->priv->gs_proxy = dbus_g_proxy_new_for_name (
-      tp_proxy_get_dbus_connection (dbus),
+  self->priv->status_changed_id = g_dbus_connection_signal_subscribe (
+      tp_proxy_get_dbus_connection (self->priv->manager),
       "org.gnome.SessionManager",
+      "org.gnome.SessionManager.Presence",
+      "StatusChanged",
       "/org/gnome/SessionManager/Presence",
-      "org.gnome.SessionManager.Presence");
-
-  if (self->priv->gs_proxy)
-    {
-      dbus_g_proxy_add_signal (self->priv->gs_proxy, "StatusChanged",
-          G_TYPE_UINT, G_TYPE_INVALID);
-      dbus_g_proxy_connect_signal (self->priv->gs_proxy, "StatusChanged",
-          G_CALLBACK (session_status_changed_cb),
-          self, NULL);
-    }
-  else
-    {
-      DEBUG ("Failed to get gs proxy");
-    }
-
-  g_object_unref (dbus);
+      NULL, /* arg0 */
+      G_DBUS_SIGNAL_FLAGS_NONE,
+      session_status_changed_cb,
+      self,
+      NULL);
 
   self->priv->connect_times = g_hash_table_new (g_direct_hash, g_direct_equal);
 }
