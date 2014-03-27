@@ -162,7 +162,7 @@ mock_tls_certificate_class_init (MockTLSCertificateClass *klass)
 
 static void
 mock_tls_certificate_accept (TpSvcAuthenticationTLSCertificate *base,
-        DBusGMethodInvocation *context)
+        GDBusMethodInvocation *context)
 {
   MockTLSCertificate *self = MOCK_TLS_CERTIFICATE (base);
   self->state = TP_TLS_CERTIFICATE_STATE_ACCEPTED;
@@ -173,7 +173,7 @@ mock_tls_certificate_accept (TpSvcAuthenticationTLSCertificate *base,
 static void
 mock_tls_certificate_reject (TpSvcAuthenticationTLSCertificate *base,
         const GPtrArray *in_Rejections,
-        DBusGMethodInvocation *context)
+        GDBusMethodInvocation *context)
 {
   MockTLSCertificate *self = MOCK_TLS_CERTIFICATE (base);
   self->state = TP_TLS_CERTIFICATE_STATE_REJECTED;
