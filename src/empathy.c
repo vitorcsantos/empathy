@@ -225,28 +225,23 @@ empathy_presence_manager_set_auto_away_cb (GSettings *gsettings,
 #define GNOME_SHELL_BUS_NAME "org.gnome.Shell"
 
 static void
-list_names_cb (TpDBusDaemon *bus_daemon,
-        const gchar * const *names,
-        const GError *error,
-        gpointer user_data,
-        GObject *weak_object)
+shell_name_owner_cb (GObject *source_object,
+    GAsyncResult *result,
+    gpointer user_data)
 {
-  EmpathyApp *self = (EmpathyApp *) weak_object;
-  guint i;
+  EmpathyApp *self = EMPATHY_APP (user_data);
+  GVariant *tuple;
 
-  if (error != NULL)
-      goto out;
+  tuple = g_dbus_connection_call_finish (G_DBUS_CONNECTION (source_object),
+      result, NULL);
 
-  for (i = 0; names[i] != NULL; i++)
+  if (tuple != NULL)
     {
-      if (!tp_strdiff (names[i], GNOME_SHELL_BUS_NAME))
-        {
-          self->shell_running = TRUE;
-          break;
-        }
+      /* we don't care *who* owns it, only that it is owned */
+      self->shell_running = TRUE;
+      g_variant_unref (tuple);
     }
 
-out:
   if (self->shell_running)
     {
       DEBUG ("GNOME Shell is running, don't create status icon");
@@ -275,6 +270,8 @@ out:
 
       empathy_presence_manager_set_auto_away (self->presence_mgr, autoaway);
     }
+
+  g_object_unref (self);
 }
 
 static void
@@ -285,7 +282,7 @@ empathy_app_activate (GApplication *app)
   if (!self->activated)
     {
       GError *error = NULL;
-      TpDBusDaemon *dbus;
+      GDBusConnection *dbus;
 
       empathy_gtk_init ();
 
@@ -319,11 +316,15 @@ empathy_app_activate (GApplication *app)
           NULL);
 
       /* check if Shell is running */
-      dbus = tp_dbus_daemon_dup (&error);
+      dbus = g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, &error);
       g_assert_no_error (error);
 
-      tp_dbus_daemon_list_names (dbus, -1, list_names_cb,
-              self, NULL, G_OBJECT (self));
+      g_dbus_connection_call (dbus,
+          "org.freedesktop.DBus", "/org/freedesktop/DBus",
+          "org.freedesktop.DBus", "GetNameOwner",
+          g_variant_new ("(s)", GNOME_SHELL_BUS_NAME),
+          G_VARIANT_TYPE ("(s)"), G_DBUS_CALL_FLAGS_NONE, -1, NULL,
+          shell_name_owner_cb, g_object_ref (self));
 
       g_object_unref (dbus);
 
