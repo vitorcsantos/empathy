@@ -1110,22 +1110,29 @@ add_service (EmpathyDebugWindow *self,
 }
 
 static void
-list_names_cb (TpDBusDaemon *bus_daemon,
-    const gchar * const *names,
-    const GError *error,
-    gpointer user_data,
-    GObject *weak_object)
+list_names_cb (GObject *source_object,
+    GAsyncResult *result,
+    gpointer user_data)
 {
-  EmpathyDebugWindow *self = EMPATHY_DEBUG_WINDOW (weak_object);
+  EmpathyDebugWindow *self = EMPATHY_DEBUG_WINDOW (user_data);
   guint i;
+  GVariant *tuple = NULL;
+  GError *error = NULL;
+  const gchar **names = NULL;
 
-  if (error != NULL)
+  tuple = g_dbus_connection_call_finish (G_DBUS_CONNECTION (source_object),
+      result, &error);
+
+  if (tuple == NULL)
     {
       DEBUG ("Failed to list names: %s", error->message);
-      return;
+      g_error_free (error);
+      goto out;
     }
 
-  for (i = 0; names[i] != NULL; i++)
+  g_variant_get (tuple, "(^a&s)", &names);
+
+  for (i = 0; names != NULL && names[i] != NULL; i++)
     {
       if (g_str_has_prefix (names[i], TP_CLIENT_BUS_NAME_BASE))
         {
@@ -1142,6 +1149,12 @@ list_names_cb (TpDBusDaemon *bus_daemon,
           add_service (self, names[i], "Mission-Control", SERVICE_TYPE_MC);
         }
     }
+
+  g_variant_unref (tuple);
+
+out:
+  g_object_unref (self);
+  g_free (names);
 }
 
 static void
@@ -1162,8 +1175,11 @@ debug_window_fill_service_chooser (EmpathyDebugWindow *self)
   self->priv->services_detected = 0;
   self->priv->name_owner_cb_count = 0;
 
-  tp_dbus_daemon_list_names (self->priv->dbus, 2000,
-      list_names_cb, NULL, NULL, G_OBJECT (self));
+  g_dbus_connection_call (tp_proxy_get_dbus_connection (self->priv->dbus),
+      "org.freedesktop.DBus", "/org/freedesktop/DBus",
+      "org.freedesktop.DBus", "ListNames", NULL,
+      G_VARIANT_TYPE ("(as)"), G_DBUS_CALL_FLAGS_NONE, 2000, NULL,
+      list_names_cb, g_object_ref (self));
 
   self->priv->name_owner_changed_signal =
       tp_cli_dbus_daemon_connect_to_name_owner_changed (self->priv->dbus,
