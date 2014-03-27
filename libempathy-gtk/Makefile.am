@@ -175,6 +175,7 @@ libempathy_gtk_la_LIBADD =			\
 	$(GCR_LIBS)				\
 	$(MEEGO_LIBS)				\
 	$(CHEESE_LIBS)				\
+	$(UDEV_LIBS)			\
 	$(top_builddir)/libempathy/libempathy.la
 
 check_c_sources = \

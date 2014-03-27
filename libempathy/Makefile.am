@@ -113,6 +113,7 @@ libempathy_la_LIBADD =		\
 	$(NETWORK_MANAGER_LIBS) \
 	$(CONNMAN_LIBS) \
 	$(UDEV_LIBS) \
+	$(CHEESE_LIBS) \
 	$(GOA_LIBS) \
 	$(UOA_LIBS) \
 	$(LIBM)
