@@ -52,28 +52,32 @@ empathy_app_plugin_build_widget (ApApplicationPlugin *plugin)
 }
 
 static void
+empathy_app_plugin_dispose (GObject *obj)
+{
+  EmpathyAppPlugin *self = EMPATHY_APP_PLUGIN (obj);
+
+  g_clear_object (&self->factory);
+
+  G_OBJECT_CLASS (empathy_app_plugin_parent_class)->dispose (obj);
+}
+
+static void
 empathy_app_plugin_class_init (EmpathyAppPluginClass *klass)
 {
   ApApplicationPluginClass *app_class = AP_APPLICATION_PLUGIN_CLASS (klass);
+  GObjectClass *oclass = G_OBJECT_CLASS (klass);
 
   app_class->build_widget = empathy_app_plugin_build_widget;
+  oclass->dispose = empathy_accounts_plugin_dispose;
 }
 
 static void
 empathy_app_plugin_init (EmpathyAppPlugin *self)
 {
-  if (tp_account_manager_can_set_default ())
+  if (tp_client_factory_can_set_default ())
     {
-      EmpathyClientFactory *factory;
-      TpAccountManager *am;
-
-      factory = empathy_client_factory_dup ();
-      am = tp_account_manager_new_with_factory (
-          TP_SIMPLE_CLIENT_FACTORY (factory));
-      tp_account_manager_set_default (am);
-
-      g_object_unref (factory);
-      g_object_unref (am);
+      self->factory = TP_CLIENT_FACTORY (empathy_client_factory_dup ());
+      tp_client_factory_set_default (self->factory);
     }
 }
 

@@ -89,8 +89,8 @@ struct _EmpathyDebugWindowPriv
   gboolean view_visible;
 
   /* Connection */
-  TpDBusDaemon *dbus;
-  TpProxySignalConnection *name_owner_changed_signal;
+  GDBusConnection *dbus;
+  guint name_owner_changed_signal;
 
   /* Whether NewDebugMessage will be fired */
   gboolean paused;
@@ -442,7 +442,7 @@ debug_window_get_messages_cb (GObject *object,
 static void
 create_proxy_to_get_messages (EmpathyDebugWindow *self,
     GtkTreeIter *iter,
-    TpDBusDaemon *dbus)
+    TpClientFactory *factory)
 {
   gchar *bus_name, *name = NULL;
   TpDebugClient *new_proxy, *stored_proxy = NULL;
@@ -474,7 +474,7 @@ create_proxy_to_get_messages (EmpathyDebugWindow *self,
   gtk_tree_model_get (GTK_TREE_MODEL (self->priv->service_store), iter,
       COL_UNIQUE_NAME, &bus_name, -1);
 
-  new_proxy = tp_debug_client_new (dbus, bus_name, &error);
+  new_proxy = tp_client_factory_ensure_debug_client (factory, bus_name, &error);
 
   if (new_proxy == NULL)
     {
@@ -643,17 +643,16 @@ refresh_all_buffer (EmpathyDebugWindow *self)
           else
             {
               GError *error = NULL;
-              TpDBusDaemon *dbus = tp_dbus_daemon_dup (&error);
+              TpClientFactory *factory = tp_client_factory_dup (&error);
 
               if (error != NULL)
                 {
-                  DEBUG ("Failed at duping the dbus daemon: %s", error->message);
+                  DEBUG ("Failed to get client factory: %s", error->message);
                   g_error_free (error);
                 }
 
-              create_proxy_to_get_messages (self, &iter, dbus);
-
-              g_object_unref (dbus);
+              create_proxy_to_get_messages (self, &iter, factory);
+              g_object_unref (factory);
             }
         }
 
@@ -666,7 +665,7 @@ static void
 debug_window_service_chooser_changed_cb (GtkComboBox *chooser,
     EmpathyDebugWindow *self)
 {
-  TpDBusDaemon *dbus;
+  TpClientFactory *factory;
   GError *error = NULL;
   GtkListStore *stored_active_buffer = NULL;
   gchar *name = NULL;
@@ -708,16 +707,18 @@ debug_window_service_chooser_changed_cb (GtkComboBox *chooser,
 
   update_store_filter (self, stored_active_buffer);
 
-  dbus = tp_dbus_daemon_dup (&error);
+  factory = tp_client_factory_dup (&error);
 
   if (error != NULL)
     {
-      DEBUG ("Failed at duping the dbus daemon: %s", error->message);
+      DEBUG ("Failed to get client factory: %s", error->message);
+      g_error_free (error);
     }
-
-  create_proxy_to_get_messages (self, &iter, dbus);
-
-  g_object_unref (dbus);
+  else
+    {
+      create_proxy_to_get_messages (self, &iter, factory);
+      g_object_unref (factory);
+    }
 
 finally:
   g_free (name);
@@ -894,23 +895,30 @@ service_dup_display_name (EmpathyDebugWindow *self,
 }
 
 static void
-debug_window_get_name_owner_cb (TpDBusDaemon *proxy,
-    const gchar *out,
-    const GError *error,
-    gpointer user_data,
-    GObject *weak_object)
+debug_window_get_name_owner_cb (GObject *source_object,
+    GAsyncResult *result,
+    gpointer user_data)
 {
   FillServiceChooserData *data = (FillServiceChooserData *) user_data;
   EmpathyDebugWindow *self = EMPATHY_DEBUG_WINDOW (data->self);
   GtkTreeIter iter;
+  GError *error = NULL;
+  const gchar *out;
+  GVariant *tuple;
 
   self->priv->name_owner_cb_count++;
 
-  if (error != NULL)
+  tuple = g_dbus_connection_call_finish (G_DBUS_CONNECTION (source_object),
+      result, &error);
+
+  if (tuple == NULL)
     {
       DEBUG ("GetNameOwner failed: %s", error->message);
+      g_error_free (error);
       goto OUT;
     }
+
+  g_variant_get (tuple, "(&s)", &out);
 
   if (!debug_window_service_is_in_model (data->self, out, NULL, FALSE))
     {
@@ -965,21 +973,31 @@ debug_window_get_name_owner_cb (TpDBusDaemon *proxy,
         gtk_combo_box_set_active (GTK_COMBO_BOX (self->priv->chooser), 0);
       }
 
+  g_variant_unref (tuple);
 OUT:
   fill_service_chooser_data_free (data);
 }
 
 static void
-debug_window_name_owner_changed_cb (TpDBusDaemon *proxy,
-    const gchar *arg0,
-    const gchar *arg1,
-    const gchar *arg2,
-    gpointer user_data,
-    GObject *weak_object)
+debug_window_name_owner_changed_cb (GDBusConnection *connection,
+    const gchar *sender_name,
+    const gchar *object_path,
+    const gchar *interface_name,
+    const gchar *signal_name,
+    GVariant *parameters,
+    gpointer user_data)
 {
   EmpathyDebugWindow *self = EMPATHY_DEBUG_WINDOW (user_data);
   ServiceType type;
   const gchar *name;
+  const gchar *arg0;
+  const gchar *arg1;
+  const gchar *arg2;
+
+  if (!g_variant_is_of_type (parameters, G_VARIANT_TYPE ("(sss)")))
+    return;
+
+  g_variant_get (parameters, "(&s&s&s)", &arg0, &arg1, &arg2);
 
   if (g_str_has_prefix (arg0, TP_CM_BUS_NAME_BASE))
     {
@@ -1103,8 +1121,11 @@ add_service (EmpathyDebugWindow *self,
 
   data = fill_service_chooser_data_new (self, display_name, type);
 
-  tp_cli_dbus_daemon_call_get_name_owner (self->priv->dbus, -1,
-      bus_name, debug_window_get_name_owner_cb, data, NULL, NULL);
+  g_dbus_connection_call (self->priv->dbus, "org.freedesktop.DBus",
+      "/org/freedesktop/DBus", "org.freedesktop.DBus", "GetNameOwner",
+      g_variant_new ("(s)", bus_name), G_VARIANT_TYPE ("(s)"),
+      G_DBUS_CALL_FLAGS_NONE, -1, NULL,
+      debug_window_get_name_owner_cb, data);
 
   self->priv->services_detected ++;
 }
@@ -1160,30 +1181,23 @@ out:
 static void
 debug_window_fill_service_chooser (EmpathyDebugWindow *self)
 {
-  GError *error = NULL;
-
-  self->priv->dbus = tp_dbus_daemon_dup (&error);
-
-  if (error != NULL)
-    {
-      DEBUG ("Failed to dup dbus daemon: %s", error->message);
-      g_error_free (error);
-      return;
-    }
-
   /* Keep a count of the services detected and added */
   self->priv->services_detected = 0;
   self->priv->name_owner_cb_count = 0;
 
-  g_dbus_connection_call (tp_proxy_get_dbus_connection (self->priv->dbus),
+  g_dbus_connection_call (self->priv->dbus,
       "org.freedesktop.DBus", "/org/freedesktop/DBus",
       "org.freedesktop.DBus", "ListNames", NULL,
       G_VARIANT_TYPE ("(as)"), G_DBUS_CALL_FLAGS_NONE, 2000, NULL,
       list_names_cb, g_object_ref (self));
 
+
   self->priv->name_owner_changed_signal =
-      tp_cli_dbus_daemon_connect_to_name_owner_changed (self->priv->dbus,
-      debug_window_name_owner_changed_cb, self, NULL, NULL, NULL);
+      g_dbus_connection_signal_subscribe (self->priv->dbus,
+          "org.freedesktop.DBus", "org.freedesktop.DBus",
+          "NameOwnerChanged", "/org/freedesktop/DBus", NULL,
+          G_DBUS_SIGNAL_FLAGS_NONE, debug_window_name_owner_changed_cb,
+          self, NULL);
 }
 
 static void
@@ -2105,6 +2119,8 @@ debug_window_constructed (GObject *object)
 
   self->priv->am = tp_account_manager_dup ();
   tp_proxy_prepare_async (self->priv->am, NULL, am_prepared_cb, object);
+
+  self->priv->dbus = tp_proxy_get_dbus_connection (self->priv->am);
 }
 
 static void
@@ -2186,8 +2202,8 @@ debug_window_dispose (GObject *object)
 {
   EmpathyDebugWindow *self = EMPATHY_DEBUG_WINDOW (object);
 
-  if (self->priv->name_owner_changed_signal != NULL)
-    tp_proxy_signal_connection_disconnect (
+  if (self->priv->name_owner_changed_signal != 0)
+    g_dbus_connection_signal_unsubscribe (self->priv->dbus,
         self->priv->name_owner_changed_signal);
 
   /* Disable Debug on all proxies */

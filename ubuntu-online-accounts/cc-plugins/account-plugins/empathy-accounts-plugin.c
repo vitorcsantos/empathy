@@ -98,33 +98,37 @@ empathy_accounts_plugin_act_headless (ApPlugin *plugin)
 }
 
 static void
+empathy_accounts_plugin_dispose (GObject *obj)
+{
+  EmpathyAccountsPlugin *self = EMPATHY_ACCOUNTS_PLUGIN (obj);
+
+  g_clear_object (&self->factory);
+
+  G_OBJECT_CLASS (empathy_accounts_plugin_parent_class)->dispose (obj);
+}
+
+static void
 empathy_accounts_plugin_class_init (
     EmpathyAccountsPluginClass *klass)
 {
   ApPluginClass *pclass = AP_PLUGIN_CLASS (klass);
+  GObjectClass *oclass = G_OBJECT_CLASS (klass);
 
   pclass->build_widget = empathy_accounts_plugin_build_widget;
   pclass->delete_account = empathy_accounts_plugin_delete_account;
   pclass->act_headless = empathy_accounts_plugin_act_headless;
+
+  oclass->dispose = empathy_accounts_plugin_dispose;
 }
 
 static void
 empathy_accounts_plugin_init (EmpathyAccountsPlugin *self)
 {
-  if (tp_account_manager_can_set_default ())
+  if (tp_client_factory_can_set_default ())
     {
-      EmpathyClientFactory *factory;
-      TpAccountManager *am;
-
-      factory = empathy_client_factory_dup ();
-      am = tp_account_manager_new_with_factory (
-          TP_SIMPLE_CLIENT_FACTORY (factory));
-      tp_account_manager_set_default (am);
-
-      g_object_unref (factory);
-      g_object_unref (am);
+      self->factory = TP_CLIENT_FACTORY (empathy_client_factory_dup ());
+      tp_client_factory_set_default (self->factory);
     }
-
 }
 
 GType

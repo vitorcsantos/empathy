@@ -229,7 +229,7 @@ mock_tls_certificate_assert_rejected (MockTLSCertificate *self,
 #endif
 
 static MockTLSCertificate *
-mock_tls_certificate_new_and_register (TpDBusDaemon *dbus,
+mock_tls_certificate_new_and_register (GDBusConnection *dbus,
         const gchar *path,
         ...)
 {
@@ -260,7 +260,7 @@ mock_tls_certificate_new_and_register (TpDBusDaemon *dbus,
   }
   va_end (va);
 
-  tp_dbus_daemon_register_object (dbus, MOCK_TLS_CERTIFICATE_PATH, cert);
+  tp_dbus_connection_register_object (dbus, MOCK_TLS_CERTIFICATE_PATH, cert);
   return cert;
 }
 
@@ -270,7 +270,8 @@ mock_tls_certificate_new_and_register (TpDBusDaemon *dbus,
 
 typedef struct {
   GMainLoop *loop;
-  TpDBusDaemon *dbus;
+  TpClientFactory *factory;
+  GDBusConnection *dbus;
   const gchar *dbus_name;
   MockTLSCertificate *mock;
   TpTLSCertificate *cert;
@@ -286,10 +287,11 @@ setup (Test *test, gconstpointer data)
 
   test->loop = g_main_loop_new (NULL, FALSE);
 
-  test->dbus = tp_dbus_daemon_dup (&error);
+  test->dbus = g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, &error);
   g_assert_no_error (error);
+  test->factory = tp_client_factory_new (test->dbus);
 
-  test->dbus_name = tp_dbus_daemon_get_unique_name (test->dbus);
+  test->dbus_name = g_dbus_connection_get_unique_name (test->dbus);
 
   test->result = NULL;
   test->cert = NULL;
@@ -312,7 +314,7 @@ teardown (Test *test, gconstpointer data)
 
   if (test->mock)
     {
-      tp_dbus_daemon_unregister_object (test->dbus, test->mock);
+      tp_dbus_connection_unregister_object (test->dbus, test->mock);
       g_object_unref (test->mock);
       test->mock = NULL;
     }
@@ -327,6 +329,8 @@ teardown (Test *test, gconstpointer data)
 
   g_main_loop_unref (test->loop);
   test->loop = NULL;
+
+  g_clear_object (&test->factory);
 
   g_object_unref (test->dbus);
   test->dbus = NULL;
@@ -383,7 +387,7 @@ ensure_certificate_proxy (Test *test)
   /* Create and prepare a certificate */
   /* We don't use tp_tls_certificate_new() as we don't pass a parent */
   test->cert = g_object_new (TP_TYPE_TLS_CERTIFICATE,
-      "dbus-daemon", test->dbus,
+      "factory", test->factory,
       "bus-name", test->dbus_name,
       "object-path", MOCK_TLS_CERTIFICATE_PATH,
       NULL);

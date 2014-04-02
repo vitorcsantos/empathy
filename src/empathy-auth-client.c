@@ -280,7 +280,6 @@ main (int argc,
   EmpathyAuthFactory *factory;
   TpDebugSender *debug_sender;
   TpClientFactory *tp_factory;
-  TpDBusDaemon *dbus;
 
   context = g_option_context_new (N_(" - Empathy authentication client"));
   g_option_context_add_group (context, gtk_get_option_group (TRUE));
@@ -315,15 +314,21 @@ main (int argc,
   g_log_set_default_handler (tp_debug_sender_log_handler, G_LOG_DOMAIN);
 #endif
 
-  dbus = tp_dbus_daemon_dup (NULL);
-  tp_factory = tp_client_factory_new (dbus);
+  tp_factory = tp_client_factory_dup (&error);
+
+  if (tp_factory == NULL)
+    {
+      g_printerr ("empathy-auth-client: unable to connect to D-Bus: %s",
+          error->message);
+      return EXIT_FAILURE;
+    }
+
   tp_client_factory_add_account_features_varargs (tp_factory,
       TP_ACCOUNT_FEATURE_STORAGE,
       0);
 
   factory = empathy_auth_factory_new (tp_factory);
   g_object_unref (tp_factory);
-  g_object_unref (dbus);
 
   g_signal_connect (factory, "new-server-tls-handler",
       G_CALLBACK (auth_factory_new_tls_handler_cb), NULL);

@@ -76,11 +76,13 @@ void
 empathy_init (void)
 {
   static gboolean initialized = FALSE;
-  TpAccountManager *am;
-  EmpathyClientFactory *factory;
+  static EmpathyClientFactory *factory;
 
   if (initialized)
-    return;
+    {
+      g_assert (factory != NULL);
+      return;
+    }
 
   g_type_init ();
 
@@ -98,11 +100,9 @@ empathy_init (void)
   initialized = TRUE;
 
   factory = empathy_client_factory_dup ();
-  am = tp_account_manager_new_with_factory (TP_CLIENT_FACTORY (factory));
-  tp_account_manager_set_default (am);
-
-  g_object_unref (factory);
-  g_object_unref (am);
+  tp_client_factory_set_default (TP_CLIENT_FACTORY (factory));
+  /* Deliberately not unreffing @factory so it won't be disposed. It exists
+   * for the lifetime of our run. */
 }
 
 xmlNodePtr

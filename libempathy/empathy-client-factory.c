@@ -201,10 +201,10 @@ empathy_client_factory_init (EmpathyClientFactory *self)
 }
 
 static EmpathyClientFactory *
-empathy_client_factory_new (TpDBusDaemon *dbus)
+empathy_client_factory_new (GDBusConnection *dbus)
 {
     return g_object_new (EMPATHY_TYPE_CLIENT_FACTORY,
-        "dbus-daemon", dbus,
+        "dbus-connection", dbus,
         NULL);
 }
 
@@ -212,16 +212,16 @@ EmpathyClientFactory *
 empathy_client_factory_dup (void)
 {
   static EmpathyClientFactory *singleton = NULL;
-  TpDBusDaemon *dbus;
+  GDBusConnection *dbus;
   GError *error = NULL;
 
   if (singleton != NULL)
     return g_object_ref (singleton);
 
-  dbus = tp_dbus_daemon_dup (&error);
+  dbus = g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, &error);
   if (dbus == NULL)
     {
-      g_warning ("Failed to get TpDBusDaemon: %s", error->message);
+      g_warning ("Failed to get GDBusConnection: %s", error->message);
       g_error_free (error);
       return NULL;
     }

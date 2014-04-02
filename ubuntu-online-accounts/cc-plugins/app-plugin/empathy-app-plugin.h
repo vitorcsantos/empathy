@@ -39,6 +39,7 @@ struct _EmpathyAppPlugin
 {
   /*<private>*/
   ApApplicationPlugin parent;
+  TpClientFactory *factory;
 };
 
 GType empathy_app_plugin_get_type (void);
