@@ -23,6 +23,7 @@
 #include "empathy-theme-adium.h"
 
 #include <glib/gi18n-lib.h>
+#include <telepathy-glib/telepathy-glib-dbus.h>
 #include <tp-account-widgets/tpaw-images.h>
 #include <tp-account-widgets/tpaw-time.h>
 #include <tp-account-widgets/tpaw-pixbuf-utils.h>

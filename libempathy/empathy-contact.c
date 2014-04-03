@@ -22,6 +22,7 @@
 #include "config.h"
 #include "empathy-contact.h"
 
+#include <telepathy-glib/telepathy-glib-dbus.h>
 #include <tp-account-widgets/tpaw-utils.h>
 
 #ifdef HAVE_GEOCODE

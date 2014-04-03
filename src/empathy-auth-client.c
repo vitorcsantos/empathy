@@ -23,6 +23,7 @@
 
 #include <glib/gi18n.h>
 #include <gnutls/gnutls.h>
+#include <telepathy-glib/telepathy-glib-dbus.h>
 
 #include "empathy-auth-factory.h"
 #include "empathy-bad-password-dialog.h"

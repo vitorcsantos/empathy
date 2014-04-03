@@ -24,6 +24,7 @@
 #include <string.h>
 #include <libxml/tree.h>
 #include <telepathy-glib/telepathy-glib.h>
+#include <telepathy-glib/telepathy-glib-dbus.h>
 
 static GValue *empathy_plist_parse_node (xmlNode *a_node);
 

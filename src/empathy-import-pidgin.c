@@ -23,6 +23,7 @@
 #include "empathy-import-pidgin.h"
 
 #include <glib/gstdio.h>
+#include <telepathy-glib/telepathy-glib-dbus.h>
 #include <tp-account-widgets/tpaw-utils.h>
 
 #include "empathy-import-utils.h"

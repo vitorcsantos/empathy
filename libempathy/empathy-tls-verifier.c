@@ -23,6 +23,7 @@
 #include "empathy-tls-verifier.h"
 
 #include <gcr/gcr.h>
+#include <telepathy-glib/telepathy-glib-dbus.h>
 
 #include "empathy-utils.h"
 

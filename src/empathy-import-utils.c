@@ -22,6 +22,7 @@
 #include "config.h"
 #include "empathy-import-utils.h"
 
+#include <telepathy-glib/telepathy-glib-dbus.h>
 #include <tp-account-widgets/tpaw-connection-managers.h>
 #include <tp-account-widgets/tpaw-utils.h>
 
