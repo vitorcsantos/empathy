@@ -1067,38 +1067,36 @@ callbacks_data_free (gpointer user_data)
 
 static gboolean
 set_content_hash_type_from_classes (EmpathyFTHandler *handler,
-    GPtrArray *classes)
+    GVariant *classes)
 {
   GArray *possible_values;
   guint value;
   gboolean valid;
   EmpathyFTHandlerPriv *priv = GET_PRIV (handler);
   gboolean support_ft = FALSE;
-  guint i;
+  GVariantIter iter;
+  GVariant *fixed;
 
   possible_values = g_array_new (TRUE, TRUE, sizeof (guint));
 
-  for (i = 0; i < classes->len; i++)
+  g_variant_iter_init (&iter, classes);
+
+  while (g_variant_iter_loop (&iter, "(@a{sv}@as)", &fixed, NULL))
     {
-      GHashTable *fixed;
-      GStrv allowed;
       const gchar *chan_type;
 
-      tp_value_array_unpack (g_ptr_array_index (classes, i), 2,
-          &fixed, &allowed);
-
-      chan_type = tp_asv_get_string (fixed, TP_PROP_CHANNEL_CHANNEL_TYPE);
+      chan_type = tp_vardict_get_string (fixed, TP_PROP_CHANNEL_CHANNEL_TYPE);
 
       if (tp_strdiff (chan_type, TP_IFACE_CHANNEL_TYPE_FILE_TRANSFER1))
         continue;
 
-      if (tp_asv_get_uint32 (fixed, TP_PROP_CHANNEL_TARGET_ENTITY_TYPE, NULL) !=
-          TP_ENTITY_TYPE_CONTACT)
+      if (tp_vardict_get_uint32 (fixed, TP_PROP_CHANNEL_TARGET_ENTITY_TYPE,
+            NULL) != TP_ENTITY_TYPE_CONTACT)
         continue;
 
       support_ft = TRUE;
 
-      value = tp_asv_get_uint32
+      value = tp_vardict_get_uint32
         (fixed, TP_PROP_CHANNEL_TYPE_FILE_TRANSFER1_CONTENT_HASH_TYPE,
          &valid);
 
@@ -1156,7 +1154,7 @@ check_hashing (CallbacksData *data)
   EmpathyFTHandlerPriv *priv = GET_PRIV (handler);
   GError *myerr = NULL;
   TpCapabilities *caps;
-  GPtrArray *classes;
+  GVariant *classes;
   TpConnection *conn;
 
   conn = empathy_contact_get_connection (priv->contact);
@@ -1168,7 +1166,7 @@ check_hashing (CallbacksData *data)
       goto out;
     }
 
-  classes = tp_capabilities_get_channel_classes (caps);
+  classes = tp_capabilities_dup_channel_classes (caps);
 
   /* set whether we support hash and the type of it */
   if (!set_content_hash_type_from_classes (handler, classes))
@@ -1188,6 +1186,8 @@ check_hashing (CallbacksData *data)
       /* get back to the caller now */
       data->callback (handler, NULL, data->user_data);
     }
+
+  g_variant_unref (classes);
 
 out:
   callbacks_data_free (data);

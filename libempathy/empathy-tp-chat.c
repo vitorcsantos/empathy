@@ -1355,7 +1355,7 @@ continue_preparing (EmpathyTpChat *self)
       caps = tp_connection_get_capabilities (connection);
       g_assert (caps != NULL);
 
-      classes = tp_capabilities_dup_channel_classes_variant (caps);
+      classes = tp_capabilities_dup_channel_classes (caps);
 
       g_variant_iter_init (&iter, classes);
       while ((class = g_variant_iter_next_value (&iter)))
