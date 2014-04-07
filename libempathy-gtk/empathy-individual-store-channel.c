@@ -117,7 +117,7 @@ group_members_changed_cb (TpChannel *channel,
     GPtrArray *local_pending,
     GPtrArray *remote_pending,
     TpContact *actor,
-    GHashTable *details,
+    GVariant *details,
     gpointer user_data)
 {
   EmpathyIndividualStoreChannel *self = EMPATHY_INDIVIDUAL_STORE_CHANNEL (

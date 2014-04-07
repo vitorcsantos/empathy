@@ -834,7 +834,7 @@ tp_chat_group_members_changed_cb (TpChannel *channel,
     GPtrArray *local_pending,
     GPtrArray *remote_pending,
     TpContact *actor,
-    GHashTable *details,
+    GVariant *details,
     EmpathyTpChat *self)
 {
   EmpathyContact *actor_contact = NULL;
@@ -842,8 +842,8 @@ tp_chat_group_members_changed_cb (TpChannel *channel,
   TpChannelGroupChangeReason reason;
   const gchar *message;
 
-  reason = tp_asv_get_uint32 (details, "change-reason", NULL);
-  message = tp_asv_get_string (details, "message");
+  reason = tp_vardict_get_uint32 (details, "change-reason", NULL);
+  message = tp_vardict_get_string (details, "message");
 
   /* Contact renamed */
   if (reason == TP_CHANNEL_GROUP_CHANGE_REASON_RENAMED)
