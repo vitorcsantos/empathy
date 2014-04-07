@@ -751,16 +751,15 @@ account_manager_uoa_ready (const McpAccountStorage *storage,
       G_CALLBACK (failure_removed_cb), self);
 }
 
-static void
-account_manager_uoa_get_identifier (const McpAccountStorage *storage,
-    const gchar *account_name,
-    GValue *identifier)
+static GVariant *
+account_manager_uoa_dup_identifier (const McpAccountStorage *storage,
+    const gchar *account_name)
 {
   McpAccountManagerUoa *self = (McpAccountManagerUoa *) storage;
   AgAccountService *service;
   AgAccount *account;
 
-  g_return_if_fail (self->priv->manager != NULL);
+  g_return_val_if_fail (self->priv->manager != NULL, NULL);
 
   service = g_hash_table_lookup (self->priv->accounts, account_name);
   if (service == NULL)
@@ -768,8 +767,7 @@ account_manager_uoa_get_identifier (const McpAccountStorage *storage,
 
   account = ag_account_service_get_account (service);
 
-  g_value_init (identifier, G_TYPE_UINT);
-  g_value_set_uint (identifier, account->id);
+  return g_variant_ref_sink (g_variant_new_uint32 (account->id));
 }
 
 static guint

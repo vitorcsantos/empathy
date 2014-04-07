@@ -702,23 +702,22 @@ mcp_account_manager_goa_get_restrictions (McpAccountStorage *self,
 }
 
 
-static void
-mcp_account_manager_goa_get_identifier (McpAccountStorage *self,
-    const gchar *acc,
-    GValue *identifier)
+static GVariant *
+mcp_account_manager_goa_dup_identifier (McpAccountStorage *self,
+    const gchar *acc)
 {
   McpAccountManagerGoaPrivate *priv = GET_PRIVATE (self);
   GoaObject *object;
   GoaAccount *account;
 
   object = g_hash_table_lookup (priv->accounts, acc);
-  g_return_if_fail (object != NULL);
+  g_return_val_if_fail (object != NULL, NULL);
 
   account = goa_object_peek_account (object);
-  g_return_if_fail (account != NULL);
+  g_return_val_if_fail (account != NULL, NULL);
 
-  g_value_init (identifier, G_TYPE_STRING);
-  g_value_set_string (identifier, goa_account_get_id (account));
+  return g_variant_ref_sink (g_variant_new_string (
+        goa_account_get_id (account)));
 }
 
 
@@ -735,7 +734,7 @@ account_storage_iface_init (McpAccountStorageIface *iface)
   IMPLEMENT (list);
   IMPLEMENT (commit);
   IMPLEMENT (get_restrictions);
-  IMPLEMENT (get_identifier);
+  IMPLEMENT (dup_identifier);
   IMPLEMENT (delete_async);
   IMPLEMENT (delete_finish);
   IMPLEMENT (get_attribute);
