@@ -1094,7 +1094,7 @@ EmpathyTpChat *
 empathy_tp_chat_new (TpClientFactory *factory,
     TpConnection *conn,
     const gchar *object_path,
-    const GHashTable *immutable_properties)
+    GVariant *immutable_properties)
 {
   g_return_val_if_fail (TP_IS_CONNECTION (conn), NULL);
   g_return_val_if_fail (immutable_properties != NULL, NULL);

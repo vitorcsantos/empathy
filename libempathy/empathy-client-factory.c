@@ -47,12 +47,11 @@ empathy_client_factory_create_channel (TpClientFactory *factory,
 
   if (!tp_strdiff (chan_type, TP_IFACE_CHANNEL_TYPE_TEXT))
     {
-      GHashTable *asv = tp_asv_from_vardict (properties);
       EmpathyTpChat *chat;
 
-      chat = empathy_tp_chat_new (TP_CLIENT_FACTORY (factory), conn, path, asv);
+      chat = empathy_tp_chat_new (TP_CLIENT_FACTORY (factory), conn, path,
+          properties);
 
-      g_hash_table_unref (asv);
       return TP_CHANNEL (chat);
     }
 
