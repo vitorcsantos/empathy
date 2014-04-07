@@ -91,7 +91,7 @@ struct _EmpathyChatPriv {
 	GCompletion       *completion;
 	guint              composing_stop_timeout_id;
 	guint              block_events_timeout_id;
-	TpEntityType       handle_type;
+	TpEntityType       entity_type;
 	gint               contacts_width;
 	gboolean           has_input_vscroll;
 
@@ -284,7 +284,7 @@ account_reconnected (EmpathyChat *chat,
 	/* FIXME: Ideally we should ask to handle ourself the channel so we can
 	* report the error if any but this is blocked by
 	* https://bugs.freedesktop.org/show_bug.cgi?id=13422 */
-	switch (priv->handle_type) {
+	switch (priv->entity_type) {
 		case TP_ENTITY_TYPE_CONTACT:
 			if (priv->sms_channel)
 				empathy_sms_contact_id (
@@ -325,7 +325,7 @@ chat_new_connection_cb (TpAccount   *account,
 		return;
 
 	if (priv->tp_chat != NULL || account != priv->account ||
-	    priv->handle_type == TP_ENTITY_TYPE_NONE ||
+	    priv->entity_type == TP_ENTITY_TYPE_NONE ||
 	    TPAW_STR_EMPTY (priv->id))
 		return;
 
@@ -3056,10 +3056,10 @@ chat_remote_contact_changed_cb (EmpathyChat *chat)
 	priv->remote_contact = empathy_tp_chat_get_remote_contact (priv->tp_chat);
 	if (priv->remote_contact != NULL) {
 		g_object_ref (priv->remote_contact);
-		priv->handle_type = TP_ENTITY_TYPE_CONTACT;
+		priv->entity_type = TP_ENTITY_TYPE_CONTACT;
 	}
 	else if (priv->tp_chat != NULL) {
-		tp_channel_get_handle ((TpChannel *) priv->tp_chat, &priv->handle_type);
+		tp_channel_get_handle ((TpChannel *) priv->tp_chat, &priv->entity_type);
 	}
 
 	chat_update_contacts_visibility (chat, priv->show_contacts);
@@ -3452,7 +3452,7 @@ chat_constructed (GObject *object)
 	}
 
 	/* Add messages from last conversation */
-	if (priv->handle_type == TP_ENTITY_TYPE_ROOM)
+	if (priv->entity_type == TP_ENTITY_TYPE_ROOM)
 		target = tpl_entity_new_from_room_id (priv->id);
 	else
 		target = tpl_entity_new (priv->id, TP_ENTITY_TYPE_CONTACT, NULL, NULL);
@@ -3461,7 +3461,7 @@ chat_constructed (GObject *object)
 								 TPL_EVENT_MASK_TEXT, chat_log_filter, chat);
 	g_object_unref (target);
 
-	if (priv->handle_type != TP_ENTITY_TYPE_ROOM) {
+	if (priv->entity_type != TP_ENTITY_TYPE_ROOM) {
 		/* First display logs from the logger and then display pending messages */
 		chat_add_logs (chat);
 	}
@@ -4465,7 +4465,7 @@ empathy_chat_is_room (EmpathyChat *chat)
 
 	g_return_val_if_fail (EMPATHY_IS_CHAT (chat), FALSE);
 
-	return (priv->handle_type == TP_ENTITY_TYPE_ROOM);
+	return (priv->entity_type == TP_ENTITY_TYPE_ROOM);
 }
 
 gboolean
