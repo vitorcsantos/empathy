@@ -126,9 +126,6 @@ struct _EmpathyChatPriv {
 
 	guint              unread_messages;
 	guint              unread_messages_when_offline;
-	/* TRUE if the pending messages can be displayed. This is to avoid to show
-	 * pending messages *before* messages from logs. (#603980) */
-	gboolean           can_show_pending;
 
 	/* FIXME: retrieving_backlogs flag is a workaround for Bug#610994 and should
 	 * be differently handled since it introduces another race condition, which
@@ -2522,19 +2519,14 @@ out:
 	return retval;
 }
 
-
 static void
 show_pending_messages (EmpathyChat *chat) {
 	EmpathyChatPriv *priv = GET_PRIV (chat);
 	const GList *messages, *l;
 
 	g_return_if_fail (EMPATHY_IS_CHAT (chat));
-
-	if (chat->view == NULL || priv->tp_chat == NULL)
-		return;
-
-	if (!priv->can_show_pending)
-		return;
+	g_return_if_fail (chat->view != NULL);
+	g_return_if_fail (priv->tp_chat != NULL);
 
 	messages = empathy_tp_chat_get_pending_messages (priv->tp_chat);
 
@@ -2543,7 +2535,6 @@ show_pending_messages (EmpathyChat *chat) {
 		chat_message_received (chat, message, TRUE);
 	}
 }
-
 
 static gboolean
 chat_scrollable_set_value (gpointer user_data)
@@ -2642,11 +2633,6 @@ out:
 	 */
 	if (G_UNLIKELY (!priv->watch_scroll &&
 			!tpl_log_walker_is_end (priv->log_walker))) {
-		/* The pending messages need not be shown after the
-		 * first batch of logs have been displayed */
-		priv->can_show_pending = TRUE;
-		show_pending_messages (chat);
-
 		priv->watch_scroll = TRUE;
 		g_idle_add_full (G_PRIORITY_LOW, chat_scrollable_connect,
 		    g_object_ref (chat), g_object_unref);
@@ -3457,7 +3443,12 @@ chat_constructed (GObject *object)
 						    supports_avatars);
 	}
 
-	/* Add messages from last conversation */
+	/* Add messages from last conversations. Backlog messages are always
+	 * prepended and pending messages are appended, so we can do both
+	 * independently. Hacks like we previously had for bug #603980 are no
+	 * longer needed. Pending messages are handled within
+	 * empathy_chat_set_tp_chat() so we don't have to care about them here.
+	 */
 	if (priv->handle_type == TP_HANDLE_TYPE_ROOM)
 		target = tpl_entity_new_from_room_id (priv->id);
 	else
@@ -3468,13 +3459,7 @@ chat_constructed (GObject *object)
 	g_object_unref (target);
 
 	if (priv->handle_type != TP_HANDLE_TYPE_ROOM) {
-		/* First display logs from the logger and then display pending messages */
 		chat_add_logs (chat);
-	}
-	 else {
-		/* Just display pending messages for rooms */
-		priv->can_show_pending = TRUE;
-		show_pending_messages (chat);
 	}
 }
 
@@ -3681,6 +3666,9 @@ empathy_chat_init (EmpathyChat *chat)
 	priv->completion = g_completion_new ((GCompletionFunc) empathy_contact_get_alias);
 	g_completion_set_compare (priv->completion, chat_contacts_completion_func);
 
+	/* Create UI early so by the time empathy_chat_set_tp_chat() is called
+	 * (construct property) the view will already exists to receive pending
+	 * messages. */
 	chat_create_ui (chat);
 }
 
@@ -4202,9 +4190,6 @@ empathy_chat_set_tp_chat (EmpathyChat   *chat,
 	g_object_notify (G_OBJECT (chat), "id");
 	g_object_notify (G_OBJECT (chat), "account");
 
-	/* This is a noop when tp-chat is set at object construction time and causes
-	 * the pending messages to be show when it's set on the object after it has
-	 * been created */
 	show_pending_messages (chat);
 
 	/* check if a password is needed */
