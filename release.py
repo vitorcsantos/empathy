@@ -8,7 +8,7 @@ from string import Template
 from optparse import OptionParser
 import dateutil.parser
 
-last_tag_pattern = 'EMPATHY_3_11*'
+last_tag_pattern = 'EMPATHY_3_12*'
 upload_server = 'master.gnome.org'
 template = '''\
 $name $version is now available for download from:
