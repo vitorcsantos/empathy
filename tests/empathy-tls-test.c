@@ -112,15 +112,6 @@ mock_tls_certificate_class_init (MockTLSCertificateClass *klass)
           { NULL }
   };
 
-  static TpDBusPropertiesMixinIfaceImpl prop_interfaces[] = {
-    { TP_IFACE_AUTHENTICATION_TLS_CERTIFICATE,
-      tp_dbus_properties_mixin_getter_gobject_properties,
-      NULL,
-      object_props,
-    },
-    { NULL }
-  };
-
   oclass->get_property = mock_tls_certificate_get_property;
   oclass->finalize = mock_tls_certificate_finalize;
 
@@ -153,9 +144,12 @@ mock_tls_certificate_class_init (MockTLSCertificateClass *klass)
       G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
   g_object_class_install_property (oclass, PROP_CERTIFICATE_CHAIN_DATA, pspec);
 
-  klass->dbus_props_class.interfaces = prop_interfaces;
-  tp_dbus_properties_mixin_class_init (oclass,
-      G_STRUCT_OFFSET (MockTLSCertificateClass, dbus_props_class));
+  tp_dbus_properties_mixin_class_init (oclass, 0);
+
+  tp_dbus_properties_mixin_implement_interface (oclass,
+      TP_IFACE_QUARK_AUTHENTICATION_TLS_CERTIFICATE,
+      tp_dbus_properties_mixin_getter_gobject_properties,
+      NULL, object_props);
 }
 
 static void
