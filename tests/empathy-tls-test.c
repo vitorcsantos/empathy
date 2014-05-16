@@ -144,8 +144,6 @@ mock_tls_certificate_class_init (MockTLSCertificateClass *klass)
       G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
   g_object_class_install_property (oclass, PROP_CERTIFICATE_CHAIN_DATA, pspec);
 
-  tp_dbus_properties_mixin_class_init (oclass, 0);
-
   tp_dbus_properties_mixin_implement_interface (oclass,
       TP_IFACE_QUARK_AUTHENTICATION_TLS_CERTIFICATE,
       tp_dbus_properties_mixin_getter_gobject_properties,
