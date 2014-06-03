@@ -159,19 +159,6 @@ get_tp_parameters (GoaAccount *account)
       PARAM ("param-fallback-servers",
           "chat.facebook.com:443");
     }
-  else if (!tp_strdiff (type, "windows_live"))
-    {
-      PARAM ("manager", "gabble");
-      PARAM ("protocol", "jabber");
-      PARAM ("Icon", "im-msn");
-      PARAM ("Service", "windows-live");
-
-      PARAM ("param-account", "messenger.live.com");
-      PARAM ("param-require-encryption", "true");
-      PARAM ("param-fallback-servers", "xmpp.messenger.live.com");
-      PARAM ("param-extra-certificate-identities",
-          "*.gateway.messenger.live.com");
-    }
   else
     {
       DEBUG ("Unknown account type %s", type);
