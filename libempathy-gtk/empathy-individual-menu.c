@@ -162,8 +162,6 @@ individual_menu_add_personas (EmpathyIndividualMenu *self,
       FolksPersonaStore *store;
       const gchar *account;
       GtkWidget *action;
-      /* Individual containing only persona */
-      FolksIndividual *single_individual;
 
       if (!empathy_folks_persona_is_interesting (FOLKS_PERSONA (persona)))
         goto while_finish;
@@ -173,13 +171,6 @@ individual_menu_add_personas (EmpathyIndividualMenu *self,
         goto while_finish;
 
       contact = empathy_contact_dup_from_tp_contact (tp_contact);
-      single_individual = empathy_ensure_individual_from_tp_contact (
-          tp_contact);
-
-      /* Pretty hacky. Creating single_individual had a side effect to change
-       * persona.individual from individual to single_individual which is not
-       * what we want so we set it back. See bgo#684971 for details. */
-      g_object_set (persona, "individual", individual, NULL);
 
       store = folks_persona_get_store (FOLKS_PERSONA (persona));
       account = folks_persona_store_get_display_name (store);
@@ -260,7 +251,6 @@ individual_menu_add_personas (EmpathyIndividualMenu *self,
 
       g_free (label);
       g_object_unref (contact);
-      g_object_unref (single_individual);
 
 while_finish:
       g_clear_object (&persona);
