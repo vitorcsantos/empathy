@@ -255,20 +255,6 @@ individual_menu_add_personas (EmpathyIndividualMenu *self,
       gtk_menu_shell_append (GTK_MENU_SHELL (contact_submenu), action);
       gtk_widget_show (action);
 
-      /* Block */
-      if (features & EMPATHY_INDIVIDUAL_FEATURE_BLOCK &&
-          (item = block_menu_item_new_individual (single_individual))
-          != NULL) {
-        GtkWidget *sep;
-
-        sep = gtk_separator_menu_item_new ();
-        gtk_menu_shell_append (GTK_MENU_SHELL (contact_submenu), sep);
-        gtk_widget_show (sep);
-
-        gtk_menu_shell_append (GTK_MENU_SHELL (contact_submenu), item);
-        gtk_widget_show (item);
-      }
-
       gtk_menu_shell_append (GTK_MENU_SHELL (menu), contact_item);
       gtk_widget_show (contact_item);
 
