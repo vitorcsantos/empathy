@@ -76,9 +76,9 @@ GtkWidget * empathy_individual_menu_new (FolksIndividual *individual,
     EmpathyIndividualFeatureFlags features,
     EmpathyIndividualStore *store);
 
-GtkWidget * empathy_individual_audio_call_menu_item_new (
+GtkWidget * empathy_individual_audio_call_menu_item_new_individual (
     EmpathyIndividualMenu *self, FolksIndividual *individual);
-GtkWidget * empathy_individual_video_call_menu_item_new (
+GtkWidget * empathy_individual_video_call_menu_item_new_individual (
     EmpathyIndividualMenu *self, FolksIndividual *individual);
 
 G_END_DECLS
