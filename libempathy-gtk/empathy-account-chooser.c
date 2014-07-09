@@ -313,6 +313,10 @@ account_chooser_constructed (GObject *object)
   GtkCellRenderer *renderer;
   GtkComboBox *combobox;
 
+  if (G_OBJECT_CLASS (empathy_account_chooser_parent_class)->constructed)
+    G_OBJECT_CLASS
+      (empathy_account_chooser_parent_class)->constructed (object);
+
   /* Set up combo box with new store */
   combobox = GTK_COMBO_BOX (self);
 

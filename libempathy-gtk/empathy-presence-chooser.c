@@ -828,6 +828,9 @@ presence_chooser_constructed (GObject *object)
 	GtkCellRenderer *renderer;
 	const gchar *status_tooltip;
 
+	if (G_OBJECT_CLASS (empathy_presence_chooser_parent_class)->constructed)
+		G_OBJECT_CLASS (empathy_presence_chooser_parent_class)->constructed (object);
+
 	presence_chooser_create_model (chooser);
 
 	gtk_combo_box_set_entry_text_column (GTK_COMBO_BOX (chooser),
