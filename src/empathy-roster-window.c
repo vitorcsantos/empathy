@@ -1301,9 +1301,8 @@ roster_window_join_chatroom_menu_activate_cb (GSimpleAction *action,
       account, room);
   if (chatroom == NULL)
     {
-      DEBUG ("Failed to get chatroom '%s' on '%s': %s",
-          room, path, error->message);
-      g_error_free (error);
+      DEBUG ("Failed to get chatroom '%s' on '%s'",
+          room, path);
       goto out;
     }
 
