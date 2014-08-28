@@ -370,7 +370,11 @@ start_gnome_contacts (FolksIndividual *individual,
 
   args = g_strdup_printf ("-i %s", folks_individual_get_id (individual));
 
-  if (!empathy_launch_external_app ("gnome-contacts.desktop", args, &error))
+  /* First try the old desktop name */
+  if (empathy_launch_external_app ("gnome-contacts.desktop", args, &error))
+    goto out;
+
+  if (!empathy_launch_external_app ("org.gnome.Contacts.desktop", args, &error))
     {
       if (g_error_matches (error, G_IO_ERROR, G_IO_ERROR_NOT_FOUND))
         {
@@ -390,6 +394,7 @@ start_gnome_contacts (FolksIndividual *individual,
         }
     }
 
+out:
   g_free (args);
 }
 
