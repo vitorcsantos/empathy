@@ -490,9 +490,10 @@ empathy_smiley_menu_new (EmpathySmileyManager *manager,
 		smiley = l->data;
 		image = gtk_image_new_from_pixbuf (smiley->pixbuf);
 
-		item = gtk_image_menu_item_new_with_label ("");
-		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item), image);
-		gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (item), TRUE);
+		item = gtk_image_menu_item_new ();
+		gtk_style_context_add_class (gtk_widget_get_style_context (item),
+			"empathy-smiley-menu-item");
+		gtk_container_add (GTK_CONTAINER (item), image);
 
 		gtk_menu_attach (GTK_MENU (menu), item,
 				 x, x + 1, y, y + 1);
