@@ -154,6 +154,7 @@ empathy_app_finalize (GObject *object)
     G_OBJECT_CLASS (empathy_app_parent_class)->finalize;
 
   g_free (self->preferences_tab);
+  g_free (self->account_manager);
 
   if (finalize != NULL)
     finalize (object);
